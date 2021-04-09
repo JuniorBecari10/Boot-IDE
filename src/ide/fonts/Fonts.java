@@ -1,0 +1,410 @@
+package ide.fonts;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
+import ide.util.Colors;
+import ide.util.Spritesheet;
+
+/**
+ * Tem tudo relacionado a fontes.
+ * 
+ * @author Juninho
+ *
+ */
+public class Fonts {
+
+    public static BufferedImage[] normal = Fonts.initFont("/font.png");
+    public static BufferedImage[] bold = Fonts.initFont("/bold.png");
+    
+    static {
+    	normal = Fonts.initFont("/font.png");
+        bold = Fonts.initFont("/bold.png");
+    }
+    
+    public static BufferedImage[] lightGrayNormal = Fonts.initFont(normal, Color.white, Colors.textLight);
+    public static BufferedImage[] lightGrayBold = Fonts.initFont(bold, Color.white, Colors.textLight);
+    
+    static {
+    	normal = Fonts.initFont("/font.png");
+        bold = Fonts.initFont("/bold.png");
+    }
+    
+    public static BufferedImage[] lighterGrayNormal = Fonts.initFont(normal, Color.white, Colors.textLighter);
+    public static BufferedImage[] lighterGrayBold = Fonts.initFont(bold, Color.white, Colors.textLighter);
+    
+    static {
+    	normal = Fonts.initFont("/font.png");
+        bold = Fonts.initFont("/bold.png");
+    }
+    
+    public static BufferedImage[] keywordNormal = Fonts.initFont(normal, Color.white, Color.decode("#95bddc")); // original: (204, 108, 29)
+    public static BufferedImage[] keywordBold = Fonts.initFont(bold, Color.white, Color.decode("#95bddc"));
+    
+    static {
+    	normal = Fonts.initFont("/font.png");
+        bold = Fonts.initFont("/bold.png");
+    }
+    
+    public static BufferedImage[] numbersNormal = Fonts.initFont(normal, Color.white, Color.decode("#5485b6"));
+    public static BufferedImage[] numbersBold = Fonts.initFont(bold, Color.white, Color.decode("#5485b6"));
+    
+    static {
+    	normal = Fonts.initFont("/font.png");
+        bold = Fonts.initFont("/bold.png");
+    }
+    
+    public static BufferedImage[] methodsNormal = Fonts.initFont(normal, Color.white, new Color(231, 215, 137));
+    public static BufferedImage[] methodsBold = Fonts.initFont(bold, Color.white, new Color(231, 215, 137));
+    
+    static {
+    	normal = Fonts.initFont("/font.png");
+        bold = Fonts.initFont("/bold.png");
+    }
+    
+    public static BufferedImage[] objectsNormal = Fonts.initFont(normal, Color.white, Color.decode("#94fa92"));
+    public static BufferedImage[] objectsBold = Fonts.initFont(bold, Color.white, Color.decode("#94fa92"));
+    
+    static {
+    	normal = Fonts.initFont("/font.png");
+        bold = Fonts.initFont("/bold.png");
+    }
+    
+    /**
+     * A gambiarra não foi totalmente resolvida. É só uma forma de "escondê"-la.
+     * 
+     * @param arg - A {@code String} para iniciar
+     * @return - A fonte como um array de {@code BufferedImage}.
+     */
+    /*public static BufferedImage[] refreshFont(String arg) {
+    	BufferedImage[] font = new BufferedImage[256];
+    	
+    	font = initFont(arg);
+    	
+    	return font;
+    }*/
+    
+    /***/
+    public static BufferedImage[] initFont(String path) {
+    	BufferedImage[] array = new BufferedImage[256];
+    	
+        Spritesheet spr = new Spritesheet(path);
+        int index = 0;
+
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
+                array[index] = spr.getSprite(x * 8, y * 8, 8, 8);
+                
+                index++;
+            }
+        }
+        
+        return array;
+    }
+    
+    public static BufferedImage[] initFont(BufferedImage img) {
+    	BufferedImage[] array = new BufferedImage[256];
+    	
+        Spritesheet spr = new Spritesheet(img);
+        int index = 0;
+
+        for (int y = 0; y < 16; y++) {
+            for (int x = 0; x < 16; x++) {
+                array[index] = spr.getSprite(x * 8, y * 8, 8, 8);
+                
+                index++;
+            }
+        }
+        
+        return array;
+    }
+    
+    public static BufferedImage[] initFont(BufferedImage[] base, Color target, Color out) {
+    	for (int i = 0; i < base.length; i++)
+        	base[i] = Colors.swapColor(base[i], target, out);
+    	
+    	return base;
+    }
+    
+    /**
+     * Desenha um texto na tela de acordo com a posição, o tamanho e a fonte especificados.
+     * 
+     * <pre>Como foi feito?</pre>
+     * 
+     * O método dividiu a {@code String} em um array de {@code char}, depois criou outro array de {@code BufferedImage}
+     * e associa cada posição ao valor da tabela ASCII definido pelo array, pois um {@code int} pode ser representado por um
+     * {@code char} no Java, depois roda um loop e desenha. Simples, ou não?
+     * 
+     * @param s - O texto.
+     * @param x - A posição x.
+     * @param y - A posição y.
+     * @param font - A fonte.
+     * @param g -  O objeto {@code Graphics} (use o g do render).
+     * 
+     * @author Boot
+     */
+	public static void drawString(String s, int x, int y, IDEFont font, Graphics g) { ///// continuar arrumando o texto pra branco e arrumar o explorador e adicionar guias.
+    	char[] ca = s.toCharArray(); // ca = char array								   converte a string em um char array
+    	
+    	BufferedImage[] text = new BufferedImage[ca.length];						// declara o array das imagens
+    	
+    	for (int i = 0; i < ca.length; i++) {										// roda um loop for para associar as
+    		int ind = ca[i] > 126 ? ca[i] - 3 : ca[i];								// imagens ao array
+    		
+    		text[i] = font.getFont()[ind];
+    	}
+    	
+    	for (int i = 0; i < text.length; i++)										// roda um loop para desenhar.
+    		g.drawImage(text[i], (x + ((font.getSize() - (font.getSize() / 4)) * i)), y, font.getSize(), font.getSize(), null);
+    }
+	
+	public static void drawString(String s, int x, int y, IDEFont font, int maxPos, Graphics g) {
+    	char[] ca = s.toCharArray(); // ca = char array								   converte a string em um char array
+    	
+    	BufferedImage[] text = new BufferedImage[ca.length];						// declara o array das imagens
+    	
+    	for (int i = 0; i < ca.length; i++) {										// roda um loop for para associar as
+    		int ind = ca[i] > 126 ? ca[i] - 3 : ca[i];								// imagens ao array
+    		
+    		text[i] = font.getFont()[ind];
+    	}
+    	
+    	for (int i = 0; i < text.length; i++) {										// roda um loop para desenhar.
+    		if ((x + ((font.getSize() - (font.getSize() / 4)) * i)) > maxPos - font.getSize()) break;
+    		
+    		g.drawImage(text[i], (x + ((font.getSize() - (font.getSize() / 4)) * i)), y, font.getSize(), font.getSize(), null);
+    	}
+    }
+	
+	/**
+	 * Desenha um array de {@code char} na tela.
+	 * 
+	 * @param c - O array
+	 * @param x - A posição x inicial.
+	 * @param y - A posição y inicial.
+	 * @param fonts - O array das fontes
+	 * @param g - O parâmetro {@code Graphics}.
+	 */
+	public static void drawChars(char[] c, int x, int y, IDEFont[] fonts, int minX, Graphics g) {
+    	BufferedImage[] text = new BufferedImage[c.length];
+    	
+    	for (int i = 0; i < c.length; i++) {
+    		char ch = c[i];
+    		
+    		if (ch == 'Á') {
+    			text[i] = fonts[i].getFont()[190];
+    			
+    			continue;
+    		}
+    		else if (ch == 'É') {
+    			text[i] = fonts[i].getFont()[197];
+    			
+    			continue;
+    		}
+    		else if (ch == 'Í') {
+    			text[i] = fonts[i].getFont()[201];
+    			
+    			continue;
+    		}
+    		else if (ch == 'Ó') {
+    			text[i] = fonts[i].getFont()[207];
+    			
+    			continue;
+    		}
+    		else if (ch == 'Ú') {
+    			text[i] = fonts[i].getFont()[214];
+    			
+    			continue;
+    		}
+    		else if (ch == 'Ý') {
+    			text[i] = fonts[i].getFont()[218];
+    			
+    			continue;
+    		}
+    		else if (ch == 'á') {
+    			text[i] = fonts[i].getFont()[222];
+    			
+    			continue;
+    		}
+    		else if (ch == 'é') {
+    			text[i] = fonts[i].getFont()[230];
+    			
+    			continue;
+    		}
+    		else if (ch == 'í') {
+    			text[i] = fonts[i].getFont()[234];
+    			
+    			continue;
+    		}
+    		else if (ch == 'ó') {
+    			text[i] = fonts[i].getFont()[240];
+    			
+    			continue;
+    		}
+    		else if (ch == 'ú') {
+    			text[i] = fonts[i].getFont()[251];
+    			
+    			continue;
+    		}
+    		/////////
+    		else if (ch == 'À') {
+    			text[i] = fonts[i].getFont()[189];
+    			
+    			continue;
+    		}
+    		else if (ch == 'È') {
+    			text[i] = fonts[i].getFont()[196];
+    			
+    			continue;
+    		}
+    		else if (ch == 'Ì') {
+    			text[i] = fonts[i].getFont()[200];
+    			
+    			continue;
+    		}
+    		else if (ch == 'Ò') {
+    			text[i] = fonts[i].getFont()[206];
+    			
+    			continue;
+    		}
+    		else if (ch == 'Ù') {
+    			text[i] = fonts[i].getFont()[213];
+    			
+    			continue;
+    		}
+    		else if (ch == 'à') {
+    			text[i] = fonts[i].getFont()[221];
+    			
+    			continue;
+    		}
+    		else if (ch == 'è') {
+    			text[i] = fonts[i].getFont()[229];
+    			
+    			continue;
+    		}
+    		else if (ch == 'ì') {
+    			text[i] = fonts[i].getFont()[233];
+    			
+    			continue;
+    		}
+    		else if (ch == 'ò') {
+    			text[i] = fonts[i].getFont()[239];
+    			
+    			continue;
+    		}
+    		else if (ch == 'ù') {
+    			text[i] = fonts[i].getFont()[250];
+    			
+    			continue;
+    		}
+    		//////
+    		if (ch == 'Â') {
+    			text[i] = fonts[i].getFont()[191];
+    			
+    			continue;
+    		}
+    		else if (ch == 'Ê') {
+    			text[i] = fonts[i].getFont()[198];
+    			
+    			continue;
+    		}
+    		else if (ch == 'Î') {
+    			text[i] = fonts[i].getFont()[202];
+    			
+    			continue;
+    		}
+    		else if (ch == 'Ô') {
+    			text[i] = fonts[i].getFont()[208];
+    			
+    			continue;
+    		}
+    		else if (ch == 'Û') {
+    			text[i] = fonts[i].getFont()[214];
+    			
+    			continue;
+    		}
+    		else if (ch == 'â') {
+    			text[i] = fonts[i].getFont()[223];
+    			
+    			continue;
+    		}
+    		else if (ch == 'ê') {
+    			text[i] = fonts[i].getFont()[231];
+    			
+    			continue;
+    		}
+    		else if (ch == 'î') {
+    			text[i] = fonts[i].getFont()[235];
+    			
+    			continue;
+    		}
+    		else if (ch == 'ô') {
+    			text[i] = fonts[i].getFont()[241];
+    			
+    			continue;
+    		}
+    		else if (ch == 'û') {
+    			text[i] = fonts[i].getFont()[248];
+    			
+    			continue;
+    		}
+    		//////
+    		else if (ch == 'Õ') {
+    			text[i] = fonts[i].getFont()[242];
+    			
+    			continue;
+    		}
+    		else if (ch == 'Ñ') {
+    			text[i] = fonts[i].getFont()[253];
+    			
+    			continue;
+    		}
+    		else if (ch == 'ã') {
+    			text[i] = fonts[i].getFont()[224];
+    			
+    			continue;
+    		}
+    		else if (ch == 'Ã') {
+    			text[i] = fonts[i].getFont()[192];
+    			
+    			continue;
+    		}
+    		else if (ch == 'õ') {
+    			text[i] = fonts[i].getFont()[242];
+    			
+    			continue;
+    		}
+    		else if (ch == 'ñ') {
+    			text[i] = fonts[i].getFont()[253];
+    			
+    			continue;
+    		}
+    		
+    		else if (ch == 'ç') {
+        		text[i] = fonts[i].getFont()[228];
+        			
+        		continue;
+    		}
+    		
+    		else if (ch == 'Ç') {
+        		text[i] = fonts[i].getFont()[195];
+        			
+        		continue;
+    		}
+    		
+    		
+    		int ind = c[i]; 						// pega o valor na tabela ASCII
+    		
+    		if (ind > 225) continue;
+    		
+    		text[i] = fonts[i].getFont()[ind];
+    	}
+    	
+    	for (int i = 0; i < text.length; i++) {
+    		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) < minX) continue;
+    		
+    		g.drawImage(text[i], (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), y, fonts[i].getSize(), fonts[i].getSize(), null);
+    	}
+    }
+}
