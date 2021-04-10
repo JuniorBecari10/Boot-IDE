@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
@@ -45,6 +46,8 @@ public class CodeEditor extends IDEComponent {
 	public static final IDEFont DEFAULT_FONT = new IDEFont(Fonts.normal, FONT_SIZE);
 	
 	public static Tab editing;
+	
+	private boolean showCursorData = false;
 	
 	private PressedAccent prAcc;
 	private boolean pressedAccent = false;
@@ -133,8 +136,12 @@ public class CodeEditor extends IDEComponent {
 		}
 		*/
 		
-		l = Files.readAllLines(p, StandardCharsets.UTF_8);
-
+		try {
+			l = Files.readAllLines(p, StandardCharsets.UTF_8); // utf-8
+		}
+		catch (Exception e) {
+			l = Files.readAllLines(p, StandardCharsets.ISO_8859_1); // ansi
+		}
 			
 		if (l.isEmpty()) l.add("");
 		
@@ -900,6 +907,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	private void copy() {
+		if (editing == null) return;
+		
 		StringSelection sl = new StringSelection(new String(toCharArray(lines.get(cursorY - 1).getChars())));
 		
 		Clipboard cl = Main.toolkit.getSystemClipboard();
@@ -907,6 +916,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	private void paste() {
+		if (editing == null) return;
+		
 		String[] sp = clipboard.split("\n");
 		StringBuilder[] bs = new StringBuilder[sp.length];
 		
@@ -958,10 +969,14 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case "save":
+			if (editing == null) return;
+			
 			editing.save();
 			break;
 			
 		case "clr":
+			if (editing == null) return;
+			
 			lines.get(cursorY - 1).getChars().clear();
 			lines.get(cursorY - 1).getFonts().clear();
 			
@@ -987,6 +1002,14 @@ public class CodeEditor extends IDEComponent {
 	public void tick() {
 		super.tick();
 		
+		showCursorData = false;
+		
+		if (KeyInput.isAltDown() && editing != null && hovered()) {
+			KeyInput.updateKeys();
+			
+			showCursorData = true;
+		}
+		
 		try {
 			clipboard = (String) Main.toolkit.getSystemClipboard().getData(DataFlavor.stringFlavor);
 		} catch (HeadlessException | UnsupportedFlavorException | IOException | IllegalStateException e) {
@@ -1004,27 +1027,31 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		
-		if (hovered()) {
+		if (hovered() && editing != null) {
 			Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));
 			
 			if (MouseInput.isMouseRolling()) {
-				if (KeyInput.isShiftDown()) {
-					if (MouseInput.wheelUp() && scrX > 0)
-						scrX -= FONT_SIZE * 3;
-					else if (MouseInput.wheelDown())
-						scrX += FONT_SIZE * 3;
-				}
-				else {
-					if (MouseInput.wheelUp() && scrY > 0)
-						scrY -= (FONT_SIZE + 4) * 3;
-					else if (MouseInput.wheelDown())
-						scrY += (FONT_SIZE + 4) * 3;
-				}
-				
-				return;
+				new Thread() {
+					public void run() {
+					if (KeyInput.isShiftDown()) {
+						if (MouseInput.wheelUp() && scrX > 0)
+							scrX -= FONT_SIZE * 3;
+						else if (MouseInput.wheelDown())
+							scrX += FONT_SIZE * 3;
+					}
+					else {
+						if (MouseInput.wheelUp() && scrY > 0)
+							scrY -= (FONT_SIZE + 4) * 3;
+						else if (MouseInput.wheelDown())
+							scrY += (FONT_SIZE + 4) * 3;
+					}
+					
+					return;
+					}
+				}.start();
 			}
 			
-			if (leftClicked()) {
+			if (leftClicked() && !RightClickOption.isRightClickActive()) {
 				cursorY = (MouseInput.getMouseY() / (FONT_SIZE + 4) - 1) + (scrY / (FONT_SIZE + 4)); // resolver seta do terminal de comando
 				cursorX = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE)); // é * 0.7
 				
@@ -1250,13 +1277,17 @@ public class CodeEditor extends IDEComponent {
 		}
 		}
 
-		for (IDELine l : lines) {
-			l.setFonts(
-					automaticColor(
-							toCharArray(
-									l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
-		
-		}
+		new Thread() {
+			public void run() {
+				for (IDELine l : lines) {
+					l.setFonts(
+							automaticColor(
+									toCharArray(
+											l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
+				
+				}
+			}
+		}.start();
 		
 		for (Tab t : tabs)
 			t.tick();
@@ -1306,9 +1337,19 @@ public class CodeEditor extends IDEComponent {
 		
 		if (cursorY * (FONT_SIZE + 4) - FONT_SIZE - scrY < MIN_Y - 40 || ((x + 40) + cursorX * (FONT_SIZE - 4)) - scrX < x + (FONT_SIZE * 2)) return;
 		
-		if (!showCursor) return;
+		if (showCursor) {
+			g.setColor(Color.white);
+			g.fillRect(((x + 40) + cursorX * (FONT_SIZE - 4)) - scrX, MIN_Y + cursorY * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE); // * 14
+		}
 		
-		g.setColor(Color.white);
-		g.fillRect(((x + 40) + cursorX * (FONT_SIZE - 4)) - scrX, MIN_Y + cursorY * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE); // * 14
+		if (showCursorData) {
+			KeyInput.updateKeys();
+			
+			g.setColor(new Color(0, 0, 0, 0.3f));
+			g.fillRect(0, 0, Main.screen.getWidth(), Main.screen.getHeight());
+			
+			Fonts.drawString("Cursor X: " + (cursorX + 1), MouseInput.getMouseX() + 10, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
+			Fonts.drawString("Cursor Y: " + cursorY, MouseInput.getMouseX() + 10, MouseInput.getMouseY() + FONT_SIZE + 3, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
+		}
 	}
 }

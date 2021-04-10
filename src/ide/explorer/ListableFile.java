@@ -210,13 +210,17 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			if (regent.isFile()) {
 				int lastX = CodeEditor.tabs.size() > 0 ? CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() : Tab.MIN_X;
 				
-				try {
-					CodeEditor.lines = CodeEditor.readFile(regent);
-				} catch (IOException e) {
-					JOptionPane.showMessageDialog(null, "Esse arquivo não é suportado, por favor escolha outro. \n Pode ser que esse arquivo seja codificado em um formato diferente do que UTF-8 ou ele seja binário.", "Esse arquivo não é compatível", JOptionPane.OK_OPTION);
-					
-					return;
-				}
+				new Thread() {
+					public void run() {
+						try {
+							CodeEditor.lines = CodeEditor.readFile(regent);
+						} catch (IOException e) {
+							JOptionPane.showMessageDialog(null, "Esse arquivo não é suportado, por favor escolha outro. \n Pode ser que esse arquivo seja codificado em um formato diferente do que UTF-8 ou ele seja binário.", "Esse arquivo não é compatível", JOptionPane.OK_OPTION);
+							
+							return;
+						}
+					}
+				}.start();
 				
 				Tab toAdd = new Tab((lastX + Tab.WIDTH) + 3, this);
 				

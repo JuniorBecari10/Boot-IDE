@@ -26,6 +26,19 @@ public class RightClickOption extends IDEComponent {
 		this.clickArg = clickArg;
 	}
 	
+	/**
+	 * Detecta se tem alguma opção de RightClick aberta.
+	 * 
+	 * @return <tt>true</tt> se sim, <tt>false</tt> se não.
+	 */
+	public static boolean isRightClickActive() {
+		for (IDEComponent i : IDEComponent.components)
+			if (i instanceof RightClickOption)
+				return true;
+		
+		return false;
+	}
+	
 	public void tick() {
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE || (MouseInput.isMousePressed() && !(leftClicked() || rightClicked()))) // obs: o bug não é aqui
 			IDEComponent.toRemove.add(this);
