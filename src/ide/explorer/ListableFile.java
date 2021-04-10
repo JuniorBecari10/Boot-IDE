@@ -263,7 +263,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	public void render(Graphics g) {
 		if (y < 199) return;
 		
-		if (hovered() && !SetFileName.added && !CommandTerminal.active) {
+		if (hovered() && !SetFileName.added && !CommandTerminal.active && !CodeEditor.selectMode) {
 			g.setColor(Colors.explorerLight);
 			g.fillRect(0, y, Main.explorer.getWidth(), height);
 		}

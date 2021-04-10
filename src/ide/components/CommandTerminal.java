@@ -32,14 +32,6 @@ public class CommandTerminal extends IDEComponent {
 	
 	public static boolean active = false;
 	private int cursorIndex = 0;
-	
-	public static int line1 = 0; // para o comando select
-	public static int line2 = 0;
-	
-	public static int index1 = 0;
-	public static int index2 = 0;
-	
-	public static boolean selecting = false;
 
 	private StringBuilder builder;
 	
@@ -127,15 +119,15 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "deselect":
-				line1 = 0;
-				line2 = 0;
+				CodeEditor.line1 = 0;
+				CodeEditor.line2 = 0;
 				
-				index1 = 0;
-				index2 = 0;
+				CodeEditor.index1 = 0;
+				CodeEditor.index2 = 0;
 				
-				selecting = false;
+				CodeEditor.selecting = false;
 				break;
-				
+				/*
 			case "del":
 				if (!selecting) return; // terminar isso
 				
@@ -154,7 +146,7 @@ public class CommandTerminal extends IDEComponent {
 					
 					CodeEditor.lines.remove(i);
 				}
-				break;
+				break;*/
 			}
 		}
 		
@@ -193,7 +185,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "select":
+			/*case "select":
 				line1 = Integer.parseInt(args[0]);
 				line2 = Integer.parseInt(args[1]);
 				
@@ -202,7 +194,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				selecting = true;
 				
-				break;
+				break;*/
 			}
 		}
 	}

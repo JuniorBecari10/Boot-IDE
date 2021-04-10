@@ -12,6 +12,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.imageio.ImageIO;
 
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
@@ -49,6 +52,14 @@ public class CodeEditor extends IDEComponent {
 	
 	private boolean showCursorData = false;
 	
+	public static boolean selectMode;
+	public static boolean isSelectingFirst = true;
+	
+	public static boolean selecting;
+
+	public static int line1, line2;
+	public static int index1, index2;
+	
 	private PressedAccent prAcc;
 	private boolean pressedAccent = false;
 	
@@ -65,6 +76,8 @@ public class CodeEditor extends IDEComponent {
 	public static List<Tab> tabs;
 	public static List<Tab> toAdd;
 	public static List<Tab> toRemove;
+	
+	public static BufferedImage gradient;
 	
 	public static String clipboard = "";
 	
@@ -98,6 +111,12 @@ public class CodeEditor extends IDEComponent {
 				cursor.play();
 			}
 		}.start();
+		
+		try {
+			gradient = ImageIO.read(getClass().getResource("/gradient.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean hovered() {
@@ -108,6 +127,14 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public static List<IDELine> readFile(File file) throws IOException {
+		CodeEditor.line1 = 0;
+		CodeEditor.line2 = 0;
+		
+		CodeEditor.index1 = 0;
+		CodeEditor.index2 = 0;
+		
+		CodeEditor.selecting = false;
+		
 		List<String> l = null;
 		
 		Path p = file.toPath();
@@ -259,7 +286,7 @@ public class CodeEditor extends IDEComponent {
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		String[] gens = { " ", "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=" };
+		String[] gens = { " ", "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!" };
 		
 		for (String s : gens) {
 			indxs = findWord(new String(chars), s);
@@ -791,6 +818,24 @@ public class CodeEditor extends IDEComponent {
 		} catch (Exception e) {}
 	}
 	
+	private int setWithinBounds(int x, int y, boolean isX) {
+		if (isX) {
+			if (y < 1) y = 1;
+			if (y + 1 > lines.size()) y = lines.size();
+			
+			if (x < 0) x = 0;
+			if (x > lines.get(y - 1).getChars().size()) x = lines.get(y - 1).getChars().size();
+			
+			return x;
+		}
+		else {
+			if (y < 1) y = 1;
+			if (y + 1 > lines.size()) y = lines.size();
+			
+			return y;
+		}
+	}
+	
 	private StringBuilder write(StringBuilder cY, char c) {
 		if (c < 32 || c > 1000) {
 			cursorX--; // esse é o método gambiarrento, mas depois pode arrumar (ou não kkkkk)
@@ -1004,10 +1049,68 @@ public class CodeEditor extends IDEComponent {
 		
 		showCursorData = false;
 		
-		if (KeyInput.isAltDown() && editing != null && hovered()) {
+		if (KeyInput.isAltDown() && editing != null && hovered()) { // TODO mudar texturas dos acentos
 			KeyInput.updateKeys();
 			
 			showCursorData = true;
+		}
+		
+		if (KeyInput.isKeyPressed() && hovered() && editing != null) {
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_Z && KeyInput.isControlDown()) // Ctrl + Z
+				selectMode = true;
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE)
+				selectMode = false;
+		}
+		
+		if (selectMode && leftClicked()) {
+			selecting = true;
+			
+			MouseInput.updateMouse();
+			
+			int mx = 0;
+			int my = 0;
+			
+			my = (MouseInput.getMouseY() / (FONT_SIZE + 4) - 1) + (scrY / (FONT_SIZE + 4)); // resolver seta do terminal de comando
+			mx = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE)); // é * 0.7
+			
+			double offset = mx * 0.7;
+			offset = Math.ceil(offset);
+			offset = mx - offset;
+			
+			mx += (int) offset;
+			mx++;
+			
+			mx = setWithinBounds(mx, my, true);
+			my = setWithinBounds(mx, my, false);
+			
+			/*if (index2 < index1) {
+				int temp = index2;
+				
+				index2 = index1;
+				index1 = temp;
+			}
+			
+			if (line2 < line1) {
+				int temp = line2;
+				
+				line2 = line1;
+				line1 = temp;
+			}*/
+			
+			if (isSelectingFirst) {
+				line1 = my;
+				index1 = mx;
+				
+				isSelectingFirst = false;
+			}
+			else {
+				line2 = my;
+				index2 = mx;
+				
+				selectMode = false;
+				isSelectingFirst = true;
+			}
 		}
 		
 		try {
@@ -1051,7 +1154,7 @@ public class CodeEditor extends IDEComponent {
 				}.start();
 			}
 			
-			if (leftClicked() && !RightClickOption.isRightClickActive()) {
+			if (leftClicked() && !RightClickOption.isRightClickActive() && !selectMode) {
 				cursorY = (MouseInput.getMouseY() / (FONT_SIZE + 4) - 1) + (scrY / (FONT_SIZE + 4)); // resolver seta do terminal de comando
 				cursorX = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE)); // é * 0.7
 				
@@ -1077,7 +1180,7 @@ public class CodeEditor extends IDEComponent {
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 150, 430, "Salvar", (s) -> execute(s), "save");
 		}
 		
-		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active) {
+		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active && !selectMode) {
 			
 			// Detectar atalhos
 				
@@ -1329,9 +1432,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (MIN_Y + (i * (FONT_SIZE + 4)) - scrY < MIN_Y) continue;
 			
-			IDEFont lineNum = CommandTerminal.selecting && i + 1 > CommandTerminal.line1 && i + 1 < CommandTerminal.line2 ? new IDEFont(Fonts.keywordNormal, FONT_SIZE) : new IDEFont(Fonts.lightGrayNormal, FONT_SIZE);
-			
-			Fonts.drawString(String.valueOf(i + 1), x, MIN_Y + (i * (FONT_SIZE + 4)) - scrY, lineNum, g);
+			Fonts.drawString(String.valueOf(i + 1), x, MIN_Y + (i * (FONT_SIZE + 4)) - scrY, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), g);
 			Fonts.drawChars(cs, (x + 40) - scrX, MIN_Y + (i * (FONT_SIZE + 4)) - scrY, fs, x + (FONT_SIZE * 2), g);
 		}
 		
@@ -1350,6 +1451,46 @@ public class CodeEditor extends IDEComponent {
 			
 			Fonts.drawString("Cursor X: " + (cursorX + 1), MouseInput.getMouseX() + 10, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
 			Fonts.drawString("Cursor Y: " + cursorY, MouseInput.getMouseX() + 10, MouseInput.getMouseY() + FONT_SIZE + 3, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
+		}
+		
+		int mx = 0;
+		int my = 0;
+		
+		if (selecting) {
+			g.setColor(Color.red);
+			g.fillRect(((x + 40) + index1 * (FONT_SIZE - 4)) - scrX, MIN_Y + line1 * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
+			
+			g.setColor(Color.red);
+			g.fillRect(((x + 40) + index2 * (FONT_SIZE - 4)) - scrX, MIN_Y + line2 * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
+		}
+		
+		my = (MouseInput.getMouseY() / (FONT_SIZE + 4) - 1) + (scrY / (FONT_SIZE + 4));
+		mx = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE)); // é * 0.7
+		
+		double offset = mx * 0.7;
+		offset = Math.ceil(offset);
+		offset = mx - offset;
+		
+		mx += (int) offset;
+		mx++;
+		
+		mx = setWithinBounds(mx, my, true);
+		my = setWithinBounds(mx, my, false);
+		
+		if (selectMode) {
+			g.drawImage(gradient, x, 0, width, 130, null);
+			
+			g.setColor(Color.blue);
+			g.fillRect(((x + 40) + mx * (FONT_SIZE - 4)) - scrX, MIN_Y + my * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
+			
+			Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 10, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
+			Fonts.drawString("[Click Direito] Selecionar", MouseInput.getMouseX() + 10, MouseInput.getMouseY() + 55, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
+			
+			if (isSelectingFirst)
+				Fonts.drawString("Selecione a primeira posição", MouseInput.getMouseX() + 10, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
+		
+			else
+				Fonts.drawString("Selecione a segunda posição", MouseInput.getMouseX() + 10, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
 		}
 	}
 }
