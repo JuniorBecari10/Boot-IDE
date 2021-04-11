@@ -274,10 +274,13 @@ public class CommandTerminal extends IDEComponent {
 				return;
 			}
 			
+			if (cursorIndex < 0) cursorIndex = 0;
+			if (cursorIndex > builder.length()) cursorIndex = builder.length();
+			
 			if (KeyInput.getCharPressed() < 33 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
 			if (builder.length() == 0 || cursorIndex == builder.length()) builder.append(KeyInput.getCharPressed());
-			else builder.insert(KeyInput.getCharPressed(), cursorIndex);
+			else builder.insert(KeyInput.getCharPressed(), cursorIndex); // arrumar isso aqui
 			
 			cursorIndex++;
 		}

@@ -18,11 +18,6 @@ public class Fonts {
     public static BufferedImage[] normal = Fonts.initFont("/font.png");
     public static BufferedImage[] bold = Fonts.initFont("/bold.png");
     
-    static {
-    	normal = Fonts.initFont("/font.png");
-        bold = Fonts.initFont("/bold.png");
-    }
-    
     public static BufferedImage[] lightGrayNormal = Fonts.initFont(normal, Color.white, Colors.textLight);
     public static BufferedImage[] lightGrayBold = Fonts.initFont(bold, Color.white, Colors.textLight);
     
@@ -39,32 +34,48 @@ public class Fonts {
         bold = Fonts.initFont("/bold.png");
     }
     
-    public static BufferedImage[] keywordNormal = Fonts.initFont(normal, Color.white, Color.decode("#95bddc")); // original: (204, 108, 29)
-    public static BufferedImage[] keywordBold = Fonts.initFont(bold, Color.white, Color.decode("#95bddc"));
+    public static BufferedImage[] keywordNormal = Fonts.initFont(normal, Color.white, Colors.keywords); // original: (204, 108, 29)
+    public static BufferedImage[] keywordBold = Fonts.initFont(bold, Color.white, Colors.keywords);
     
     static {
     	normal = Fonts.initFont("/font.png");
         bold = Fonts.initFont("/bold.png");
     }
     
-    public static BufferedImage[] numbersNormal = Fonts.initFont(normal, Color.white, Color.decode("#5485b6"));
-    public static BufferedImage[] numbersBold = Fonts.initFont(bold, Color.white, Color.decode("#5485b6"));
+    public static BufferedImage[] numbersNormal = Fonts.initFont(normal, Color.white, Colors.numbers);
+    public static BufferedImage[] numbersBold = Fonts.initFont(bold, Color.white, Colors.numbers);
     
     static {
     	normal = Fonts.initFont("/font.png");
         bold = Fonts.initFont("/bold.png");
     }
     
-    public static BufferedImage[] methodsNormal = Fonts.initFont(normal, Color.white, new Color(231, 215, 137));
-    public static BufferedImage[] methodsBold = Fonts.initFont(bold, Color.white, new Color(231, 215, 137));
+    public static BufferedImage[] methodsNormal = Fonts.initFont(normal, Color.white, Colors.methods);
+    public static BufferedImage[] methodsBold = Fonts.initFont(bold, Color.white, Colors.methods);
     
     static {
     	normal = Fonts.initFont("/font.png");
         bold = Fonts.initFont("/bold.png");
     }
     
-    public static BufferedImage[] objectsNormal = Fonts.initFont(normal, Color.white, Color.decode("#94fa92"));
-    public static BufferedImage[] objectsBold = Fonts.initFont(bold, Color.white, Color.decode("#94fa92"));
+    public static BufferedImage[] objectsNormal = Fonts.initFont(normal, Color.white, Colors.objects);
+    public static BufferedImage[] objectsBold = Fonts.initFont(bold, Color.white, Colors.objects);
+    
+    static {
+    	normal = Fonts.initFont("/font.png");
+        bold = Fonts.initFont("/bold.png");
+    }
+    
+    public static BufferedImage[] commentsNormal = Fonts.initFont(normal, Color.white, Colors.comments);
+    public static BufferedImage[] commentsBold = Fonts.initFont(bold, Color.white, Colors.comments);
+    
+    static {
+    	normal = Fonts.initFont("/font.png");
+        bold = Fonts.initFont("/bold.png");
+    }
+    
+    public static BufferedImage[] stringsNormal = Fonts.initFont(normal, Color.white, Colors.strings);
+    public static BufferedImage[] stringsBold = Fonts.initFont(bold, Color.white, Colors.strings);
     
     static {
     	normal = Fonts.initFont("/font.png");

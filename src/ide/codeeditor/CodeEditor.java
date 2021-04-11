@@ -44,7 +44,7 @@ import ide.util.Colors;
 
 public class CodeEditor extends IDEComponent {
 	
-	public static int FONT_SIZE = 16; // 18, 16
+	public static final int FONT_SIZE = 16; // 18, 16
 	
 	public static final IDEFont DEFAULT_FONT = new IDEFont(Fonts.normal, FONT_SIZE);
 	
@@ -300,14 +300,14 @@ public class CodeEditor extends IDEComponent {
 		indxs = findWord(new String(chars), new Character((char) 34).toString()); // colorir strings
 
 		for (int i = 0; i < indxs.size() - 1; i += 2)
-			fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), fs);
+			fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		indxs = findWord(new String(chars), new Character((char) 39).toString()); // colorir chars
 
 		for (int i = 0; i < indxs.size() - 1; i += 2)
-			fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), fs);
+			fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -332,7 +332,7 @@ public class CodeEditor extends IDEComponent {
 			indxs = findWord(new String(chars), "//"); // colorir comentários de uma linha
 			
 			if (!(fs.size() == 0 || indxs.size() == 0))
-				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), fs);
+				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
@@ -509,7 +509,7 @@ public class CodeEditor extends IDEComponent {
 				
 				if (fs.size() == 0 || indxs.size() == 0) break;
 				
-				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), fs);
+				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			
 			
 			break;
@@ -531,7 +531,7 @@ public class CodeEditor extends IDEComponent {
 				
 				if (fs.size() == 0 || indxs.size() == 0) break;
 				
-				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), fs);
+				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			
 			break;
 			
@@ -556,7 +556,7 @@ public class CodeEditor extends IDEComponent {
 				
 				if (fs.size() == 0 || indxs.size() == 0) break;
 				
-				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), fs);
+				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			
 			break;
 			
@@ -581,7 +581,7 @@ public class CodeEditor extends IDEComponent {
 				
 				if (fs.size() == 0 || indxs.size() == 0) break;
 				
-				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), fs);
+				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			
 			break;
 			
@@ -609,13 +609,13 @@ public class CodeEditor extends IDEComponent {
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
-			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), fs);
+			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			
 			indxs = findWord(new String(chars), "rem"); // colorir comentários de uma linha
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
-			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), fs);
+			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			break;
 			
 		case ".js":
@@ -638,7 +638,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
-			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), fs);
+			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			break;
 			
 		case ".lua":
@@ -657,7 +657,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
-			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), fs);
+			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			break;
 			
 		case ".sql":
@@ -684,14 +684,14 @@ public class CodeEditor extends IDEComponent {
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
-			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), fs);
+			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			break;
 			
 		case ".asm":
 			String[] asmKeys = { "add", "sub", "mov", "mul", "imul", "div", "idiv",
 					"cmp", "jmp", "call", "jxx", "je", "jb", "jbe", "ja", "jae", "jz",
 					"jne", "jnae", "jna", "jnbe", "jnb", "jnz", "jl", "jle", "jg", "jge",
-					"jnl", "jng", "jnge", "dec", "inc", "loop", "loope", "loopz", "loopne", "loopnz" };
+					"jnl", "jng", "jnge", "dec", "inc", "loop", "loope", "loopz", "loopne", "loopnz", "lea" };
 			
 			for (String s : asmKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -704,7 +704,15 @@ public class CodeEditor extends IDEComponent {
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
-			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), fs);
+			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			break;
+			
+		case ".md":
+			indxs = findWord(new String(chars), "#");
+			
+			if (fs.size() == 0 || indxs.size() == 0) break;
+			
+			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.keywordNormal, FONT_SIZE), fs);
 			break;
 		}
 		
@@ -1175,15 +1183,18 @@ public class CodeEditor extends IDEComponent {
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 430, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 430, "Abrir Terminal de Comando", (s) -> execute(s), "term");
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 430, "Abrir Explorador de Arquivos", (s) -> execute(s), "sysexp");
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 430, "Copiar linha", (s) -> execute(s), "copy");
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 430, "Colar", (s) -> execute(s), "paste");
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 150, 430, "Salvar", (s) -> execute(s), "save");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 430, "Salvar", (s) -> execute(s), "save");
+			
+			if (selecting) {
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 430, "Copiar", (s) -> execute(s), "copy");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 150, 430, "Colar", (s) -> execute(s), "paste");
+			}
 		}
 		
 		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active && !selectMode) {
 			
 			// Detectar atalhos
-				
+			
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + T (Terminal)
 				KeyInput.updateKeys();
 					
@@ -1374,7 +1385,7 @@ public class CodeEditor extends IDEComponent {
 			
 			setCursorWithinBounds();
 			
-			if (KeyInput.getCharPressed() < 33 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
+			if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 		
 			editing.setSaved(false);
 		}
@@ -1432,15 +1443,13 @@ public class CodeEditor extends IDEComponent {
 			
 			if (MIN_Y + (i * (FONT_SIZE + 4)) - scrY < MIN_Y) continue;
 			
+			if (i == cursorY - 1) {
+				g.setColor(Colors.backgroundLight);
+				g.fillRect((x + 40), MIN_Y + (i * (FONT_SIZE + 4)) - scrY, width, FONT_SIZE + 4);
+			}
+			
 			Fonts.drawString(String.valueOf(i + 1), x, MIN_Y + (i * (FONT_SIZE + 4)) - scrY, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), g);
 			Fonts.drawChars(cs, (x + 40) - scrX, MIN_Y + (i * (FONT_SIZE + 4)) - scrY, fs, x + (FONT_SIZE * 2), g);
-		}
-		
-		if (cursorY * (FONT_SIZE + 4) - FONT_SIZE - scrY < MIN_Y - 40 || ((x + 40) + cursorX * (FONT_SIZE - 4)) - scrX < x + (FONT_SIZE * 2)) return;
-		
-		if (showCursor) {
-			g.setColor(Color.white);
-			g.fillRect(((x + 40) + cursorX * (FONT_SIZE - 4)) - scrX, MIN_Y + cursorY * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE); // * 14
 		}
 		
 		if (showCursorData) {
@@ -1449,19 +1458,25 @@ public class CodeEditor extends IDEComponent {
 			g.setColor(new Color(0, 0, 0, 0.3f));
 			g.fillRect(0, 0, Main.screen.getWidth(), Main.screen.getHeight());
 			
-			Fonts.drawString("Cursor X: " + (cursorX + 1), MouseInput.getMouseX() + 10, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
-			Fonts.drawString("Cursor Y: " + cursorY, MouseInput.getMouseX() + 10, MouseInput.getMouseY() + FONT_SIZE + 3, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
+			Fonts.drawString("Posição do Cursor:", MouseInput.getMouseX() + 10, MouseInput.getMouseY() - FONT_SIZE - 5, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
+			
+			Fonts.drawString("Coluna: " + (cursorX + 1), MouseInput.getMouseX() + 10, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
+			Fonts.drawString(" Linha: " + cursorY, MouseInput.getMouseX() + 10, MouseInput.getMouseY() + FONT_SIZE + 3, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
 		}
 		
 		int mx = 0;
 		int my = 0;
 		
 		if (selecting) {
-			g.setColor(Color.red);
-			g.fillRect(((x + 40) + index1 * (FONT_SIZE - 4)) - scrX, MIN_Y + line1 * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
+			if (line1 * (FONT_SIZE + 4) - scrY > 0) { 
+				g.setColor(Color.red);
+				g.fillRect(((x + 40) + index1 * (FONT_SIZE - 4)) - scrX, MIN_Y + line1 * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
+			}
 			
-			g.setColor(Color.red);
-			g.fillRect(((x + 40) + index2 * (FONT_SIZE - 4)) - scrX, MIN_Y + line2 * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
+			if (line2 * (FONT_SIZE + 4) - scrY > 0) {
+				g.setColor(Color.red);
+				g.fillRect(((x + 40) + index2 * (FONT_SIZE - 4)) - scrX, MIN_Y + line2 * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
+			}
 		}
 		
 		my = (MouseInput.getMouseY() / (FONT_SIZE + 4) - 1) + (scrY / (FONT_SIZE + 4));
@@ -1484,13 +1499,18 @@ public class CodeEditor extends IDEComponent {
 			g.fillRect(((x + 40) + mx * (FONT_SIZE - 4)) - scrX, MIN_Y + my * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
 			
 			Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 10, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
-			Fonts.drawString("[Click Direito] Selecionar", MouseInput.getMouseX() + 10, MouseInput.getMouseY() + 55, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
+			Fonts.drawString("[Clique Direito] Selecionar", MouseInput.getMouseX() + 10, MouseInput.getMouseY() + 55, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
 			
 			if (isSelectingFirst)
 				Fonts.drawString("Selecione a primeira posição", MouseInput.getMouseX() + 10, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
 		
 			else
 				Fonts.drawString("Selecione a segunda posição", MouseInput.getMouseX() + 10, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
+		}
+		
+		if (showCursor && !((cursorY * (FONT_SIZE + 4) - FONT_SIZE - scrY < MIN_Y - 40 || ((x + 40) + cursorX * (FONT_SIZE - 4)) - scrX < x + (FONT_SIZE * 2)))) {
+			g.setColor(Color.white);
+			g.fillRect(((x + 40) + cursorX * (FONT_SIZE - 4)) - scrX, MIN_Y + cursorY * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE); // * 14
 		}
 	}
 }
