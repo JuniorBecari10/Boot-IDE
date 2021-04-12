@@ -4,12 +4,16 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
 import ide.explorer.Explorer;
@@ -70,7 +74,7 @@ public class CommandTerminal extends IDEComponent {
 	 * 
 	 * @param command
 	 */
-	private void runCommand(String command) {
+	public static void runCommand(String command) {
 		usedCommands.add(command);
 		
 		String[] tokens = command.split(" ");
@@ -127,6 +131,95 @@ public class CommandTerminal extends IDEComponent {
 				
 				CodeEditor.selecting = false;
 				break;
+				
+			case "copy":
+				if (!CodeEditor.selecting) break;
+				
+				List<String> lines = new ArrayList<>();
+				String str = "";
+				
+				if (CodeEditor.line1 - 1 != CodeEditor.line2 - 1) { // se não selecionou uma linha só (selecionou várias)
+					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2 - 1; i++) {
+						if (i == CodeEditor.line1 - 1) {
+							lines.add(new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars().subList(CodeEditor.index1, CodeEditor.lines.get(i).getChars().size()))));
+							
+							continue;
+						}
+						
+						if (i == CodeEditor.line2 - 1) {
+							lines.add(new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars().subList(0, CodeEditor.index2))));
+							
+							continue;
+						}
+						
+						lines.add(new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars())));
+					}
+					
+					for (String s : lines)
+						str += "\n" + s;
+				}
+				else {
+					if (CodeEditor.index2 < CodeEditor.index1) {
+						JOptionPane.showMessageDialog(null, "O index 2 não pode ser maior que o index 1!", "Valores invertidos", JOptionPane.OK_OPTION);
+						
+						runCommand("deselect");
+						
+						break;
+					}
+					
+					str = new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().subList(CodeEditor.index1, CodeEditor.index2)));
+				}
+				
+				StringSelection sel = new StringSelection(str);
+				Clipboard clip = Main.toolkit.getSystemClipboard();
+				
+				clip.setContents(sel, sel);
+				
+				break;
+				
+			case "del":
+				if (!CodeEditor.selecting) break;
+				
+				if (CodeEditor.line1 - 1 != CodeEditor.line2 - 1) { // se não selecionou uma linha só (selecionou várias)
+					if (CodeEditor.line2 < CodeEditor.line1) {
+						JOptionPane.showMessageDialog(null, "A linha 2 não pode ser menor que a linha 1!");
+						
+						runCommand("deselect");
+						
+						break;
+					}
+					
+					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2 - 1; i++) {
+						if (i == CodeEditor.line1 - 1) {
+							CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(0, CodeEditor.index1));
+							
+							continue;
+						}
+						
+						if (i == CodeEditor.line2 - 1) {
+							CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(i).getChars().size()));
+							
+							continue;
+						}
+						
+						CodeEditor.lines.remove(i);
+					}
+				}
+				else {
+					if (CodeEditor.index2 < CodeEditor.index1) {
+						JOptionPane.showMessageDialog(null, "O index 2 não pode ser maior que o index 1!");
+						
+						break;
+					}
+					
+					CodeEditor.lines.get(CodeEditor.line1 - 1).setChars((CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().subList(0, CodeEditor.index1)));
+					CodeEditor.lines.get(CodeEditor.line1 - 1).setChars((CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().size())));
+				}
+				
+				runCommand("deselect");
+				
+				break;
+				
 				/*
 			case "del":
 				if (!selecting) return; // terminar isso
@@ -167,6 +260,16 @@ public class CommandTerminal extends IDEComponent {
 				} catch (NumberFormatException e) {
 					break;
 				}
+				
+			case "gotoline":
+				try {
+					int pos = Integer.parseInt(args[0]) * (CodeEditor.FONT_SIZE + 4);
+					
+					CodeEditor.scrY = pos;
+				} catch (NumberFormatException e) {
+					break;
+				}
+				break;
 			}
 		}
 		else if (args.length == 2) {
@@ -180,6 +283,21 @@ public class CommandTerminal extends IDEComponent {
 					
 					Collections.swap(CodeEditor.tabs, idx1, idx2);
 				} catch (NumberFormatException | IndexOutOfBoundsException e) {
+					break;
+				}
+				
+				break;
+				
+			case "setcursorpos":
+				try {
+					int x = Integer.parseInt(args[0]) - 1;
+					int y = Integer.parseInt(args[1]);
+					
+					CodeEditor.cursorX = x;
+					CodeEditor.cursorY = y;
+					
+					CodeEditor.setCursorWithinBounds();
+				} catch (NumberFormatException e) {
 					break;
 				}
 				
@@ -280,7 +398,7 @@ public class CommandTerminal extends IDEComponent {
 			if (KeyInput.getCharPressed() < 33 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
 			if (builder.length() == 0 || cursorIndex == builder.length()) builder.append(KeyInput.getCharPressed());
-			else builder.insert(KeyInput.getCharPressed(), cursorIndex); // arrumar isso aqui
+			else builder.insert(cursorIndex, KeyInput.getCharPressed()); // o erro era ordem de parâmetros
 			
 			cursorIndex++;
 		}

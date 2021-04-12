@@ -114,23 +114,6 @@ public class Fonts {
         return array;
     }
     
-    public static BufferedImage[] initFont(BufferedImage img) {
-    	BufferedImage[] array = new BufferedImage[256];
-    	
-        Spritesheet spr = new Spritesheet(img);
-        int index = 0;
-
-        for (int y = 0; y < 16; y++) {
-            for (int x = 0; x < 16; x++) {
-                array[index] = spr.getSprite(x * 8, y * 8, 8, 8);
-                
-                index++;
-            }
-        }
-        
-        return array;
-    }
-    
     public static BufferedImage[] initFont(BufferedImage[] base, Color target, Color out) {
     	for (int i = 0; i < base.length; i++)
         	base[i] = Colors.swapColor(base[i], target, out);

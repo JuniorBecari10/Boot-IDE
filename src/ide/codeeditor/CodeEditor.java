@@ -7,9 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.HeadlessException;
 import java.awt.Rectangle;
-import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -241,25 +239,6 @@ public class CodeEditor extends IDEComponent {
 		
 		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".js") || ext.equals(".h") || ext.equals(".lua"))) {			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
-			String[] cl = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
-					"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-
-			for (String s : cl)
-				indxs = Stream.concat(indxs.stream(), findWord(new String(chars), s).stream()).collect(Collectors.toList());
-
-			int len = 0;
-
-			for (Integer i : indxs) {
-				while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != ')')
-					len++;
-
-				if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
-			}
-		}
-		
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		indxs = findWord(new String(chars), "(");
 		
@@ -267,7 +246,7 @@ public class CodeEditor extends IDEComponent {
 			int c = i;
 			int len = 0;
 			
-			while (c < chars.length && c > 0 && (chars[c] != ' ' || chars[c] != '(' || chars[c] != '[' || chars[i + len] != ',' || chars[i + len] != ';')) {
+			while (c < chars.length && c > 0 && (chars[c] != ' ' || chars[c] != '(' || chars[c] != '[' || chars[i + len] != ',' || chars[i + len] != ';' || chars[i + len] != '.' || chars[i + len] != ':')) {
 				c--;
 				len++;
 			}
@@ -276,6 +255,25 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		String[] cl = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+				"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+
+		for (String s : cl)
+			indxs = Stream.concat(indxs.stream(), findWord(new String(chars), s).stream()).collect(Collectors.toList());
+
+		int len = 0;
+
+		for (Integer i : indxs) {
+			while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != ')' && chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.' && chars[i + len] != ':')
+				len++;
+
+			if (i + len < chars.length)
+				fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
+		}
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		for (String s : nums) { // colorir números
 			indxs = findWord(new String(chars), s);
@@ -292,7 +290,7 @@ public class CodeEditor extends IDEComponent {
 			indxs = findWord(new String(chars), s);
 
 			for (Integer i : indxs)
-				fs = color(i, i + s.length(), new IDEFont(Fonts.normal, FONT_SIZE), fs);
+				fs = color(i, i + s.length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 		}
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -708,11 +706,19 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".md":
+			for (int i = 0; i < chars.length; i++)
+				fs.add(DEFAULT_FONT);
+			
 			indxs = findWord(new String(chars), "#");
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
 			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.keywordNormal, FONT_SIZE), fs);
+			break;
+		
+		case ".txt":
+			for (int i = 0; i < chars.length; i++)
+				fs.add(DEFAULT_FONT);
 			break;
 		}
 		
@@ -740,7 +746,7 @@ public class CodeEditor extends IDEComponent {
 	    return count;
 	}
 	
-	public char[] toCharArray(List<Character> list) {
+	public static char[] toCharArray(List<Character> list) {
 		StringBuilder sb = new StringBuilder();
 		
         for (Character ch : list) {
@@ -814,7 +820,7 @@ public class CodeEditor extends IDEComponent {
 		return pre;
 	}
 	
-	private void setCursorWithinBounds() { // o cursorY deve ser feito primeiro
+	public static void setCursorWithinBounds() { // o cursorY deve ser feito primeiro
 		if (editing == null) return;
 		
 		try {
@@ -959,15 +965,6 @@ public class CodeEditor extends IDEComponent {
 		return ch;
 	}
 	
-	private void copy() {
-		if (editing == null) return;
-		
-		StringSelection sl = new StringSelection(new String(toCharArray(lines.get(cursorY - 1).getChars())));
-		
-		Clipboard cl = Main.toolkit.getSystemClipboard();
-		cl.setContents(sl, null);
-	}
-	
 	private void paste() {
 		if (editing == null) return;
 		
@@ -1011,10 +1008,6 @@ public class CodeEditor extends IDEComponent {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			break;
-			
-		case "copy":
-			copy();
 			break;
 			
 		case "paste":
@@ -1224,7 +1217,9 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C) { // Ctrl + C (Copiar)
 				KeyInput.updateKeys();
 					
-				copy();
+				if (!selecting) return;
+				
+				CommandTerminal.runCommand("copy");
 					
 				return;
 			}
