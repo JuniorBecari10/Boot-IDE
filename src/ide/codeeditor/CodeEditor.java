@@ -17,6 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -881,18 +882,18 @@ public class CodeEditor extends IDEComponent {
 		return cY;
 	}
 	
-	private void register(StringBuilder cY) { // cY = cursorY
+	private void register(StringBuilder cY, int y) { // cY = cursorY
 		String gs = cY.toString(); // gen string
 		char[] ca = gs.toCharArray(); // char array
 		
 		List<Character> lc = toCharList(ca); // list char	(Esses comentários são para especificar os nomes das variáveis)
 		
-		lines.get(cursorY - 1).getChars().clear();
-		lines.get(cursorY - 1).getFonts().clear();
+		lines.get(y).getChars().clear();
+		lines.get(y).getFonts().clear();
 		
 		for (Character c : lc) {
-			lines.get(cursorY - 1).getChars().add(c);
-			lines.get(cursorY - 1).getFonts().add(DEFAULT_FONT);
+			lines.get(y).getChars().add(c);
+			lines.get(y).getFonts().add(DEFAULT_FONT);
 		}
 	}
 	
@@ -983,23 +984,27 @@ public class CodeEditor extends IDEComponent {
 		return ch;
 	}
 	
-	public void paste() { // terminar
+	public void paste() {
 		if (editing == null) return;
 		
 		String[] sp = clipboard.split("\n");
 		StringBuilder[] bs = new StringBuilder[sp.length];
 		
 		for (int i = 0; i < sp.length; i++) {
-			int x = cursorX;
-			
 			bs[i] = new StringBuilder(sp[i]);
-			bs[i].insert(x, sp[i]);
+			bs[i].insert(cursorX, sp[i]);
 		}
 			
 		editing.setSaved(false);
 		
-		for (int i = 0; i < sp.length; i++)
-			register(bs[i]);
+		for (int i = 0; i < sp.length; i++) {
+			if (i != 0)
+				lines.add((cursorY - 1) + i, new IDELine(new ArrayList<>(), new ArrayList<>()));
+			
+			bs[i] = new StringBuilder(bs[i].toString().substring(0, bs[i].toString().length() / 2));
+			
+			register(bs[i], (cursorY - 1) + i);
+		}
 	}
 	
 	public static void execTerminal() {
@@ -1198,7 +1203,7 @@ public class CodeEditor extends IDEComponent {
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), 430, "Colar", (s) -> execute(s), "paste");
 			
 			if (selecting)
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 430, "Copiar", (s) -> execute(s), "copy");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 430, "Copiar", (s) -> CommandTerminal.runCommand(s), "copy");
 		}
 		
 		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active && !selectMode) {
@@ -1206,13 +1211,15 @@ public class CodeEditor extends IDEComponent {
 			
 			new Thread() {
 				public void run() {
-					for (IDELine l : lines) {
-						l.setFonts(
-								automaticColor(
-										toCharArray(
-												l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
-					
-					}
+					try {
+						for (IDELine l : lines) {
+							l.setFonts(
+									automaticColor(
+											toCharArray(
+													l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
+						
+						}
+					} catch (ConcurrentModificationException e) {}
 				}
 			}.start();
 			
@@ -1318,7 +1325,7 @@ public class CodeEditor extends IDEComponent {
 
 					editing.setSaved(false);
 				
-					register(cY);
+					register(cY, cursorY - 1);
 				}
 				else if (cursorY > 1) {
 					String s = cY.toString();
@@ -1334,7 +1341,7 @@ public class CodeEditor extends IDEComponent {
 
 					editing.setSaved(false);
 					
-					register(cY);
+					register(cY, cursorY - 1);
 				}
 				
 				return;
@@ -1350,7 +1357,7 @@ public class CodeEditor extends IDEComponent {
 
 					editing.setSaved(false);
 				
-					register(cY);
+					register(cY, cursorY - 1);
 				}
 				
 				return;
@@ -1382,7 +1389,7 @@ public class CodeEditor extends IDEComponent {
 				
 				lines.add(cursorY, new IDELine(toCharList(s.toCharArray()), fs));
 				
-				register(cY);
+				register(cY, cursorY - 1);
 				
 				editing.setSaved(false);
 				
@@ -1402,7 +1409,7 @@ public class CodeEditor extends IDEComponent {
 			cY = write(cY, c);
 			cY = addCodeHints(cY);
 			
-			register(cY);
+			register(cY, cursorY - 1);
 			
 			cursorX++;
 			

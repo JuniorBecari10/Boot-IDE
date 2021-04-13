@@ -138,8 +138,8 @@ public class CommandTerminal extends IDEComponent {
 				List<String> lines = new ArrayList<>();
 				String str = "";
 				
-				if (CodeEditor.line1 - 1 != CodeEditor.line2 - 1) { // se não selecionou uma linha só (selecionou várias)
-					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2 - 1; i++) {
+				if (CodeEditor.line1 - 1 != CodeEditor.line2) { // se não selecionou uma linha só (selecionou várias)
+					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) {
 						if (i == CodeEditor.line1 - 1) {
 							lines.add(new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars().subList(CodeEditor.index1, CodeEditor.lines.get(i).getChars().size()))));
 							
@@ -155,8 +155,12 @@ public class CommandTerminal extends IDEComponent {
 						lines.add(new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars())));
 					}
 					
-					for (String s : lines)
-						str += "\n" + s;
+					for (String s : lines) { // terminar os comandos e arrumar coloração
+						str += s;
+						
+						if (s != lines.get(lines.size() - 1)) // se não for a última linha (para não adicionar quebras de linha adicionais desnecessárias)
+							str += "\n";
+					}
 				}
 				else {
 					if (CodeEditor.index2 < CodeEditor.index1) {
