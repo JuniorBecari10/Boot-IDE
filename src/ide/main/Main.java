@@ -168,7 +168,7 @@ public class Main implements Runnable, Tickable {
             render();
             
             try {
-				Thread.sleep(1000/120);
+				Thread.sleep(1000/100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

@@ -62,6 +62,7 @@ public class CodeEditor extends IDEComponent {
 	private boolean pressedAccent = false;
 	
 	public static List<IDELine> lines = new ArrayList<>();
+	public static List<IDELine> linesToRemove = new ArrayList<>();
 	
 	public static int cursorX = 0;
 	public static int cursorY = 1;
@@ -187,6 +188,18 @@ public class CodeEditor extends IDEComponent {
 			ls.add(gen);
 		}
 		
+		new Thread() {
+			public void run() {
+				for (IDELine l : lines) {
+					l.setFonts(
+							automaticColor(
+									toCharArray(
+											l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
+				
+				}
+			}
+		}.start();
+		
 		return ls;
 			
 	}
@@ -238,8 +251,28 @@ public class CodeEditor extends IDEComponent {
 				  "1l", "2l", "3l", "4l", "5l", "6l", "7l", "8l", "9l", "0l"}; // long
 		
 		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".js") || ext.equals(".h") || ext.equals(".lua"))) {			
-			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
+			String[] cl = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+					"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+
+			for (String s : cl)
+				indxs = Stream.concat(indxs.stream(), findWord(new String(chars), s).stream()).collect(Collectors.toList());
+
+			int len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length && (chars[i + len] == 'a' || chars[i + len] == 'b' || chars[i + len] == 'c' || chars[i + len] == 'd' || chars[i + len] == 'e' || chars[i + len] == 'f' || chars[i + len] == 'g' || chars[i + len] == 'h' || chars[i + len] == 'i' || chars[i + len] == 'j' || chars[i + len] == 'k' || chars[i + len] == 'l' || chars[i + len] == 'm' || chars[i + len] == 'n' || chars[i + len] == 'o' || chars[i + len] == 'p' || chars[i + len] == 'q' || chars[i + len] == 'r' || chars[i + len] == 's' || chars[i + len] == 't' || chars[i + len] == 'u' || chars[i + len] == 'v' || chars[i + len] == 'w' || chars[i + len] == 'x' || chars[i + len] == 'y' || chars[i + len] == 'z' || chars[i + len] == 'A' || chars[i + len] == 'B' || chars[i + len] == 'C' || chars[i + len] == 'D' || chars[i + len] == 'E' || chars[i + len] == 'F' || chars[i + len] == 'G' || chars[i + len] == 'H' || chars[i + len] == 'I' || chars[i + len] == 'J' || chars[i + len] == 'K' || chars[i + len] == 'L' || chars[i + len] == 'M' || chars[i + len] == 'N' || chars[i + len] == 'O' || chars[i + len] == 'P' || chars[i + len] == 'Q' || chars[i + len] == 'R' || chars[i + len] == 'S' || chars[i + len] == 'T' || chars[i + len] == 'U' || chars[i + len] == 'V' || chars[i + len] == 'W' || chars[i + len] == 'X' || chars[i + len] == 'Y' || chars[i + len] == 'Z'))
+					len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
+			}
+		}
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
 		indxs = findWord(new String(chars), "(");
 		
 		for (Integer i : indxs) {
@@ -256,25 +289,6 @@ public class CodeEditor extends IDEComponent {
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		String[] cl = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
-				"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-
-		for (String s : cl)
-			indxs = Stream.concat(indxs.stream(), findWord(new String(chars), s).stream()).collect(Collectors.toList());
-
-		int len = 0;
-
-		for (Integer i : indxs) {
-			while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != ')' && chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.' && chars[i + len] != ':')
-				len++;
-
-			if (i + len < chars.length)
-				fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
-		}
-	}
-	
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
 		for (String s : nums) { // colorir números
 			indxs = findWord(new String(chars), s);
 
@@ -283,7 +297,7 @@ public class CodeEditor extends IDEComponent {
 		}
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
+		// gens = genéricos
 		String[] gens = { " ", "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!" };
 		
 		for (String s : gens) {
@@ -833,20 +847,24 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	private int setWithinBounds(int x, int y, boolean isX) {
-		if (isX) {
-			if (y < 1) y = 1;
-			if (y + 1 > lines.size()) y = lines.size();
-			
-			if (x < 0) x = 0;
-			if (x > lines.get(y - 1).getChars().size()) x = lines.get(y - 1).getChars().size();
-			
+		try {
+			if (isX) {
+				if (y < 1) y = 1;
+				if (y + 1 > lines.size()) y = lines.size();
+				
+				if (x < 0) x = 0;
+				if (x > lines.get(y - 1).getChars().size()) x = lines.get(y - 1).getChars().size();
+				
+				return x;
+			}
+			else {
+				if (y < 1) y = 1;
+				if (y + 1 > lines.size()) y = lines.size();
+				
+				return y;
+			}
+		} catch (Exception e) {
 			return x;
-		}
-		else {
-			if (y < 1) y = 1;
-			if (y + 1 > lines.size()) y = lines.size();
-			
-			return y;
 		}
 	}
 	
@@ -965,14 +983,14 @@ public class CodeEditor extends IDEComponent {
 		return ch;
 	}
 	
-	private void paste() {
+	public void paste() { // terminar
 		if (editing == null) return;
 		
 		String[] sp = clipboard.split("\n");
 		StringBuilder[] bs = new StringBuilder[sp.length];
 		
 		for (int i = 0; i < sp.length; i++) {
-			int x = cursorX == 0 ? cursorX : 0;
+			int x = cursorX;
 			
 			bs[i] = new StringBuilder(sp[i]);
 			bs[i].insert(x, sp[i]);
@@ -1177,14 +1195,26 @@ public class CodeEditor extends IDEComponent {
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 430, "Abrir Terminal de Comando", (s) -> execute(s), "term");
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 430, "Abrir Explorador de Arquivos", (s) -> execute(s), "sysexp");
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 430, "Salvar", (s) -> execute(s), "save");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), 430, "Colar", (s) -> execute(s), "paste");
 			
-			if (selecting) {
+			if (selecting)
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 430, "Copiar", (s) -> execute(s), "copy");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 150, 430, "Colar", (s) -> execute(s), "paste");
-			}
 		}
 		
 		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active && !selectMode) {
+			setCursorWithinBounds();
+			
+			new Thread() {
+				public void run() {
+					for (IDELine l : lines) {
+						l.setFonts(
+								automaticColor(
+										toCharArray(
+												l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
+					
+					}
+				}
+			}.start();
 			
 			// Detectar atalhos
 			
@@ -1216,8 +1246,6 @@ public class CodeEditor extends IDEComponent {
 				
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C) { // Ctrl + C (Copiar)
 				KeyInput.updateKeys();
-					
-				if (!selecting) return;
 				
 				CommandTerminal.runCommand("copy");
 					
@@ -1385,18 +1413,6 @@ public class CodeEditor extends IDEComponent {
 			editing.setSaved(false);
 		}
 		}
-
-		new Thread() {
-			public void run() {
-				for (IDELine l : lines) {
-					l.setFonts(
-							automaticColor(
-									toCharArray(
-											l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
-				
-				}
-			}
-		}.start();
 		
 		for (Tab t : tabs)
 			t.tick();
@@ -1406,6 +1422,9 @@ public class CodeEditor extends IDEComponent {
 		
 		tabs.removeAll(toRemove);
 		toRemove.clear();
+		
+		lines.removeAll(linesToRemove);
+		linesToRemove.clear();
 	}
 	
 	public void render(Graphics g) {

@@ -189,7 +189,7 @@ public class CommandTerminal extends IDEComponent {
 						break;
 					}
 					
-					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2 - 1; i++) {
+					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) {
 						if (i == CodeEditor.line1 - 1) {
 							CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(0, CodeEditor.index1));
 							
@@ -197,13 +197,26 @@ public class CommandTerminal extends IDEComponent {
 						}
 						
 						if (i == CodeEditor.line2 - 1) {
-							CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(i).getChars().size()));
-							
+							try {
+								if (CodeEditor.lines.get(i).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(i).getChars().size()).size() != 0)
+									CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(i).getChars().size()));
+								else
+									CodeEditor.linesToRemove.add(CodeEditor.lines.get(i));
+							} catch (Exception e) {
+								try {
+									CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(CodeEditor.lines.get(i).getChars().size(), CodeEditor.index2));
+								} catch (Exception f) {}
+							}
+								
 							continue;
 						}
 						
-						CodeEditor.lines.remove(i);
+						if (i < CodeEditor.lines.size())
+							CodeEditor.linesToRemove.add(CodeEditor.lines.get(i));
 					}
+					
+					CodeEditor.editing.setSaved(false);
+					CodeEditor.setCursorWithinBounds();
 				}
 				else {
 					if (CodeEditor.index2 < CodeEditor.index1) {
@@ -213,33 +226,27 @@ public class CommandTerminal extends IDEComponent {
 					}
 					
 					CodeEditor.lines.get(CodeEditor.line1 - 1).setChars((CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().subList(0, CodeEditor.index1)));
-					CodeEditor.lines.get(CodeEditor.line1 - 1).setChars((CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().size())));
+					
+					try {
+						CodeEditor.lines.get(CodeEditor.line1 - 1).setChars((CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().size())));
+					} catch (Exception e) {}
 				}
 				
 				runCommand("deselect");
 				
 				break;
 				
-				/*
-			case "del":
-				if (!selecting) return; // terminar isso
+			case "cut":
+				if (!CodeEditor.selecting) break;
 				
-				for (int i = line1 - 1; i < line2 - 1; i++) {
-					if (i == line1 - 1) {
-						CodeEditor.lines.get(line1 - 1).getChars().subList(index1, CodeEditor.lines.get(line1 - 1).getChars().size()).clear();
-						
-						return;
-					}
-					
-					if (i == line2 - 2) {
-						CodeEditor.lines.get(line1 - 1).getChars().subList(0, index2).clear();
-						
-						return;
-					}
-					
-					CodeEditor.lines.remove(i);
-				}
-				break;*/
+				runCommand("copy");
+				runCommand("del");
+				break;
+				
+			case "paste":
+				Main.editor.paste();
+				
+				break;
 			}
 		}
 		
