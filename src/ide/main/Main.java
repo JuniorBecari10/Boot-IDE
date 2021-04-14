@@ -96,10 +96,10 @@ public class Main implements Runnable, Tickable {
         reload = new ReloadButton(240, 85, 32, 32, spritesheet.getSprite(128, 0, 16, 16));
 
         
-        IDEComponent.components.add(logo);
-        
         IDEComponent.components.add(explorer);
         IDEComponent.components.add(editor);
+        
+        IDEComponent.components.add(logo);
         
         IDEComponent.components.add(openBase);
     }

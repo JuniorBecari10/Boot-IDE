@@ -237,7 +237,12 @@ public class Fonts {
     			continue;
     		}
     		else if (ch == 'ú') {
-    			text[i] = fonts[i].getFont()[251];
+    			text[i] = fonts[i].getFont()[247];
+    			
+    			continue;
+    		}
+    		else if (ch == 'ý') {
+    			text[i] = fonts[i].getFont()[250];
     			
     			continue;
     		}
@@ -288,7 +293,7 @@ public class Fonts {
     			continue;
     		}
     		else if (ch == 'ù') {
-    			text[i] = fonts[i].getFont()[250];
+    			text[i] = fonts[i].getFont()[246];
     			
     			continue;
     		}
@@ -314,7 +319,7 @@ public class Fonts {
     			continue;
     		}
     		else if (ch == 'Û') {
-    			text[i] = fonts[i].getFont()[214];
+    			text[i] = fonts[i].getFont()[216];
     			
     			continue;
     		}
@@ -345,12 +350,12 @@ public class Fonts {
     		}
     		//////
     		else if (ch == 'Õ') {
-    			text[i] = fonts[i].getFont()[242];
+    			text[i] = fonts[i].getFont()[209];
     			
     			continue;
     		}
     		else if (ch == 'Ñ') {
-    			text[i] = fonts[i].getFont()[253];
+    			text[i] = fonts[i].getFont()[205];
     			
     			continue;
     		}
@@ -370,7 +375,7 @@ public class Fonts {
     			continue;
     		}
     		else if (ch == 'ñ') {
-    			text[i] = fonts[i].getFont()[253];
+    			text[i] = fonts[i].getFont()[238];
     			
     			continue;
     		}

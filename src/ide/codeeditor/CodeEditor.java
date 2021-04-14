@@ -992,7 +992,11 @@ public class CodeEditor extends IDEComponent {
 		
 		for (int i = 0; i < sp.length; i++) {
 			bs[i] = new StringBuilder(sp[i]);
-			bs[i].insert(cursorX, sp[i]);
+			
+			if (cursorX < sp[i].length())
+				bs[i].insert(cursorX, sp[i]);
+			else
+				bs[i].append(sp[i]);
 		}
 			
 		editing.setSaved(false);
@@ -1069,11 +1073,16 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public void tick() {
-		super.tick();
+		super.tick(); // •
+		
+		if (editing != null)
+			Main.screen.frame.setTitle(Main.baseFolder.getName() + " • " + editing.getRegent().getRegent().getName() + " - Boot IDE");
+		else if (Main.baseFolder != null)
+			Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
 		
 		showCursorData = false;
 		
-		if (KeyInput.isAltDown() && editing != null && hovered()) { // TODO mudar texturas dos acentos
+		if (KeyInput.isAltDown() && editing != null && hovered()) {
 			KeyInput.updateKeys();
 			
 			showCursorData = true;
@@ -1083,8 +1092,12 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_Z && KeyInput.isControlDown()) // Ctrl + Z
 				selectMode = true;
 			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE)
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
 				selectMode = false;
+				isSelectingFirst = true;
+				
+				CommandTerminal.runCommand("deselect");
+			}
 		}
 		
 		if (selectMode && leftClicked()) {
@@ -1199,11 +1212,18 @@ public class CodeEditor extends IDEComponent {
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 430, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 430, "Abrir Terminal de Comando", (s) -> execute(s), "term");
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 430, "Abrir Explorador de Arquivos", (s) -> execute(s), "sysexp");
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 430, "Salvar", (s) -> execute(s), "save");
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), 430, "Colar", (s) -> execute(s), "paste");
 			
-			if (selecting)
+			if (editing != null) {
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 210 : 150), 430, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectentireline");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 430, "Salvar", (s) -> execute(s), "save");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), 430, "Colar", (s) -> execute(s), "paste");
+			}
+			
+			if (selecting) {
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 430, "Copiar", (s) -> CommandTerminal.runCommand(s), "copy");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 180, 430, "Cortar", (s) -> CommandTerminal.runCommand(s), "cut");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 240, 430, "Desselecionar", (s) -> CommandTerminal.runCommand(s), "deselect");
+			}
 		}
 		
 		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active && !selectMode) {
@@ -1490,13 +1510,17 @@ public class CodeEditor extends IDEComponent {
 		
 		if (selecting) {
 			if (line1 * (FONT_SIZE + 4) - scrY > 0) { 
-				g.setColor(Color.red);
+				g.setColor(Color.decode("#ff6961"));
 				g.fillRect(((x + 40) + index1 * (FONT_SIZE - 4)) - scrX, MIN_Y + line1 * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
+			
+				Fonts.drawString("1", ((x + 40) + index1 * (FONT_SIZE - 4)) - scrX - 5, MIN_Y + line1 * (FONT_SIZE + 4) - FONT_SIZE - scrY + 15, new IDEFont(Fonts.normal, FONT_SIZE), g);
 			}
 			
 			if (line2 * (FONT_SIZE + 4) - scrY > 0) {
-				g.setColor(Color.red);
+				g.setColor(Color.decode("#ff5147"));
 				g.fillRect(((x + 40) + index2 * (FONT_SIZE - 4)) - scrX, MIN_Y + line2 * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
+				
+				Fonts.drawString("2", ((x + 40) + index2 * (FONT_SIZE - 4)) - scrX - 5, MIN_Y + line2 * (FONT_SIZE + 4) - FONT_SIZE - scrY + 15, new IDEFont(Fonts.normal, FONT_SIZE), g);
 			}
 		}
 		
@@ -1522,13 +1546,20 @@ public class CodeEditor extends IDEComponent {
 			Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 10, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
 			Fonts.drawString("[Clique Direito] Selecionar", MouseInput.getMouseX() + 10, MouseInput.getMouseY() + 55, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
 			
-			if (isSelectingFirst)
+			if (isSelectingFirst) {
 				Fonts.drawString("Selecione a primeira posição", MouseInput.getMouseX() + 10, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
-		
-			else
+				
+				Fonts.drawString("1", MouseInput.getMouseX() + 25, MouseInput.getMouseY() - 50, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE * 3), g);
+			}
+			
+			else {
 				Fonts.drawString("Selecione a segunda posição", MouseInput.getMouseX() + 10, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
+			
+				Fonts.drawString("2", MouseInput.getMouseX() + 25, MouseInput.getMouseY() - 50, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE * 3), g);
+			}
 		}
 		
+		// Desenhar cursor
 		if (showCursor && !((cursorY * (FONT_SIZE + 4) - FONT_SIZE - scrY < MIN_Y - 40 || ((x + 40) + cursorX * (FONT_SIZE - 4)) - scrX < x + (FONT_SIZE * 2)))) {
 			g.setColor(Color.white);
 			g.fillRect(((x + 40) + cursorX * (FONT_SIZE - 4)) - scrX, MIN_Y + cursorY * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE); // * 14

@@ -52,6 +52,8 @@ public class OpenBaseFolderButton extends IDEComponent {
 					index++;
 				}
 				
+				Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
+				
 				IDEComponent.toAdd.add(Main.oneLevel);
 				IDEComponent.toAdd.add(Main.returnBase);
 				IDEComponent.toAdd.add(Main.newFile);

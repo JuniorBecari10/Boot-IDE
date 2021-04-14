@@ -155,7 +155,7 @@ public class CommandTerminal extends IDEComponent {
 						lines.add(new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars())));
 					}
 					
-					for (String s : lines) { // terminar os comandos e arrumar coloração
+					for (String s : lines) {
 						str += s;
 						
 						if (s != lines.get(lines.size() - 1)) // se não for a última linha (para não adicionar quebras de linha adicionais desnecessárias)
@@ -243,13 +243,25 @@ public class CommandTerminal extends IDEComponent {
 			case "cut":
 				if (!CodeEditor.selecting) break;
 				
-				runCommand("copy");
+				runCommand("copy");	// hehe :)
 				runCommand("del");
 				break;
 				
 			case "paste":
 				Main.editor.paste();
 				
+				break;
+				
+			case "selectentireline":
+				int y = CodeEditor.cursorY - 1;
+				
+				CodeEditor.index1 = 0;
+				CodeEditor.index2 = CodeEditor.lines.get(y).getChars().size();
+				
+				CodeEditor.line1 = y + 1;
+				CodeEditor.line2 = y + 1;
+				
+				CodeEditor.selecting = true;
 				break;
 			}
 		}
