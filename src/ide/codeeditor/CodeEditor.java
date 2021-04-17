@@ -43,7 +43,7 @@ import ide.util.Colors;
 
 public class CodeEditor extends IDEComponent {
 	
-	public static final int FONT_SIZE = 16; // 18, 16
+	public static final int FONT_SIZE = 16; // 18, 16		-- fazer isso aqui mutável e qualquer valor que colocar aqui o editor aceita numa boa
 	
 	public static final IDEFont DEFAULT_FONT = new IDEFont(Fonts.normal, FONT_SIZE);
 	
@@ -250,15 +250,12 @@ public class CodeEditor extends IDEComponent {
 				  "1d", "2d", "3d", "4d", "5d", "6d", "7d", "8d", "9d", "0d",
 				  "1e", "2e", "3e", "4e", "5e", "6e", "7e", "8e", "9e", "0e",
 				  "1f", "2f", "3f", "4f", "5f", "6f", "7f", "8f", "9f", "0f",
-				  "1l", "2l", "3l", "4l", "5l", "6l", "7l", "8l", "9l", "0l"}; // long
+				  "1l", "2l", "3l", "4l", "5l", "6l", "7l", "8l", "9l", "0l",
+				  "0x" }; // long
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".js") || ext.equals(".h") || ext.equals(".lua"))) {						
-			
-			
-			//////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
+		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".js") || ext.equals(".h") || ext.equals(".lua"))) {			
 			String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
 					"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
@@ -546,7 +543,24 @@ public class CodeEditor extends IDEComponent {
 			int len = 0;
 
 			for (Integer i : indxs) {
-				while (i + len < chars.length && (chars[i + len] == 'a' || chars[i + len] == 'b' || chars[i + len] == 'c' || chars[i + len] == 'd' || chars[i + len] == 'e' || chars[i + len] == 'f' || chars[i + len] == 'g' || chars[i + len] == 'h' || chars[i + len] == 'i' || chars[i + len] == 'j' || chars[i + len] == 'k' || chars[i + len] == 'l' || chars[i + len] == 'm' || chars[i + len] == 'n' || chars[i + len] == 'o' || chars[i + len] == 'p' || chars[i + len] == 'q' || chars[i + len] == 'r' || chars[i + len] == 's' || chars[i + len] == 't' || chars[i + len] == 'u' || chars[i + len] == 'v' || chars[i + len] == 'w' || chars[i + len] == 'x' || chars[i + len] == 'y' || chars[i + len] == 'z' || chars[i + len] == 'A' || chars[i + len] == 'B' || chars[i + len] == 'C' || chars[i + len] == 'D' || chars[i + len] == 'E' || chars[i + len] == 'F' || chars[i + len] == 'G' || chars[i + len] == 'H' || chars[i + len] == 'I' || chars[i + len] == 'J' || chars[i + len] == 'K' || chars[i + len] == 'L' || chars[i + len] == 'M' || chars[i + len] == 'N' || chars[i + len] == 'O' || chars[i + len] == 'P' || chars[i + len] == 'Q' || chars[i + len] == 'R' || chars[i + len] == 'S' || chars[i + len] == 'T' || chars[i + len] == 'U' || chars[i + len] == 'V' || chars[i + len] == 'W' || chars[i + len] == 'X' || chars[i + len] == 'Y' || chars[i + len] == 'Z'))
+				while (i + len < chars.length && (chars[i + len] == 'a' || chars[i + len] == 'b' ||
+						chars[i + len] == 'c' || chars[i + len] == 'd' || chars[i + len] == 'e' ||
+						chars[i + len] == 'f' || chars[i + len] == 'g' || chars[i + len] == 'h' ||
+						chars[i + len] == 'i' || chars[i + len] == 'j' || chars[i + len] == 'k' ||
+						chars[i + len] == 'l' || chars[i + len] == 'm' || chars[i + len] == 'n' ||
+						chars[i + len] == 'o' || chars[i + len] == 'p' || chars[i + len] == 'q' ||
+						chars[i + len] == 'r' || chars[i + len] == 's' || chars[i + len] == 't' ||
+						chars[i + len] == 'u' || chars[i + len] == 'v' || chars[i + len] == 'w' ||
+						chars[i + len] == 'x' || chars[i + len] == 'y' || chars[i + len] == 'z' ||
+						chars[i + len] == 'A' || chars[i + len] == 'B' || chars[i + len] == 'C' ||
+						chars[i + len] == 'D' || chars[i + len] == 'E' || chars[i + len] == 'F' ||
+						chars[i + len] == 'G' || chars[i + len] == 'H' || chars[i + len] == 'I' ||
+						chars[i + len] == 'J' || chars[i + len] == 'K' || chars[i + len] == 'L' ||
+						chars[i + len] == 'M' || chars[i + len] == 'N' || chars[i + len] == 'O' ||
+						chars[i + len] == 'P' || chars[i + len] == 'Q' || chars[i + len] == 'R' ||
+						chars[i + len] == 'S' || chars[i + len] == 'T' || chars[i + len] == 'U' ||
+						chars[i + len] == 'V' || chars[i + len] == 'W' || chars[i + len] == 'X' ||
+						chars[i + len] == 'Y' || chars[i + len] == 'Z'))
 					len++;
 
 				if (i + len < chars.length)
@@ -558,7 +572,24 @@ public class CodeEditor extends IDEComponent {
 			len = 0;
 
 			for (Integer i : indxs) {
-				while (i + len < chars.length && (chars[i + len] == 'a' || chars[i + len] == 'b' || chars[i + len] == 'c' || chars[i + len] == 'd' || chars[i + len] == 'e' || chars[i + len] == 'f' || chars[i + len] == 'g' || chars[i + len] == 'h' || chars[i + len] == 'i' || chars[i + len] == 'j' || chars[i + len] == 'k' || chars[i + len] == 'l' || chars[i + len] == 'm' || chars[i + len] == 'n' || chars[i + len] == 'o' || chars[i + len] == 'p' || chars[i + len] == 'q' || chars[i + len] == 'r' || chars[i + len] == 's' || chars[i + len] == 't' || chars[i + len] == 'u' || chars[i + len] == 'v' || chars[i + len] == 'w' || chars[i + len] == 'x' || chars[i + len] == 'y' || chars[i + len] == 'z' || chars[i + len] == 'A' || chars[i + len] == 'B' || chars[i + len] == 'C' || chars[i + len] == 'D' || chars[i + len] == 'E' || chars[i + len] == 'F' || chars[i + len] == 'G' || chars[i + len] == 'H' || chars[i + len] == 'I' || chars[i + len] == 'J' || chars[i + len] == 'K' || chars[i + len] == 'L' || chars[i + len] == 'M' || chars[i + len] == 'N' || chars[i + len] == 'O' || chars[i + len] == 'P' || chars[i + len] == 'Q' || chars[i + len] == 'R' || chars[i + len] == 'S' || chars[i + len] == 'T' || chars[i + len] == 'U' || chars[i + len] == 'V' || chars[i + len] == 'W' || chars[i + len] == 'X' || chars[i + len] == 'Y' || chars[i + len] == 'Z'))
+				while (i + len < chars.length && (chars[i + len] == 'a' || chars[i + len] == 'b' ||
+						chars[i + len] == 'c' || chars[i + len] == 'd' || chars[i + len] == 'e' ||
+						chars[i + len] == 'f' || chars[i + len] == 'g' || chars[i + len] == 'h' ||
+						chars[i + len] == 'i' || chars[i + len] == 'j' || chars[i + len] == 'k' ||
+						chars[i + len] == 'l' || chars[i + len] == 'm' || chars[i + len] == 'n' ||
+						chars[i + len] == 'o' || chars[i + len] == 'p' || chars[i + len] == 'q' ||
+						chars[i + len] == 'r' || chars[i + len] == 's' || chars[i + len] == 't' ||
+						chars[i + len] == 'u' || chars[i + len] == 'v' || chars[i + len] == 'w' ||
+						chars[i + len] == 'x' || chars[i + len] == 'y' || chars[i + len] == 'z' ||
+						chars[i + len] == 'A' || chars[i + len] == 'B' || chars[i + len] == 'C' ||
+						chars[i + len] == 'D' || chars[i + len] == 'E' || chars[i + len] == 'F' ||
+						chars[i + len] == 'G' || chars[i + len] == 'H' || chars[i + len] == 'I' ||
+						chars[i + len] == 'J' || chars[i + len] == 'K' || chars[i + len] == 'L' ||
+						chars[i + len] == 'M' || chars[i + len] == 'N' || chars[i + len] == 'O' ||
+						chars[i + len] == 'P' || chars[i + len] == 'Q' || chars[i + len] == 'R' ||
+						chars[i + len] == 'S' || chars[i + len] == 'T' || chars[i + len] == 'U' ||
+						chars[i + len] == 'V' || chars[i + len] == 'W' || chars[i + len] == 'X' ||
+						chars[i + len] == 'Y' || chars[i + len] == 'Z'))
 					len++;
 
 				if (i + len < chars.length)
@@ -1249,12 +1280,12 @@ public class CodeEditor extends IDEComponent {
 			clipboard = "";
 		}
 		
-		if (MouseInput.hovered(x, 0, width, Tab.HEIGHT)) {
+		if (MouseInput.hovered(x, 0, width, Tab.HEIGHT) && tabs.size() > 0) {
 			if (MouseInput.isMouseRolling()) {
 				if (MouseInput.wheelUp() && tabScr < 0)
-					tabScr += 200;
-				else if (MouseInput.wheelDown()) {
-					tabScr -= 200;
+					tabScr += 203;						// 3 é a compensação para as tab n se distanciar
+				else if (MouseInput.wheelDown() && (tabs.get(tabs.size() - 1).getX() + tabScr) - 200 > 280) {
+					tabScr -= 203;
 				}
 			}
 		}
@@ -1274,7 +1305,7 @@ public class CodeEditor extends IDEComponent {
 					else {
 						if (MouseInput.wheelUp() && scrY > 0)
 							scrY -= (FONT_SIZE + 4) * 3;
-						else if (MouseInput.wheelDown())
+						else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + 4) * 3 < lines.size() * (FONT_SIZE + 4))
 							scrY += (FONT_SIZE + 4) * 3;
 					}
 					

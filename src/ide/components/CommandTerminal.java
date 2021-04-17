@@ -181,7 +181,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "del":									// fazer o delete funcionar e n dar exception
+			case "del":
 				if (!CodeEditor.selecting) break;
 				
 				if (CodeEditor.line1 != CodeEditor.line2) { // se não selecionou uma linha só (selecionou várias)
