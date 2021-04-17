@@ -1,8 +1,14 @@
 package ide.explorer;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +25,7 @@ import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
+import ide.util.Spritesheet;
 
 public class ListableFile extends IDEComponent implements ExecuteCommand {
 	
@@ -48,8 +55,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".jar", Main.spritesheet.getSprite(112, 32, 16, 16)),
 			new FileType(".exe", Main.spritesheet.getSprite(128, 32, 16, 16)),
 			new FileType(".svg", Main.spritesheet.getSprite(144, 32, 16, 16)),
-			new FileType(".urna",Main.spritesheet.getSprite(160, 32, 16, 16)),		// easter egg!
-			new FileType(".save",Main.spritesheet.getSprite(176, 32, 16, 16)),		// easter egg!
+			new FileType(".urna",Main.spritesheet.getSprite(160, 32, 16, 16)),		// easter egg! (Criador de Urnas)
+			new FileType(".save",Main.spritesheet.getSprite(176, 32, 16, 16)),		// easter egg! (World's Hardest Game Maker 2)
+			new FileType(".conf",Main.spritesheet.getSprite(192, 32, 16, 16)),
 			
 			new FileType(".png", Main.spritesheet.getSprite  (0, 48, 16, 16)),
 			new FileType(".jpg", Main.spritesheet.getSprite  (0, 48, 16, 16)),
@@ -95,6 +103,286 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	        return ""; // empty extension
 	    }
 	    return name.substring(lastIndexOf);
+	}
+	
+	/* Como é composto o Arquivo:
+	 * 
+	 * Arquivo de Configurações para Boot IDE
+	 * 
+	 * - Colors
+	 * 
+	 * background: default
+	 * backgroundLight: default
+	 * explorer: default
+	 * explorerLight: default
+	 * textLight: default
+	 * textLighter: default
+	 * objects: default
+	 * methods: default
+	 * numbers: default
+	 * keywords: default
+	 * variables: default
+	 * comments: default
+	 * strings: default
+	 * generics: default
+	 * select1: default
+	 * select2: default
+	 * 
+	 * - Files
+	 * 
+	 * spritesheet: default
+	 * font-normal: default
+	 * font-bold: default
+	 * 
+	 * - Color Mode
+	 * 
+	 * objects: normal
+	 * methods: normal
+	 * numbers: normal
+	 * keywords: normal
+	 * variables: normal
+	 * comments: normal
+	 * strings: normal
+	 * generics: normal
+	 * 
+	 * - Settings
+	 * 
+	 * Lembrar de abas quando fechar a Boot IDE: true
+	 * Lembrar do arquivo de configurações: true
+	 * 
+	 */
+	public static void generateConfigFile(String path) {
+		String s = path + path.contains(".conf") != null ? "" : ".conf";
+		
+		try {
+			BufferedWriter w = new BufferedWriter(new FileWriter(s));
+			
+			w.write("Arquivo de Configurações para Boot IDE\n");
+			w.write("\n");
+			w.write("- Colors\n");
+			w.write("\n");
+			w.write("background: default\n");
+			w.write("backgroundLight: default\n");
+			w.write("explorer: default\n");
+			w.write("explorerLight: default\n");
+			w.write("textLight: default\n");
+			w.write("textLighter: default\n");
+			w.write("objects: default\n");
+			w.write("methods: default\n");
+			w.write("numbers: default\n");
+			w.write("keywords: default\n");
+			w.write("variables: default\n");
+			w.write("comments: default\n");
+			w.write("strings: default\n");
+			w.write("generics: default\n");
+			w.write("select1: default\n");
+			w.write("select2: default\n");
+			w.write("\n");
+			w.write("- Files\n");
+			w.write("\n");
+			w.write("spritesheet: default\n");
+			w.write("font-normal: default\n");
+			w.write("font-bold: default\n");
+			w.write("\n");
+			w.write("- Color Mode\n");
+			w.write("\n");
+			w.write("objectsMode: normal\n");
+			w.write("methodsMode: normal\n");
+			w.write("numbersMode: normal\n");
+			w.write("keywordsMode: normal\n");
+			w.write("variablesMode: normal\n");
+			w.write("commentsMode: normal\n");
+			w.write("stringsMode: normal\n");
+			w.write("genericsMode: normal\n");
+			w.write("\n");
+			w.write("- Settings\n");
+			w.write("\n");
+			w.write("Lembrar de abas quando fechar a Boot IDE: true\n");
+			w.write("Lembrar do arquivo de configurações: true\n");
+			
+			w.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void readConfigFile(File f) {
+		Path p = f.toPath();
+		
+		List<String> lines = new ArrayList<>();
+		
+		try {
+			lines = Files.readAllLines(p, StandardCharsets.UTF_8); // utf-8
+		}
+		catch (Exception e) {
+			try {
+				lines = Files.readAllLines(p, StandardCharsets.ISO_8859_1); // ansi
+			} catch (Exception ff) {}
+		}
+		
+		for (String s : lines) {
+			if (s.startsWith("-") || s.startsWith("\n")) continue;
+			
+			String[] split = s.split(" ");
+			
+			switch (split[0]) {
+			case "background:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.background = Color.decode(split[1]);
+				
+				break;
+				
+			case "backgroundLight:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.backgroundLight = Color.decode(split[1]);
+				
+				break;
+				
+			case "explorer:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.explorer = Color.decode(split[1]);
+				
+				break;
+				
+			case "explorerLight:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.explorerLight = Color.decode(split[1]);
+				
+				break;
+				
+			case "textLight:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.textLight = Color.decode(split[1]);
+				
+				break;
+				
+			case "textLighter:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.textLighter = Color.decode(split[1]);
+				
+				break;
+				
+			case "objects:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.objects = Color.decode(split[1]);
+				
+				break;
+				
+			case "methods:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.methods = Color.decode(split[1]);
+				
+				break;
+				
+			case "numbers:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.numbers = Color.decode(split[1]);
+				
+				break;
+				
+			case "keywords:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.keywords = Color.decode(split[1]);
+				
+				break;
+				
+			case "variables:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.variables = Color.decode(split[1]);
+				
+				break;
+				
+			case "comments:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.comments = Color.decode(split[1]);
+				
+				break;
+				
+			case "strings:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.strings = Color.decode(split[1]);
+				
+				break;
+				
+			case "generics:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.generics = Color.decode(split[1]);
+				
+				break;
+				
+			case "select1:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.select1 = Color.decode(split[1]);
+				
+				break;
+				
+			case "select2:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.select2 = Color.decode(split[1]);
+				
+				break;
+				
+				////////
+				
+			case "spritesheet:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Main.spritesheet = new Spritesheet(split[1]);
+				
+				break;
+			}
+		}
 	}
 	
 	public static List<ListableFile> loadFolder(ListableFile folder) {

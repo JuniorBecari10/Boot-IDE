@@ -539,37 +539,27 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			indxs = findWord(new String(chars), ".");
-			
-			int len = 0;
 
 			for (Integer i : indxs) {
-				while (i + len < chars.length && (chars[i + len] == 'a' || chars[i + len] == 'b' ||
-						chars[i + len] == 'c' || chars[i + len] == 'd' || chars[i + len] == 'e' ||
-						chars[i + len] == 'f' || chars[i + len] == 'g' || chars[i + len] == 'h' ||
-						chars[i + len] == 'i' || chars[i + len] == 'j' || chars[i + len] == 'k' ||
-						chars[i + len] == 'l' || chars[i + len] == 'm' || chars[i + len] == 'n' ||
-						chars[i + len] == 'o' || chars[i + len] == 'p' || chars[i + len] == 'q' ||
-						chars[i + len] == 'r' || chars[i + len] == 's' || chars[i + len] == 't' ||
-						chars[i + len] == 'u' || chars[i + len] == 'v' || chars[i + len] == 'w' ||
-						chars[i + len] == 'x' || chars[i + len] == 'y' || chars[i + len] == 'z' ||
-						chars[i + len] == 'A' || chars[i + len] == 'B' || chars[i + len] == 'C' ||
-						chars[i + len] == 'D' || chars[i + len] == 'E' || chars[i + len] == 'F' ||
-						chars[i + len] == 'G' || chars[i + len] == 'H' || chars[i + len] == 'I' ||
-						chars[i + len] == 'J' || chars[i + len] == 'K' || chars[i + len] == 'L' ||
-						chars[i + len] == 'M' || chars[i + len] == 'N' || chars[i + len] == 'O' ||
-						chars[i + len] == 'P' || chars[i + len] == 'Q' || chars[i + len] == 'R' ||
-						chars[i + len] == 'S' || chars[i + len] == 'T' || chars[i + len] == 'U' ||
-						chars[i + len] == 'V' || chars[i + len] == 'W' || chars[i + len] == 'X' ||
-						chars[i + len] == 'Y' || chars[i + len] == 'Z'))
-					len++;
+				int len = 0;
+				
+				while (i + len < chars.length &&
+						chars[i + len] != ' ' &&
+						chars[i + len] != '[' &&
+						chars[i + len] != ']' &&
+						chars[i + len] != ',' &&
+						chars[i + len] != ';' &&
+						chars[i + len] != '.' &&
+						chars[i + len] != ':')
+						len++;
 
 				if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
+					fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs); // TODO
 			}
 			
 			indxs = findWord(new String(chars), "#");
 			
-			len = 0;
+			int len = 0;
 
 			for (Integer i : indxs) {
 				while (i + len < chars.length && (chars[i + len] == 'a' || chars[i + len] == 'b' ||
@@ -1231,10 +1221,10 @@ public class CodeEditor extends IDEComponent {
 			int mx = 0;
 			int my = 0;
 			
-			my = (MouseInput.getMouseY() / (FONT_SIZE + 4) - 1) + (scrY / (FONT_SIZE + 4)); // resolver seta do terminal de comando
+			my = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
 			mx = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE)); // é * 0.7
 			
-			double offset = mx * 0.7;
+			double offset = mx * 0.7; // 0.7 (no 16) (((FONT_SIZE / 2) - 1) / 10) // TODO terminar
 			offset = Math.ceil(offset);
 			offset = mx - offset;
 			
@@ -1304,9 +1294,9 @@ public class CodeEditor extends IDEComponent {
 					}
 					else {
 						if (MouseInput.wheelUp() && scrY > 0)
-							scrY -= (FONT_SIZE + 4) * 3;
-						else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + 4) * 3 < lines.size() * (FONT_SIZE + 4))
-							scrY += (FONT_SIZE + 4) * 3;
+							scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+						else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size() * (FONT_SIZE + (FONT_SIZE / 4)))
+							scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 3;
 					}
 					
 					return;
@@ -1315,7 +1305,7 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			if (leftClicked() && !RightClickOption.isRightClickActive() && !selectMode) {
-				cursorY = (MouseInput.getMouseY() / (FONT_SIZE + 4) - 1) + (scrY / (FONT_SIZE + 4)); // resolver seta do terminal de comando
+				cursorY = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4))); // resolver seta do terminal de comando
 				cursorX = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE)); // é * 0.7
 				
 				double offset = cursorX * 0.7;
@@ -1608,15 +1598,15 @@ public class CodeEditor extends IDEComponent {
 			
 			if (lines.get(i) == null) break;
 			
-			if (MIN_Y + (i * (FONT_SIZE + 4)) - scrY < MIN_Y) continue;
+			if (MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY < MIN_Y) continue;
 			
 			if (i == cursorY - 1) {
 				g.setColor(Colors.backgroundLight);
-				g.fillRect((x + 40), MIN_Y + (i * (FONT_SIZE + 4)) - scrY, width, FONT_SIZE + 4);
+				g.fillRect((x + 40), MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, width, FONT_SIZE + (FONT_SIZE / 4));
 			}
 			
-			Fonts.drawString(String.valueOf(i + 1), x, MIN_Y + (i * (FONT_SIZE + 4)) - scrY, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), g);
-			Fonts.drawChars(cs, (x + 40) - scrX, MIN_Y + (i * (FONT_SIZE + 4)) - scrY, fs, x + (FONT_SIZE * 2), g);
+			Fonts.drawString(String.valueOf(i + 1), x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), g);
+			Fonts.drawChars(cs, (x + 40) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 2), g);
 		}
 		
 		if (showCursorData) {
@@ -1635,22 +1625,22 @@ public class CodeEditor extends IDEComponent {
 		int my = 0;
 		
 		if (selecting) {
-			if (line1 * (FONT_SIZE + 4) - scrY > 0) { 
+			if (line1 * (FONT_SIZE + (FONT_SIZE / 4)) - scrY > 0) { 
 				g.setColor(Colors.select1);
-				g.fillRect(((x + 40) + index1 * (FONT_SIZE - 4)) - scrX, MIN_Y + line1 * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
+				g.fillRect(((x + 40) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, MIN_Y + line1 * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
 			
-				Fonts.drawString("1", ((x + 40) + index1 * (FONT_SIZE - 4)) - scrX - 5, MIN_Y + line1 * (FONT_SIZE + 4) - FONT_SIZE - scrY + 15, new IDEFont(Fonts.normal, FONT_SIZE), g);
+				Fonts.drawString("1", ((x + 40) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - 5, MIN_Y + line1 * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY + 15, new IDEFont(Fonts.normal, FONT_SIZE), g);
 			}
 			
-			if (line2 * (FONT_SIZE + 4) - scrY > 0) {
+			if (line2 * (FONT_SIZE + (FONT_SIZE / 4)) - scrY > 0) {
 				g.setColor(Colors.select2);
-				g.fillRect(((x + 40) + index2 * (FONT_SIZE - 4)) - scrX, MIN_Y + line2 * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
+				g.fillRect(((x + 40) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, MIN_Y + line2 * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
 				
-				Fonts.drawString("2", ((x + 40) + index2 * (FONT_SIZE - 4)) - scrX - 5, MIN_Y + line2 * (FONT_SIZE + 4) - FONT_SIZE - scrY + 15, new IDEFont(Fonts.normal, FONT_SIZE), g);
+				Fonts.drawString("2", ((x + 40) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - 5, MIN_Y + line2 * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY + 15, new IDEFont(Fonts.normal, FONT_SIZE), g);
 			}
 		}
 		
-		my = (MouseInput.getMouseY() / (FONT_SIZE + 4) - 1) + (scrY / (FONT_SIZE + 4));
+		my = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
 		mx = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE)); // é * 0.7
 		
 		double offset = mx * 0.7;
@@ -1667,7 +1657,7 @@ public class CodeEditor extends IDEComponent {
 			g.drawImage(gradient, x, 0, width, 130, null);
 			
 			g.setColor(Color.blue);
-			g.fillRect(((x + 40) + mx * (FONT_SIZE - 4)) - scrX, MIN_Y + my * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
+			g.fillRect(((x + 40) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, MIN_Y + my * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
 			
 			Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 10, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
 			Fonts.drawString("[Clique Direito] Selecionar", MouseInput.getMouseX() + 10, MouseInput.getMouseY() + 55, new IDEFont(Fonts.lighterGrayNormal, FONT_SIZE), g);
@@ -1686,9 +1676,9 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		// Desenhar cursor
-		if (showCursor && !((cursorY * (FONT_SIZE + 4) - FONT_SIZE - scrY < MIN_Y - 40 || ((x + 40) + cursorX * (FONT_SIZE - 4)) - scrX < x + (FONT_SIZE * 2)))) {
+		if (showCursor && !((cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY < MIN_Y - 40 || ((x + 40) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < x + (FONT_SIZE * 2)))) {
 			g.setColor(Color.white);
-			g.fillRect(((x + 40) + cursorX * (FONT_SIZE - 4)) - scrX, MIN_Y + cursorY * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE); // * 14
+			g.fillRect(((x + 40) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, MIN_Y + cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2, 2, FONT_SIZE); // * 14
 		}
 	}
 }

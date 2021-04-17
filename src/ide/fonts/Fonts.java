@@ -98,6 +98,10 @@ public class Fonts {
         bold = Fonts.initFont("/bold.png");
     }
     
+    public static void initFonts(String font1, String font2) { // terminar saporra
+    	
+    }
+    
     /**
      * A gambiarra não foi totalmente resolvida. É só uma forma de "escondê"-la.
      * 

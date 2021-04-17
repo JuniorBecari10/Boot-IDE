@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
 import ide.explorer.Explorer;
+import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
@@ -276,6 +277,10 @@ public class CommandTerminal extends IDEComponent {
 				} catch (NumberFormatException e) {
 					break;
 				}
+				break;
+				
+			case "generateconfigfile":
+				ListableFile.generateConfigFile(args[0]);
 				break;
 			}
 		}
