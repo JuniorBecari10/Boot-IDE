@@ -176,6 +176,7 @@ public class Tab extends IDEComponent {
 			CodeEditor.cursorX = 0;
 			CodeEditor.cursorY = 1;
 			
+			CodeEditor.scrX = 0;
 			CodeEditor.scrY = 0;
 		}
 		

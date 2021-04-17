@@ -191,6 +191,7 @@ public class CodeEditor extends IDEComponent {
 		
 		new Thread() {
 			public void run() {
+				if (editing != null || editing.getRegent() != null || editing.getRegent().getRegent() != null)
 				for (IDELine l : lines) {
 					l.setFonts(
 							automaticColor(
@@ -251,21 +252,31 @@ public class CodeEditor extends IDEComponent {
 				  "1f", "2f", "3f", "4f", "5f", "6f", "7f", "8f", "9f", "0f",
 				  "1l", "2l", "3l", "4l", "5l", "6l", "7l", "8l", "9l", "0l"}; // long
 		
-		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".js") || ext.equals(".h") || ext.equals(".lua"))) {			
-			
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-			String[] cl = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".js") || ext.equals(".h") || ext.equals(".lua"))) {						
+			
+			
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+			String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
 					"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
-			for (String s : cl)
+			for (String s : cll)
 				indxs = Stream.concat(indxs.stream(), findWord(new String(chars), s).stream()).collect(Collectors.toList());
 
 			int len = 0;
 
 			for (Integer i : indxs) {
-				while (i + len < chars.length && (chars[i + len] == 'a' || chars[i + len] == 'b' || chars[i + len] == 'c' || chars[i + len] == 'd' || chars[i + len] == 'e' || chars[i + len] == 'f' || chars[i + len] == 'g' || chars[i + len] == 'h' || chars[i + len] == 'i' || chars[i + len] == 'j' || chars[i + len] == 'k' || chars[i + len] == 'l' || chars[i + len] == 'm' || chars[i + len] == 'n' || chars[i + len] == 'o' || chars[i + len] == 'p' || chars[i + len] == 'q' || chars[i + len] == 'r' || chars[i + len] == 's' || chars[i + len] == 't' || chars[i + len] == 'u' || chars[i + len] == 'v' || chars[i + len] == 'w' || chars[i + len] == 'x' || chars[i + len] == 'y' || chars[i + len] == 'z' || chars[i + len] == 'A' || chars[i + len] == 'B' || chars[i + len] == 'C' || chars[i + len] == 'D' || chars[i + len] == 'E' || chars[i + len] == 'F' || chars[i + len] == 'G' || chars[i + len] == 'H' || chars[i + len] == 'I' || chars[i + len] == 'J' || chars[i + len] == 'K' || chars[i + len] == 'L' || chars[i + len] == 'M' || chars[i + len] == 'N' || chars[i + len] == 'O' || chars[i + len] == 'P' || chars[i + len] == 'Q' || chars[i + len] == 'R' || chars[i + len] == 'S' || chars[i + len] == 'T' || chars[i + len] == 'U' || chars[i + len] == 'V' || chars[i + len] == 'W' || chars[i + len] == 'X' || chars[i + len] == 'Y' || chars[i + len] == 'Z'))
-					len++;
+				while (i + len < chars.length &&
+						chars[i + len] != ' ' &&
+						chars[i + len] != '[' &&
+						chars[i + len] != ']' &&
+						chars[i + len] != ',' &&
+						chars[i + len] != ';' &&
+						chars[i + len] != '.' &&
+						chars[i + len] != ':')
+						len++;
 
 				if (i + len < chars.length)
 					fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
@@ -280,7 +291,16 @@ public class CodeEditor extends IDEComponent {
 			int c = i;
 			int len = 0;
 			
-			while (c < chars.length && c > 0 && (chars[c] != ' ' || chars[c] != '(' || chars[c] != '[' || chars[i + len] != ',' || chars[i + len] != ';' || chars[i + len] != '.' || chars[i + len] != ':')) {
+			while (c < chars.length && 
+					c + len < chars.length &&
+					c > 0 &&
+					chars[c] != ' ' &&
+					chars[c] != '[' &&
+					chars[c] != ']' &&
+					chars[c] != ',' &&
+					chars[c] != ';' &&
+					chars[c] != '.' &&
+					chars[c] != ':') {
 				c--;
 				len++;
 			}
@@ -299,13 +319,13 @@ public class CodeEditor extends IDEComponent {
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// gens = genéricos
-		String[] gens = { " ", "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!" };
+		String[] gens = { " ", "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@" };
 		
 		for (String s : gens) {
 			indxs = findWord(new String(chars), s);
 
 			for (Integer i : indxs)
-				fs = color(i, i + s.length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+				fs = color(i, i + s.length(), new IDEFont(Fonts.genericsNormal, FONT_SIZE), fs);
 		}
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -328,7 +348,7 @@ public class CodeEditor extends IDEComponent {
 		case ".java":
 			String[] javaKeys = { "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
 					"continue", "default", "do", "double", "else", "enum", "extends", "final", "finally", "float",
-					"for", "goto", "if", "implements", "import", "instanceof", "int ","interface ","long", "native",
+					"for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long", "native",
 					"new", "package", "private", "protected", "public", "return", "short", "static", "strictfp", "super",
 					"switch", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile", "while",
 					"true", "false", "null", "@interface" };
@@ -349,7 +369,21 @@ public class CodeEditor extends IDEComponent {
 			
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
-			break;		// depois colorir comentários multi-linha
+			indxs = findWord(new String(chars), "/*");
+			List<Integer> finals = findWord(new String(chars), "*/");
+			
+			if (indxs.size() > 0)
+				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			
+			if (finals.size() > 0)
+				fs = color(0, finals.get(0), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			
+			/*indxs = findWord(new String(chars), "*"); // se colorir com asterisco toda vez que vc multiplicar ou indicar um ponteiro, vai colorir
+			
+			if (indxs.size() > 0)
+				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);*/
+			
+			break;
 			
 		case ".html":
 			String[] tags = { "<!--", "<!doctype", "<!DOCTYPE", "<a", "<abbr", "<acronym", "<address", "<applet", "<area", "<article",
@@ -427,16 +461,19 @@ public class CodeEditor extends IDEComponent {
 				fs = color(i, i + 1, new IDEFont(Fonts.keywordNormal, FONT_SIZE), fs);
 			}
 			
-			indxs = findWord(new String(chars), "-->"); // colorir final de tags de comentário
+			indxs = findWord(new String(chars), "<!--");
+			List<Integer> finalss = findWord(new String(chars), "-->");
 			
-			for (Integer i : indxs) {
-				fs = color(i, i + 3, new IDEFont(Fonts.keywordNormal, FONT_SIZE), fs);
-			}
+			if (indxs.size() > 0)
+				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			
+			if (finalss.size() > 0)
+				fs = color(0, finalss.get(0), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // terminar
 			
 			break;
 			
 		case ".css":
-			String[] tagsss = { "!--", "!doctype", "!DOCTYPE", "a", "abbr", "acronym", "address", "applet", "area", "article",
+			String[] tagsss = { "a", "abbr", "acronym", "address", "applet", "area", "article",
 					"aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button",
 					"canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del",
 					"details", "dfn", "dialog", "dir", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure",
@@ -502,6 +539,30 @@ public class CodeEditor extends IDEComponent {
 				
 				for (Integer i : indxs)
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+			
+			indxs = findWord(new String(chars), ".");
+			
+			int len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length && (chars[i + len] == 'a' || chars[i + len] == 'b' || chars[i + len] == 'c' || chars[i + len] == 'd' || chars[i + len] == 'e' || chars[i + len] == 'f' || chars[i + len] == 'g' || chars[i + len] == 'h' || chars[i + len] == 'i' || chars[i + len] == 'j' || chars[i + len] == 'k' || chars[i + len] == 'l' || chars[i + len] == 'm' || chars[i + len] == 'n' || chars[i + len] == 'o' || chars[i + len] == 'p' || chars[i + len] == 'q' || chars[i + len] == 'r' || chars[i + len] == 's' || chars[i + len] == 't' || chars[i + len] == 'u' || chars[i + len] == 'v' || chars[i + len] == 'w' || chars[i + len] == 'x' || chars[i + len] == 'y' || chars[i + len] == 'z' || chars[i + len] == 'A' || chars[i + len] == 'B' || chars[i + len] == 'C' || chars[i + len] == 'D' || chars[i + len] == 'E' || chars[i + len] == 'F' || chars[i + len] == 'G' || chars[i + len] == 'H' || chars[i + len] == 'I' || chars[i + len] == 'J' || chars[i + len] == 'K' || chars[i + len] == 'L' || chars[i + len] == 'M' || chars[i + len] == 'N' || chars[i + len] == 'O' || chars[i + len] == 'P' || chars[i + len] == 'Q' || chars[i + len] == 'R' || chars[i + len] == 'S' || chars[i + len] == 'T' || chars[i + len] == 'U' || chars[i + len] == 'V' || chars[i + len] == 'W' || chars[i + len] == 'X' || chars[i + len] == 'Y' || chars[i + len] == 'Z'))
+					len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "#");
+			
+			len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length && (chars[i + len] == 'a' || chars[i + len] == 'b' || chars[i + len] == 'c' || chars[i + len] == 'd' || chars[i + len] == 'e' || chars[i + len] == 'f' || chars[i + len] == 'g' || chars[i + len] == 'h' || chars[i + len] == 'i' || chars[i + len] == 'j' || chars[i + len] == 'k' || chars[i + len] == 'l' || chars[i + len] == 'm' || chars[i + len] == 'n' || chars[i + len] == 'o' || chars[i + len] == 'p' || chars[i + len] == 'q' || chars[i + len] == 'r' || chars[i + len] == 's' || chars[i + len] == 't' || chars[i + len] == 'u' || chars[i + len] == 'v' || chars[i + len] == 'w' || chars[i + len] == 'x' || chars[i + len] == 'y' || chars[i + len] == 'z' || chars[i + len] == 'A' || chars[i + len] == 'B' || chars[i + len] == 'C' || chars[i + len] == 'D' || chars[i + len] == 'E' || chars[i + len] == 'F' || chars[i + len] == 'G' || chars[i + len] == 'H' || chars[i + len] == 'I' || chars[i + len] == 'J' || chars[i + len] == 'K' || chars[i + len] == 'L' || chars[i + len] == 'M' || chars[i + len] == 'N' || chars[i + len] == 'O' || chars[i + len] == 'P' || chars[i + len] == 'Q' || chars[i + len] == 'R' || chars[i + len] == 'S' || chars[i + len] == 'T' || chars[i + len] == 'U' || chars[i + len] == 'V' || chars[i + len] == 'W' || chars[i + len] == 'X' || chars[i + len] == 'Y' || chars[i + len] == 'Z'))
+					len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
 			}
 			
 			break;
@@ -734,6 +795,23 @@ public class CodeEditor extends IDEComponent {
 		case ".txt":
 			for (int i = 0; i < chars.length; i++)
 				fs.add(DEFAULT_FONT);
+			break;
+			
+		case ".swift":
+			String[] swKeys = { "associatedtype", "class", "deinit", "enum", "extension", "fileprivate", "func", "import" , "init", "inout", "internal", "let", "open", "operator", "private", "protocol", "public", "rethrows", "static", "struct", "subscript", "typealias", "var", "break", "case", "continue", "default", "defer", "do", "else", "fallthrough", "for", "guard", "if", "in", "repeat", "return", "switch", "where", "while", "as", "Any", "catch", "false", "is", "nil", "super", "self", "self", "throw", "throws", "true", "try", "_", "#available", "#colorLiteral", "#column", "#else", "#elseif", "#endif", "#error", "#file", "#fileID", "#fileLiteral", "#filePath", "#function", "#if", "#imageLiteral", "#line", "#selector", "#sourceLocation", "#warning", "associativity", "convenience", "dynamic", "didset", "final", "get", "infix", "indirect", "lazy", "left", "mutating", "none", "nonmutating", "optional", "override", "postfix", "precendence", "prefix", "Protocol", "required", "right", "set", "Type", "unowned", "weak", "willSet" };
+			
+			for (String s : swKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+			
+			indxs = findWord(new String(chars), "//"); // colorir comentários de uma linha
+			
+			if (fs.size() == 0 || indxs.size() == 0) break;
+			
+			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			break;
 		}
 		
@@ -984,30 +1062,44 @@ public class CodeEditor extends IDEComponent {
 		return ch;
 	}
 	
-	public void paste() {
+	public void paste() {		// terminar o paste com mais de uma linha
 		if (editing == null) return;
 		
 		String[] sp = clipboard.split("\n");
-		StringBuilder[] bs = new StringBuilder[sp.length];
 		
-		for (int i = 0; i < sp.length; i++) {
-			bs[i] = new StringBuilder(sp[i]);
-			
-			if (cursorX < sp[i].length())
-				bs[i].insert(cursorX, sp[i]);
-			else
-				bs[i].append(sp[i]);
+		int index = 0;
+		
+		if (sp.length == 1) { // se é só uma linha
+			for (String s : sp) {
+				StringBuilder b = new StringBuilder(new String(toCharArray(lines.get((cursorY - 1)).getChars())));
+				
+				b.insert(cursorX, s);
+				
+				register(b, (cursorY - 1) + index);
+				
+				cursorX += s.length();
+			}
 		}
-			
-		editing.setSaved(false);
-		
-		for (int i = 0; i < sp.length; i++) {
-			if (i != 0)
-				lines.add((cursorY - 1) + i, new IDELine(new ArrayList<>(), new ArrayList<>()));
-			
-			bs[i] = new StringBuilder(bs[i].toString().substring(0, bs[i].toString().length() / 2));
-			
-			register(bs[i], (cursorY - 1) + i);
+		else {
+			for (String s : sp) {
+				if (s != sp[0])
+					lines.add((cursorY - 1) + index, new IDELine(new ArrayList<>(), new ArrayList<>()));
+				
+				StringBuilder b = new StringBuilder(new String(toCharArray(lines.get((cursorY - 1) + index).getChars())));
+				
+				int x = cursorX > lines.get((cursorY - 1) + index).getChars().size() ? lines.get((cursorY - 1) + index).getChars().size() : cursorX; // não pode exceder o index
+				
+				b.insert(x, s);
+				
+				register(b, (cursorY - 1) + index);
+				
+				if (s == sp[sp.length - 1]) {
+					cursorX += s.length();
+					cursorY += sp.length - 1;
+				}
+				
+				index++;
+			}
 		}
 	}
 	
@@ -1214,15 +1306,18 @@ public class CodeEditor extends IDEComponent {
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 430, "Abrir Explorador de Arquivos", (s) -> execute(s), "sysexp");
 			
 			if (editing != null) {
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 210 : 150), 430, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectentireline");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), 430, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectentireline");
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 430, "Salvar", (s) -> execute(s), "save");
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), 430, "Colar", (s) -> execute(s), "paste");
+				
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 300 : 180), 430, "Modo de Seleção", (s) -> CommandTerminal.runCommand(s), "selectmode");
 			}
 			
 			if (selecting) {
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 430, "Copiar", (s) -> CommandTerminal.runCommand(s), "copy");
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 180, 430, "Cortar", (s) -> CommandTerminal.runCommand(s), "cut");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 240, 430, "Desselecionar", (s) -> CommandTerminal.runCommand(s), "deselect");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 210, 430, "Deletar", (s) -> CommandTerminal.runCommand(s), "del");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 270, 430, "Desselecionar", (s) -> CommandTerminal.runCommand(s), "deselect");
 			}
 		}
 		
@@ -1510,14 +1605,14 @@ public class CodeEditor extends IDEComponent {
 		
 		if (selecting) {
 			if (line1 * (FONT_SIZE + 4) - scrY > 0) { 
-				g.setColor(Color.decode("#ff6961"));
+				g.setColor(Colors.select1);
 				g.fillRect(((x + 40) + index1 * (FONT_SIZE - 4)) - scrX, MIN_Y + line1 * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
 			
 				Fonts.drawString("1", ((x + 40) + index1 * (FONT_SIZE - 4)) - scrX - 5, MIN_Y + line1 * (FONT_SIZE + 4) - FONT_SIZE - scrY + 15, new IDEFont(Fonts.normal, FONT_SIZE), g);
 			}
 			
 			if (line2 * (FONT_SIZE + 4) - scrY > 0) {
-				g.setColor(Color.decode("#ff5147"));
+				g.setColor(Colors.select2);
 				g.fillRect(((x + 40) + index2 * (FONT_SIZE - 4)) - scrX, MIN_Y + line2 * (FONT_SIZE + 4) - FONT_SIZE - scrY - 2, 2, FONT_SIZE);
 				
 				Fonts.drawString("2", ((x + 40) + index2 * (FONT_SIZE - 4)) - scrX - 5, MIN_Y + line2 * (FONT_SIZE + 4) - FONT_SIZE - scrY + 15, new IDEFont(Fonts.normal, FONT_SIZE), g);

@@ -138,7 +138,7 @@ public class CommandTerminal extends IDEComponent {
 				List<String> lines = new ArrayList<>();
 				String str = "";
 				
-				if (CodeEditor.line1 - 1 != CodeEditor.line2) { // se não selecionou uma linha só (selecionou várias)
+				if (CodeEditor.line1 != CodeEditor.line2) { // se não selecionou uma linha só (selecionou várias)
 					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) {
 						if (i == CodeEditor.line1 - 1) {
 							lines.add(new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars().subList(CodeEditor.index1, CodeEditor.lines.get(i).getChars().size()))));
@@ -181,59 +181,39 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "del":
+			case "del":									// fazer o delete funcionar e n dar exception
 				if (!CodeEditor.selecting) break;
 				
-				if (CodeEditor.line1 - 1 != CodeEditor.line2 - 1) { // se não selecionou uma linha só (selecionou várias)
-					if (CodeEditor.line2 < CodeEditor.line1) {
-						JOptionPane.showMessageDialog(null, "A linha 2 não pode ser menor que a linha 1!");
+				if (CodeEditor.line1 != CodeEditor.line2) { // se não selecionou uma linha só (selecionou várias)
+					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) {
+						if (i == CodeEditor.line1 - 1) {
+							CodeEditor.lines.get(CodeEditor.line1).setChars(CodeEditor.lines.get(CodeEditor.line1).getChars().subList(0, CodeEditor.index1)); 
+							
+							continue;
+						}
+						
+						if (i == CodeEditor.line2 - 1) {
+							CodeEditor.lines.get(CodeEditor.line1).setChars(CodeEditor.lines.get(CodeEditor.line1).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(CodeEditor.line1).getChars().size())); 
+							
+							continue;
+						}
+						
+						CodeEditor.lines.remove(CodeEditor.line1);
+					}
+				}
+				else {
+					if (CodeEditor.index2 < CodeEditor.index1) {
+						JOptionPane.showMessageDialog(null, "O index 2 não pode ser maior que o index 1!", "Valores invertidos", JOptionPane.OK_OPTION);
 						
 						runCommand("deselect");
 						
 						break;
 					}
 					
-					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) {
-						if (i == CodeEditor.line1 - 1) {
-							CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(0, CodeEditor.index1));
-							
-							continue;
-						}
-						
-						if (i == CodeEditor.line2 - 1) {
-							try {
-								if (CodeEditor.lines.get(i).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(i).getChars().size()).size() != 0)
-									CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(i).getChars().size()));
-								else
-									CodeEditor.linesToRemove.add(CodeEditor.lines.get(i));
-							} catch (Exception e) {
-								try {
-									CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(CodeEditor.lines.get(i).getChars().size(), CodeEditor.index2));
-								} catch (Exception f) {}
-							}
-								
-							continue;
-						}
-						
-						if (i < CodeEditor.lines.size())
-							CodeEditor.linesToRemove.add(CodeEditor.lines.get(i));
-					}
+					int len = CodeEditor.lines.get(CodeEditor.line1).getChars().subList(0, CodeEditor.index1).size() - 1;
 					
-					CodeEditor.editing.setSaved(false);
-					CodeEditor.setCursorWithinBounds();
-				}
-				else {
-					if (CodeEditor.index2 < CodeEditor.index1) {
-						JOptionPane.showMessageDialog(null, "O index 2 não pode ser maior que o index 1!");
-						
-						break;
-					}
-					
-					CodeEditor.lines.get(CodeEditor.line1 - 1).setChars((CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().subList(0, CodeEditor.index1)));
-					
-					try {
-						CodeEditor.lines.get(CodeEditor.line1 - 1).setChars((CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().size())));
-					} catch (Exception e) {}
+					CodeEditor.lines.get(CodeEditor.line1).setChars(CodeEditor.lines.get(CodeEditor.line1).getChars().subList(0, CodeEditor.index1)); 
+					CodeEditor.lines.get(CodeEditor.line1).setChars(CodeEditor.lines.get(CodeEditor.line1).getChars().subList(CodeEditor.index2 - len, CodeEditor.lines.get(CodeEditor.line1).getChars().size())); 
 				}
 				
 				runCommand("deselect");
@@ -262,6 +242,10 @@ public class CommandTerminal extends IDEComponent {
 				CodeEditor.line2 = y + 1;
 				
 				CodeEditor.selecting = true;
+				break;
+				
+			case "selectmode":
+				CodeEditor.selectMode = true;
 				break;
 			}
 		}

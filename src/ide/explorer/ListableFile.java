@@ -35,6 +35,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".asm", Main.spritesheet.getSprite(128, 16, 16, 16)),
 			new FileType(".lua", Main.spritesheet.getSprite(144, 16, 16, 16)),
 			new FileType(".sql", Main.spritesheet.getSprite(160, 16, 16, 16)),
+			new FileType(".swift",Main.spritesheet.getSprite(176, 16, 16, 16)),
 			
 			new FileType(".html", Main.spritesheet.getSprite (0, 32, 16, 16)),
 			new FileType(".htm", Main.spritesheet.getSprite  (0, 32, 16, 16)),
@@ -47,6 +48,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".jar", Main.spritesheet.getSprite(112, 32, 16, 16)),
 			new FileType(".exe", Main.spritesheet.getSprite(128, 32, 16, 16)),
 			new FileType(".svg", Main.spritesheet.getSprite(144, 32, 16, 16)),
+			new FileType(".urna",Main.spritesheet.getSprite(160, 32, 16, 16)),		// easter egg!
+			new FileType(".save",Main.spritesheet.getSprite(176, 32, 16, 16)),		// easter egg!
 			
 			new FileType(".png", Main.spritesheet.getSprite  (0, 48, 16, 16)),
 			new FileType(".jpg", Main.spritesheet.getSprite  (0, 48, 16, 16)),
@@ -188,7 +191,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			Explorer.toRemove.add(this);
 			
 			for (Tab t : CodeEditor.tabs)
-				if (t.getRegent().equals(this))
+				if (t.getRegent().getRegent().getPath().equals(this.regent.getPath()))
 					t.close();
 				
 			Explorer.toRemove.addAll(Explorer.files);
@@ -230,7 +233,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				CodeEditor.scrY = 0;
 				
 				for (Tab t : CodeEditor.tabs)
-					if (t.getRegent().equals(this)) {
+					if (t.getRegent().getRegent().getPath().equals(this.regent.getPath())) {
 						CodeEditor.editing = t;
 						
 						return;

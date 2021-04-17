@@ -82,6 +82,22 @@ public class Fonts {
         bold = Fonts.initFont("/bold.png");
     }
     
+    public static BufferedImage[] variablesNormal = Fonts.initFont(normal, Color.white, Colors.variables);
+    public static BufferedImage[] variablesBold = Fonts.initFont(bold, Color.white, Colors.variables);
+    
+    static {
+    	normal = Fonts.initFont("/font.png");
+        bold = Fonts.initFont("/bold.png");
+    }
+    
+    public static BufferedImage[] genericsNormal = Fonts.initFont(normal, Color.white, Colors.generics);
+    public static BufferedImage[] genericsBold = Fonts.initFont(bold, Color.white, Colors.generics);
+    
+    static {
+    	normal = Fonts.initFont("/font.png");
+        bold = Fonts.initFont("/bold.png");
+    }
+    
     /**
      * A gambiarra não foi totalmente resolvida. É só uma forma de "escondê"-la.
      * 

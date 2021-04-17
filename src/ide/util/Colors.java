@@ -20,9 +20,14 @@ public class Colors {
     public static Color methods = 		  Color.decode("#e7d789");
     public static Color numbers = 		  Color.decode("#5485b6");
     public static Color keywords = 		  Color.decode("#95bddc");
+    public static Color variables = 	  Color.decode("#66e1f8");
     
     public static Color comments = 					  textLighter;
     public static Color strings = 					    textLight;
+    public static Color generics = 						 comments;
+    
+    public static Color select1 = 		  Color.decode("#ff6961");
+    public static Color select2 = 		  Color.decode("#ff5147");
     
     /**
      * Troca a cor especificada em {@code target} na cor especificada em {@code out}.
