@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
 import ide.explorer.Explorer;
-import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
@@ -188,18 +187,18 @@ public class CommandTerminal extends IDEComponent {
 				if (CodeEditor.line1 != CodeEditor.line2) { // se não selecionou uma linha só (selecionou várias)
 					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) {
 						if (i == CodeEditor.line1 - 1) {
-							CodeEditor.lines.get(CodeEditor.line1).setChars(CodeEditor.lines.get(CodeEditor.line1).getChars().subList(0, CodeEditor.index1)); 
+							CodeEditor.lines.get(CodeEditor.line1 - 1).setChars(CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().subList(0, CodeEditor.index1)); 
 							
 							continue;
 						}
 						
 						if (i == CodeEditor.line2 - 1) {
-							CodeEditor.lines.get(CodeEditor.line1).setChars(CodeEditor.lines.get(CodeEditor.line1).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(CodeEditor.line1).getChars().size())); 
+							CodeEditor.lines.get(CodeEditor.line2 - 1).setChars(CodeEditor.delete(0, CodeEditor.index2, CodeEditor.lines.get(CodeEditor.line2 - 1).getChars()));
 							
 							continue;
 						}
 						
-						CodeEditor.lines.remove(CodeEditor.line1);
+						CodeEditor.lines.remove(CodeEditor.line1 - 1);
 					}
 				}
 				else {
@@ -211,13 +210,11 @@ public class CommandTerminal extends IDEComponent {
 						break;
 					}
 					
-					int len = CodeEditor.lines.get(CodeEditor.line1).getChars().subList(0, CodeEditor.index1).size() - 1;
-					
-					CodeEditor.lines.get(CodeEditor.line1).setChars(CodeEditor.lines.get(CodeEditor.line1).getChars().subList(0, CodeEditor.index1)); 
-					CodeEditor.lines.get(CodeEditor.line1).setChars(CodeEditor.lines.get(CodeEditor.line1).getChars().subList(CodeEditor.index2 - len, CodeEditor.lines.get(CodeEditor.line1).getChars().size())); 
+					CodeEditor.lines.get(CodeEditor.line1 - 1).setChars(CodeEditor.delete(CodeEditor.index1, CodeEditor.index2, CodeEditor.lines.get(CodeEditor.line1 - 1).getChars()));
 				}
 				
 				runCommand("deselect");
+				CodeEditor.editing.setSaved(false);
 				
 				break;
 				
@@ -279,9 +276,23 @@ public class CommandTerminal extends IDEComponent {
 				}
 				break;
 				
-			case "generateconfigfile":
+			/*case "generateconfigfile":
 				ListableFile.generateConfigFile(args[0]);
 				break;
+				
+			case "changefontsize":
+				if (args[0].equals("default")) {
+					CodeEditor.FONT_SIZE = 16;
+					
+					try {
+						int a0 = Integer.parseInt(args[0]);
+						
+						CodeEditor.FONT_SIZE = a0;
+						
+						CodeEditor.lines = CodeEditor.readFile(CodeEditor.editing.getRegent().getRegent());
+					} catch (NumberFormatException | IOException e) {}
+				}
+				break;*/
 			}
 		}
 		else if (args.length == 2) {

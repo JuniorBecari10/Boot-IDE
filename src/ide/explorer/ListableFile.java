@@ -25,7 +25,6 @@ import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
-import ide.util.Spritesheet;
 
 public class ListableFile extends IDEComponent implements ExecuteCommand {
 	
@@ -40,9 +39,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".bat", Main.spritesheet.getSprite (96, 16, 16, 16)),
 			new FileType(".h", Main.spritesheet.getSprite  (112, 16, 16, 16)),
 			new FileType(".asm", Main.spritesheet.getSprite(128, 16, 16, 16)),
+			new FileType(".s", Main.spritesheet.getSprite  (128, 16, 16, 16)),
 			new FileType(".lua", Main.spritesheet.getSprite(144, 16, 16, 16)),
 			new FileType(".sql", Main.spritesheet.getSprite(160, 16, 16, 16)),
 			new FileType(".swift",Main.spritesheet.getSprite(176, 16, 16, 16)),
+			new FileType(".rs", Main.spritesheet.getSprite (192, 16, 16, 16)),
 			
 			new FileType(".html", Main.spritesheet.getSprite (0, 32, 16, 16)),
 			new FileType(".htm", Main.spritesheet.getSprite  (0, 32, 16, 16)),
@@ -58,6 +59,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".urna",Main.spritesheet.getSprite(160, 32, 16, 16)),		// easter egg! (Criador de Urnas)
 			new FileType(".save",Main.spritesheet.getSprite(176, 32, 16, 16)),		// easter egg! (World's Hardest Game Maker 2)
 			new FileType(".conf",Main.spritesheet.getSprite(192, 32, 16, 16)),
+			new FileType(".mk", Main.spritesheet.getSprite (208, 32, 16, 16)),
 			
 			new FileType(".png", Main.spritesheet.getSprite  (0, 48, 16, 16)),
 			new FileType(".jpg", Main.spritesheet.getSprite  (0, 48, 16, 16)),
@@ -150,6 +152,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	 * Lembrar de abas quando fechar a Boot IDE: true
 	 * Lembrar do arquivo de configurações: true
 	 * 
+	 * Colorir Objetos: true
+	 * Colorir Métodos: true
+	 * Colorir Números: true
+	 * Colorir Palavras-chave: true
+	 * Colorir Variáveis: true
+	 * Colorir Comentários: true
+	 * Colorir Strings: true
+	 * Colorir Genéricos: true
+	 * 
 	 */
 	public static void generateConfigFile(String path) {
 		String s = path + path.contains(".conf") != null ? "" : ".conf";
@@ -199,6 +210,16 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("\n");
 			w.write("Lembrar de abas quando fechar a Boot IDE: true\n");
 			w.write("Lembrar do arquivo de configurações: true\n");
+			w.write("\n");
+			w.write("Colorir Objetos: true\n");
+			w.write("Colorir Métodos: true\n");
+			w.write("Colorir Números: true\n");
+			w.write("Colorir Palavras-chave: true\n");
+			w.write("Colorir Variáveis: true\n");
+			w.write("Colorir Comentários: true\n");
+			w.write("Colorir Comentários: true\n");
+			w.write("Colorir Strings: true\n");
+			w.write("Colorir Genéricos: true\n");
 			
 			w.close();
 			
@@ -376,9 +397,21 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "spritesheet:":
 				if (split[1].equals("default")) break;
 				
-				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				Main.sprsh = split[1];
 				
-				Main.spritesheet = new Spritesheet(split[1]);
+				break;
+				
+			case "font-normal":
+				if (split[1].equals("default")) break;
+				
+				Main.fntnr = split[1];
+				
+				break;
+				
+			case "font-bold":
+				if (split[1].equals("default")) break;
+				
+				Main.fntbl = split[1]; // TODO
 				
 				break;
 			}

@@ -45,6 +45,7 @@ import ide.components.ReloadButton;
 import ide.components.ReturnToBaseFolderButton;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
+import ide.fonts.Fonts;
 import ide.input.MouseInput;
 import ide.util.Colors;
 import ide.util.Spritesheet;
@@ -74,12 +75,20 @@ public class Main implements Runnable, Tickable {
     public static ReloadButton reload;
     
     public static File baseFolder;
+    public static File cnfFile;
+    
+    public static String sprsh = "/spritesheet.png";
+    public static String fntnr = "/font.png";
+    public static String fntbl = "/bold.png";
     
     public Main() {
         toolkit = Toolkit.getDefaultToolkit();
         screen = new Screen("Boot IDE");
         
-        spritesheet = new Spritesheet("/spritesheet.png");
+        //ListableFile.readConfigFile(cnfFile); // dps eu faço isso (ou nunca kkk)
+        Fonts.initFonts(fntnr, fntbl);
+        
+        spritesheet = new Spritesheet(sprsh);
 
         explorer = new Explorer(0, 0, 280, Screen.HEIGHT);
         editor = new CodeEditor(280, 0, Screen.WIDTH - 280, Screen.HEIGHT);

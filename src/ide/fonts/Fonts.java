@@ -15,91 +15,122 @@ import ide.util.Spritesheet;
  */
 public class Fonts {
 
-    public static BufferedImage[] normal = Fonts.initFont("/font.png");
-    public static BufferedImage[] bold = Fonts.initFont("/bold.png");
+    public static BufferedImage[] normal;
+    public static BufferedImage[] bold;
     
-    public static BufferedImage[] lightGrayNormal = Fonts.initFont(normal, Color.white, Colors.textLight);
-    public static BufferedImage[] lightGrayBold = Fonts.initFont(bold, Color.white, Colors.textLight);
+    public static BufferedImage[] lightGrayNormal;
+    public static BufferedImage[] lightGrayBold;
+
+    public static BufferedImage[] lighterGrayNormal;
+    public static BufferedImage[] lighterGrayBold;
+
+    public static BufferedImage[] keywordNormal;
+    public static BufferedImage[] keywordBold;
     
-    static {
-    	normal = Fonts.initFont("/font.png");
-        bold = Fonts.initFont("/bold.png");
-    }
+    public static BufferedImage[] numbersNormal;
+    public static BufferedImage[] numbersBold;
+
+    public static BufferedImage[] methodsNormal;
+    public static BufferedImage[] methodsBold;
+
+    public static BufferedImage[] objectsNormal;
+    public static BufferedImage[] objectsBold;
+
+    public static BufferedImage[] commentsNormal;
+    public static BufferedImage[] commentsBold;
+
+    public static BufferedImage[] stringsNormal;
+    public static BufferedImage[] stringsBold;
+
+    public static BufferedImage[] variablesNormal;
+    public static BufferedImage[] variablesBold;
     
-    public static BufferedImage[] lighterGrayNormal = Fonts.initFont(normal, Color.white, Colors.textLighter);
-    public static BufferedImage[] lighterGrayBold = Fonts.initFont(bold, Color.white, Colors.textLighter);
+    public static BufferedImage[] genericsNormal;
+    public static BufferedImage[] genericsBold;
     
-    static {
-    	normal = Fonts.initFont("/font.png");
-        bold = Fonts.initFont("/bold.png");
-    }
-    
-    public static BufferedImage[] keywordNormal = Fonts.initFont(normal, Color.white, Colors.keywords); // original: (204, 108, 29)
-    public static BufferedImage[] keywordBold = Fonts.initFont(bold, Color.white, Colors.keywords);
-    
-    static {
-    	normal = Fonts.initFont("/font.png");
-        bold = Fonts.initFont("/bold.png");
-    }
-    
-    public static BufferedImage[] numbersNormal = Fonts.initFont(normal, Color.white, Colors.numbers);
-    public static BufferedImage[] numbersBold = Fonts.initFont(bold, Color.white, Colors.numbers);
-    
-    static {
-    	normal = Fonts.initFont("/font.png");
-        bold = Fonts.initFont("/bold.png");
-    }
-    
-    public static BufferedImage[] methodsNormal = Fonts.initFont(normal, Color.white, Colors.methods);
-    public static BufferedImage[] methodsBold = Fonts.initFont(bold, Color.white, Colors.methods);
-    
-    static {
-    	normal = Fonts.initFont("/font.png");
-        bold = Fonts.initFont("/bold.png");
-    }
-    
-    public static BufferedImage[] objectsNormal = Fonts.initFont(normal, Color.white, Colors.objects);
-    public static BufferedImage[] objectsBold = Fonts.initFont(bold, Color.white, Colors.objects);
-    
-    static {
-    	normal = Fonts.initFont("/font.png");
-        bold = Fonts.initFont("/bold.png");
-    }
-    
-    public static BufferedImage[] commentsNormal = Fonts.initFont(normal, Color.white, Colors.comments);
-    public static BufferedImage[] commentsBold = Fonts.initFont(bold, Color.white, Colors.comments);
-    
-    static {
-    	normal = Fonts.initFont("/font.png");
-        bold = Fonts.initFont("/bold.png");
-    }
-    
-    public static BufferedImage[] stringsNormal = Fonts.initFont(normal, Color.white, Colors.strings);
-    public static BufferedImage[] stringsBold = Fonts.initFont(bold, Color.white, Colors.strings);
-    
-    static {
-    	normal = Fonts.initFont("/font.png");
-        bold = Fonts.initFont("/bold.png");
-    }
-    
-    public static BufferedImage[] variablesNormal = Fonts.initFont(normal, Color.white, Colors.variables);
-    public static BufferedImage[] variablesBold = Fonts.initFont(bold, Color.white, Colors.variables);
-    
-    static {
-    	normal = Fonts.initFont("/font.png");
-        bold = Fonts.initFont("/bold.png");
-    }
-    
-    public static BufferedImage[] genericsNormal = Fonts.initFont(normal, Color.white, Colors.generics);
-    public static BufferedImage[] genericsBold = Fonts.initFont(bold, Color.white, Colors.generics);
-    
-    static {
-    	normal = Fonts.initFont("/font.png");
-        bold = Fonts.initFont("/bold.png");
-    }
-    
-    public static void initFonts(String font1, String font2) { // terminar saporra
+    public static void initFonts(String font1, String font2) {
+    	 normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
     	
+    	 lightGrayNormal = Fonts.initFont(normal, Color.white, Colors.textLight);
+         lightGrayBold = Fonts.initFont(bold, Color.white, Colors.textLight);
+        
+        
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+        
+        
+         lighterGrayNormal = Fonts.initFont(normal, Color.white, Colors.textLighter);
+         lighterGrayBold = Fonts.initFont(bold, Color.white, Colors.textLighter);
+        
+        
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+        
+        
+         keywordNormal = Fonts.initFont(normal, Color.white, Colors.keywords); // original: (204, 108, 29)
+         keywordBold = Fonts.initFont(bold, Color.white, Colors.keywords);
+        
+        
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+        
+        
+         numbersNormal = Fonts.initFont(normal, Color.white, Colors.numbers);
+         numbersBold = Fonts.initFont(bold, Color.white, Colors.numbers);
+        
+        
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+        
+        
+         methodsNormal = Fonts.initFont(normal, Color.white, Colors.methods);
+         methodsBold = Fonts.initFont(bold, Color.white, Colors.methods);
+        
+        
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+        
+        
+         objectsNormal = Fonts.initFont(normal, Color.white, Colors.objects);
+         objectsBold = Fonts.initFont(bold, Color.white, Colors.objects);
+        
+        
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+        
+        
+         commentsNormal = Fonts.initFont(normal, Color.white, Colors.comments);
+         commentsBold = Fonts.initFont(bold, Color.white, Colors.comments);
+        
+        
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+        
+        
+         stringsNormal = Fonts.initFont(normal, Color.white, Colors.strings);
+         stringsBold = Fonts.initFont(bold, Color.white, Colors.strings);
+        
+        
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+        
+        
+         variablesNormal = Fonts.initFont(normal, Color.white, Colors.variables);
+         variablesBold = Fonts.initFont(bold, Color.white, Colors.variables);
+        
+        
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+        
+        
+         genericsNormal = Fonts.initFont(normal, Color.white, Colors.generics);
+         genericsBold = Fonts.initFont(bold, Color.white, Colors.generics);
+        
+        
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+        
     }
     
     /**

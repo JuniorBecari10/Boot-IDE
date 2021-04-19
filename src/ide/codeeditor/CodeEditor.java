@@ -43,7 +43,7 @@ import ide.util.Colors;
 
 public class CodeEditor extends IDEComponent {
 	
-	public static final int FONT_SIZE = 16; // 18, 16		-- fazer isso aqui mutável e qualquer valor que colocar aqui o editor aceita numa boa
+	public static int FONT_SIZE = 16; // 18, 16 (Padrão: 16)
 	
 	public static final IDEFont DEFAULT_FONT = new IDEFont(Fonts.normal, FONT_SIZE);
 	
@@ -255,12 +255,14 @@ public class CodeEditor extends IDEComponent {
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".js") || ext.equals(".h") || ext.equals(".lua"))) {			
+		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".js") || ext.equals(".h") || ext.equals(".lua") || ext.equals(".rs"))) {			
 			String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
 					"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
 			for (String s : cll)
-				indxs = Stream.concat(indxs.stream(), findWord(new String(chars), s).stream()).collect(Collectors.toList());
+				indxs = Stream.concat(indxs.stream(), findWord(new String(chars), s)
+							  .stream())
+							  .collect(Collectors.toList());
 
 			int len = 0;
 
@@ -786,7 +788,7 @@ public class CodeEditor extends IDEComponent {
 			String[] asmKeys = { "add", "sub", "mov", "mul", "imul", "div", "idiv",
 					"cmp", "jmp", "call", "jxx", "je", "jb", "jbe", "ja", "jae", "jz",
 					"jne", "jnae", "jna", "jnbe", "jnb", "jnz", "jl", "jle", "jg", "jge",
-					"jnl", "jng", "jnge", "dec", "inc", "loop", "loope", "loopz", "loopne", "loopnz", "lea" };
+					"jnl", "jng", "jnge", "dec", "inc", "loop", "loope", "loopz", "loopne", "loopnz", "lea", "times" };
 			
 			for (String s : asmKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -819,7 +821,18 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".swift":
-			String[] swKeys = { "associatedtype", "class", "deinit", "enum", "extension", "fileprivate", "func", "import" , "init", "inout", "internal", "let", "open", "operator", "private", "protocol", "public", "rethrows", "static", "struct", "subscript", "typealias", "var", "break", "case", "continue", "default", "defer", "do", "else", "fallthrough", "for", "guard", "if", "in", "repeat", "return", "switch", "where", "while", "as", "Any", "catch", "false", "is", "nil", "super", "self", "self", "throw", "throws", "true", "try", "_", "#available", "#colorLiteral", "#column", "#else", "#elseif", "#endif", "#error", "#file", "#fileID", "#fileLiteral", "#filePath", "#function", "#if", "#imageLiteral", "#line", "#selector", "#sourceLocation", "#warning", "associativity", "convenience", "dynamic", "didset", "final", "get", "infix", "indirect", "lazy", "left", "mutating", "none", "nonmutating", "optional", "override", "postfix", "precendence", "prefix", "Protocol", "required", "right", "set", "Type", "unowned", "weak", "willSet" };
+			String[] swKeys = { "associatedtype", "class", "deinit", "enum", "extension", "fileprivate",
+					"func", "import" , "init", "inout", "internal", "let", "open", "operator", "private",
+					"protocol", "public", "rethrows", "static", "struct", "subscript", "typealias", "var",
+					"break", "case", "continue", "default", "defer", "do", "else", "fallthrough", "for",
+					"guard", "if", "in", "repeat", "return", "switch", "where", "while", "as", "Any", "catch",
+					"false", "is", "nil", "super", "self", "self", "throw", "throws", "true", "try", "_",
+					"#available", "#colorLiteral", "#column", "#else", "#elseif", "#endif", "#error", "#file",
+					"#fileID", "#fileLiteral", "#filePath", "#function", "#if", "#imageLiteral", "#line",
+					"#selector", "#sourceLocation", "#warning", "associativity", "convenience", "dynamic",
+					"didset", "final", "get", "infix", "indirect", "lazy", "left", "mutating", "none", "nonmutating",
+					"optional", "override", "postfix", "precendence", "prefix", "Protocol", "required", "right",
+					"set", "Type", "unowned", "weak", "willSet" };
 			
 			for (String s : swKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -833,6 +846,22 @@ public class CodeEditor extends IDEComponent {
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
 			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			break;
+			
+		case ".rs":
+			String[] rsKeys = { "as", "break", "const", "continue", "crate", "else", "enum", "extern", "false",
+					"fn", "for", "if", "impl", "in", "let", "loop", "match", "mod", "move", "mut", "pub", "ref",
+					"return", "self", "Self", "static", "struct", "super", "trait", "true", "type", "unsafe", "use",
+					"where", "while", "async", "await", "dyn", "abstract", "become", "box", "do", "final", "macro",
+					"override", "priv", "typeof", "unsized", "virtual", "yield", "try", "union", "'static", "dyn" };
+			
+			for (String s : rsKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordNormal, FONT_SIZE), fs);
+			}
+			
 			break;
 		}
 		
@@ -976,7 +1005,9 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (cY.length() == 0) cY.append(c);
-		else if (cursorX <= cY.length()) cY.insert(cursorX, c); // use <= pq se digitar no último n digita pq n bate com a condição mas mesmo assim aumenta o cursorX e quando dá o backspace excede o tamanho da linha e dá no que dá né
+		else if (cursorX <= cY.length()) cY.insert(cursorX, c); // use <= pq se digitar no último n digita pq n bate
+															   // com a condição mas mesmo assim aumenta o cursorX e quando dá
+															  // o backspace excede o tamanho da linha e dá no que dá né
 		
 		return cY;
 	}
@@ -1081,6 +1112,15 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		return ch;
+	}
+	
+	public static List<Character> delete(int start, int end, List<Character> list) {
+		List<Character> result = new ArrayList<>();
+		
+		result.addAll(list.subList(0, start));
+		result.addAll(list.subList(end, list.size()));
+		
+		return result;
 	}
 	
 	public void paste() {		// terminar o paste com mais de uma linha
@@ -1224,7 +1264,7 @@ public class CodeEditor extends IDEComponent {
 			my = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
 			mx = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE)); // é * 0.7
 			
-			double offset = mx * 0.7; // 0.7 (no 16) (((FONT_SIZE / 2) - 1) / 10) // TODO terminar
+			double offset = mx * 0.7; // com esse padrão fica quase perfeito
 			offset = Math.ceil(offset);
 			offset = mx - offset;
 			
@@ -1313,9 +1353,12 @@ public class CodeEditor extends IDEComponent {
 				offset = cursorX - offset;
 				
 				cursorX += (int) offset;
-				cursorX += cursorX < 2 ? 0 : 2;
+				cursorX += cursorX < 2 ? (16 - FONT_SIZE) * 2 : 2;
 				
 				setCursorWithinBounds();
+				
+				//cursorX = setWithinBounds(cursorX, cursorY, true);
+				//cursorY = setWithinBounds(cursorX, cursorY, false);
 			}
 		}
 		else
@@ -1592,22 +1635,24 @@ public class CodeEditor extends IDEComponent {
 			g.fillRect(x, MIN_Y, width, height);
 		}
 		
-		for (int i = 0; i < lines.size(); i++) {
-			char[] cs = toCharArray(lines.get(i).getChars());
-			IDEFont[] fs = toArray(lines.get(i).getFonts());
-			
-			if (lines.get(i) == null) break;
-			
-			if (MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY < MIN_Y) continue;
-			
-			if (i == cursorY - 1) {
-				g.setColor(Colors.backgroundLight);
-				g.fillRect((x + 40), MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, width, FONT_SIZE + (FONT_SIZE / 4));
+		try {
+			for (int i = 0; i < lines.size(); i++) {
+				char[] cs = toCharArray(lines.get(i).getChars());
+				IDEFont[] fs = toArray(lines.get(i).getFonts());
+				
+				if (lines.get(i) == null) break;
+				
+				if (MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY < MIN_Y) continue;
+				
+				if (i == cursorY - 1) {
+					g.setColor(Colors.backgroundLight);
+					g.fillRect((x + 40), MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, width, FONT_SIZE + (FONT_SIZE / 4));
+				}
+				
+				Fonts.drawString(String.valueOf(i + 1), x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), g);
+				Fonts.drawChars(cs, (x + 40) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 2), g);
 			}
-			
-			Fonts.drawString(String.valueOf(i + 1), x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), g);
-			Fonts.drawChars(cs, (x + 40) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 2), g);
-		}
+		} catch (Exception e) {}
 		
 		if (showCursorData) {
 			KeyInput.updateKeys();
