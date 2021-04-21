@@ -10,6 +10,7 @@ import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.util.Colors;
 
 public class OneLevelAboveButton extends IDEComponent {
 
@@ -45,6 +46,11 @@ public class OneLevelAboveButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
+		if (hovered()) {
+			g.setColor(Colors.backgroundLight);
+			g.fillRect(x - 2, y - 2, width + 4, height + 4);
+		}
+		
 		super.render(g);
 		
 		if (hovered())

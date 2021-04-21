@@ -788,7 +788,9 @@ public class CodeEditor extends IDEComponent {
 			String[] asmKeys = { "add", "sub", "mov", "mul", "imul", "div", "idiv",
 					"cmp", "jmp", "call", "jxx", "je", "jb", "jbe", "ja", "jae", "jz",
 					"jne", "jnae", "jna", "jnbe", "jnb", "jnz", "jl", "jle", "jg", "jge",
-					"jnl", "jng", "jnge", "dec", "inc", "loop", "loope", "loopz", "loopne", "loopnz", "lea", "times" };
+					"jnl", "jng", "jnge", "dec", "inc", "loop", "loope", "loopz", "loopne", 
+					"loopnz", "lea", "times", "db", "dw", "include", "INCLUDE", "push", "pop",
+					"xor", "and", "or", "test", "not", "int", "ret" };
 			
 			for (String s : asmKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -1012,7 +1014,7 @@ public class CodeEditor extends IDEComponent {
 		return cY;
 	}
 	
-	private void register(StringBuilder cY, int y) { // cY = cursorY
+	public void register(StringBuilder cY, int y) { // cY = cursorY
 		String gs = cY.toString(); // gen string
 		char[] ca = gs.toCharArray(); // char array
 		
@@ -1178,7 +1180,14 @@ public class CodeEditor extends IDEComponent {
 		switch (arg) {
 		case "cmd":
 			try {
-				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start");
+				boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
+				
+				ProcessBuilder pb = null;
+				
+				if (isWindows)
+					pb = new ProcessBuilder("cmd", "/c", "start");
+				else
+					pb = new ProcessBuilder("sh", "-c", "start");
 				
 				File dir = Explorer.scope != null ? Explorer.scope.getRegent() : Main.baseFolder; // eu tava fazendo o equivalente a isso: null.regent != null
 				
@@ -1391,6 +1400,8 @@ public class CodeEditor extends IDEComponent {
 			new Thread() {
 				public void run() {
 					try {
+						if (editing == null) return;
+						
 						for (IDELine l : lines) {
 							l.setFonts(
 									automaticColor(
@@ -1426,6 +1437,14 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 					
 				editing.save();
+					
+				return;
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A) { // Ctrl + A (Selecionar Linha)
+				KeyInput.updateKeys();
+					
+				CommandTerminal.runCommand("selectentireline");
 					
 				return;
 			}

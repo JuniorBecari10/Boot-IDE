@@ -43,12 +43,12 @@ public class Logo extends IDEComponent {
 		else {
 			g.setColor(Colors.explorer);
 			
-			g.fillRect(x - 145, y + 189, 8 * 20 - 5, 25);
-			g.fillRect(x - 145, y + 219, 12 * 20 + 5, 25);
+			g.fillRect(x - 145, y + 189, 12 * 20 + 5, 25);
+			g.fillRect(x - 145, y + 219, 8 * 20 - 5, 25);
 			g.fillRect(x - 145, y + 249, 12 * 20 + 5, 25);
 			
-			Fonts.drawString("[Ctrl + T] Terminal de Comando", x - 140, y + 190, new IDEFont(Fonts.lightGrayNormal, 20), g);
-			Fonts.drawString("[Ctrl + Windows] Prompt de Comando", x - 140, y + 220, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString("[Ctrl + Windows] Prompt de Comando", x - 140, y + 190, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString("[Ctrl + T] Terminal de Comando", x - 140, y + 220, new IDEFont(Fonts.lightGrayNormal, 20), g);
 			Fonts.drawString("[Clique Direito] Mais Opções", x - 140, y + 250, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		}
 	}

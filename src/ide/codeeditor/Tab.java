@@ -145,6 +145,8 @@ public class Tab extends IDEComponent {
 			
 		case "all":
 			CodeEditor.tabs.clear();
+			
+			CodeEditor.editing = null;
 			break;
 			
 		case "save":

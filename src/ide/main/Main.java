@@ -85,7 +85,12 @@ public class Main implements Runnable, Tickable {
         toolkit = Toolkit.getDefaultToolkit();
         screen = new Screen("Boot IDE");
         
-        //ListableFile.readConfigFile(cnfFile); // dps eu faço isso (ou nunca kkk)
+        /*try {
+        	cnfFile = new File("C:/config.conf");
+        	
+        	ListableFile.readConfigFile(cnfFile);
+        } catch (Throwable e) { ListableFile.generateConfigFile("C:/config.conf"); }*/
+        
         Fonts.initFonts(fntnr, fntbl);
         
         spritesheet = new Spritesheet(sprsh);

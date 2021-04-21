@@ -12,6 +12,7 @@ import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.util.Colors;
 
 public class OpenBaseFolderButton extends IDEComponent {
 	
@@ -66,9 +67,14 @@ public class OpenBaseFolderButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
+		if (hovered()) {
+			g.setColor(Colors.backgroundLight);
+			g.fillRect(x - 1, y - 1, width + 4, height + 4);
+		}
+		
 		super.render(g);
 		
 		if (hovered())
 			Fonts.drawString("Selecionar Pasta Base", MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
-		}
+	}
 }

@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
 import ide.explorer.Explorer;
+import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
@@ -181,25 +182,48 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "del":
+			case "del":										// terminar (provavelmente) depois isso aqui e mais um pouco
 				if (!CodeEditor.selecting) break;
 				
+				StringBuilder s = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.line1 - 1).getChars())));
+				
 				if (CodeEditor.line1 != CodeEditor.line2) { // se não selecionou uma linha só (selecionou várias)
+					/*int index = 0;
+					
 					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) {
+						int pos = (CodeEditor.line1 - 1) + index > CodeEditor.lines.size() ? CodeEditor.lines.size() : (CodeEditor.line1 - 1) + index;
+						
+						s = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(pos - 1).getChars())));
+						
 						if (i == CodeEditor.line1 - 1) {
-							CodeEditor.lines.get(CodeEditor.line1 - 1).setChars(CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().subList(0, CodeEditor.index1)); 
+							s.delete(CodeEditor.index1, s.length());
+							
+							Main.editor.register(s, pos);
+							
+							index++;
 							
 							continue;
 						}
 						
 						if (i == CodeEditor.line2 - 1) {
-							CodeEditor.lines.get(CodeEditor.line2 - 1).setChars(CodeEditor.delete(0, CodeEditor.index2, CodeEditor.lines.get(CodeEditor.line2 - 1).getChars()));
+							s.delete(0, CodeEditor.index2);
+							
+							Main.editor.register(s, pos);
+							
+							index++;
 							
 							continue;
 						}
 						
-						CodeEditor.lines.remove(CodeEditor.line1 - 1);
-					}
+						CodeEditor.lines.remove(pos - 1);
+						
+						index++;
+					}*/
+					
+					JOptionPane.showMessageDialog(null, "Por enquanto, a Boot IDE suporta somente deletar uma linha por vez!", "Só uma linha!", JOptionPane.OK_OPTION);
+					
+					runCommand("deselect");
+					break;
 				}
 				else {
 					if (CodeEditor.index2 < CodeEditor.index1) {
@@ -210,7 +234,9 @@ public class CommandTerminal extends IDEComponent {
 						break;
 					}
 					
-					CodeEditor.lines.get(CodeEditor.line1 - 1).setChars(CodeEditor.delete(CodeEditor.index1, CodeEditor.index2, CodeEditor.lines.get(CodeEditor.line1 - 1).getChars()));
+					s.delete(CodeEditor.index1, CodeEditor.index2);
+					
+					Main.editor.register(s, CodeEditor.line1 - 1);
 				}
 				
 				runCommand("deselect");
@@ -245,6 +271,10 @@ public class CommandTerminal extends IDEComponent {
 			case "selectmode":
 				CodeEditor.selectMode = true;
 				break;
+				
+			case "generateconfigfile":
+				ListableFile.generateConfigFile("C:/config.conf");
+				break;
 			}
 		}
 		
@@ -276,11 +306,7 @@ public class CommandTerminal extends IDEComponent {
 				}
 				break;
 				
-			/*case "generateconfigfile":
-				ListableFile.generateConfigFile(args[0]);
-				break;
-				
-			case "changefontsize":
+			/*case "changefontsize":
 				if (args[0].equals("default")) {
 					CodeEditor.FONT_SIZE = 16;
 					
