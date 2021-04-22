@@ -255,7 +255,8 @@ public class CodeEditor extends IDEComponent {
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".js") || ext.equals(".h") || ext.equals(".lua") || ext.equals(".rs"))) {			
+		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".js") ||
+			 ext.equals(".h") || ext.equals(".lua") || ext.equals(".rs") || ext.equals(".asm"))) {			
 			String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
 					"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
@@ -471,7 +472,7 @@ public class CodeEditor extends IDEComponent {
 			
 			break;
 			
-		case ".css":
+		case ".css":	// (22/04/2021 - 08:41)
 			String[] tagsss = { "a", "abbr", "acronym", "address", "applet", "area", "article",
 					"aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button",
 					"canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del",
@@ -785,12 +786,25 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".asm":
+			String[] asmRegs = { "rax", "rbx", "rcx", "rdx", "rsi", "rdi", "rbp", "rsp", "r8", "r9", "r10", "r11", "r12", "r13",
+					"r14", "r15", "eax", "ebx", "ecx", "esi", "edi", "ebp", "esp", "r8d", "r9d", "r10d", "r11d", "r12d", "r13d",
+					"r14d", "r15d", "ax", "bx", "cx", "dx", "si", "di", "bp", "sp", "r8w", "r9w", "r10w", "r11w", "r12w", "r13w",
+					"r14w", "r15w", "al", "bl", "cl", "dl", "sil", "dil", "bpl", "spl", "r8b", "r9b", "r10b", "r11b", "r12b",
+					"r13b", "r14b", "r15b", "ah", "bh", "ch", "dh" };
+			
+			for (String s : asmRegs) { // colorir keywords
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+			
 			String[] asmKeys = { "add", "sub", "mov", "mul", "imul", "div", "idiv",
 					"cmp", "jmp", "call", "jxx", "je", "jb", "jbe", "ja", "jae", "jz",
 					"jne", "jnae", "jna", "jnbe", "jnb", "jnz", "jl", "jle", "jg", "jge",
 					"jnl", "jng", "jnge", "dec", "inc", "loop", "loope", "loopz", "loopne", 
-					"loopnz", "lea", "times", "db", "dw", "include", "INCLUDE", "push", "pop",
-					"xor", "and", "or", "test", "not", "int", "ret" };
+					"loopnz", "lea", "times", "db", "dw", "dd", "include", "INCLUDE", "push",
+					"pop", "xor", "and", "or", "test", "not", "int", "ret", "equ", "org" };
 			
 			for (String s : asmKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);

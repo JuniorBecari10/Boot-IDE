@@ -71,7 +71,7 @@ public class Explorer extends IDEComponent {
         
     		g2.setStroke(new BasicStroke(4f));
             g.setColor(Colors.explorerLight);
-            g2.drawLine(10, 198, 270, 198);
+            g2.drawLine(10, 195, width, 195);
         }
         
         Fonts.drawString(folderPath, x + 10, 170, new IDEFont(Fonts.lighterGrayNormal, 15), g);

@@ -20,6 +20,9 @@ public class Screen extends Canvas {
 
     public static final int WIDTH =  (int) getScreenSize().getWidth();
     public static final int HEIGHT = (int) getScreenSize().getHeight() - 50;
+    
+    public static final int MIN_W = 980; // minimized width
+    public static final int MIN_H = 520; // minimized height
 
     public BufferedImage layer;
 
@@ -27,7 +30,7 @@ public class Screen extends Canvas {
     private KeyInput keyInput;
 
     public Screen(String title) {
-        initWindow(title, new Dimension(Screen.WIDTH, Screen.HEIGHT));
+        initWindow(title, new Dimension(MIN_W, MIN_H));
 
         layer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 

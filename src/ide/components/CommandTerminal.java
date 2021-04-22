@@ -182,7 +182,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "del":										// terminar (provavelmente) depois isso aqui e mais um pouco
+			case "del":										// (21/04/2021 - 15:56)
 				if (!CodeEditor.selecting) break;
 				
 				StringBuilder s = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.line1 - 1).getChars())));
