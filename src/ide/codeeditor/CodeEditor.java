@@ -790,7 +790,7 @@ public class CodeEditor extends IDEComponent {
 					"r14", "r15", "eax", "ebx", "ecx", "esi", "edi", "ebp", "esp", "r8d", "r9d", "r10d", "r11d", "r12d", "r13d",
 					"r14d", "r15d", "ax", "bx", "cx", "dx", "si", "di", "bp", "sp", "r8w", "r9w", "r10w", "r11w", "r12w", "r13w",
 					"r14w", "r15w", "al", "bl", "cl", "dl", "sil", "dil", "bpl", "spl", "r8b", "r9b", "r10b", "r11b", "r12b",
-					"r13b", "r14b", "r15b", "ah", "bh", "ch", "dh" };
+					"r13b", "r14b", "r15b", "ah", "bh", "ch", "dh", "edx" };
 			
 			for (String s : asmRegs) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -804,7 +804,7 @@ public class CodeEditor extends IDEComponent {
 					"jne", "jnae", "jna", "jnbe", "jnb", "jnz", "jl", "jle", "jg", "jge",
 					"jnl", "jng", "jnge", "dec", "inc", "loop", "loope", "loopz", "loopne", 
 					"loopnz", "lea", "times", "db", "dw", "dd", "include", "INCLUDE", "push",
-					"pop", "xor", "and", "or", "test", "not", "int", "ret", "equ", "org" };
+					"pop", "xor", "and", "or", "test", "not", "int", "ret", "equ", "org", "section", "global" }; // (22/04/2021 - 09:59)
 			
 			for (String s : asmKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -1178,6 +1178,8 @@ public class CodeEditor extends IDEComponent {
 				index++;
 			}
 		}
+		
+		editing.setSaved(false);
 	}
 	
 	public static void execTerminal() {
