@@ -60,6 +60,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".save",Main.spritesheet.getSprite(176, 32, 16, 16)),		// easter egg! (World's Hardest Game Maker 2)
 			new FileType(".conf",Main.spritesheet.getSprite(192, 32, 16, 16)),
 			new FileType(".mk", Main.spritesheet.getSprite (208, 32, 16, 16)),
+			new FileType(".sh", Main.spritesheet.getSprite (224, 32, 16, 16)),
 			
 			new FileType(".png", Main.spritesheet.getSprite  (0, 48, 16, 16)),
 			new FileType(".jpg", Main.spritesheet.getSprite  (0, 48, 16, 16)),
@@ -603,7 +604,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			String extension = getFileExtension(regent);
 			
 			for (FileType f : types) {
-				if (f.getExtension().equals(extension)) {
+				if (f.getExtension().equalsIgnoreCase(extension)) {
 					g.drawImage(f.getIcon(), x + 5, y, height, height, null);
 					
 					return;

@@ -191,7 +191,7 @@ public class CodeEditor extends IDEComponent {
 		
 		new Thread() {
 			public void run() {
-				if (editing != null || editing.getRegent() != null || editing.getRegent().getRegent() != null)
+				if (editing != null && editing.getRegent() != null && editing.getRegent().getRegent() != null)
 				for (IDELine l : lines) {
 					l.setFonts(
 							automaticColor(
@@ -689,12 +689,12 @@ public class CodeEditor extends IDEComponent {
 					"rem", "start", "time", "type", "vol", "attrib", "chkdsk", "choice", "cmd",
 					"comp", "convert", "driverquery", "expand", "find", "format", "help", "ipconfig",
 					"label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo",
-					"taskkill", "xcopy", "tree", "fc", "title", "set", "VER", "ASSOC", "CD", "CLS",
+					"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "VER", "ASSOC", "CD", "CLS",
 					"COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 					"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
 					"CMD", "COMP", "CONVERT", "DRIVERQUERY", "EXPAND", "FIND", "FORMAT", "HELP", "IPCONFIG",
 					"LABEL", "MORE", "NET", "PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO",
-					"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET" };
+					"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH" };
 			
 			for (String s : batCom) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -723,7 +723,7 @@ public class CodeEditor extends IDEComponent {
 					"goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long",
 					"native", "new", "null", "package", "private", "protected", "public", "return", "short", "static",
 					"super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof",
-					"var", "void", "volatile", "while", "with", "yield" };
+					"var", "void", "volatile", "while", "with", "yield" }; // 23/04/2021 - 09:09
 			
 			for (String s : jsKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -804,7 +804,8 @@ public class CodeEditor extends IDEComponent {
 					"jne", "jnae", "jna", "jnbe", "jnb", "jnz", "jl", "jle", "jg", "jge",
 					"jnl", "jng", "jnge", "dec", "inc", "loop", "loope", "loopz", "loopne", 
 					"loopnz", "lea", "times", "db", "dw", "dd", "include", "INCLUDE", "push",
-					"pop", "xor", "and", "or", "test", "not", "int", "ret", "equ", "org", "section", "global" }; // (22/04/2021 - 09:59)
+					"pop", "xor", "and", "or", "test", "not", "int", "ret", "equ", "org", "section", "global", 
+					"movq", "movzx", "movl", "extern" };
 			
 			for (String s : asmKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -878,6 +879,20 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordNormal, FONT_SIZE), fs);
 			}
 			
+			break;
+			
+		case ".sh":
+			String[] shKeys = { "pwd", "cd", "ls", "cat", "cp", "mv", "mkdir", "rmdir", "rm", "touch", "locate", "find",
+					"grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs", "kill", "ping",
+					"wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd", "userdel",
+					"clear" };
+			
+			for (String s : shKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordNormal, FONT_SIZE), fs);
+			}
 			break;
 		}
 		
