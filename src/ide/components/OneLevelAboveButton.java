@@ -19,6 +19,8 @@ public class OneLevelAboveButton extends IDEComponent {
 	}
 	
 	public void tick() {
+		if (CommandTerminal.expOff) return;
+		
 		if (Explorer.scope == null) return;
 		
 		if (leftClicked()) {
@@ -46,6 +48,8 @@ public class OneLevelAboveButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
+		if (CommandTerminal.expOff) return;
+		
 		if (hovered()) {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x - 2, y - 2, width + 4, height + 4);

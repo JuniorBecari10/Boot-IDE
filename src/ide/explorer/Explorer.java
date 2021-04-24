@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -37,6 +38,8 @@ public class Explorer extends IDEComponent {
     }
     
     public void tick() {
+    	if (CommandTerminal.expOff) return;
+    	
     	super.tick();
     	
     	if (Explorer.scope == null) Explorer.folderPath = "";
@@ -55,6 +58,8 @@ public class Explorer extends IDEComponent {
     }
 
     public void render(Graphics g) {
+    	if (CommandTerminal.expOff) return;
+    	
     	Graphics2D g2 = (Graphics2D) g;
     	
         g.setColor(Colors.explorer);
@@ -71,7 +76,7 @@ public class Explorer extends IDEComponent {
         
     		g2.setStroke(new BasicStroke(4f));
             g.setColor(Colors.explorerLight);
-            g2.drawLine(10, 195, width, 195);
+            g2.drawLine(0, 199, width, 199);
         }
         
         Fonts.drawString(folderPath, x + 10, 170, new IDEFont(Fonts.lighterGrayNormal, 15), g);

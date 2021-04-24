@@ -37,14 +37,15 @@ public class CommandTerminal extends IDEComponent {
 	
 	public static boolean active = false;
 	private int cursorIndex = 0;
+	
+	public static boolean expOff = false;
 
 	private StringBuilder builder;
 	
 	private boolean showCursor;
 	private Animation cursor;
 	
-	public static List<String> usedCommands = new ArrayList<>();
-	public static int idx = 0;
+	private static String lastCommand = "";
 	
 	public CommandTerminal(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
@@ -76,7 +77,7 @@ public class CommandTerminal extends IDEComponent {
 	 * @param command
 	 */
 	public static void runCommand(String command) {
-		usedCommands.add(command);
+		lastCommand = command;
 		
 		String[] tokens = command.split(" ");
 		
@@ -275,6 +276,16 @@ public class CommandTerminal extends IDEComponent {
 			case "generateconfigfile":
 				ListableFile.generateConfigFile("C:/config.conf");
 				break;
+				
+			case "toggleexplorer":
+				if (expOff)
+					Main.editor.setX(280);
+				else
+					Main.editor.setX(0);
+				
+				expOff ^= true;	
+				
+				break;
 			}
 		}
 		
@@ -300,7 +311,9 @@ public class CommandTerminal extends IDEComponent {
 				try {
 					int pos = Integer.parseInt(args[0]) * (CodeEditor.FONT_SIZE + 4);
 					
-					CodeEditor.scrY = pos;
+					double round = Math.round(pos / 3) * 3;
+					
+					CodeEditor.scrY = (int) round - (CodeEditor.FONT_SIZE - 4);
 				} catch (NumberFormatException e) {
 					break;
 				}
@@ -319,6 +332,28 @@ public class CommandTerminal extends IDEComponent {
 					} catch (NumberFormatException | IOException e) {}
 				}
 				break;*/
+				
+			case "insertchar":
+				int ascii = 0;
+				
+				try {
+					ascii = Integer.parseInt(args[0]);
+				} catch (NumberFormatException e) {}
+				
+				char c = (char) ascii;
+				
+				if (!Character.isLetter(c)) break;
+				
+				StringBuilder sb = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				
+				sb.insert(CodeEditor.cursorX, c);
+				
+				Main.editor.register(sb, CodeEditor.cursorY - 1);
+				
+				CodeEditor.cursorX++;
+				CodeEditor.editing.setSaved(false);
+				
+				break;
 			}
 		}
 		else if (args.length == 2) {
@@ -378,23 +413,13 @@ public class CommandTerminal extends IDEComponent {
 		if (KeyInput.isKeyPressed()) {
 			KeyInput.updateKeys();
 			
-			List<String> rvs = usedCommands;
-			
-			Collections.reverse(rvs);
-			
 			if (KeyInput.isControlDown() || KeyInput.isAltDown() || KeyInput.isAltGrDown()) return;
 			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP && idx < rvs.size()) {
-				builder = new StringBuilder(rvs.get(idx));
-				
-				idx++;
-			}
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP)
+				builder = new StringBuilder(lastCommand);
 			
-			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN && idx > 0) {
-				builder = new StringBuilder(rvs.get(idx));
-				
-				idx--;
-			}	
+			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN)
+				builder = new StringBuilder();
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && cursorIndex > 0) {
 				cursorIndex--;
@@ -475,7 +500,7 @@ public class CommandTerminal extends IDEComponent {
 		
 		if (showCursor) {
 			g.setColor(Color.white);
-			g.drawLine(x + (cursorIndex * 14), y + 5, x + (cursorIndex * 14), y + 5 + 18);
+			g.drawLine((x + 2) + (cursorIndex * 14), y + 5, (x + 2) + (cursorIndex * 14), y + 5 + 18);
 		}
 		
 		Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);

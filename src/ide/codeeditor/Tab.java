@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import ide.components.CloseTabButton;
+import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
@@ -29,11 +30,13 @@ import ide.util.Colors;
  */
 public class Tab extends IDEComponent {
 
-	public static final int MIN_X = 77;
+	public static int MIN_X = 77;
 	
 	public static final int Y = 3;
 	public static final int WIDTH = 200;
 	public static final int HEIGHT = 30;
+	
+	public int scrX = 0, scrY = 0;
 	
 	private boolean isSaved = true;
 	
@@ -156,6 +159,8 @@ public class Tab extends IDEComponent {
 	}
 	
 	public void tick() {
+		MIN_X = CommandTerminal.expOff ? -WIDTH : 77;	// -WIDTH é um macete kkk
+		
 		int x = this.x + CodeEditor.tabScr;
 		
 		if (CodeEditor.tabs.indexOf(this) - 1 > -1)
@@ -165,6 +170,11 @@ public class Tab extends IDEComponent {
 		
 		button.setX(((this.x + WIDTH) - 20) + CodeEditor.tabScr);
 		button.tick();
+		
+		if (CodeEditor.editing == this) {
+			scrX = CodeEditor.scrX;
+			scrY = CodeEditor.scrY;
+		}
 		
 		if (leftClicked() && !button.leftClicked()) {
 			CodeEditor.editing = this;
@@ -178,8 +188,8 @@ public class Tab extends IDEComponent {
 			CodeEditor.cursorX = 0;
 			CodeEditor.cursorY = 1;
 			
-			CodeEditor.scrX = 0;
-			CodeEditor.scrY = 0;
+			CodeEditor.scrX = scrX;
+			CodeEditor.scrY = scrY;
 		}
 		
 		if (rightClicked()) {

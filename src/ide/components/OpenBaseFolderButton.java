@@ -26,6 +26,8 @@ public class OpenBaseFolderButton extends IDEComponent {
 	}
 	
 	public void tick() {
+		if (CommandTerminal.expOff) return;
+		
 		super.tick();
 		
 		if (leftClicked()) {
@@ -67,6 +69,8 @@ public class OpenBaseFolderButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
+		if (CommandTerminal.expOff) return;
+		
 		if (hovered()) {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x - 1, y - 1, width + 4, height + 4);

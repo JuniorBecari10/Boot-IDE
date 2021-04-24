@@ -596,7 +596,7 @@ public class CodeEditor extends IDEComponent {
 					"continue", "def", "del", "elif", "else", "except ", "False",
 					"finally", "for", "from", "global", "if", "import ", "in", "is",
 					"lambda", "None", "nonlocal", "not", "or", "pass", "raise", "return",
-					"True", "try", "while ", "with ", "yield" };
+					"True", "try", "while ", "with ", "yield", "self" };
 			for (String s : pyKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s); // descobrir pq algumas coisas não colorem
 				
@@ -617,7 +617,7 @@ public class CodeEditor extends IDEComponent {
 					"continue", "default", "do", "double", "else", "enum", "extern",
 					"float", "for", "goto", "if", "int", "long", "register", "return",
 					"short", "signed", "sizeof", "static", "struct", "switch", "typedef",
-					"union", "unsigned", "void", "volatile", "while", "true", "false", "null" };
+					"union", "unsigned", "void", "volatile", "while", "true", "false", "null", "include" };
 			
 			for (String s : cKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -642,7 +642,8 @@ public class CodeEditor extends IDEComponent {
 					"asm", "dynamic_cast", "namespace", "reinterpret_cast", "bool",
 					"explicit", "new", "static_cast", "false", "catch", "operator", "template",
 					"friend", "private", "class", "this", "inline", "public", "throw", "const_cast",
-					"delete", "mutable", "protected", "true", "try", "typeid", "typename", "using", "virtual", "wchar_t"};
+					"delete", "mutable", "protected", "true", "try", "typeid", "typename", "using", "virtual",
+					"wchar_t", "include", "define" };
 			
 			for (String s : cppKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -804,8 +805,8 @@ public class CodeEditor extends IDEComponent {
 					"jne", "jnae", "jna", "jnbe", "jnb", "jnz", "jl", "jle", "jg", "jge",
 					"jnl", "jng", "jnge", "dec", "inc", "loop", "loope", "loopz", "loopne", 
 					"loopnz", "lea", "times", "db", "dw", "dd", "include", "INCLUDE", "push",
-					"pop", "xor", "and", "or", "test", "not", "int", "ret", "equ", "org", "section", "global", 
-					"movq", "movzx", "movl", "extern" };
+					"pop", "xor", "and", "or", "test", "not", "int", "ret", "equ", "org", "section",
+					"global", "movq", "movzx", "movl", "extern", "syscall" };
 			
 			for (String s : asmKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -1446,6 +1447,23 @@ public class CodeEditor extends IDEComponent {
 			
 			// Detectar atalhos
 			
+			if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.isAltDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + Shift + Alt + T (Fechar Todas as Abas)
+				KeyInput.updateKeys();
+				
+				tabs.clear();
+				editing = null;
+					
+				return;
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + Shift + T (Fechar Aba)
+				KeyInput.updateKeys();
+				
+				editing.close();
+					
+				return;
+			}
+			
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + T (Terminal)
 				KeyInput.updateKeys();
 					
@@ -1492,6 +1510,14 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 					
 				paste();
+					
+				return;
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) { // Ctrl + C (Copiar)
+				KeyInput.updateKeys();
+				
+				CommandTerminal.runCommand("del");
 					
 				return;
 			}
@@ -1682,11 +1708,15 @@ public class CodeEditor extends IDEComponent {
 		
 		if (editing != null) {
 			g.setColor(Colors.explorer);
-			g.fillRect(x, MIN_Y, width, height);
+			g.fillRect(x, MIN_Y, Main.screen.getWidth(), height);
 		}
 		
 		try {
 			for (int i = 0; i < lines.size(); i++) {
+				int yr = MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY;
+				
+				if (yr < 0 || yr > Screen.HEIGHT) continue;
+				
 				char[] cs = toCharArray(lines.get(i).getChars());
 				IDEFont[] fs = toArray(lines.get(i).getFonts());
 				
@@ -1696,7 +1726,7 @@ public class CodeEditor extends IDEComponent {
 				
 				if (i == cursorY - 1) {
 					g.setColor(Colors.backgroundLight);
-					g.fillRect((x + 40), MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, width, FONT_SIZE + (FONT_SIZE / 4));
+					g.fillRect((x + 40), MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4));
 				}
 				
 				Fonts.drawString(String.valueOf(i + 1), x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), g);

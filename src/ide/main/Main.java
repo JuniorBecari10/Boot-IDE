@@ -96,7 +96,7 @@ public class Main implements Runnable, Tickable {
         spritesheet = new Spritesheet(sprsh);
 
         explorer = new Explorer(0, 0, 280, Screen.HEIGHT);
-        editor = new CodeEditor(280, 0, Screen.WIDTH - 280, Screen.HEIGHT);
+        editor = new CodeEditor(280, 0, Screen.WIDTH - 280, Screen.HEIGHT); // 280
         
         logo = new Logo(Screen.WIDTH / 2 + 80, Screen.HEIGHT / 2 - 120, 160, 160, spritesheet.getSprite(32, 0, 16, 16));
         

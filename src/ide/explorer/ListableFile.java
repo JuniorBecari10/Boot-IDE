@@ -509,6 +509,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	}
 	
 	public void tick() {
+		if (CommandTerminal.expOff) return;
+		
 		if (!regent.exists()) {
 			Explorer.toRemove.add(this);
 			
@@ -586,6 +588,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	}
 	
 	public void render(Graphics g) {
+		if (CommandTerminal.expOff) return;
+		
 		if (y < 199) return;
 		
 		if (hovered() && !SetFileName.added && !CommandTerminal.active && !CodeEditor.selectMode) {
