@@ -31,8 +31,15 @@ package ide.main;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
@@ -80,23 +87,26 @@ public class Main implements Runnable, Tickable {
     public static String sprsh = "/spritesheet.png";
     public static String fntnr = "/font.png";
     public static String fntbl = "/bold.png";
+    public static String conffile = "none";
+    
+    private static boolean addButtons = false;
+    
+    public static String[] args;
+    
+    public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings.conf");
     
     public Main() {
+    	if (args == null)
+    		args = new String[10];
+    	
         toolkit = Toolkit.getDefaultToolkit();
         screen = new Screen("Boot IDE");
         
-        /*try {
-        	cnfFile = new File("C:/config.conf");
-        	
-        	ListableFile.readConfigFile(cnfFile);
-        } catch (Throwable e) { ListableFile.generateConfigFile("C:/config.conf"); }*/
-        
         Fonts.initFonts(fntnr, fntbl);
-        
         spritesheet = new Spritesheet(sprsh);
-
+        
         explorer = new Explorer(0, 0, 280, Screen.HEIGHT);
-        editor = new CodeEditor(280, 0, Screen.WIDTH - 280, Screen.HEIGHT); // 280
+        editor = new CodeEditor(280, 0, Screen.WIDTH - 280, Screen.HEIGHT); // esses 2 precisa ser inicializados depois das fontes e da spritesheet
         
         logo = new Logo(Screen.WIDTH / 2 + 80, Screen.HEIGHT / 2 - 120, 160, 160, spritesheet.getSprite(32, 0, 16, 16));
         
@@ -116,6 +126,115 @@ public class Main implements Runnable, Tickable {
         IDEComponent.components.add(logo);
         
         IDEComponent.components.add(openBase);
+        
+        if (settingsFile.exists())
+    		readFile(settingsFile);
+        
+        ListableFile.readConfigFile(conffile);
+        Fonts.initFonts(fntnr, fntbl);
+        spritesheet = new Spritesheet(sprsh);
+        
+        if (addButtons) {
+        	IDEComponent.toAdd.add(Main.oneLevel);
+			IDEComponent.toAdd.add(Main.returnBase);
+			IDEComponent.toAdd.add(Main.newFile);
+			IDEComponent.toAdd.add(Main.newFolder);
+			IDEComponent.toAdd.add(Main.reload);
+        }
+        
+        args[0] = "C:\\Users\\Juninho\\OneDrive\\Documentos\\Coisas Teste\\js\\test.js";
+        
+        //openWith();
+    }
+    
+    /*private void openWith() {
+    	if (args == null || args[0] == null) return;
+    	
+    	try {
+    		File f = new File(args[0]);
+    		
+    		baseFolder = f.getParentFile();
+    		
+    		CodeEditor.tabs.add(new Tab(Tab.MIN_X, ListableFile.search(f.getParentFile())));
+			
+			Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
+			
+			IDEComponent.toAdd.add(Main.oneLevel);
+			IDEComponent.toAdd.add(Main.returnBase);
+			IDEComponent.toAdd.add(Main.newFile);
+			IDEComponent.toAdd.add(Main.newFolder);
+			IDEComponent.toAdd.add(Main.reload);
+    	} catch (NullPointerException e) {
+    		return;
+    	}
+    }*/
+    
+    public static void writeFile(File setFile) {
+    	try {
+			BufferedWriter wr = new BufferedWriter(new FileWriter(setFile));
+			
+			wr.write((fntnr.equals("/font.png")) ? "default\n" : fntnr + "\n");
+			wr.write((fntbl.equals("/bold.png")) ? "default\n" : fntbl + "\n");
+			wr.write((sprsh.equals("/spritesheet.png")) ? "default\n" : sprsh + "\n");
+			wr.write(baseFolder.getPath() + "\n");
+			wr.write(conffile);
+			
+			wr.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public static void readFile(File setFile) {
+    	Path p = setFile.toPath();
+    	
+    	try {
+			List<String> lines = new ArrayList<>();
+			
+			try {
+				lines = Files.readAllLines(p, StandardCharsets.UTF_8); // utf-8
+			}
+			catch (Exception e) {
+				lines = Files.readAllLines(p, StandardCharsets.ISO_8859_1); // ansi
+			}
+			
+			for (int i = 0; i < lines.size(); i++) {
+				String s = lines.get(i);
+				
+				if (i == 0)
+					fntnr = (fntnr.equals("default")) ? s : "/font.png";
+				else if (i == 1)
+					fntbl = (fntbl.equals("default")) ? s : "/bold.png";
+				else if (i == 2)
+					sprsh = (sprsh.equals("default")) ? s : "/spritesheet.png";
+				else if (i == 3) {
+					Fonts.initFonts(fntnr, fntbl);
+			        spritesheet = new Spritesheet(sprsh);
+					
+					baseFolder = new File(s);
+					
+					int index = 0;
+					
+					for (File f : Main.baseFolder.listFiles()) {
+						Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+						
+						index++;
+					}
+					
+					//addButtons = true;
+				}
+				else if (i == 4)
+					conffile = s;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+		IDEComponent.toAdd.add(Main.oneLevel);
+		IDEComponent.toAdd.add(Main.returnBase);
+		IDEComponent.toAdd.add(Main.newFile);
+		IDEComponent.toAdd.add(Main.newFolder);
+		IDEComponent.toAdd.add(Main.reload);
     }
 
     public synchronized void start() {
@@ -182,7 +301,7 @@ public class Main implements Runnable, Tickable {
             render();
             
             try {
-				Thread.sleep(1000/100);
+				Thread.sleep(1000/120);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

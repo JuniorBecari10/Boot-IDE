@@ -23,6 +23,7 @@ public class OpenBaseFolderButton extends IDEComponent {
 		
 		chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		chooser.setDialogTitle("Selecionar Pasta Base");
 	}
 	
 	public void tick() {
@@ -62,6 +63,9 @@ public class OpenBaseFolderButton extends IDEComponent {
 				IDEComponent.toAdd.add(Main.newFile);
 				IDEComponent.toAdd.add(Main.newFolder);
 				IDEComponent.toAdd.add(Main.reload);
+				
+				Main.writeFile(Main.settingsFile);
+	    		Main.readFile(Main.settingsFile);
 				
 				MouseInput.updateMouse();
 			}

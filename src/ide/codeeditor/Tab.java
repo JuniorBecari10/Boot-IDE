@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import ide.components.CloseTabButton;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.explorer.Explorer;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
@@ -91,6 +92,9 @@ public class Tab extends IDEComponent {
 		this.regent = regent;
 	}
 	
+	/**
+	 * Fecha essa Tab.
+	 */
 	public void close() {
 		CodeEditor.toRemove.add(this);
 		CodeEditor.lines.clear();
@@ -155,6 +159,21 @@ public class Tab extends IDEComponent {
 		case "save":
 			save();
 			break;
+			
+		case "showexp":
+			Explorer.files.clear();
+			ListableFile.files.clear();
+			
+			if (ListableFile.search(regent.getRegent()) != null) { // não está diretamente dentro da pasta base, ou seja, não achou nada
+				Explorer.scope = null;
+			}
+			else {
+				Explorer.scope = regent.getParent();
+			}
+			
+			ListableFile.files = ListableFile.loadFolder(regent.getParent());
+			
+			break;
 		}
 	}
 	
@@ -190,6 +209,8 @@ public class Tab extends IDEComponent {
 			
 			CodeEditor.scrX = scrX;
 			CodeEditor.scrY = scrY;
+			
+			save();
 		}
 		
 		if (rightClicked()) {
@@ -198,6 +219,7 @@ public class Tab extends IDEComponent {
 			IDEComponent.addRightClickOption(x, y + height + 3, 320, "Fechar Aba", (s) -> execute(s), "this");
 			IDEComponent.addRightClickOption(x, y + height + 3 + 30, 320, "Fechar todas as abas", (s) -> execute(s), "all");
 			IDEComponent.addRightClickOption(x, y + height + 3 + 60, 320, "Salvar", (s) -> execute(s), "save");
+			IDEComponent.addRightClickOption(x, y + height + 3 + 90, 320, "Mostrar no Explorador", (s) -> execute(s), "showexp");
 		}
 		
 		if (isSaved)
@@ -231,12 +253,19 @@ public class Tab extends IDEComponent {
 	
 		button.render(g);
 		
-		for (FileType f : ListableFile.types)
-			if (f.getExtension().equals(extension)) {
+		for (FileType f : ListableFile.types) {
+			if (f.getExtension().equalsIgnoreCase(extension)) {
 				g.drawImage(f.getIcon(), x + 3, Y + 1, HEIGHT - 3, HEIGHT - 3, null);
 				
 				return;
 			}
+			
+			else if (f.getExtension().equalsIgnoreCase(regent.getRegent().getName())) {
+				g.drawImage(f.getIcon(), x + 3, Y + 1, HEIGHT - 3, HEIGHT - 3, null);
+				
+				return;
+			}
+		}
 		g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 3, Y + 1, HEIGHT, HEIGHT, null);
 	}
 }

@@ -88,18 +88,8 @@ public abstract class IDEComponent implements Tickable, Renderable, Clickable { 
         return sprite;
     }
 
-    // use super.tick(); !!
     @Override
-    public void tick() {
-    	if (!enabled || selected != this) return;
-    	
-        setSelected();
-    }
-
-    private void setSelected() {
-        if (leftClicked())
-            selected = this;
-    }
+    public void tick() {}
     
     protected static final void addRightClickOption(int x, int y, int width, String text, ExecuteCommand command, String clickArg) {
     	toAdd.add(new RightClickOption(x, y, width, text, command, clickArg));

@@ -8,7 +8,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
-import ide.codeeditor.CodeEditor;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
@@ -37,7 +36,7 @@ public class SetFileName extends IDEComponent {
 		
 		this.isFile = isFile;
 		
-		cursor = new Animation(2, true) {
+		cursor = new Animation(2, true) { // 20
 			private boolean flip = false;
 			
 			public void play() {
@@ -57,6 +56,11 @@ public class SetFileName extends IDEComponent {
 	}
 	
 	public void tick() {
+		if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).y + 30;
+		
+		if (text.length() > 20) width = Main.screen.getWidth();
+		else width = Main.explorer.width - 3;
+		
 		if (MouseInput.isLeftPressed() && !leftClicked()) {
 			IDEComponent.toRemove.add(this);
 			added = false;
@@ -119,14 +123,14 @@ public class SetFileName extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.getCharPressed() < 33 || KeyInput.getCharPressed() > 256) return;
-			
-			cursorIndex++;
-			
 			int keyCode = KeyInput.getKeyCodePressed();
 			char c = KeyInput.getCharPressed();
 			
 			c = Main.editor.addAccents(keyCode, c);
+			
+			if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256) return;
+			
+			cursorIndex++;
 			
 			if (text.length() == 0) text.append(c);
 			else text.insert(cursorIndex - 1, c);
@@ -148,7 +152,7 @@ public class SetFileName extends IDEComponent {
 		g2.setStroke(new BasicStroke(2f));
 		
 		if (showCursor)
-			g.fillRect(cursorIndex * (CodeEditor.FONT_SIZE - 2), y, 2, height);
+			g.fillRect(cursorIndex * (16 - 2), y, 2, height);
 		
 		Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
 		Fonts.drawString("[Enter] Criar", MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);

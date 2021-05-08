@@ -24,8 +24,8 @@ public class Fonts {
     public static BufferedImage[] lighterGrayNormal;
     public static BufferedImage[] lighterGrayBold;
 
-    public static BufferedImage[] keywordNormal;
-    public static BufferedImage[] keywordBold;
+    public static BufferedImage[] keywordsNormal;
+    public static BufferedImage[] keywordsBold;
     
     public static BufferedImage[] numbersNormal;
     public static BufferedImage[] numbersBold;
@@ -45,92 +45,99 @@ public class Fonts {
     public static BufferedImage[] variablesNormal;
     public static BufferedImage[] variablesBold;
     
-    public static BufferedImage[] genericsNormal;
-    public static BufferedImage[] genericsBold;
+    public static BufferedImage[] symbolsNormal;
+    public static BufferedImage[] symbolsBold;
+    
+    public static BufferedImage[] select1Normal;
+    public static BufferedImage[] select1Bold;
+    
+    public static BufferedImage[] select2Normal;
+    public static BufferedImage[] select2Bold;
+    
+    public static BufferedImage[] otherNormal;
+    public static BufferedImage[] otherBold;
     
     public static void initFonts(String font1, String font2) {
     	 normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
-    	
+         
     	 lightGrayNormal = Fonts.initFont(normal, Color.white, Colors.textLight);
          lightGrayBold = Fonts.initFont(bold, Color.white, Colors.textLight);
         
-        
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
-        
-        
+         
          lighterGrayNormal = Fonts.initFont(normal, Color.white, Colors.textLighter);
          lighterGrayBold = Fonts.initFont(bold, Color.white, Colors.textLighter);
         
-        
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
         
-        
-         keywordNormal = Fonts.initFont(normal, Color.white, Colors.keywords); // original: (204, 108, 29)
-         keywordBold = Fonts.initFont(bold, Color.white, Colors.keywords);
-        
+         keywordsNormal = Fonts.initFont(normal, Color.white, Colors.keywords); // original: (204, 108, 29)
+         keywordsBold = Fonts.initFont(bold, Color.white, Colors.keywords);
         
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
-        
         
          numbersNormal = Fonts.initFont(normal, Color.white, Colors.numbers);
          numbersBold = Fonts.initFont(bold, Color.white, Colors.numbers);
         
-        
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
-        
         
          methodsNormal = Fonts.initFont(normal, Color.white, Colors.methods);
          methodsBold = Fonts.initFont(bold, Color.white, Colors.methods);
         
-        
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
-        
         
          objectsNormal = Fonts.initFont(normal, Color.white, Colors.objects);
          objectsBold = Fonts.initFont(bold, Color.white, Colors.objects);
         
-        
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
-        
         
          commentsNormal = Fonts.initFont(normal, Color.white, Colors.comments);
          commentsBold = Fonts.initFont(bold, Color.white, Colors.comments);
         
-        
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
-        
         
          stringsNormal = Fonts.initFont(normal, Color.white, Colors.strings);
          stringsBold = Fonts.initFont(bold, Color.white, Colors.strings);
         
-        
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
-        
         
          variablesNormal = Fonts.initFont(normal, Color.white, Colors.variables);
          variablesBold = Fonts.initFont(bold, Color.white, Colors.variables);
         
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+        
+         symbolsNormal = Fonts.initFont(normal, Color.white, Colors.symbols);
+         symbolsBold = Fonts.initFont(bold, Color.white, Colors.symbols);
         
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
         
-        
-         genericsNormal = Fonts.initFont(normal, Color.white, Colors.generics);
-         genericsBold = Fonts.initFont(bold, Color.white, Colors.generics);
-        
+         select1Normal = Fonts.initFont(normal, Color.white, Colors.select1);
+         select1Bold = Fonts.initFont(bold, Color.white, Colors.select1);
         
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
+         
+         select2Normal = Fonts.initFont(normal, Color.white, Colors.select2);
+         select2Bold = Fonts.initFont(bold, Color.white, Colors.select2);
         
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+         
+         otherNormal = Fonts.initFont(normal, Color.white, Colors.other);
+         otherBold = Fonts.initFont(bold, Color.white, Colors.other);
+         
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
     }
     
     /**
@@ -452,7 +459,7 @@ public class Fonts {
     	}
     	
     	for (int i = 0; i < text.length; i++) {
-    		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) < minX) continue;
+    		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) < minX) continue; // TODO talvez aumentar ou diminuir o espaçamento entre letras por parte do usuário, ou não sla
     		
     		g.drawImage(text[i], (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), y, fonts[i].getSize(), fonts[i].getSize(), null);
     	}

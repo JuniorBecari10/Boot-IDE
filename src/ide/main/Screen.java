@@ -3,12 +3,14 @@ package ide.main;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.dnd.DropTarget;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
 import ide.input.KeyInput;
 import ide.input.MouseInput;
+import ide.input.WindowInput;
 
 public class Screen extends Canvas {
     
@@ -23,11 +25,17 @@ public class Screen extends Canvas {
     
     public static final int MIN_W = 980; // minimized width
     public static final int MIN_H = 520; // minimized height
+    
+    @SuppressWarnings("unused")
+	private DropTarget dt;
 
     public BufferedImage layer;
 
     private MouseInput mouseInput;
     private KeyInput keyInput;
+    
+    private WindowInput windowInput;
+    private DragListener dragListener;
 
     public Screen(String title) {
         initWindow(title, new Dimension(MIN_W, MIN_H));
@@ -36,12 +44,18 @@ public class Screen extends Canvas {
 
         mouseInput = new MouseInput();
         keyInput = new KeyInput();
+        windowInput = new WindowInput();
+        dragListener = new DragListener();
 
         addMouseListener(mouseInput);
         addMouseMotionListener(mouseInput);
         addMouseWheelListener(mouseInput);
+        
+        frame.addWindowListener(windowInput);
 
         addKeyListener(keyInput);
+        
+        dt = new DropTarget(frame, dragListener);
     }
 
     private void initWindow(String title, Dimension d) {

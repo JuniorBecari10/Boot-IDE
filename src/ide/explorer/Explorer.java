@@ -24,6 +24,8 @@ public class Explorer extends IDEComponent {
 
 	public static String folderPath = "";
 	
+	public static boolean hoveringListableFile;
+	
     public Explorer(int x, int y, int width, int height) {
         super(x, y, width, height, null);
         
@@ -40,7 +42,13 @@ public class Explorer extends IDEComponent {
     public void tick() {
     	if (CommandTerminal.expOff) return;
     	
-    	super.tick();
+    	if (rightClicked() && !hoveringListableFile) {
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 430, "Abrir Prompt de Comando", (s) -> Main.editor.execute(s), "cmd");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 430, "Abrir Terminal de Comando", (s) -> Main.editor.execute(s), "term");
+			
+			if (Main.baseFolder != null)
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 430, "Abrir Explorador de Arquivos", (s) -> Main.editor.execute(s), "sysexp");
+    	}
     	
     	if (Explorer.scope == null) Explorer.folderPath = "";
     	else if (Explorer.scope.getParent() == null) Explorer.folderPath = Explorer.scope.getRegent().getName();
@@ -55,6 +63,8 @@ public class Explorer extends IDEComponent {
 			if (MouseInput.wheelUp() && first.getY() < 200) first.setY(first.getY() + 30);
 			else if (MouseInput.wheelDown() && last.getY() > 200) first.setY(first.getY() - 30);
 		}
+    	
+    	hoveringListableFile = false;
     }
 
     public void render(Graphics g) {

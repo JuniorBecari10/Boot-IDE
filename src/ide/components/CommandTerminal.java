@@ -13,9 +13,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
+import ide.codeeditor.IDELine;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
@@ -26,6 +28,7 @@ import ide.main.Main;
 import ide.main.Screen;
 import ide.util.Animation;
 import ide.util.Colors;
+import ide.util.Spritesheet;
 
 /**
  * Um terminal onde você coloca os comandos nele e ele executa de acordo com que você mandar. Simples, não?
@@ -47,10 +50,13 @@ public class CommandTerminal extends IDEComponent {
 	
 	private static String lastCommand = "";
 	
+	private static JFileChooser chooser;
+	
 	public CommandTerminal(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
 		
 		builder = new StringBuilder();
+		chooser = new JFileChooser();
 		
 		cursor = new Animation(2, true) {
 			private boolean flip = false;
@@ -184,46 +190,34 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "del":										// (21/04/2021 - 15:56)
-				if (!CodeEditor.selecting) break;
+				if (!CodeEditor.selecting) break;			// 30/04/2021 - 12:42
 				
 				StringBuilder s = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.line1 - 1).getChars())));
 				
 				if (CodeEditor.line1 != CodeEditor.line2) { // se não selecionou uma linha só (selecionou várias)
-					/*int index = 0;
-					
 					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) {
-						int pos = (CodeEditor.line1 - 1) + index > CodeEditor.lines.size() ? CodeEditor.lines.size() : (CodeEditor.line1 - 1) + index;
-						
-						s = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(pos - 1).getChars())));
-						
 						if (i == CodeEditor.line1 - 1) {
-							s.delete(CodeEditor.index1, s.length());
-							
-							Main.editor.register(s, pos);
-							
-							index++;
+							CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(0, CodeEditor.index1));
 							
 							continue;
 						}
 						
 						if (i == CodeEditor.line2 - 1) {
-							s.delete(0, CodeEditor.index2);
-							
-							Main.editor.register(s, pos);
-							
-							index++;
-							
+							CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(i).getChars().size()));
+						
 							continue;
 						}
 						
-						CodeEditor.lines.remove(pos - 1);
+						/*CodeEditor.lines.get(i).setChars(new ArrayList<>());
+						CodeEditor.lines.get(i).setFonts(new ArrayList<>());*/
 						
-						index++;
-					}*/
-					
-					JOptionPane.showMessageDialog(null, "Por enquanto, a Boot IDE suporta somente deletar uma linha por vez!", "Só uma linha!", JOptionPane.OK_OPTION);
+						CodeEditor.linesToRemove.add(CodeEditor.lines.get(i)); // pra evitar concurrentmodificationexception
+					}
 					
 					runCommand("deselect");
+					CodeEditor.setCursorWithinBounds();
+					CodeEditor.editing.setSaved(false);
+					
 					break;
 				}
 				else {
@@ -274,7 +268,14 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "generateconfigfile":
-				ListableFile.generateConfigFile("C:/config.conf");
+				int option = chooser.showSaveDialog(Main.screen.frame);
+				
+				if (option == JFileChooser.APPROVE_OPTION) {
+					File f = chooser.getSelectedFile();
+					
+					ListableFile.generateConfigFile(f);
+				}
+				
 				break;
 				
 			case "toggleexplorer":
@@ -283,7 +284,124 @@ public class CommandTerminal extends IDEComponent {
 				else
 					Main.editor.setX(0);
 				
-				expOff ^= true;	
+				expOff ^= true;	// uma forma de togglar boolean (^ é xor gate)
+				
+				break;
+				
+			case "readconfigfile":
+				option = chooser.showOpenDialog(Main.screen.frame);
+				
+				if (option == JFileChooser.APPROVE_OPTION) {
+					Main.conffile = chooser.getSelectedFile().getPath();
+					ListableFile.readConfigFile(chooser.getSelectedFile().getPath());
+					
+					//JOptionPane.showMessageDialog(null, "As mudanças serão aplicadas na próxima vez que você iniciar a Boot IDE!");
+					
+					Main.cnfFile = chooser.getSelectedFile();
+					
+					Fonts.initFonts(Main.fntnr, Main.fntbl);
+					Main.spritesheet = new Spritesheet(Main.sprsh);
+				}
+				
+				break;
+				
+			case "deleteconfigfile":
+				Main.conffile = "none";
+				
+				Main.writeFile(Main.settingsFile);
+				runCommand("revertcolors");
+				
+				break;
+			
+			case "sysout":
+			case "syso":
+				StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				
+				b.insert(CodeEditor.cursorX, "System.out.println();");
+				
+				Main.editor.register(b, CodeEditor.cursorY - 1);
+				
+				CodeEditor.editing.setSaved(false);
+				
+				CodeEditor.cursorX += 19;
+				
+				break;
+				
+			case "gendiv":
+				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				
+				b.insert(CodeEditor.cursorX, "<div></div>");
+				
+				Main.editor.register(b, CodeEditor.cursorY - 1);
+				
+				CodeEditor.editing.setSaved(false);
+				
+				break;
+				
+			case "genbase":
+				String[] strs = { "<html>", " <head>", "  <title></title>", "  ", "  <meta charset=\"UTF-8\">", " </head>", " <body>", " </body>", "</html>" };
+				
+				for (int i = 0; i < strs.length; i++) {
+					if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
+						CodeEditor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
+					
+					b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
+					
+					b.insert(CodeEditor.cursorX, strs[i]);
+					
+					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
+				}
+				
+				CodeEditor.editing.setSaved(false);
+				
+				break;
+				
+			case "gennewbase":
+				String[] strss = { "<html>", " <head>", "  <title></title>", "  ", "  <meta charset=\"UTF-8\">", "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", " </head>", " <body>", " </body>", "</html>" };
+				
+				for (int i = 0; i < strss.length; i++) {
+					if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
+						CodeEditor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
+					
+					b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
+					
+					b.insert(CodeEditor.cursorX, strss[i]);
+					
+					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
+				}
+				
+				CodeEditor.editing.setSaved(false);
+				
+				break;
+				
+			case "closebasefolder":
+				if (Main.baseFolder == null) return;
+				
+				CodeEditor.tabs.clear();
+				Main.baseFolder = null;
+				
+				Explorer.files.clear();
+				ListableFile.files.clear();
+				
+				Explorer.scope = null;
+				CodeEditor.editing = null;
+				
+				Main.screen.frame.setTitle("Boot IDE");
+				
+				IDEComponent.toRemove.add(Main.oneLevel);
+				IDEComponent.toRemove.add(Main.returnBase);
+				IDEComponent.toRemove.add(Main.newFile);
+				IDEComponent.toRemove.add(Main.newFolder);
+				IDEComponent.toRemove.add(Main.reload);
+				break;
+				
+			case "revertcolors":
+				Colors.revertColors();
+				
+				Fonts.initFonts(Main.fntnr, Main.fntbl);
+				Main.spritesheet = new Spritesheet(Main.sprsh);
+				
+				CodeEditor.FONT_SIZE = 16;
 				
 				break;
 			}
@@ -311,27 +429,28 @@ public class CommandTerminal extends IDEComponent {
 				try {
 					int pos = Integer.parseInt(args[0]) * (CodeEditor.FONT_SIZE + 4);
 					
-					double round = Math.round(pos / 3) * 3;
+					double round = Math.round(pos / ((CodeEditor.FONT_SIZE + 4) * 3)) * ((CodeEditor.FONT_SIZE + 4) * 3);
 					
-					CodeEditor.scrY = (int) round - (CodeEditor.FONT_SIZE - 4);
+					CodeEditor.scrY = (int) round;
 				} catch (NumberFormatException e) {
 					break;
 				}
 				break;
 				
-			/*case "changefontsize":
-				if (args[0].equals("default")) {
+			case "setfontsize":
+				if (args[0].equals("default"))
 					CodeEditor.FONT_SIZE = 16;
-					
-					try {
-						int a0 = Integer.parseInt(args[0]);
+				
+				try {
+					int a0 = Integer.parseInt(args[0]);
 						
-						CodeEditor.FONT_SIZE = a0;
+					CodeEditor.FONT_SIZE = a0;
 						
-						CodeEditor.lines = CodeEditor.readFile(CodeEditor.editing.getRegent().getRegent());
-					} catch (NumberFormatException | IOException e) {}
+					CodeEditor.lines = CodeEditor.readFile(CodeEditor.editing.getRegent().getRegent());
+				} catch (NumberFormatException | IOException e) {
+					CodeEditor.FONT_SIZE = 16;
 				}
-				break;*/
+				break;
 				
 			case "insertchar":
 				int ascii = 0;
@@ -342,7 +461,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				char c = (char) ascii;
 				
-				if (!Character.isLetter(c)) break;
+				//if (!Character.isLetterOrDigit(c)) break; // não vai verificar mais, pode colocar o que quiser aqui :\
 				
 				StringBuilder sb = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
 				
@@ -353,6 +472,30 @@ public class CommandTerminal extends IDEComponent {
 				CodeEditor.cursorX++;
 				CodeEditor.editing.setSaved(false);
 				
+				break;
+				
+			case "gendiv":
+				StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				
+				b.insert(CodeEditor.cursorX, "<div class='" + args[0] + "'></div>");
+				
+				Main.editor.register(b, CodeEditor.cursorY - 1);
+				
+				CodeEditor.editing.setSaved(false);
+				
+				break;
+				
+			case "rename":
+				int option = chooser.showOpenDialog(Main.screen.frame);
+				
+				if (option == JFileChooser.APPROVE_OPTION) {
+					File toRename = chooser.getSelectedFile();
+					
+					String newPath = toRename.getParent() + "\\" + args[0];
+					File newFile = new File(newPath);
+					
+					toRename.renameTo(newFile);
+				}
 				break;
 			}
 		}
@@ -399,6 +542,23 @@ public class CommandTerminal extends IDEComponent {
 				break;*/
 			}
 		}
+		
+		new Thread() {
+			public void run() {
+				if (CodeEditor.editing != null && CodeEditor.editing.getRegent() != null && CodeEditor.editing.getRegent().getRegent() != null)
+				for (IDELine l : CodeEditor.lines) {
+					l.setFonts(
+							CodeEditor.automaticColor(
+									CodeEditor.toCharArray(
+											l.getChars()), ListableFile.getFileExtension(CodeEditor.editing.getRegent().getRegent())));
+				
+				}
+			}
+		}.start();
+		
+		Main.writeFile(Main.settingsFile);
+		
+		CodeEditor.setCursorWithinBounds();
 	}
 	
 	public void tick() {
@@ -469,10 +629,15 @@ public class CommandTerminal extends IDEComponent {
 			if (cursorIndex < 0) cursorIndex = 0;
 			if (cursorIndex > builder.length()) cursorIndex = builder.length();
 			
+			int keyCode = KeyInput.getKeyCodePressed();
+			char c = KeyInput.getCharPressed();
+			
+			c = Main.editor.addAccents(keyCode, c);
+			
 			if (KeyInput.getCharPressed() < 33 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
-			if (builder.length() == 0 || cursorIndex == builder.length()) builder.append(KeyInput.getCharPressed());
-			else builder.insert(cursorIndex, KeyInput.getCharPressed()); // o erro era ordem de parâmetros
+			if (builder.length() == 0 || cursorIndex == builder.length()) builder.append(c);
+			else builder.insert(cursorIndex, c); // o erro era ordem de parâmetros
 			
 			cursorIndex++;
 		}
@@ -492,15 +657,15 @@ public class CommandTerminal extends IDEComponent {
 		g.setColor(Colors.explorerLight);
 		g2.drawRect(x, y, width, height);
 		
-		Fonts.drawString("Insira o comando:", Main.screen.getWidth() / 2 - 100, y - 25, new IDEFont(Fonts.normal, 20), g);
+		Fonts.drawString("Insira o comando:", Main.screen.getWidth() / 2 - 100, y - 25, new IDEFont(Fonts.otherNormal, 20), g);
 		
-		Fonts.drawString(builder.toString(), x, y + 5, new IDEFont(Fonts.normal, 18), g);
+		Fonts.drawString(builder.toString(), x + 4, y + 5, new IDEFont(Fonts.otherNormal, 18), g);
 		
 		g2.setStroke(new BasicStroke(2f));
 		
 		if (showCursor) {
 			g.setColor(Color.white);
-			g.drawLine((x + 2) + (cursorIndex * 14), y + 5, (x + 2) + (cursorIndex * 14), y + 5 + 18);
+			g.drawLine((x + 4) + (cursorIndex * 14), y + 5, (x + 4) + (cursorIndex * 14), y + 5 + 18);
 		}
 		
 		Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);

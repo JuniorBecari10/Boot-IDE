@@ -23,6 +23,8 @@ public class Logo extends IDEComponent {
 		
 		if (Main.baseFolder != null)
 			showMessage1 = false;
+		else
+			showMessage1 = true;
 		
 		show = CodeEditor.editing == null;
 		

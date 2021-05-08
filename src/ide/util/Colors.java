@@ -24,10 +24,37 @@ public class Colors {
     
     public static Color comments = 					  textLighter;
     public static Color strings = 					    textLight;
-    public static Color generics = 						 comments;
+    public static Color symbols = 						 comments;
     
     public static Color select1 = 		  Color.decode("#ff6961");
     public static Color select2 = 		  Color.decode("#ff5147");
+    public static Color selectCursor = 	  			   Color.blue;
+    public static Color other =						  Color.white;
+    
+    public static void revertColors() {
+    	 background = Color.decode("#353b48");
+         backgroundLight = Color.decode("#28394d");
+         explorer = Color.decode("#222f3e");
+
+         explorerLight = Color.decode("#2d3f54");
+         textLight = Color.decode("#95afc0");
+         textLighter = Color.decode("#A9B4C2");
+        
+         objects = 		  Color.decode("#94fa92");
+         methods = 		  Color.decode("#e7d789");
+         numbers = 		  Color.decode("#5485b6");
+         keywords = 		  Color.decode("#95bddc");
+         variables = 	  Color.decode("#66e1f8");
+        
+         comments = 					  textLighter;
+         strings = 					    textLight;
+         symbols = 						 comments;
+        
+         select1 = 		  Color.decode("#ff6961");
+         select2 = 		  Color.decode("#ff5147");
+         selectCursor = 	  Color.blue;
+         other =						  Color.white;
+    }
     
     /**
      * Troca a cor especificada em {@code target} na cor especificada em {@code out}.

@@ -1,0 +1,82 @@
+package ide.input;
+
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
+public class WindowInput implements WindowListener {
+	
+	private static boolean activated;
+	private static boolean closed;
+	private static boolean closing;
+	private static boolean deactivated;
+	private static boolean maximized;
+	private static boolean minimized;
+	private static boolean opened;
+
+	public static boolean isActivated() {
+		return activated;
+	}
+
+	public static boolean isClosed() {
+		return closed;
+	}
+
+	public static boolean isClosing() {
+		return closing;
+	}
+
+	public static boolean isDeactivated() {
+		return deactivated;
+	}
+
+	public static boolean isMaximized() {
+		return maximized;
+	}
+
+	public static boolean isMinimized() {
+		return minimized;
+	}
+
+	public static boolean isOpened() {
+		return opened;
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		activated = true;
+		deactivated = false;
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		closed = true;
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		closing = true;
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		deactivated = true;
+		activated = false;
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		maximized = true;
+		minimized = false;
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		minimized = true;
+		maximized = false;
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		opened = true;
+	}
+}

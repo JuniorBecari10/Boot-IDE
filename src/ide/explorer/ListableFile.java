@@ -4,11 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,17 +33,25 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".class", Main.spritesheet.getSprite(0, 16, 16, 16)),
 			new FileType(".c", Main.spritesheet.getSprite   (16, 16, 16, 16)),
 			new FileType(".cpp", Main.spritesheet.getSprite (32, 16, 16, 16)),
+			new FileType(".cxx", Main.spritesheet.getSprite (32, 16, 16, 16)),
 			new FileType(".cs", Main.spritesheet.getSprite  (48, 16, 16, 16)),
 			new FileType(".py", Main.spritesheet.getSprite  (64, 16, 16, 16)),
 			new FileType(".js", Main.spritesheet.getSprite  (80, 16, 16, 16)),
 			new FileType(".bat", Main.spritesheet.getSprite (96, 16, 16, 16)),
 			new FileType(".h", Main.spritesheet.getSprite  (112, 16, 16, 16)),
+			new FileType(".hxx", Main.spritesheet.getSprite(112, 16, 16, 16)),
+			new FileType(".hpp", Main.spritesheet.getSprite(112, 16, 16, 16)),
 			new FileType(".asm", Main.spritesheet.getSprite(128, 16, 16, 16)),
 			new FileType(".s", Main.spritesheet.getSprite  (128, 16, 16, 16)),
 			new FileType(".lua", Main.spritesheet.getSprite(144, 16, 16, 16)),
 			new FileType(".sql", Main.spritesheet.getSprite(160, 16, 16, 16)),
 			new FileType(".swift",Main.spritesheet.getSprite(176, 16, 16, 16)),
 			new FileType(".rs", Main.spritesheet.getSprite (192, 16, 16, 16)),
+			new FileType(".php", Main.spritesheet.getSprite(208, 16, 16, 16)),
+			new FileType(".kt", Main.spritesheet.getSprite (224, 16, 16, 16)),
+			new FileType(".vue", Main.spritesheet.getSprite(240, 16, 16, 16)),
+			new FileType(".rb", Main.spritesheet.getSprite (256, 16, 16, 16)),
+			new FileType(".ino", Main.spritesheet.getSprite(272, 16, 16, 16)),
 			
 			new FileType(".html", Main.spritesheet.getSprite (0, 32, 16, 16)),
 			new FileType(".htm", Main.spritesheet.getSprite  (0, 32, 16, 16)),
@@ -60,7 +68,10 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".save",Main.spritesheet.getSprite(176, 32, 16, 16)),		// easter egg! (World's Hardest Game Maker 2)
 			new FileType(".conf",Main.spritesheet.getSprite(192, 32, 16, 16)),
 			new FileType(".mk", Main.spritesheet.getSprite (208, 32, 16, 16)),
+			new FileType(".make",Main.spritesheet.getSprite(208, 32, 16, 16)),
 			new FileType(".sh", Main.spritesheet.getSprite (224, 32, 16, 16)),
+			new FileType(".gitignore",Main.spritesheet.getSprite(240, 32, 16, 16)),
+			new FileType(".dockerfile",Main.spritesheet.getSprite(256, 32, 16, 16)),
 			
 			new FileType(".png", Main.spritesheet.getSprite  (0, 48, 16, 16)),
 			new FileType(".jpg", Main.spritesheet.getSprite  (0, 48, 16, 16)),
@@ -71,6 +82,20 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".mp4", Main.spritesheet.getSprite (16, 48, 16, 16)),
 			new FileType(".wmv", Main.spritesheet.getSprite (16, 48, 16, 16)),
 			new FileType(".avi", Main.spritesheet.getSprite (16, 48, 16, 16)),
+			
+			new FileType(".wav", Main.spritesheet.getSprite (32, 48, 16, 16)),
+			new FileType(".mp3", Main.spritesheet.getSprite (32, 48, 16, 16)),
+			new FileType(".ogg", Main.spritesheet.getSprite (32, 48, 16, 16)),
+			
+			new FileType(".otf", Main.spritesheet.getSprite (48, 48, 16, 16)),
+			new FileType(".ttf", Main.spritesheet.getSprite (48, 48, 16, 16)),
+			new FileType(".woff", Main.spritesheet.getSprite (48, 48, 16, 16)),
+			new FileType(".woff2", Main.spritesheet.getSprite (48, 48, 16, 16)),
+			
+			// Specials
+			
+			new FileType("makefile",Main.spritesheet.getSprite(208, 32, 16, 16)),
+			new FileType("dockerfile",Main.spritesheet.getSprite(256, 32, 16, 16)),
 	};
 	
 	private ListableFile parent;
@@ -106,6 +131,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	        return ""; // empty extension
 	    }
 	    return name.substring(lastIndexOf);
+	}
+	
+	public static ListableFile search(File regent) {
+		for (ListableFile l : Explorer.files) {
+			if (l.getRegent().equals(regent))
+				return l;
+		}
+		System.out.println("não achei nada");
+		return null;
 	}
 	
 	/* Como é composto o Arquivo:
@@ -161,15 +195,20 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	 * Colorir Comentários: true
 	 * Colorir Strings: true
 	 * Colorir Genéricos: true
-	 * 
-	 */
-	public static void generateConfigFile(String path) {
-		String s = path + path.contains(".conf") != null ? "" : ".conf";
+	 * */
+	 
+	public static void generateConfigFile(File file) {
+		String pathStr = file.getAbsolutePath();
+		String s = pathStr + pathStr.contains(".conf") != null ? "" : ".conf";
+		
+		System.out.println(s);
+		
+		Path path = Paths.get(s);
 		
 		try {
-			BufferedWriter w = new BufferedWriter(new FileWriter(s));
+			BufferedWriter w = Files.newBufferedWriter(path, StandardCharsets.UTF_8); //new BufferedWriter(new FileWriter(s));
 			
-			w.write("Arquivo de Configurações para Boot IDE\n");
+			w.write("Arquivo de Configurações da Boot IDE\n");
 			w.write("\n");
 			w.write("- Colors\n");
 			w.write("\n");
@@ -189,13 +228,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("generics: default\n");
 			w.write("select1: default\n");
 			w.write("select2: default\n");
+			w.write("selectCursor: default\n");
+			w.write("other: default\n");
 			w.write("\n");
 			w.write("- Files\n");
 			w.write("\n");
 			w.write("spritesheet: default\n");
 			w.write("font-normal: default\n");
 			w.write("font-bold: default\n");
-			w.write("\n");
+			/*w.write("\n");
 			w.write("- Color Mode\n");
 			w.write("\n");
 			w.write("objectsMode: normal\n");
@@ -205,11 +246,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("variablesMode: normal\n");
 			w.write("commentsMode: normal\n");
 			w.write("stringsMode: normal\n");
-			w.write("genericsMode: normal\n");
+			w.write("genericsMode: normal\n");*/
 			w.write("\n");
 			w.write("- Settings\n");
 			w.write("\n");
-			w.write("Lembrar de abas quando fechar a Boot IDE: true\n");
+			/*w.write("Lembrar de abas quando fechar a Boot IDE: true\n");
 			w.write("Lembrar do arquivo de configurações: true\n");
 			w.write("\n");
 			w.write("Colorir Objetos: true\n");
@@ -220,7 +261,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("Colorir Comentários: true\n");
 			w.write("Colorir Comentários: true\n");
 			w.write("Colorir Strings: true\n");
-			w.write("Colorir Genéricos: true\n");
+			w.write("Colorir Genéricos: true\n");*/
+			w.write("font_size: default\n");
 			
 			w.close();
 			
@@ -229,7 +271,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		}
 	}
 	
-	public static void readConfigFile(File f) {
+	public static void readConfigFile(String path) {
+		File f = new File(path);
 		Path p = f.toPath();
 		
 		List<String> lines = new ArrayList<>();
@@ -244,8 +287,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		}
 		
 		for (String s : lines) {
-			if (s.startsWith("-") || s.startsWith("\n")) continue;
-			
+			//if (s.startsWith("-") || s.startsWith("\n")) continue;
 			String[] split = s.split(" ");
 			
 			switch (split[0]) {
@@ -366,12 +408,12 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				
 				break;
 				
-			case "generics:":
+			case "symbols:":
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.generics = Color.decode(split[1]);
+				Colors.symbols = Color.decode(split[1]);
 				
 				break;
 				
@@ -393,6 +435,24 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				
 				break;
 				
+			case "selectCursor:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.selectCursor = Color.decode(split[1]);
+				
+				break;
+				
+			case "other:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				Colors.other = Color.decode(split[1]);
+				
+				break;
+				
 				////////
 				
 			case "spritesheet:":
@@ -402,17 +462,26 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				
 				break;
 				
-			case "font-normal":
+			case "font_normal:":
 				if (split[1].equals("default")) break;
 				
 				Main.fntnr = split[1];
 				
 				break;
 				
-			case "font-bold":
+			case "font_bold:":
 				if (split[1].equals("default")) break;
 				
-				Main.fntbl = split[1]; // TODO
+				Main.fntbl = split[1];
+				
+				break;
+				
+			case "font_size:":
+				if (split[1].equals("default")) break;
+				
+				int size = Integer.parseInt(split[1]);
+				
+				CodeEditor.FONT_SIZE = size;
 				
 				break;
 			}
@@ -448,6 +517,12 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		return files;
 	}
 	
+	/*public static void generateSaveFile() {
+		Path p;
+		
+		BufferedWriter wr = Files.newBufferedWriter(, StandardCharsets.UTF_8);
+	}*/
+	
 	@Override
 	public void execute(String arg) {
 		switch (arg) {
@@ -469,6 +544,20 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		case "run":
 			try {
 				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", regent.getName());
+				File dir = Explorer.scope != null ? Explorer.scope.regent : new File(Explorer.getScopePath());
+				
+				pb.directory(dir);
+				
+				pb.start();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case "runbash":
+			try {
+				ProcessBuilder pb = new ProcessBuilder("sh", "-c", "start", regent.getName());
 				File dir = Explorer.scope != null ? Explorer.scope.regent : new File(Explorer.getScopePath());
 				
 				pb.directory(dir);
@@ -524,6 +613,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			files = ListableFile.loadFolder(Explorer.scope);
 		}
 		
+		if (hovered())
+			Explorer.hoveringListableFile = true;
+		
 		if (leftClicked()) {
 			MouseInput.updateMouse();
 			
@@ -576,8 +668,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			IDEComponent.addRightClickOption((x + width), y + 60, 430, "Abrir Terminal de Comando", (s) -> execute(s), "term");
 			IDEComponent.addRightClickOption((x + width), y + 90, 430, "Abrir Explorador de Arquivos", (s) -> execute(s), "sysexp");
 			
-			if (getFileExtension(regent).equals(".bat"))
+			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
+			
+			if (getFileExtension(regent).equals(".bat") && isWindows)
 				IDEComponent.addRightClickOption((x + width), y + 120, 430, "Executar", (s) -> execute(s), "run");
+			
+			if (getFileExtension(regent).equals(".sh") && !isWindows)
+				IDEComponent.addRightClickOption((x + width), y + 120, 430, "Executar", (s) -> execute(s), "runbash");
 		}
 		
 		int index = Explorer.files.indexOf(this);
@@ -588,6 +685,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	}
 	
 	public void render(Graphics g) {
+		if (y < 200 || y > Main.screen.getHeight()) return;
+		
 		if (CommandTerminal.expOff) return;
 		
 		if (y < 199) return;
@@ -609,6 +708,12 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			
 			for (FileType f : types) {
 				if (f.getExtension().equalsIgnoreCase(extension)) {
+					g.drawImage(f.getIcon(), x + 5, y, height, height, null);
+					
+					return;
+				}
+				
+				else if (f.getExtension().equalsIgnoreCase(regent.getName())) {
 					g.drawImage(f.getIcon(), x + 5, y, height, height, null);
 					
 					return;

@@ -26,7 +26,7 @@ public class NewFolderButton extends IDEComponent {
 			
 			if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).y + 30;
 			
-			SetFileName set = new SetFileName(0, y, Main.explorer.width, 30, false);
+			SetFileName set = new SetFileName(0, y, Main.explorer.width - 3, 30, false);
 			
 			if (SetFileName.added) return;
 			

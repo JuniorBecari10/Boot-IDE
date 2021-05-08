@@ -24,9 +24,9 @@ public class NewFileButton extends IDEComponent {
 			
 			int y = 200;
 			
-			if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).y + 30; // fazer as funções do clique direito e renomear e deletar
+			if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).y + 30;
 			
-			SetFileName set = new SetFileName(0, y, Main.explorer.width, 30, true);
+			SetFileName set = new SetFileName(0, y, Main.explorer.width - 3, 30, true);
 			
 			if (SetFileName.added) return;
 			
