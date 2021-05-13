@@ -72,7 +72,6 @@ public class DragListener implements DropTargetListener {
 		          		if (files.get(0).isDirectory()) {
 		          			Main.baseFolder = files.get(0);
 		          			
-		          			Explorer.files.clear();
 							ListableFile.files.clear();
 							
 							Explorer.scope = null;
@@ -80,7 +79,7 @@ public class DragListener implements DropTargetListener {
 			        	  	int index = 0;
 							
 							for (File f : Main.baseFolder.listFiles()) {
-								Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+								ListableFile.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
 								
 								index++;
 							}

@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
@@ -29,13 +30,15 @@ import ide.util.Colors;
  * @author Juninho
  *
  */
-public class Tab extends IDEComponent {
+public class Tab extends IDEComponent implements Serializable {
 
-	public static int MIN_X = 77;
+	private static final long serialVersionUID = 1L;
+
+	public static transient int MIN_X = 77;
 	
-	public static final int Y = 3;
-	public static final int WIDTH = 200;
-	public static final int HEIGHT = 30;
+	public static transient final int Y = 3;
+	public static transient final int WIDTH = 200;
+	public static transient final int HEIGHT = 30;
 	
 	public int scrX = 0, scrY = 0;
 	
@@ -45,8 +48,14 @@ public class Tab extends IDEComponent {
 	
 	private ListableFile regent;
 	
-	private BufferedImage closeSpr = Main.spritesheet.getSprite(16, 0, 5, 5);
-	private BufferedImage notSavedSpr = Main.spritesheet.getSprite(16, 5, 5, 5);
+	private transient BufferedImage closeSpr = Main.spritesheet.getSprite(16, 0, 5, 5);
+	private transient BufferedImage notSavedSpr = Main.spritesheet.getSprite(16, 5, 5, 5);
+	
+	public Tab() {
+		super(MIN_X, Y, WIDTH, HEIGHT, null);
+		
+		regent = null;
+	}
 	
 	public Tab(int x, ListableFile regent) {
 		super(x, Y, WIDTH, HEIGHT, null);
@@ -64,7 +73,7 @@ public class Tab extends IDEComponent {
 		
         Rectangle mouse = new Rectangle(MouseInput.getMouseX(), MouseInput.getMouseY(), 1, 1);
         Rectangle comp = new Rectangle(x, y, width, height);
-
+        
         return mouse.intersects(comp);
     }
 
@@ -164,12 +173,11 @@ public class Tab extends IDEComponent {
 			Explorer.files.clear();
 			ListableFile.files.clear();
 			
-			if (ListableFile.search(regent.getRegent()) != null) { // não está diretamente dentro da pasta base, ou seja, não achou nada
+			if (ListableFile.search(regent.getRegent(), regent.getRegent().getParentFile()) != null) // não está diretamente dentro da pasta base, ou seja, não achou nada
 				Explorer.scope = null;
-			}
-			else {
+			
+			else
 				Explorer.scope = regent.getParent();
-			}
 			
 			ListableFile.files = ListableFile.loadFolder(regent.getParent());
 			
@@ -178,6 +186,9 @@ public class Tab extends IDEComponent {
 	}
 	
 	public void tick() {
+		if (!regent.getRegent().exists())
+			close();
+		
 		MIN_X = CommandTerminal.expOff ? -WIDTH : 77;	// -WIDTH é um macete kkk
 		
 		int x = this.x + CodeEditor.tabScr;

@@ -5,8 +5,10 @@ import java.awt.Graphics;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -26,9 +28,11 @@ import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
 
-public class ListableFile extends IDEComponent implements ExecuteCommand {
+public class ListableFile extends IDEComponent implements ExecuteCommand, Serializable {
 	
-	public static FileType[] types = {
+	private static final long serialVersionUID = 1L;
+
+	public static transient FileType[] types = {
 			new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16)),
 			new FileType(".class", Main.spritesheet.getSprite(0, 16, 16, 16)),
 			new FileType(".c", Main.spritesheet.getSprite   (16, 16, 16, 16)),
@@ -38,6 +42,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".py", Main.spritesheet.getSprite  (64, 16, 16, 16)),
 			new FileType(".js", Main.spritesheet.getSprite  (80, 16, 16, 16)),
 			new FileType(".bat", Main.spritesheet.getSprite (96, 16, 16, 16)),
+			new FileType(".com", Main.spritesheet.getSprite (96, 16, 16, 16)),
 			new FileType(".h", Main.spritesheet.getSprite  (112, 16, 16, 16)),
 			new FileType(".hxx", Main.spritesheet.getSprite(112, 16, 16, 16)),
 			new FileType(".hpp", Main.spritesheet.getSprite(112, 16, 16, 16)),
@@ -45,13 +50,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".s", Main.spritesheet.getSprite  (128, 16, 16, 16)),
 			new FileType(".lua", Main.spritesheet.getSprite(144, 16, 16, 16)),
 			new FileType(".sql", Main.spritesheet.getSprite(160, 16, 16, 16)),
-			new FileType(".swift",Main.spritesheet.getSprite(176, 16, 16, 16)),
+			new FileType(".swift",Main.spritesheet.getSprite(176,16, 16, 16)),
 			new FileType(".rs", Main.spritesheet.getSprite (192, 16, 16, 16)),
 			new FileType(".php", Main.spritesheet.getSprite(208, 16, 16, 16)),
 			new FileType(".kt", Main.spritesheet.getSprite (224, 16, 16, 16)),
 			new FileType(".vue", Main.spritesheet.getSprite(240, 16, 16, 16)),
 			new FileType(".rb", Main.spritesheet.getSprite (256, 16, 16, 16)),
 			new FileType(".ino", Main.spritesheet.getSprite(272, 16, 16, 16)),
+			new FileType(".ts", Main.spritesheet.getSprite (288, 16, 16, 16)),
 			
 			new FileType(".html", Main.spritesheet.getSprite (0, 32, 16, 16)),
 			new FileType(".htm", Main.spritesheet.getSprite  (0, 32, 16, 16)),
@@ -60,6 +66,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".json", Main.spritesheet.getSprite(48, 32, 16, 16)),
 			new FileType(".md", Main.spritesheet.getSprite  (64, 32, 16, 16)),
 			new FileType(".txt", Main.spritesheet.getSprite (80, 32, 16, 16)),
+			new FileType(".log", Main.spritesheet.getSprite (80, 32, 16, 16)),
 			new FileType(".pdf", Main.spritesheet.getSprite (96, 32, 16, 16)),
 			new FileType(".jar", Main.spritesheet.getSprite(112, 32, 16, 16)),
 			new FileType(".exe", Main.spritesheet.getSprite(128, 32, 16, 16)),
@@ -70,8 +77,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".mk", Main.spritesheet.getSprite (208, 32, 16, 16)),
 			new FileType(".make",Main.spritesheet.getSprite(208, 32, 16, 16)),
 			new FileType(".sh", Main.spritesheet.getSprite (224, 32, 16, 16)),
-			new FileType(".gitignore",Main.spritesheet.getSprite(240, 32, 16, 16)),
-			new FileType(".dockerfile",Main.spritesheet.getSprite(256, 32, 16, 16)),
+			new FileType(".gitignore",Main.spritesheet.getSprite(240,32,16,16)),
+			new FileType(".dockerfile",Main.spritesheet.getSprite(256,32,16,16)),
 			
 			new FileType(".png", Main.spritesheet.getSprite  (0, 48, 16, 16)),
 			new FileType(".jpg", Main.spritesheet.getSprite  (0, 48, 16, 16)),
@@ -89,8 +96,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			
 			new FileType(".otf", Main.spritesheet.getSprite (48, 48, 16, 16)),
 			new FileType(".ttf", Main.spritesheet.getSprite (48, 48, 16, 16)),
-			new FileType(".woff", Main.spritesheet.getSprite (48, 48, 16, 16)),
-			new FileType(".woff2", Main.spritesheet.getSprite (48, 48, 16, 16)),
+			new FileType(".woff",Main.spritesheet.getSprite (48, 48, 16, 16)),
+			new FileType(".woff2",Main.spritesheet.getSprite(48, 48, 16, 16)),
 			
 			// Specials
 			
@@ -133,8 +140,37 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	    return name.substring(lastIndexOf);
 	}
 	
+	public static boolean isPath(String path) {
+		try {
+			Paths.get(path);
+		} catch (InvalidPathException | NullPointerException e) {
+			return false;
+		}
+		
+		return true;
+	}
+	
 	public static ListableFile search(File regent) {
 		for (ListableFile l : Explorer.files) {
+			if (l.getRegent().equals(regent))
+				return l;
+		}
+		System.out.println("não achei nada");
+		return null;
+	}
+	
+	public static ListableFile search(File regent, File folder) {
+		List<ListableFile> fl = new ArrayList<>();
+		
+		int index = 0;
+		
+		for (File f : folder.listFiles()) {
+			fl.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+			
+			index++;
+		}
+		
+		for (ListableFile l : fl) {
 			if (l.getRegent().equals(regent))
 				return l;
 		}
@@ -523,6 +559,23 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		BufferedWriter wr = Files.newBufferedWriter(, StandardCharsets.UTF_8);
 	}*/
 	
+	public static String getFileNameWithoutExtension(File file) {
+        String fileName = "";
+ 
+        try {
+            if (file != null && file.exists()) {
+                String name = file.getName();
+                fileName = name.replaceFirst("[.][^.]+$", "");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            fileName = "";
+        }
+ 
+        return fileName;
+ 
+    }
+	
 	@Override
 	public void execute(String arg) {
 		switch (arg) {
@@ -600,7 +653,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	public void tick() {
 		if (CommandTerminal.expOff) return;
 		
-		if (!regent.exists()) {
+		if (!regent.exists() && CodeEditor.tabs != null) {
 			Explorer.toRemove.add(this);
 			
 			for (Tab t : CodeEditor.tabs)
@@ -626,7 +679,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					Explorer.toRemove.addAll(Explorer.files);
 			}
 			
-			if (regent.isFile()) {
+			if (regent.isFile() && CodeEditor.tabs != null) {
 				int lastX = CodeEditor.tabs.size() > 0 ? CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() : Tab.MIN_X;
 				
 				new Thread() {

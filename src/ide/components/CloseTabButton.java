@@ -3,10 +3,13 @@ package ide.components;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 import ide.codeeditor.Tab;
 
-public class CloseTabButton extends IDEComponent {
+public class CloseTabButton extends IDEComponent implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Tab regent;
 

@@ -305,7 +305,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "deleteconfigfile":
+			case "releaseconfigfile":		// ÚLTIMO: 13/05/2021 - 08:30
 				Main.conffile = "none";
 				
 				Main.writeFile(Main.settingsFile);
@@ -327,6 +327,32 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
+			case "cout":
+				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				
+				b.insert(CodeEditor.cursorX, "cout << \"\" << endl;");
+				
+				Main.editor.register(b, CodeEditor.cursorY - 1);
+				
+				CodeEditor.editing.setSaved(false);
+				
+				CodeEditor.cursorX += 19;
+				
+				break;
+				
+			case "syserr":
+				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				
+				b.insert(CodeEditor.cursorX, "System.err.println();");
+				
+				Main.editor.register(b, CodeEditor.cursorY - 1);
+				
+				CodeEditor.editing.setSaved(false);
+				
+				CodeEditor.cursorX += 19;
+				
+				break;
+				
 			case "gendiv":
 				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
 				
@@ -338,25 +364,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "genbase":
-				String[] strs = { "<html>", " <head>", "  <title></title>", "  ", "  <meta charset=\"UTF-8\">", " </head>", " <body>", " </body>", "</html>" };
-				
-				for (int i = 0; i < strs.length; i++) {
-					if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
-						CodeEditor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
-					
-					b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
-					
-					b.insert(CodeEditor.cursorX, strs[i]);
-					
-					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
-				}
-				
-				CodeEditor.editing.setSaved(false);
-				
-				break;
-				
-			case "gennewbase":
+			case "gennewhtmlbase":
 				String[] strss = { "<html>", " <head>", "  <title></title>", "  ", "  <meta charset=\"UTF-8\">", "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", " </head>", " <body>", " </body>", "</html>" };
 				
 				for (int i = 0; i < strss.length; i++) {
@@ -496,6 +504,77 @@ public class CommandTerminal extends IDEComponent {
 					
 					toRename.renameTo(newFile);
 				}
+				break;
+				
+			case "genbase":
+				String[] strs = { };
+				
+				String classname = ListableFile.getFileNameWithoutExtension(CodeEditor.editing.getRegent().getRegent());
+				
+				switch (args[0].toLowerCase()) {
+				case "html":
+					String[] htmlstrs = { "<html>", " <head>", "  <title></title>", "  ", "  <meta charset=\"UTF-8\">", " </head>", " <body>", " </body>", "</html>" };
+					
+					strs = htmlstrs;
+					
+					break;
+					
+				case "css":
+					String[] cssstrs = { "* {", "margin: 0;", "padding: 0;", "box-sizing: border-box;", "font-family: sans-serif;", "}"};
+					
+					strs = cssstrs;
+					
+					break;
+					
+				case "java":
+					String[] javastrs = { "public class " + classname + " {", "", " public static void main(String[] args) {", "  ", " }", "}"};
+					
+					strs = javastrs;
+					
+					break;
+					
+				case "cs":
+					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname, "{", " ", " public class Program", " {", " ", "  static void main(String[] args)", "  {", "   ", "  }", " }", "}"};
+					
+					strs = csstrs;
+					
+					break;
+					
+				case "cpp":
+					String[] cppstrs = { "#include <iostream>", "", "using namespace std;", "", "int main()", "{", " ", " return 0;", "}"};
+					
+					strs = cppstrs;
+					
+					break;
+					
+				case "c":
+					String[] cstrs = { "#include <stdio.h>", "", "int main()", "{", " ", " return 0;", "}"};
+					
+					strs = cstrs;
+					
+					break;
+					
+				case "ino":
+					String[] inotrs = { "void setup()", "{", " ", "}", "", "void loop()", "{", " ", "}"};
+					
+					strs = inotrs;
+					
+					break;
+				}
+				
+				for (int i = 0; i < strs.length; i++) {
+					if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
+						CodeEditor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
+					
+					b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
+					
+					b.insert(CodeEditor.cursorX, strs[i]);
+					
+					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
+				}
+				
+				CodeEditor.editing.setSaved(false);
+				
 				break;
 			}
 		}

@@ -122,7 +122,7 @@ public class CodeEditor extends IDEComponent {
 		}.start();
 		
 		new Thread() {
-			public void run() {
+			public void run() { // 25 pra frente com o explorer desligado, isso é uma gambiarrinha viu
 				while (true) {
 					my = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
 					mx = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE));
@@ -132,6 +132,8 @@ public class CodeEditor extends IDEComponent {
 					
 					while (MIN_Y + my * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 > MouseInput.getMouseY()) // o mesmo para aqui, só que com o y
 						my--;
+					
+					if (CommandTerminal.expOff) mx += 25; // TODO acabar de arrumar isso
 
 					mx = setWithinBounds(mx, my, true);
 					my = setWithinBounds(mx, my, false);
@@ -304,7 +306,8 @@ public class CodeEditor extends IDEComponent {
 		
 		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".cxx") || ext.equals(".js") ||
 			 ext.equals(".h") || ext.equals(".hpp") || ext.equals(".hxx") || ext.equals(".lua") || ext.equals(".rs") || ext.equals(".asm") ||
-			 ext.equals(".php") || ext.equals(".kt") || ext.equals(".vue") || ext.equals(".py") || ext.equals(".rb") || ext.equals(".ino"))) {		
+			 ext.equals(".php") || ext.equals(".kt") || ext.equals(".vue") || ext.equals(".py") || ext.equals(".rb") || ext.equals(".ino") ||
+			 ext.equals(".ts") || ext.equals(".swift"))) {		
 			String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
 					"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
@@ -457,7 +460,11 @@ public class CodeEditor extends IDEComponent {
 					"output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script",
 					"section", "select", "small", "source", "span", "strike", "strong", "style", "sup", "svg", "table",
 					"tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt",
-					"u", "ul", "var", "video", "wbr" };
+					"u", "ul", "var", "video", "wbr",
+					// Especiais
+					
+					"sans-serif", "border-box" // dps faço mais desses
+			};
 			
 			String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
 					"animation-duration", "animation-fill-mode", "animation-iteration-count", "animation-name",
@@ -611,7 +618,7 @@ public class CodeEditor extends IDEComponent {
 					"continue", "default", "do", "double", "else", "enum", "extern",
 					"float", "for", "goto", "if", "int", "long", "register", "return",
 					"short", "signed", "sizeof", "static", "struct", "switch", "typedef",
-					"union", "unsigned", "void", "volatile", "while", "true", "false", "null", "include" };
+					"union", "unsigned", "void", "volatile", "while", "true", "false", "null", "include", "string" };
 			
 			for (String s : cKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
@@ -652,7 +659,7 @@ public class CodeEditor extends IDEComponent {
 					"explicit", "new", "static_cast", "false", "catch", "operator", "template",
 					"friend", "private", "class", "this", "inline", "public", "throw", "const_cast",
 					"delete", "mutable", "protected", "true", "try", "typeid", "typename", "using", "virtual",
-					"wchar_t", "include", "define" };
+					"wchar_t", "include", "define", "string" };
 			
 			for (String s : cppKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
@@ -680,7 +687,7 @@ public class CodeEditor extends IDEComponent {
 					"lock", "params", "ref", "out", "using", "alias", "await", "sizeof", "typeof",
 					"stackalloc", "is", "base", "this", "null", "false", "true", "value", "void", "bool", "byte",
 					"char", "class", "decimal", "double", "enum", "float", "int", "long", "sbyte", "short", "string",
-					"struct", "uint", "ulong", "ushort", "add", "var", "dynamic", "global", "set", "namespace" };
+					"struct", "uint", "ulong", "ushort", "add", "var", "dynamic", "global", "set", "namespace", "object", "as" };
 			
 			for (String s : csKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
@@ -695,7 +702,8 @@ public class CodeEditor extends IDEComponent {
 				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			
 			break;
-			
+		
+		case ".com":
 		case ".bat":
 			extType = "Batch";
 			foundExt = true;
@@ -886,9 +894,14 @@ public class CodeEditor extends IDEComponent {
 			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 			break;
 		
-		case ".txt":
-			extType = "Arquivo de Texto";
+		case ".log":
+			extType = "Arquivo de Log";
 			foundExt = true;
+		case ".txt":
+			if (!foundExt) {
+				extType = "Arquivo de Texto";
+				foundExt = true;
+				}
 			
 			for (int i = 0; i < chars.length; i++) // colorir tudo de branco
 				fs.add(DEFAULT_FONT);
@@ -995,6 +1008,31 @@ public class CodeEditor extends IDEComponent {
 			
 			if (finals.size() > 0)
 				fs = color(0, finals.get(0), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			break;
+			
+		case ".ts":
+			extType = "TypeScript";
+			foundExt = true;
+			
+			String[] tsKeys = { "break", "as", "any", "switch", "case", "if", "throw",
+					"else", "var", "number", "string", "get", "module", "type", "instanceof",
+					"typeof", "public", "private", "enum", "export", "finally", "for", "while",
+					"void", "null", "super", "this", "new", "in", "return", "true", "false",
+					"extends", "static", "let", "package", "implements", "interface", "function",
+					"new", "try", "yield", "const", "continue", "do", "catch" };
+			
+			for (String s : tsKeys) { // colorir keywordss
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+			
+			indxs = findWord(new String(chars), "//"); // colorir comentários de uma linha
+			
+			if (fs.size() == 0 || indxs.size() == 0) break;
+			
+			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			break;
 			
 		case ".json":
@@ -1149,7 +1187,8 @@ public class CodeEditor extends IDEComponent {
 		}
 		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".cxx") || ext.equals(".js") ||
 				 ext.equals(".h") || ext.equals(".hpp") || ext.equals(".hxx") || ext.equals(".lua") || ext.equals(".rs") || ext.equals(".asm") ||
-				 ext.equals(".php") || ext.equals(".kt") || ext.equals(".vue") || ext.equals(".py") || ext.equals(".ino"))) {
+				 ext.equals(".php") || ext.equals(".kt") || ext.equals(".vue") || ext.equals(".py") || ext.equals(".rb") || ext.equals(".ino") ||
+				 ext.equals(".ts") || ext.equals(".swift"))) {
 		
 			indxs = findWord(new String(chars), "(");
 			
@@ -1173,6 +1212,23 @@ public class CodeEditor extends IDEComponent {
 				
 				fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
 			}
+			
+			/*indxs = findWord(new String(chars), "=");
+			
+			for (Integer i : indxs) {
+				int c = i;
+				int len = 0;
+				
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0 &&
+						chars[c] != ' ') {
+					c--;
+					len++;
+				}
+				
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}*/ // n deu :(
 		}
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1617,6 +1673,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public static void verifyDuplicateTabs() {
+		if (tabs == null || tabs.size() == 0) return;
+		
 		for (int i = 0; i < tabs.size(); i++)
 			for (int j = 0; j < tabs.size(); j++) {
 				Tab tabi = tabs.get(i);
@@ -1630,7 +1688,9 @@ public class CodeEditor extends IDEComponent {
 			}
 	}
 	
-	public void tick() { // arrumar o bug da font size alterar quando digita e às vezes o explorer não limpa os listablefile
+	public void tick() {
+		if (tabs == null) tabs = new ArrayList<>();
+		
 		verifyDuplicateTabs();
 		
 		if (FONT_SIZE < 1)
@@ -1724,7 +1784,7 @@ public class CodeEditor extends IDEComponent {
 			clipboard = "";
 		}
 		
-		if (MouseInput.hovered(x, 0, Main.screen.getWidth(), Tab.HEIGHT) && tabs.size() > 0) {
+		if (MouseInput.hovered(x, 0, Main.screen.getWidth(), Tab.HEIGHT) && tabs != null && tabs.size() > 0) {
 			if (MouseInput.isMouseRolling()) {
 				if (MouseInput.wheelUp() && tabScr < 0)
 					tabScr += 203;						// 3 é a compensação para as tab n se distanciar
@@ -1889,6 +1949,14 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_X) { // Ctrl + X (Cortar)
+				KeyInput.updateKeys();
+				
+				CommandTerminal.runCommand("cut");
+					
+				return;
+			}
+			
 			if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.isAltDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + Shift + Alt + T (Fechar Todas as Abas)
 				KeyInput.updateKeys();
 				
@@ -1927,7 +1995,7 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_S) { // Ctrl + S (Salvar)
 				KeyInput.updateKeys();
 					
-				editing.save(); // ÚLTIMO - 08/05/2021 - 16:12
+				editing.save(); // 08/05/2021 - 16:12
 					
 				return;
 			}
@@ -2118,17 +2186,19 @@ public class CodeEditor extends IDEComponent {
 		} // <-
 		} // não ligue pra isso :)
 		
-		for (Tab t : tabs)
-			t.tick();
+		if (tabs != null) {
+			for (Tab t : tabs)
+				t.tick();
 		
-		tabs.addAll(toAdd);
-		toAdd.clear();
-		
-		tabs.removeAll(toRemove);
-		toRemove.clear();
-		
-		lines.removeAll(linesToRemove);
-		linesToRemove.clear();
+			tabs.addAll(toAdd);
+			toAdd.clear();
+			
+			tabs.removeAll(toRemove);
+			toRemove.clear();
+			
+			lines.removeAll(linesToRemove);
+			linesToRemove.clear();
+		}
 		
 		if (scrX < 0) scrX = 0;
 		if (scrY < 0) scrY = 0;
@@ -2146,7 +2216,7 @@ public class CodeEditor extends IDEComponent {
 		g.setColor(Colors.background);
 		g.fillRect(x, y, width, height);
 		
-		if (tabs.size() == 0) return;
+		if (tabs == null || tabs.size() == 0) return;
 		
 		for (Tab t : tabs)
 			t.render(g);
@@ -2155,6 +2225,23 @@ public class CodeEditor extends IDEComponent {
 			g.setColor(Colors.explorer);
 			g.fillRect(x, MIN_Y, Main.screen.getWidth(), height);
 		}
+		
+//		if (editing != null &&																	// não vamos mostrar imagens aqui
+//			(ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".png") || // se for uma imagem
+//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".jpg") ||
+//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".jpeg")||
+//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".gif") ||
+//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".bmp"))) {
+//			try {
+//				BufferedImage get = ImageIO.read(getClass().getResource(editing.getRegent().getRegent().getAbsolutePath())); // esse get tá null
+//				
+//				g.drawImage(get, (x + (width / 2)) - get.getWidth(), (y + (height / 2)) - get.getHeight(), get.getWidth() * 2, get.getHeight() * 2, null);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//			
+//			return; // pra n renderizar texto, aquele monte de coisa estranha
+//		}
 		
 		try {
 			for (int i = 0; i < lines.size(); i++) {

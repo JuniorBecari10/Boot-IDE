@@ -42,6 +42,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ide.codeeditor.CodeEditor;
+import ide.codeeditor.Tab;
+import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.Logo;
 import ide.components.NewFileButton;
@@ -54,6 +56,7 @@ import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.input.MouseInput;
+import ide.input.WindowInput;
 import ide.util.Colors;
 import ide.util.Spritesheet;
 import ide.util.Tickable;
@@ -89,7 +92,7 @@ public class Main implements Runnable, Tickable {
     public static String fntbl = "/bold.png";
     public static String conffile = "none";
     
-    private static boolean addButtons = false;
+    private static int tabindex = -1;
     
     public static String[] args;
     
@@ -134,16 +137,6 @@ public class Main implements Runnable, Tickable {
         Fonts.initFonts(fntnr, fntbl);
         spritesheet = new Spritesheet(sprsh);
         
-        if (addButtons) {
-        	IDEComponent.toAdd.add(Main.oneLevel);
-			IDEComponent.toAdd.add(Main.returnBase);
-			IDEComponent.toAdd.add(Main.newFile);
-			IDEComponent.toAdd.add(Main.newFolder);
-			IDEComponent.toAdd.add(Main.reload);
-        }
-        
-        args[0] = "C:\\Users\\Juninho\\OneDrive\\Documentos\\Coisas Teste\\js\\test.js";
-        
         //openWith();
     }
     
@@ -177,9 +170,25 @@ public class Main implements Runnable, Tickable {
 			wr.write((fntbl.equals("/bold.png")) ? "default\n" : fntbl + "\n");
 			wr.write((sprsh.equals("/spritesheet.png")) ? "default\n" : sprsh + "\n");
 			wr.write(baseFolder.getPath() + "\n");
-			wr.write(conffile);
+			wr.write(conffile + "\n");
+			wr.write(CodeEditor.tabs.indexOf(CodeEditor.editing) + "\n");
+			wr.write(CodeEditor.scrX + "\n");
+			wr.write(CodeEditor.scrY + "\n");
+			wr.write(CodeEditor.tabScr + "\n");
+			wr.write(CommandTerminal.expOff + "\n");
+			
+			if (CodeEditor.tabs.size() > 0) {
+				for (int i = 0; i < CodeEditor.tabs.size(); i++) {
+					Tab t = CodeEditor.tabs.get(i);
+					
+					String s = t.getRegent().getRegent().getAbsolutePath().charAt(0) < 10 ? t.getRegent().getRegent().getAbsolutePath().substring(1) : t.getRegent().getRegent().getAbsolutePath();
+					
+					wr.write(s + "\n");
+				}
+			}
 			
 			wr.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -213,22 +222,62 @@ public class Main implements Runnable, Tickable {
 					
 					baseFolder = new File(s);
 					
-					int index = 0;
-					
-					for (File f : Main.baseFolder.listFiles()) {
-						Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+					if (Explorer.files.size() == 0) {
+						int index = 0;
 						
-						index++;
+						for (File f : Main.baseFolder.listFiles()) {
+							Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+							
+							index++;
+						}
 					}
-					
-					//addButtons = true;
 				}
 				else if (i == 4)
 					conffile = s;
+				
+				else if (i == 5)
+					tabindex = Integer.parseInt(s);
+				
+				else if (i == 6)
+					CodeEditor.scrX = Integer.parseInt(s);
+				
+				else if (i == 7)
+					CodeEditor.scrY = Integer.parseInt(s);
+				
+				else if (i == 8)
+					CodeEditor.tabScr = Integer.parseInt(s);
+				
+				else if (i == 9) {
+					CommandTerminal.expOff = Boolean.parseBoolean(s);
+					
+					if (CommandTerminal.expOff == true) {
+						System.out.println("a");
+						CommandTerminal.runCommand("toggleexplorer");
+					}
+				}
+				
+				if (i > 9) {
+					if (!ListableFile.isPath(s)) continue;
+					
+					File reg = new File(s);
+					File par = reg.getParentFile();
+					
+					CodeEditor.tabs.add(new Tab((i - 4) * Tab.WIDTH, ListableFile.search(reg, par))); // 12/05/2021 - 16:17
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    	
+    	if (CodeEditor.tabs.size() > 0) {
+			CodeEditor.editing = CodeEditor.tabs.get(tabindex);
+    	
+	    	try {
+				CodeEditor.lines = CodeEditor.readFile(CodeEditor.tabs.get(tabindex).getRegent().getRegent());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    	}
     	
 		IDEComponent.toAdd.add(Main.oneLevel);
 		IDEComponent.toAdd.add(Main.returnBase);
@@ -246,6 +295,9 @@ public class Main implements Runnable, Tickable {
 
     @Override
     public void tick() {
+    	if (WindowInput.isClosing())
+    		writeFile(settingsFile);
+    	
         for (IDEComponent c : IDEComponent.components)
             c.tick();
         
