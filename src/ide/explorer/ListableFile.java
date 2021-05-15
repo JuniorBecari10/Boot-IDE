@@ -140,6 +140,12 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	    return name.substring(lastIndexOf);
 	}
 	
+	/**
+	 * Retorna true ou false se o caminho especificado em path é um caminho válido.
+	 * 
+	 * @param path - O caminho
+	 * @return true, se é um caminho válido, false se não.
+	 */
 	public static boolean isPath(String path) {
 		try {
 			Paths.get(path);
@@ -159,13 +165,19 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		return null;
 	}
 	
-	public static ListableFile search(File regent, File folder) {
+	public static ListableFile search(File regent, File folder) { // deu certo pq ficou pegando o parent sempre da pasta que está o scope, e vai indo até a pasta base
+		ListableFile prdoparent = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile(), null);
+		ListableFile parent = new ListableFile(0, 0, 0, 0, folder, prdoparent); // o parent não precisa ter outro parent, ou precisa?
+		
+		if (folder.getAbsolutePath().equals(Main.baseFolder.getAbsolutePath())) // se o parent for a pasta base, defina o
+			parent = null;														// parent como null.
+		
 		List<ListableFile> fl = new ArrayList<>();
 		
 		int index = 0;
 		
 		for (File f : folder.listFiles()) {
-			fl.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+			fl.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, parent));
 			
 			index++;
 		}
@@ -553,12 +565,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		return files;
 	}
 	
-	/*public static void generateSaveFile() {
-		Path p;
-		
-		BufferedWriter wr = Files.newBufferedWriter(, StandardCharsets.UTF_8);
-	}*/
-	
 	public static String getFileNameWithoutExtension(File file) {
         String fileName = "";
  
@@ -580,6 +586,12 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	public void execute(String arg) {
 		switch (arg) {
 		case "del":
+			String[] options = { "Sim", "Não" };
+			
+			int selectedOption = JOptionPane.showOptionDialog(null, "Tem certeza de que deseja deletar esse arquivo?", "Confirmar Exclusão", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+			
+			if (selectedOption != 0) break;
+			
 			if (!regent.delete())
 				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao deletar. Lembre-se que pastas não podem ser excluídas se não estiverem vazias!", "Não foi possível deletar.", JOptionPane.OK_OPTION);
 			
@@ -716,18 +728,18 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		if (rightClicked()) {
 			MouseInput.updateMouse();
 			
-			IDEComponent.addRightClickOption((x + width), y, 430, "Deletar", (s) -> execute(s), "del");
-			IDEComponent.addRightClickOption((x + width), y + 30, 430, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
-			IDEComponent.addRightClickOption((x + width), y + 60, 430, "Abrir Terminal de Comando", (s) -> execute(s), "term");
-			IDEComponent.addRightClickOption((x + width), y + 90, 430, "Abrir Explorador de Arquivos", (s) -> execute(s), "sysexp");
+			IDEComponent.addRightClickOption((x + width), y, 477, "Deletar", (s) -> execute(s), "del");
+			IDEComponent.addRightClickOption((x + width), y + 30, 477, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
+			IDEComponent.addRightClickOption((x + width), y + 60, 477, "Abrir Terminal de Comando", (s) -> execute(s), "term");
+			IDEComponent.addRightClickOption((x + width), y + 90, 477, "Abrir no Explorador de Arquivos", (s) -> execute(s), "sysexp");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			if (getFileExtension(regent).equals(".bat") && isWindows)
-				IDEComponent.addRightClickOption((x + width), y + 120, 430, "Executar", (s) -> execute(s), "run");
+				IDEComponent.addRightClickOption((x + width), y + 120, 477, "Executar", (s) -> execute(s), "run");
 			
 			if (getFileExtension(regent).equals(".sh") && !isWindows)
-				IDEComponent.addRightClickOption((x + width), y + 120, 430, "Executar", (s) -> execute(s), "runbash");
+				IDEComponent.addRightClickOption((x + width), y + 120, 477, "Executar", (s) -> execute(s), "runbash");
 		}
 		
 		int index = Explorer.files.indexOf(this);

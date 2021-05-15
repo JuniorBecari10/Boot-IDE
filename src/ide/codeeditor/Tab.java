@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
@@ -173,11 +174,21 @@ public class Tab extends IDEComponent implements Serializable {
 			Explorer.files.clear();
 			ListableFile.files.clear();
 			
-			if (ListableFile.search(regent.getRegent(), regent.getRegent().getParentFile()) != null) // não está diretamente dentro da pasta base, ou seja, não achou nada
+			if (regent.getParent() == null) {
 				Explorer.scope = null;
+				
+				int index = 0;
+				
+				for (File f : Main.baseFolder.listFiles()) {
+					Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+					
+					index++;
+				}
+				
+				break;
+			}
 			
-			else
-				Explorer.scope = regent.getParent();
+			Explorer.scope = regent.getParent();
 			
 			ListableFile.files = ListableFile.loadFolder(regent.getParent());
 			
@@ -227,10 +238,10 @@ public class Tab extends IDEComponent implements Serializable {
 		if (rightClicked()) {
 			MouseInput.updateMouse();
 			
-			IDEComponent.addRightClickOption(x, y + height + 3, 320, "Fechar Aba", (s) -> execute(s), "this");
-			IDEComponent.addRightClickOption(x, y + height + 3 + 30, 320, "Fechar todas as abas", (s) -> execute(s), "all");
-			IDEComponent.addRightClickOption(x, y + height + 3 + 60, 320, "Salvar", (s) -> execute(s), "save");
-			IDEComponent.addRightClickOption(x, y + height + 3 + 90, 320, "Mostrar no Explorador", (s) -> execute(s), "showexp");
+			IDEComponent.addRightClickOption(x, y + height + 3, 305, "Fechar Aba", (s) -> execute(s), "this");
+			IDEComponent.addRightClickOption(x, y + height + 3 + 30, 305, "Fechar todas as abas", (s) -> execute(s), "all");
+			IDEComponent.addRightClickOption(x, y + height + 3 + 60, 305, "Salvar", (s) -> execute(s), "save");
+			IDEComponent.addRightClickOption(x, y + height + 3 + 90, 305, "Abrir no Explorador", (s) -> execute(s), "showexp");
 		}
 		
 		if (isSaved)

@@ -11,17 +11,17 @@
  * 
  * 1.1
  * 
- * - Adicionada opÁ„o "Limpar linha".
+ * - Adicionada op√ß√£o "Limpar linha".
  * - Adicionado suporte para a linguagem Lua.
- * - Terminado coloraÁ„o de coment·rios de uma linha sÛ pra todas as linguagens.
- * - Ainda n„o h· coloraÁ„o para coment·rios multi-linha
+ * - Terminado colora√ß√£o de coment√°rios de uma linha s√≥ pra todas as linguagens.
+ * - Ainda n√£o h√° colora√ß√£o para coment√°rios multi-linha
  * 
  * 1.2
  * 
  * - Corrigido Bugs:
  *  * Alternar para outra guia sem salvar o arquivo o corrompe;
  *  * Deletar o arquivo e a sua guia correspondente ficar aberta;
- *  * <Ainda n„o corrigido> Clicar em um arquivo que j· tem guia aberta e cria de novo outra guia com o mesmo arquivo. // Esse pode para corrigir mais pra frente pois ele n„o È crÌtico.
+ *  * <Ainda n√£o corrigido> Clicar em um arquivo que j√° tem guia aberta e cria de novo outra guia com o mesmo arquivo. // Esse pode para corrigir mais pra frente pois ele n√£o √© cr√≠tico.
  *  
  *  - Adicionado suporte para a linguagem SQL.
  */

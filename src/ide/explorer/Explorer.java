@@ -43,11 +43,11 @@ public class Explorer extends IDEComponent {
     	if (CommandTerminal.expOff) return;
     	
     	if (rightClicked() && !hoveringListableFile) {
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 430, "Abrir Prompt de Comando", (s) -> Main.editor.execute(s), "cmd");
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 430, "Abrir Terminal de Comando", (s) -> Main.editor.execute(s), "term");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 477, "Abrir Prompt de Comando", (s) -> Main.editor.execute(s), "cmd");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 477, "Abrir Terminal de Comando", (s) -> Main.editor.execute(s), "term");
 			
 			if (Main.baseFolder != null)
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 430, "Abrir Explorador de Arquivos", (s) -> Main.editor.execute(s), "sysexp");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 477, "Abrir no Explorador de Arquivos", (s) -> Main.editor.execute(s), "sysexp");
     	}
     	
     	if (Explorer.scope == null) Explorer.folderPath = "";

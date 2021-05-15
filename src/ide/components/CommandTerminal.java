@@ -305,7 +305,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "releaseconfigfile":		// ÚLTIMO: 13/05/2021 - 08:30
+			case "releaseconfigfile":		// 13/05/2021 - 08:30
 				Main.conffile = "none";
 				
 				Main.writeFile(Main.settingsFile);
@@ -331,6 +331,19 @@ public class CommandTerminal extends IDEComponent {
 				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
 				
 				b.insert(CodeEditor.cursorX, "cout << \"\" << endl;");
+				
+				Main.editor.register(b, CodeEditor.cursorY - 1);
+				
+				CodeEditor.editing.setSaved(false);
+				
+				CodeEditor.cursorX += 19;
+				
+				break;
+				
+			case "stdcout":
+				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				
+				b.insert(CodeEditor.cursorX, "std::cout << \"\" << std::endl;");
 				
 				Main.editor.register(b, CodeEditor.cursorY - 1);
 				
@@ -401,6 +414,9 @@ public class CommandTerminal extends IDEComponent {
 				IDEComponent.toRemove.add(Main.newFile);
 				IDEComponent.toRemove.add(Main.newFolder);
 				IDEComponent.toRemove.add(Main.reload);
+				
+				Main.writeFile(Main.settingsFile);
+				
 				break;
 				
 			case "revertcolors":
@@ -411,6 +427,10 @@ public class CommandTerminal extends IDEComponent {
 				
 				CodeEditor.FONT_SIZE = 16;
 				
+				break;
+				
+			case "gotocursor":
+				CodeEditor.scrY = (CodeEditor.cursorY - 1) * (CodeEditor.FONT_SIZE);
 				break;
 			}
 		}
@@ -454,7 +474,8 @@ public class CommandTerminal extends IDEComponent {
 						
 					CodeEditor.FONT_SIZE = a0;
 						
-					CodeEditor.lines = CodeEditor.readFile(CodeEditor.editing.getRegent().getRegent());
+					if (CodeEditor.editing != null)
+						CodeEditor.lines = CodeEditor.readFile(CodeEditor.editing.getRegent().getRegent());
 				} catch (NumberFormatException | IOException e) {
 					CodeEditor.FONT_SIZE = 16;
 				}
@@ -520,7 +541,7 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "css":
-					String[] cssstrs = { "* {", "margin: 0;", "padding: 0;", "box-sizing: border-box;", "font-family: sans-serif;", "}"};
+					String[] cssstrs = { "* {", " margin: 0;", " padding: 0;", " box-sizing: border-box;", " font-family: sans-serif;", "}"};
 					
 					strs = cssstrs;
 					
@@ -534,7 +555,7 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "cs":
-					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname, "{", " ", " public class Program", " {", " ", "  static void main(String[] args)", "  {", "   ", "  }", " }", "}"};
+					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname, "{", " ", " public class Program ", " {", " ", "  static void Main(string[] args)", "  {", "   ", "  }", " }", "}"};
 					
 					strs = csstrs;
 					
@@ -555,12 +576,14 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "ino":
-					String[] inotrs = { "void setup()", "{", " ", "}", "", "void loop()", "{", " ", "}"};
+					String[] inostrs = { "void setup()", "{", " ", "}", "", "void loop()", "{", " ", "}"};
 					
-					strs = inotrs;
+					strs = inostrs;
 					
 					break;
 				}
+				
+				if (strs.length == 0) return;
 				
 				for (int i = 0; i < strs.length; i++) {
 					if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
@@ -576,8 +599,49 @@ public class CommandTerminal extends IDEComponent {
 				CodeEditor.editing.setSaved(false);
 				
 				break;
+				
+			case "search":
+				List<Integer> linesfound = new ArrayList<>();
+				
+				for (int i = 0; i < CodeEditor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
+					IDELine l = CodeEditor.lines.get(i);
+					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+					
+					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
+				}
+				
+				if (linesfound.size() == 0) return;
+				
+				// como é automaticamente occur 0, pegamos automaticamente ela.
+				
+				CodeEditor.scrY = (linesfound.get(0) - 1) * (CodeEditor.FONT_SIZE);// + 4);
+				CodeEditor.cursorY = (linesfound.get(0) - 1) + 2;
+				
+				break;
+				
+			case "searchsel":
+				if (!CodeEditor.selecting) break;
+				
+				linesfound = new ArrayList<>();
+				
+				for (int i = CodeEditor.line1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+					IDELine l = CodeEditor.lines.get(i);
+					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+					
+					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
+				}
+				
+				if (linesfound.size() == 0) return;
+				
+				// como é automaticamente occur 0, pegamos automaticamente ela.
+				
+				CodeEditor.scrY = (linesfound.get(0) - 1) * (CodeEditor.FONT_SIZE);// + 4);
+				CodeEditor.cursorY = (linesfound.get(0) - 1) + 2;
+				
+				break;
 			}
 		}
+		
 		else if (args.length == 2) {
 			switch (com) {
 			case "ordertab":
@@ -609,6 +673,98 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
+			case "search":
+				List<Integer> linesfound = new ArrayList<>();
+				
+				for (int i = 0; i < CodeEditor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
+					IDELine l = CodeEditor.lines.get(i);
+					String s = new String(CodeEditor.toCharArray(l.getChars()));
+					
+					if (s.contains(args[0])) linesfound.add(i);
+				}
+				
+				if (linesfound.size() == 0) return;
+				
+				int occurnum = Integer.parseInt(args[1]); // base 1 viu
+				
+				if (occurnum > linesfound.size())
+					occurnum = linesfound.size();
+				
+				CodeEditor.scrY = (linesfound.get(occurnum - 1) - 1) * (CodeEditor.FONT_SIZE);// + 4);
+				CodeEditor.cursorY = (linesfound.get(occurnum - 1) - 1) + 2;
+				
+				break;
+				
+			case "searchsel":
+				if (!CodeEditor.selecting) break;
+				
+				linesfound = new ArrayList<>();
+				
+				for (int i = CodeEditor.line1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+					IDELine l = CodeEditor.lines.get(i);
+					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+					
+					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
+				}
+				
+				if (linesfound.size() == 0) return;
+				
+				occurnum = Integer.parseInt(args[1]); // base 1 viu
+				
+				if (occurnum > linesfound.size())
+					occurnum = linesfound.size();
+				
+				CodeEditor.scrY = (linesfound.get(occurnum - 1) - 1) * (CodeEditor.FONT_SIZE);// + 4);
+				CodeEditor.cursorY = (linesfound.get(occurnum - 1) - 1) + 2;
+				
+				break;
+				
+			case "replace":
+				linesfound = new ArrayList<>();
+				
+				for (int i = 0; i < CodeEditor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
+					IDELine l = CodeEditor.lines.get(i);
+					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+					
+					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
+				}
+				
+				if (linesfound.size() == 0) return;
+				
+				for (Integer i : linesfound) {
+					String s = new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars()));
+					
+					s = s.replaceAll(args[0], args[1]);
+					
+					Main.editor.register(new StringBuilder(s), i);
+				}
+				
+				break;
+				
+			case "replacesel":
+				if (!CodeEditor.selecting) break;
+				
+				linesfound = new ArrayList<>();
+				
+				for (int i = CodeEditor.line1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+					IDELine l = CodeEditor.lines.get(i);
+					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+					
+					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
+				}
+				
+				if (linesfound.size() == 0) return;
+				
+				for (Integer i : linesfound) {
+					String s = new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars()));
+					
+					s = s.replaceAll(args[0], args[1]);
+					
+					Main.editor.register(new StringBuilder(s), i);
+				}
+				
+				break;
+				
 			/*case "select":
 				line1 = Integer.parseInt(args[0]);
 				line2 = Integer.parseInt(args[1]);
@@ -619,6 +775,74 @@ public class CommandTerminal extends IDEComponent {
 				selecting = true;
 				
 				break;*/
+			}
+		}
+		else if (args.length == 3) { // TODO
+			switch (com) {
+			case "gengetter":
+				String[] strs = { };
+				
+				switch (args[0].toLowerCase()) {
+				case "java":
+					String[] javastrs = { "public " + args[2] + " get" + CodeEditor.capitalizeFirstLetter(args[1]) + "() {", " return " + args[1] + ";", "}"};
+					
+					strs = javastrs;
+					
+					break;
+					
+				case "cs":
+					String[] csstrs = { "public " + args[2] + " " + args[1] + " { get { return " + args[1] + "; } set { " + args[1] + " = value; } };" };
+					
+					strs = csstrs; // ÚLTIMO: 15/05/2021 - 11:13
+					
+					break;
+				}
+				
+				if (strs.length == 0) return;
+				
+				for (int i = 0; i < strs.length; i++) {
+					if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
+						CodeEditor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
+					
+					StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
+					
+					b.insert(CodeEditor.cursorX, strs[i]);
+					
+					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
+				}
+				
+				CodeEditor.editing.setSaved(false);
+				
+				break;
+				
+			case "gensetter":
+				String[] strss = { };
+				
+				switch (args[0].toLowerCase()) {
+				case "java":
+					String[] javastrs = { "public void set" + CodeEditor.capitalizeFirstLetter(args[1]) + "(" + args[2] + " " + args[1] + ") {", " this." + args[1] + " = " + args[1] + ";", "}"};
+					
+					strss = javastrs;
+					
+					break;
+				}
+				
+				if (strss.length == 0) return;
+				
+				for (int i = 0; i < strss.length; i++) {
+					if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
+						CodeEditor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
+					
+					StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
+					
+					b.insert(CodeEditor.cursorX, strss[i]);
+					
+					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
+				}
+				
+				CodeEditor.editing.setSaved(false);
+				
+				break;
 			}
 		}
 		
@@ -636,7 +860,6 @@ public class CommandTerminal extends IDEComponent {
 		}.start();
 		
 		Main.writeFile(Main.settingsFile);
-		
 		CodeEditor.setCursorWithinBounds();
 	}
 	

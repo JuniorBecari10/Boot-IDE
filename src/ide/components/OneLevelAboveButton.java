@@ -58,6 +58,6 @@ public class OneLevelAboveButton extends IDEComponent {
 		super.render(g);
 		
 		if (hovered())
-			Fonts.drawString("Um Nível Acima", MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString("Uma Pasta Acima", MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
 	}
 }

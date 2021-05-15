@@ -45,9 +45,7 @@ import ide.util.Colors;
 
 public class CodeEditor extends IDEComponent {
 	
-	public static int FONT_SIZE = 16; // 18, 16 (Padrão: 16)
-	
-	public static final IDEFont DEFAULT_FONT = new IDEFont(Fonts.otherNormal, FONT_SIZE);
+	public static volatile int FONT_SIZE = 16; // 18, 16 (Padrão: 16)
 	
 	public static Tab editing;
 	
@@ -219,7 +217,7 @@ public class CodeEditor extends IDEComponent {
 				cs.add(c);
 			
 			for (int i = 0; i < cs.size(); i++)
-				fs.add(DEFAULT_FONT);
+				fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
 			
 			IDELine gen = new IDELine(cs, fs);
 			
@@ -687,7 +685,7 @@ public class CodeEditor extends IDEComponent {
 					"lock", "params", "ref", "out", "using", "alias", "await", "sizeof", "typeof",
 					"stackalloc", "is", "base", "this", "null", "false", "true", "value", "void", "bool", "byte",
 					"char", "class", "decimal", "double", "enum", "float", "int", "long", "sbyte", "short", "string",
-					"struct", "uint", "ulong", "ushort", "add", "var", "dynamic", "global", "set", "namespace", "object", "as" };
+					"struct", "uint", "ulong", "ushort", "add", "var", "dynamic", "global", "set", "namespace", "object", "as", "get" };
 			
 			for (String s : csKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
@@ -885,7 +883,7 @@ public class CodeEditor extends IDEComponent {
 			foundExt = true;
 			
 			for (int i = 0; i < chars.length; i++)
-				fs.add(DEFAULT_FONT);
+				fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
 			
 			indxs = findWord(new String(chars), "#");
 			
@@ -904,7 +902,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			
 			for (int i = 0; i < chars.length; i++) // colorir tudo de branco
-				fs.add(DEFAULT_FONT);
+				fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
 			break;
 			
 		case ".swift":
@@ -1457,7 +1455,7 @@ public class CodeEditor extends IDEComponent {
 		
 		for (Character c : lc) {
 			lines.get(y).getChars().add(c);
-			lines.get(y).getFonts().add(DEFAULT_FONT);
+			lines.get(y).getFonts().add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
 		}
 	}
 	
@@ -1848,25 +1846,25 @@ public class CodeEditor extends IDEComponent {
 			Main.screen.setCursor(Cursor.getDefaultCursor()); // 24/04/2021 - 09:18
 		
 		if (rightClicked()) {
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 430, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 430, "Abrir Terminal de Comando", (s) -> execute(s), "term");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 477, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 477, "Abrir Terminal de Comando", (s) -> execute(s), "term");
 			
 			if (Main.baseFolder != null)
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 430, "Abrir Explorador de Arquivos", (s) -> execute(s), "sysexp");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 477, "Abrir no Explorador de Arquivos", (s) -> execute(s), "sysexp");
 			
 			if (editing != null) {
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), 430, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectentireline");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 430, "Salvar", (s) -> execute(s), "save");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), 430, "Colar", (s) -> execute(s), "paste");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), 477, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectentireline");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 477, "Salvar", (s) -> execute(s), "save");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), 477, "Colar", (s) -> execute(s), "paste");
 				
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 300 : 180), 430, "Modo de Seleção", (s) -> CommandTerminal.runCommand(s), "selectmode");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 300 : 180), 477, "Modo de Seleção", (s) -> CommandTerminal.runCommand(s), "selectmode");
 			}
 			
 			if (selecting) {
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 430, "Copiar", (s) -> CommandTerminal.runCommand(s), "copy");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 180, 430, "Cortar", (s) -> CommandTerminal.runCommand(s), "cut");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 210, 430, "Deletar", (s) -> CommandTerminal.runCommand(s), "del");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 270, 430, "Desselecionar", (s) -> CommandTerminal.runCommand(s), "deselect");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 477, "Copiar", (s) -> CommandTerminal.runCommand(s), "copy");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 180, 477, "Cortar", (s) -> CommandTerminal.runCommand(s), "cut");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 210, 477, "Deletar", (s) -> CommandTerminal.runCommand(s), "del");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 270, 477, "Desselecionar", (s) -> CommandTerminal.runCommand(s), "deselect");
 			}
 		}
 		
@@ -2150,7 +2148,7 @@ public class CodeEditor extends IDEComponent {
 				List<IDEFont> fs = new ArrayList<>();
 				
 				for (int i = 0; i < s.length(); i++)
-					fs.add(DEFAULT_FONT);
+					fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
 				
 				lines.add(cursorY, new IDELine(toCharList(s.toCharArray()), fs));
 				
@@ -2347,14 +2345,12 @@ public class CodeEditor extends IDEComponent {
 			Fonts.drawString(codeType + " - " + extType, x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 		}
 		
-		if (editing != null) {
+		/*if (editing != null) {
 			int y = this.y;
 			int height = 50;
 			
-			
-			
 			g.setColor(Colors.background);
 			g.fillRect(Main.screen.getWidth() - 4, y, 4, height); // 131 linhas = 70 height
-		}
+		}*/
 	}
 }
