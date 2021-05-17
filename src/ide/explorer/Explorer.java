@@ -43,12 +43,14 @@ public class Explorer extends IDEComponent {
     	if (CommandTerminal.expOff) return;
     	
     	if (rightClicked() && !hoveringListableFile) {
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 477, "Abrir Prompt de Comando", (s) -> Main.editor.execute(s), "cmd");
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 477, "Abrir Terminal de Comando", (s) -> Main.editor.execute(s), "term");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 540, "Abrir Prompt de Comando", (s) -> Main.editor.execute(s), "cmd");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 540, "Abrir Terminal de Comando", (s) -> Main.editor.execute(s), "term");
 			
-			if (Main.baseFolder != null)
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 477, "Abrir no Explorador de Arquivos", (s) -> Main.editor.execute(s), "sysexp");
-    	}
+			if (Main.baseFolder != null) {
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 540, "Abrir no Explorador de Arquivos", (s) -> Main.editor.execute(s), "sysexp");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 540, "Definir pasta atual como Pasta Base", (s) -> Main.editor.execute(s), "setbase");
+			}
+		}
     	
     	if (Explorer.scope == null) Explorer.folderPath = "";
     	else if (Explorer.scope.getParent() == null) Explorer.folderPath = Explorer.scope.getRegent().getName();

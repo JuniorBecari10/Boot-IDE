@@ -28,6 +28,7 @@
 
 package ide.main;
 
+import java.awt.Desktop;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
@@ -43,7 +44,6 @@ import java.util.List;
 
 import ide.codeeditor.CodeEditor;
 import ide.codeeditor.Tab;
-import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.Logo;
 import ide.components.NewFileButton;
@@ -94,9 +94,11 @@ public class Main implements Runnable, Tickable {
     
     private static int tabindex = -1;
     
+    public static Desktop desktop;
+    
     public static String[] args;
     
-    public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings.conf");
+    public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings.conf"); // 08/05/2021 - 15:48
     
     public Main() {
     	if (args == null)
@@ -122,6 +124,7 @@ public class Main implements Runnable, Tickable {
         newFolder = new NewFolderButton(120, 85, 32, 32, spritesheet.getSprite(112, 0, 16, 16));
         reload = new ReloadButton(240, 85, 32, 32, spritesheet.getSprite(128, 0, 16, 16));
 
+        desktop = Desktop.getDesktop();
         
         IDEComponent.components.add(explorer);
         IDEComponent.components.add(editor);
@@ -175,7 +178,6 @@ public class Main implements Runnable, Tickable {
 			wr.write(CodeEditor.scrX + "\n");
 			wr.write(CodeEditor.scrY + "\n");
 			wr.write(CodeEditor.tabScr + "\n");
-			wr.write(CommandTerminal.expOff + "\n");
 			
 			if (CodeEditor.tabs.size() > 0) {
 				for (int i = 0; i < CodeEditor.tabs.size(); i++) {
@@ -247,16 +249,7 @@ public class Main implements Runnable, Tickable {
 				else if (i == 8)
 					CodeEditor.tabScr = Integer.parseInt(s);
 				
-				else if (i == 9) {
-					CommandTerminal.expOff = Boolean.parseBoolean(s);
-					
-					if (CommandTerminal.expOff == true) {
-						System.out.println("a");
-						CommandTerminal.runCommand("toggleexplorer");
-					}
-				}
-				
-				if (i > 9) {
+				if (i > 8) {
 					if (!ListableFile.isPath(s)) continue;
 					
 					File reg = new File(s);
@@ -314,6 +307,8 @@ public class Main implements Runnable, Tickable {
         
         Explorer.files.removeAll(Explorer.toRemove);
         Explorer.toRemove.clear();
+        
+        IDEComponent.components = CodeEditor.removeAllDuplicates(IDEComponent.components);
         
         if (!ListableFile.files.isEmpty())
         	Explorer.files = new ArrayList<>(ListableFile.files);

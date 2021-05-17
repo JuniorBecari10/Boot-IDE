@@ -659,6 +659,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		case "term":
 			CodeEditor.execTerminal();
 			break;
+			
+		case "setbase":
+			Main.baseFolder = new File(Explorer.getScopePath());
+			Explorer.folderPath = "";
+			
+			ListableFile.files = ListableFile.loadFolder(null);
+			
+			break;
 		}
 	}
 	
@@ -683,6 +691,27 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		
 		if (leftClicked()) {
 			MouseInput.updateMouse();
+			
+			if (getFileExtension(regent).equals(".png") ||
+					getFileExtension(regent).equals(".jpg") ||
+					getFileExtension(regent).equals(".jpeg")||
+					getFileExtension(regent).equals(".png") ||
+					getFileExtension(regent).equals(".gif") ||
+					getFileExtension(regent).equals(".bmp") ||
+					getFileExtension(regent).equals(".wav") ||
+					getFileExtension(regent).equals(".mp3") ||
+					getFileExtension(regent).equals(".ogg") ||
+					getFileExtension(regent).equals(".mp4") ||
+					getFileExtension(regent).equals(".wmv") ||
+					getFileExtension(regent).equals(".avi")) {
+					try {
+						Main.desktop.open(regent);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					return;
+				}
 			
 			if (y > 199 && regent.isDirectory()) {
 				files = loadFolder(this);
@@ -728,18 +757,19 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		if (rightClicked()) {
 			MouseInput.updateMouse();
 			
-			IDEComponent.addRightClickOption((x + width), y, 477, "Deletar", (s) -> execute(s), "del");
-			IDEComponent.addRightClickOption((x + width), y + 30, 477, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
-			IDEComponent.addRightClickOption((x + width), y + 60, 477, "Abrir Terminal de Comando", (s) -> execute(s), "term");
-			IDEComponent.addRightClickOption((x + width), y + 90, 477, "Abrir no Explorador de Arquivos", (s) -> execute(s), "sysexp");
+			IDEComponent.addRightClickOption((x + width), y, 540, "Deletar", (s) -> execute(s), "del");
+			IDEComponent.addRightClickOption((x + width), y + 30, 540, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
+			IDEComponent.addRightClickOption((x + width), y + 60, 540, "Abrir Terminal de Comando", (s) -> execute(s), "term");
+			IDEComponent.addRightClickOption((x + width), y + 90, 540, "Abrir no Explorador de Arquivos", (s) -> execute(s), "sysexp");
+			IDEComponent.addRightClickOption((x + width), y + 120, 540, "Definir pasta atual como Pasta Base", (s) -> execute(s), "setbase");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			if (getFileExtension(regent).equals(".bat") && isWindows)
-				IDEComponent.addRightClickOption((x + width), y + 120, 477, "Executar", (s) -> execute(s), "run");
+				IDEComponent.addRightClickOption((x + width), y + 150, 540, "Executar", (s) -> execute(s), "run");
 			
 			if (getFileExtension(regent).equals(".sh") && !isWindows)
-				IDEComponent.addRightClickOption((x + width), y + 120, 477, "Executar", (s) -> execute(s), "runbash");
+				IDEComponent.addRightClickOption((x + width), y + 150, 540, "Executar", (s) -> execute(s), "runbash");
 		}
 		
 		int index = Explorer.files.indexOf(this);
@@ -762,12 +792,12 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		}
 		
 		if (regent.isDirectory()) {
-			Fonts.drawString(regent.getName(), x + 40, y + 3, new IDEFont(Fonts.lightGrayNormal, 16), width, g);
+			Fonts.drawString(regent.getName(), x + 40, y + 4, new IDEFont(Fonts.lightGrayNormal, 16), width, g);
 			
 			g.drawImage(Main.spritesheet.getSprite(48, 0, 16, 16), x + 6, y, height - 5, height - 5, null);
 		}
 		else if (regent.isFile()) {
-			Fonts.drawString(regent.getName(), x + 40, y + 3, new IDEFont(Fonts.lightGrayNormal, 16), width, g);
+			Fonts.drawString(regent.getName(), x + 40, y + 4, new IDEFont(Fonts.lightGrayNormal, 16), width, g);
 			
 			String extension = getFileExtension(regent);
 			
@@ -784,7 +814,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 					return;
 				}
 			}
-			g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 5, y - 5, height, height, null);
+			g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 5, y, height, height, null);
 		}
 	}
 }

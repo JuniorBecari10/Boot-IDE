@@ -20,7 +20,7 @@ public class Colors {
     public static Color methods = 		  Color.decode("#e7d789");
     public static Color numbers = 		  Color.decode("#5485b6");
     public static Color keywords = 		  Color.decode("#95bddc");
-    public static Color variables = 	  Color.decode("#66e1f8");
+    public static Color variables = 	  Color.decode("#74c8e8"); // 66e1f8
     
     public static Color comments = 					  textLighter;
     public static Color strings = 					    textLight;

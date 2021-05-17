@@ -15,4 +15,10 @@ Depois clique no projeto uma vez e execute-o clicando no botão de Executar do E
 
 ## Quando abrir, o que faço?
 
-Na primeira vez que você abre a Boot IDE, não tem nenhuma pasta carregada, então clique no botão "Selecionar Pasta Base" e selecione uma pasta. Depois, navegue pelas pastas e clique no arquivo que deseja editar, depois comece a programar!
+Na primeira vez que você abre a Boot IDE, não tem nenhuma pasta carregada, então clique no
+botão "Selecionar Pasta Base" e selecione uma pasta. Depois, navegue pelas pastas e clique
+no arquivo que deseja editar, depois comece a programar!
+
+## Mais Informações
+
+Para mais informações, acesse o site oficial da Boot IDE!

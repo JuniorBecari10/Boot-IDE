@@ -251,7 +251,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "selectentireline":
+			case "selectline":
 				int y = CodeEditor.cursorY - 1;
 				
 				CodeEditor.index1 = 0;
@@ -259,6 +259,16 @@ public class CommandTerminal extends IDEComponent {
 				
 				CodeEditor.line1 = y + 1;
 				CodeEditor.line2 = y + 1;
+				
+				CodeEditor.selecting = true;
+				break;
+				
+			case "selectall":
+				CodeEditor.index1 = 0;
+				CodeEditor.index2 = CodeEditor.lines.get(CodeEditor.lines.size() - 1).getChars().size();
+				
+				CodeEditor.line1 = 1;
+				CodeEditor.line2 = CodeEditor.lines.size();
 				
 				CodeEditor.selecting = true;
 				break;
@@ -288,7 +298,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "readconfigfile":
+			case "loadconfigfile":
 				option = chooser.showOpenDialog(Main.screen.frame);
 				
 				if (option == JFileChooser.APPROVE_OPTION) {
@@ -305,7 +315,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "releaseconfigfile":		// 13/05/2021 - 08:30
+			case "unloadconfigfile":		// 13/05/2021 - 08:30
 				Main.conffile = "none";
 				
 				Main.writeFile(Main.settingsFile);
@@ -336,7 +346,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				CodeEditor.editing.setSaved(false);
 				
-				CodeEditor.cursorX += 19;
+				CodeEditor.cursorX += 9;
 				
 				break;
 				
@@ -349,7 +359,20 @@ public class CommandTerminal extends IDEComponent {
 				
 				CodeEditor.editing.setSaved(false);
 				
-				CodeEditor.cursorX += 19;
+				CodeEditor.cursorX += 14;
+				
+				break;
+				
+			case "writeline":
+				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				
+				b.insert(CodeEditor.cursorX, "Console.WriteLine();");
+				
+				Main.editor.register(b, CodeEditor.cursorY - 1);
+				
+				CodeEditor.editing.setSaved(false);
+				
+				CodeEditor.cursorX += 18;
 				
 				break;
 				
@@ -555,7 +578,7 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "cs":
-					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname, "{", " ", " public class Program ", " {", " ", "  static void Main(string[] args)", "  {", "   ", "  }", " }", "}"};
+					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname + " ", "{", " ", " public class Program ", " {", "  ", "  static void Main(string[] args)", "  {", "   ", "  }", " }", "}"};
 					
 					strs = csstrs;
 					
@@ -793,23 +816,25 @@ public class CommandTerminal extends IDEComponent {
 				case "cs":
 					String[] csstrs = { "public " + args[2] + " " + args[1] + " { get { return " + args[1] + "; } set { " + args[1] + " = value; } };" };
 					
-					strs = csstrs; // ÚLTIMO: 15/05/2021 - 11:13
+					strs = csstrs; // 15/05/2021 - 11:13
 					
 					break;
 				}
 				
-				if (strs.length == 0) return;
+				if (strs.length == 0) return; // ÚLTIMO: 17/05/2021 - 15:51
 				
-				for (int i = 0; i < strs.length; i++) {
-					if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
-						CodeEditor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
-					
-					StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
-					
-					b.insert(CodeEditor.cursorX, strs[i]);
-					
-					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
-				}
+				try {
+					for (int i = 0; i < strs.length; i++) {
+						if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
+							CodeEditor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
+						
+						StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
+						
+						b.insert(CodeEditor.cursorX, strs[i]);
+						
+						Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
+					}
+				} catch (Exception e) { return; }
 				
 				CodeEditor.editing.setSaved(false);
 				

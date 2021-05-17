@@ -1,5 +1,6 @@
 package ide.components;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -41,6 +42,8 @@ public class OpenBaseFolderButton extends IDEComponent {
 				
 				File sel = chooser.getSelectedFile();
 				
+				boolean alreadyHasBaseFolder = Main.baseFolder != null;
+				
 				Main.baseFolder = sel;
 				
 				Explorer.files.clear();
@@ -58,11 +61,13 @@ public class OpenBaseFolderButton extends IDEComponent {
 				
 				Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
 				
-				IDEComponent.toAdd.add(Main.oneLevel);
-				IDEComponent.toAdd.add(Main.returnBase);
-				IDEComponent.toAdd.add(Main.newFile);
-				IDEComponent.toAdd.add(Main.newFolder);
-				IDEComponent.toAdd.add(Main.reload);
+				if (!alreadyHasBaseFolder) {
+					IDEComponent.toAdd.add(Main.oneLevel);
+					IDEComponent.toAdd.add(Main.returnBase);
+					IDEComponent.toAdd.add(Main.newFile);
+					IDEComponent.toAdd.add(Main.newFolder);
+					IDEComponent.toAdd.add(Main.reload);
+				}
 				
 				Main.writeFile(Main.settingsFile);
 	    		Main.readFile(Main.settingsFile);
@@ -78,6 +83,9 @@ public class OpenBaseFolderButton extends IDEComponent {
 		if (hovered()) {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x - 1, y - 1, width + 4, height + 4);
+			
+			g.setColor(new Color(0, 0, 0, 0.5f));
+			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, 335, 28);
 		}
 		
 		super.render(g);

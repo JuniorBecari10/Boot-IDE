@@ -18,7 +18,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -125,13 +127,16 @@ public class CodeEditor extends IDEComponent {
 					my = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
 					mx = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE));
 
+					while (((x + 40) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX > MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
+						mx--;
+					
 					while (((x + 40) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
 						mx++;
 					
 					while (MIN_Y + my * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 > MouseInput.getMouseY()) // o mesmo para aqui, só que com o y
 						my--;
 					
-					if (CommandTerminal.expOff) mx += 25; // TODO acabar de arrumar isso
+					if (CommandTerminal.expOff) mx += 25;
 
 					mx = setWithinBounds(mx, my, true);
 					my = setWithinBounds(mx, my, false);
@@ -347,7 +352,7 @@ public class CodeEditor extends IDEComponent {
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		switch (ext.toLowerCase()) { // olha só :0
+		switch (ext.toLowerCase()) { // olha só :0 - 16/05/2021 - 10:04 - Domingo
 		case ".java":
 			extType = "Java";
 			foundExt = true;
@@ -442,11 +447,75 @@ public class CodeEditor extends IDEComponent {
 				fs = color(i, i + 1, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 			}
 			
-			break;
+			indxs = findWord(new String(chars), "<");
+
+			int len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length &&
+						chars[i + len] != ' ' &&
+						chars[i + len] != '[' &&
+						chars[i + len] != ']' &&
+						chars[i + len] != ',' &&
+						chars[i + len] != ';' &&
+						chars[i + len] != '.' &&
+						chars[i + len] != ':' &&
+						chars[i + len] != '>')
+						len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+			}
 			
-		case ".css":	// (22/04/2021 - 08:41)
-			extType = "Cascading Style Sheets - CSS";
-			foundExt = true;
+			indxs = findWord(new String(chars), "</");
+
+			len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length &&
+						chars[i + len] != ' ' &&
+						chars[i + len] != '[' &&
+						chars[i + len] != ']' &&
+						chars[i + len] != ',' &&
+						chars[i + len] != ';' &&
+						chars[i + len] != '.' &&
+						chars[i + len] != ':')
+						len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "=");
+			
+			for (Integer i : indxs) {
+				int c = i;
+				len = 0;
+				
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0 &&
+						chars[c] != ' ' &&
+						chars[c] != '[' &&
+						chars[c] != ']' &&
+						chars[c] != ',' &&
+						chars[c] != ';' &&
+						chars[c] != '.' &&
+						chars[c] != ':') {
+					c--;
+					len++;
+				}
+				
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
+			break; // 16/05/2021 - 10:12 - Domingo TODO
+			
+		case ".css":
+			if (!foundExt) {
+				extType = "Cascading Style Sheets - CSS";
+				foundExt = true;
+			}
 			
 			String[] tagsss = { "a", "abbr", "acronym", "address", "applet", "area", "article",
 					"aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button",
@@ -532,7 +601,7 @@ public class CodeEditor extends IDEComponent {
 			indxs = findWord(new String(chars), ".");
 
 			for (Integer i : indxs) {
-				int len = 0;
+				len = 0;
 				
 				while (i + len < chars.length &&
 						chars[i + len] != ' ' &&
@@ -550,7 +619,7 @@ public class CodeEditor extends IDEComponent {
 			
 			indxs = findWord(new String(chars), "#");
 			
-			int len = 0;
+			len = 0;
 
 			for (Integer i : indxs) {
 				while (i + len < chars.length && (chars[i + len] == 'a' || chars[i + len] == 'b' ||
@@ -953,6 +1022,11 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 			}
 			
+			indxs = findWord(new String(chars), "//"); // colorir comentários de uma linha
+			
+			if (!(fs.size() == 0 || indxs.size() == 0))
+				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			
 			break;
 			
 		case ".sh":
@@ -969,6 +1043,7 @@ public class CodeEditor extends IDEComponent {
 				for (Integer i : indxs)
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 			}
+			
 			break;
 			
 		case ".php":
@@ -1036,6 +1111,16 @@ public class CodeEditor extends IDEComponent {
 		case ".json":
 			extType = "JavaScript Object Notation - JSON";
 			foundExt = true;
+			
+			String[] jsonKeys = { "true", "false" };
+			
+			for (String s : jsonKeys) { // colorir keywordss
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+			
 			break;
 			
 		case ".kt":
@@ -1057,6 +1142,11 @@ public class CodeEditor extends IDEComponent {
 				
 				for (Integer i : indxs)
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				
+				indxs = findWord(new String(chars), "//"); // colorir comentários de uma linha
+				
+				if (!(fs.size() == 0 || indxs.size() == 0))
+					fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			}
 			break;
 			
@@ -1104,6 +1194,69 @@ public class CodeEditor extends IDEComponent {
 		case ".xml":
 			extType = "Extensible Markup Language - XML";
 			foundExt = true;
+			
+			indxs = findWord(new String(chars), "<");
+
+			len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length &&
+						chars[i + len] != ' ' &&
+						chars[i + len] != '[' &&
+						chars[i + len] != ']' &&
+						chars[i + len] != ',' &&
+						chars[i + len] != ';' &&
+						chars[i + len] != '.' &&
+						chars[i + len] != ':' &&
+						chars[i + len] != '>')
+						len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "</");
+
+			len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length &&
+						chars[i + len] != ' ' &&
+						chars[i + len] != '[' &&
+						chars[i + len] != ']' &&
+						chars[i + len] != ',' &&
+						chars[i + len] != ';' &&
+						chars[i + len] != '.' &&
+						chars[i + len] != ':')
+						len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "=");
+			
+			for (Integer i : indxs) {
+				int c = i;
+				len = 0;
+				
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0 &&
+						chars[c] != ' ' &&
+						chars[c] != '[' &&
+						chars[c] != ']' &&
+						chars[c] != ',' &&
+						chars[c] != ';' &&
+						chars[c] != '.' &&
+						chars[c] != ':') {
+					c--;
+					len++;
+				}
+				
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
 			break;
 			
 		case ".pdf":
@@ -1140,6 +1293,35 @@ public class CodeEditor extends IDEComponent {
 		case ".make":
 			extType = "Makefile";
 			foundExt = true;
+			
+			indxs = findWord(new String(chars), ":");
+			
+			for (Integer i : indxs) {
+				int c = i;
+				len = 0;
+				
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0 &&
+						chars[c] != ' ' &&
+						chars[c] != '[' &&
+						chars[c] != ']' &&
+						chars[c] != ',' &&
+						chars[c] != ';' &&
+						chars[c] != '.') {
+					c--;
+					len++;
+				}
+				
+				fs = color(c, c + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
+			
+			if (fs.size() == 0 || indxs.size() == 0) break;
+			
+			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			
 			break;
 			
 		case ".png":
@@ -1176,17 +1358,33 @@ public class CodeEditor extends IDEComponent {
 		case ".gitignore":
 			extType = "Git Ignore";
 			foundExt = true;
+			
+			indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
+			
+			if (fs.size() == 0 || indxs.size() == 0) break;
+			
+			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			break;
 			
 		case ".dockerfile":
 			extType = "Dockerfile";
 			foundExt = true;
+			
+			String[] dkKeys = { "FROM", "RUN", "from", "run" };
+			
+			for (String s : dkKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+			}
+			
 			break;
 		}
 		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".cxx") || ext.equals(".js") ||
 				 ext.equals(".h") || ext.equals(".hpp") || ext.equals(".hxx") || ext.equals(".lua") || ext.equals(".rs") || ext.equals(".asm") ||
 				 ext.equals(".php") || ext.equals(".kt") || ext.equals(".vue") || ext.equals(".py") || ext.equals(".rb") || ext.equals(".ino") ||
-				 ext.equals(".ts") || ext.equals(".swift"))) {
+				 ext.equals(".ts") || ext.equals(".swift") || ext.equals(".html") || ext.equals(".htm"))) {
 		
 			indxs = findWord(new String(chars), "(");
 			
@@ -1272,8 +1470,54 @@ public class CodeEditor extends IDEComponent {
 		if (!foundExt && editing != null) {
 			for (FileType f : ListableFile.types) {
 				if (f.getExtension().equalsIgnoreCase(editing.getRegent().getRegent().getName())) { // tenta ver se tem algum especial
-					String s = capitalizeFirstLetter(f.getExtension());
-					extType = s;
+					String st = capitalizeFirstLetter(f.getExtension());
+					extType = st;
+					
+					
+					switch (st.toLowerCase()) {
+					case "dockerfile":
+						String[] dkKeys = { "FROM", "RUN", "from", "run" };
+						
+						for (String s : dkKeys) { // colorir keywords
+							indxs = findWord(new String(chars), s);
+							
+							for (Integer i : indxs)
+								fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+						}
+						
+						break;
+						
+					case "makefile":
+						indxs = findWord(new String(chars), ":");
+						
+						for (Integer i : indxs) {
+							int c = i;
+							int len = 0;
+							
+							while (c < chars.length && 
+									c + len < chars.length &&
+									c > 0 &&
+									chars[c] != ' ' &&
+									chars[c] != '[' &&
+									chars[c] != ']' &&
+									chars[c] != ',' &&
+									chars[c] != ';' &&
+									chars[c] != '.') {
+								c--;
+								len++;
+							}
+							
+							fs = color(c, c + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+						}
+						
+						indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
+						
+						if (fs.size() == 0 || indxs.size() == 0) break;
+						
+						fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+						
+						break;
+					}
 					
 					return fs;
 				}
@@ -1667,6 +1911,14 @@ public class CodeEditor extends IDEComponent {
 		case "term":
 			execTerminal();
 			break;
+			
+		case "setbase":
+			Main.baseFolder = new File(Explorer.getScopePath());
+			Explorer.folderPath = "";
+			
+			ListableFile.files = ListableFile.loadFolder(null);
+			
+			break;
 		}
 	}
 	
@@ -1686,9 +1938,18 @@ public class CodeEditor extends IDEComponent {
 			}
 	}
 	
+	public static <T> List<T> removeAllDuplicates(List<T> list) {
+		Set<T> linkedSet = new LinkedHashSet<>();
+		
+		linkedSet.addAll(list);
+		list.clear();
+		list.addAll(linkedSet);
+		
+		return list;
+	}
+	
 	public void tick() {
 		if (tabs == null) tabs = new ArrayList<>();
-		
 		verifyDuplicateTabs();
 		
 		if (FONT_SIZE < 1)
@@ -1853,7 +2114,7 @@ public class CodeEditor extends IDEComponent {
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 477, "Abrir no Explorador de Arquivos", (s) -> execute(s), "sysexp");
 			
 			if (editing != null) {
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), 477, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectentireline");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), 477, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectline");
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 477, "Salvar", (s) -> execute(s), "save");
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), 477, "Colar", (s) -> execute(s), "paste");
 				
@@ -1955,6 +2216,14 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_K) { // Ctrl + K (Alternar Explorador)
+				KeyInput.updateKeys();
+				
+				CommandTerminal.runCommand("toggleexplorer");
+					
+				return;
+			}
+			
 			if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.isAltDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + Shift + Alt + T (Fechar Todas as Abas)
 				KeyInput.updateKeys();
 				
@@ -1998,10 +2267,18 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
+			if (KeyInput.isControlDown() &&  KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A) { // Ctrl + Shift + A (Selecionar Tudo)
+				KeyInput.updateKeys();
+					
+				CommandTerminal.runCommand("selectall");
+					
+				return;
+			}
+			
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A) { // Ctrl + A (Selecionar Linha)
 				KeyInput.updateKeys();
 					
-				CommandTerminal.runCommand("selectentireline");
+				CommandTerminal.runCommand("selectline");
 					
 				return;
 			}
@@ -2126,7 +2403,16 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER || KeyInput.getCharPressed() == (char) 9) {
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
+				KeyInput.updateKeys();
+				
+				cY.insert(cursorX, "    ");
+				
+				cursorX += 4;
+				editing.setSaved(false);
+			}
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
 				
 				StringBuilder spaces = new StringBuilder();
@@ -2162,7 +2448,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_SHIFT || KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) return;
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_SHIFT) return;
 			
 			int keyCode = KeyInput.getKeyCodePressed();
 			char c = KeyInput.getCharPressed();
@@ -2340,7 +2626,7 @@ public class CodeEditor extends IDEComponent {
 		
 		if (editing != null) {
 			g.setColor(Colors.backgroundLight);
-			g.fillRect(x, Main.screen.getHeight() - 22, width, 22);
+			g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
 			
 			Fonts.drawString(codeType + " - " + extType, x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 		}

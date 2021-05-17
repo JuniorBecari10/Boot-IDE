@@ -1,5 +1,6 @@
 package ide.components;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -47,6 +48,9 @@ public class ReturnToBaseFolderButton extends IDEComponent {
 		if (hovered()) {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x - 2, y - 2, width + 4, height + 4);
+			
+			g.setColor(new Color(0, 0, 0, 0.5f));
+			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, 330, 28);
 		}
 		
 		super.render(g);

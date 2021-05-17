@@ -47,15 +47,16 @@ public class Screen extends Canvas {
         windowInput = new WindowInput();
         dragListener = new DragListener();
 
+        addKeyListener(keyInput);
         addMouseListener(mouseInput);
         addMouseMotionListener(mouseInput);
         addMouseWheelListener(mouseInput);
         
         frame.addWindowListener(windowInput);
-
-        addKeyListener(keyInput);
         
         dt = new DropTarget(frame, dragListener);
+        
+        setFocusTraversalKeysEnabled(false);
     }
 
     private void initWindow(String title, Dimension d) {
@@ -66,10 +67,12 @@ public class Screen extends Canvas {
         frame.add(this);
 		frame.setResizable(true);
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-
+		frame.setFocusTraversalKeysEnabled(false);
+		
         frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setFocusTraversalKeysEnabled(false); // tem q ter esses dois
 		frame.setVisible(true);
     }
     
