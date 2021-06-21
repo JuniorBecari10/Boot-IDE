@@ -20,16 +20,22 @@ public class Colors {
     public static Color methods = 		  Color.decode("#e7d789");
     public static Color numbers = 		  Color.decode("#5485b6");
     public static Color keywords = 		  Color.decode("#95bddc");
-    public static Color variables = 	  Color.decode("#74c8e8"); // 66e1f8
+    public static Color variables = 	  Color.decode("#80d1f2"); // 66e1f8
     
     public static Color comments = 					  textLighter;
     public static Color strings = 					    textLight;
     public static Color symbols = 						 comments;
     
+    public static Color select = 		   Color.decode("#8c8c8c");
+    
     public static Color select1 = 		  Color.decode("#ff6961");
     public static Color select2 = 		  Color.decode("#ff5147");
     public static Color selectCursor = 	  			   Color.blue;
     public static Color other =						  Color.white;
+    public static Color error =			  Color.decode("#ff6961");
+    public static Color cursor = 					  Color.white;
+    public static Color lineNumber =			 Colors.textLight;
+    public static Color selectedLineNumber=Color.decode("#c5d5ea");
     
     public static void revertColors() {
     	 background = Color.decode("#353b48");
@@ -50,9 +56,9 @@ public class Colors {
          strings = 					    textLight;
          symbols = 						 comments;
         
-         select1 = 		  Color.decode("#ff6961");
+         /*select1 = 		  Color.decode("#ff6961");
          select2 = 		  Color.decode("#ff5147");
-         selectCursor = 	  Color.blue;
+         selectCursor = 	  Color.blue;*/
          other =						  Color.white;
     }
     

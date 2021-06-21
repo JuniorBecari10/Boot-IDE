@@ -172,7 +172,7 @@ public class CommandTerminal extends IDEComponent {
 				}
 				else {
 					if (CodeEditor.index2 < CodeEditor.index1) {
-						JOptionPane.showMessageDialog(null, "O index 2 não pode ser maior que o index 1!", "Valores invertidos", JOptionPane.OK_OPTION);
+						JOptionPane.showMessageDialog(null, "O index 2 não pode ser menor que o index 1!", "Valores invertidos", JOptionPane.OK_OPTION);
 						
 						runCommand("deselect");
 						
@@ -197,6 +197,8 @@ public class CommandTerminal extends IDEComponent {
 				if (CodeEditor.line1 != CodeEditor.line2) { // se não selecionou uma linha só (selecionou várias)
 					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) {
 						if (i == CodeEditor.line1 - 1) {
+							if (CodeEditor.lines.get(i).getChars().size() < CodeEditor.index1 || CodeEditor.lines.get(i).getChars().size() < CodeEditor.index2) continue;
+							
 							CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(0, CodeEditor.index1));
 							
 							continue;
@@ -222,7 +224,7 @@ public class CommandTerminal extends IDEComponent {
 				}
 				else {
 					if (CodeEditor.index2 < CodeEditor.index1) {
-						JOptionPane.showMessageDialog(null, "O index 2 não pode ser maior que o index 1!", "Valores invertidos", JOptionPane.OK_OPTION);
+						JOptionPane.showMessageDialog(null, "O index 2 não pode ser menor que o index 1!", "Valores invertidos", JOptionPane.OK_OPTION);
 						
 						runCommand("deselect");
 						
@@ -269,6 +271,9 @@ public class CommandTerminal extends IDEComponent {
 				
 				CodeEditor.line1 = 1;
 				CodeEditor.line2 = CodeEditor.lines.size();
+				
+				CodeEditor.cursorX = 0;
+				CodeEditor.cursorY = 1;
 				
 				CodeEditor.selecting = true;
 				break;
@@ -389,30 +394,25 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
+			case "clog":
+				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				
+				b.insert(CodeEditor.cursorX, "console.log()");
+				
+				Main.editor.register(b, CodeEditor.cursorY - 1);
+				
+				CodeEditor.editing.setSaved(false);
+				
+				CodeEditor.cursorX += 12;
+				
+				break;
+				
 			case "gendiv":
 				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
 				
 				b.insert(CodeEditor.cursorX, "<div></div>");
 				
 				Main.editor.register(b, CodeEditor.cursorY - 1);
-				
-				CodeEditor.editing.setSaved(false);
-				
-				break;
-				
-			case "gennewhtmlbase":
-				String[] strss = { "<html>", " <head>", "  <title></title>", "  ", "  <meta charset=\"UTF-8\">", "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", " </head>", " <body>", " </body>", "</html>" };
-				
-				for (int i = 0; i < strss.length; i++) {
-					if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
-						CodeEditor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
-					
-					b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
-					
-					b.insert(CodeEditor.cursorX, strss[i]);
-					
-					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
-				}
 				
 				CodeEditor.editing.setSaved(false);
 				
@@ -452,6 +452,14 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
+			case "togglesyntaxerrors":
+				CodeEditor.syntaxErrorsOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor syntaxerrorson, true
+				break;
+				
+			case "togglecodehints":
+				CodeEditor.codeHintsOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor syntaxerrorson, true
+				break;
+				
 			case "gotocursor":
 				CodeEditor.scrY = (CodeEditor.cursorY - 1) * (CodeEditor.FONT_SIZE);
 				break;
@@ -478,11 +486,9 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "gotoline":
 				try {
-					int pos = Integer.parseInt(args[0]) * (CodeEditor.FONT_SIZE + 4);
+					CodeEditor.cursorY = Integer.parseInt(args[0]);
 					
-					double round = Math.round(pos / ((CodeEditor.FONT_SIZE + 4) * 3)) * ((CodeEditor.FONT_SIZE + 4) * 3);
-					
-					CodeEditor.scrY = (int) round;
+					runCommand("gotocursor");
 				} catch (NumberFormatException e) {
 					break;
 				}
@@ -604,6 +610,13 @@ public class CommandTerminal extends IDEComponent {
 					strs = inostrs;
 					
 					break;
+					
+				case "htmlnew":
+					String[] htmlnewstrs = { "<html>", " <head>", "  <title></title>", "  ", "  <meta charset=\"UTF-8\">", "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", " </head>", " <body>", " </body>", "</html>" };
+					
+					strs = htmlnewstrs;
+					
+					break;
 				}
 				
 				if (strs.length == 0) return;
@@ -637,7 +650,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				// como é automaticamente occur 0, pegamos automaticamente ela.
 				
-				CodeEditor.scrY = (linesfound.get(0) - 1) * (CodeEditor.FONT_SIZE);// + 4);
+				CodeEditor.scrY = (linesfound.get(0) + 1) * (CodeEditor.FONT_SIZE);// + 4);
 				CodeEditor.cursorY = (linesfound.get(0) - 1) + 2;
 				
 				break;
@@ -710,6 +723,11 @@ public class CommandTerminal extends IDEComponent {
 				
 				int occurnum = Integer.parseInt(args[1]); // base 1 viu
 				
+				if (occurnum == 0) {
+					runCommand("search " + args[0]);
+					break;
+				}
+				
 				if (occurnum > linesfound.size())
 					occurnum = linesfound.size();
 				
@@ -762,6 +780,8 @@ public class CommandTerminal extends IDEComponent {
 					Main.editor.register(new StringBuilder(s), i);
 				}
 				
+				CodeEditor.editing.setSaved(false);
+				
 				break;
 				
 			case "replacesel":
@@ -786,6 +806,8 @@ public class CommandTerminal extends IDEComponent {
 					Main.editor.register(new StringBuilder(s), i);
 				}
 				
+				CodeEditor.editing.setSaved(false);
+				
 				break;
 				
 			/*case "select":
@@ -800,7 +822,7 @@ public class CommandTerminal extends IDEComponent {
 				break;*/
 			}
 		}
-		else if (args.length == 3) { // TODO
+		else if (args.length == 3) { // TODO arrumar isso em uma futura atualização
 			switch (com) {
 			case "gengetter":
 				String[] strs = { };
@@ -816,25 +838,23 @@ public class CommandTerminal extends IDEComponent {
 				case "cs":
 					String[] csstrs = { "public " + args[2] + " " + args[1] + " { get { return " + args[1] + "; } set { " + args[1] + " = value; } };" };
 					
-					strs = csstrs; // 15/05/2021 - 11:13
+					strs = csstrs;
 					
 					break;
 				}
 				
-				if (strs.length == 0) return; // ÚLTIMO: 17/05/2021 - 15:51
+				if (strs.length == 0) return;
 				
-				try {
-					for (int i = 0; i < strs.length; i++) {
-						if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
-							CodeEditor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
-						
-						StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
-						
-						b.insert(CodeEditor.cursorX, strs[i]);
-						
-						Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
-					}
-				} catch (Exception e) { return; }
+				for (int i = 0; i < strs.length; i++) {
+					if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
+						CodeEditor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
+					
+					StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
+					
+					b.insert(CodeEditor.cursorX, strs[i]);
+					
+					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
+				}
 				
 				CodeEditor.editing.setSaved(false);
 				
@@ -866,6 +886,23 @@ public class CommandTerminal extends IDEComponent {
 				}
 				
 				CodeEditor.editing.setSaved(false);
+				
+				break;
+			}
+		}
+			
+		else if (args.length == 4) {
+			switch (com) {
+			case "select":
+				CodeEditor.index1 = Integer.parseInt(args[0]);
+				CodeEditor.index2 = Integer.parseInt(args[1]);
+				CodeEditor.line1 = Integer.parseInt(args[2]);
+				CodeEditor.line2 = Integer.parseInt(args[3]);
+				
+				if (CodeEditor.line1 < 1) CodeEditor.line1 = 1;
+				if (CodeEditor.line2 < 1) CodeEditor.line2 = 1;
+				
+				CodeEditor.selecting = true;
 				
 				break;
 			}
@@ -991,7 +1028,7 @@ public class CommandTerminal extends IDEComponent {
 		g2.setStroke(new BasicStroke(2f));
 		
 		if (showCursor) {
-			g.setColor(Color.white);
+			g.setColor(Colors.cursor);
 			g.drawLine((x + 4) + (cursorIndex * 14), y + 5, (x + 4) + (cursorIndex * 14), y + 5 + 18);
 		}
 		

@@ -45,7 +45,7 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	private boolean isSaved = true;
 	
-	private CloseTabButton button;
+	public CloseTabButton button;
 	
 	private ListableFile regent;
 	
@@ -109,15 +109,25 @@ public class Tab extends IDEComponent implements Serializable {
 		CodeEditor.toRemove.add(this);
 		CodeEditor.lines.clear();
 		
+		CodeEditor.selecting = false;
+		
 		if (CodeEditor.tabs.size() < 2) {
 			CodeEditor.editing = null;
 			
 			return;
 		}
 		
+		CodeEditor.tabScr = 0;
+		
 		Tab next = CodeEditor.tabs.indexOf(this) == 0 ? CodeEditor.tabs.get(1) : CodeEditor.tabs.get(0);
 		
+		if (!CodeEditor.toRemove.get(0).equals(this))
+			next = this;
+		
 		CodeEditor.editing = next;
+		
+		CodeEditor.cursorX = 0;
+		CodeEditor.cursorY = 0;
 		
 		try {
 			CodeEditor.lines = CodeEditor.readFile(next.getRegent().getRegent());
@@ -170,9 +180,40 @@ public class Tab extends IDEComponent implements Serializable {
 			save();
 			break;
 			
+		case "run":
+			try {
+				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", regent.getRegent().getName());
+				File dir = regent.getRegent().getParentFile();
+				
+				pb.directory(dir);
+				
+				pb.start();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case "runbash":
+			try {
+				ProcessBuilder pb = new ProcessBuilder("sh", "-c", "start", regent.getRegent().getName());
+				File dir = regent.getRegent().getParentFile();
+				
+				pb.directory(dir);
+				
+				pb.start();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
 		case "showexp":
 			Explorer.files.clear();
 			ListableFile.files.clear();
+			
+			if (CommandTerminal.expOff)
+				CommandTerminal.runCommand("toggleexplorer");
 			
 			if (regent.getParent() == null) {
 				Explorer.scope = null;
@@ -190,7 +231,7 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			Explorer.scope = regent.getParent();
 			
-			ListableFile.files = ListableFile.loadFolder(regent.getParent());
+			ListableFile.files = ListableFile.loadFolder((!regent.getParent().getRegent().equals(Main.baseFolder) ? regent.getParent() : null));
 			
 			break;
 		}
@@ -213,12 +254,18 @@ public class Tab extends IDEComponent implements Serializable {
 		button.tick();
 		
 		if (CodeEditor.editing == this) {
-			scrX = CodeEditor.scrX;
+			scrX = CodeEditor.scrX; // TODO
 			scrY = CodeEditor.scrY;
 		}
 		
 		if (leftClicked() && !button.leftClicked()) {
+			CodeEditor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
+			
 			CodeEditor.editing = this;
+			
+			CodeEditor.isMultilineCommenting = false;
+			CodeEditor.isAnotherIteration = false;
+			CodeEditor.foundExt = false;
 			
 			try {
 				CodeEditor.lines = CodeEditor.readFile(regent.getRegent());
@@ -232,6 +279,9 @@ public class Tab extends IDEComponent implements Serializable {
 			CodeEditor.scrX = scrX;
 			CodeEditor.scrY = scrY;
 			
+			//if (CodeEditor.scrY > CodeEditor.lines.size() * (CodeEditor.FONT_SIZE / 4))
+				//CommandTerminal.runCommand("gotocursor");
+			
 			save();
 		}
 		
@@ -242,6 +292,14 @@ public class Tab extends IDEComponent implements Serializable {
 			IDEComponent.addRightClickOption(x, y + height + 3 + 30, 305, "Fechar todas as abas", (s) -> execute(s), "all");
 			IDEComponent.addRightClickOption(x, y + height + 3 + 60, 305, "Salvar", (s) -> execute(s), "save");
 			IDEComponent.addRightClickOption(x, y + height + 3 + 90, 305, "Abrir no Explorador", (s) -> execute(s), "showexp");
+			
+			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
+			
+			if (ListableFile.getFileExtension(regent.getRegent()).equals(".bat") && isWindows)
+				IDEComponent.addRightClickOption(x, y + height + 3 + 120, 305, "Executar", (s) -> execute(s), "run");
+			
+			if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && !isWindows)
+				IDEComponent.addRightClickOption(x, y + height + 3 + 150, 305, "Executar", (s) -> execute(s), "runbash");
 		}
 		
 		if (isSaved)
@@ -271,7 +329,14 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		String extension = ListableFile.getFileExtension(regent.getRegent());
 		
-		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, new IDEFont(Fonts.lighterGrayNormal, 16), (x + WIDTH) - 15, g);
+		IDEFont font = new IDEFont(Fonts.lighterGrayNormal, 16);
+		
+		if (CodeEditor.linesWithErrors != null && CodeEditor.syntaxErrorsOn) {
+			if (CodeEditor.linesWithErrors.size() > 0 && CodeEditor.editing == this)
+				font = new IDEFont(Fonts.errorNormal, 16);
+		}
+		
+		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, (x + WIDTH) - 15, g);
 	
 		button.render(g);
 		

@@ -53,6 +53,7 @@ public final class KeyInput extends KeyAdapter {
         keyCodePressed = e.getKeyCode();
         
         controlDown = e.isControlDown();
+        
         shiftDown = e.isShiftDown();
         altDown = e.isAltDown();
         altGrDown = e.isAltGraphDown();
@@ -63,7 +64,7 @@ public final class KeyInput extends KeyAdapter {
         keyPressed = false;
 
         charPressed = e.getKeyChar();
-        keyCodePressed = e.getKeyCode();
+        keyCodePressed = -1;
         
         controlDown = e.isControlDown();
         shiftDown = e.isShiftDown();

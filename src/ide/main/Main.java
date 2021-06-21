@@ -1,7 +1,7 @@
 /**
  * Boot IDE
  * 
- * Actual Version: Release 1.2
+ * Actual Version: Release 3.0
  * 
  * Changelog:
  * 
@@ -28,8 +28,10 @@
 
 package ide.main;
 
+import java.awt.BasicStroke;
 import java.awt.Desktop;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.io.BufferedWriter;
@@ -55,6 +57,7 @@ import ide.components.ReturnToBaseFolderButton;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
+import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
 import ide.util.Colors;
@@ -126,8 +129,8 @@ public class Main implements Runnable, Tickable {
 
         desktop = Desktop.getDesktop();
         
-        IDEComponent.components.add(explorer);
         IDEComponent.components.add(editor);
+        IDEComponent.components.add(explorer);
         
         IDEComponent.components.add(logo);
         
@@ -172,7 +175,7 @@ public class Main implements Runnable, Tickable {
 			wr.write((fntnr.equals("/font.png")) ? "default\n" : fntnr + "\n");
 			wr.write((fntbl.equals("/bold.png")) ? "default\n" : fntbl + "\n");
 			wr.write((sprsh.equals("/spritesheet.png")) ? "default\n" : sprsh + "\n");
-			wr.write(baseFolder.getPath() + "\n");
+			wr.write((baseFolder != null ? baseFolder.getPath() : "none") + "\n");
 			wr.write(conffile + "\n");
 			wr.write(CodeEditor.tabs.indexOf(CodeEditor.editing) + "\n");
 			wr.write(CodeEditor.scrX + "\n");
@@ -197,86 +200,88 @@ public class Main implements Runnable, Tickable {
     }
     
     public static void readFile(File setFile) {
-    	Path p = setFile.toPath();
-    	
     	try {
-			List<String> lines = new ArrayList<>();
-			
-			try {
-				lines = Files.readAllLines(p, StandardCharsets.UTF_8); // utf-8
-			}
-			catch (Exception e) {
-				lines = Files.readAllLines(p, StandardCharsets.ISO_8859_1); // ansi
-			}
-			
-			for (int i = 0; i < lines.size(); i++) {
-				String s = lines.get(i);
+	    	Path p = setFile.toPath();
+	    	
+	    	try {
+				List<String> lines = new ArrayList<>();
 				
-				if (i == 0)
-					fntnr = (fntnr.equals("default")) ? s : "/font.png";
-				else if (i == 1)
-					fntbl = (fntbl.equals("default")) ? s : "/bold.png";
-				else if (i == 2)
-					sprsh = (sprsh.equals("default")) ? s : "/spritesheet.png";
-				else if (i == 3) {
-					Fonts.initFonts(fntnr, fntbl);
-			        spritesheet = new Spritesheet(sprsh);
+				try {
+					lines = Files.readAllLines(p, StandardCharsets.UTF_8); // utf-8
+				}
+				catch (Exception e) {
+					lines = Files.readAllLines(p, StandardCharsets.ISO_8859_1); // ansi
+				}
+				
+				for (int i = 0; i < lines.size(); i++) {
+					String s = lines.get(i);
 					
-					baseFolder = new File(s);
-					
-					if (Explorer.files.size() == 0) {
-						int index = 0;
+					if (i == 0)
+						fntnr = (fntnr.equals("default")) ? s : "/font.png";
+					else if (i == 1)
+						fntbl = (fntbl.equals("default")) ? s : "/bold.png";
+					else if (i == 2)
+						sprsh = (sprsh.equals("default")) ? s : "/spritesheet.png";
+					else if (i == 3) {
+						Fonts.initFonts(fntnr, fntbl);
+				        spritesheet = new Spritesheet(sprsh);
 						
-						for (File f : Main.baseFolder.listFiles()) {
-							Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+						baseFolder = new File(s);
+						
+						if (Explorer.files.size() == 0) {
+							int index = 0;
 							
-							index++;
+							for (File f : Main.baseFolder.listFiles()) {
+								Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+									
+								index++;
+							}
 						}
 					}
-				}
-				else if (i == 4)
-					conffile = s;
-				
-				else if (i == 5)
-					tabindex = Integer.parseInt(s);
-				
-				else if (i == 6)
-					CodeEditor.scrX = Integer.parseInt(s);
-				
-				else if (i == 7)
-					CodeEditor.scrY = Integer.parseInt(s);
-				
-				else if (i == 8)
-					CodeEditor.tabScr = Integer.parseInt(s);
-				
-				if (i > 8) {
-					if (!ListableFile.isPath(s)) continue;
+					else if (i == 4)
+						conffile = s;
 					
-					File reg = new File(s);
-					File par = reg.getParentFile();
+					else if (i == 5)
+						tabindex = Integer.parseInt(s);
 					
-					CodeEditor.tabs.add(new Tab((i - 4) * Tab.WIDTH, ListableFile.search(reg, par))); // 12/05/2021 - 16:17
+					else if (i == 6)
+						CodeEditor.scrX = Integer.parseInt(s);
+					
+					else if (i == 7)
+						CodeEditor.scrY = Integer.parseInt(s);
+					
+					else if (i == 8)
+						CodeEditor.tabScr = Integer.parseInt(s);
+					
+					if (i > 8) {
+						if (!ListableFile.isPath(s)) continue;
+						
+						File reg = new File(s);
+						File par = reg.getParentFile();
+						
+						CodeEditor.tabs.add(new Tab((i - 4) * Tab.WIDTH, ListableFile.search(reg, par))); // 12/05/2021 - 16:17
+					}
 				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	
-    	if (CodeEditor.tabs.size() > 0) {
-			CodeEditor.editing = CodeEditor.tabs.get(tabindex);
-    	
-	    	try {
-				CodeEditor.lines = CodeEditor.readFile(CodeEditor.tabs.get(tabindex).getRegent().getRegent());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-    	}
-    	
-		IDEComponent.toAdd.add(Main.oneLevel);
-		IDEComponent.toAdd.add(Main.returnBase);
-		IDEComponent.toAdd.add(Main.newFile);
-		IDEComponent.toAdd.add(Main.newFolder);
-		IDEComponent.toAdd.add(Main.reload);
+	    	
+	    	if (CodeEditor.tabs.size() > 0) {
+				CodeEditor.editing = CodeEditor.tabs.get(tabindex);
+	    	
+		    	try {
+					CodeEditor.lines = CodeEditor.readFile(CodeEditor.tabs.get(tabindex).getRegent().getRegent());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+	    	}
+	    	
+			IDEComponent.toAdd.add(Main.oneLevel);
+			IDEComponent.toAdd.add(Main.returnBase);
+			IDEComponent.toAdd.add(Main.newFile);
+			IDEComponent.toAdd.add(Main.newFolder);
+			IDEComponent.toAdd.add(Main.reload);
+    	} catch (Exception e) {}
     }
 
     public synchronized void start() {
@@ -288,8 +293,12 @@ public class Main implements Runnable, Tickable {
 
     @Override
     public void tick() {
-    	if (WindowInput.isClosing())
+    	if (WindowInput.isClosing()) {
+    		if (CodeEditor.editing != null)
+    			CodeEditor.editing.save();
+    		
     		writeFile(settingsFile);
+    	}
     	
         for (IDEComponent c : IDEComponent.components)
             c.tick();
@@ -323,6 +332,8 @@ public class Main implements Runnable, Tickable {
         }
 
         Graphics g = screen.layer.getGraphics();
+        
+        Graphics2D g2 = (Graphics2D) g;
 
         g.setColor(Colors.background);
         g.fillRect(0, 0, Screen.WIDTH, Screen.HEIGHT);
@@ -332,6 +343,61 @@ public class Main implements Runnable, Tickable {
         
         for (ListableFile f : Explorer.files)
         	f.render(g);
+        
+        for (Tab t : CodeEditor.tabs) {
+			if (t.hovered() && CodeEditor.editing == t && t.getX() + CodeEditor.tabScr >= editor.getX() && !t.button.hovered()) { // por algum motivo é + e não -
+				int index = t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0;
+				
+				int width = 10 + t.getRegent().getRegent().getPath().substring(index).length() * 15;
+				int height = CodeEditor.linesWithErrors.size() == 0 ? 70 : 50 + (CodeEditor.linesWithErrors.size() * 40);
+				
+				if (!CodeEditor.syntaxErrorsOn)
+					height = 70;
+				
+				if (CodeEditor.syntaxErrorsOn) {
+					if (CodeEditor.linesWithErrors.size() > 0)
+						width = 700;
+					else
+						width = 500;
+					
+					if (t.getRegent().getRegent().getPath().substring(index).length() > "Não foram encontrados erros de sintaxe.".length())
+						width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
+				}
+				else {
+					width = 650;
+					
+					if (t.getRegent().getRegent().getPath().substring(index).length() > "Foram encontrados erros de sintaxe nas seguintes linhas:".length())
+						width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12; // 31/05/2021 - 11:04 - Segunda-feira
+				}
+				
+				g.setColor(Colors.explorerLight);
+				g.fillRect(MouseInput.getMouseX() + 10, MouseInput.getMouseY(), width, height);
+				
+				g.setColor(Colors.textLighter);
+				g2.setStroke(new BasicStroke(2f));
+				g2.drawRect(MouseInput.getMouseX() + 10, MouseInput.getMouseY(), width, height);
+				
+				Fonts.drawString(t.getRegent().getRegent().getPath().substring(index), MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+			
+				if (CodeEditor.syntaxErrorsOn) {
+					if (CodeEditor.linesWithErrors.size() == 0)
+						Fonts.drawString("Não foram encontrados erros de sintaxe.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					else {
+						Fonts.drawString("Foram encontrados erros de sintaxe nas seguintes linhas:", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.errorNormal, 16), g2);
+						
+						int count = 0;
+						
+						for (Integer i : CodeEditor.linesWithErrors) {
+							Fonts.drawString(new Integer(i + 1).toString(), MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 65 + count * 16, new IDEFont(Fonts.errorNormal, 16), g2);
+						
+							count++;
+						}
+					}
+				}
+				else
+					Fonts.drawString("As detecções de erros de sintaxe foram desativadas.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+			}
+		}
         
         g.dispose();
         g = bs.getDrawGraphics();

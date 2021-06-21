@@ -28,8 +28,14 @@ public class Logo extends IDEComponent {
 		
 		show = CodeEditor.editing == null;
 		
-		x = (int) (Main.screen.getWidth() / 2 + 80);
-		y = (int) (Main.screen.getHeight() / 2 - 120);
+		if (!CommandTerminal.expOff) {
+			x = (int) (Main.screen.getWidth() / 2 + 80);
+			y = (int) (Main.screen.getHeight() / 2 - 120);
+		}
+		else {
+			x = (int) ((Main.screen.getWidth() / 2) - width / 2);
+			y = (int) (Main.screen.getHeight() / 2 - 120);
+		}
 	}
 	
 	public void render(Graphics g) {
@@ -38,6 +44,10 @@ public class Logo extends IDEComponent {
 		super.render(g);
 		
 		if (showMessage1) {
+			g.setColor(Colors.explorer);
+			
+			g.fillRect(x + 47, y + 218, 17 * 20 + 10, 27);
+			
 			Fonts.drawString("Não há nenhuma pasta carregada.", x - 140, y + 170, new IDEFont(Fonts.lighterGrayNormal, 20), g);
 			Fonts.drawString("Clique no botão [Selecionar Pasta Base]", x - 190, y + 220, new IDEFont(Fonts.lightGrayNormal, 20), g);
 			Fonts.drawString("para carregar uma.", x - 50, y + 250, new IDEFont(Fonts.lightGrayNormal, 20), g);

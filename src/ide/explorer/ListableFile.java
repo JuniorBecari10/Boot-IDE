@@ -34,12 +34,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 
 	public static transient FileType[] types = {
 			new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16)),
-			new FileType(".class", Main.spritesheet.getSprite(0, 16, 16, 16)),
+			new FileType(".class",Main.spritesheet.getSprite(272,32, 16, 16)),
 			new FileType(".c", Main.spritesheet.getSprite   (16, 16, 16, 16)),
 			new FileType(".cpp", Main.spritesheet.getSprite (32, 16, 16, 16)),
 			new FileType(".cxx", Main.spritesheet.getSprite (32, 16, 16, 16)),
 			new FileType(".cs", Main.spritesheet.getSprite  (48, 16, 16, 16)),
 			new FileType(".py", Main.spritesheet.getSprite  (64, 16, 16, 16)),
+			new FileType(".pyd", Main.spritesheet.getSprite (64, 16, 16, 16)),
 			new FileType(".js", Main.spritesheet.getSprite  (80, 16, 16, 16)),
 			new FileType(".bat", Main.spritesheet.getSprite (96, 16, 16, 16)),
 			new FileType(".com", Main.spritesheet.getSprite (96, 16, 16, 16)),
@@ -58,12 +59,26 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType(".rb", Main.spritesheet.getSprite (256, 16, 16, 16)),
 			new FileType(".ino", Main.spritesheet.getSprite(272, 16, 16, 16)),
 			new FileType(".ts", Main.spritesheet.getSprite (288, 16, 16, 16)),
+			new FileType(".go", Main.spritesheet.getSprite (304, 16, 16, 16)),
+			new FileType(".r",  Main.spritesheet.getSprite (320, 16, 16, 16)),
+			new FileType(".jl", Main.spritesheet.getSprite (336, 16, 16, 16)),
+			new FileType(".pl", Main.spritesheet.getSprite (352, 16, 16, 16)),
+			new FileType(".has", Main.spritesheet.getSprite(368, 16, 16, 16)),
+			new FileType(".hs", Main.spritesheet.getSprite (368, 16, 16, 16)),
+			new FileType(".fs", Main.spritesheet.getSprite (384, 16, 16, 16)),
+			new FileType(".coffee",Main.spritesheet.getSprite(400,16,16, 16)),
+			new FileType(".m", Main.spritesheet.getSprite  (416, 16, 16, 16)),
+			new FileType(".pas", Main.spritesheet.getSprite(432, 16, 16, 16)),
+			new FileType(".pp", Main.spritesheet.getSprite (432, 16, 16, 16)),
+			new FileType(".scala",Main.spritesheet.getSprite(448,16, 16, 16)),
+			new FileType(".dart",Main.spritesheet.getSprite(464, 16, 16, 16)),
 			
 			new FileType(".html", Main.spritesheet.getSprite (0, 32, 16, 16)),
 			new FileType(".htm", Main.spritesheet.getSprite  (0, 32, 16, 16)),
 			new FileType(".css", Main.spritesheet.getSprite (16, 32, 16, 16)),
 			new FileType(".xml", Main.spritesheet.getSprite (32, 32, 16, 16)),
 			new FileType(".json", Main.spritesheet.getSprite(48, 32, 16, 16)),
+			new FileType(".jsonc",Main.spritesheet.getSprite(48, 32, 16, 16)),
 			new FileType(".md", Main.spritesheet.getSprite  (64, 32, 16, 16)),
 			new FileType(".txt", Main.spritesheet.getSprite (80, 32, 16, 16)),
 			new FileType(".log", Main.spritesheet.getSprite (80, 32, 16, 16)),
@@ -79,12 +94,30 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType(".sh", Main.spritesheet.getSprite (224, 32, 16, 16)),
 			new FileType(".gitignore",Main.spritesheet.getSprite(240,32,16,16)),
 			new FileType(".dockerfile",Main.spritesheet.getSprite(256,32,16,16)),
+			new FileType(".jsx", Main.spritesheet.getSprite(368, 32, 16, 16)),
+			new FileType(".config",Main.spritesheet.getSprite(352,32,16, 16)),
+			new FileType(".cfg", Main.spritesheet.getSprite (352, 32,16, 16)),
+			new FileType(".ps1", Main.spritesheet.getSprite(320, 32, 16, 16)),
+			new FileType(".license",Main.spritesheet.getSprite(336,32,16,16)),
+			new FileType(".docx",Main.spritesheet.getSprite(384, 32, 16, 16)),
+			new FileType(".xlsx",Main.spritesheet.getSprite(400, 32, 16, 16)),
+			new FileType(".docx",Main.spritesheet.getSprite(384, 32, 16, 16)),
+			new FileType(".pptx",Main.spritesheet.getSprite(416, 32, 16, 16)),
+			new FileType(".one", Main.spritesheet.getSprite(432, 32, 16, 16)),
+			new FileType(".psd",Main.spritesheet.getSprite (448, 32, 16, 16)),
+			new FileType(".aed",Main.spritesheet.getSprite (464, 32, 16, 16)),
+			new FileType(".ai", Main.spritesheet.getSprite (480, 32, 16, 16)),
+			new FileType(".indd",Main.spritesheet.getSprite(496, 32, 16, 16)),
+			new FileType(".ejs", Main.spritesheet.getSprite(512, 32, 16, 16)),
+			new FileType(".ld", Main.spritesheet.getSprite (528, 32, 16, 16)),
+			new FileType(".lock",Main.spritesheet.getSprite(544, 32, 16, 16)),
 			
 			new FileType(".png", Main.spritesheet.getSprite  (0, 48, 16, 16)),
 			new FileType(".jpg", Main.spritesheet.getSprite  (0, 48, 16, 16)),
 			new FileType(".jpeg", Main.spritesheet.getSprite (0, 48, 16, 16)),
 			new FileType(".gif", Main.spritesheet.getSprite  (0, 48, 16, 16)),
 			new FileType(".bmp", Main.spritesheet.getSprite  (0, 48, 16, 16)),
+			new FileType(".ico", Main.spritesheet.getSprite  (0, 48, 16, 16)),
 			
 			new FileType(".mp4", Main.spritesheet.getSprite (16, 48, 16, 16)),
 			new FileType(".wmv", Main.spritesheet.getSprite (16, 48, 16, 16)),
@@ -98,11 +131,17 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType(".ttf", Main.spritesheet.getSprite (48, 48, 16, 16)),
 			new FileType(".woff",Main.spritesheet.getSprite (48, 48, 16, 16)),
 			new FileType(".woff2",Main.spritesheet.getSprite(48, 48, 16, 16)),
+			new FileType(".zip", Main.spritesheet.getSprite(288, 32, 16, 16)),
+			new FileType(".rar", Main.spritesheet.getSprite(288, 32, 16, 16)),
+			new FileType(".7z", Main.spritesheet.getSprite (288, 32, 16, 16)),
+			new FileType(".bin", Main.spritesheet.getSprite(304, 32, 16, 16)),
 			
 			// Specials
 			
 			new FileType("makefile",Main.spritesheet.getSprite(208, 32, 16, 16)),
-			new FileType("dockerfile",Main.spritesheet.getSprite(256, 32, 16, 16)),
+			new FileType("dockerfile",Main.spritesheet.getSprite(256,32,16, 16)),
+			new FileType("license", Main.spritesheet.getSprite(336, 32, 16, 16)),
+			new FileType("gitignore",Main.spritesheet.getSprite(240,32,16,16)),
 	};
 	
 	private ListableFile parent;
@@ -123,6 +162,10 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	
 	public File getRegent() {
 		return regent;
+	}
+	
+	public void setParent(ListableFile parent) {
+		this.parent = parent;
 	}
 	
 	@Override
@@ -277,7 +320,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			w.write("select1: default\n");
 			w.write("select2: default\n");
 			w.write("selectCursor: default\n");
+			w.write("cursor: default\n");
 			w.write("other: default\n");
+			w.write("error: default\n");
+			w.write("lineNumber: default\n");
+			w.write("selectedLineNumber: default\n");
 			w.write("\n");
 			w.write("- Files\n");
 			w.write("\n");
@@ -344,7 +391,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.background = Color.decode(split[1]);
+				try {
+					Colors.background = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -353,7 +404,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.backgroundLight = Color.decode(split[1]);
+				try {
+					Colors.backgroundLight = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -362,7 +417,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.explorer = Color.decode(split[1]);
+				try {
+					Colors.explorer = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -371,7 +430,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.explorerLight = Color.decode(split[1]);
+				try {
+					Colors.explorerLight = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -380,7 +443,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.textLight = Color.decode(split[1]);
+				try {
+					Colors.textLight = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -389,7 +456,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.textLighter = Color.decode(split[1]);
+				try {
+					Colors.textLighter = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -398,7 +469,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.objects = Color.decode(split[1]);
+				try {
+					Colors.objects = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -407,7 +482,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.methods = Color.decode(split[1]);
+				try {
+					Colors.methods = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -416,7 +495,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.numbers = Color.decode(split[1]);
+				try {
+					Colors.numbers = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -425,7 +508,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.keywords = Color.decode(split[1]);
+				try {
+					Colors.keywords = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -434,7 +521,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.variables = Color.decode(split[1]);
+				try {
+					Colors.variables = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -443,7 +534,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.comments = Color.decode(split[1]);
+				try {
+					Colors.comments = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -452,7 +547,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.strings = Color.decode(split[1]);
+				try {
+					Colors.strings = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -461,16 +560,24 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.symbols = Color.decode(split[1]);
+				try {
+					Colors.symbols = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
-			case "select1:":
+			/*case "select1:":
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.select1 = Color.decode(split[1]);
+				try {
+					Colors.select1 = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -479,7 +586,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.select2 = Color.decode(split[1]);
+				try {
+					Colors.select2 = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -488,7 +599,37 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.selectCursor = Color.decode(split[1]);
+				try {
+					Colors.selectCursor = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
+				
+				break;*/
+				
+			case "select:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				try {
+					Colors.select = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
+				
+				break;
+				
+			case "cursor:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				try {
+					Colors.cursor = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -497,7 +638,50 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				
-				Colors.other = Color.decode(split[1]);
+				try {
+					Colors.other = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
+				
+				break;
+				
+			case "error:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				try {
+					Colors.error = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
+				
+				break;
+				
+			case "lineNumber:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				try {
+					Colors.lineNumber = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
+				
+				break;
+				
+			case "selectedLineNumber:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				
+				try {
+					Colors.selectedLineNumber = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
 				
 				break;
 				
@@ -527,7 +711,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			case "font_size:":
 				if (split[1].equals("default")) break;
 				
-				int size = Integer.parseInt(split[1]);
+				int size = 0;
+				
+				try {
+					size = Integer.parseInt(split[1]);
+				} catch (Exception e) {
+					size = 16;
+				}
 				
 				CodeEditor.FONT_SIZE = size;
 				
@@ -650,7 +840,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			
 		case "sysexp":
 			try {
-				Runtime.getRuntime().exec("explorer.exe /select," + regent.getPath());
+				Main.desktop.open(new File(regent.getPath()).getParentFile());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -666,6 +856,18 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			
 			ListableFile.files = ListableFile.loadFolder(null);
 			
+			break;
+			
+		case "opendef":
+			new Thread() {
+				public void run() {
+					try {
+						Main.desktop.open(regent);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "O sistema não encontrou um programa padrão para abrir esse arquivo.", "Não encontrou nada!", JOptionPane.OK_OPTION);
+					}
+				}
+			}.start();
 			break;
 		}
 	}
@@ -693,7 +895,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			MouseInput.updateMouse();
 			
 			if (getFileExtension(regent).equals(".png") ||
-					getFileExtension(regent).equals(".jpg") ||
+					getFileExtension(regent).equals(".jpg") || // provavelmente fazer isso com excel e mais coisas do word
 					getFileExtension(regent).equals(".jpeg")||
 					getFileExtension(regent).equals(".png") ||
 					getFileExtension(regent).equals(".gif") ||
@@ -703,7 +905,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 					getFileExtension(regent).equals(".ogg") ||
 					getFileExtension(regent).equals(".mp4") ||
 					getFileExtension(regent).equals(".wmv") ||
-					getFileExtension(regent).equals(".avi")) {
+					getFileExtension(regent).equals(".avi") ||
+					getFileExtension(regent).equalsIgnoreCase(".exe") ||
+					getFileExtension(regent).equals(".pdf")) {
 					try {
 						Main.desktop.open(regent);
 					} catch (IOException e) {
@@ -742,6 +946,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				CodeEditor.scrY = 0;
 				
+				CodeEditor.isMultilineCommenting = false;
+				CodeEditor.isAnotherIteration = false;
+				
 				for (Tab t : CodeEditor.tabs)
 					if (t.getRegent().getRegent().getPath().equals(this.regent.getPath())) {
 						CodeEditor.editing = t;
@@ -762,14 +969,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			IDEComponent.addRightClickOption((x + width), y + 60, 540, "Abrir Terminal de Comando", (s) -> execute(s), "term");
 			IDEComponent.addRightClickOption((x + width), y + 90, 540, "Abrir no Explorador de Arquivos", (s) -> execute(s), "sysexp");
 			IDEComponent.addRightClickOption((x + width), y + 120, 540, "Definir pasta atual como Pasta Base", (s) -> execute(s), "setbase");
+			IDEComponent.addRightClickOption((x + width), y + 150, 540, "Abrir arquivo com o programa padrão", (s) -> execute(s), "opendef");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			if (getFileExtension(regent).equals(".bat") && isWindows)
-				IDEComponent.addRightClickOption((x + width), y + 150, 540, "Executar", (s) -> execute(s), "run");
+				IDEComponent.addRightClickOption((x + width), y + 180, 540, "Executar", (s) -> execute(s), "run");
 			
 			if (getFileExtension(regent).equals(".sh") && !isWindows)
-				IDEComponent.addRightClickOption((x + width), y + 150, 540, "Executar", (s) -> execute(s), "runbash");
+				IDEComponent.addRightClickOption((x + width), y + 180, 540, "Executar", (s) -> execute(s), "runbash");
 		}
 		
 		int index = Explorer.files.indexOf(this);

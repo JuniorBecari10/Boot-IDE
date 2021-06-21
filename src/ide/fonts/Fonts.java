@@ -57,6 +57,15 @@ public class Fonts {
     public static BufferedImage[] otherNormal;
     public static BufferedImage[] otherBold;
     
+    public static BufferedImage[] errorNormal;
+    public static BufferedImage[] errorBold;
+    
+    public static BufferedImage[] lineNumberNormal;
+    public static BufferedImage[] lineNumberBold;
+    
+    public static BufferedImage[] selectedLineNumberNormal;
+    public static BufferedImage[] selectedLineNumberBold;
+    
     public static void initFonts(String font1, String font2) {
     	 normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
@@ -138,6 +147,24 @@ public class Fonts {
          
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
+         
+         errorNormal = Fonts.initFont(normal, Color.white, Colors.error);
+         errorBold = Fonts.initFont(bold, Color.white, Colors.error);
+         
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+         
+         lineNumberNormal = Fonts.initFont(normal, Color.white, Colors.lineNumber);
+         lineNumberBold = Fonts.initFont(bold, Color.white, Colors.lineNumber);
+         
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
+         
+         selectedLineNumberNormal = Fonts.initFont(normal, Color.white, Colors.selectedLineNumber);
+         selectedLineNumberBold = Fonts.initFont(bold, Color.white, Colors.selectedLineNumber);
+         
+         normal = Fonts.initFont(font1);
+         bold = Fonts.initFont(font2);
     }
     
     /**
@@ -207,8 +234,236 @@ public class Fonts {
     		text[i] = font.getFont()[ind];
     	}
     	
-    	for (int i = 0; i < text.length; i++)										// roda um loop para desenhar.
-    		g.drawImage(text[i], (x + ((font.getSize() - (font.getSize() / 4)) * i)), y, font.getSize(), font.getSize(), null);
+    	for (int i = 0; i < ca.length; i++) {
+    		char cah = ca[i];
+    		
+    		if (cah == 'Б') {
+    			text[i] = font.getFont()[190+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Й') {
+    			text[i] = font.getFont()[197+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Н') {
+    			text[i] = font.getFont()[201+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'У') {
+    			text[i] = font.getFont()[207+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Ъ') {
+    			text[i] = font.getFont()[214+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Э') {
+    			text[i] = font.getFont()[218+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'б') {
+    			text[i] = font.getFont()[222+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'й') {
+    			text[i] = font.getFont()[230+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'н') {
+    			text[i] = font.getFont()[234+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'у') {
+    			text[i] = font.getFont()[240+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'ъ') {
+    			text[i] = font.getFont()[247+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'э') {
+    			text[i] = font.getFont()[250+2];
+    			
+    			continue;
+    		}
+    		/////////
+    		else if (cah == 'А') {
+    			text[i] = font.getFont()[189+1];
+    			
+    			continue;
+    		}
+    		else if (cah == 'И') {
+    			text[i] = font.getFont()[196+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'М') {
+    			text[i] = font.getFont()[200+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Т') {
+    			text[i] = font.getFont()[206+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Щ') {
+    			text[i] = font.getFont()[213+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'а') {
+    			text[i] = font.getFont()[221+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'и') {
+    			text[i] = font.getFont()[229+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'м') {
+    			text[i] = font.getFont()[233+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'т') {
+    			text[i] = font.getFont()[239+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'щ') {
+    			text[i] = font.getFont()[246+2];
+    			
+    			continue;
+    		}
+    		//////
+    		if (cah == 'В') {
+    			text[i] = font.getFont()[191+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'К') {
+    			text[i] = font.getFont()[198+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'О') {
+    			text[i] = font.getFont()[202+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Ф') {
+    			text[i] = font.getFont()[208+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Ы') {
+    			text[i] = font.getFont()[216+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'в') {
+    			text[i] = font.getFont()[223+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'к') {
+    			text[i] = font.getFont()[231+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'о') {
+    			text[i] = font.getFont()[235+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'ф') {
+    			text[i] = font.getFont()[241+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'ы') {
+    			text[i] = font.getFont()[248+2];
+    			
+    			continue;
+    		}
+    		//////
+    		else if (cah == 'Х') {
+    			text[i] = font.getFont()[209+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'С') {
+    			text[i] = font.getFont()[205+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'г') {
+    			text[i] = font.getFont()[224+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Г') {
+    			text[i] = font.getFont()[192+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'х') {
+    			text[i] = font.getFont()[242+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'с') {
+    			text[i] = font.getFont()[238+2];
+    			
+    			continue;
+    		}
+    		
+    		else if (cah == 'з') {
+        		text[i] = font.getFont()[228+2];
+        			
+        		continue;
+    		}
+    		
+    		else if (cah == 'З') {
+        		text[i] = font.getFont()[195+2];
+        			
+        		continue;
+    		}
+    		
+    		else if (cah == 'µ') {
+        		text[i] = font.getFont()[180];
+        			
+        		continue;
+    		}
+    		
+    		int ind = ca[i]; 						// pega o valor na tabela ASCII
+    		
+    		if (ind > 225) continue;
+    		
+    		text[i] = font.getFont()[ind];
+    	}
+    	
+    	for (int i = 0; i < text.length; i++) {										// roda um loop para desenhar.
+    		char[] cha = s.toCharArray();
+    		char ch = cha[i];
+    		
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g' || ch == 'y' || ch == 'э' || ch == 'j' || ch == ',' || ch == ';' || ch == 'з' || ch == 'З' ? y + 2 : y;
+    		
+    		g.drawImage(text[i], (x + ((font.getSize() - (font.getSize() / 4)) * i)), ydraw, font.getSize(), font.getSize(), null);
+    	}
     }
 	
 	public static void drawString(String s, int x, int y, IDEFont font, int maxPos, Graphics g) {
@@ -222,10 +477,232 @@ public class Fonts {
     		text[i] = font.getFont()[ind];
     	}
     	
+    	for (int i = 0; i < ca.length; i++) {
+    		char cah = ca[i];
+    		
+    		if (cah == 'Б') {
+    			text[i] = font.getFont()[190+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Й') {
+    			text[i] = font.getFont()[197+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Н') {
+    			text[i] = font.getFont()[201+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'У') {
+    			text[i] = font.getFont()[207+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Ъ') {
+    			text[i] = font.getFont()[214+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Э') {
+    			text[i] = font.getFont()[218+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'б') {
+    			text[i] = font.getFont()[222+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'й') {
+    			text[i] = font.getFont()[230+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'н') {
+    			text[i] = font.getFont()[234+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'у') {
+    			text[i] = font.getFont()[240+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'ъ') {
+    			text[i] = font.getFont()[247+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'э') {
+    			text[i] = font.getFont()[250+2];
+    			
+    			continue;
+    		}
+    		/////////
+    		else if (cah == 'А') {
+    			text[i] = font.getFont()[189+1];
+    			
+    			continue;
+    		}
+    		else if (cah == 'И') {
+    			text[i] = font.getFont()[196+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'М') {
+    			text[i] = font.getFont()[200+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Т') {
+    			text[i] = font.getFont()[206+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Щ') {
+    			text[i] = font.getFont()[213+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'а') {
+    			text[i] = font.getFont()[221+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'и') {
+    			text[i] = font.getFont()[229+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'м') {
+    			text[i] = font.getFont()[233+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'т') {
+    			text[i] = font.getFont()[239+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'щ') {
+    			text[i] = font.getFont()[246+2];
+    			
+    			continue;
+    		}
+    		//////
+    		if (cah == 'В') {
+    			text[i] = font.getFont()[191+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'К') {
+    			text[i] = font.getFont()[198+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'О') {
+    			text[i] = font.getFont()[202+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Ф') {
+    			text[i] = font.getFont()[208+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Ы') {
+    			text[i] = font.getFont()[216+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'в') {
+    			text[i] = font.getFont()[223+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'к') {
+    			text[i] = font.getFont()[231+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'о') {
+    			text[i] = font.getFont()[235+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'ф') {
+    			text[i] = font.getFont()[241+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'ы') {
+    			text[i] = font.getFont()[248+2];
+    			
+    			continue;
+    		}
+    		//////
+    		else if (cah == 'Х') {
+    			text[i] = font.getFont()[209+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'С') {
+    			text[i] = font.getFont()[205+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'г') {
+    			text[i] = font.getFont()[224+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'Г') {
+    			text[i] = font.getFont()[192+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'х') {
+    			text[i] = font.getFont()[242+2];
+    			
+    			continue;
+    		}
+    		else if (cah == 'с') {
+    			text[i] = font.getFont()[238+2];
+    			
+    			continue;
+    		}
+    		
+    		else if (cah == 'з') {
+        		text[i] = font.getFont()[228+2];
+        			
+        		continue;
+    		}
+    		
+    		else if (cah == 'З') {
+        		text[i] = font.getFont()[195+2];
+        			
+        		continue;
+    		}
+    		
+    		
+    		int ind = ca[i]; 						// pega o valor na tabela AScaII
+    		
+    		if (ind > 225) continue;
+    		
+    		text[i] = font.getFont()[ind];
+    	}
+    	
     	for (int i = 0; i < text.length; i++) {										// roda um loop para desenhar.
+    		char[] cha = s.toCharArray(); // fazer arrumaзгo de з e acentos
+    		char ch = cha[i];
+    		
     		if ((x + ((font.getSize() - (font.getSize() / 4)) * i)) > maxPos - font.getSize()) break;
     		
-    		g.drawImage(text[i], (x + ((font.getSize() - (font.getSize() / 4)) * i)), y, font.getSize(), font.getSize(), null);
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g' || ch == 'y' || ch == 'э' || ch == 'j' || ch == ',' || ch == ';' || ch == 'з' || ch == 'З' ? y + 2 : y;
+    		
+    		g.drawImage(text[i], (x + ((font.getSize() - (font.getSize() / 4)) * i)), ydraw, font.getSize(), font.getSize(), null);
     	}
     }
 	
@@ -245,211 +722,222 @@ public class Fonts {
     		char ch = c[i];
     		
     		if (ch == 'Б') {
-    			text[i] = fonts[i].getFont()[190];
+    			text[i] = fonts[i].getFont()[190+2];
     			
     			continue;
     		}
     		else if (ch == 'Й') {
-    			text[i] = fonts[i].getFont()[197];
+    			text[i] = fonts[i].getFont()[197+2];
     			
     			continue;
     		}
     		else if (ch == 'Н') {
-    			text[i] = fonts[i].getFont()[201];
+    			text[i] = fonts[i].getFont()[201+2];
     			
     			continue;
     		}
     		else if (ch == 'У') {
-    			text[i] = fonts[i].getFont()[207];
+    			text[i] = fonts[i].getFont()[207+2];
     			
     			continue;
     		}
     		else if (ch == 'Ъ') {
-    			text[i] = fonts[i].getFont()[214];
+    			text[i] = fonts[i].getFont()[214+2];
     			
     			continue;
     		}
     		else if (ch == 'Э') {
-    			text[i] = fonts[i].getFont()[218];
+    			text[i] = fonts[i].getFont()[218+2];
     			
     			continue;
     		}
     		else if (ch == 'б') {
-    			text[i] = fonts[i].getFont()[222];
+    			text[i] = fonts[i].getFont()[222+2];
     			
     			continue;
     		}
     		else if (ch == 'й') {
-    			text[i] = fonts[i].getFont()[230];
+    			text[i] = fonts[i].getFont()[230+2];
     			
     			continue;
     		}
     		else if (ch == 'н') {
-    			text[i] = fonts[i].getFont()[234];
+    			text[i] = fonts[i].getFont()[234+2];
     			
     			continue;
     		}
     		else if (ch == 'у') {
-    			text[i] = fonts[i].getFont()[240];
+    			text[i] = fonts[i].getFont()[240+2];
     			
     			continue;
     		}
     		else if (ch == 'ъ') {
-    			text[i] = fonts[i].getFont()[247];
+    			text[i] = fonts[i].getFont()[247+2];
     			
     			continue;
     		}
     		else if (ch == 'э') {
-    			text[i] = fonts[i].getFont()[250];
+    			text[i] = fonts[i].getFont()[250+2];
     			
     			continue;
     		}
     		/////////
     		else if (ch == 'А') {
-    			text[i] = fonts[i].getFont()[189];
+    			text[i] = fonts[i].getFont()[189+1];
     			
     			continue;
     		}
     		else if (ch == 'И') {
-    			text[i] = fonts[i].getFont()[196];
+    			text[i] = fonts[i].getFont()[196+2];
     			
     			continue;
     		}
     		else if (ch == 'М') {
-    			text[i] = fonts[i].getFont()[200];
+    			text[i] = fonts[i].getFont()[200+2];
     			
     			continue;
     		}
     		else if (ch == 'Т') {
-    			text[i] = fonts[i].getFont()[206];
+    			text[i] = fonts[i].getFont()[206+2];
     			
     			continue;
     		}
     		else if (ch == 'Щ') {
-    			text[i] = fonts[i].getFont()[213];
+    			text[i] = fonts[i].getFont()[213+2];
     			
     			continue;
     		}
     		else if (ch == 'а') {
-    			text[i] = fonts[i].getFont()[221];
+    			text[i] = fonts[i].getFont()[221+2];
     			
     			continue;
     		}
     		else if (ch == 'и') {
-    			text[i] = fonts[i].getFont()[229];
+    			text[i] = fonts[i].getFont()[229+2];
     			
     			continue;
     		}
     		else if (ch == 'м') {
-    			text[i] = fonts[i].getFont()[233];
+    			text[i] = fonts[i].getFont()[233+2];
     			
     			continue;
     		}
     		else if (ch == 'т') {
-    			text[i] = fonts[i].getFont()[239];
+    			text[i] = fonts[i].getFont()[239+2];
     			
     			continue;
     		}
     		else if (ch == 'щ') {
-    			text[i] = fonts[i].getFont()[246];
+    			text[i] = fonts[i].getFont()[246+2];
     			
     			continue;
     		}
     		//////
     		if (ch == 'В') {
-    			text[i] = fonts[i].getFont()[191];
+    			text[i] = fonts[i].getFont()[191+2];
     			
     			continue;
     		}
     		else if (ch == 'К') {
-    			text[i] = fonts[i].getFont()[198];
+    			text[i] = fonts[i].getFont()[198+2];
     			
     			continue;
     		}
     		else if (ch == 'О') {
-    			text[i] = fonts[i].getFont()[202];
+    			text[i] = fonts[i].getFont()[202+2];
     			
     			continue;
     		}
     		else if (ch == 'Ф') {
-    			text[i] = fonts[i].getFont()[208];
+    			text[i] = fonts[i].getFont()[208+2];
     			
     			continue;
     		}
     		else if (ch == 'Ы') {
-    			text[i] = fonts[i].getFont()[216];
+    			text[i] = fonts[i].getFont()[216+2];
     			
     			continue;
     		}
     		else if (ch == 'в') {
-    			text[i] = fonts[i].getFont()[223];
+    			text[i] = fonts[i].getFont()[223+2];
     			
     			continue;
     		}
     		else if (ch == 'к') {
-    			text[i] = fonts[i].getFont()[231];
+    			text[i] = fonts[i].getFont()[231+2];
     			
     			continue;
     		}
     		else if (ch == 'о') {
-    			text[i] = fonts[i].getFont()[235];
+    			text[i] = fonts[i].getFont()[235+2];
     			
     			continue;
     		}
     		else if (ch == 'ф') {
-    			text[i] = fonts[i].getFont()[241];
+    			text[i] = fonts[i].getFont()[241+2];
     			
     			continue;
     		}
     		else if (ch == 'ы') {
-    			text[i] = fonts[i].getFont()[248];
+    			text[i] = fonts[i].getFont()[248+2];
     			
     			continue;
     		}
     		//////
     		else if (ch == 'Х') {
-    			text[i] = fonts[i].getFont()[209];
+    			text[i] = fonts[i].getFont()[209+2];
     			
     			continue;
     		}
     		else if (ch == 'С') {
-    			text[i] = fonts[i].getFont()[205];
+    			text[i] = fonts[i].getFont()[205+2];
     			
     			continue;
     		}
     		else if (ch == 'г') {
-    			text[i] = fonts[i].getFont()[224];
+    			text[i] = fonts[i].getFont()[224+2];
     			
     			continue;
     		}
     		else if (ch == 'Г') {
-    			text[i] = fonts[i].getFont()[192];
+    			text[i] = fonts[i].getFont()[192+2];
     			
     			continue;
     		}
     		else if (ch == 'х') {
-    			text[i] = fonts[i].getFont()[242];
+    			text[i] = fonts[i].getFont()[242+2];
     			
     			continue;
     		}
     		else if (ch == 'с') {
-    			text[i] = fonts[i].getFont()[238];
+    			text[i] = fonts[i].getFont()[238+2];
     			
     			continue;
     		}
     		
     		else if (ch == 'з') {
-        		text[i] = fonts[i].getFont()[228];
+        		text[i] = fonts[i].getFont()[228+2];
         			
         		continue;
     		}
     		
     		else if (ch == 'З') {
-        		text[i] = fonts[i].getFont()[195];
+        		text[i] = fonts[i].getFont()[195+2];
         			
         		continue;
     		}
     		
+    		else if (ch == 'µ') {
+        		text[i] = fonts[i].getFont()[180];
+        			
+        		continue;
+    		}
+    		
+    		else if (ch == 8721) {
+        		text[i] = fonts[i].getFont()[255];
+        			
+        		continue;
+    		}
     		
     		int ind = c[i]; 						// pega o valor na tabela ASCII
     		
@@ -459,9 +947,13 @@ public class Fonts {
     	}
     	
     	for (int i = 0; i < text.length; i++) {
+    		char ch = c[i];
+    		
     		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) < minX) continue; // TODO talvez aumentar ou diminuir o espaзamento entre letras por parte do usuбrio, ou nгo sla
     		
-    		g.drawImage(text[i], (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), y, fonts[i].getSize(), fonts[i].getSize(), null);
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'э' || ch == 'j' || ch == ',' || ch == ';' || ch == 'з' || ch == 'З' ? y + 2 : y;
+    		
+    		g.drawImage(text[i], (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw, fonts[i].getSize(), fonts[i].getSize(), null);
     	}
     }
 }
