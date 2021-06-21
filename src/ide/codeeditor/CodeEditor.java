@@ -286,51 +286,85 @@ public class CodeEditor extends IDEComponent {
   }
   
   public static List<IDELine> readFile(File file) throws IOException {
-    line1 = 0;
-    line2 = 0;
-    index1 = 0;
-    index2 = 0;
-    selecting = false;
-    List<String> l = null;
-    Path p = file.toPath();
-    try {
-      l = Files.readAllLines(p, StandardCharsets.UTF_8);
-      codeType = "UTF-8";
-    } catch (Exception e) {
-      l = Files.readAllLines(p, StandardCharsets.ISO_8859_1);
-      codeType = "ANSI";
-    } 
-    if (l.isEmpty())
-      l.add(""); 
-    List<IDELine> ls = new ArrayList<>();
-    for (String s : l) {
-      List<Character> cs = new ArrayList<>();
-      List<IDEFont> fs = new ArrayList<>();
-      byte b;
-      int j;
-      char[] arrayOfChar;
-      for (j = (arrayOfChar = s.toCharArray()).length, b = 0; b < j; ) {
-        char c = arrayOfChar[b];
-        cs.add(Character.valueOf(c));
-        b++;
-      } 
-      for (int i = 0; i < cs.size(); i++)
-        fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE)); 
-      IDELine gen = new IDELine(cs, fs);
-      ls.add(gen);
-    } 
-    (new Thread() {
-        public void run() {
-          if (CodeEditor.editing != null && CodeEditor.editing.getRegent() != null && CodeEditor.editing.getRegent().getRegent() != null)
-            for (IDELine l : CodeEditor.lines)
-              l.setFonts(
-                  CodeEditor.automaticColor(
-                    CodeEditor.toCharArray(
-                      l.getChars()), ListableFile.getFileExtension(CodeEditor.editing.getRegent().getRegent())));  
-        }
-      }).start();
-    return ls;
-  }
+		CodeEditor.line1 = 0;
+		CodeEditor.line2 = 0;
+		
+		CodeEditor.index1 = 0;
+		CodeEditor.index2 = 0;
+		
+		CodeEditor.selecting = false;
+		
+		List<String> l = null;
+		
+		Path p = file.toPath();
+			
+		/*
+		try {														// tenta ler em todos os tipos de codificação, mas n dá
+			l = Files.readAllLines(p, StandardCharsets.UTF_8);
+		} catch (MalformedInputException a) {
+			try {
+				l = Files.readAllLines(p, StandardCharsets.UTF_16);
+			} catch (MalformedInputException b) {
+				try {
+					l = Files.readAllLines(p, StandardCharsets.UTF_16BE);
+				} catch (MalformedInputException c) {
+					try {
+						l = Files.readAllLines(p, StandardCharsets.UTF_16LE);
+					} catch (MalformedInputException d) {
+						try {
+							l = Files.readAllLines(p, StandardCharsets.US_ASCII);
+						} catch (MalformedInputException e) {
+							l = Files.readAllLines(p, StandardCharsets.ISO_8859_1);
+						}
+					}
+				}
+			}
+		}
+		*/
+		
+		try {
+			l = Files.readAllLines(p, StandardCharsets.UTF_8); // utf-8
+			codeType = "UTF-8";
+		}
+		catch (Exception e) {
+			l = Files.readAllLines(p, StandardCharsets.ISO_8859_1); // ansi
+			codeType = "ANSI";
+		}
+			
+		if (l.isEmpty()) l.add("");
+		
+		List<IDELine> ls = new ArrayList<>();
+		
+		for (String s : l) {
+			List<Character> cs = new ArrayList<>();
+			List<IDEFont> fs = new ArrayList<>();
+			
+			for (char c : s.toCharArray())
+				cs.add(c);
+			
+			for (int i = 0; i < cs.size(); i++)
+				fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
+			
+			IDELine gen = new IDELine(cs, fs);
+			
+			ls.add(gen);
+		}
+		
+		new Thread() {
+			public void run() {
+				if (editing != null && editing.getRegent() != null && editing.getRegent().getRegent() != null)
+				for (IDELine l : lines) {
+					l.setFonts(
+							automaticColor(
+									toCharArray(
+											l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
+				}
+			}
+		}.start();
+		
+		return ls;
+			
+	}
   
   public static List<Integer> findWord(String textString, String word) {
     List<Integer> indexes = new ArrayList<>();
@@ -2484,7 +2518,7 @@ public class CodeEditor extends IDEComponent {
                   }
                case 166757441:
                   if (s.equals("license") && !foundExt) {
-                     extType = "Arquivo de LicenÃ§a";
+                     extType = "Arquivo de Licença";
                      foundExt = true;
                   }
                }
@@ -2497,7 +2531,7 @@ public class CodeEditor extends IDEComponent {
             try {
                extn = ListableFile.getFileExtension(editing.getRegent().getRegent()).substring(1);
             } catch (Exception var49) {
-               extn = "Sem ExtensÃ£o";
+               extn = "Sem Extensão";
             }
 
             extType = extn;
@@ -3586,7 +3620,8 @@ public class CodeEditor extends IDEComponent {
     this.realcx = this.x + 50 + cursorX * (FONT_SIZE - FONT_SIZE / 4) - scrX;
     this.realcy = 35 + cursorY * (FONT_SIZE + FONT_SIZE / 4) - FONT_SIZE - scrY - 2;
     if ((KeyInput.isKeyPressed() && !KeyInput.isControlDown() && !KeyInput.isShiftDown()) || (cursorX != index1 && cursorY != line1 && cursorX != index2 && cursorY != line2))
-      selecting = false; 
+    	KeyInput.updateKeys();
+    	selecting = false; 
     this.drawcx = this.realcx;
     this.drawcy = this.realcy;
     if (FONT_SIZE < 1)
@@ -3623,7 +3658,7 @@ public class CodeEditor extends IDEComponent {
       KeyInput.updateKeys();
       this.showCursorData = true;
     } 
-    if (KeyInput.isKeyPressed() && hovered() && editing != null) {
+   /* if (KeyInput.isKeyPressed() && hovered() && editing != null) {
       if (KeyInput.getKeyCodePressed() == 90 && KeyInput.isControlDown())
         selectMode = true; 
       if (KeyInput.getKeyCodePressed() == 27) {
@@ -3645,7 +3680,7 @@ public class CodeEditor extends IDEComponent {
         selectMode = false;
         isSelectingFirst = true;
       } 
-    } 
+    } */
     try {
       clipboard = (String)Main.toolkit.getSystemClipboard().getData(DataFlavor.stringFlavor);
     } catch (HeadlessException|java.awt.datatransfer.UnsupportedFlavorException|IOException|IllegalStateException e) {
@@ -3665,6 +3700,7 @@ public class CodeEditor extends IDEComponent {
         (new Thread() {
             public void run() {
               if (KeyInput.isShiftDown()) {
+            	  KeyInput.updateKeys();
                 if (MouseInput.wheelUp() && CodeEditor.scrX > 0) {
                   CodeEditor.scrX -= CodeEditor.FONT_SIZE * 3;
                 } else if (MouseInput.wheelDown()) {
@@ -3708,6 +3744,7 @@ public class CodeEditor extends IDEComponent {
       }
     }
     if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active && !selectMode) {
+    	KeyInput.updateKeys();
       setCursorWithinBounds();
       
       /*
@@ -3839,148 +3876,162 @@ public class CodeEditor extends IDEComponent {
         return;
       } 
       if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == 80) {
-        KeyInput.updateKeys();
-        CommandTerminal.runCommand("togglecodehints");
-        return;
-      } 
-      if (!KeyInput.isAltDown() && !KeyInput.isControlDown()) {
-        if (!KeyInput.isShiftDown()) {
-          if (KeyInput.getKeyCodePressed() == 38) {
-            KeyInput.updateKeys();
-            cursorY--;
-            setCursorWithinBounds();
-            return;
-          } 
-          if (KeyInput.getKeyCodePressed() == 40) {
-            KeyInput.updateKeys();
-            cursorY++;
-            setCursorWithinBounds();
-            return;
-          } 
-          if (KeyInput.getKeyCodePressed() == 37) {
-            KeyInput.updateKeys();
-            cursorX--;
-            setCursorWithinBounds();
-            return;
-          } 
-          if (KeyInput.getKeyCodePressed() == 39) {
-            KeyInput.updateKeys();
-            cursorX++;
-            setCursorWithinBounds();
-            return;
-          } 
-        } else {
-          if (KeyInput.getKeyCodePressed() == 38) {
-            KeyInput.updateKeys();
-            line1--;
-            selecting = true;
-            setCursorWithinBounds();
-            return;
-          } 
-          if (KeyInput.getKeyCodePressed() == 40) {
-            KeyInput.updateKeys();
-            line2++;
-            selecting = true;
-            setCursorWithinBounds();
-            return;
-          } 
-          if (KeyInput.getKeyCodePressed() == 37) {
-            KeyInput.updateKeys();
-            index1--;
-            selecting = true;
-            setCursorWithinBounds();
-            return;
-          } 
-          if (KeyInput.getKeyCodePressed() == 39) {
-            KeyInput.updateKeys();
-            index2++;
-            selecting = true;
-            setCursorWithinBounds();
-            return;
-          } 
-          setWithinBounds(index1, line1 - 1, true);
-          setWithinBounds(index2, line2 - 1, false);
-        } 
-        KeyInput.updateKeys();
-        StringBuilder cY = new StringBuilder(new String(toCharArray(((IDELine)lines.get(cursorY - 1)).getChars())));
-        if (KeyInput.getKeyCodePressed() == 8) {
-          KeyInput.updateKeys();
-          if (!selecting) {
-            if (cursorX > 0) {
-              cY.deleteCharAt(cursorX - 1);
-              cursorX--;
-              setCursorWithinBounds();
-              editing.setSaved(false);
-              register(cY, cursorY - 1);
-            } else if (cursorY > 1) {
-              String s = cY.toString();
-              cursorX = ((IDELine)lines.get(cursorY - 2)).getChars().size();
-              lines.remove(cursorY - 1);
-              cursorY--;
-              cY = new StringBuilder(new String(toCharArray(((IDELine)lines.get(cursorY - 1)).getChars())));
-              cY.append(s);
-              editing.setSaved(false);
-              register(cY, cursorY - 1);
-            } 
-            return;
-          } 
-          CommandTerminal.runCommand("del");
-          return;
-        } 
-        if (KeyInput.getKeyCodePressed() == 127) {
-          KeyInput.updateKeys();
-          if (cursorX < cY.length()) {
-            cY.deleteCharAt(cursorX);
-            setCursorWithinBounds();
-            editing.setSaved(false);
-            register(cY, cursorY - 1);
-          } 
-          return;
-        } 
-        if (KeyInput.getKeyCodePressed() == 9) {
-          KeyInput.updateKeys();
-          cY.insert(cursorX, "    ");
-          cursorX += 4;
-          editing.setSaved(false);
-        } 
-        if (KeyInput.getKeyCodePressed() == 10) {
-          KeyInput.updateKeys();
-          StringBuilder spaces = new StringBuilder();
-          String s = cY.substring(cursorX);
-          int i;
-          for (i = 0; i < countChar(cY.toString(), ' '); i++)
-            spaces.append(' '); 
-          for (i = 0; i < countChar(cY.toString(), '\t'); i++)
-            spaces.append(' '); 
-          int nSpaces = spaces.length();
-          spaces.append(s);
-          s = spaces.toString();
-          cY.delete(cursorX, cY.length());
-          List<IDEFont> fs = new ArrayList<>();
-          for (int j = 0; j < s.length(); j++)
-            fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE)); 
-          lines.add(cursorY, new IDELine(toCharList(s.toCharArray()), fs));
-          register(cY, cursorY - 1);
-          editing.setSaved(false);
-          cursorX = nSpaces;
-          cursorY++;
-          return;
-        } 
-        if (KeyInput.getKeyCodePressed() == 16)
-          return; 
-        int keyCode = KeyInput.getKeyCodePressed();
-        char c = KeyInput.getCharPressed();
-        c = addAccents(keyCode, c);
-        cY = write(cY, c);
-        if (codeHintsOn)
-          cY = addCodeHints(cY); 
-        register(cY, cursorY - 1);
-        cursorX++;
-        setCursorWithinBounds();
-        
-        if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
-        
-        editing.setSaved(false);
+    	  if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
+				KeyInput.updateKeys();
+				
+				cursorY--;
+				
+				setCursorWithinBounds();
+				
+				return;
+			}
+			
+			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
+				KeyInput.updateKeys();
+				
+				cursorY++;
+				
+				setCursorWithinBounds();
+				
+				return;
+			}
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
+				KeyInput.updateKeys();
+				
+				cursorX--;
+				
+				setCursorWithinBounds();
+				
+				return;
+			}
+			
+			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
+				KeyInput.updateKeys();
+				
+				cursorX++;
+				
+				setCursorWithinBounds();
+				
+				return;
+			}
+			
+			KeyInput.updateKeys();
+			
+			StringBuilder cY = new StringBuilder(new String(toCharArray( lines.get(cursorY - 1).getChars() )));
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
+				KeyInput.updateKeys();
+				
+				if (cursorX > 0) {
+					cY.deleteCharAt(cursorX - 1);
+				
+					cursorX--;
+				
+					setCursorWithinBounds();
+					editing.setSaved(false);
+				
+					register(cY, cursorY - 1);
+				}
+				else if (cursorY > 1) {
+					String s = cY.toString();
+					
+					cursorX = lines.get(cursorY - 2).getChars().size();
+					
+					lines.remove(cursorY - 1);
+					cursorY--;
+					
+					cY = new StringBuilder(new String(toCharArray( lines.get(cursorY - 1).getChars() )));
+					
+					cY.append(s);
+					editing.setSaved(false);
+					
+					register(cY, cursorY - 1);
+				}
+				
+				return;
+			}
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
+				KeyInput.updateKeys();
+				
+				if (cursorX < cY.length()) {
+					cY.deleteCharAt(cursorX);
+				
+					setCursorWithinBounds();
+					editing.setSaved(false);
+				
+					register(cY, cursorY - 1);
+				}
+				
+				return;
+			}
+
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
+				KeyInput.updateKeys();
+
+				cY.insert(cursorX, "    ");
+
+				cursorX += 4;
+				editing.setSaved(false);
+			}
+
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+				KeyInput.updateKeys();
+
+				StringBuilder spaces = new StringBuilder();
+				String s = cY.substring(cursorX);
+				
+				for (int i = 0; i < countChar(cY.toString(), ' '); i++)
+					spaces.append(' ');
+				
+				for (int i = 0; i < countChar(cY.toString(), (char) 9); i++) // char 9 é o tab
+					spaces.append(' ');
+				
+				int nSpaces = spaces.length();
+				
+				spaces.append(s);
+				s = spaces.toString();
+				
+				cY.delete(cursorX, cY.length());
+				
+				List<IDEFont> fs = new ArrayList<>();
+				
+				for (int i = 0; i < s.length(); i++)
+					fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
+				
+				lines.add(cursorY, new IDELine(toCharList(s.toCharArray()), fs));
+				
+				register(cY, cursorY - 1);
+				
+				editing.setSaved(false);
+				
+				cursorX = nSpaces;
+				cursorY++;
+				
+				return;
+			}
+
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_SHIFT || KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) return;
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_SHIFT) return;
+
+			int keyCode = KeyInput.getKeyCodePressed();
+			char c = KeyInput.getCharPressed();
+			
+			c = addAccents(keyCode, c);
+			
+			cY = write(cY, c);
+			cY = addCodeHints(cY);
+			
+			register(cY, cursorY - 1);
+			
+			cursorX++;
+			
+			setCursorWithinBounds();
+			
+			if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
+		
+			editing.setSaved(false);
       }
     if (tabs != null) {
       for (Tab t : tabs)
@@ -4007,18 +4058,23 @@ public class CodeEditor extends IDEComponent {
   }
   
   public void render(Graphics g) {
-    Graphics2D g2 = (Graphics2D)g;
+    Graphics2D g2 = (Graphics2D) g;
+    
     g.setColor(Colors.explorerLight);
     g2.setStroke(new BasicStroke(8.0F));
     g2.drawLine(this.x, 30, this.width, 30);
+    
     g.setColor(Colors.background);
     g.fillRect(this.x, this.y, this.width, this.height);
+    
     if (tabs == null || tabs.size() == 0)
       return; 
+    
     if (editing != null) {
       g.setColor(Colors.explorer);
       g.fillRect(this.x, 35, Main.screen.getWidth(), this.height);
     } 
+    
     try {
       int i;
       for (i = 0; i < lines.size(); i++) {

@@ -111,7 +111,7 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		CodeEditor.selecting = false;
 		
-		if (CodeEditor.tabs.size() < 2) {
+		if (CodeEditor.tabs.size() == 1) {
 			CodeEditor.editing = null;
 			
 			return;
