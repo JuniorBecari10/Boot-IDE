@@ -106,5 +106,9 @@ public class Explorer extends IDEComponent {
         }
         
         Fonts.drawString(folderPath, x + 10, 170, new IDEFont(Fonts.lighterGrayNormal, 15), g);
+        
+        g.setColor(Colors.explorerLight);
+        g2.setStroke(new BasicStroke(3f));
+        g2.drawLine(width - 1, 0, width - 1, height);
     }
 }

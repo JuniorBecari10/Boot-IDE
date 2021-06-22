@@ -154,6 +154,11 @@ public class SetFileName extends IDEComponent {
 		if (showCursor)
 			g.fillRect(cursorIndex * (16 - 2), y, 2, height);
 		
+		if (isFile)
+			Fonts.drawString("Criar Novo Arquivo...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 40, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		else
+			Fonts.drawString("Criar Nova Pasta...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 40, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		
 		Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
 		Fonts.drawString("[Enter] Criar", MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
 	}
