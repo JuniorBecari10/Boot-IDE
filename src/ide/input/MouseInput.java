@@ -98,6 +98,16 @@ public final class MouseInput extends MouseInputAdapter {
         mouseX = e.getX();
         mouseY = e.getY();
     }
+	
+	@Override
+	public void mouseExited(MouseEvent e) {
+		mouseMoved = false;
+	}
+	
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		mouseMoved = true;
+	}
 
     @Override
     public void mouseMoved(MouseEvent e) {
@@ -116,8 +126,6 @@ public final class MouseInput extends MouseInputAdapter {
 
         mouseX = e.getX();
         mouseY = e.getY();
-        
-        mouseMoved = false;
     }
 
     @Override
@@ -129,7 +137,6 @@ public final class MouseInput extends MouseInputAdapter {
     		rightPressed = true;
     	
         mousePressed = true;
-        mouseMoved = false;
 
         mouseX = e.getX();
         mouseY = e.getY();

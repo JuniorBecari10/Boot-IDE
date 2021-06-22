@@ -17,7 +17,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -112,10 +111,10 @@ public class CodeEditor extends IDEComponent {
 	
 	public static List<Integer> linesWithErrors = new ArrayList<>();
 	
-	private Thread syntaxErrors;
+	//private Thread syntaxErrors;
 	
-	private static List<Integer> numopenbrackets = new ArrayList<>();
-	private static List<Integer> numclosebrackets = new ArrayList<>();
+	//private static List<Integer> numopenbrackets = new ArrayList<>();
+	//private static List<Integer> numclosebrackets = new ArrayList<>();
 
 	public CodeEditor(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
@@ -209,7 +208,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		}.start();
 		
-		syntaxErrors = new Thread() {
+		/*syntaxErrors = new Thread() {
 			public void run() {
 				while (true) {
 					try {
@@ -221,7 +220,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		};
 		
-		syntaxErrors.start();
+		syntaxErrors.start();*/
 		
 		try {
 			gradient = ImageIO.read(getClass().getResource("/gradient.png"));
@@ -229,12 +228,6 @@ public class CodeEditor extends IDEComponent {
 			e.printStackTrace();
 		}
 	}
-	
-	/* TODO
-	 * Bugs Pra Resolver:
-	 * 
-	 * Abrir uma Tab e depois pra outra o texto some, pois está com o scroll muito para o tamnaho do documento -- depois
-	 */
 	
 	public boolean hovered() {
 		Rectangle mouse = new Rectangle(MouseInput.getMouseX(), MouseInput.getMouseY(), 1, 1);
@@ -268,107 +261,107 @@ public class CodeEditor extends IDEComponent {
 	 * }
 	 * 
 	 */
-	public static List<Integer> syntaxErrors(List<IDELine> lines) {
-		if (lines.size() == 0)
-			return new ArrayList<>();
-		
-		numopenbrackets.clear();
-		numclosebrackets.clear();
-		
-		List<IDELine> getlines = (List<IDELine>) Collections.synchronizedList(CodeEditor.lines); // fazer mostrar os erros somente se o numero de uns 
-		
-		List<Integer> linescounted = new ArrayList<>();
-		List<Integer> linesfound = new ArrayList<>();
-		
-		boolean bracketsHasPair = true;
-		
-		if (getlines.size() == 0)
-			return linesfound;
-		
-		for (int i = 0; i < getlines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
-			IDELine l = getlines.get(i);
-			
-			if (l == null) break;
-			
-			Object[] arr = l.getChars().toArray(); // muahahahahhaha tirei a exception
-			char[] sa = new char[arr.length];
-			
-			for (int j = 0; j < arr.length; j++) {
-				if (arr[j] == null) continue;
-				
-				sa[j] = (char) arr[j];
-			}
-			
-			String s = new String(sa).toLowerCase(); // converte pra String a sequência de chars
-			
-			if (s.contains("{")) {
-				numopenbrackets.add(i);
-			}
-			
-			if (s.contains("}")) {
-				numclosebrackets.add(i);
-			}
-			
-			for (char c : s.toCharArray()) {
-				if (c == '{') {
-					if (!bracketsHasPair && (numopenbrackets.size() != numclosebrackets.size())) // dps arrumar isso aqui do jeito certo e desgambiarrar
-						linescounted.add(i);
-					
-					bracketsHasPair = false;
-				}
-				
-				if (c == '}') {
-					if (bracketsHasPair && (numopenbrackets.size() != numclosebrackets.size()))
-						linescounted.add(i);
-					
-					bracketsHasPair = true;
-				}
-			}
-			
-			/*
-			if (s.contains("["))
-				numopensquarebrackets.add(i);
-			
-			if (s.contains("]"))
-				numclosesquarebrackets.add(i);
-			
-			if (s.contains("("))
-				numopenparenthesis.add(i);
-			
-			if (s.contains(")"))
-				numcloseparenthesis.add(i);*/
-		}
-		
-		if (numopenbrackets.size() != numclosebrackets.size() && linesfound.size() > 0) { // 03/06/2021 - 14:39 - Quinta-Feira
-			linesfound = linescounted;
-			
-			linesfound = removeDuplicates(linesfound);
-			
-			Integer get0 = linesfound.get(0);
-			
-			linesfound.clear();
-			linesfound.add(get0); // gambiarra - remover isso na próxima atualização
-		}
-
-		
-		///////////////////////////////////////////////////////////////////////////
-		
-		/*if (numopensquarebrackets.size() > numclosesquarebrackets.size())
-			linesfound.add(numopensquarebrackets.get(numopensquarebrackets.size() - 1));
-		
-		if (numclosesquarebrackets.size() > numopensquarebrackets.size())
-			linesfound.add(numclosesquarebrackets.get(numclosesquarebrackets.size() - 1));
-		
-		///////////////////////////////////////////////////////////////////////////
-		
-		if (numopenparenthesis.size() > numcloseparenthesis.size())
-			linesfound.add(numopenparenthesis.get(numopenparenthesis.size() - 1));
-		
-		if (numcloseparenthesis.size() > numopenparenthesis.size())
-			linesfound.add(numcloseparenthesis.get(numcloseparenthesis.size() - 1));*/ // não vai detectar chevrons, pq existem os if's
-		
-		return linesfound;
-	}
+//	public static List<Integer> syntaxErrors(List<IDELine> lines) {
+//		if (lines.size() == 0)
+//			return new ArrayList<>();
+//		
+//		numopenbrackets.clear();
+//		numclosebrackets.clear();
+//		
+//		List<IDELine> getlines = (List<IDELine>) Collections.synchronizedList(CodeEditor.lines); // fazer mostrar os erros somente se o numero de uns 
+//		
+//		List<Integer> linescounted = new ArrayList<>();
+//		List<Integer> linesfound = new ArrayList<>();
+//		
+//		boolean bracketsHasPair = true;
+//		
+//		if (getlines.size() == 0)
+//			return linesfound;
+//		
+//		for (int i = 0; i < getlines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
+//			IDELine l = getlines.get(i);
+//			
+//			if (l == null) break;
+//			
+//			Object[] arr = l.getChars().toArray(); // muahahahahhaha tirei a exception
+//			char[] sa = new char[arr.length];
+//			
+//			for (int j = 0; j < arr.length; j++) {
+//				if (arr[j] == null) continue;
+//				
+//				sa[j] = (char) arr[j];
+//			}
+//			
+//			String s = new String(sa).toLowerCase(); // converte pra String a sequência de chars
+//			
+//			if (s.contains("{")) {
+//				numopenbrackets.add(i);
+//			}
+//			
+//			if (s.contains("}")) {
+//				numclosebrackets.add(i);
+//			}
+//			
+//			for (char c : s.toCharArray()) {
+//				if (c == '{') {
+//					if (!bracketsHasPair && (numopenbrackets.size() != numclosebrackets.size())) // dps arrumar isso aqui do jeito certo e desgambiarrar
+//						linescounted.add(i);
+//					
+//					bracketsHasPair = false;
+//				}
+//				
+//				if (c == '}') {
+//					if (bracketsHasPair && (numopenbrackets.size() != numclosebrackets.size()))
+//						linescounted.add(i);
+//					
+//					bracketsHasPair = true;
+//				}
+//			}
+//			
+//			/*
+//			if (s.contains("["))
+//				numopensquarebrackets.add(i);
+//			
+//			if (s.contains("]"))
+//				numclosesquarebrackets.add(i);
+//			
+//			if (s.contains("("))
+//				numopenparenthesis.add(i);
+//			
+//			if (s.contains(")"))
+//				numcloseparenthesis.add(i);*/
+//		}
+//		
+//		if (numopenbrackets.size() != numclosebrackets.size() && linesfound.size() > 0) { // 03/06/2021 - 14:39 - Quinta-Feira
+//			linesfound = linescounted;
+//			
+//			linesfound = removeDuplicates(linesfound);
+//			
+//			Integer get0 = linesfound.get(0);
+//			
+//			linesfound.clear();
+//			linesfound.add(get0); // gambiarra - remover isso na próxima atualização
+//		}
+//
+//		
+//		///////////////////////////////////////////////////////////////////////////
+//		
+//		/*if (numopensquarebrackets.size() > numclosesquarebrackets.size())
+//			linesfound.add(numopensquarebrackets.get(numopensquarebrackets.size() - 1));
+//		
+//		if (numclosesquarebrackets.size() > numopensquarebrackets.size())
+//			linesfound.add(numclosesquarebrackets.get(numclosesquarebrackets.size() - 1));
+//		
+//		///////////////////////////////////////////////////////////////////////////
+//		
+//		if (numopenparenthesis.size() > numcloseparenthesis.size())
+//			linesfound.add(numopenparenthesis.get(numopenparenthesis.size() - 1));
+//		
+//		if (numcloseparenthesis.size() > numopenparenthesis.size())
+//			linesfound.add(numcloseparenthesis.get(numcloseparenthesis.size() - 1));*/ // não vai detectar chevrons, pq existem os if's
+//		
+//		return linesfound;
+//	}
 	
 	public static List<IDELine> readFile(File file) throws IOException {
 		CodeEditor.line1 = 0;
@@ -2681,6 +2674,38 @@ indxs = findWord(new String(chars), ".");
 				extType = "Arquivo de Configurações da Boot IDE";
 				foundExt = true;
 			}
+			
+			String[] confKeys = { "Arquivo de Configurações da Boot IDE", "Colors", "Files", "Settings", "default" };
+			
+			for (String s : confKeys) { // colorir keywordss
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+			
+			indxs = findWord(new String(chars), ":");
+			
+			for (Integer i : indxs) {
+				int c = i;
+				len = 0;
+				
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0 &&
+						chars[c] != ' ' &&
+						chars[c] != '[' &&
+						chars[c] != ']' &&
+						chars[c] != ',' &&
+						chars[c] != ';' &&
+						chars[c] != '.') {
+					c--;
+					len++;
+				}
+				
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
 			break;
 		
 		case ".7z":
@@ -2825,7 +2850,8 @@ indxs = findWord(new String(chars), ".");
 				foundExt = true;
 			}
 			
-			String[] dkKeys = { "FROM", "RUN", "VOLUME", "WORKDIR", "from", "run", "volume", "workdir" };
+			String[] dkKeys = { "FROM", "RUN", "VOLUME", "WORKDIR", "ADD", "CMD", "ENTRYPOINT", "ENV", "EXPOSE", "MAINTAINER", "USER",
+					"from", "run", "volume", "workdir", "add", "cmd", "entrypoint", "env", "expose", "maintainer", "user" };
 			
 			for (String s : dkKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -2888,7 +2914,7 @@ indxs = findWord(new String(chars), ".");
 				 ext.equals(".ts") || ext.equals(".swift") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".go") || ext.equals(".r") ||
 				 ext.equals(".jl") || ext.equals(".pl") || ext.equals(".has") || ext.equals(".hs") || ext.equals(".fs") || ext.equals(".coffee") ||
 				 ext.equals(".m") || ext.equals(".jsx") || ext.equals(".ld") || ext.equals(".pas") || ext.equals(".pp") || ext.equals(".scala") || ext.equals(".dart") || ext.equals(".md") ||
-				 ext.equals(".json") || ext.equals(".jsonc"))) {
+				 ext.equals(".json") || ext.equals(".jsonc") || ext.equals(".bat") || ext.equals(".sh") || ext.equals(".conf"))) {
 			
 			indxs = findWord(new String(chars), "(");
 			
@@ -2984,7 +3010,8 @@ indxs = findWord(new String(chars), ".");
 					
 					switch (st.toLowerCase()) {
 					case "dockerfile":
-						String[] dkKeys = { "FROM", "RUN", "VOLUME", "WORKDIR", "from", "run", "volume", "workdir" };
+						String[] dkKeys = { "FROM", "RUN", "VOLUME", "WORKDIR", "ADD", "CMD", "ENTRYPOINT", "ENV", "EXPOSE", "MAINTAINER", "USER",
+								"from", "run", "volume", "workdir", "add", "cmd", "entrypoint", "env", "expose", "maintainer", "user" };
 						
 						for (String s : dkKeys) { // colorir keywords
 							indxs = findWord(new String(chars), s);

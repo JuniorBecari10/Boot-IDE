@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
@@ -290,14 +291,12 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	 
 	public static void generateConfigFile(File file) {
 		String pathStr = file.getAbsolutePath();
-		String s = pathStr + pathStr.contains(".conf") != null ? "" : ".conf";
+		String s = pathStr.contains(".conf") ? pathStr + "" : pathStr + ".conf";
 		
-		System.out.println(s);
-		
-		Path path = Paths.get(s);
+		//Path path = Paths.get(s);
 		
 		try {
-			BufferedWriter w = Files.newBufferedWriter(path, StandardCharsets.UTF_8); //new BufferedWriter(new FileWriter(s));
+			BufferedWriter w = /*Files.newBufferedWriter(path, StandardCharsets.UTF_8);*/ new BufferedWriter(new FileWriter(s));
 			
 			w.write("Arquivo de Configurações da Boot IDE\n");
 			w.write("\n");
@@ -893,6 +892,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		
 		if (leftClicked()) {
 			MouseInput.updateMouse();
+			
+			if (Explorer.folderPath.length() > 22)
+				Explorer.folderPath = Explorer.folderPath.substring(0, 19) + "...";
+	    	
+			Explorer.baseFolderName = Main.baseFolder.getName().length() > 15 ? Main.baseFolder.getName().substring(0, 12) + "..." : Main.baseFolder.getName();
 			
 			if (getFileExtension(regent).equals(".png") ||
 					getFileExtension(regent).equals(".jpg") || // provavelmente fazer isso com excel e mais coisas do word

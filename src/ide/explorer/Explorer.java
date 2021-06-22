@@ -1,7 +1,6 @@
 package ide.explorer;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -25,6 +24,8 @@ public class Explorer extends IDEComponent {
 	public static String folderPath = "";
 	
 	public static boolean hoveringListableFile;
+	
+	public static String baseFolderName;
 	
     public Explorer(int x, int y, int width, int height) {
         super(x, y, width, height, null);
@@ -81,6 +82,11 @@ public class Explorer extends IDEComponent {
 		}
     	
     	hoveringListableFile = false;
+    	
+    	if (folderPath.length() > 22)
+        	folderPath = folderPath.substring(0, 19) + "...";
+    	
+    	baseFolderName = Main.baseFolder.getName().length() > 15 ? Main.baseFolder.getName().substring(0, 12) + "..." : Main.baseFolder.getName();
     }
 
     public void render(Graphics g) {
@@ -92,13 +98,13 @@ public class Explorer extends IDEComponent {
         g.fillRect(x, y, width, height);   
         
         Fonts.drawString("Explorador", x + 40, y + 30, new IDEFont(Fonts.lightGrayNormal, 23), g);
-        g.setColor(Color.decode("#95afc0"));
+        g.setColor(Colors.textLight);
         
         g2.setStroke(new BasicStroke(2f));
         g.drawLine(x + 40, y + 60, x + 220, y + 60);
         
         if (Main.baseFolder != null) {
-    		Fonts.drawString(Main.baseFolder.getName(), x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 23), g);
+    		Fonts.drawString(baseFolderName, x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 23), g);
         
     		g2.setStroke(new BasicStroke(4f));
             g.setColor(Colors.explorerLight);

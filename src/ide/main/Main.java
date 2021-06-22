@@ -58,6 +58,7 @@ import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
 import ide.util.Colors;
@@ -380,6 +381,8 @@ public class Main implements Runnable, Tickable {
 				Fonts.drawString(t.getRegent().getRegent().getPath().substring(index), MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 			
 				if (CodeEditor.syntaxErrorsOn) {
+					CodeEditor.syntaxErrorsOn = false; // TODO quando for mudar os erros de sintaxe, desative isso
+					
 					if (CodeEditor.linesWithErrors.size() == 0)
 						Fonts.drawString("Não foram encontrados erros de sintaxe.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					else {
@@ -409,13 +412,13 @@ public class Main implements Runnable, Tickable {
 
     @Override
     public void run() {
-        while (running) {
-        	//if (KeyInput.isKeyPressed() || MouseInput.mouseMoved() || MouseInput.isMousePressed()) // fazer isso depois
+        while (running) {        	
+        	if (KeyInput.isKeyPressed() | MouseInput.mouseMoved() | MouseInput.isMousePressed() | WindowInput.isActivated()) { // fazer isso depois
 	        tick();
 	        render();
-            
+            }
             try {
-				Thread.sleep(1000/120);
+				Thread.sleep(1000/120); // 120
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
