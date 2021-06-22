@@ -410,8 +410,9 @@ public class Main implements Runnable, Tickable {
     @Override
     public void run() {
         while (running) {
-            tick();
-            render();
+        	//if (KeyInput.isKeyPressed() || MouseInput.mouseMoved() || MouseInput.isMousePressed()) // fazer isso depois
+	        tick();
+	        render();
             
             try {
 				Thread.sleep(1000/120);

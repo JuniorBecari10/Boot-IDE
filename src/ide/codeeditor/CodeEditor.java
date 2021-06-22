@@ -832,7 +832,7 @@ indxs = findWord(new String(chars), ".");
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
-			indxs = findWord(new String(chars), "<");
+			/*indxs = findWord(new String(chars), "<");
 			
 			for (Integer i : indxs) {
 				int c = i;
@@ -886,7 +886,7 @@ indxs = findWord(new String(chars), ".");
 				}
 					
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-			}
+			}*/
 		}
 		}
 		
@@ -3028,14 +3028,16 @@ indxs = findWord(new String(chars), ".");
 						break;
 						
 					case "gitignore":
-						extType = "Git Ignore";
-						foundExt = true;
+						if (!foundExt) {
+							extType = "Git Ignore";
+							foundExt = true;
+						}
 						break;
 					}
 				}
 			}
 			
-			if (extType.equals("") || extType == null) {
+			if (extType.equals("") || extType == null) { // TODO arrumar o gitignore
 				String extn = "";
 				
 				try {
@@ -3570,7 +3572,6 @@ indxs = findWord(new String(chars), ".");
 		else if (cursorX <= cY.length()) cY.insert(cursorX, c); // use <= pq se digitar no último n digita pq n bate
 															   // com a condição mas mesmo assim aumenta o cursorX e quando dá
 															  // o backspace excede o tamanho da linha e dá no que dá né
-		
 		return cY;
 	}
 	
@@ -4234,7 +4235,7 @@ indxs = findWord(new String(chars), ".");
 				
 				tabs.clear();
 				editing = null;
-					
+				
 				return;
 			}
 			
@@ -4386,6 +4387,12 @@ indxs = findWord(new String(chars), ".");
 						
 						setCursorWithinBounds();
 						
+						setWithinBounds(index1, line1 - 1, true);
+						setWithinBounds(index1, line1 - 1, false);
+						
+						setWithinBounds(index2, line2 - 1, true);
+						setWithinBounds(index2, line2 - 1, false);
+						
 						return;
 					}
 					
@@ -4397,6 +4404,12 @@ indxs = findWord(new String(chars), ".");
 						selecting = true;
 						
 						setCursorWithinBounds();
+						
+						setWithinBounds(index1, line1 - 1, true);
+						setWithinBounds(index1, line1 - 1, false);
+						
+						setWithinBounds(index2, line2 - 1, true);
+						setWithinBounds(index2, line2 - 1, false);
 						
 						return;
 					}
@@ -4410,6 +4423,12 @@ indxs = findWord(new String(chars), ".");
 						
 						setCursorWithinBounds();
 						
+						setWithinBounds(index1, line1 - 1, true);
+						setWithinBounds(index1, line1 - 1, false);
+						
+						setWithinBounds(index2, line2 - 1, true);
+						setWithinBounds(index2, line2 - 1, false);
+						
 						return;
 					}
 					
@@ -4422,10 +4441,19 @@ indxs = findWord(new String(chars), ".");
 						
 						setCursorWithinBounds();
 						
+						setWithinBounds(index1, line1 - 1, true);
+						setWithinBounds(index1, line1 - 1, false);
+						
+						setWithinBounds(index2, line2 - 1, true);
+						setWithinBounds(index2, line2 - 1, false);
+						
 						return;
 					}
 					
 					setWithinBounds(index1, line1 - 1, true);
+					setWithinBounds(index1, line1 - 1, false);
+					
+					setWithinBounds(index2, line2 - 1, true);
 					setWithinBounds(index2, line2 - 1, false);
 				}
 			

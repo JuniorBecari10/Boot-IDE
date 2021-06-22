@@ -18,6 +18,7 @@ public final class MouseInput extends MouseInputAdapter {
     private static boolean mousePressed;
     private static boolean mouseDragged;
     private static boolean mouseClicked;
+    private static boolean mouseMoved;
     
     private static boolean mouseRolled;
     
@@ -71,6 +72,10 @@ public final class MouseInput extends MouseInputAdapter {
 		return roll;
 	}
 	
+	public static boolean mouseMoved() {
+		return mouseMoved;
+	}
+	
 	public static boolean wheelUp() {
 		return roll == MouseWheelRoll.UP;
 	}
@@ -87,6 +92,8 @@ public final class MouseInput extends MouseInputAdapter {
     public void mouseDragged(MouseEvent e) {
         mousePressed = true;
         mouseDragged = true;
+        
+        mouseMoved = true;
 
         mouseX = e.getX();
         mouseY = e.getY();
@@ -99,6 +106,8 @@ public final class MouseInput extends MouseInputAdapter {
         
         mousePressed = false;
         mouseClicked = false;
+        
+        mouseMoved = true;
     }
     
     @Override
@@ -107,6 +116,8 @@ public final class MouseInput extends MouseInputAdapter {
 
         mouseX = e.getX();
         mouseY = e.getY();
+        
+        mouseMoved = false;
     }
 
     @Override
@@ -118,6 +129,7 @@ public final class MouseInput extends MouseInputAdapter {
     		rightPressed = true;
     	
         mousePressed = true;
+        mouseMoved = false;
 
         mouseX = e.getX();
         mouseY = e.getY();

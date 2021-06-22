@@ -1016,20 +1016,20 @@ public class CommandTerminal extends IDEComponent {
 		g2.setStroke(new BasicStroke(3f));
 		
 		g.setColor(Colors.explorer);
-		g2.fillRect(x, y, width, height);
+		g2.fillRect(x - 100, y, width + 200, height);
 		
 		g.setColor(Colors.explorerLight);
-		g2.drawRect(x, y, width, height);
+		g2.drawRect(x - 100, y, width + 200, height);
 		
 		Fonts.drawString("Insira o comando:", Main.screen.getWidth() / 2 - 100, y - 25, new IDEFont(Fonts.otherNormal, 20), g);
 		
-		Fonts.drawString(builder.toString(), x + 4, y + 5, new IDEFont(Fonts.otherNormal, 18), g);
+		Fonts.drawString(builder.toString(), (x - 100) + 4, y + 8, new IDEFont(Fonts.otherNormal, 18), g);
 		
 		g2.setStroke(new BasicStroke(2f));
 		
 		if (showCursor) {
 			g.setColor(Colors.cursor);
-			g.drawLine((x + 4) + (cursorIndex * 14), y + 5, (x + 4) + (cursorIndex * 14), y + 5 + 18);
+			g.drawLine(((x - 100) + 4) + (cursorIndex * 14), y + 8, (x - 100) + 4 + (cursorIndex * 14), y + 8 + 18);
 		}
 		
 		Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
