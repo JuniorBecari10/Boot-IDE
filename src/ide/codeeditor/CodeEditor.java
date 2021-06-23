@@ -2418,7 +2418,7 @@ indxs = findWord(new String(chars), ".");
 			
 		case ".ini":
 			if (!foundExt) {
-				extType = "Arquivo de Parâmetro de Configuração";
+				extType = "Arquivo de Parâmetros de Configurações";
 				foundExt = true;
 			}
 			
@@ -3099,7 +3099,7 @@ indxs = findWord(new String(chars), ".");
 		}
 		}
 		
-		if (!foundExt && editing != null) {
+		if ((!foundExt && editing != null) || (extType.equals("") || extType == null)) { // TODO o culpado do gitignore estar assim é esse ARRUMAR DEPOIS 
 			for (FileType f : ListableFile.types) {
 				if (f.getExtension().equalsIgnoreCase(editing.getRegent().getRegent().getName())) { // tenta ver se tem algum especial
 					String st = capitalizeFirstLetter(f.getExtension());
@@ -3158,7 +3158,7 @@ indxs = findWord(new String(chars), ".");
 						}
 						break;
 						
-					case "gitignore": // TODO arrumar o gitignore sem extensão
+					case "gitignore":
 						if (!foundExt) {
 							extType = "Git Ignore";
 							foundExt = true;

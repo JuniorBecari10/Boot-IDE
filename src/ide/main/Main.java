@@ -260,6 +260,8 @@ public class Main implements Runnable, Tickable {
 						File reg = new File(s);
 						File par = reg.getParentFile();
 						
+						if (!reg.exists()) continue;
+						
 						CodeEditor.tabs.add(new Tab((i - 4) * Tab.WIDTH, ListableFile.search(reg, par))); // 12/05/2021 - 16:17
 					}
 				}
