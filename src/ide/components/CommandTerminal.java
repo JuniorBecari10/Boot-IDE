@@ -937,6 +937,13 @@ public class CommandTerminal extends IDEComponent {
 		if (KeyInput.isKeyPressed()) {
 			KeyInput.updateKeys();
 			
+			// Shortcuts Area
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
+				builder = new StringBuilder();
+				cursorIndex = 0;
+			}
+			
 			if (KeyInput.isControlDown() || KeyInput.isAltDown() || KeyInput.isAltGrDown()) return;
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP)
@@ -1034,5 +1041,6 @@ public class CommandTerminal extends IDEComponent {
 		
 		Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
 		Fonts.drawString("[Enter] Executar", MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString("[Ctrl + Delete] Limpar", MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.lightGrayNormal, 20), g);
 	}
 }

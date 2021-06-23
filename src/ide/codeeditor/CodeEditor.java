@@ -4457,13 +4457,7 @@ indxs = findWord(new String(chars), ".");
 						
 						selecting = true;
 						
-						setCursorWithinBounds();
-						
-						setWithinBounds(index1, line1 - 1, true);
-						setWithinBounds(index1, line1 - 1, false);
-						
-						setWithinBounds(index2, line2 - 1, true);
-						setWithinBounds(index2, line2 - 1, false);
+						line1 = setWithinBounds(index1, line1, false);
 						
 						return;
 					}
@@ -4475,13 +4469,7 @@ indxs = findWord(new String(chars), ".");
 						
 						selecting = true;
 						
-						setCursorWithinBounds();
-						
-						setWithinBounds(index1, line1 - 1, true);
-						setWithinBounds(index1, line1 - 1, false);
-						
-						setWithinBounds(index2, line2 - 1, true);
-						setWithinBounds(index2, line2 - 1, false);
+						line2 = setWithinBounds(index2, line2, false);
 						
 						return;
 					}
@@ -4493,13 +4481,7 @@ indxs = findWord(new String(chars), ".");
 						
 						selecting = true;
 						
-						setCursorWithinBounds();
-						
-						setWithinBounds(index1, line1 - 1, true);
-						setWithinBounds(index1, line1 - 1, false);
-						
-						setWithinBounds(index2, line2 - 1, true);
-						setWithinBounds(index2, line2 - 1, false);
+						index1 = setWithinBounds(index1, line1, true);
 						
 						return;
 					}
@@ -4511,22 +4493,18 @@ indxs = findWord(new String(chars), ".");
 						
 						selecting = true;
 						
-						setCursorWithinBounds();
-						
-						setWithinBounds(index1, line1 - 1, true);
-						setWithinBounds(index1, line1 - 1, false);
-						
-						setWithinBounds(index2, line2 - 1, true);
-						setWithinBounds(index2, line2 - 1, false);
+						index2 = setWithinBounds(index2, line2, true);
 						
 						return;
 					}
 					
-					setWithinBounds(index1, line1 - 1, true);
-					setWithinBounds(index1, line1 - 1, false);
+					/*
+					index1 = setWithinBounds(index1, line1, true);
+					line1 = setWithinBounds(index1, line1, false);
 					
-					setWithinBounds(index2, line2 - 1, true);
-					setWithinBounds(index2, line2 - 1, false);
+					index2 = setWithinBounds(index2, line2, true);
+					line2 = setWithinBounds(index2, line2, false);
+					*/
 				}
 			
 			KeyInput.updateKeys();

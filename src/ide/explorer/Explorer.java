@@ -8,6 +8,7 @@ import java.util.List;
 
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.SetFileName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.MouseInput;
@@ -41,6 +42,7 @@ public class Explorer extends IDEComponent {
     }
     
     public void tick() {
+    	if (SetFileName.added || CommandTerminal.active) return;
     	if (CommandTerminal.expOff) return;
     	
     	if (ListableFile.files.isEmpty() && files.isEmpty()) hoveringListableFile = false;

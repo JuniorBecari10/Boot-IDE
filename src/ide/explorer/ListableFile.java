@@ -873,6 +873,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	}
 	
 	public void tick() {
+		if (SetFileName.added || CommandTerminal.active) return;
 		if (CommandTerminal.expOff) return;
 		
 		if (!regent.exists() && CodeEditor.tabs != null) {
