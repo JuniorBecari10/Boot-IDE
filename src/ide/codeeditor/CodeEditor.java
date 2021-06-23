@@ -2858,6 +2858,14 @@ indxs = findWord(new String(chars), ".");
 			}
 			break;
 			
+		case ".dll":
+			if (!foundExt) {
+				extType = "Dynamic Link Library";
+				foundExt = true;
+			}
+			
+			break;
+			
 		case ".lock":
 			if (!foundExt) {
 				extType = "Lock";
@@ -3272,6 +3280,7 @@ indxs = findWord(new String(chars), ".");
 		case ".dockerfile":
 		case ".config":
 		case ".cfg":
+		case ".ini":
 			indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
