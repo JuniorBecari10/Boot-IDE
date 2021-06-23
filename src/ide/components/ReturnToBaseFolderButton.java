@@ -22,6 +22,8 @@ public class ReturnToBaseFolderButton extends IDEComponent {
 	public void tick() {
 		if (CommandTerminal.expOff) return;
 		
+		if (Main.baseFolder == null) toRemove.add(this);
+		
 		if (leftClicked()) {
 			MouseInput.updateMouse();
 			

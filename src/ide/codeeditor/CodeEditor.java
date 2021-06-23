@@ -2418,9 +2418,66 @@ indxs = findWord(new String(chars), ".");
 			
 		case ".ini":
 			if (!foundExt) {
-				extType = "Arquivo de Inicialização";
+				extType = "Arquivo de Parâmetro de Configuração";
 				foundExt = true;
 			}
+			
+			indxs = findWord(new String(chars), "]");
+			
+			for (Integer i : indxs) {
+				int c = i;
+				len = 0;
+				
+				//boolean hasSpace = false;
+					
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0 &&
+						chars[c] != '[' &&
+						chars[c] != ':') {
+					c--;
+					len++;
+					
+					/*if (chars[c] == ' ') {
+						if (!hasSpace)
+							hasSpace = true;
+						
+						if (hasSpace)
+							break;
+					}*/
+				}
+					
+				fs = color(c, c + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "=");
+			
+			for (Integer i : indxs) {
+				int c = i;
+				len = 0;
+				
+				boolean hasSpace = false;
+					
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0 &&
+						chars[c] != '(' &&
+						chars[c] != ':') {
+					c--;
+					len++;
+					
+					if (chars[c] == ' ') {
+						if (hasSpace)
+							break;
+						
+						if (!hasSpace)
+							hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
+					}
+				}
+					
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
 			break;
 			
 		case ".swift":
@@ -2950,7 +3007,8 @@ indxs = findWord(new String(chars), ".");
 				 ext.equals(".ts") || ext.equals(".swift") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".go") || ext.equals(".r") ||
 				 ext.equals(".jl") || ext.equals(".pl") || ext.equals(".has") || ext.equals(".hs") || ext.equals(".fs") || ext.equals(".coffee") ||
 				 ext.equals(".m") || ext.equals(".jsx") || ext.equals(".ld") || ext.equals(".pas") || ext.equals(".pp") || ext.equals(".scala") || ext.equals(".dart") || ext.equals(".md") ||
-				 ext.equals(".json") || ext.equals(".jsonc") || ext.equals(".bat") || ext.equals(".sh") || ext.equals(".conf") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml"))) {
+				 ext.equals(".json") || ext.equals(".jsonc") || ext.equals(".bat") || ext.equals(".sh") || ext.equals(".conf") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml") ||
+				 ext.equals(".ini"))) {
 			
 			if (!(ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml"))) {
 				indxs = findWord(new String(chars), "(");

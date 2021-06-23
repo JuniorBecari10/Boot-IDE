@@ -22,6 +22,8 @@ public class OneLevelAboveButton extends IDEComponent {
 	public void tick() {
 		if (CommandTerminal.expOff) return;
 		
+		if (Main.baseFolder == null) toRemove.add(this);
+		
 		if (Explorer.scope == null) return;
 		
 		if (leftClicked()) {

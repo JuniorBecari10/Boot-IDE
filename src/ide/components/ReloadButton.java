@@ -9,6 +9,7 @@ import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.MouseInput;
+import ide.main.Main;
 import ide.util.Colors;
 
 public class ReloadButton extends IDEComponent {
@@ -32,6 +33,8 @@ public class ReloadButton extends IDEComponent {
 	
 	public void render(Graphics g) {
 		if (CommandTerminal.expOff) return;
+		
+		if (Main.baseFolder == null) toRemove.add(this);
 		
 		if (hovered()) {
 			g.setColor(Colors.backgroundLight);
