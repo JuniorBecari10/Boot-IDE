@@ -146,7 +146,7 @@ public class SetFileName extends IDEComponent {
 		g.setColor(Colors.explorerLight);
 		g.fillRect(x, y, width, height);
 		
-		Fonts.drawString(text.toString(), x, y + 5, new IDEFont(Fonts.normal, 18), g); // depois colocar drawchars e o sistema de fontes
+		Fonts.drawString(text.toString(), x, y + 5, new IDEFont(Fonts.otherNormal, 18), g); // depois colocar drawchars e o sistema de fontes
 		
 		g.setColor(Color.white);
 		g2.setStroke(new BasicStroke(2f));

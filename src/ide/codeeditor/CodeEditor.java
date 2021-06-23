@@ -1855,13 +1855,15 @@ indxs = findWord(new String(chars), ".");
 					"rem", "start", "time", "type", "vol", "attrib", "chkdsk", "choice", "cmd",
 					"comp", "convert", "driverquery", "expand", "find", "format", "help", "ipconfig",
 					"label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo",
-					"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto", "rmdir", "icacls", "takeown",
+					"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto",
+					"rmdir", "icacls", "takeown", "if", "for", "else",
 					"VER", "ASSOC", "CD", "CLS",
 					"COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 					"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
 					"CMD", "COMP", "CONVERT", "DRIVERQUERY", "EXPAND", "FIND", "FORMAT", "HELP", "IPCONFIG",
 					"LABEL", "MORE", "NET", "PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO",
-					"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH", "NODE", "OFF", "GOTO", "RMDIR", "ICACLS", "TAKEOWN" };
+					"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH", "NODE", "OFF", "GOTO",
+					"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE" };
 			
 			for (String s : batCom) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
@@ -2387,6 +2389,13 @@ indxs = findWord(new String(chars), ".");
 			}
 			break;
 			
+		case ".ini":
+			if (!foundExt) {
+				extType = "Arquivo de Inicialização";
+				foundExt = true;
+			}
+			break;
+			
 		case ".swift":
 			if (!foundExt) {
 				extType = "Swift";
@@ -2650,21 +2659,21 @@ indxs = findWord(new String(chars), ".");
 			
 		case ".urna":
 			if (!foundExt) {
-				extType = "Urna salva do Criador de Urnas";
+				extType = "Urna Salva do Criador de Urnas";
 				foundExt = true;
 			}
 			break;
 			
 		case ".class":
 			if (!foundExt) {
-				extType = "Arquivo do Java Compilado";
+				extType = "Arquivo Compilado do Java";
 				foundExt = true;
 			}
 			break;
 			
 		case ".save":
 			if (!foundExt) {
-				extType = "Jogo salvo do World's Hardest Game Maker 2";
+				extType = "Jogo Salvo do World's Hardest Game Maker 2";
 				foundExt = true;
 			}
 			break;
@@ -2914,62 +2923,64 @@ indxs = findWord(new String(chars), ".");
 				 ext.equals(".ts") || ext.equals(".swift") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".go") || ext.equals(".r") ||
 				 ext.equals(".jl") || ext.equals(".pl") || ext.equals(".has") || ext.equals(".hs") || ext.equals(".fs") || ext.equals(".coffee") ||
 				 ext.equals(".m") || ext.equals(".jsx") || ext.equals(".ld") || ext.equals(".pas") || ext.equals(".pp") || ext.equals(".scala") || ext.equals(".dart") || ext.equals(".md") ||
-				 ext.equals(".json") || ext.equals(".jsonc") || ext.equals(".bat") || ext.equals(".sh") || ext.equals(".conf"))) {
+				 ext.equals(".json") || ext.equals(".jsonc") || ext.equals(".bat") || ext.equals(".sh") || ext.equals(".conf") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml"))) {
 			
-			indxs = findWord(new String(chars), "(");
-			
-			for (Integer i : indxs) {
-				int c = i;
-				len = 0;
+			if (!(ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml"))) {
+				indxs = findWord(new String(chars), "(");
 				
-				while (c < chars.length && 
-						c + len < chars.length &&
-						c > 0 &&
-						chars[c] != ' ' &&
-						chars[c] != '[' &&
-						chars[c] != ']' &&
-						chars[c] != ',' &&
-						chars[c] != ';' &&
-						chars[c] != '.' &&
-						chars[c] != '-' &&
-						chars[c] != '+' &&
-						chars[c] != '*' &&
-						chars[c] != '/' &&
-						chars[c] != '<' &&
-						chars[c] != '>' &&
-						chars[c] != '?' &&
-						chars[c] != ':') {
-					c--;
-					len++;
+				for (Integer i : indxs) {
+					int c = i;
+					len = 0;
+					
+					while (c < chars.length && 
+							c + len < chars.length &&
+							c > 0 &&
+							chars[c] != ' ' &&
+							chars[c] != '[' &&
+							chars[c] != ']' &&
+							chars[c] != ',' &&
+							chars[c] != ';' &&
+							chars[c] != '.' &&
+							chars[c] != '-' &&
+							chars[c] != '+' &&
+							chars[c] != '*' &&
+							chars[c] != '/' &&
+							chars[c] != '<' &&
+							chars[c] != '>' &&
+							chars[c] != '?' &&
+							chars[c] != ':') {
+						c--;
+						len++;
+					}
+					
+					fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
 				}
 				
-				fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
+				/*indxs = findWord(new String(chars), "=");
+				
+				for (Integer i : indxs) {
+					int c = i;
+					int len = 0;
+					
+					while (c < chars.length && 
+							c + len < chars.length &&
+							c > 0 &&
+							chars[c] != ' ') {
+						c--;
+						len++;
+					}
+					
+					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}*/ // n deu :(
 			}
-			
-			/*indxs = findWord(new String(chars), "=");
-			
-			for (Integer i : indxs) {
-				int c = i;
-				int len = 0;
-				
-				while (c < chars.length && 
-						c + len < chars.length &&
-						c > 0 &&
-						chars[c] != ' ') {
-					c--;
-					len++;
-				}
-				
-				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-			}*/ // n deu :(
-
+	
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// gens = genéricos
 		String[] syms = { " ", "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@" };
-		
+			
 		for (String s : syms) {
 			indxs = findWord(new String(chars), s);
-
+	
 			for (Integer i : indxs)
 				fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
 		}
@@ -3054,7 +3065,7 @@ indxs = findWord(new String(chars), ".");
 						}
 						break;
 						
-					case "gitignore":
+					case "gitignore": // TODO arrumar o gitignore sem extensão
 						if (!foundExt) {
 							extType = "Git Ignore";
 							foundExt = true;
@@ -3064,7 +3075,7 @@ indxs = findWord(new String(chars), ".");
 				}
 			}
 			
-			if (extType.equals("") || extType == null) { // TODO arrumar o gitignore
+			if (extType.equals("") || extType == null) {
 				String extn = "";
 				
 				try {
@@ -3868,20 +3879,22 @@ indxs = findWord(new String(chars), ".");
 		}
 	}
 	
-	public static void verifyDuplicateTabs() {
-		if (tabs == null || tabs.size() == 0) return;
-		
-		for (int i = 0; i < tabs.size(); i++)
-			for (int j = 0; j < tabs.size(); j++) {
-				Tab tabi = tabs.get(i);
-				Tab tabj = tabs.get(j);
-				
-				if (tabi.getRegent().getRegent().getAbsolutePath().equals(tabj.getRegent().getRegent().getAbsolutePath()) && tabi != tabj) {
-					tabi.close();
+	public static void verifyDuplicateTabs() { // continuar segundo o TODO
+		try {
+			if (tabs == null || tabs.size() == 0) return;
+			
+			for (int i = 0; i < tabs.size(); i++)
+				for (int j = 0; j < tabs.size(); j++) {
+					Tab tabi = tabs.get(i);
+					Tab tabj = tabs.get(j);
 					
-					return;
+					if (tabi.getRegent().getRegent().getAbsolutePath().equals(tabj.getRegent().getRegent().getAbsolutePath()) && tabi != tabj) {
+						tabi.close();
+						
+						return;
+					}
 				}
-			}
+		} catch (Exception e) {}
 	}
 	
 	public static <T> List<T> removeAllDuplicates(List<T> list) {
@@ -4069,6 +4082,11 @@ indxs = findWord(new String(chars), ".");
 				else if (MouseInput.wheelDown() && (tabs.get(tabs.size() - 1).getX() + tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280)) { // 280
 					tabScr -= 203;
 				}
+				
+				for (IDEComponent i : components) {
+					if (i instanceof RightClickOption)
+						IDEComponent.toRemove.add(i);
+				}
 			}
 		}
 		
@@ -4131,6 +4149,7 @@ indxs = findWord(new String(chars), ".");
 			
 			if (Main.baseFolder != null)
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 550, "Abrir no Explorador de Arquivos", (s) -> execute(s), "sysexp");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (editing != null ? (selecting ? 330 : 210) : 90), 550, "Definir pasta atual como Pasta Base", (s) -> execute(s), "setbase");
 			
 			if (editing != null) {
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), 550, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectline");
@@ -4138,7 +4157,6 @@ indxs = findWord(new String(chars), ".");
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), 550, "Colar", (s) -> execute(s), "paste");
 				
 				//IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 300 : 180), 550, "Modo de Seleção", (s) -> CommandTerminal.runCommand(s), "selectmode");
-			}
 			
 			if (selecting) {
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 550, "Copiar", (s) -> CommandTerminal.runCommand(s), "copy");
@@ -4149,8 +4167,8 @@ indxs = findWord(new String(chars), ".");
 			
 			if (Main.baseFolder != null && editing != null) {
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 270 : 180), 550, "Selecionar Tudo", (s) -> CommandTerminal.runCommand(s), "selectall");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 330 : 210), 550, "Definir pasta atual como Pasta Base", (s) -> execute(s), "setbase");
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 360 : 240), 550, "Abrir arquivo com o programa padrão", (s) -> execute(s), "opendef");
+			}
 			}
 		}
 		
@@ -4804,7 +4822,7 @@ indxs = findWord(new String(chars), ".");
 						if (i != line1 - 1) {
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
 								(line2 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 15 ? 5 : 0),
-								(((x + 38) + (index2 - 29) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) + (Math.abs(14 - FONT_SIZE) * FONT_SIZE) + 2,
+								(((x + 38) + (index2 - (FONT_SIZE == 15 ? 28 : 29)) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) + (Math.abs(14 - FONT_SIZE) * FONT_SIZE) + 2,// + FONT_SIZE == 15 ? FONT_SIZE : 0,
 								FONT_SIZE + 4);
 						}
 					}

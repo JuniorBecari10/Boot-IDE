@@ -294,13 +294,6 @@ public class Main implements Runnable, Tickable {
 
     @Override
     public void tick() {
-    	if (WindowInput.isClosing()) {
-    		if (CodeEditor.editing != null)
-    			CodeEditor.editing.save();
-    		
-    		writeFile(settingsFile);
-    	}
-    	
         for (IDEComponent c : IDEComponent.components)
             c.tick();
         
@@ -366,6 +359,7 @@ public class Main implements Runnable, Tickable {
 				}
 				else {
 					width = 650;
+					height = 100;
 					
 					if (t.getRegent().getRegent().getPath().substring(index).length() > "Foram encontrados erros de sintaxe nas seguintes linhas:".length())
 						width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12; // 31/05/2021 - 11:04 - Segunda-feira
@@ -399,6 +393,11 @@ public class Main implements Runnable, Tickable {
 				}
 				else
 					Fonts.drawString("As detecções de erros de sintaxe foram desativadas.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+				
+				if (CodeEditor.codeHintsOn)
+					Fonts.drawString("Os CodeHints estão ativados.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+				else
+					Fonts.drawString("Os CodeHints estão desativados.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 			}
 		}
         
@@ -414,8 +413,15 @@ public class Main implements Runnable, Tickable {
     public void run() {
         while (running) {        	
         	if (KeyInput.isKeyPressed() | MouseInput.mouseMoved() | MouseInput.isMousePressed() | WindowInput.isActivated()) { // fazer isso depois
-	        tick();
-	        render();
+		        tick();
+		        render();
+		        
+		        if (WindowInput.isClosing()) {
+		    		if (CodeEditor.editing != null)
+		    			CodeEditor.editing.save();
+		    		
+		    		writeFile(settingsFile);
+		    	}
             }
             try {
 				Thread.sleep(1000/120); // 120

@@ -234,6 +234,32 @@ public class Tab extends IDEComponent implements Serializable {
 			ListableFile.files = ListableFile.loadFolder((!regent.getParent().getRegent().equals(Main.baseFolder) ? regent.getParent() : null));
 			
 			break;
+			
+		case "closeother":
+			for (Tab t : CodeEditor.tabs)
+				if (t != this) t.close();
+			
+			CodeEditor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
+			
+			CodeEditor.editing = this;
+			
+			CodeEditor.isMultilineCommenting = false;
+			CodeEditor.isAnotherIteration = false;
+			CodeEditor.foundExt = false;
+			
+			try {
+				CodeEditor.lines = CodeEditor.readFile(regent.getRegent());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			CodeEditor.cursorX = 0;
+			CodeEditor.cursorY = 1;
+			
+			CodeEditor.scrX = scrX;
+			CodeEditor.scrY = scrY;
+			
+			break;
 		}
 	}
 	
@@ -288,15 +314,16 @@ public class Tab extends IDEComponent implements Serializable {
 		if (rightClicked()) {
 			MouseInput.updateMouse();
 			
-			IDEComponent.addRightClickOption(x, y + height + 3, 305, "Fechar Aba", (s) -> execute(s), "this");
-			IDEComponent.addRightClickOption(x, y + height + 3 + 30, 305, "Fechar todas as abas", (s) -> execute(s), "all");
-			IDEComponent.addRightClickOption(x, y + height + 3 + 60, 305, "Salvar", (s) -> execute(s), "save");
-			IDEComponent.addRightClickOption(x, y + height + 3 + 90, 305, "Abrir no Explorador", (s) -> execute(s), "showexp");
+			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3, 305, "Fechar Aba", (s) -> execute(s), "this");
+			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 30, 305, "Fechar todas as abas", (s) -> execute(s), "all");
+			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 60, 305, "Fechar outras abas", (s) -> execute(s), "closeother");
+			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 90, 305, "Salvar", (s) -> execute(s), "save");
+			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 120, 305, "Abrir no Explorador", (s) -> execute(s), "showexp");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			if (ListableFile.getFileExtension(regent.getRegent()).equals(".bat") && isWindows)
-				IDEComponent.addRightClickOption(x, y + height + 3 + 120, 305, "Executar", (s) -> execute(s), "run");
+				IDEComponent.addRightClickOption(x, y + height + 3 + 150, 305, "Executar", (s) -> execute(s), "run");
 			
 			if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && !isWindows)
 				IDEComponent.addRightClickOption(x, y + height + 3 + 150, 305, "Executar", (s) -> execute(s), "runbash");

@@ -43,6 +43,8 @@ public class Explorer extends IDEComponent {
     public void tick() {
     	if (CommandTerminal.expOff) return;
     	
+    	if (ListableFile.files.isEmpty() && files.isEmpty()) hoveringListableFile = false;
+    	
     	if (!(Main.baseFolder != null) || !Main.baseFolder.exists()) {
     		CommandTerminal.runCommand("closebasefolder");
     		
@@ -93,6 +95,12 @@ public class Explorer extends IDEComponent {
     	if (CommandTerminal.expOff) return;
     	
     	Graphics2D g2 = (Graphics2D) g;
+    	
+    	if (folderPath.length() > 22)
+        	folderPath = folderPath.substring(0, 19) + "...";
+    	
+    	if (Main.baseFolder != null)
+    		baseFolderName = Main.baseFolder.getName().length() > 15 ? Main.baseFolder.getName().substring(0, 12) + "..." : Main.baseFolder.getName();
     	
         g.setColor(Colors.explorer);
         g.fillRect(x, y, width, height);   
