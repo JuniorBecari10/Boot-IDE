@@ -1548,6 +1548,33 @@ indxs = findWord(new String(chars), ".");
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
+			indxs = findWord(new String(chars), ":");
+			
+			for (Integer i : indxs) {
+				int c = i;
+				len = 0;
+				
+				boolean hasSpace = false;
+					
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0 &&
+						chars[c] != '(') {
+					c--;
+					len++;
+					
+					if (chars[c] == ' ') {
+						if (hasSpace)
+							break;
+						
+						if (!hasSpace)
+							hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
+					}
+				}
+					
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
 			indxs = findWord(new String(chars), ".");
 			
 			len = 0;

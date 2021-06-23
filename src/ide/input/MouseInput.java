@@ -106,7 +106,7 @@ public final class MouseInput extends MouseInputAdapter {
 	
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		mouseMoved = true;
+		//mouseMoved = true;
 	}
 
     @Override

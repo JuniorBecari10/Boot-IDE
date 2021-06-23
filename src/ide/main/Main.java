@@ -415,14 +415,15 @@ public class Main implements Runnable, Tickable {
         	if (KeyInput.isKeyPressed() | MouseInput.mouseMoved() | MouseInput.isMousePressed() | WindowInput.isActivated()) { // fazer isso depois
 		        tick();
 		        render();
-		        
-		        if (WindowInput.isClosing()) {
-		    		if (CodeEditor.editing != null)
-		    			CodeEditor.editing.save();
-		    		
-		    		writeFile(settingsFile);
-		    	}
             }
+        	
+        	if (WindowInput.isClosing()) {
+	    		if (CodeEditor.editing != null)
+	    			CodeEditor.editing.save();
+	    		
+	    		writeFile(settingsFile);
+	    	}
+        	
             try {
 				Thread.sleep(1000/120); // 120
 			} catch (InterruptedException e) {
