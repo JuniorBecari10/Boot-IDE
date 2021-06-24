@@ -4005,6 +4005,15 @@ indxs = findWord(new String(chars), ".");
 		return (b * c) / a;
 	}
 	
+	public static String arrayToStr(String[] array) {
+		StringBuilder result = new StringBuilder();
+		
+		for (String s : array)
+			result.append(s);
+		
+		return result.toString();
+	}
+	
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active) return;
 		
@@ -4094,7 +4103,7 @@ indxs = findWord(new String(chars), ".");
 			showCursorData = true;
 		}
 		
-		if (KeyInput.isKeyPressed() && hovered() && editing != null) {
+		/*if (KeyInput.isKeyPressed() && hovered() && editing != null) {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_Z && KeyInput.isControlDown()) // Ctrl + Z
 				selectMode = true;
 			
@@ -4104,7 +4113,7 @@ indxs = findWord(new String(chars), ".");
 				
 				CommandTerminal.runCommand("deselect");
 			}
-		}
+		}*/
 		
 		if (selectMode && leftClicked()) {
 			selecting = true;

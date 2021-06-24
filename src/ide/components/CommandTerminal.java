@@ -639,6 +639,8 @@ public class CommandTerminal extends IDEComponent {
 			case "search":
 				List<Integer> linesfound = new ArrayList<>();
 				
+				//args[0] = CodeEditor.arrayToStr(args); // -- n da certo pq esse comando n vai ser executado pq o numero de args é maior
+				
 				for (int i = 0; i < CodeEditor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
 					IDELine l = CodeEditor.lines.get(i);
 					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
@@ -646,7 +648,7 @@ public class CommandTerminal extends IDEComponent {
 					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
 				}
 				
-				if (linesfound.size() == 0) return;
+				if (linesfound.size() == 0) return; // v3.6 - 25/06/2021 - Quinta-Feira - 08:35
 				
 				// como é automaticamente occur 0, pegamos automaticamente ela.
 				
