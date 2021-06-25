@@ -885,6 +885,34 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			IDEComponent.toAdd.add(ren);
 			
 			break;
+			
+		case "newfile":
+			int y = 200;
+			
+			if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).getY() + 30;
+			
+			SetFileName set = new SetFileName(0, y, Main.explorer.getWidth() - 3, 30, true);
+			
+			if (SetFileName.added) return;
+			
+			SetFileName.added = true;
+			
+			IDEComponent.toAdd.add(set);
+			break;
+			
+		case "newfolder":
+			y = 200;
+			
+			if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).getY() + 30;
+			
+			set = new SetFileName(0, y, Main.explorer.getWidth() - 3, 30, false);
+			
+			if (SetFileName.added) return;
+			
+			SetFileName.added = true;
+			
+			IDEComponent.toAdd.add(set);
+			break;
 		}
 	}
 	
@@ -985,6 +1013,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		
 		if (rightClicked()) {
 			MouseInput.updateMouse();
+			
+			IDEComponent.addRightClickOption((x + width), y - 60, 540, "Criar Novo Arquivo", (s) -> execute(s), "newfile");
+			IDEComponent.addRightClickOption((x + width), y - 30, 540, "Criar Nova Pasta", (s) -> execute(s), "newfolder");
 			
 			IDEComponent.addRightClickOption((x + width), y, 540, "Deletar", (s) -> execute(s), "del");
 			IDEComponent.addRightClickOption((x + width), y + 30, 540, "Renomear", (s) -> execute(s), "rename");

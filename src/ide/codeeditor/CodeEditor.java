@@ -628,7 +628,7 @@ public class CodeEditor extends IDEComponent {
 					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				}
 				
-indxs = findWord(new String(chars), ".");
+				indxs = findWord(new String(chars), ".");
 				
 				for (Integer i : indxs) {
 					int c = i;
@@ -754,19 +754,6 @@ indxs = findWord(new String(chars), ".");
 				if (i + len < chars.length)
 					fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
 			}
-			
-			/*indxs = findWord(new String(chars), "(");
-			List<Integer> indxss = findWord(new String(chars), ")");
-			
-			if (indxs.size() > indxss.size())
-				indxss = indxss.subList(0, indxs.size());	// igualar o tamanho das duas
-			
-			else if (indxss.size() > indxs.size())
-				indxs = indxs.subList(0, indxss.size());
-			
-			for (int i = 0; i < indxs.size(); i++) {
-				fs = color(indxs.get(i), indxss.get(i), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-			}*/ // deu certo n
 		}
 		}
 			
@@ -793,7 +780,7 @@ indxs = findWord(new String(chars), ".");
 					}
 
 					if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // TODO colorir + escuro
+						fs = color(i, i + len, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), fs);
 				}
 			}
 		
@@ -3334,7 +3321,7 @@ indxs = findWord(new String(chars), ".");
 			
 		case ".dll":
 			if (!foundExt) {
-				extType = "Dynamic Link Library";
+				extType = "Dynamic Link Library (Biblioteca de Links Dinâmicos)";
 				foundExt = true;
 			}
 			
