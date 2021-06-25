@@ -322,7 +322,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "unloadconfigfile":		// 13/05/2021 - 08:30
+			case "unloadconfigfile":
 				Main.conffile = "none";
 				
 				Main.writeFile(Main.settingsFile);

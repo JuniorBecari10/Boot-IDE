@@ -126,6 +126,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType(".gif", Main.spritesheet.getSprite  (0, 48, 16, 16)),
 			new FileType(".bmp", Main.spritesheet.getSprite  (0, 48, 16, 16)),
 			new FileType(".ico", Main.spritesheet.getSprite  (0, 48, 16, 16)),
+			new FileType(".webp", Main.spritesheet.getSprite (0, 48, 16, 16)),
 			
 			new FileType(".mp4", Main.spritesheet.getSprite (16, 48, 16, 16)),
 			new FileType(".wmv", Main.spritesheet.getSprite (16, 48, 16, 16)),
@@ -959,7 +960,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 					getFileExtension(regent).equals(".wmv") ||
 					getFileExtension(regent).equals(".avi") ||
 					getFileExtension(regent).equalsIgnoreCase(".exe") ||
-					getFileExtension(regent).equals(".pdf")) {
+					getFileExtension(regent).equals(".pdf") ||
+					getFileExtension(regent).equals(".webp")) {
 					try {
 						Main.desktop.open(regent);
 					} catch (IOException e) {
