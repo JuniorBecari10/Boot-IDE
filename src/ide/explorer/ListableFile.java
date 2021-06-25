@@ -44,7 +44,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType(".pyd", Main.spritesheet.getSprite (64, 16, 16, 16)),
 			new FileType(".js", Main.spritesheet.getSprite  (80, 16, 16, 16)),
 			new FileType(".bat", Main.spritesheet.getSprite (96, 16, 16, 16)),
-			new FileType(".com", Main.spritesheet.getSprite (96, 16, 16, 16)),
+			new FileType(".com", Main.spritesheet.getSprite(592, 32, 16, 16)),
+			new FileType(".cmd", Main.spritesheet.getSprite(592, 32, 16, 16)),
 			new FileType(".h", Main.spritesheet.getSprite  (112, 16, 16, 16)),
 			new FileType(".hxx", Main.spritesheet.getSprite(112, 16, 16, 16)),
 			new FileType(".hpp", Main.spritesheet.getSprite(112, 16, 16, 16)),
@@ -81,6 +82,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType(".json", Main.spritesheet.getSprite(48, 32, 16, 16)),
 			new FileType(".jsonc",Main.spritesheet.getSprite(48, 32, 16, 16)),
 			new FileType(".md", Main.spritesheet.getSprite  (64, 32, 16, 16)),
+			new FileType(".markdown",Main.spritesheet.getSprite(64,32,16,16)),
 			new FileType(".txt", Main.spritesheet.getSprite (80, 32, 16, 16)),
 			new FileType(".log", Main.spritesheet.getSprite (80, 32, 16, 16)),
 			new FileType(".pdf", Main.spritesheet.getSprite (96, 32, 16, 16)),
@@ -981,7 +983,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
-			if (getFileExtension(regent).equals(".bat") && isWindows)
+			if ((getFileExtension(regent).equals(".bat") || getFileExtension(regent).equals(".cmd") || getFileExtension(regent).equals(".com") || getFileExtension(regent).equals(".ps1")) && isWindows)
 				IDEComponent.addRightClickOption((x + width), y + 180, 540, "Executar", (s) -> execute(s), "run");
 			
 			if (getFileExtension(regent).equals(".sh") && !isWindows)

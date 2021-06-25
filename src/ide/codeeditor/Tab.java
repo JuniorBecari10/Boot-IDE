@@ -322,7 +322,7 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
-			if (ListableFile.getFileExtension(regent.getRegent()).equals(".bat") && isWindows)
+			if ((ListableFile.getFileExtension(regent.getRegent()).equals(".bat") || ListableFile.getFileExtension(regent.getRegent()).equals(".cmd") || ListableFile.getFileExtension(regent.getRegent()).equals(".com") || ListableFile.getFileExtension(regent.getRegent()).equals(".ps1")) && isWindows)
 				IDEComponent.addRightClickOption(x, y + height + 3 + 150, 305, "Executar", (s) -> execute(s), "run");
 			
 			if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && !isWindows)

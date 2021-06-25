@@ -499,7 +499,7 @@ public class CodeEditor extends IDEComponent {
 			 ext.equals(".ts") || ext.equals(".swift")  || ext.equals(".go") || ext.equals(".r") ||
 			 ext.equals(".jl") || ext.equals(".pl") || ext.equals(".has") || ext.equals(".hs") || ext.equals(".fs") || ext.equals(".coffee") ||
 			 ext.equals(".m") || ext.equals(".jsx") || ext.equals(".ld") || ext.equals(".pas") || ext.equals(".pp") || ext.equals(".scala") ||
-			 ext.equals(".dart") || ext.equals(".md"))) { // não verificaremos mais o html aqui
+			 ext.equals(".dart") || ext.equals(".md") || ext.equals(".markdown"))) { // não verificaremos mais o html aqui
 			
 			indxs = findWord(new String(chars), ")");
 			
@@ -556,7 +556,7 @@ public class CodeEditor extends IDEComponent {
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
-			if (!ext.equals(".md")) {
+			if (!ext.equals(".md") && !ext.equals(".markdown")) {
 				indxs = findWord(new String(chars), ":");
 				
 				for (Integer i : indxs) {
@@ -691,7 +691,7 @@ indxs = findWord(new String(chars), ".");
 				}
 			}
 			
-			if (!(ext.equals(".html") || ext.equals(".htm") || ext.equals(".md"))) {
+			if (!(ext.equals(".html") || ext.equals(".htm") || ext.equals(".md") || ext.equals(".markdown"))) {
 			
 			String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
 					"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
@@ -796,7 +796,7 @@ indxs = findWord(new String(chars), ".");
 				}
 			}
 		
-			if (!ext.equals(".md")) {			
+			if (!ext.equals(".md") && !ext.equals(".markdown")) {			
 			indxs = findWord(new String(chars), "=");
 			
 			for (Integer i : indxs) {
@@ -1870,7 +1870,12 @@ indxs = findWord(new String(chars), ".");
 				extType = "Arquivo PowerShell";
 				foundExt = true;
 			}
+		case ".cmd":
 		case ".com":
+			if (!foundExt) {
+				extType = "Arquivo do Prompt de Comando";
+				foundExt = true;
+			}
 		case ".bat":
 			if (!foundExt) {
 				extType = "Batch";
@@ -2418,6 +2423,7 @@ indxs = findWord(new String(chars), ".");
 			
 			break;
 			
+		case ".markdown":
 		case ".md":
 			if (!foundExt) {
 				extType = "Markdown";
@@ -3044,8 +3050,8 @@ indxs = findWord(new String(chars), ".");
 				 ext.equals(".php") || ext.equals(".kt") || ext.equals(".vue") || ext.equals(".py") || ext.equals(".pyd") || ext.equals(".rb") || ext.equals(".ino") ||
 				 ext.equals(".ts") || ext.equals(".swift") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".go") || ext.equals(".r") ||
 				 ext.equals(".jl") || ext.equals(".pl") || ext.equals(".has") || ext.equals(".hs") || ext.equals(".fs") || ext.equals(".coffee") ||
-				 ext.equals(".m") || ext.equals(".jsx") || ext.equals(".ld") || ext.equals(".pas") || ext.equals(".pp") || ext.equals(".scala") || ext.equals(".dart") || ext.equals(".md") ||
-				 ext.equals(".json") || ext.equals(".jsonc") || ext.equals(".bat") || ext.equals(".sh") || ext.equals(".conf") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml") ||
+				 ext.equals(".m") || ext.equals(".jsx") || ext.equals(".ld") || ext.equals(".pas") || ext.equals(".pp") || ext.equals(".scala") || ext.equals(".dart") || ext.equals(".md") || ext.equals(".markdown") ||
+				 ext.equals(".json") || ext.equals(".jsonc") || ext.equals(".bat") || ext.equals(".cmd") || ext.equals(".sh") || ext.equals(".conf") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml") ||
 				 ext.equals(".ini"))) {
 			
 			if (!(ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml"))) {
@@ -3266,6 +3272,7 @@ indxs = findWord(new String(chars), ".");
 		case ".ps1":
 		case ".com":
 		case ".bat":
+		case ".cmd":
 			indxs = findWord(new String(chars), "REM"); // colorir comentários de uma linha
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
@@ -3318,7 +3325,8 @@ indxs = findWord(new String(chars), ".");
 			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			
 			break;
-			
+		
+		case ".markdown":
 		case ".md":
 			indxs = findWord(new String(chars), "[//]: #"); // colorir comentários de uma linha
 			
@@ -4488,7 +4496,7 @@ indxs = findWord(new String(chars), ".");
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) { // Ctrl + Delete (Deletar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE || (selecting && KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE)) { // Ctrl + Delete (Deletar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("del");
@@ -4651,6 +4659,8 @@ indxs = findWord(new String(chars), ".");
 					
 					return;
 				}
+				
+				System.out.println("a");
 				
 				CommandTerminal.runCommand("del");
 				
