@@ -927,6 +927,12 @@ public class Fonts {
         		continue;
     		}
     		
+    		else if (ch == '´') {
+        		text[i] = fonts[i].getFont()[39];
+        			
+        		continue;
+    		}
+    		
     		else if (ch == 'µ') {
         		text[i] = fonts[i].getFont()[180];
         			
