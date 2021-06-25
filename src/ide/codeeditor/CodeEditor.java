@@ -1853,13 +1853,15 @@ public class CodeEditor extends IDEComponent {
 					"label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo",
 					"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto",
 					"rmdir", "icacls", "takeown", "if", "for", "else", "git", "npm", "call", "exist", "end",
+					"java", "javac", "nodemon",
 					"VER", "ASSOC", "CD", "CLS",
 					"COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 					"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
 					"CMD", "COMP", "CONVERT", "DRIVERQUERY", "EXPAND", "FIND", "FORMAT", "HELP", "IPCONFIG",
 					"LABEL", "MORE", "NET", "PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO",
 					"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH", "NODE", "OFF", "GOTO",
-					"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM", "CALL", "EXIST", "ENDAS" };
+					"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM", "CALL", "EXIST", "END",
+					"JAVA", "JAVAC", "NODEMON" };
 			
 			for (String s : batCom) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
