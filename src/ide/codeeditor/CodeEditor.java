@@ -500,7 +500,7 @@ public class CodeEditor extends IDEComponent {
 			 ext.equals(".ts") || ext.equals(".swift")  || ext.equals(".go") || ext.equals(".r") ||
 			 ext.equals(".jl") || ext.equals(".pl") || ext.equals(".has") || ext.equals(".hs") || ext.equals(".fs") || ext.equals(".coffee") ||
 			 ext.equals(".m") || ext.equals(".jsx") || ext.equals(".ld") || ext.equals(".pas") || ext.equals(".pp") || ext.equals(".scala") ||
-			 ext.equals(".dart") || ext.equals(".md") || ext.equals(".markdown"))) { // não verificaremos mais o html aqui
+			 ext.equals(".dart") || ext.equals(".md") || ext.equals(".markdown") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile"))) { // não verificaremos mais o html aqui
 			
 			indxs = findWord(new String(chars), ")");
 			
@@ -606,7 +606,7 @@ public class CodeEditor extends IDEComponent {
 					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // mais tarde arrumar os outros bugs, ou em outra update
 				}
 				
-				indxs = findWord(new String(chars), ";"); // ÚLTIMA EDIÇÃO: 14/06/2021 - 17:57 - Segunda-Feira
+				indxs = findWord(new String(chars), ";");
 				
 				for (Integer i : indxs) {
 					int c = i;
@@ -1851,14 +1851,14 @@ public class CodeEditor extends IDEComponent {
 					"comp", "convert", "driverquery", "expand", "find", "format", "help", "ipconfig",
 					"label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo",
 					"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto",
-					"rmdir", "icacls", "takeown", "if", "for", "else",
+					"rmdir", "icacls", "takeown", "if", "for", "else", "git", "npm", "call", "exist", "end",
 					"VER", "ASSOC", "CD", "CLS",
 					"COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 					"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
 					"CMD", "COMP", "CONVERT", "DRIVERQUERY", "EXPAND", "FIND", "FORMAT", "HELP", "IPCONFIG",
 					"LABEL", "MORE", "NET", "PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO",
 					"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH", "NODE", "OFF", "GOTO",
-					"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE" };
+					"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM", "CALL", "EXIST", "ENDAS" };
 			
 			for (String s : batCom) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
@@ -3277,12 +3277,22 @@ public class CodeEditor extends IDEComponent {
 				foundExt = true;
 			}
 			break;
-			
+		
+		case ".makefile":
 		case ".mk":
 		case ".make":
 			if (!foundExt) {
 				extType = "Makefile";
 				foundExt = true;
+			}
+			
+			String[] makeKeys = { "if", "else", "make", "echo", "elif", "then", "fi", "exit", "export" };
+			
+			for (String s : makeKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
 			indxs = findWord(new String(chars), ":");
@@ -3477,7 +3487,7 @@ public class CodeEditor extends IDEComponent {
 				 ext.equals(".jl") || ext.equals(".pl") || ext.equals(".has") || ext.equals(".hs") || ext.equals(".fs") || ext.equals(".coffee") ||
 				 ext.equals(".m") || ext.equals(".jsx") || ext.equals(".ld") || ext.equals(".pas") || ext.equals(".pp") || ext.equals(".scala") || ext.equals(".dart") || ext.equals(".md") || ext.equals(".markdown") ||
 				 ext.equals(".json") || ext.equals(".jsonc") || ext.equals(".bat") || ext.equals(".cmd") || ext.equals(".sh") || ext.equals(".conf") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml") ||
-				 ext.equals(".ini") || ext.equals(".ejs"))) {
+				 ext.equals(".ini") || ext.equals(".ejs") || ext.equals(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile"))) {
 			
 			if (!(ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml") || ext.equals(".ejs"))) {
 				indxs = findWord(new String(chars), "(");
@@ -3502,7 +3512,13 @@ public class CodeEditor extends IDEComponent {
 							chars[c] != '<' &&
 							chars[c] != '>' &&
 							chars[c] != '?' &&
-							chars[c] != ':') {
+							chars[c] != ':' &&
+							chars[c] != '=' &&
+							chars[c] != '$' &&
+							chars[c] != '#' &&
+							chars[c] != '@' &&
+							chars[c] != '!' &&
+							chars[c] != '%') {
 						c--;
 						len++;
 					}
@@ -3530,7 +3546,7 @@ public class CodeEditor extends IDEComponent {
 	
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// gens = genéricos
-		String[] syms = { " ", "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@" };
+		String[] syms = { " ", "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`" };
 			
 		for (String s : syms) {
 			indxs = findWord(new String(chars), s);
@@ -3613,6 +3629,15 @@ public class CodeEditor extends IDEComponent {
 						break;
 						
 					case "makefile":
+						String[] makeKeys = { "if", "else", "make", "echo", "elif", "then", "fi", "exit", "export" };
+						
+						for (String s : makeKeys) { // colorir keywords
+							indxs = findWord(new String(chars), s);
+							
+							for (Integer i : indxs)
+								fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+						}
+						
 						indxs = findWord(new String(chars), ":");
 						
 						for (Integer i : indxs) {
