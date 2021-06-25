@@ -80,7 +80,7 @@ public class OpenBaseFolderButton extends IDEComponent {
 	public void render(Graphics g) {
 		if (CommandTerminal.expOff) return;
 		
-		if (hovered()) {
+		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x - 1, y - 1, width + 4, height + 4);
 			
@@ -90,7 +90,7 @@ public class OpenBaseFolderButton extends IDEComponent {
 		
 		super.render(g);
 		
-		if (hovered())
+		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active))
 			Fonts.drawString("Selecionar Pasta Base", MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
 	}
 }
