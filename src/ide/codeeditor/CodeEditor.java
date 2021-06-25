@@ -2113,7 +2113,7 @@ indxs = findWord(new String(chars), ".");
 					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
-			String[] asmKeys = { "global", "db", "dw", "equ", "extern", "org", "syscall", "aaa", "aad", "aam", "aas", "adc",
+			String[] asmKeys = { "global", "db", "dw", "equ", "extern", "include", "times", "org", "syscall", "aaa", "aad", "aam", "aas", "adc",
 					"add", "addpd", "addps", "addressing", "addsd", "addss", "align", "and", "andnpd", "andnps", "andpd",
 					"andps", "arpl", "as", "commandline", "ELFobjectfile", "macroprocessing", "syntaxUNIXversusIntel", "ascii",
 					"assemblerSeeasB", "bcd", "binaryarithmeticinstructions", "bitinstructions", "bound", "bsf", "bsr",
@@ -2216,7 +2216,7 @@ indxs = findWord(new String(chars), ".");
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}*/
 
-			/*indxs = findWord(new String(chars), "db");
+			indxs = findWord(new String(chars), "db");
 			
 			for (Integer i : indxs) {
 				int c = i;
@@ -2244,7 +2244,37 @@ indxs = findWord(new String(chars), ".");
 				}
 				
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-			}*/
+			}
+			
+			indxs = findWord(new String(chars), "equ");
+			
+			for (Integer i : indxs) {
+				int c = i;
+				len = 0;
+				
+				boolean hasSpace = false;
+				
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0 &&
+						chars[c] != '[' &&
+						chars[c] != ']' &&
+						chars[c] != ';' &&
+						chars[c] != '.' &&
+						chars[c] != ':') {
+					c--;
+					len++;
+					
+					if (chars[c] != ' ') {
+						if (!hasSpace)
+							hasSpace = true;
+						else
+							break;
+					}
+				}
+				
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
 			
 			indxs = findWord(new String(chars), ".");
 			

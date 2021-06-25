@@ -648,7 +648,7 @@ public class CommandTerminal extends IDEComponent {
 					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
 				}
 				
-				if (linesfound.size() == 0) return; // v3.6 - 25/06/2021 - Quinta-Feira - 08:35
+				if (linesfound.size() == 0) return;
 				
 				// como é automaticamente occur 0, pegamos automaticamente ela.
 				
