@@ -8,6 +8,8 @@ import java.util.List;
 
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.RenameFile;
+import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -42,7 +44,7 @@ public class Explorer extends IDEComponent {
     }
     
     public void tick() {
-    	if (SetFileName.added || CommandTerminal.active) return;
+    	if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
     	if (CommandTerminal.expOff) return;
     	
     	if (ListableFile.files.isEmpty() && files.isEmpty()) hoveringListableFile = false;
@@ -81,6 +83,11 @@ public class Explorer extends IDEComponent {
     	if (files.size() == 0) return;
     	
     	if (MouseInput.isMouseRolling() && hovered()) {
+    		for (IDEComponent i : components) {
+    			if (i instanceof RightClickOption)
+    				IDEComponent.toRemove.add(i);
+    		}
+    		
     		ListableFile first = files.get(0);
     		ListableFile last = files.get(files.size() - 1);
     		

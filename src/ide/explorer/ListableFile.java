@@ -22,6 +22,7 @@ import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
 import ide.components.ExecuteCommand;
 import ide.components.IDEComponent;
+import ide.components.RenameFile;
 import ide.components.SetFileName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -873,11 +874,22 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				}
 			}.start();
 			break;
+			
+		case "rename":
+			RenameFile ren = new RenameFile(0, y, Main.explorer.getWidth() - 3, 30, regent);
+			
+			if (RenameFile.added) return;
+			
+			RenameFile.added = true;
+			
+			IDEComponent.toAdd.add(ren);
+			
+			break;
 		}
 	}
 	
 	public void tick() {
-		if (SetFileName.added || CommandTerminal.active) return;
+		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
 		if (CommandTerminal.expOff) return;
 		
 		if (!regent.exists() && CodeEditor.tabs != null) {
@@ -893,7 +905,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			files = ListableFile.loadFolder(Explorer.scope);
 		}
 		
-		if (hovered())
+		if (hovered() && !RenameFile.added)
 			Explorer.hoveringListableFile = true;
 		
 		if (leftClicked()) {
@@ -975,11 +987,12 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			MouseInput.updateMouse();
 			
 			IDEComponent.addRightClickOption((x + width), y, 540, "Deletar", (s) -> execute(s), "del");
-			IDEComponent.addRightClickOption((x + width), y + 30, 540, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
-			IDEComponent.addRightClickOption((x + width), y + 60, 540, "Abrir Terminal de Comando", (s) -> execute(s), "term");
-			IDEComponent.addRightClickOption((x + width), y + 90, 540, "Abrir no Explorador de Arquivos", (s) -> execute(s), "sysexp");
-			IDEComponent.addRightClickOption((x + width), y + 120, 540, "Definir pasta atual como Pasta Base", (s) -> execute(s), "setbase");
-			IDEComponent.addRightClickOption((x + width), y + 150, 540, "Abrir arquivo com o programa padrão", (s) -> execute(s), "opendef");
+			IDEComponent.addRightClickOption((x + width), y + 30, 540, "Renomear", (s) -> execute(s), "rename");
+			IDEComponent.addRightClickOption((x + width), y + 60, 540, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
+			IDEComponent.addRightClickOption((x + width), y + 90, 540, "Abrir Terminal de Comando", (s) -> execute(s), "term");
+			IDEComponent.addRightClickOption((x + width), y + 120, 540, "Abrir no Explorador de Arquivos", (s) -> execute(s), "sysexp");
+			IDEComponent.addRightClickOption((x + width), y + 150, 540, "Definir pasta atual como Pasta Base", (s) -> execute(s), "setbase");
+			IDEComponent.addRightClickOption((x + width), y + 180, 540, "Abrir arquivo com o programa padrão", (s) -> execute(s), "opendef");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
@@ -999,12 +1012,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	
 	public void render(Graphics g) {
 		if (y < 200 || y > Main.screen.getHeight()) return;
-		
 		if (CommandTerminal.expOff) return;
-		
 		if (y < 199) return;
 		
-		if (hovered() && !SetFileName.added && !CommandTerminal.active && !CodeEditor.selectMode) {
+		for (IDEComponent i : IDEComponent.components) {
+			if (i instanceof RenameFile)
+				if (((RenameFile) i).old == regent) return;
+		}
+		
+		if (hovered() && !SetFileName.added && !CommandTerminal.active && !RenameFile.added && !CodeEditor.selectMode) {
 			g.setColor(Colors.explorerLight);
 			g.fillRect(0, y, Main.explorer.getWidth(), height);
 		}

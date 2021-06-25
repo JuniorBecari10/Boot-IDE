@@ -547,7 +547,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "rename":
+			/*case "rename":
 				int option = chooser.showOpenDialog(Main.screen.frame);
 				
 				if (option == JFileChooser.APPROVE_OPTION) {
@@ -558,7 +558,7 @@ public class CommandTerminal extends IDEComponent {
 					
 					toRename.renameTo(newFile);
 				}
-				break;
+				break;*/
 				
 			case "genbase":
 				String[] strs = { };

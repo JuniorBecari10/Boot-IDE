@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.RenameFile;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
@@ -4543,7 +4544,7 @@ indxs = findWord(new String(chars), ".");
 	}
 	
 	public void tick() {
-		if (SetFileName.added || CommandTerminal.active) return;
+		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
 		
 		if (tabs == null) tabs = new ArrayList<>();
 		verifyDuplicateTabs();
