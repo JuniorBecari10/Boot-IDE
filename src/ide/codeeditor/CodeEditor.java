@@ -4496,13 +4496,13 @@ indxs = findWord(new String(chars), ".");
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_O) { // Ctrl + O (Toggle Syntax Errors)
+			/*if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_O) { // Ctrl + O (Toggle Syntax Errors)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("togglesyntaxerrors");
 					
 				return;
-			}
+			}*/
 			
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_P) { // Ctrl + P (Toggle Code Hints)
 				KeyInput.updateKeys();

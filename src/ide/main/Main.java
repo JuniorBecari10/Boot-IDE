@@ -46,6 +46,7 @@ import java.util.List;
 
 import ide.codeeditor.CodeEditor;
 import ide.codeeditor.Tab;
+import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.Logo;
 import ide.components.NewFileButton;
@@ -54,6 +55,7 @@ import ide.components.OneLevelAboveButton;
 import ide.components.OpenBaseFolderButton;
 import ide.components.ReloadButton;
 import ide.components.ReturnToBaseFolderButton;
+import ide.components.SetFileName;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
@@ -102,6 +104,8 @@ public class Main implements Runnable, Tickable {
     public static Desktop desktop;
     
     public static String[] args;
+    
+    public static boolean hasConfigFile = false;
     
     public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings.conf"); // 08/05/2021 - 15:48
     
@@ -240,8 +244,12 @@ public class Main implements Runnable, Tickable {
 							}
 						}
 					}
-					else if (i == 4)
+					else if (i == 4) {
 						conffile = s;
+						
+						if (!conffile.equals("none"))
+							hasConfigFile = true;
+					}
 					
 					else if (i == 5)
 						tabindex = Integer.parseInt(s);
@@ -296,7 +304,7 @@ public class Main implements Runnable, Tickable {
     }
     
     public static boolean hasUserInteraction() {
-    	return KeyInput.isKeyPressed() | MouseInput.mouseMoved() | MouseInput.isMousePressed() | MouseInput.isMouseClicked() | MouseInput.isMouseDragged() | WindowInput.isActivated() | ComponentInput.windowMoved() | ComponentInput.windowResized();
+    	return KeyInput.isKeyPressed() | KeyInput.isControlDown() | KeyInput.isShiftDown() | KeyInput.isAltDown() | KeyInput.isAltGrDown() | MouseInput.mouseMoved() | MouseInput.isMousePressed() | MouseInput.isMouseClicked() | MouseInput.isMouseDragged() | WindowInput.isActivated() | ComponentInput.windowMoved() | ComponentInput.windowResized() | WindowInput.isActivated() | CommandTerminal.active | SetFileName.added;
     }
 
     @Override
@@ -353,10 +361,10 @@ public class Main implements Runnable, Tickable {
 				int width = 10 + t.getRegent().getRegent().getPath().substring(index).length() * 15;
 				int height = CodeEditor.linesWithErrors.size() == 0 ? 70 : 50 + (CodeEditor.linesWithErrors.size() * 40);
 				
-				if (!CodeEditor.syntaxErrorsOn)
-					height = 70;
+				/*if (!CodeEditor.syntaxErrorsOn)
+					height = 70;*/
 				
-				if (CodeEditor.syntaxErrorsOn) {
+				/*if (CodeEditor.syntaxErrorsOn) {
 					if (CodeEditor.linesWithErrors.size() > 0)
 						width = 700;
 					else
@@ -370,7 +378,7 @@ public class Main implements Runnable, Tickable {
 					height = 100;
 					
 					if (t.getRegent().getRegent().getPath().substring(index).length() > "Foram encontrados erros de sintaxe nas seguintes linhas:".length())
-						width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12; // 31/05/2021 - 11:04 - Segunda-feira
+						width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
 				}
 				
 				g.setColor(Colors.explorerLight);
@@ -399,8 +407,33 @@ public class Main implements Runnable, Tickable {
 						}
 					}
 				}
+				else*/
+				
+				width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
+				height = 100;
+				
+				if (!hasConfigFile) {
+					if (width < 600)
+						width = 600;
+				}
+				else {
+					if (width < 435)
+						width = 435;
+				}
+				
+				g.setColor(Colors.explorerLight);
+				g.fillRect(MouseInput.getMouseX() + 10, MouseInput.getMouseY(), width, height);
+				
+				g.setColor(Colors.textLighter);
+				g2.setStroke(new BasicStroke(2f));
+				g2.drawRect(MouseInput.getMouseX() + 10, MouseInput.getMouseY(), width, height);
+				
+				Fonts.drawString(t.getRegent().getRegent().getPath().substring(index), MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+				
+				if (!hasConfigFile)
+					Fonts.drawString("Não há nenhum Arquivo de Configurações carregado.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				else
-					Fonts.drawString("As detecções de erros de sintaxe foram desativadas.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					Fonts.drawString("Arquivo de Configurações carregado.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				
 				if (CodeEditor.codeHintsOn)
 					Fonts.drawString("Os CodeHints estão ativados.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
@@ -420,7 +453,7 @@ public class Main implements Runnable, Tickable {
     @Override
     public void run() {
         while (running) {        	
-        	if (hasUserInteraction()) { 
+        	if (hasUserInteraction()) {
 		        tick();
 		        render();
             }

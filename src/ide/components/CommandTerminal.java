@@ -316,6 +316,8 @@ public class CommandTerminal extends IDEComponent {
 					
 					Fonts.initFonts(Main.fntnr, Main.fntbl);
 					Main.spritesheet = new Spritesheet(Main.sprsh);
+					
+					Main.hasConfigFile = true;
 				}
 				
 				break;
