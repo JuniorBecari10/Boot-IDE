@@ -500,7 +500,8 @@ public class CodeEditor extends IDEComponent {
 			 ext.equals(".ts") || ext.equals(".swift")  || ext.equals(".go") || ext.equals(".r") ||
 			 ext.equals(".jl") || ext.equals(".pl") || ext.equals(".has") || ext.equals(".hs") || ext.equals(".fs") || ext.equals(".coffee") ||
 			 ext.equals(".m") || ext.equals(".jsx") || ext.equals(".ld") || ext.equals(".pas") || ext.equals(".pp") || ext.equals(".scala") ||
-			 ext.equals(".dart") || ext.equals(".md") || ext.equals(".markdown") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile"))) { // não verificaremos mais o html aqui
+			 ext.equals(".dart") || ext.equals(".md") || ext.equals(".markdown") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
+			 ext.equals(".url"))) { // não verificaremos mais o html aqui
 			
 			indxs = findWord(new String(chars), ")");
 			
@@ -3331,7 +3332,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".dll":
 			if (!foundExt) {
-				extType = "Dynamic Link Library (Biblioteca de Links Dinâmicos)";
+				extType = "Dynamic Link Library (DLL)";
 				foundExt = true;
 			}
 			
@@ -3433,6 +3434,14 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			break;
+			
+		case ".url":
+			if (!foundExt) {
+				extType = "Uniform Resource Locator (URL)";
+				foundExt = true;
+			}
+			
+			break;
 		}
 		
 		String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
@@ -3487,7 +3496,8 @@ public class CodeEditor extends IDEComponent {
 				 ext.equals(".jl") || ext.equals(".pl") || ext.equals(".has") || ext.equals(".hs") || ext.equals(".fs") || ext.equals(".coffee") ||
 				 ext.equals(".m") || ext.equals(".jsx") || ext.equals(".ld") || ext.equals(".pas") || ext.equals(".pp") || ext.equals(".scala") || ext.equals(".dart") || ext.equals(".md") || ext.equals(".markdown") ||
 				 ext.equals(".json") || ext.equals(".jsonc") || ext.equals(".bat") || ext.equals(".cmd") || ext.equals(".sh") || ext.equals(".conf") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml") ||
-				 ext.equals(".ini") || ext.equals(".ejs") || ext.equals(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile"))) {
+				 ext.equals(".ini") || ext.equals(".ejs") || ext.equals(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
+				 ext.equals(".url"))) {
 			
 			if (!(ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml") || ext.equals(".ejs"))) {
 				indxs = findWord(new String(chars), "(");
