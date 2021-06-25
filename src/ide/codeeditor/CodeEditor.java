@@ -4470,6 +4470,34 @@ indxs = findWord(new String(chars), ".");
 		case "term":
 			execTerminal();
 			break;
+			
+		case "newfile":
+			int y = 200;
+			
+			if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).getY() + 30;
+			
+			SetFileName set = new SetFileName(0, y, Main.explorer.getWidth() - 3, 30, true);
+			
+			if (SetFileName.added) return;
+			
+			SetFileName.added = true;
+			
+			IDEComponent.toAdd.add(set);
+			break;
+			
+		case "newfolder":
+			y = 200;
+			
+			if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).getY() + 30;
+			
+			set = new SetFileName(0, y, Main.explorer.getWidth() - 3, 30, false);
+			
+			if (SetFileName.added) return;
+			
+			SetFileName.added = true;
+			
+			IDEComponent.toAdd.add(set);
+			break;
 		}
 	}
 	

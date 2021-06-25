@@ -62,12 +62,15 @@ public class Explorer extends IDEComponent {
     	}
     	
     	if (rightClicked() && !hoveringListableFile) {
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 540, "Abrir Prompt de Comando", (s) -> Main.editor.execute(s), "cmd");
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 540, "Abrir Terminal de Comando", (s) -> Main.editor.execute(s), "term");
+    		IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 540, "Criar Novo Arquivo", (s) -> Main.editor.execute(s), "newfile");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 540, "Criar Nova Pasta", (s) -> Main.editor.execute(s), "newfolder");
+    		
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 540, "Abrir Prompt de Comando", (s) -> Main.editor.execute(s), "cmd");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 540, "Abrir Terminal de Comando", (s) -> Main.editor.execute(s), "term");
 			
 			if (Main.baseFolder != null) {
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 540, "Abrir no Explorador de Arquivos", (s) -> Main.editor.execute(s), "sysexp");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 540, "Definir pasta atual como Pasta Base", (s) -> Main.editor.execute(s), "setbase");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 540, "Abrir no Explorador de Arquivos", (s) -> Main.editor.execute(s), "sysexp");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 150, 540, "Definir pasta atual como Pasta Base", (s) -> Main.editor.execute(s), "setbase");
 			}
 		}
     	
