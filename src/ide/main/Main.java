@@ -58,6 +58,7 @@ import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.input.ComponentInput;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
@@ -293,6 +294,10 @@ public class Main implements Runnable, Tickable {
         t = new Thread(this);
         t.start();
     }
+    
+    public static boolean hasUserInteraction() {
+    	return KeyInput.isKeyPressed() | MouseInput.mouseMoved() | MouseInput.isMousePressed() | MouseInput.isMouseClicked() | MouseInput.isMouseDragged() | WindowInput.isActivated() | ComponentInput.windowMoved() | ComponentInput.windowResized();
+    }
 
     @Override
     public void tick() {
@@ -303,6 +308,7 @@ public class Main implements Runnable, Tickable {
         	f.tick();
         
         MouseInput.updateMouse();
+        ComponentInput.update();
         
         IDEComponent.components.removeAll(IDEComponent.toRemove);
         IDEComponent.toRemove.clear();
@@ -414,7 +420,7 @@ public class Main implements Runnable, Tickable {
     @Override
     public void run() {
         while (running) {        	
-        	if (KeyInput.isKeyPressed() | MouseInput.mouseMoved() | MouseInput.isMousePressed() | WindowInput.isActivated()) { // fazer isso depois
+        	if (hasUserInteraction()) { 
 		        tick();
 		        render();
             }

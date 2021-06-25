@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import ide.input.ComponentInput;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
@@ -37,6 +38,8 @@ public class Screen extends Canvas {
     private WindowInput windowInput;
     private DragListener dragListener;
 
+    private ComponentInput componentInput;
+    
     public Screen(String title) {
         initWindow(title, new Dimension(MIN_W, MIN_H));
 
@@ -46,11 +49,15 @@ public class Screen extends Canvas {
         keyInput = new KeyInput();
         windowInput = new WindowInput();
         dragListener = new DragListener();
+        componentInput = new ComponentInput();
 
         addKeyListener(keyInput);
         addMouseListener(mouseInput);
         addMouseMotionListener(mouseInput);
         addMouseWheelListener(mouseInput);
+        addComponentListener(componentInput);
+        
+        frame.addComponentListener(componentInput);
         
         frame.addWindowListener(windowInput);
         

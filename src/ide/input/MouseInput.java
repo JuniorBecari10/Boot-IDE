@@ -41,15 +41,13 @@ public final class MouseInput extends MouseInputAdapter {
         return mousePressed;
     }
     
-    /**
-     * Use esse método sempre depois de usar o clicked() ou dragged().
-     */
     public static void updateMouse() {
     	mousePressed = false;
     	leftPressed = false;
     	rightPressed = false;
     	
     	mouseRolled = false;
+    	mouseMoved = false;
     }
 
     public static boolean isMouseDragged() {
