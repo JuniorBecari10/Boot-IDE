@@ -328,6 +328,8 @@ public class CommandTerminal extends IDEComponent {
 				Main.writeFile(Main.settingsFile);
 				runCommand("revertcolors");
 				
+				Main.hasConfigFile = false;
+				
 				break;
 			
 			case "sysout":

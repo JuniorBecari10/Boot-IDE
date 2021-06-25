@@ -304,7 +304,11 @@ public class Main implements Runnable, Tickable {
     }
     
     public static boolean hasUserInteraction() {
-    	return KeyInput.isKeyPressed() | KeyInput.isControlDown() | KeyInput.isShiftDown() | KeyInput.isAltDown() | KeyInput.isAltGrDown() | MouseInput.mouseMoved() | MouseInput.isMousePressed() | MouseInput.isMouseClicked() | MouseInput.isMouseDragged() | WindowInput.isActivated() | ComponentInput.windowMoved() | ComponentInput.windowResized() | WindowInput.isActivated() | CommandTerminal.active | SetFileName.added;
+    	return KeyInput.isKeyPressed() | KeyInput.isControlDown() | KeyInput.isShiftDown() |
+    		   KeyInput.isAltDown() | KeyInput.isAltGrDown() | MouseInput.mouseMoved() |
+    		   MouseInput.isMousePressed() | MouseInput.isMouseClicked() | MouseInput.isMouseDragged() |
+    		   WindowInput.isActivated() | ComponentInput.windowMoved() | ComponentInput.windowResized() |
+    		   WindowInput.isActivated() | CommandTerminal.active | SetFileName.added;
     }
 
     @Override
@@ -391,7 +395,7 @@ public class Main implements Runnable, Tickable {
 				Fonts.drawString(t.getRegent().getRegent().getPath().substring(index), MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 			
 				if (CodeEditor.syntaxErrorsOn) {
-					CodeEditor.syntaxErrorsOn = false; // TODO quando for mudar os erros de sintaxe, desative isso
+					CodeEditor.syntaxErrorsOn = false; // quando for mudar os erros de sintaxe, desative isso
 					
 					if (CodeEditor.linesWithErrors.size() == 0)
 						Fonts.drawString("Não foram encontrados erros de sintaxe.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
