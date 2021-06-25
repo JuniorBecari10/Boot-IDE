@@ -178,9 +178,9 @@ public class Main implements Runnable, Tickable {
     	try {
 			BufferedWriter wr = new BufferedWriter(new FileWriter(setFile));
 			
-			wr.write((fntnr.equals("/font.png")) ? "default\n" : fntnr + "\n");
+			/*wr.write((fntnr.equals("/font.png")) ? "default\n" : fntnr + "\n");
 			wr.write((fntbl.equals("/bold.png")) ? "default\n" : fntbl + "\n");
-			wr.write((sprsh.equals("/spritesheet.png")) ? "default\n" : sprsh + "\n");
+			wr.write((sprsh.equals("/spritesheet.png")) ? "default\n" : sprsh + "\n");*/
 			wr.write((baseFolder != null ? baseFolder.getPath() : "none") + "\n");
 			wr.write(conffile + "\n");
 			wr.write(CodeEditor.tabs.indexOf(CodeEditor.editing) + "\n");
@@ -222,13 +222,13 @@ public class Main implements Runnable, Tickable {
 				for (int i = 0; i < lines.size(); i++) {
 					String s = lines.get(i);
 					
-					if (i == 0)
+					/*if (i == 0)
 						fntnr = (fntnr.equals("default")) ? s : "/font.png";
 					else if (i == 1)
 						fntbl = (fntbl.equals("default")) ? s : "/bold.png";
 					else if (i == 2)
-						sprsh = (sprsh.equals("default")) ? s : "/spritesheet.png";
-					else if (i == 3) {
+						sprsh = (sprsh.equals("default")) ? s : "/spritesheet.png";*/
+					if (i == 0) {
 						Fonts.initFonts(fntnr, fntbl);
 				        spritesheet = new Spritesheet(sprsh);
 						
@@ -244,26 +244,26 @@ public class Main implements Runnable, Tickable {
 							}
 						}
 					}
-					else if (i == 4) {
+					else if (i == 1) {
 						conffile = s;
 						
 						if (!conffile.equals("none"))
 							hasConfigFile = true;
 					}
 					
-					else if (i == 5)
+					else if (i == 2)
 						tabindex = Integer.parseInt(s);
 					
-					else if (i == 6)
+					else if (i == 3)
 						CodeEditor.scrX = Integer.parseInt(s);
 					
-					else if (i == 7)
+					else if (i == 4)
 						CodeEditor.scrY = Integer.parseInt(s);
 					
-					else if (i == 8)
+					else if (i == 5)
 						CodeEditor.tabScr = Integer.parseInt(s);
 					
-					if (i > 8) {
+					if (i > 5) {
 						if (!ListableFile.isPath(s)) continue;
 						
 						File reg = new File(s);

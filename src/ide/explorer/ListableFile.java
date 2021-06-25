@@ -332,11 +332,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			w.write("lineNumber: default\n");
 			w.write("selectedLineNumber: default\n");
 			w.write("\n");
-			w.write("- Files\n");
+			/*w.write("- Files\n");
 			w.write("\n");
 			w.write("spritesheet: default\n");
 			w.write("font-normal: default\n");
-			w.write("font-bold: default\n");
+			w.write("font-bold: default\n");*/
 			/*w.write("\n");
 			w.write("- Color Mode\n");
 			w.write("\n");
@@ -693,7 +693,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				////////
 				
-			case "spritesheet:":
+			/*case "spritesheet:":
 				if (split[1].equals("default")) break;
 				
 				Main.sprsh = split[1];
@@ -712,7 +712,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				Main.fntbl = split[1];
 				
-				break;
+				break;*/
 				
 			case "font_size:":
 				if (split[1].equals("default")) break;
