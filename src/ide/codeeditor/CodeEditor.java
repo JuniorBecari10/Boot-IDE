@@ -908,6 +908,11 @@ indxs = findWord(new String(chars), ".");
 			
 			break;
 		
+		case ".ejs":
+			if (!foundExt) {
+				extType = "Embedded JavaScript - EJS";
+				foundExt = true;
+			}
 		case ".cfg":
 		case ".config":
 			if (!foundExt) {
@@ -1905,12 +1910,6 @@ indxs = findWord(new String(chars), ".");
 			}
 			break;
 			
-			
-		case ".ejs":
-			if (!foundExt) {
-				extType = "Embedded JavaScript - EJS";
-				foundExt = true;
-			}
 		case ".jsx":
 			if (!foundExt) {
 				extType = "React";
@@ -3052,9 +3051,9 @@ indxs = findWord(new String(chars), ".");
 				 ext.equals(".jl") || ext.equals(".pl") || ext.equals(".has") || ext.equals(".hs") || ext.equals(".fs") || ext.equals(".coffee") ||
 				 ext.equals(".m") || ext.equals(".jsx") || ext.equals(".ld") || ext.equals(".pas") || ext.equals(".pp") || ext.equals(".scala") || ext.equals(".dart") || ext.equals(".md") || ext.equals(".markdown") ||
 				 ext.equals(".json") || ext.equals(".jsonc") || ext.equals(".bat") || ext.equals(".cmd") || ext.equals(".sh") || ext.equals(".conf") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml") ||
-				 ext.equals(".ini"))) {
+				 ext.equals(".ini") || ext.equals(".ejs"))) {
 			
-			if (!(ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml"))) {
+			if (!(ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml") || ext.equals(".ejs"))) {
 				indxs = findWord(new String(chars), "(");
 				
 				for (Integer i : indxs) {
