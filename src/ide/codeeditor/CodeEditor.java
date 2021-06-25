@@ -3133,6 +3133,31 @@ indxs = findWord(new String(chars), ".");
 		for (IDEFont i : fs) {
 			i.setSize(FONT_SIZE);
 		}
+		
+		// extras que precisam ser coloridos depois disso
+		
+		if (ext.equals(".json") || ext.equals(".jsonc")) {
+			indxs = findWord(new String(chars), ":");
+			
+			for (Integer i : indxs) {
+				int c = i;
+				len = 0;
+				
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0 &&
+						chars[c] != ' ' &&
+						chars[c] != '[' &&
+						chars[c] != ']' &&
+						chars[c] != ',' &&
+						chars[c] != ';') {
+					c--;
+					len++;
+				}
+				
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+		}
 		}
 		
 		if ((!foundExt && editing != null) || (extType.equals("") || extType == null)) { // TODO o culpado do gitignore estar assim é esse ARRUMAR DEPOIS 
