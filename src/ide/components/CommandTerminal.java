@@ -567,56 +567,63 @@ public class CommandTerminal extends IDEComponent {
 				
 				switch (args[0].toLowerCase()) {
 				case "html":
-					String[] htmlstrs = { "<html>", " <head>", "  <title></title>", "  ", "  <meta charset=\"UTF-8\">", " </head>", " <body>", " </body>", "</html>" };
+					String[] htmlstrs = { "<!DOCTYPE html>", "<html>", "    <head>", "        <title></title>", "        ", "        <meta charset=\"UTF-8\">", "    </head>", "    <body>", "    </body>", "</html>" };
 					
 					strs = htmlstrs;
 					
 					break;
 					
 				case "css":
-					String[] cssstrs = { "* {", " margin: 0;", " padding: 0;", " box-sizing: border-box;", " font-family: sans-serif;", "}"};
+					String[] cssstrs = { "* {", "    margin: 0;", "    padding: 0;", "    box-sizing: border-box;", "    font-family: sans-serif;", "}"};
 					
 					strs = cssstrs;
 					
 					break;
 					
 				case "java":
-					String[] javastrs = { "public class " + classname + " {", "", " public static void main(String[] args) {", "  ", " }", "}"};
+					String[] javastrs = { "public class " + classname + " {", "    ", "}"};
 					
 					strs = javastrs;
 					
 					break;
 					
+				case "javamain":
+					String[] javamstrs = { "public class " + classname + " {", "", "    public static void main(String[] args) {", "        ", "    }", "}"};
+					
+					strs = javamstrs;
+					
+					break;
+					
 				case "cs":
-					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname + " ", "{", " ", " public class Program ", " {", "  ", "  static void Main(string[] args)", "  {", "   ", "  }", " }", "}"};
+					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname + " ", "{", "    ", "    public class Program ", "    {", "        ", "        static void Main(string[] args)", "        {", "            ", "        }", "    }", "}"};
 					
 					strs = csstrs;
 					
 					break;
 					
 				case "cpp":
-					String[] cppstrs = { "#include <iostream>", "", "using namespace std;", "", "int main()", "{", " ", " return 0;", "}"};
+					String[] cppstrs = { "#include <iostream>", "", "using namespace std;", "", "int main()", "{", "    return 0;", "}"};
 					
 					strs = cppstrs;
 					
 					break;
 					
 				case "c":
-					String[] cstrs = { "#include <stdio.h>", "", "int main()", "{", " ", " return 0;", "}"};
+					String[] cstrs = { "#include <stdio.h>", "", "int main()", "{", "    return 0;", "}"};
 					
 					strs = cstrs;
 					
 					break;
 					
 				case "ino":
-					String[] inostrs = { "void setup()", "{", " ", "}", "", "void loop()", "{", " ", "}"};
+					String[] inostrs = { "void setup()", "{", "    ", "}", "", "void loop()", "{", "    ", "}"};
 					
 					strs = inostrs;
 					
 					break;
 					
 				case "htmlnew":
-					String[] htmlnewstrs = { "<html>", " <head>", "  <title></title>", "  ", "  <meta charset=\"UTF-8\">", "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", " </head>", " <body>", " </body>", "</html>" };
+					String[] htmlnewstrs = { "<!DOCTYPE html>", "<html>", "    <head>", "        <title></title>", "        ", "        <meta charset=\"UTF-8\">", "        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", "    </head>", "    <body>", "    </body>", "</html>" };
 					
 					strs = htmlnewstrs;
 					
