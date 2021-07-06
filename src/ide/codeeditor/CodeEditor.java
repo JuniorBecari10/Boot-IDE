@@ -3685,12 +3685,12 @@ public class CodeEditor extends IDEComponent {
 						}
 						break;
 						
-					case "gitignore":
+					/*case "gitignore":
 						if (!foundExt) {
 							extType = "Git Ignore";
 							foundExt = true;
 						}
-						break;
+						break;*/
 					}
 				}
 			}

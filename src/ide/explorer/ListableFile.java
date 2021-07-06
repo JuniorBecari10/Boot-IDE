@@ -150,7 +150,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType("makefile",Main.spritesheet.getSprite(208, 32, 16, 16)),
 			new FileType("dockerfile",Main.spritesheet.getSprite(256,32,16, 16)),
 			new FileType("license", Main.spritesheet.getSprite(336, 32, 16, 16)),
-			new FileType("gitignore",Main.spritesheet.getSprite(240,32,16,16)),
+			//new FileType("gitignore",Main.spritesheet.getSprite(240,32,16,16)),
 	};
 	
 	private ListableFile parent;
