@@ -673,7 +673,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				linesfound = new ArrayList<>();
 				
-				for (int i = CodeEditor.line1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+				for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
 					IDELine l = CodeEditor.lines.get(i);
 					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
 					
@@ -802,7 +802,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				linesfound = new ArrayList<>();
 				
-				for (int i = CodeEditor.line1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+				for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
 					IDELine l = CodeEditor.lines.get(i);
 					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
 					
