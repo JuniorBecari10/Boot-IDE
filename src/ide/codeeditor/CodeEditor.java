@@ -21,6 +21,7 @@ import java.util.ConcurrentModificationException;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -86,6 +87,9 @@ public class CodeEditor extends IDEComponent {
 	public static List<IDELine> lines = new ArrayList<>();
 	public static List<IDELine> linesToRemove = new ArrayList<>();
 	
+	public static Stack<List<IDELine>> undo = new Stack<>();
+	public static Stack<List<IDELine>> redo = new Stack<>();
+	
 	public static int cursorX = 0;
 	public static int cursorY = 1;
 	
@@ -111,6 +115,8 @@ public class CodeEditor extends IDEComponent {
 	private static int mx, my;
 	
 	public static List<Integer> linesWithErrors = new ArrayList<>();
+	
+	public static boolean isReadOnly = false;
 	
 	//private Thread syntaxErrors;
 	
@@ -441,6 +447,10 @@ public class CodeEditor extends IDEComponent {
 			}
 		}.start();
 		
+		String ext = ListableFile.getFileExtension(file);
+		
+		if (ext.equalsIgnoreCase(".bin"));
+		
 		return ls;
 			
 	}
@@ -494,14 +504,14 @@ public class CodeEditor extends IDEComponent {
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".cpp") || ext.equals(".cxx") || ext.equals(".js") ||
-			 ext.equals(".h") || ext.equals(".hpp") || ext.equals(".hxx") || ext.equals(".lua") || ext.equals(".rs") || ext.equals(".asm") ||
-			 ext.equals(".php") || ext.equals(".kt") || ext.equals(".vue") || ext.equals(".py") || ext.equals(".pyd") || ext.equals(".rb") || ext.equals(".ino") ||
-			 ext.equals(".ts") || ext.equals(".swift")  || ext.equals(".go") || ext.equals(".r") ||
-			 ext.equals(".jl") || ext.equals(".pl") || ext.equals(".has") || ext.equals(".hs") || ext.equals(".fs") || ext.equals(".coffee") ||
-			 ext.equals(".m") || ext.equals(".jsx") || ext.equals(".ld") || ext.equals(".pas") || ext.equals(".pp") || ext.equals(".scala") ||
-			 ext.equals(".dart") || ext.equals(".md") || ext.equals(".markdown") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
-			 ext.equals(".url"))) { // não verificaremos mais o html aqui
+		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") ||
+			 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") ||
+			 ext.equalsIgnoreCase(".php") || ext.equalsIgnoreCase(".kt") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".rb") || ext.equalsIgnoreCase(".ino") ||
+			 ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".swift")  || ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".r") ||
+			 ext.equalsIgnoreCase(".jl") || ext.equalsIgnoreCase(".pl") || ext.equalsIgnoreCase(".has") || ext.equalsIgnoreCase(".hs") || ext.equalsIgnoreCase(".fs") || ext.equalsIgnoreCase(".coffee") ||
+			 ext.equalsIgnoreCase(".m") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".pas") || ext.equalsIgnoreCase(".pp") || ext.equalsIgnoreCase(".scala") ||
+			 ext.equalsIgnoreCase(".dart") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
+			 ext.equalsIgnoreCase(".url"))) { // não verificaremos mais o html aqui
 			
 			indxs = findWord(new String(chars), ")");
 			
@@ -558,7 +568,7 @@ public class CodeEditor extends IDEComponent {
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
-			if (!ext.equals(".md") && !ext.equals(".markdown")) {
+			if (!ext.equalsIgnoreCase(".md") && !ext.equalsIgnoreCase(".markdown")) {
 				indxs = findWord(new String(chars), ":");
 				
 				for (Integer i : indxs) {
@@ -693,7 +703,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			if (!(ext.equals(".html") || ext.equals(".htm") || ext.equals(".md") || ext.equals(".markdown"))) {
+			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
 			
 			String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
 					"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
@@ -758,7 +768,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		}
 			
-			if (ext.equals(".java")) {
+			if (ext.equalsIgnoreCase(".java")) {
 				indxs = findWord(new String(chars), "@");
 				
 				int len = 0;
@@ -785,7 +795,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 		
-			if (!ext.equals(".md") && !ext.equals(".markdown")) {			
+			if (!ext.equalsIgnoreCase(".md") && !ext.equalsIgnoreCase(".markdown")) {			
 			indxs = findWord(new String(chars), "=");
 			
 			for (Integer i : indxs) {
@@ -3491,20 +3501,20 @@ public class CodeEditor extends IDEComponent {
 				fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 		}
 		
-		if ((ext.equals(".java") || ext.equals(".c") || ext.equals(".cs") || ext.equals(".css") || ext.equals(".cpp") || ext.equals(".cxx") || ext.equals(".js") ||
-				 ext.equals(".h") || ext.equals(".hpp") || ext.equals(".hxx") || ext.equals(".lua") || ext.equals(".rs") || ext.equals(".asm") ||
-				 ext.equals(".php") || ext.equals(".kt") || ext.equals(".vue") || ext.equals(".py") || ext.equals(".pyd") || ext.equals(".rb") || ext.equals(".ino") ||
-				 ext.equals(".ts") || ext.equals(".swift") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".go") || ext.equals(".r") ||
-				 ext.equals(".jl") || ext.equals(".pl") || ext.equals(".has") || ext.equals(".hs") || ext.equals(".fs") || ext.equals(".coffee") ||
-				 ext.equals(".m") || ext.equals(".jsx") || ext.equals(".ld") || ext.equals(".pas") || ext.equals(".pp") || ext.equals(".scala") || ext.equals(".dart") || ext.equals(".md") || ext.equals(".markdown") ||
-				 ext.equals(".json") || ext.equals(".jsonc") || ext.equals(".bat") || ext.equals(".cmd") || ext.equals(".sh") || ext.equals(".conf") || ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml") ||
-				 ext.equals(".ini") || ext.equals(".ejs") || ext.equals(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
-				 ext.equals(".url"))) {
+		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") ||
+				 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") ||
+				 ext.equalsIgnoreCase(".php") || ext.equalsIgnoreCase(".kt") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".rb") || ext.equalsIgnoreCase(".ino") ||
+				 ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".swift") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".r") ||
+				 ext.equalsIgnoreCase(".jl") || ext.equalsIgnoreCase(".pl") || ext.equalsIgnoreCase(".has") || ext.equalsIgnoreCase(".hs") || ext.equalsIgnoreCase(".fs") || ext.equalsIgnoreCase(".coffee") ||
+				 ext.equalsIgnoreCase(".m") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".pas") || ext.equalsIgnoreCase(".pp") || ext.equalsIgnoreCase(".scala") || ext.equalsIgnoreCase(".dart") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") ||
+				 ext.equalsIgnoreCase(".json") || ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xml") ||
+				 ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
+				 ext.equalsIgnoreCase(".url"))) {
 			
 			// primeira vez usando labels!
 			methods:
-			if (!(ext.equals(".md") || ext.equals(".markdown"))) {
-				if (ext.equals(".html") | ext.equals(".htm") | ext.equals(".xml") | ext.equals(".ejs")) {
+			if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
+				if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs")) {
 					if (!(isCssPart || isJSPart)) break methods;
 				}
 				
@@ -3593,7 +3603,7 @@ public class CodeEditor extends IDEComponent {
 		
 		// extras que precisam ser coloridos depois disso
 		
-		if (ext.equals(".json") || ext.equals(".jsonc")) {
+		if (ext.equalsIgnoreCase(".json") || ext.equalsIgnoreCase(".jsonc")) {
 			indxs = findWord(new String(chars), ":");
 			
 			for (Integer i : indxs) {
@@ -3617,7 +3627,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		}
 		
-		if ((!foundExt && editing != null) || (extType.equals("") || extType == null)) { // TODO o culpado do gitignore estar assim é esse ARRUMAR DEPOIS 
+		if ((!foundExt && editing != null) || (extType.equalsIgnoreCase("") || extType == null)) { // TODO o culpado do gitignore estar assim é esse ARRUMAR DEPOIS 
 			for (FileType f : ListableFile.types) {
 				if (f.getExtension().equalsIgnoreCase(editing.getRegent().getRegent().getName())) { // tenta ver se tem algum especial
 					String st = capitalizeFirstLetter(f.getExtension());
@@ -3695,7 +3705,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			if (extType.equals("") || extType == null) {
+			if (extType.equalsIgnoreCase("") || extType == null) {
 				String extn = "";
 				
 				try {
@@ -3748,7 +3758,7 @@ public class CodeEditor extends IDEComponent {
 //			}
 //			
 //			for (Integer i : indxs) {
-//				if (i > 1 && lines.get(lineindex).getFonts().get(i - 1).getFont().equals(Fonts.stringsNormal)) // TODO não colorir comentários em strings
+//				if (i > 1 && lines.get(lineindex).getFonts().get(i - 1).getFont().equalsIgnoreCase(Fonts.stringsNormal)) // TODO não colorir comentários em strings
 //					canColor = false;
 //			}
 //			
@@ -3837,7 +3847,7 @@ public class CodeEditor extends IDEComponent {
 		/*for (FileType f : ListableFile.types) {
 			String ex = f.getExtension();
 			
-			if (ex.toLowerCase().equals("makefile") || ex.toLowerCase().equals("dockerfile") || ex.toLowerCase().equals("gitignore")) {
+			if (ex.toLowerCase().equalsIgnoreCase("makefile") || ex.toLowerCase().equalsIgnoreCase("dockerfile") || ex.toLowerCase().equalsIgnoreCase("gitignore")) {
 				indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
 				
 				if (fs.size() == 0 || indxs.size() == 0) break;
@@ -5038,6 +5048,34 @@ public class CodeEditor extends IDEComponent {
 					
 				return;
 			}
+			// por enquanto essa função está desativada
+			/*if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
+				KeyInput.updateKeys();
+				
+				List<IDELine> peek = undo.peek();
+				
+				lines = peek;
+				redo.push(peek);
+				
+				if (!undo.isEmpty())
+					undo.pop();
+					
+				return;
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Y (Refazer)
+				KeyInput.updateKeys();
+				
+				List<IDELine> peek = redo.peek();
+				
+				lines = peek;
+				undo.push(peek);
+					
+				if (!redo.isEmpty())
+					redo.pop();
+				
+				return;
+			}*/
 			
 			if (!(KeyInput.isAltDown()|| KeyInput.isControlDown())) { // se ctrl, alt NÃO estão pressionados
 			
@@ -5178,8 +5216,6 @@ public class CodeEditor extends IDEComponent {
 					
 					return;
 				}
-				
-				System.out.println("a");
 				
 				CommandTerminal.runCommand("del");
 				
@@ -5324,6 +5360,8 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 		
+			undo.push(lines);
+			
 			editing.setSaved(false);
 		} // <-
 		} // não ligue pra isso :)
