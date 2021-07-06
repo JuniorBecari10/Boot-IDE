@@ -3501,7 +3501,7 @@ public class CodeEditor extends IDEComponent {
 				 ext.equals(".ini") || ext.equals(".ejs") || ext.equals(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
 				 ext.equals(".url"))) {
 			
-			if (!(ext.equals(".html") || ext.equals(".htm") || ext.equals(".xml") || ext.equals(".ejs"))) {
+			if ((ext.equals(".html") | ext.equals(".htm") | ext.equals(".xml") | ext.equals(".ejs")) && (isCssPart || isJSPart)) {
 				indxs = findWord(new String(chars), "(");
 				
 				for (Integer i : indxs) {
@@ -3521,8 +3521,6 @@ public class CodeEditor extends IDEComponent {
 							chars[c] != '+' &&
 							chars[c] != '*' &&
 							chars[c] != '/' &&
-							chars[c] != '<' &&
-							chars[c] != '>' &&
 							chars[c] != '?' &&
 							chars[c] != ':' &&
 							chars[c] != '=' &&
@@ -4483,7 +4481,6 @@ public class CodeEditor extends IDEComponent {
 						path = editing.getRegent().getRegent().getPath();
 					else
 						path = Explorer.getScopePath();
-					System.out.println(path);
 				}
 				
 				
