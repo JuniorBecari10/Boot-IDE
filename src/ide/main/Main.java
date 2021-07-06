@@ -425,6 +425,9 @@ public class Main implements Runnable, Tickable {
 						width = 435;
 				}
 				
+				if (CodeEditor.editing.isReadOnly)
+					height = 130;
+				
 				g.setColor(Colors.explorerLight);
 				g.fillRect(MouseInput.getMouseX() + 10, MouseInput.getMouseY(), width, height);
 				
@@ -443,6 +446,9 @@ public class Main implements Runnable, Tickable {
 					Fonts.drawString("Os CodeHints estão ativados.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				else
 					Fonts.drawString("Os CodeHints estão desativados.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+			
+				if (CodeEditor.editing.isReadOnly)
+					Fonts.drawString("Esse arquivo está como somente leitura.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 			}
 		}
         

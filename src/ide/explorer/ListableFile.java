@@ -1055,7 +1055,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (((RenameFile) i).old == regent) return;
 		}
 		
-		if (hovered() && !SetFileName.added && !CommandTerminal.active && !RenameFile.added && !CodeEditor.selectMode) {
+		if (hovered() && !SetFileName.added && !CommandTerminal.active && !RenameFile.added) {
 			g.setColor(Colors.explorerLight);
 			g.fillRect(0, y, Main.explorer.getWidth(), height);
 		}

@@ -278,9 +278,9 @@ public class CommandTerminal extends IDEComponent {
 				CodeEditor.selecting = true;
 				break;
 				
-			case "selectmode":
+			/*case "selectmode":
 				CodeEditor.selectMode = true;
-				break;
+				break;*/
 				
 			case "generateconfigfile":
 				int option = chooser.showSaveDialog(Main.screen.frame);
@@ -401,7 +401,7 @@ public class CommandTerminal extends IDEComponent {
 			case "clog":
 				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
 				
-				b.insert(CodeEditor.cursorX, "console.log()");
+				b.insert(CodeEditor.cursorX, "console.log();");
 				
 				Main.editor.register(b, CodeEditor.cursorY - 1);
 				
@@ -466,6 +466,12 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "gotocursor":
 				CodeEditor.scrY = (CodeEditor.cursorY - 1) * (CodeEditor.FONT_SIZE);
+				break;
+				
+			case "togglereadonly":
+				CodeEditor.isReadOnly ^= true;
+				CodeEditor.editing.isReadOnly ^= true;
+				
 				break;
 			}
 		}

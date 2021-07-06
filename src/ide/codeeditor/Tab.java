@@ -49,6 +49,8 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	private ListableFile regent;
 	
+	public boolean isReadOnly;
+	
 	private transient BufferedImage closeSpr = Main.spritesheet.getSprite(16, 0, 5, 5);
 	private transient BufferedImage notSavedSpr = Main.spritesheet.getSprite(16, 5, 5, 5);
 	
@@ -66,6 +68,14 @@ public class Tab extends IDEComponent implements Serializable {
 		button = new CloseTabButton((x + WIDTH) - 20, Y + 8, 13, 13, Main.spritesheet.getSprite(16, 0, 5, 5), this);
 		
 		CodeEditor.tabScr = 0;
+		
+		String ext = ListableFile.getFileExtension(regent.getRegent());
+		
+		if (ext.equalsIgnoreCase(".pdf") || ext.equalsIgnoreCase(".jar") || ext.equalsIgnoreCase(".class") || ext.equalsIgnoreCase(".exe") || ext.equalsIgnoreCase(".urna") || ext.equalsIgnoreCase(".save") || ext.equalsIgnoreCase(".docx") || ext.equalsIgnoreCase(".pptx") || ext.equalsIgnoreCase(".one") || ext.equalsIgnoreCase(".psd") || ext.equalsIgnoreCase(".aed") || ext.equalsIgnoreCase(".ai") || ext.equalsIgnoreCase(".indd") || ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".dll") || ext.equalsIgnoreCase(".png") || ext.equalsIgnoreCase(".jpg") || ext.equalsIgnoreCase(".jpeg") || ext.equalsIgnoreCase(".gif") || ext.equalsIgnoreCase(".bmp") || ext.equalsIgnoreCase(".ico") || ext.equalsIgnoreCase(".webp") || ext.equalsIgnoreCase(".mp4") || ext.equalsIgnoreCase(".wmv") || ext.equalsIgnoreCase(".avi") || ext.equalsIgnoreCase(".wav") || ext.equalsIgnoreCase(".mp3") || ext.equalsIgnoreCase(".ogg") || ext.equalsIgnoreCase(".otf") || ext.equalsIgnoreCase(".ttf") || ext.equalsIgnoreCase(".woff") || ext.equalsIgnoreCase(".woff2") || ext.equalsIgnoreCase(".zip") || ext.equalsIgnoreCase(".rar") || ext.equalsIgnoreCase(".7z") || ext.equalsIgnoreCase(".bin")) {
+			isReadOnly = true;
+			
+			CodeEditor.isReadOnly = true;
+		}
 	}
 	
 	@Override
@@ -363,8 +373,11 @@ public class Tab extends IDEComponent implements Serializable {
 				font = new IDEFont(Fonts.errorNormal, 16);
 		}
 		
-		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, (x + WIDTH) - 15, g);
+		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, isReadOnly ? (x + WIDTH) - 35 : (x + WIDTH) - 15, g);
 	
+		if (isReadOnly)
+			g.drawImage(Main.spritesheet.getSprite(27, 0, 5, 5), (x + WIDTH) - 40, y + 7, 15, 15, null);
+		
 		button.render(g);
 		
 		for (FileType f : ListableFile.types) {

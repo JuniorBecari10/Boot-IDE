@@ -54,8 +54,8 @@ public class CodeEditor extends IDEComponent {
 	
 	private boolean showCursorData = false;
 	
-	public static boolean selectMode;
-	public static boolean isSelectingFirst = true;
+	//public static boolean selectMode;
+	//public static boolean isSelectingFirst = true;
 	
 	public static boolean isMultilineCommenting = false;
 	
@@ -150,6 +150,8 @@ public class CodeEditor extends IDEComponent {
 		
 		new Thread() {
 			public void run() { // 25 pra frente com o explorer desligado, isso é uma gambiarrinha viu
+				if (!isReadOnly) {
+				
 				int offset = CommandTerminal.expOff ? 280 : 0;
 				int lcx = !CommandTerminal.expOff ? 0 : 280;
 				
@@ -211,6 +213,7 @@ public class CodeEditor extends IDEComponent {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+				}
 				}
 			}
 		}.start();
@@ -382,6 +385,8 @@ public class CodeEditor extends IDEComponent {
 		List<String> l = null;
 		
 		Path p = file.toPath();
+		
+		isReadOnly = false;
 			
 		/*
 		try {														// tenta ler em todos os tipos de codificação, mas n dá
@@ -449,10 +454,11 @@ public class CodeEditor extends IDEComponent {
 		
 		String ext = ListableFile.getFileExtension(file);
 		
-		if (ext.equalsIgnoreCase(".bin"));
-		
-		return ls;
+		if (ext.equalsIgnoreCase(".pdf") || ext.equalsIgnoreCase(".jar") || ext.equalsIgnoreCase(".class") || ext.equalsIgnoreCase(".exe") || ext.equalsIgnoreCase(".urna") || ext.equalsIgnoreCase(".save") || ext.equalsIgnoreCase(".docx") || ext.equalsIgnoreCase(".pptx") || ext.equalsIgnoreCase(".one") || ext.equalsIgnoreCase(".psd") || ext.equalsIgnoreCase(".aed") || ext.equalsIgnoreCase(".ai") || ext.equalsIgnoreCase(".indd") || ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".dll") || ext.equalsIgnoreCase(".png") || ext.equalsIgnoreCase(".jpg") || ext.equalsIgnoreCase(".jpeg") || ext.equalsIgnoreCase(".gif") || ext.equalsIgnoreCase(".bmp") || ext.equalsIgnoreCase(".ico") || ext.equalsIgnoreCase(".webp") || ext.equalsIgnoreCase(".mp4") || ext.equalsIgnoreCase(".wmv") || ext.equalsIgnoreCase(".avi") || ext.equalsIgnoreCase(".wav") || ext.equalsIgnoreCase(".mp3") || ext.equalsIgnoreCase(".ogg") || ext.equalsIgnoreCase(".otf") || ext.equalsIgnoreCase(".ttf") || ext.equalsIgnoreCase(".woff") || ext.equalsIgnoreCase(".woff2") || ext.equalsIgnoreCase(".zip") || ext.equalsIgnoreCase(".rar") || ext.equalsIgnoreCase(".7z") || ext.equalsIgnoreCase(".bin")) {
+			isReadOnly = true;
+		}
 			
+		return ls;
 	}
 	
 	public static List<Integer> findWord(String textString, String word) { // Fonte: baeldung.com
@@ -4083,12 +4089,14 @@ public class CodeEditor extends IDEComponent {
 			break;
 		}
 		
-		if (linesWithErrors != null && syntaxErrorsOn)
+		/*if (linesWithErrors != null && syntaxErrorsOn)
 			for (Integer i : linesWithErrors) {
 				if (toCharArray(lines.get(i).getChars()) == chars) return fs;
 				
 				fs = color(0, fs.size(), new IDEFont(Fonts.errorNormal, FONT_SIZE), fs);
-			}
+			}*/
+		
+		if (isReadOnly && !extType.contains(" (Somente Leitura)")) extType += " (Somente Leitura)";
 		
 		return fs;
 	}
@@ -4624,7 +4632,7 @@ public class CodeEditor extends IDEComponent {
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;
 		
-		if (MouseInput.isMouseDragged()) {
+		if (MouseInput.isMouseDragged() && !isReadOnly) {
 			selecting = true;
 			
 			index1 = cursorX;
@@ -4682,12 +4690,12 @@ public class CodeEditor extends IDEComponent {
 			}
 		}*/
 		
-		if (selectMode && leftClicked()) {
+		/*if (selectMode && leftClicked()) {
 			selecting = true;
 			
 			MouseInput.updateMouse();
 			
-			/*my = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
+			my = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
 			mx = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE)); // é * 0.7
 			
 			double offset = mx * 0.7; // com esse padrão fica quase perfeito
@@ -4701,7 +4709,7 @@ public class CodeEditor extends IDEComponent {
 				my--;
 			
 			mx = setWithinBounds(mx, my, true);
-			my = setWithinBounds(mx, my, false);*/
+			my = setWithinBounds(mx, my, false);
 			
 			/*while (((x + 40) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
 				mx++;
@@ -4721,7 +4729,7 @@ public class CodeEditor extends IDEComponent {
 				
 				line2 = line1;
 				line1 = temp;
-			}*/
+			}
 			
 			if (isSelectingFirst) {
 				line1 = my;
@@ -4736,7 +4744,7 @@ public class CodeEditor extends IDEComponent {
 				selectMode = false;
 				isSelectingFirst = true;
 			}
-		}
+		}*/
 		
 		try {
 			clipboard = (String) Main.toolkit.getSystemClipboard().getData(DataFlavor.stringFlavor);
@@ -4761,7 +4769,12 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (hovered() && editing != null) {
-			Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+			if (!isReadOnly) {
+				Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+			}
+			else {
+				Main.screen.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
 			
 			if (MouseInput.isMouseRolling()) {
 				new Thread() {
@@ -4784,7 +4797,7 @@ public class CodeEditor extends IDEComponent {
 				}.start();
 			}
 			
-			if (leftClicked() && !RightClickOption.isRightClickActive() && !selectMode) {
+			if (leftClicked() && !RightClickOption.isRightClickActive() && !isReadOnly) {
 //				cursorY = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4))); // resolver seta do terminal de comando
 //				cursorX = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE)); // é * 0.7
 //				
@@ -4813,7 +4826,7 @@ public class CodeEditor extends IDEComponent {
 		else
 			Main.screen.setCursor(Cursor.getDefaultCursor()); // 24/04/2021 - 09:18
 		
-		if (rightClicked()) {
+		if (rightClicked() && !isReadOnly) {
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 550, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 550, "Abrir Terminal de Comando", (s) -> execute(s), "term");
 			
@@ -4842,7 +4855,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		
-		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active && !selectMode) {
+		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active) {
 			setCursorWithinBounds();
 			
 			new Thread() {
@@ -4863,7 +4876,7 @@ public class CodeEditor extends IDEComponent {
 			
 			// Detectar atalhos
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) { // Ctrl + Home - Começo do Documento
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME && !isReadOnly) { // Ctrl + Home - Começo do Documento
 				KeyInput.updateKeys();
 				
 				scrX = 0;
@@ -4877,7 +4890,15 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_END) { // Ctrl + End - Fim do Documento
+			if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_H) { // Ctrl + Shift + H - Toggle Read Only
+				KeyInput.updateKeys();
+				
+				CommandTerminal.runCommand("togglereadonly");
+					
+				return;
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_END && !isReadOnly) { // Ctrl + End - Fim do Documento
 				KeyInput.updateKeys();
 				
 				//scrX = (lines.get(lines.size() - 1).getChars().size() * FONT_SIZE) - FONT_SIZE * 10; // esse - FONT_SIZE * 5 é pra dar um offset para trás e ficar no meio da tela.
@@ -4891,7 +4912,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) { // Home - Começo da Linha
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME && !isReadOnly) { // Home - Começo da Linha
 				KeyInput.updateKeys();
 				
 				scrX = 0;
@@ -4902,7 +4923,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END) { // End - Fim da Linha
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END && !isReadOnly) { // End - Fim da Linha
 				KeyInput.updateKeys();
 				
 				//scrX = (lines.get(cursorY - 1).getChars().size() * FONT_SIZE) - FONT_SIZE * 10;
@@ -4913,7 +4934,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D) { // Ctrl + D (Desselecionar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D && !isReadOnly) { // Ctrl + D (Desselecionar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("deselect");
@@ -4921,7 +4942,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_M) { // Ctrl + M (Go To Cursor)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_M && !isReadOnly) { // Ctrl + M (Go To Cursor)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("gotocursor");
@@ -4929,7 +4950,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_X) { // Ctrl + X (Cortar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_X && !isReadOnly) { // Ctrl + X (Cortar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("cut");
@@ -4980,7 +5001,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (editing == null) return;
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_S) { // Ctrl + S (Salvar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_S && !isReadOnly) { // Ctrl + S (Salvar)
 				KeyInput.updateKeys();
 					
 				editing.save(); // 08/05/2021 - 16:12
@@ -4988,7 +5009,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() &&  KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A) { // Ctrl + Shift + A (Selecionar Tudo)
+			if (KeyInput.isControlDown() &&  KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A && !isReadOnly) { // Ctrl + Shift + A (Selecionar Tudo)
 				KeyInput.updateKeys();
 					
 				cursorX = 0;
@@ -4999,7 +5020,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A) { // Ctrl + A (Selecionar Linha)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A && !isReadOnly) { // Ctrl + A (Selecionar Linha)
 				KeyInput.updateKeys();
 				
 				cursorX = 0;
@@ -5009,7 +5030,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 				
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C) { // Ctrl + C (Copiar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && !isReadOnly) { // Ctrl + C (Copiar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("copy");
@@ -5017,7 +5038,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 				
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_V) { // Ctrl + V (Colar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_V && !isReadOnly) { // Ctrl + V (Colar)
 				KeyInput.updateKeys();
 					
 				paste();
@@ -5025,7 +5046,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE || (selecting && KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE)) { // Ctrl + Delete (Deletar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE || (selecting && KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) && !isReadOnly) { // Ctrl + Delete (Deletar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("del");
@@ -5041,7 +5062,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}*/
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_P) { // Ctrl + P (Toggle Code Hints)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_P && !isReadOnly) { // Ctrl + P (Toggle Code Hints)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("togglecodehints");
@@ -5077,7 +5098,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}*/
 			
-			if (!(KeyInput.isAltDown()|| KeyInput.isControlDown())) { // se ctrl, alt NÃO estão pressionados
+			if (!(KeyInput.isAltDown()|| KeyInput.isControlDown()) && !isReadOnly) { // se ctrl, alt NÃO estão pressionados
 			
 				if (!KeyInput.isShiftDown()) {
 					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
@@ -5474,7 +5495,7 @@ public class CodeEditor extends IDEComponent {
 				
 				if (MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY < MIN_Y - 15) continue;
 				
-				if (i == cursorY - 1) {
+				if (i == cursorY - 1 && !isReadOnly) {
 					g.setColor(Colors.backgroundLight);
 					g.fillRect(x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4) + 1);
 				} // não mais x + 50
@@ -5516,6 +5537,8 @@ public class CodeEditor extends IDEComponent {
 				//g.fillRect((x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, FONT_SIZE, FONT_SIZE + 4);
 				
 				IDEFont font = i == cursorY - 1 ? new IDEFont(Fonts.selectedLineNumberNormal, FONT_SIZE) : new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
+				
+				if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 				
 				//font = i == linesWithErrors.get(i) ? new IDEFont(Fonts.select1Normal, FONT_SIZE) : save;
 				Fonts.drawString(String.valueOf(i + 1), x + 1, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, font, g);
@@ -5590,10 +5613,11 @@ public class CodeEditor extends IDEComponent {
 		}*/
 		
 		// Desenhar cursor
-		if (showCursor && !((cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY < MIN_Y - 40 || ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < x + (FONT_SIZE * 2))) && !WindowInput.isDeactivated()) {
-			g.setColor(Colors.cursor);
-			g.fillRect(drawcx, drawcy, 2, FONT_SIZE); // * 14
-		}
+		if (!isReadOnly)
+			if (showCursor && !((cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY < MIN_Y - 40 || ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < x + (FONT_SIZE * 2))) && !WindowInput.isDeactivated()) {
+				g.setColor(Colors.cursor);
+				g.fillRect(drawcx, drawcy, 2, FONT_SIZE); // * 14
+			}
 		
 		// desenhar barra inferior
 		if (editing != null) {
@@ -5602,12 +5626,34 @@ public class CodeEditor extends IDEComponent {
 			
 			Fonts.drawString(codeType + " - " + extType, x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 		}
+		//}
+		/*else {
+			g.setColor(Colors.explorer);
+			g.fillRect(x + 40 + (15 * 16) + 5, (y + 80) - 1, 12 * 16 + 10, 20);
+			
+			Fonts.drawString("Este arquivo é binário. Por padrão ele não é aberto no editor.", x + 40, y + 60, new IDEFont(Fonts.otherNormal, 16), g);
+			Fonts.drawString("Para abri-lo, digite unlockbinaryfile no Terminal de Comando.", x + 40, y + 80, new IDEFont(Fonts.otherNormal, 16), g);
+		}*/
 		
 		g.setColor(Colors.background);
 		g.fillRect(x, 0, width, 35);
 		
 		for (Tab t : CodeEditor.tabs)
 			t.render(g);
+		
+		if (isReadOnly && hovered()) {			
+			g.setColor(Colors.explorerLight);
+			g.fillRect(MouseInput.getMouseX() + 10, MouseInput.getMouseY() - 35, 810, 80);
+			
+			g.setColor(Colors.textLighter);
+			g2.setStroke(new BasicStroke(2f));
+			g2.drawRect(MouseInput.getMouseX() + 10, MouseInput.getMouseY() - 35, 810, 80);
+			
+			Fonts.drawString("Este arquivo está como Somente Leitura.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() - 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			
+			Fonts.drawString("Para alternar os modos Somente Leitura, aperte", MouseInput.getMouseX() + 20, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			Fonts.drawString("Ctrl + Shift + H, ou digite togglereadonly no Terminal de Comando.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 16 + 3, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+		}
 		
 		/*if (editing != null) {
 			int y = this.y;
