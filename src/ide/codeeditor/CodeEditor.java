@@ -3501,7 +3501,13 @@ public class CodeEditor extends IDEComponent {
 				 ext.equals(".ini") || ext.equals(".ejs") || ext.equals(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
 				 ext.equals(".url"))) {
 			
-			if (((ext.equals(".html") | ext.equals(".htm") | ext.equals(".xml") | ext.equals(".ejs")) && (isCssPart || isJSPart)) && !(ext.equals(".md") || ext.equals(".markdown"))) {
+			// primeira vez usando labels!
+			methods:
+			if (!(ext.equals(".md") || ext.equals(".markdown"))) {
+				if (ext.equals(".html") | ext.equals(".htm") | ext.equals(".xml") | ext.equals(".ejs")) {
+					if (!(isCssPart || isJSPart)) break methods;
+				}
+				
 				indxs = findWord(new String(chars), "(");
 				
 				for (Integer i : indxs) {
