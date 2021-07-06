@@ -4482,7 +4482,8 @@ public class CodeEditor extends IDEComponent {
 					if (editing != null)
 						path = editing.getRegent().getRegent().getPath();
 					else
-						return;
+						path = Explorer.getScopePath();
+					System.out.println(path);
 				}
 				
 				
