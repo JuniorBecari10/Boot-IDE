@@ -150,6 +150,8 @@ public class Tab extends IDEComponent implements Serializable {
 	 * Salvar Arquivo
 	 */
 	public void save() {
+		if (isReadOnly) return;
+		
 		try {
 			BufferedWriter w = Files.newBufferedWriter(regent.getRegent().toPath(), StandardCharsets.UTF_8); // precisa escrever em utf-8 tbm!!
 			
