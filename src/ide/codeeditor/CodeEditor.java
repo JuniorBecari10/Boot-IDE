@@ -4093,7 +4093,7 @@ public class CodeEditor extends IDEComponent {
 			for (Integer i : linesWithErrors) {
 				if (toCharArray(lines.get(i).getChars()) == chars) return fs;
 				
-				fs = color(0, fs.size(), new IDEFont(Fonts.errorNormal, FONT_SIZE), fs); // continuar o undo/redo
+				fs = color(0, fs.size(), new IDEFont(Fonts.errorNormal, FONT_SIZE), fs);
 			}*/
 		
 		if (isReadOnly && !extType.contains("(Somente Leitura)")) extType += " (Somente Leitura)";

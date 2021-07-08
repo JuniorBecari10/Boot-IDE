@@ -127,9 +127,9 @@ public class Tab extends IDEComponent implements Serializable {
 			return;
 		}
 		
-		CodeEditor.tabScr = 0;
+		CodeEditor.tabScr = (CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() + CodeEditor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? CodeEditor.tabScr : CodeEditor.tabScr + 203;
 		
-		Tab next = CodeEditor.tabs.indexOf(this) == 0 ? CodeEditor.tabs.get(1) : CodeEditor.tabs.get(0);
+		Tab next = CodeEditor.tabs.indexOf(this) == 0 ? CodeEditor.tabs.get(1) : CodeEditor.tabs.get(CodeEditor.tabs.indexOf(this) - 1);
 		
 		if (!CodeEditor.toRemove.get(0).equals(this))
 			next = this;
