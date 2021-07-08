@@ -456,12 +456,12 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "togglesyntaxerrors":
+			/*case "togglesyntaxerrors":
 				CodeEditor.syntaxErrorsOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor syntaxerrorson, true
-				break;
+				break;*/
 				
 			case "togglecodehints":
-				CodeEditor.codeHintsOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor syntaxerrorson, true
+				CodeEditor.codeHintsOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor syntaxerrorson, true (lógico que o nome da variável n seria esse né :/)
 				break;
 				
 			case "gotocursor":
