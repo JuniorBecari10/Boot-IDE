@@ -839,8 +839,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		case "run":
 			try {
 				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", regent.getName());
-				File dir = Explorer.scope != null ? Explorer.scope.regent : new File(Explorer.getScopePath());
-				
+				File dir = regent.getParentFile();
 				pb.directory(dir);
 				
 				pb.start();
@@ -853,8 +852,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		case "runbash":
 			try {
 				ProcessBuilder pb = new ProcessBuilder("sh", "-c", "start", regent.getName());
-				File dir = Explorer.scope != null ? Explorer.scope.regent : new File(Explorer.getScopePath());
-				
+				File dir = regent.getParentFile();
 				pb.directory(dir);
 				
 				pb.start();
@@ -1064,10 +1062,10 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			if ((getFileExtension(regent).equals(".bat") || getFileExtension(regent).equals(".cmd") || getFileExtension(regent).equals(".com") || getFileExtension(regent).equals(".ps1")) && isWindows)
-				IDEComponent.addRightClickOption((x + width), y + 180, 540, "Executar", (s) -> execute(s), "run");
+				IDEComponent.addRightClickOption((x + width), y + 210, 540, "Executar", (s) -> execute(s), "run");
 			
 			if (getFileExtension(regent).equals(".sh") && !isWindows)
-				IDEComponent.addRightClickOption((x + width), y + 180, 540, "Executar", (s) -> execute(s), "runbash");
+				IDEComponent.addRightClickOption((x + width), y + 210, 540, "Executar", (s) -> execute(s), "runbash");
 		}
 		
 		int index = Explorer.files.indexOf(this);
