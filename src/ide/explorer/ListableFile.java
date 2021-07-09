@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
@@ -13,6 +14,7 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -163,6 +165,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		
 		this.regent = regent;
 		this.parent = parent;
+		
+		
 	}
 	
 	public ListableFile getParent() {
@@ -734,6 +738,34 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		}
 	}
 	
+	public static List<File> listFilesOrdered(File folder) {
+		File[] dirs = folder.listFiles(new FilenameFilter() {
+    		public boolean accept(File dir, String name) {
+    			File f = new File(dir, name);
+    			
+    			return f.isDirectory();
+    		}
+    	});
+    	
+    	File[] fls = folder.listFiles(new FilenameFilter() {
+    		public boolean accept(File dir, String name) {
+    			File f = new File(dir, name);
+    			
+    			return f.isFile();
+    		}
+    	});
+    	
+    	List<File> dirsList = Arrays.asList(dirs);
+    	List<File> flsList = Arrays.asList(fls);
+    	
+    	List<File> all = new ArrayList<>();
+    	
+    	all.addAll(dirsList);
+    	all.addAll(flsList);
+    	
+    	return all;
+	}
+	
 	public static List<ListableFile> loadFolder(ListableFile folder) {
 		Explorer.scope = folder;
 		
@@ -743,7 +775,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			if (folder.regent.isDirectory()) {
 				int index = 0;
 				
-				for (File f : folder.regent.listFiles()) {
+				for (File f : listFilesOrdered(folder.regent)) {
 					files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, folder));
 					
 					index++;
@@ -753,7 +785,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		else {
 			int index = 0;
 			
-			for (File f : Main.baseFolder.listFiles()) {
+			for (File f : listFilesOrdered(Main.baseFolder)) {
 				files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
 				
 				index++;

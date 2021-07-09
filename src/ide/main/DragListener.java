@@ -45,7 +45,7 @@ public class DragListener implements DropTargetListener {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void drop(DropTargetDropEvent dtde) { // terminar
+	public void drop(DropTargetDropEvent dtde) {
 		try {
 		      Transferable tr = dtde.getTransferable();
 		      DataFlavor[] flavors = tr.getTransferDataFlavors();
@@ -78,7 +78,7 @@ public class DragListener implements DropTargetListener {
 			        	  	
 			        	  	int index = 0;
 							
-							for (File f : Main.baseFolder.listFiles()) {
+							for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
 								ListableFile.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
 								
 								index++;
@@ -96,7 +96,7 @@ public class DragListener implements DropTargetListener {
 		        	  	
 		        	  	int index = 0;
 						
-						for (File f : Main.baseFolder.listFiles()) {
+						for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
 							Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
 							
 							index++;
@@ -142,11 +142,13 @@ public class DragListener implements DropTargetListener {
 					
 					Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
 					
-					IDEComponent.toAdd.add(Main.oneLevel);
-					IDEComponent.toAdd.add(Main.returnBase);
-					IDEComponent.toAdd.add(Main.newFile);
-					IDEComponent.toAdd.add(Main.newFolder);
-					IDEComponent.toAdd.add(Main.reload);
+					if (Main.baseFolder == null) {
+						IDEComponent.toAdd.add(Main.oneLevel);
+						IDEComponent.toAdd.add(Main.returnBase);
+						IDEComponent.toAdd.add(Main.newFile);
+						IDEComponent.toAdd.add(Main.newFolder);
+						IDEComponent.toAdd.add(Main.reload);
+					}
 		          
 		          dtde.dropComplete(true);
 		          return;
