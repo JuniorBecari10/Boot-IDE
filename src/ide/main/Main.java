@@ -422,6 +422,10 @@ public class Main implements Runnable, Tickable {
 					if (width < 600)
 						width = 600;
 				}
+				else if (CodeEditor.editing.isReadOnly) {
+					if (width < 480)
+						width = 480;
+				}
 				else {
 					if (width < 435)
 						width = 435;
