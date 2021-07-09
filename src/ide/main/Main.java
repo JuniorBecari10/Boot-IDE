@@ -319,6 +319,8 @@ public class Main implements Runnable, Tickable {
         for (ListableFile f : Explorer.files)
         	f.tick();
         
+        
+        
         MouseInput.updateMouse();
         ComponentInput.update();
         
@@ -462,10 +464,13 @@ public class Main implements Runnable, Tickable {
 
     @Override
     public void run() {
-        while (running) {        	
+        while (running) {
         	if (hasUserInteraction()) {
 		        tick();
 		        render();
+		        
+		        //KeyInput.chars.clear();
+		        //KeyInput.keyCodes.clear();
             }
         	
         	if (WindowInput.isClosing()) {

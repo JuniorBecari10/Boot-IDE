@@ -1,8 +1,14 @@
 package ide.input;
 
-import java.awt.event.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public final class KeyInput extends KeyAdapter {
+	
+	public static Queue<Integer> keyCodes = new LinkedList<>();
+	public static Queue<Character> chars = new LinkedList<>();
     
     private static char charPressed;
     private static boolean keyPressed;
@@ -30,7 +36,8 @@ public final class KeyInput extends KeyAdapter {
 	}
 
 	public static char getCharPressed() {
-        return charPressed;
+        //return !chars.isEmpty() ? chars.remove() : charPressed;
+		return charPressed;
     }
 
     public static boolean isKeyPressed() {
@@ -38,7 +45,8 @@ public final class KeyInput extends KeyAdapter {
     }
 
     public static int getKeyCodePressed() {
-        return keyCodePressed;
+        //return !keyCodes.isEmpty() ? keyCodes.remove() : keyCodePressed;
+    	return keyCodePressed;
     }
     
     public static void updateKeys() {
@@ -57,6 +65,11 @@ public final class KeyInput extends KeyAdapter {
         shiftDown = e.isShiftDown();
         altDown = e.isAltDown();
         altGrDown = e.isAltGraphDown();
+        
+        /*if (Character.isLetterOrDigit(charPressed)) {
+	        keyCodes.add(keyCodePressed);
+	        chars.add(charPressed);
+        }*/
     }
 
     @Override

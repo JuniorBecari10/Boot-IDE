@@ -4893,6 +4893,8 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_H) { // Ctrl + Shift + H - Toggle Read Only
 				KeyInput.updateKeys();
 				
+				editing.save();
+				
 				CommandTerminal.runCommand("togglereadonly");
 					
 				return;
