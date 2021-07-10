@@ -5464,7 +5464,7 @@ public class CodeEditor extends IDEComponent {
 						else {
 							g.fillRect(((x + 48) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o fim da linha
 								(line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 14 ? 5 : 0),
-								(((x + 48) + lines.get(i).getChars().size() * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - (((x + 48) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
+								Main.screen.getWidth() + scrX,
 								FONT_SIZE + 4);
 						}
 					}
@@ -5479,7 +5479,7 @@ public class CodeEditor extends IDEComponent {
 					if (i > line1 && i < line2) {
 						g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
 								(i + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 14 ? 5 : 0),
-								(lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4)) - scrX, // n é x + 38, é a width, não o x2!
+								Main.screen.getWidth() + scrX,
 								FONT_SIZE + 4);
 					}
 				}
