@@ -20,6 +20,9 @@ public final class MouseInput extends MouseInputAdapter {
     private static boolean mouseClicked;
     private static boolean mouseMoved;
     
+    private static boolean leftDragged;
+    private static boolean rightDragged;
+    
     private static boolean mouseRolled;
     
     public static boolean hovered(int x, int y, int w, int h) {
@@ -85,11 +88,25 @@ public final class MouseInput extends MouseInputAdapter {
 	public static boolean isMouseRolling() {
 		return mouseRolled;
 	}
+	
+	public static boolean leftDragged() {
+		return leftDragged;
+	}
+	
+	public static boolean rightDragged() {
+		return rightDragged;
+	}
 
 	@Override
     public void mouseDragged(MouseEvent e) {
-        mousePressed = true;
+        //mousePressed = true;
         mouseDragged = true;
+        
+        if (SwingUtilities.isLeftMouseButton(e))
+    		leftDragged = true;
+    	
+    	if (SwingUtilities.isRightMouseButton(e))
+    		rightDragged = true;
         
         mouseMoved = true;
 
@@ -151,6 +168,9 @@ public final class MouseInput extends MouseInputAdapter {
     	
     	if (SwingUtilities.isRightMouseButton(e))
     		rightPressed = false;
+    	
+    	leftDragged = false;
+    	rightDragged = false;
     }
     
     @Override

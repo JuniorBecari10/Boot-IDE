@@ -4632,7 +4632,7 @@ public class CodeEditor extends IDEComponent {
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;
 		
-		if (MouseInput.isMouseDragged() && !isReadOnly) {
+		if (MouseInput.leftDragged() && !isReadOnly && hovered()) {
 			selecting = true;
 			
 			index1 = cursorX;
