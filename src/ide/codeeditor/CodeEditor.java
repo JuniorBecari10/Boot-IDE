@@ -4672,7 +4672,7 @@ public class CodeEditor extends IDEComponent {
 		
 		showCursorData = false;
 		
-		if (KeyInput.isAltDown() && editing != null && hovered()) {
+		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_PAGE_UP && editing != null && hovered()) {
 			KeyInput.updateKeys();
 			
 			showCursorData = true;
