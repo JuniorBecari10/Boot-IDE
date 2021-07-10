@@ -32,6 +32,7 @@ import java.awt.BasicStroke;
 import java.awt.Desktop;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.io.BufferedWriter;
@@ -415,6 +416,9 @@ public class Main implements Runnable, Tickable {
 				}
 				else*/
 				
+				int x = MouseInput.getMouseX() + 10;
+				int y = MouseInput.getMouseY() + 10;
+				
 				width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
 				height = 100;
 				
@@ -434,27 +438,33 @@ public class Main implements Runnable, Tickable {
 				if (CodeEditor.editing.isReadOnly)
 					height = 130;
 				
+				Rectangle intersection = new Rectangle(x, y, width, height).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
+				
+				if (!intersection.isEmpty()) {
+					x -= intersection.getWidth();
+				}
+				
 				g.setColor(Colors.explorerLight);
-				g.fillRect(MouseInput.getMouseX() + 10, MouseInput.getMouseY(), width, height);
+				g.fillRect(x, MouseInput.getMouseY(), width, height);
 				
 				g.setColor(Colors.textLighter);
 				g2.setStroke(new BasicStroke(2f));
-				g2.drawRect(MouseInput.getMouseX() + 10, MouseInput.getMouseY(), width, height);
+				g2.drawRect(x, MouseInput.getMouseY(), width, height);
 				
-				Fonts.drawString(t.getRegent().getRegent().getPath().substring(index), MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+				Fonts.drawString(t.getRegent().getRegent().getPath().substring(index), (x - 10) + 20, (y - 10) + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				
 				if (!hasConfigFile)
-					Fonts.drawString("Não há nenhum Arquivo de Configurações carregado.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					Fonts.drawString("Não há nenhum Arquivo de Configurações carregado.", (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				else
-					Fonts.drawString("Arquivo de Configurações carregado.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					Fonts.drawString("Arquivo de Configurações carregado.", (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				
 				if (CodeEditor.codeHintsOn)
-					Fonts.drawString("Os CodeHints estão ativados.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					Fonts.drawString("Os CodeHints estão ativados.", (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				else
-					Fonts.drawString("Os CodeHints estão desativados.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					Fonts.drawString("Os CodeHints estão desativados.", (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 			
 				if (CodeEditor.editing.isReadOnly)
-					Fonts.drawString("Esse arquivo está como somente leitura.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					Fonts.drawString("Esse arquivo está como somente leitura.", (x - 10) + 20, (y - 10)+ 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 			}
 		}
         

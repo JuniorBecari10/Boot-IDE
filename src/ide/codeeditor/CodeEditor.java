@@ -5643,18 +5643,29 @@ public class CodeEditor extends IDEComponent {
 		for (Tab t : CodeEditor.tabs)
 			t.render(g);
 		
-		if (isReadOnly && hovered()) {			
+		if (isReadOnly && hovered()) {
+			int xdr = MouseInput.getMouseX() + 10;
+			int ydr = MouseInput.getMouseY() - 30;
+			
+			final int wdr = 810;
+			final int hdr = 80;
+			
+			Rectangle intersection = new Rectangle(xdr, ydr, wdr, hdr).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
+			
+			if (!intersection.isEmpty())
+				xdr -= intersection.getWidth();
+			
 			g.setColor(Colors.explorerLight);
-			g.fillRect(MouseInput.getMouseX() + 10, MouseInput.getMouseY() - 35, 810, 80);
+			g.fillRect(xdr, MouseInput.getMouseY() - 35, wdr, hdr);
 			
 			g.setColor(Colors.textLighter);
 			g2.setStroke(new BasicStroke(2f));
-			g2.drawRect(MouseInput.getMouseX() + 10, MouseInput.getMouseY() - 35, 810, 80);
+			g2.drawRect(xdr, MouseInput.getMouseY() - 35, wdr, hdr);
 			
-			Fonts.drawString("Este arquivo está como Somente Leitura.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() - 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			Fonts.drawString("Este arquivo está como Somente Leitura.", xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 			
-			Fonts.drawString("Para alternar os modos Somente Leitura, aperte", MouseInput.getMouseX() + 20, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, 16), g);
-			Fonts.drawString("Ctrl + Shift + H, ou digite togglereadonly no Terminal de Comando.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 16 + 3, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			Fonts.drawString("Para alternar os modos Somente Leitura, aperte", xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			Fonts.drawString("Ctrl + Shift + H, ou digite togglereadonly no Terminal de Comando.", xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 		}
 		
 		/*if (editing != null) {
