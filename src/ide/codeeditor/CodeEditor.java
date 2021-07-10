@@ -5454,7 +5454,7 @@ public class CodeEditor extends IDEComponent {
 				if (selecting) {
 					g.setColor(Colors.select);
 					
-					if (i == line1 - 1) { // - 1 porque a line1 é base 1
+					/*if (i == line1 - 1) { // - 1 porque a line1 é base 1
 						if (i == line2 - 1) {
 							g.fillRect(((x + 48) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do index1 até o index2
 								(line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 14 ? 5 : 0),
@@ -5467,7 +5467,7 @@ public class CodeEditor extends IDEComponent {
 								Main.screen.getWidth() + scrX,
 								FONT_SIZE + 4);
 						}
-					}
+					}*/
 					/*if (i == line2 - 1) {
 						if (i != line1 - 1) {
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
