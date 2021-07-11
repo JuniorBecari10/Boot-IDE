@@ -318,6 +318,17 @@ public class CommandTerminal extends IDEComponent {
 					Main.spritesheet = new Spritesheet(Main.sprsh);
 					
 					Main.hasConfigFile = true;
+					
+					if (!ListableFile.hasAltered) {
+						String[] options = { "Sim", "Não" };
+						
+						int selectedOption = JOptionPane.showOptionDialog(null, "O Arquivo de Configurações foi carregado, mas nada foi alterado. Deseja que ele continue carregado?", "Não fez nada!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+						
+						if (selectedOption != 1) break;
+						
+						Main.conffile = "none";
+						Main.hasConfigFile = false;
+					}
 				}
 				
 				break;

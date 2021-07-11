@@ -34,6 +34,8 @@ import ide.util.Colors;
 
 public class ListableFile extends IDEComponent implements ExecuteCommand, Serializable {
 	
+	public static boolean hasAltered = false;
+	
 	private static final long serialVersionUID = 1L;
 
 	public static transient FileType[] types = {
@@ -383,6 +385,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		File f = new File(path);
 		Path p = f.toPath();
 		
+		hasAltered = false;
+		
 		List<String> lines = new ArrayList<>();
 		
 		try {
@@ -403,6 +407,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.background = Color.decode(split[1]);
@@ -416,6 +421,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.backgroundLight = Color.decode(split[1]);
@@ -429,6 +435,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.explorer = Color.decode(split[1]);
@@ -442,6 +449,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.explorerLight = Color.decode(split[1]);
@@ -455,6 +463,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.textLight = Color.decode(split[1]);
@@ -468,6 +477,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.textLighter = Color.decode(split[1]);
@@ -481,6 +491,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.objects = Color.decode(split[1]);
@@ -494,6 +505,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.methods = Color.decode(split[1]);
@@ -507,6 +519,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.numbers = Color.decode(split[1]);
@@ -520,6 +533,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.keywords = Color.decode(split[1]);
@@ -533,6 +547,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.variables = Color.decode(split[1]);
@@ -546,6 +561,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.comments = Color.decode(split[1]);
@@ -559,6 +575,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.strings = Color.decode(split[1]);
@@ -572,6 +589,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.symbols = Color.decode(split[1]);
@@ -624,6 +642,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.select = Color.decode(split[1]);
@@ -637,6 +656,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.cursor = Color.decode(split[1]);
@@ -650,6 +670,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.other = Color.decode(split[1]);
@@ -663,6 +684,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.error = Color.decode(split[1]);
@@ -676,6 +698,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.lineNumber = Color.decode(split[1]);
@@ -689,6 +712,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
 				
 				try {
 					Colors.selectedLineNumber = Color.decode(split[1]);
@@ -733,6 +757,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				}
 				
 				CodeEditor.FONT_SIZE = size;
+				hasAltered = true;
 				
 				break;
 			}
