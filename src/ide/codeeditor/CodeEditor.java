@@ -3633,21 +3633,23 @@ public class CodeEditor extends IDEComponent {
 		}
 		}
 		
-		if ((!foundExt && editing != null) || (extType.equalsIgnoreCase("") || extType == null)) { // TODO o culpado do gitignore estar assim é esse ARRUMAR DEPOIS 
+		if (!foundExt) {//(!foundExt && editing != null) || (extType.equalsIgnoreCase("") || extType == null)) { // TODO o culpado do gitignore estar assim é esse ARRUMAR DEPOIS 
 			for (FileType f : ListableFile.types) {
 				if (f.getExtension().equalsIgnoreCase(editing.getRegent().getRegent().getName())) { // tenta ver se tem algum especial
 					String st = capitalizeFirstLetter(f.getExtension());
-					extType = st;
-					
+					//extType = st;
 					indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
 					
-					if (fs.size() == 0) break;
+					//if (fs.size() == 0) break; // q noia é essa mermão
 					
 					if (indxs.size() != 0)
 						fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 					
 					switch (st.toLowerCase()) {
 					case "dockerfile":
+						extType = "Dockerfile";	// talvez alterar depois para Docker File
+						foundExt = true;
+						
 						String[] dkKeys = { "FROM", "RUN", "VOLUME", "WORKDIR", "ADD", "CMD", "ENTRYPOINT", "ENV", "EXPOSE", "MAINTAINER", "USER",
 								"from", "run", "volume", "workdir", "add", "cmd", "entrypoint", "env", "expose", "maintainer", "user" };
 						
@@ -3661,6 +3663,9 @@ public class CodeEditor extends IDEComponent {
 						break;
 						
 					case "makefile":
+						extType = "Dockerfile";
+						foundExt = true;
+						
 						String[] makeKeys = { "if", "else", "make", "echo", "elif", "then", "fi", "exit", "export" };
 						
 						for (String s : makeKeys) { // colorir keywords
@@ -3701,12 +3706,19 @@ public class CodeEditor extends IDEComponent {
 						}
 						break;
 						
-					/*case "gitignore":
+					case "authors":
+						if (!foundExt) {
+							extType = "Nomes dos Autores";
+							foundExt = true;
+						}
+						break;
+						
+					case "gitignore":
 						if (!foundExt) {
 							extType = "Git Ignore";
 							foundExt = true;
 						}
-						break;*/
+						break;
 					}
 				}
 			}
