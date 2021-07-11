@@ -259,6 +259,8 @@ public class Tab extends IDEComponent implements Serializable {
 			CodeEditor.isAnotherIteration = false;
 			CodeEditor.foundExt = false;
 			
+			CodeEditor.tabScr = 0;
+			
 			try {
 				CodeEditor.lines = CodeEditor.readFile(regent.getRegent());
 			} catch (IOException e) {
