@@ -133,7 +133,7 @@ public class Main implements Runnable, Tickable {
         newFile = new NewFileButton(80, 85, 32, 32, spritesheet.getSprite(96, 0, 16, 16));
         newFolder = new NewFolderButton(120, 85, 32, 32, spritesheet.getSprite(112, 0, 16, 16));
         reload = new ReloadButton(240, 85, 32, 32, spritesheet.getSprite(128, 0, 16, 16));
-
+        
         desktop = Desktop.getDesktop();
         
         IDEComponent.components.add(editor);
@@ -146,14 +146,16 @@ public class Main implements Runnable, Tickable {
         if (settingsFile.exists())
     		readFile(settingsFile);
         
+        //System.out.println(args[0]);
+        
+        //openWith();
+        
         ListableFile.readConfigFile(conffile);
         Fonts.initFonts(fntnr, fntbl);
         spritesheet = new Spritesheet(sprsh);
-        
-        //openWith();
     }
     
-    /*private void openWith() {
+   /*private void openWith() {
     	if (args == null || args[0] == null) return;
     	
     	try {
@@ -319,8 +321,6 @@ public class Main implements Runnable, Tickable {
         
         for (ListableFile f : Explorer.files)
         	f.tick();
-        
-        
         
         MouseInput.updateMouse();
         ComponentInput.update();
