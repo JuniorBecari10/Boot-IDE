@@ -3358,7 +3358,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".lock":
 			if (!foundExt) {
-				extType = "Lock";
+				extType = "Lock File";
 				foundExt = true;
 			}
 			break;
@@ -3462,51 +3462,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 		}
 		
-		String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
-				  "1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "0a", // hex
-				  "1b", "2b", "3b", "4b", "5b", "6b", "7b", "8b", "9b", "0b",
-				  "1c", "2c", "3c", "4c", "5c", "6c", "7c", "8c", "9c", "0c",
-				  "1d", "2d", "3d", "4d", "5d", "6d", "7d", "8d", "9d", "0d",
-				  "1e", "2e", "3e", "4e", "5e", "6e", "7e", "8e", "9e", "0e",
-				  "1f", "2f", "3f", "4f", "5f", "6f", "7f", "8f", "9f", "0f",
-				  "1l", "2l", "3l", "4l", "5l", "6l", "7l", "8l", "9l", "0l",
-				  "1A", "2A", "3A", "4A", "5A", "6A", "7A", "8A", "9A", "0A", // HEX
-				  "1B", "2B", "3B", "4B", "5B", "6B", "7B", "8B", "9B", "0B",
-				  "1C", "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "0C",
-				  "1D", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "0D",
-				  "1E", "2E", "3E", "4E", "5E", "6E", "7E", "8E", "9E", "0E",
-				  "1F", "2F", "3F", "4F", "5F", "6F", "7F", "8F", "9F", "0F",
-				  "1L", "2L", "3L", "4L", "5L", "6L", "7L", "8L", "9L", "0L",
-				  "0x", "0X" }; // long
-		
-		for (String s : nums) { // colorir números
-			indxs = findWord(new String(chars), s);
-
-			for (Integer i : indxs)
-				fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-		}
-		
-		indxs = findWord(new String(chars), "0x");
-		
-		int len = 0;
-
-		for (Integer i : indxs) {
-			while (i + len < chars.length &&
-					chars[i + len] != ' ' &&
-					chars[i + len] != '[' &&
-					chars[i + len] != ']' &&
-					chars[i + len] != '(' &&
-					chars[i + len] != ')' &&
-					chars[i + len] != ',' &&
-					chars[i + len] != ';' &&
-					chars[i + len] != '.' &&
-					chars[i + len] != ':')
-					len++;
-
-			if (i + len < chars.length)
-				fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-		}
-		
 		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") ||
 				 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") ||
 				 ext.equalsIgnoreCase(".php") || ext.equalsIgnoreCase(".kt") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".rb") || ext.equalsIgnoreCase(".ino") ||
@@ -3516,6 +3471,51 @@ public class CodeEditor extends IDEComponent {
 				 ext.equalsIgnoreCase(".json") || ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xml") ||
 				 ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
 				 ext.equalsIgnoreCase(".url"))) {
+			
+			String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+					  "1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "0a", // hex
+					  "1b", "2b", "3b", "4b", "5b", "6b", "7b", "8b", "9b", "0b",
+					  "1c", "2c", "3c", "4c", "5c", "6c", "7c", "8c", "9c", "0c",
+					  "1d", "2d", "3d", "4d", "5d", "6d", "7d", "8d", "9d", "0d",
+					  "1e", "2e", "3e", "4e", "5e", "6e", "7e", "8e", "9e", "0e",
+					  "1f", "2f", "3f", "4f", "5f", "6f", "7f", "8f", "9f", "0f",
+					  "1l", "2l", "3l", "4l", "5l", "6l", "7l", "8l", "9l", "0l",
+					  "1A", "2A", "3A", "4A", "5A", "6A", "7A", "8A", "9A", "0A", // HEX
+					  "1B", "2B", "3B", "4B", "5B", "6B", "7B", "8B", "9B", "0B",
+					  "1C", "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "0C",
+					  "1D", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "0D",
+					  "1E", "2E", "3E", "4E", "5E", "6E", "7E", "8E", "9E", "0E",
+					  "1F", "2F", "3F", "4F", "5F", "6F", "7F", "8F", "9F", "0F",
+					  "1L", "2L", "3L", "4L", "5L", "6L", "7L", "8L", "9L", "0L",
+					  "0x", "0X" }; // long
+			
+			for (String s : nums) { // colorir números
+				indxs = findWord(new String(chars), s);
+
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "0x");
+			
+			int len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length &&
+						chars[i + len] != ' ' &&
+						chars[i + len] != '[' &&
+						chars[i + len] != ']' &&
+						chars[i + len] != '(' &&
+						chars[i + len] != ')' &&
+						chars[i + len] != ',' &&
+						chars[i + len] != ';' &&
+						chars[i + len] != '.' &&
+						chars[i + len] != ':')
+						len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+			}
 			
 			// primeira vez usando labels!
 			methods:
@@ -3679,7 +3679,7 @@ public class CodeEditor extends IDEComponent {
 						
 						for (Integer i : indxs) {
 							int c = i;
-							len = 0;
+							int len = 0;
 							
 							while (c < chars.length && 
 									c + len < chars.length &&
