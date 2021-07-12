@@ -161,5 +161,8 @@ public class SetFileName extends IDEComponent {
 		
 		Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
 		Fonts.drawString("[Enter] Criar", MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		
+		if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())))
+			Fonts.drawString("Já existe um arquivo nessa pasta com esse nome.", MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
 	}
 }

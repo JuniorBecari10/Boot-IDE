@@ -224,6 +224,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		return null;
 	}
 	
+	public static boolean hasDuplicateFileNames(String name, File folder) {
+		for (String s : folder.list()) {
+			if (s.equalsIgnoreCase(name)) return true;
+		}
+		
+		return false;
+	}
+	
 	public static ListableFile search(File regent, File folder) { // deu certo pq ficou pegando o parent sempre da pasta que está o scope, e vai indo até a pasta base
 		ListableFile prdoprdoparent = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile().getParentFile(), null);
 		ListableFile prdoparent = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile(), prdoprdoparent);

@@ -1,8 +1,8 @@
 - Fazer alguma coisa quando vc abre o terminal de comando e o arquivo é somente leitura e os cards ficam na frente do mouse
 
-- Colorir métodos ANTES das keywords
+- Colorir métodos ANTES das keywords [ARQUIVADO]
 
-- Exibir uma mensagem se há algum arquivo com o mesmo nome na mesma pasta quando se está criando um arquivo/pasta
+- Digitar mais rápido [ARQUIVADO]
 
 - O gengetters/gensetters criar linhas sozinhos
 
