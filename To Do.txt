@@ -23,3 +23,12 @@
 - Não colorir NENHUMA variável depois das classes
 
 - Quando colorir variáveis/classes guardá-los numa lista e quando aparecer de novo colorir pq está na lista, mesmo se houver bug, vai colorir certo, por causa da lista
+
+- O closebasefolder deleta o config file (não o arquivo, descarrega ele)
+
+- Voltar a colorir tags no html (e ejs) como keywords (se é igual no array) e  só colorir tags dinamicamente no xml
+
+- Adicionar comando lorem int:numparagraphs
+e		    gentag str:tag [TALVEZ NÃO ADICIONO ESSE]
+
+- Não colorir tags no css, já colore como variável

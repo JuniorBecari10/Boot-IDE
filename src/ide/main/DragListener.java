@@ -142,7 +142,7 @@ public class DragListener implements DropTargetListener {
 					
 					Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
 					
-					if (Main.baseFolder == null) {
+					if (Main.baseFolder == null) { // arrumar isso aqui
 						IDEComponent.toAdd.add(Main.oneLevel);
 						IDEComponent.toAdd.add(Main.returnBase);
 						IDEComponent.toAdd.add(Main.newFile);
