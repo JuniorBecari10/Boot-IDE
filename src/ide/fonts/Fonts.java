@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import ide.codeeditor.CodeEditor;
 import ide.util.Colors;
 import ide.util.Spritesheet;
 
@@ -959,7 +960,7 @@ public class Fonts {
     		
     		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + 2 : y;
     		
-    		g.drawImage(text[i], (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw, fonts[i].getSize() + (ch == 'i' ? 1 : 0), fonts[i].getSize(), null);
+    		g.drawImage(text[i], (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw, fonts[i].getSize() + ((ch == 'i' || ch == ',' || ch == ';') && (CodeEditor.FONT_SIZE == 14 || CodeEditor.FONT_SIZE == 13) ? 1 : 0), fonts[i].getSize(), null);
     	}
     }
 }
