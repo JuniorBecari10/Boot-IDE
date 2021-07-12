@@ -3350,7 +3350,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".dll":
 			if (!foundExt) {
-				extType = "Dynamic Link Library (DLL)";
+				extType = "Dynamic Link Library - DLL";
 				foundExt = true;
 			}
 			

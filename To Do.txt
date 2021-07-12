@@ -5,3 +5,17 @@
 - Colorir métodos ANTES das keywords
 
 - Exibir uma mensagem se há algum arquivo com o mesmo nome na mesma pasta quando se está criando um arquivo/pasta
+
+- O gengetters/gensetters criar linhas sozinhos
+
+- Arrumar bug de colocar múltiplas tags (html) juntas, ver arquivo Debug/b.ejs para ver o que ocorre.
+
+- Deletar com backspace.
+
+- O Drag and Drop não cria botões de navegação (criar arquivo, pasta, uma pasta acima...)
+
+- A primeira linha de seleção n vai até o final da janela
+
+- Colocar uma linha pra ver onde é o começo da linha
+
+- Arrumar bug de quando sai da janela e dps volta o cursor n volta
