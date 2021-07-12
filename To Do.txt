@@ -1,0 +1,7 @@
+- Fazer alguma coisa quando vc abre o terminal de comando e o arquivo é somente leitura e os cards ficam na frente do mouse
+
+- Somente colorir números se for alguma das condições que colore métodos
+
+- Colorir métodos ANTES das keywords
+
+- Exibir uma mensagem se há algum arquivo com o mesmo nome na mesma pasta quando se está criando um arquivo/pasta
