@@ -136,5 +136,8 @@ public class Explorer extends IDEComponent {
         g.setColor(Colors.explorerLight);
         g2.setStroke(new BasicStroke(3f));
         g2.drawLine(width - 1, 0, width - 1, height);
+        
+        for (ListableFile f : Explorer.files)
+        	f.render(g);
     }
 }

@@ -18,8 +18,6 @@
 
 - Arrumar bug de clicar com botão direito encima do Explorador (na parte que fica o nome da pasta base) e pairar o mouse no listablefile e o efeito de hover fica encima das opções
 
-- Não colorir NENHUMA variável depois das classes
-
 - Quando colorir variáveis/classes guardá-los numa lista e quando aparecer de novo colorir pq está na lista, mesmo se houver bug, vai colorir certo, por causa da lista
 
 - O closebasefolder deleta o config file (não o arquivo, descarrega ele)

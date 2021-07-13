@@ -358,9 +358,6 @@ public class Main implements Runnable, Tickable {
         for (IDEComponent c : IDEComponent.components)
             c.render(g);
         
-        for (ListableFile f : Explorer.files)
-        	f.render(g);
-        
         for (Tab t : CodeEditor.tabs) {
 			if (t.hovered() && CodeEditor.editing == t && t.getX() + CodeEditor.tabScr >= editor.getX() && !t.button.hovered()) { // por algum motivo é + e não -
 				int index = t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0;
