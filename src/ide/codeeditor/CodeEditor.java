@@ -3507,7 +3507,11 @@ public class CodeEditor extends IDEComponent {
 					  "1E", "2E", "3E", "4E", "5E", "6E", "7E", "8E", "9E", "0E",
 					  "1F", "2F", "3F", "4F", "5F", "6F", "7F", "8F", "9F", "0F",
 					  "1L", "2L", "3L", "4L", "5L", "6L", "7L", "8L", "9L", "0L",
-					  "0x", "0X" }; // long
+					  "1x", "2x", "3x", "4x", "5x", "6x", "7x", "8x", "9x", "0x",
+					  "1X", "2X", "3X", "4X", "5X", "6X", "7X", "8X", "9X", "0X",
+					  "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "0h",
+					  "1H", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "0H"
+					  }; // long
 			
 			numbers:
 				if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs")) {
