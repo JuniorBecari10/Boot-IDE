@@ -4842,9 +4842,10 @@ public class CodeEditor extends IDEComponent {
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 550, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 550, "Abrir Terminal de Comando", (s) -> execute(s), "term");
 			
-			if (Main.baseFolder != null)
+			if (Main.baseFolder != null) {
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 550, "Abrir no Explorador de Arquivos", (s) -> execute(s), "sysexp");
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (editing != null ? (selecting ? 330 : 210) : 90), 550, "Definir pasta atual como Pasta Base", (s) -> execute(s), "setbase");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (editing != null ? (selecting ? 330 : 210) : 90), 550, "Definir pasta atual como Pasta Base", (s) -> execute(s), "setbase");
+			}
 			
 			if (editing != null) {
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), 550, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectline");

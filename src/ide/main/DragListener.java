@@ -69,6 +69,14 @@ public class DragListener implements DropTargetListener {
 		          		if (Main.baseFolder != null)
 		          			prevBase = Main.baseFolder;*/
 		          
+		          if (Main.baseFolder == null) {
+						IDEComponent.toAdd.add(Main.oneLevel);
+						IDEComponent.toAdd.add(Main.returnBase);
+						IDEComponent.toAdd.add(Main.newFile);
+						IDEComponent.toAdd.add(Main.newFolder);
+						IDEComponent.toAdd.add(Main.reload);
+					}
+		          
 		          		if (files.get(0).isDirectory()) {
 		          			Main.baseFolder = files.get(0);
 		          			
@@ -104,19 +112,19 @@ public class DragListener implements DropTargetListener {
 		          
 				int lastX = CodeEditor.tabs.size() > 0 ? CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() : Tab.MIN_X;
 	        	  	
-	        	Tab toAdd = new Tab((lastX + Tab.WIDTH) + 3, ListableFile.search(files.get(0))); // terminar
+	        	Tab toAdd = new Tab((lastX + Tab.WIDTH) + 3, ListableFile.search(files.get(0)));
   				
   				CodeEditor.cursorX = 0;
   				CodeEditor.cursorY = 1;
   				
   				CodeEditor.scrY = 0;
   				
-  				for (Tab t : CodeEditor.tabs)
+  				/*for (Tab t : CodeEditor.tabs)
   					if (t.getRegent().getRegent().getPath().equals(ListableFile.search(files.get(0)).getRegent().getPath())) {
   						CodeEditor.editing = t;
   						
   						return;
-  					}
+  					}*/
   				
 	        	  	CodeEditor.toAdd.add(toAdd);
 	        	  	CodeEditor.editing = toAdd;
@@ -141,14 +149,6 @@ public class DragListener implements DropTargetListener {
 	        	  	CodeEditor.tabs.add(new Tab((lastX + Tab.WIDTH) + 3, ListableFile.search(files.get(0))));
 					
 					Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
-					
-					if (Main.baseFolder == null) { // arrumar isso aqui
-						IDEComponent.toAdd.add(Main.oneLevel);
-						IDEComponent.toAdd.add(Main.returnBase);
-						IDEComponent.toAdd.add(Main.newFile);
-						IDEComponent.toAdd.add(Main.newFolder);
-						IDEComponent.toAdd.add(Main.reload);
-					}
 		          
 		          dtde.dropComplete(true);
 		          return;
