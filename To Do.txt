@@ -24,7 +24,7 @@
 
 - Voltar a colorir tags no html (e ejs) como keywords (se é igual no array) e  só colorir tags dinamicamente no xml
 
-- Adicionar comando lorem int:numparagraphs
+- Adicionar comando lorem int:numparagraphs bool:init-dolorsitamet
 e		    gentag str:tag [TALVEZ NÃO ADICIONO ESSE]
 
 - Não colorir tags no css, já colore como variável
