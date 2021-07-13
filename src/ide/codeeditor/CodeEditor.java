@@ -3228,7 +3228,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".class":
 			if (!foundExt) {
-				extType = "Arquivo Compilado do Java";
+				extType = "Arquivo Bytecode do Java";
 				foundExt = true;
 			}
 			break;
@@ -3249,7 +3249,7 @@ public class CodeEditor extends IDEComponent {
 			String[] confKeys = { "Arquivo de Configurações da Boot IDE", "Colors", "Files", "Settings", "default" };
 			
 			for (String s : confKeys) { // colorir keywordss
-				indxs = findWord(new String(chars), s);
+				indxs = findWord(new String(chars), s);			// haha slk mermão colorir coisas de até próprio arquivo de configurações
 				
 				for (Integer i : indxs)
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
