@@ -55,6 +55,7 @@ import ide.components.NewFolderButton;
 import ide.components.OneLevelAboveButton;
 import ide.components.OpenBaseFolderButton;
 import ide.components.ReloadButton;
+import ide.components.RenameFile;
 import ide.components.ReturnToBaseFolderButton;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
@@ -358,111 +359,64 @@ public class Main implements Runnable, Tickable {
         for (IDEComponent c : IDEComponent.components)
             c.render(g);
         
-        for (Tab t : CodeEditor.tabs) {
-			if (t.hovered() && CodeEditor.editing == t && t.getX() + CodeEditor.tabScr >= editor.getX() && !t.button.hovered()) { // por algum motivo é + e não -
-				int index = t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0;
-				
-				int width = 10 + t.getRegent().getRegent().getPath().substring(index).length() * 15;
-				int height = CodeEditor.linesWithErrors.size() == 0 ? 70 : 50 + (CodeEditor.linesWithErrors.size() * 40);
-				
-				/*if (!CodeEditor.syntaxErrorsOn)
-					height = 70;*/
-				
-				/*if (CodeEditor.syntaxErrorsOn) {
-					if (CodeEditor.linesWithErrors.size() > 0)
-						width = 700;
-					else
-						width = 500;
+        if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))
+	        for (Tab t : CodeEditor.tabs) {
+				if (t.hovered() && CodeEditor.editing == t && t.getX() + CodeEditor.tabScr >= editor.getX() && !t.button.hovered()) { // por algum motivo é + e não -
+					int index = t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0;
 					
-					if (t.getRegent().getRegent().getPath().substring(index).length() > "Não foram encontrados erros de sintaxe.".length())
-						width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
-				}
-				else {
-					width = 650;
+					int width = 10 + t.getRegent().getRegent().getPath().substring(index).length() * 15;
+					int height = CodeEditor.linesWithErrors.size() == 0 ? 70 : 50 + (CodeEditor.linesWithErrors.size() * 40);
+					
+					int x = MouseInput.getMouseX() + 10;
+					int y = MouseInput.getMouseY() + 10;
+					
+					width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
 					height = 100;
 					
-					if (t.getRegent().getRegent().getPath().substring(index).length() > "Foram encontrados erros de sintaxe nas seguintes linhas:".length())
-						width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
-				}
-				
-				g.setColor(Colors.explorerLight);
-				g.fillRect(MouseInput.getMouseX() + 10, MouseInput.getMouseY(), width, height);
-				
-				g.setColor(Colors.textLighter);
-				g2.setStroke(new BasicStroke(2f));
-				g2.drawRect(MouseInput.getMouseX() + 10, MouseInput.getMouseY(), width, height);
-				
-				Fonts.drawString(t.getRegent().getRegent().getPath().substring(index), MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-			
-				if (CodeEditor.syntaxErrorsOn) {
-					CodeEditor.syntaxErrorsOn = false; // quando for mudar os erros de sintaxe, desative isso
-					
-					if (CodeEditor.linesWithErrors.size() == 0)
-						Fonts.drawString("Não foram encontrados erros de sintaxe.", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-					else {
-						Fonts.drawString("Foram encontrados erros de sintaxe nas seguintes linhas:", MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.errorNormal, 16), g2);
-						
-						int count = 0;
-						
-						for (Integer i : CodeEditor.linesWithErrors) {
-							Fonts.drawString(new Integer(i + 1).toString(), MouseInput.getMouseX() + 20, MouseInput.getMouseY() + 65 + count * 16, new IDEFont(Fonts.errorNormal, 16), g2);
-						
-							count++;
-						}
+					if (!hasConfigFile) {
+						if (width < 600)
+							width = 600;
 					}
+					else if (CodeEditor.editing.isReadOnly) {
+						if (width < 480)
+							width = 480;
+					}
+					else {
+						if (width < 435)
+							width = 435;
+					}
+					
+					if (CodeEditor.editing.isReadOnly)
+						height = 130;
+					
+					Rectangle intersection = new Rectangle(x, y, width, height).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
+					
+					if (!intersection.isEmpty()) {
+						x -= intersection.getWidth();
+					}
+					
+					g.setColor(Colors.explorerLight);
+					g.fillRect(x, MouseInput.getMouseY(), width, height);
+					
+					g.setColor(Colors.textLighter);
+					g2.setStroke(new BasicStroke(2f));
+					g2.drawRect(x, MouseInput.getMouseY(), width, height);
+					
+					Fonts.drawString(t.getRegent().getRegent().getPath().substring(index), (x - 10) + 20, (y - 10) + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					
+					if (!hasConfigFile)
+						Fonts.drawString("Não há nenhum Arquivo de Configurações carregado.", (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					else
+						Fonts.drawString("Arquivo de Configurações carregado.", (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					
+					if (CodeEditor.codeHintsOn)
+						Fonts.drawString("Os CodeHints estão ativados.", (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					else
+						Fonts.drawString("Os CodeHints estão desativados.", (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+				
+					if (CodeEditor.editing.isReadOnly)
+						Fonts.drawString("Esse arquivo está como somente leitura.", (x - 10) + 20, (y - 10)+ 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				}
-				else*/
-				
-				int x = MouseInput.getMouseX() + 10;
-				int y = MouseInput.getMouseY() + 10;
-				
-				width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
-				height = 100;
-				
-				if (!hasConfigFile) {
-					if (width < 600)
-						width = 600;
-				}
-				else if (CodeEditor.editing.isReadOnly) {
-					if (width < 480)
-						width = 480;
-				}
-				else {
-					if (width < 435)
-						width = 435;
-				}
-				
-				if (CodeEditor.editing.isReadOnly)
-					height = 130;
-				
-				Rectangle intersection = new Rectangle(x, y, width, height).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
-				
-				if (!intersection.isEmpty()) {
-					x -= intersection.getWidth();
-				}
-				
-				g.setColor(Colors.explorerLight);
-				g.fillRect(x, MouseInput.getMouseY(), width, height);
-				
-				g.setColor(Colors.textLighter);
-				g2.setStroke(new BasicStroke(2f));
-				g2.drawRect(x, MouseInput.getMouseY(), width, height);
-				
-				Fonts.drawString(t.getRegent().getRegent().getPath().substring(index), (x - 10) + 20, (y - 10) + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-				
-				if (!hasConfigFile)
-					Fonts.drawString("Não há nenhum Arquivo de Configurações carregado.", (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-				else
-					Fonts.drawString("Arquivo de Configurações carregado.", (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-				
-				if (CodeEditor.codeHintsOn)
-					Fonts.drawString("Os CodeHints estão ativados.", (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-				else
-					Fonts.drawString("Os CodeHints estão desativados.", (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-			
-				if (CodeEditor.editing.isReadOnly)
-					Fonts.drawString("Esse arquivo está como somente leitura.", (x - 10) + 20, (y - 10)+ 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-			}
 		}
         
         g.dispose();

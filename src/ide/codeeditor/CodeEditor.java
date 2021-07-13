@@ -518,7 +518,7 @@ public class CodeEditor extends IDEComponent {
 			 ext.equalsIgnoreCase(".jl") || ext.equalsIgnoreCase(".pl") || ext.equalsIgnoreCase(".has") || ext.equalsIgnoreCase(".hs") || ext.equalsIgnoreCase(".fs") || ext.equalsIgnoreCase(".coffee") ||
 			 ext.equalsIgnoreCase(".m") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".pas") || ext.equalsIgnoreCase(".pp") || ext.equalsIgnoreCase(".scala") ||
 			 ext.equalsIgnoreCase(".dart") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
-			 ext.equalsIgnoreCase(".url"))) { // não verificaremos mais o html aqui
+			 ext.equalsIgnoreCase(".url"))) { // não verificaremos mais o html aqui kikikikiki
 			
 			indxs = findWord(new String(chars), ")");
 			
@@ -3511,7 +3511,7 @@ public class CodeEditor extends IDEComponent {
 					  "1X", "2X", "3X", "4X", "5X", "6X", "7X", "8X", "9X", "0X",
 					  "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "0h",
 					  "1H", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "0H"
-					  }; // long
+					  };
 			
 			numbers:
 				if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs")) {
@@ -4867,33 +4867,35 @@ public class CodeEditor extends IDEComponent {
 		else
 			Main.screen.setCursor(Cursor.getDefaultCursor()); // 24/04/2021 - 09:18
 		
-		if (rightClicked() && !isReadOnly) {
+		if (rightClicked()) {
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 550, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 550, "Abrir Terminal de Comando", (s) -> execute(s), "term");
 			
 			if (Main.baseFolder != null) {
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 550, "Abrir no Explorador de Arquivos", (s) -> execute(s), "sysexp");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (editing != null ? (selecting ? 330 : 210) : 90), 550, "Definir pasta atual como Pasta Base", (s) -> execute(s), "setbase");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (isReadOnly ? 90 : (editing != null ? (selecting ? 330 : 210) : 90)), 550, "Definir pasta atual como Pasta Base", (s) -> execute(s), "setbase");
 			}
 			
-			if (editing != null) {
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), 550, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectline");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 550, "Salvar", (s) -> execute(s), "save");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), 550, "Colar", (s) -> execute(s), "paste");
-				
-				//IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 300 : 180), 550, "Modo de Seleção", (s) -> CommandTerminal.runCommand(s), "selectmode");
-			
-			if (selecting) {
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 550, "Copiar", (s) -> CommandTerminal.runCommand(s), "copy");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 180, 550, "Cortar", (s) -> CommandTerminal.runCommand(s), "cut");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 210, 550, "Deletar", (s) -> CommandTerminal.runCommand(s), "del");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 300, 550, "Desselecionar", (s) -> CommandTerminal.runCommand(s), "deselect");
-			}
-			
-			if (Main.baseFolder != null && editing != null) {
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 270 : 180), 550, "Selecionar Tudo", (s) -> CommandTerminal.runCommand(s), "selectall");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 360 : 240), 550, "Abrir arquivo com o programa padrão", (s) -> execute(s), "opendef");
-			}
+			if (!isReadOnly) {
+					if (editing != null) {
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), 550, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectline");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 550, "Salvar", (s) -> execute(s), "save");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), 550, "Colar", (s) -> execute(s), "paste");
+						
+						//IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 300 : 180), 550, "Modo de Seleção", (s) -> CommandTerminal.runCommand(s), "selectmode");
+					
+					if (selecting) {
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 550, "Copiar", (s) -> CommandTerminal.runCommand(s), "copy");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 180, 550, "Cortar", (s) -> CommandTerminal.runCommand(s), "cut");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 210, 550, "Deletar", (s) -> CommandTerminal.runCommand(s), "del");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 300, 550, "Desselecionar", (s) -> CommandTerminal.runCommand(s), "deselect");
+					}
+					
+					if (Main.baseFolder != null && editing != null) {
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 270 : 180), 550, "Selecionar Tudo", (s) -> CommandTerminal.runCommand(s), "selectall");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 360 : 240), 550, "Abrir arquivo com o programa padrão", (s) -> execute(s), "opendef");
+					}
+				}
 			}
 		}
 		
@@ -5685,7 +5687,7 @@ public class CodeEditor extends IDEComponent {
 		for (Tab t : CodeEditor.tabs)
 			t.render(g);
 		
-		if (isReadOnly && hovered()) {
+		if (isReadOnly && hovered() && !(CommandTerminal.active || SetFileName.added || RenameFile.added) && !RightClickOption.isRightClickActive()) {
 			int xdr = MouseInput.getMouseX() + 10;
 			int ydr = MouseInput.getMouseY() - 30;
 			
