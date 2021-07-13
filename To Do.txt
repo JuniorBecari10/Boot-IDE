@@ -6,8 +6,6 @@
 
 - O gengetters/gensetters criar linhas sozinhos
 
-- Arrumar bug de colocar múltiplas tags (html) juntas, ver arquivo Debug/b.ejs para ver o que ocorre.
-
 - Deletar com backspace.
 
 - A primeira linha de seleção n vai até o final da janela
