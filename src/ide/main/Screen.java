@@ -81,6 +81,8 @@ public class Screen extends Canvas {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setFocusTraversalKeysEnabled(false); // tem q ter esses dois
 		frame.setVisible(true);
+		
+		requestFocus();
     }
     
     public void setFrameIcon(Image icon) {

@@ -66,6 +66,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public static boolean isCssPart;
 	public static boolean isJSPart;
+	public static boolean isPhpPart;
 	
 	public static boolean codeHintsOn = true;
 	
@@ -939,56 +940,88 @@ public class CodeEditor extends IDEComponent {
 				foundExt = true;
 			}
 			
-			indxs = findWord(new String(chars), ">"); // colorir final de tags
+			String[] tags = { "<!--", "<!doctype", "<?php", "<!DOCTYPE", "<a", "<abbr", "<acronym", "<address", "<applet", "<area", "<article",
+					"<aside", "<audio", "<b", "<base", "<basefont", "<bdi", "<bdo", "<big", "<blockquote", "<body", "<br", "<button",
+					"<canvas", "<caption", "<center", "<cite", "<code", "<col", "<colgroup", "<data", "<datalist", "<dd", "<del",
+					"<details", "<dfn", "<dialog", "<dir", "<div", "<dl", "<dt", "<em", "<embed", "<fieldset", "<figcaption", "<figure",
+					"<font", "<footer", "<form", "<frame", "<frameset", "<h1", "<h2", "<h3", "<h4", "<h5", "<h6", "<head", "<header",
+					"<hr", "<html", "<i", "<iframe", "<img", "<input", "<ins", "<kbd", "<label", "<legend", "<li", "<link", "<main",
+					"<map", "<mark", "<meta", "<meter", "<nav", "<noframes", "<noscript", "<object", "<ol", "<optgroup", "<option",
+					"<output", "<p", "<param", "<picture", "<pre", "<progress", "<q", "<rp", "<rt", "<ruby", "<s", "<samp", "<script",
+					"<section", "<select", "<small", "<source", "<span", "<strike", "<strong", "<style", "<sup", "<svg", "<table",
+					"<tbody", "<td", "<template", "<textarea", "<tfoot", "<th", "<thead", "<time", "<title", "<tr", "<track", "<tt",
+					"<u", "<ul", "<var", "<video", "<wbr",
+					"</a", "</abbr", "</acronym", "</address", "</applet", "</area", "</article",
+					"</aside", "</audio", "</b", "</base", "</basefont", "</bdi", "</bdo", "</big", "</blockquote", "</body", "</br", "</button",
+					"</canvas", "</caption", "</center", "</cite", "</code", "</col", "</colgroup", "</data", "</datalist", "</dd", "</del",
+					"</details", "</dfn", "</dialog", "</dir", "</div", "</dl", "</dt", "</em", "</embed", "</fieldset", "</figcaption", "</figure",
+					"</font", "</footer", "</form", "</frame", "</frameset", "</h1", "</h2", "</h3", "</h4", "</h5", "</h6", "</head", "</header",
+					"</hr", "</html", "</i", "</iframe", "</img", "</input", "</ins", "</kbd", "</label", "</legend", "</li", "</link", "</main",
+					"</map", "</mark", "</meta", "</meter", "</nav", "</noframes", "</noscript", "</object", "</ol", "</optgroup", "</option",
+					"</output", "</p", "</param", "</picture", "</pre", "</progress", "</q", "</rp", "</rt", "</ruby", "</s", "</samp", "</script",
+					"</section", "</select", "</small", "</source", "</span", "</strike", "</strong", "</style", "</sup", "</svg", "</table",
+					"</tbody", "</td", "</template", "</textarea", "</tfoot", "</th", "</thead", "</time", "</title", "</tr", "</track", "</tt",
+					"</u", "</ul", "</var", "</video", "</wbr" };
 			
-			for (Integer i : indxs) {
-				fs = color(i, i + 1, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+			for (String s : tags) { // colorir tags
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
-			indxs = findWord(new String(chars), "<");
-
-			int len = 0;
-
-			for (Integer i : indxs) {
-				while (i + len < chars.length &&
-						chars[i + len] != ' ' &&
-						chars[i + len] != '[' &&
-						chars[i + len] != ']' &&
-						chars[i + len] != ',' &&
-						chars[i + len] != ';' &&
-						chars[i + len] != '.' &&
-						chars[i + len] != ':' &&
-						chars[i + len] != '>')
-						len++;
-
-				if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
-			}
-			
-			indxs = findWord(new String(chars), "</");
-
-			len = 0;
-
-			for (Integer i : indxs) {
-				while (i + len < chars.length &&
-						chars[i + len] != ' ' &&
-						chars[i + len] != '[' &&
-						chars[i + len] != ']' &&
-						chars[i + len] != ',' &&
-						chars[i + len] != ';' &&
-						chars[i + len] != '.' &&
-						chars[i + len] != ':')
-						len++;
-
-				if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+			if (ext.equals(".xml") || ext.equals(".svg") || ext.equals(".config") || ext.equals(".cfg")) {
+				indxs = findWord(new String(chars), ">"); // colorir final de tags
+				
+				for (Integer i : indxs) {
+					fs = color(i, i + 1, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
+				
+				indxs = findWord(new String(chars), "<");
+	
+				int len = 0;
+	
+				for (Integer i : indxs) {
+					while (i + len < chars.length &&
+							chars[i + len] != ' ' &&
+							chars[i + len] != '[' &&
+							chars[i + len] != ']' &&
+							chars[i + len] != ',' &&
+							chars[i + len] != ';' &&
+							chars[i + len] != '.' &&
+							chars[i + len] != ':' &&
+							chars[i + len] != '>')
+							len++;
+	
+					if (i + len < chars.length)
+						fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
+				
+				indxs = findWord(new String(chars), "</");
+	
+				len = 0;
+	
+				for (Integer i : indxs) {
+					while (i + len < chars.length &&
+							chars[i + len] != ' ' &&
+							chars[i + len] != '[' &&
+							chars[i + len] != ']' &&
+							chars[i + len] != ',' &&
+							chars[i + len] != ';' &&
+							chars[i + len] != '.' &&
+							chars[i + len] != ':')
+							len++;
+	
+					if (i + len < chars.length)
+						fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
 			}
 			
 			indxs = findWord(new String(chars), "="); // html
 			
 			for (Integer i : indxs) {
 				int c = i;
-				len = 0;
+				int len = 0;
 				
 				while (c < chars.length && 
 						c + len < chars.length &&
@@ -1025,7 +1058,35 @@ public class CodeEditor extends IDEComponent {
 			indxs = findWord(new String(chars), "</script");
 			
 			if (indxs.size() > 0)
-				isJSPart = false; // TODO colorir variáveis do JS no html
+				isJSPart = false;
+			
+			indxs = findWord(new String(chars), "<?php");
+			
+			if (indxs.size() > 0)
+				isPhpPart = true;
+			
+			indxs = findWord(new String(chars), "?>");
+			
+			if (indxs.size() > 0)
+				isPhpPart = false;
+			
+			if (isPhpPart) {
+				String[] phpKeys = { "abstract", "and", "as", "break", "callable", "case", "catch", "class", "clone",
+						"const", "continue", "declare", "default", "do", "echo", "else", "elseif", "enddeclare", "endfor",
+						"endforeach", "endif", "endswitch", "endwhile", "extends", "final", "finally", "fn", "for", "foreach",
+						"function", "global", "goto", "if", "implements", "include", "include_once", "instanceof", "insteadof",
+						"interface", "match", "namespace", "new", "or", "print", "private", "protected", "public", "require",
+						"require_once", "return", "static", "switch", "throw", "trait", "try", "use", "var", "while", "yield",
+						"yield from", "__CLASS__", "__DIR__", "__FILE__", "__FUNCTION__", "__LINE__", "__METHOD__", "__NAMESPACE__",
+						"__TRAIT__" };
+				
+				for (String s : phpKeys) { // colorir keywordss
+					indxs = findWord(new String(chars), s);
+					
+					for (Integer i : indxs)
+						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
+			}
 			
 			if (isJSPart) {
 				String[] jsKeys = { "abstract", "arguments", "await", "boolean", "break", "byte", "case", "catch",
@@ -1047,7 +1108,7 @@ public class CodeEditor extends IDEComponent {
 				
 				for (Integer i : indxs) {
 					int c = i;
-					len = 0;
+					int len = 0;
 					
 					//boolean hasSpace = false;
 						
@@ -1074,7 +1135,7 @@ public class CodeEditor extends IDEComponent {
 				
 				for (Integer i : indxs) {
 					int c = i;
-					len = 0;
+					int len = 0;
 					
 					//boolean hasSpace = false;
 						
@@ -1101,7 +1162,7 @@ public class CodeEditor extends IDEComponent {
 					
 					for (Integer i : indxs) {
 						int c = i;
-						len = 0;
+						int len = 0;
 						
 						boolean hasSpace = false;
 							
@@ -1128,7 +1189,7 @@ public class CodeEditor extends IDEComponent {
 					
 					for (Integer i : indxs) {
 						int c = i;
-						len = 0;
+						int len = 0;
 							
 						while (c < chars.length && 
 								c + len < chars.length &&
@@ -1149,7 +1210,7 @@ public class CodeEditor extends IDEComponent {
 					
 					for (Integer i : indxs) {
 						int c = i;
-						len = 0;
+						int len = 0;
 							
 						while (c < chars.length && 
 								c + len < chars.length &&
@@ -1171,7 +1232,7 @@ public class CodeEditor extends IDEComponent {
 					
 					for (Integer i : indxs) {
 						int c = i;
-						len = 0;
+						int len = 0;
 							
 						while (c < chars.length && 
 								c + len < chars.length &&
@@ -1192,7 +1253,7 @@ public class CodeEditor extends IDEComponent {
 					
 					for (Integer i : indxs) {
 						int c = i;
-						len = 0;
+						int len = 0;
 							
 						while (c < chars.length && 
 								c + len < chars.length &&
@@ -1213,7 +1274,7 @@ public class CodeEditor extends IDEComponent {
 					
 					for (Integer i : indxs) {
 						int c = i;
-						len = 0;
+						int len = 0;
 							
 						while (c < chars.length && 
 								c + len < chars.length &&
@@ -1234,7 +1295,7 @@ public class CodeEditor extends IDEComponent {
 					
 					for (Integer i : indxs) {
 						int c = i;
-						len = 0;
+						int len = 0;
 						
 						boolean hasSpace = false;
 							
@@ -1340,7 +1401,7 @@ public class CodeEditor extends IDEComponent {
 				
 				indxs = findWord(new String(chars), ".");
 				
-				len = 0;
+				int len = 0;
 
 				for (Integer i : indxs) {
 					while (i + len < chars.length && chars[i + len] != ' ')/* (chars[i + len] == 'a' || chars[i + len] == 'b' ||
@@ -1458,8 +1519,7 @@ public class CodeEditor extends IDEComponent {
 					"output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script",
 					"section", "select", "small", "source", "span", "strike", "strong", "style", "sup", "svg", "table",
 					"tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt",
-					"u", "ul", "var", "video", "wbr"
-			};
+					"u", "ul", "var", "video", "wbr" };
 			
 			// As outras são coloridas automaticamente como variável
 			String[] props = { "@charset", "@font-face", "@font-feature-values", "@import", "@keyframes", "@media",
@@ -1492,7 +1552,7 @@ public class CodeEditor extends IDEComponent {
 			
 			for (Integer i : indxs) {
 				int c = i;
-				len = 0;
+				int len = 0;
 				
 				boolean hasSpace = false;
 					
@@ -1517,7 +1577,7 @@ public class CodeEditor extends IDEComponent {
 			
 			indxs = findWord(new String(chars), ".");
 			
-			len = 0;
+			int len = 0;
 
 			for (Integer i : indxs) {
 				while (i + len < chars.length && chars[i + len] != ' ')/* (chars[i + len] == 'a' || chars[i + len] == 'b' ||
@@ -2597,7 +2657,7 @@ public class CodeEditor extends IDEComponent {
 			indxs = findWord(new String(chars), "</script");
 			
 			if (indxs.size() > 0)
-				isJSPart = false; // TODO colorir variáveis do JS no html
+				isJSPart = false;
 			
 			if (isJSPart) {
 				String[] jsKeyss = { "abstract", "arguments", "await", "boolean", "break", "byte", "case", "catch",
@@ -3449,74 +3509,79 @@ public class CodeEditor extends IDEComponent {
 					  "1L", "2L", "3L", "4L", "5L", "6L", "7L", "8L", "9L", "0L",
 					  "0x", "0X" }; // long
 			
-			for (String s : nums) { // colorir números
-				indxs = findWord(new String(chars), s);
-
-				for (Integer i : indxs)
-					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-			}
-			
-			indxs = findWord(new String(chars), "0x");
-			
-			int len = 0;
-
-			for (Integer i : indxs) {
-				while (i + len < chars.length &&
-						chars[i + len] != ' ' &&
-						chars[i + len] != '[' &&
-						chars[i + len] != ']' &&
-						chars[i + len] != '(' &&
-						chars[i + len] != ')' &&
-						chars[i + len] != ',' &&
-						chars[i + len] != ';' &&
-						chars[i + len] != '.' &&
-						chars[i + len] != ':')
-						len++;
-
-				if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-			}
+			numbers:
+				if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs")) {
+					if (!(isCssPart || isJSPart || isPhpPart)) break numbers;
+				}
+				
+				for (String s : nums) { // colorir números
+					indxs = findWord(new String(chars), s);
+	
+					for (Integer i : indxs)
+						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+				}
+				
+				indxs = findWord(new String(chars), "0x");
+				
+				int len = 0;
+	
+				for (Integer i : indxs) {
+					while (i + len < chars.length &&
+							chars[i + len] != ' ' &&
+							chars[i + len] != '[' &&
+							chars[i + len] != ']' &&
+							chars[i + len] != '(' &&
+							chars[i + len] != ')' &&
+							chars[i + len] != ',' &&
+							chars[i + len] != ';' &&
+							chars[i + len] != '.' &&
+							chars[i + len] != ':')
+							len++;
+	
+					if (i + len < chars.length)
+						fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+				}
 			
 			// primeira vez usando labels!
 			methods:
-			if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
-				if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs")) {
-					if (!(isCssPart || isJSPart)) break methods;
-				}
-				
-				indxs = findWord(new String(chars), "(");
-				
-				for (Integer i : indxs) {
-					int c = i;
-					len = 0;
-					
-					while (c < chars.length && 
-							c + len < chars.length &&
-							c > 0 &&
-							chars[c] != ' ' &&
-							chars[c] != '[' &&
-							chars[c] != ']' &&
-							chars[c] != ',' &&
-							chars[c] != ';' &&
-							chars[c] != '.' &&
-							chars[c] != '-' &&
-							chars[c] != '+' &&
-							chars[c] != '*' &&
-							chars[c] != '/' &&
-							chars[c] != '?' &&
-							chars[c] != ':' &&
-							chars[c] != '=' &&
-							chars[c] != '$' &&
-							chars[c] != '#' &&
-							chars[c] != '@' &&
-							chars[c] != '!' &&
-							chars[c] != '%') {
-						c--;
-						len++;
+				if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
+					if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs")) {
+						if (!(isCssPart || isJSPart || isPhpPart)) break methods;
 					}
 					
-					fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
-				}
+					indxs = findWord(new String(chars), "(");
+					
+					for (Integer i : indxs) {
+						int c = i;
+						len = 0;
+						
+						while (c < chars.length && 
+								c + len < chars.length &&
+								c > 0 &&
+								chars[c] != ' ' &&
+								chars[c] != '[' &&
+								chars[c] != ']' &&
+								chars[c] != ',' &&
+								chars[c] != ';' &&
+								chars[c] != '.' &&
+								chars[c] != '-' &&
+								chars[c] != '+' &&
+								chars[c] != '*' &&
+								chars[c] != '/' &&
+								chars[c] != '?' &&
+								chars[c] != ':' &&
+								chars[c] != '=' &&
+								chars[c] != '$' &&
+								chars[c] != '#' &&
+								chars[c] != '@' &&
+								chars[c] != '!' &&
+								chars[c] != '%') {
+							c--;
+							len++;
+						}
+						
+						fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
+					}
 				
 				/*indxs = findWord(new String(chars), "=");
 				
