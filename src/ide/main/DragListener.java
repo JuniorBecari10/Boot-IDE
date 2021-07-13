@@ -92,6 +92,7 @@ public class DragListener implements DropTargetListener {
 								index++;
 							}
 		          			
+							dtde.dropComplete(true);
 		          			return;
 		          		}
 		          
@@ -111,12 +112,13 @@ public class DragListener implements DropTargetListener {
 						}
 		          
 				int lastX = CodeEditor.tabs.size() > 0 ? CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() : Tab.MIN_X;
-	        	  	
-	        	Tab toAdd = new Tab((lastX + Tab.WIDTH) + 3, ListableFile.search(files.get(0)));
-  				
+	        	
+	        	Tab toAdd = new Tab(CodeEditor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : lastX - (Tab.WIDTH * 2), ListableFile.search(files.get(0)));
+	        	
   				CodeEditor.cursorX = 0;
   				CodeEditor.cursorY = 1;
   				
+  				CodeEditor.scrX = 0;
   				CodeEditor.scrY = 0;
   				
   				/*for (Tab t : CodeEditor.tabs)

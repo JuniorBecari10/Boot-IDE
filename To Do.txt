@@ -10,8 +10,6 @@
 
 - Deletar com backspace.
 
-- O Drag and Drop não cria botões de navegação (criar arquivo, pasta, uma pasta acima...)
-
 - A primeira linha de seleção n vai até o final da janela
 
 - Colocar uma linha pra ver onde é o começo da linha
@@ -32,3 +30,5 @@
 e		    gentag str:tag [TALVEZ NÃO ADICIONO ESSE]
 
 - Não colorir tags no css, já colore como variável
+
+- Somente colorir números em html em csspart ou jspart

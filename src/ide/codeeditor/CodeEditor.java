@@ -774,7 +774,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		}
 			
-			if (ext.equalsIgnoreCase(".java")) {
+			if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd")) {
 				indxs = findWord(new String(chars), "@");
 				
 				int len = 0;
@@ -5061,7 +5061,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE || (selecting && KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) && !isReadOnly) { // Ctrl + Delete (Deletar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE | (selecting & KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) && !isReadOnly) { // Ctrl + Delete ou Backspace (Apenas Selecionando) (Deletar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("del");
