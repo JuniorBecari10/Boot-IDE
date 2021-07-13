@@ -22,5 +22,3 @@
 
 - Adicionar comando lorem int:numparagraphs bool:init-dolorsitamet
 e		    gentag str:tag [TALVEZ NÃO ADICIONO ESSE]
-
-- Somente colorir números em html em csspart ou jspart

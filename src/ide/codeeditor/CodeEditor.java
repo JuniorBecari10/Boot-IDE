@@ -929,12 +929,13 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
-			for (String s : nums) { // colorir números
-				indxs = findWord(new String(chars), s);
-
-				for (Integer i : indxs)
-					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-			}
+			if (isCssPart || isJSPart || isPhpPart)
+				for (String s : nums) { // colorir números
+					indxs = findWord(new String(chars), s);
+	
+					for (Integer i : indxs)
+						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+				}
 			
 			indxs = findWord(new String(chars), "0x");
 			
