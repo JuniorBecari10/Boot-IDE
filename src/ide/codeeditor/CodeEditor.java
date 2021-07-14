@@ -4483,6 +4483,16 @@ public class CodeEditor extends IDEComponent {
 		editing.setSaved(false);
 	}
 	
+	public static void addNewLine(int yPos) {
+		List<Character> chars = new ArrayList<>(); // terminar
+		List<IDEFont> fs = new ArrayList<>();
+		
+		chars.add(new Character('\0'));
+		fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
+		
+		lines.add(yPos, new IDELine(chars, fs));
+	}
+	
 	public static void execTerminal() {
 		CommandTerminal term = new CommandTerminal(Screen.WIDTH / 2 - 250, 25, 500, 30);
 		

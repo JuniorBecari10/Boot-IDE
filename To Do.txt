@@ -23,3 +23,5 @@
 - Adicionar comando gentag str:tag [TALVEZ NÃO ADICIONO ESSE]
 
 - Arrumar bug de às vezes trocar de Tab quando troca
+
+- O card somente leitura fica escondido atrás do Explorer com a tela menor
