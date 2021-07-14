@@ -20,7 +20,6 @@
 
 - O closebasefolder deleta o config file (não o arquivo, descarrega ele)
 
-- Adicionar comando lorem int:numwords int:numparagraphs ESSE NÃO -> bool:init-dolorsitamet
-e		    gentag str:tag [TALVEZ NÃO ADICIONO ESSE]
+- Adicionar comando gentag str:tag [TALVEZ NÃO ADICIONO ESSE]
 
 - Arrumar bug de às vezes trocar de Tab quando troca

@@ -705,6 +705,19 @@ public class CommandTerminal extends IDEComponent {
 				CodeEditor.cursorY = (linesfound.get(0) - 1) + 2;
 				
 				break;
+				
+			case "lorem":
+				StringBuilder bl = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				
+				try {
+					String lorem = CodeEditor.generateLoremIpsum(Integer.parseInt(args[0]));
+					
+					bl.insert(CodeEditor.cursorX, lorem);
+					
+					Main.editor.register(bl, CodeEditor.cursorY - 1);
+				} catch (Exception e) { break; }
+					
+				break;
 			}
 		}
 		
