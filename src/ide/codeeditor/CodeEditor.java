@@ -64,6 +64,11 @@ public class CodeEditor extends IDEComponent {
 	public static int line1, line2;
 	public static int index1, index2;
 	
+	public static boolean alternateTabsMode = false;
+	
+	public static Tab exchanging;
+	public static Tab exchanged;
+	
 	public static boolean isCssPart;
 	public static boolean isJSPart;
 	public static boolean isPhpPart;
@@ -151,7 +156,7 @@ public class CodeEditor extends IDEComponent {
 		
 		new Thread() {
 			public void run() { // 25 pra frente com o explorer desligado, isso é uma gambiarrinha viu
-				if (!isReadOnly) {
+				if (!isReadOnly && !alternateTabsMode) {
 				
 				int offset = CommandTerminal.expOff ? 280 : 0;
 				int lcx = !CommandTerminal.expOff ? 0 : 280;
@@ -4691,7 +4696,7 @@ public class CodeEditor extends IDEComponent {
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;
 		
-		if (MouseInput.leftDragged() && !isReadOnly && hovered()) {
+		if (MouseInput.leftDragged() && !isReadOnly && !alternateTabsMode && hovered()) {
 			selecting = true;
 			
 			index1 = cursorX;
@@ -4737,78 +4742,11 @@ public class CodeEditor extends IDEComponent {
 			showCursorData = true;
 		}
 		
-		/*if (KeyInput.isKeyPressed() && hovered() && editing != null) {
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_Z && KeyInput.isControlDown()) // Ctrl + Z
-				selectMode = true;
-			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
-				selectMode = false;
-				isSelectingFirst = true;
-				
-				CommandTerminal.runCommand("deselect");
-			}
-		}*/
-		
-		/*if (selectMode && leftClicked()) {
-			selecting = true;
-			
-			MouseInput.updateMouse();
-			
-			my = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
-			mx = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE)); // é * 0.7
-			
-			double offset = mx * 0.7; // com esse padrão fica quase perfeito
-			offset = Math.ceil(offset);
-			offset = mx - offset;
-			
-			mx += (int) offset;
-			mx++;
-			
-			if (FONT_SIZE < 11)
-				my--;
-			
-			mx = setWithinBounds(mx, my, true);
-			my = setWithinBounds(mx, my, false);
-			
-			/*while (((x + 40) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
-				mx++;
-			
-			while (MIN_Y + my * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 > MouseInput.getMouseY()) // o mesmo para aqui, só que com o y
-				my--;*/
-			
-			/*if (index2 < index1 && line2 >= line1) {
-				int temp = index2;
-				
-				index2 = index1;
-				index1 = temp;
-			}
-			
-			if (line2 < line1) {
-				int temp = line2;
-				
-				line2 = line1;
-				line1 = temp;
-			}
-			
-			if (isSelectingFirst) {
-				line1 = my;
-				index1 = mx;
-				
-				isSelectingFirst = false;
-			}
-			else {
-				line2 = my;
-				index2 = mx;
-				
-				selectMode = false;
-				isSelectingFirst = true;
-			}
-		}*/
-		
 		try {
 			clipboard = (String) Main.toolkit.getSystemClipboard().getData(DataFlavor.stringFlavor);
 		} catch (HeadlessException | UnsupportedFlavorException | IOException | IllegalStateException e) {
-			System.err.println("Não é string. Resetando!");
+			// Não é string. Resetando!
+			
 			clipboard = "";
 		}
 		
@@ -4828,7 +4766,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (hovered() && editing != null) {
-			if (!isReadOnly) {
+			if (!isReadOnly && !alternateTabsMode) {
 				Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));
 			}
 			else {
@@ -4856,26 +4794,7 @@ public class CodeEditor extends IDEComponent {
 				}.start();
 			}
 			
-			if (leftClicked() && !RightClickOption.isRightClickActive() && !isReadOnly) {
-//				cursorY = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4))); // resolver seta do terminal de comando
-//				cursorX = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE)); // é * 0.7
-//				
-//				/*double offset = cursorX * 0.75; // 0.7: 16, 0.75: 15 e 14
-//				offset = Math.ceil(offset);
-//				offset = cursorX - offset; // arrumar isso
-//				
-//				cursorX += (int) offset;
-//				cursorX += cursorX < 2 ? 0 : 2;*/
-//				
-//				//cursorX = setWithinBounds(cursorX, cursorY, true);
-//				//cursorY = setWithinBounds(cursorX, cursorY, false);
-//				
-//				while (((x + 40) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
-//					cursorX++;
-//				
-//				while (MIN_Y + cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 > MouseInput.getMouseY()) // o mesmo para aqui, só que com o y
-//					cursorY--;
-				
+			if (leftClicked() && !RightClickOption.isRightClickActive() && !isReadOnly && !alternateTabsMode) {
 				cursorX = mx;
 				cursorY = my;
 				
@@ -4894,7 +4813,7 @@ public class CodeEditor extends IDEComponent {
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (isReadOnly ? 90 : (editing != null ? (selecting ? 330 : 210) : 90)), 550, "Definir pasta atual como Pasta Base", (s) -> execute(s), "setbase");
 			}
 			
-			if (!isReadOnly) {
+			if (!isReadOnly && !alternateTabsMode) {
 					if (editing != null) {
 						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), 550, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectline");
 						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 550, "Salvar", (s) -> execute(s), "save");
@@ -4938,7 +4857,11 @@ public class CodeEditor extends IDEComponent {
 			
 			// Detectar atalhos
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME && !isReadOnly) { // Ctrl + Home - Começo do Documento
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && alternateTabsMode) {
+				alternateTabsMode = false;
+				exchanging = null;
+			}
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME && !isReadOnly && !alternateTabsMode) { // Ctrl + Home - Começo do Documento
 				KeyInput.updateKeys();
 				
 				scrX = 0;
@@ -4962,7 +4885,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_END && !isReadOnly) { // Ctrl + End - Fim do Documento
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_END && !isReadOnly && !alternateTabsMode) { // Ctrl + End - Fim do Documento
 				KeyInput.updateKeys();
 				
 				//scrX = (lines.get(lines.size() - 1).getChars().size() * FONT_SIZE) - FONT_SIZE * 10; // esse - FONT_SIZE * 5 é pra dar um offset para trás e ficar no meio da tela.
@@ -4976,7 +4899,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME && !isReadOnly) { // Home - Começo da Linha
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME && !isReadOnly && !alternateTabsMode) { // Home - Começo da Linha
 				KeyInput.updateKeys();
 				
 				scrX = 0;
@@ -4987,7 +4910,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END && !isReadOnly) { // End - Fim da Linha
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END && !isReadOnly && !alternateTabsMode) { // End - Fim da Linha
 				KeyInput.updateKeys();
 				
 				//scrX = (lines.get(cursorY - 1).getChars().size() * FONT_SIZE) - FONT_SIZE * 10;
@@ -4998,7 +4921,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D && !isReadOnly) { // Ctrl + D (Desselecionar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D && !isReadOnly && !alternateTabsMode) { // Ctrl + D (Desselecionar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("deselect");
@@ -5006,7 +4929,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_M && !isReadOnly) { // Ctrl + M (Go To Cursor)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_M && !isReadOnly && !alternateTabsMode) { // Ctrl + M (Go To Cursor)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("gotocursor");
@@ -5014,7 +4937,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_X && !isReadOnly) { // Ctrl + X (Cortar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_X && !isReadOnly && !alternateTabsMode) { // Ctrl + X (Cortar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("cut");
@@ -5065,7 +4988,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (editing == null) return;
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_S && !isReadOnly) { // Ctrl + S (Salvar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_S && !isReadOnly && !alternateTabsMode) { // Ctrl + S (Salvar)
 				KeyInput.updateKeys();
 					
 				editing.save();
@@ -5073,7 +4996,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() &&  KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A && !isReadOnly) { // Ctrl + Shift + A (Selecionar Tudo)
+			if (KeyInput.isControlDown() &&  KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A && !isReadOnly && !alternateTabsMode) { // Ctrl + Shift + A (Selecionar Tudo)
 				KeyInput.updateKeys();
 					
 				cursorX = 0;
@@ -5084,7 +5007,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A && !isReadOnly) { // Ctrl + A (Selecionar Linha)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A && !isReadOnly && !alternateTabsMode) { // Ctrl + A (Selecionar Linha)
 				KeyInput.updateKeys();
 				
 				cursorX = 0;
@@ -5094,7 +5017,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 				
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && !isReadOnly) { // Ctrl + C (Copiar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && !isReadOnly && !alternateTabsMode) { // Ctrl + C (Copiar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("copy");
@@ -5102,7 +5025,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 				
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_V && !isReadOnly) { // Ctrl + V (Colar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_V && !isReadOnly && !alternateTabsMode) { // Ctrl + V (Colar)
 				KeyInput.updateKeys();
 					
 				paste();
@@ -5110,7 +5033,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE | (selecting & KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) && !isReadOnly) { // Ctrl + Delete ou Backspace (Apenas Selecionando) (Deletar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE | (selecting & KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) && !isReadOnly && !alternateTabsMode) { // Ctrl + Delete ou Backspace (Apenas Selecionando) (Deletar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("del");
@@ -5126,7 +5049,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}*/
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_P && !isReadOnly) { // Ctrl + P (Toggle Code Hints)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_P && !isReadOnly && !alternateTabsMode) { // Ctrl + P (Toggle Code Hints)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("togglecodehints");
@@ -5162,7 +5085,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}*/
 			
-			if (!(KeyInput.isAltDown()|| KeyInput.isControlDown()) && !isReadOnly) { // se ctrl, alt NÃO estão pressionados
+			if (!(KeyInput.isAltDown()|| KeyInput.isControlDown()) && !isReadOnly && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados
 			
 				if (!KeyInput.isShiftDown()) {
 					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
@@ -5704,6 +5627,19 @@ public class CodeEditor extends IDEComponent {
 		
 		for (Tab t : CodeEditor.tabs)
 			t.render(g);
+		
+		if (alternateTabsMode) {
+			g.setColor(new Color(0, 0, 0, 0.3f));
+			g.fillRect(x, y + 35, width, height);
+			
+			int xdr = MouseInput.getMouseX() + 10;
+			int ydr = MouseInput.getMouseY() - 30;
+			
+			Fonts.drawString("Selecione a Tab que deseja trocar:", xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			
+			Fonts.drawString("[Esc] Cancelar", xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			Fonts.drawString("[Clique Esquerdo -> Aba] Trocar", xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+		}
 		
 		if (isReadOnly && hovered() && !(CommandTerminal.active || SetFileName.added || RenameFile.added) && !RightClickOption.isRightClickActive()) {
 			int xdr = MouseInput.getMouseX() + 10;

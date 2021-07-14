@@ -276,6 +276,12 @@ public class Tab extends IDEComponent implements Serializable {
 			CodeEditor.scrY = scrY;
 			
 			break;
+			
+		case "alternate":
+			CodeEditor.alternateTabsMode = true;
+			CodeEditor.exchanging = this;
+			
+			break;
 		}
 	}
 	
@@ -300,7 +306,7 @@ public class Tab extends IDEComponent implements Serializable {
 			scrY = CodeEditor.scrY;
 		}
 		
-		if (leftClicked() && !button.leftClicked()) {
+		if (leftClicked() && !button.leftClicked() && !CodeEditor.alternateTabsMode) {
 			CodeEditor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
 			
 			CodeEditor.editing = this;
@@ -327,7 +333,20 @@ public class Tab extends IDEComponent implements Serializable {
 			save();
 		}
 		
-		if (rightClicked()) {
+		if (leftClicked() && !button.leftClicked() && CodeEditor.alternateTabsMode) {
+			CodeEditor.exchanged = this;
+			
+			CommandTerminal.runCommand("ordertab " + CodeEditor.tabs.indexOf(CodeEditor.exchanging) + " " + CodeEditor.tabs.indexOf(CodeEditor.exchanged));
+			
+			CodeEditor.alternateTabsMode = false;
+			
+			CodeEditor.exchanging = null;
+			CodeEditor.exchanged = null;
+			
+			return;
+		}
+		
+		if (rightClicked() && !CodeEditor.alternateTabsMode) {
 			MouseInput.updateMouse();
 			
 			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3, 305, "Fechar Aba", (s) -> execute(s), "this");
@@ -335,14 +354,15 @@ public class Tab extends IDEComponent implements Serializable {
 			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 60, 305, "Fechar outras abas", (s) -> execute(s), "closeother");
 			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 90, 305, "Salvar", (s) -> execute(s), "save");
 			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 120, 305, "Abrir no Explorador", (s) -> execute(s), "showexp");
+			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 150, 305, "Alternar Abas", (s) -> execute(s), "alternate");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			if ((ListableFile.getFileExtension(regent.getRegent()).equals(".bat") || ListableFile.getFileExtension(regent.getRegent()).equals(".cmd") || ListableFile.getFileExtension(regent.getRegent()).equals(".com") || ListableFile.getFileExtension(regent.getRegent()).equals(".ps1")) && isWindows)
-				IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 150, 305, "Executar", (s) -> execute(s), "run");
+				IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 180, 305, "Executar", (s) -> execute(s), "run");
 			
 			if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && !isWindows)
-				IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 150, 305, "Executar", (s) -> execute(s), "runbash");
+				IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 180, 305, "Executar", (s) -> execute(s), "runbash");
 		}
 		
 		if (isSaved)
@@ -400,5 +420,44 @@ public class Tab extends IDEComponent implements Serializable {
 			}
 		}
 		g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 3, Y + 1, HEIGHT, HEIGHT, null);
+		
+		if (CodeEditor.exchanging == this) {
+			x = (MouseInput.getMouseX() - WIDTH) - 5;
+			int y = MouseInput.getMouseY();
+			
+			g.setColor(bg);
+			g2.setStroke(new BasicStroke(3f));
+			g2.fillRect(x, y, WIDTH, HEIGHT);
+			
+			g.setColor(c);
+			g.drawRect(x, y, WIDTH, HEIGHT);
+			
+			if (CodeEditor.linesWithErrors != null && CodeEditor.syntaxErrorsOn) {
+				if (CodeEditor.linesWithErrors.size() > 0 && CodeEditor.editing == this)
+					font = new IDEFont(Fonts.errorNormal, 16);
+			}
+			
+			Fonts.drawString(regent.getRegent().getName(), x + 35, y + 5, font, isReadOnly ? (x + WIDTH) - 35 : (x + WIDTH) - 15, g);
+		
+			if (isReadOnly)
+				g.drawImage(Main.spritesheet.getSprite(27, 0, 5, 5), (x + WIDTH) - 40, y + 7, 15, 15, null);
+			
+			button.render(g);
+			
+			for (FileType f : ListableFile.types) {
+				if (f.getExtension().equalsIgnoreCase(extension)) {
+					g.drawImage(f.getIcon(), x + 3, y + 1, HEIGHT - 3, HEIGHT - 3, null);
+					
+					return;
+				}
+				
+				else if (f.getExtension().equalsIgnoreCase(regent.getRegent().getName())) {
+					g.drawImage(f.getIcon(), x + 3, y + 1, HEIGHT - 3, HEIGHT - 3, null);
+					
+					return;
+				}
+			}
+			g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 3, y + 1, HEIGHT, HEIGHT, null);
+		}
 	}
 }
