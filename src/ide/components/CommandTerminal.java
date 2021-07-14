@@ -328,6 +328,8 @@ public class CommandTerminal extends IDEComponent {
 						
 						Main.conffile = "none";
 						Main.hasConfigFile = false;
+						
+						runCommand("revertconfigfile");
 					}
 				}
 				
@@ -337,7 +339,7 @@ public class CommandTerminal extends IDEComponent {
 				Main.conffile = "none";
 				
 				Main.writeFile(Main.settingsFile);
-				runCommand("revertcolors");
+				runCommand("revertconfigfile");
 				
 				Main.hasConfigFile = false;
 				
@@ -457,7 +459,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "revertcolors":
+			case "revertconfigfile":
 				Colors.revertColors();
 				
 				Fonts.initFonts(Main.fntnr, Main.fntbl);

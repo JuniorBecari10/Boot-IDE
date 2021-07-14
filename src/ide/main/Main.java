@@ -202,6 +202,7 @@ public class Main implements Runnable, Tickable {
 				}
 			}
 			
+			wr.flush();
 			wr.close();
 			
 		} catch (IOException e) {

@@ -26,7 +26,7 @@ public class Colors {
     public static Color strings = 					    textLight;
     public static Color symbols = 						 comments;
     
-    public static Color select = 		   Color.decode("#8c8c8c");
+    public static Color select = 		  Color.decode("#8c8c8c");
     
     public static Color select1 = 		  Color.decode("#ff6961");
     public static Color select2 = 		  Color.decode("#ff5147");
@@ -38,27 +38,27 @@ public class Colors {
     public static Color selectedLineNumber=Color.decode("#c5d5ea");
     
     public static void revertColors() {
-    	 background = Color.decode("#353b48");
-         backgroundLight = Color.decode("#28394d");
-         explorer = Color.decode("#222f3e");
+    	 background = 		  Color.decode("#353b48");
+         backgroundLight = 	  Color.decode("#28394d");
+         explorer = 		  Color.decode("#222f3e");
 
-         explorerLight = Color.decode("#2d3f54");
-         textLight = Color.decode("#95afc0");
-         textLighter = Color.decode("#A9B4C2");
+         explorerLight = 	  Color.decode("#2d3f54");
+         textLight = 		  Color.decode("#95afc0");
+         textLighter = 		  Color.decode("#A9B4C2");
         
-         objects = 		  Color.decode("#94fa92");
-         methods = 		  Color.decode("#e7d789");
-         numbers = 		  Color.decode("#5485b6");
+         objects = 		  	  Color.decode("#94fa92");
+         methods = 		  	  Color.decode("#e7d789");
+         numbers = 		  	  Color.decode("#5485b6");
          keywords = 		  Color.decode("#95bddc");
-         variables = 	  Color.decode("#66e1f8");
+         variables = 	  	  Color.decode("#66e1f8");
         
          comments = 					  textLighter;
-         strings = 					    textLight;
-         symbols = 						 comments;
+         strings = 					    	textLight;
+         symbols = 						 	 comments;
         
          /*select1 = 		  Color.decode("#ff6961");
-         select2 = 		  Color.decode("#ff5147");
-         selectCursor = 	  Color.blue;*/
+         select2 = 		 	  Color.decode("#ff5147");
+         selectCursor = 	  			   Color.blue;*/
          other =						  Color.white;
     }
     
