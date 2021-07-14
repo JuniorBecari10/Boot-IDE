@@ -419,45 +419,6 @@ public class Tab extends IDEComponent implements Serializable {
 				return;
 			}
 		}
-		g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 3, Y + 1, HEIGHT, HEIGHT, null);
-		
-		if (CodeEditor.exchanging == this) {
-			x = (MouseInput.getMouseX() - WIDTH) - 5;
-			int y = MouseInput.getMouseY();
-			
-			g.setColor(bg);
-			g2.setStroke(new BasicStroke(3f));
-			g2.fillRect(x, y, WIDTH, HEIGHT);
-			
-			g.setColor(c);
-			g.drawRect(x, y, WIDTH, HEIGHT);
-			
-			if (CodeEditor.linesWithErrors != null && CodeEditor.syntaxErrorsOn) {
-				if (CodeEditor.linesWithErrors.size() > 0 && CodeEditor.editing == this)
-					font = new IDEFont(Fonts.errorNormal, 16);
-			}
-			
-			Fonts.drawString(regent.getRegent().getName(), x + 35, y + 5, font, isReadOnly ? (x + WIDTH) - 35 : (x + WIDTH) - 15, g);
-		
-			if (isReadOnly)
-				g.drawImage(Main.spritesheet.getSprite(27, 0, 5, 5), (x + WIDTH) - 40, y + 7, 15, 15, null);
-			
-			button.render(g);
-			
-			for (FileType f : ListableFile.types) {
-				if (f.getExtension().equalsIgnoreCase(extension)) {
-					g.drawImage(f.getIcon(), x + 3, y + 1, HEIGHT - 3, HEIGHT - 3, null);
-					
-					return;
-				}
-				
-				else if (f.getExtension().equalsIgnoreCase(regent.getRegent().getName())) {
-					g.drawImage(f.getIcon(), x + 3, y + 1, HEIGHT - 3, HEIGHT - 3, null);
-					
-					return;
-				}
-			}
-			g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 3, y + 1, HEIGHT, HEIGHT, null);
-		}
+		g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 3, Y + 1, HEIGHT, HEIGHT, null); // desenhar tab no mouse
 	}
 }

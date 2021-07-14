@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 
@@ -4651,6 +4652,88 @@ public class CodeEditor extends IDEComponent {
 			result.append(s);
 		
 		return result.toString();
+	}
+	
+	/**
+	 * Gera um Lorem Ipsum aleatório a partir das palavras do array, com pontuação e tudo.
+	 * <pre>Ele suporta somente um parágrafo.</pre>
+	 * 
+	 * @param numWords - O número de palavras no total que o texto vai ter.
+	 * @return O texto gerado.
+	 */
+	public static String generateLoremIpsum(int numWords) {
+		String[] words = { "dolor", "sit", "amet", "consectetur",
+				"adipiscing", "elit", "curabitur", "vel", "hendrerit", "libero",
+				"eleifend", "blandit", "nunc", "ornare", "odio", "ut",
+				"orci", "gravida", "imperdiet", "nullam", "purus", "lacinia",
+				"a", "pretium", "quis", "congue", "praesent", "sagittis", 
+				"laoreet", "auctor", "mauris", "non", "velit", "eros",
+				"dictum", "proin", "accumsan", "sapien", "nec", "massa",
+				"volutpat", "venenatis", "sed", "eu", "molestie", "lacus",
+				"quisque", "porttitor", "ligula", "dui", "mollis", "tempus",
+				"at", "magna", "vestibulum", "turpis", "ac", "diam",
+				"tincidunt", "id", "condimentum", "enim", "sodales", "in",
+				"hac", "habitasse", "platea", "dictumst", "aenean", "neque",
+				"fusce", "augue", "leo", "eget", "semper", "mattis", 
+				"tortor", "scelerisque", "nulla", "interdum", "tellus", "malesuada",
+				"rhoncus", "porta", "sem", "aliquet", "et", "nam",
+				"suspendisse", "potenti", "vivamus", "luctus", "fringilla", "erat",
+				"donec", "justo", "vehicula", "ultricies", "varius", "ante",
+				"primis", "faucibus", "ultrices", "posuere", "cubilia", "curae",
+				"etiam", "cursus", "aliquam", "quam", "dapibus", "nisl",
+				"feugiat", "egestas", "class", "aptent", "taciti", "sociosqu",
+				"ad", "litora", "torquent", "per", "conubia", "nostra",
+				"inceptos", "himenaeos", "phasellus", "nibh", "pulvinar", "vitae",
+				"urna", "iaculis", "lobortis", "nisi", "viverra", "arcu",
+				"morbi", "pellentesque", "metus", "commodo", "ut", "facilisis",
+				"felis", "tristique", "ullamcorper", "placerat", "aenean", "convallis",
+				"sollicitudin", "integer", "rutrum", "duis", "est", "etiam",
+				"bibendum", "donec", "pharetra", "vulputate", "maecenas", "mi",
+				"fermentum", "consequat", "suscipit", "aliquam", "habitant", "senectus",
+				"netus", "fames", "quisque", "euismod", "curabitur", "lectus",
+				"elementum", "tempor", "risus", "cras" };
+		
+		String[] points = { ". ", ", ", "; ", ", ", ", ", "; " }; // tem mais chances de ser ; ou , do que .
+		
+		Random rd = new Random();
+		
+		boolean capitalize = false;
+		String initialText = "Lorem ipsum dolor sit amet ";
+			
+		StringBuilder bl = new StringBuilder(initialText);
+			
+		for (int i = 0; i < numWords; i++) {
+			String word = capitalize ? capitalizeFirstLetter(words[rd.nextInt(words.length)]) : words[rd.nextInt(words.length)];
+				
+			bl.append(word + (i == numWords - 1 ? "." : ""));
+				
+			capitalize = false;
+				
+			if (rd.nextInt(100) < 25 && i < numWords - 1) { // 25% de pontuar
+				// pontuar!
+				String point = points[rd.nextInt(points.length)];
+					
+				bl.append(point);
+					
+				if (point.contains(".")) capitalize = true;
+			}
+			else
+				bl.append(" ");
+		}
+			
+		return bl.toString();
+	}
+	
+	public static String mergeStringArrays(String[]... arrays) {
+		StringBuilder bl = new StringBuilder();
+		
+		for (int i = 0; i < arrays.length; i++) {
+			for (int j = 0; j < arrays[i].length; j++) {
+				bl.append(arrays[i][j] + " ");
+			}
+		}
+		
+		return bl.toString();
 	}
 	
 	public void tick() {

@@ -154,6 +154,8 @@ public class Main implements Runnable, Tickable {
         ListableFile.readConfigFile(conffile);
         Fonts.initFonts(fntnr, fntbl);
         spritesheet = new Spritesheet(sprsh);
+        
+        System.out.println(CodeEditor.generateLoremIpsum(100));
     }
     
    /*private void openWith() {
