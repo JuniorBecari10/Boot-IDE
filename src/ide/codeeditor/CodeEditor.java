@@ -4484,7 +4484,7 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public static void addNewLine(int yPos) {
-		List<Character> chars = new ArrayList<>(); // terminar
+		List<Character> chars = new ArrayList<>();
 		List<IDEFont> fs = new ArrayList<>();
 		
 		chars.add(new Character('\0'));
@@ -5734,7 +5734,7 @@ public class CodeEditor extends IDEComponent {
 			Fonts.drawString("[Clique Esquerdo -> Aba] Trocar", xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 		}
 		
-		if (isReadOnly && hovered() && !(CommandTerminal.active || SetFileName.added || RenameFile.added) && !RightClickOption.isRightClickActive()) {
+		if (isReadOnly && hovered() && !(CommandTerminal.active || SetFileName.added || RenameFile.added || alternateTabsMode) && !RightClickOption.isRightClickActive()) {
 			int xdr = MouseInput.getMouseX() + 10;
 			int ydr = MouseInput.getMouseY() - 30;
 			
