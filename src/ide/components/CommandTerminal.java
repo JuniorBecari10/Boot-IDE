@@ -911,7 +911,7 @@ public class CommandTerminal extends IDEComponent {
 				break;*/
 			}
 		}
-		else if (args.length == 3) { // TODO arrumar isso em uma futura atualização
+		else if (args.length == 3) {
 			switch (com) {
 			case "gengetter":
 				if (CodeEditor.isReadOnly) break;
@@ -920,7 +920,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				switch (args[0].toLowerCase()) {
 				case "java":
-					String[] javastrs = { "public " + args[2] + " get" + CodeEditor.capitalizeFirstLetter(args[1]) + "() {", " return " + args[1] + ";", "}"};
+					String[] javastrs = { "public " + args[2] + " get" + CodeEditor.capitalizeFirstLetter(args[1]) + "() {", "    return " + args[1] + ";", "}"};
 					
 					strs = javastrs;
 					
@@ -936,13 +936,19 @@ public class CommandTerminal extends IDEComponent {
 				
 				if (strs.length == 0) return;
 				
-				for (int i = 0; i < strs.length; i++) {
-					if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
-						CodeEditor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
+				for (int i = 0; i < strs.length - 1; i++) {
+					StringBuilder spaces = new StringBuilder();
 					
+					for (int j = 0; j < Main.editor.countChar(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())), ' '); j++)
+						spaces.append(' ');
+					
+					CodeEditor.addNewLine(CodeEditor.cursorY - 1, spaces.toString());
+				}
+				
+				for (int i = 0; i < strs.length; i++) {
 					StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
 					
-					b.insert(CodeEditor.cursorX, strs[i]);
+					b.append(strs[i]);
 					
 					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
 				}
@@ -967,13 +973,19 @@ public class CommandTerminal extends IDEComponent {
 				
 				if (strss.length == 0) return;
 				
-				for (int i = 0; i < strss.length; i++)
-					CodeEditor.addNewLine(CodeEditor.cursorY - 1);
+				for (int i = 0; i < strss.length - 1; i++) {
+					StringBuilder spaces = new StringBuilder();
+					
+					for (int j = 0; j < Main.editor.countChar(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())), ' '); j++)
+						spaces.append(' ');
+					
+					CodeEditor.addNewLine(CodeEditor.cursorY - 1, spaces.toString());
+				}
 				
 				for (int i = 0; i < strss.length; i++) {
 					StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
 					
-					b.insert(CodeEditor.cursorX, strss[i]);
+					b.append(strss[i]);
 					
 					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
 				}

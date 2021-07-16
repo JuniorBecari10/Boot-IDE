@@ -4493,6 +4493,20 @@ public class CodeEditor extends IDEComponent {
 		lines.add(yPos, new IDELine(chars, fs));
 	}
 	
+	public static void addNewLine(int yPos, String initialText) {
+		List<Character> chars = new ArrayList<>();
+		List<IDEFont> fs = new ArrayList<>();
+		
+		char[] arr = initialText.toCharArray();
+		
+		for (char c : arr) {
+			chars.add(c);
+			fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
+		}
+		
+		lines.add(yPos, new IDELine(chars, fs));
+	}
+	
 	public static void execTerminal() {
 		CommandTerminal term = new CommandTerminal(Screen.WIDTH / 2 - 250, 25, 500, 30);
 		
@@ -5726,7 +5740,7 @@ public class CodeEditor extends IDEComponent {
 			g.fillRect(x, y + 35, width, height);
 			
 			int xdr = MouseInput.getMouseX() + 10;
-			int ydr = MouseInput.getMouseY() - 30;
+			int ydr = MouseInput.getMouseY() - 30; // TODO alterar texto trocar por algo melhor
 			
 			Fonts.drawString("Selecione a aba que deseja trocar:", xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 			
