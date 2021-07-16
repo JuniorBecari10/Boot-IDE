@@ -4897,7 +4897,7 @@ public class CodeEditor extends IDEComponent {
 		else
 			Main.screen.setCursor(Cursor.getDefaultCursor());
 		
-		if (rightClicked()) {
+		if (rightClicked() && !alternateTabsMode) {
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 550, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 550, "Abrir Terminal de Comando", (s) -> execute(s), "term");
 			
@@ -4906,7 +4906,7 @@ public class CodeEditor extends IDEComponent {
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (isReadOnly ? 90 : (editing != null ? (selecting ? 330 : 210) : 90)), 550, "Definir pasta atual como Pasta Base", (s) -> execute(s), "setbase");
 			}
 			
-			if (!isReadOnly && !alternateTabsMode) {
+			if (!isReadOnly) {
 					if (editing != null) {
 						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), 550, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectline");
 						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 550, "Salvar", (s) -> execute(s), "save");
@@ -5728,7 +5728,7 @@ public class CodeEditor extends IDEComponent {
 			int xdr = MouseInput.getMouseX() + 10;
 			int ydr = MouseInput.getMouseY() - 30;
 			
-			Fonts.drawString("Selecione a Tab que deseja trocar:", xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			Fonts.drawString("Selecione a aba que deseja trocar:", xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 			
 			Fonts.drawString("[Esc] Cancelar", xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 			Fonts.drawString("[Clique Esquerdo -> Aba] Trocar", xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);

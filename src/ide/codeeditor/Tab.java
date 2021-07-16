@@ -116,6 +116,10 @@ public class Tab extends IDEComponent implements Serializable {
 	 * Fecha essa Tab.
 	 */
 	public void close() {
+		CodeEditor.isMultilineCommenting = false; // TODO closeother reseta o cursor
+		CodeEditor.isAnotherIteration = false;
+		CodeEditor.foundExt = false;
+		
 		CodeEditor.toRemove.add(this);
 		CodeEditor.lines.clear();
 		
@@ -185,7 +189,7 @@ public class Tab extends IDEComponent implements Serializable {
 			break;
 			
 		case "all":
-			CodeEditor.tabs.clear();
+			CodeEditor.tabs.forEach((e) -> e.close());
 			
 			CodeEditor.editing = null;
 			break;
@@ -354,7 +358,7 @@ public class Tab extends IDEComponent implements Serializable {
 			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 60, 305, "Fechar outras abas", (s) -> execute(s), "closeother");
 			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 90, 305, "Salvar", (s) -> execute(s), "save");
 			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 120, 305, "Abrir no Explorador", (s) -> execute(s), "showexp");
-			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 150, 305, "Alternar Abas", (s) -> execute(s), "alternate");
+			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 150, 305, "Ordenar Abas", (s) -> execute(s), "alternate");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
@@ -419,6 +423,18 @@ public class Tab extends IDEComponent implements Serializable {
 				return;
 			}
 		}
-		g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 3, Y + 1, HEIGHT, HEIGHT, null); // desenhar tab no mouse
+		g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 3, Y + 1, HEIGHT, HEIGHT, null);
+		
+		/*if (CodeEditor.alternateTabsMode && CodeEditor.exchanging == this) {
+			int xdr = (MouseInput.getMouseX() - WIDTH) - 10;
+			int ydr = MouseInput.getMouseY();
+			
+			g.setColor(Colors.explorer);
+			g.fillRect(xdr, ydr, WIDTH, HEIGHT);
+			
+			g.setColor(Colors.explorerLight);
+			g2.setStroke(new BasicStroke(3f));
+			g.drawRect(xdr, ydr, WIDTH, HEIGHT);
+		}*/
 	}
 }
