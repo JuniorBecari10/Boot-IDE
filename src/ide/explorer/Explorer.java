@@ -25,8 +25,12 @@ public class Explorer extends IDEComponent {
 	public static ListableFile scope;
 
 	public static String folderPath = "";
+	public static String folderPathFull = "";
 	
 	public static boolean hoveringListableFile;
+	
+	public static boolean showBaseFolderCard = false;
+	public static boolean showFolderPathCard = false;
 	
 	public static String baseFolderName;
 	
@@ -49,7 +53,7 @@ public class Explorer extends IDEComponent {
     	
     	if (ListableFile.files.isEmpty() && files.isEmpty()) hoveringListableFile = false;
     	
-    	if (!(Main.baseFolder != null) || !Main.baseFolder.exists()) {
+    	if (!(Main.baseFolder != null) || !Main.baseFolder.exists()) { // resumindo, se for null
     		CommandTerminal.runCommand("closebasefolder");
     		
     		return;
@@ -62,6 +66,9 @@ public class Explorer extends IDEComponent {
     		if (scope.getRegent().getParentFile().equals(Main.baseFolder))
     			scope.setParent(null);
     	}
+    	
+    	showBaseFolderCard = false;
+    	showFolderPathCard = false;
     	
     	if (rightClicked() && !hoveringListableFile) {
     		IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 540, "Criar Novo Arquivo", (s) -> Main.editor.execute(s), "newfile");
@@ -80,39 +87,40 @@ public class Explorer extends IDEComponent {
     	else if (Explorer.scope.getParent() == null) Explorer.folderPath = Explorer.scope.getRegent().getName();
 		else Explorer.folderPath = Explorer.scope.getParent().getRegent().getName() + " / " + Explorer.scope.getRegent().getName();
     	
-    	if (files.size() == 0) return;
+    	folderPathFull = folderPath;
     	
-    	if (MouseInput.isMouseRolling() && hovered()) {
-    		for (IDEComponent i : components) {
-    			if (i instanceof RightClickOption)
-    				IDEComponent.toRemove.add(i);
-    		}
-    		
-    		ListableFile first = files.get(0);
-    		ListableFile last = files.get(files.size() - 1);
-    		
-			if (MouseInput.wheelUp() && first.getY() < 200) first.setY(first.getY() + 30);
-			else if (MouseInput.wheelDown() && last.getY() > 200) first.setY(first.getY() - 30);
-		}
+    	if (files.size() != 0) {
+	    	if (MouseInput.isMouseRolling() && hovered()) {
+	    		for (IDEComponent i : components) {
+	    			if (i instanceof RightClickOption)
+	    				IDEComponent.toRemove.add(i);
+	    		}
+	    		
+	    		ListableFile first = files.get(0);
+	    		ListableFile last = files.get(files.size() - 1);
+	    		
+				if (MouseInput.wheelUp() && first.getY() < 200) first.setY(first.getY() + 30);
+				else if (MouseInput.wheelDown() && last.getY() > 200) first.setY(first.getY() - 30);
+			}
+    	}
     	
     	hoveringListableFile = false;
     	
-    	if (folderPath.length() > 22)
+    	if (folderPath.length() > 22) {
         	folderPath = folderPath.substring(0, 19) + "...";
+        	showFolderPathCard = true;
+    	}
     	
     	baseFolderName = Main.baseFolder.getName().length() > 15 ? Main.baseFolder.getName().substring(0, 12) + "..." : Main.baseFolder.getName();
+    	
+    	if (Main.baseFolder.getName().length() > 15)
+    		showBaseFolderCard = true;
     }
 
     public void render(Graphics g) {
     	if (CommandTerminal.expOff) return;
     	
     	Graphics2D g2 = (Graphics2D) g;
-    	
-    	if (folderPath.length() > 22)
-        	folderPath = folderPath.substring(0, 19) + "...";
-    	
-    	if (Main.baseFolder != null)
-    		baseFolderName = Main.baseFolder.getName().length() > 15 ? Main.baseFolder.getName().substring(0, 12) + "..." : Main.baseFolder.getName();
     	
         g.setColor(Colors.explorer);
         g.fillRect(x, y, width, height);   

@@ -918,7 +918,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				String[] strs = { };
 				
-				switch (args[0].toLowerCase()) {
+				switch (args[0].toLowerCase()) { // TODO o gengetter do cs tbm tem o setter, talvez dar uma arrumada nisso
 				case "java":
 					String[] javastrs = { "public " + args[2] + " get" + CodeEditor.capitalizeFirstLetter(args[1]) + "() {", "    return " + args[1] + ";", "}"};
 					

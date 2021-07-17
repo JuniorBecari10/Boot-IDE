@@ -121,8 +121,6 @@ public class CodeEditor extends IDEComponent {
 	
 	private static int mx, my;
 	
-	public static List<Integer> linesWithErrors = new ArrayList<>();
-	
 	public static boolean isReadOnly = false;
 	
 	//private Thread syntaxErrors;

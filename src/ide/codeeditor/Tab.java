@@ -398,11 +398,6 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		IDEFont font = new IDEFont(Fonts.lighterGrayNormal, 16);
 		
-		if (CodeEditor.linesWithErrors != null && CodeEditor.syntaxErrorsOn) {
-			if (CodeEditor.linesWithErrors.size() > 0 && CodeEditor.editing == this)
-				font = new IDEFont(Fonts.errorNormal, 16);
-		}
-		
 		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, isReadOnly ? (x + WIDTH) - 35 : (x + WIDTH) - 15, g);
 	
 		if (isReadOnly)

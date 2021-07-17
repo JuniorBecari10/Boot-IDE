@@ -179,8 +179,10 @@ public class Main implements Runnable, Tickable {
     }*/
     
     public static void writeFile(File setFile) {
+    	BufferedWriter wr = null;
+    	
     	try {
-			BufferedWriter wr = new BufferedWriter(new FileWriter(setFile));
+			wr = new BufferedWriter(new FileWriter(setFile));
 			
 			/*wr.write((fntnr.equals("/font.png")) ? "default\n" : fntnr + "\n");
 			wr.write((fntbl.equals("/bold.png")) ? "default\n" : fntbl + "\n");
@@ -206,7 +208,14 @@ public class Main implements Runnable, Tickable {
 			wr.close();
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			
+			try {
+				wr.flush();
+				wr.close();
+			} catch (IOException f) {
+				f.printStackTrace();
+			}
 		}
     }
     
@@ -365,14 +374,11 @@ public class Main implements Runnable, Tickable {
 				if (t.hovered() && CodeEditor.editing == t && t.getX() + CodeEditor.tabScr >= editor.getX() && !t.button.hovered()) { // por algum motivo é + e não -
 					int index = t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0;
 					
-					int width = 10 + t.getRegent().getRegent().getPath().substring(index).length() * 15;
-					int height = CodeEditor.linesWithErrors.size() == 0 ? 70 : 50 + (CodeEditor.linesWithErrors.size() * 40);
+					int width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
+					int height = 100;
 					
 					int x = MouseInput.getMouseX() + 10;
 					int y = MouseInput.getMouseY() + 10;
-					
-					width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
-					height = 100;
 					
 					if (!hasConfigFile) {
 						if (width < 600)
@@ -418,7 +424,57 @@ public class Main implements Runnable, Tickable {
 					if (CodeEditor.editing.isReadOnly)
 						Fonts.drawString("Esse arquivo está como somente leitura.", (x - 10) + 20, (y - 10)+ 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				}
-		}
+	        }
+        
+        if (explorer.hovered()) {
+        	if (MouseInput.hovered(explorer.getX() + 10, 140, explorer.getWidth() - 10, 23) && Explorer.showBaseFolderCard) {
+        		int xdr = MouseInput.getMouseX() + 10;
+    			int ydr = MouseInput.getMouseY() - 10;
+    			
+    			final int wdr = 15 + Main.baseFolder.getName().length() * 12;
+    			final int hdr = 70;
+    			
+    			Rectangle intersection = new Rectangle(xdr, ydr, wdr, hdr).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
+    			
+    			if (!intersection.isEmpty())
+    				xdr -= intersection.getWidth();
+    			
+    			g.setColor(Colors.explorerLight);
+    			g.fillRect(xdr, MouseInput.getMouseY() - 15, wdr, hdr);
+    			
+    			g.setColor(Colors.textLighter);
+    			g2.setStroke(new BasicStroke(2f));
+    			g2.drawRect(xdr, MouseInput.getMouseY() - 15, wdr, hdr);
+    			
+    			Fonts.drawString("Pasta Base:", xdr + 10, ydr + 10, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+    			Fonts.drawString(Main.baseFolder.getName(), xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+        	}
+        	
+        	if (MouseInput.hovered(explorer.getX() + 10, 170, explorer.getWidth() - 10, 23) && Explorer.showFolderPathCard) {
+        		String scopeStr = Explorer.getScopePath().contains(baseFolder.getName()) ? Explorer.getScopePath().substring(Explorer.getScopePath().indexOf(baseFolder.getName())) : Explorer.getScopePath();
+        		
+        		int xdr = MouseInput.getMouseX() + 10;
+    			int ydr = MouseInput.getMouseY() - 10;
+    			
+    			final int wdr = 15 + scopeStr.length() * 12;
+    			final int hdr = 70;
+    			
+    			Rectangle intersection = new Rectangle(xdr, ydr, wdr, hdr).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
+    			
+    			if (!intersection.isEmpty())
+    				xdr -= intersection.getWidth();
+    			
+    			g.setColor(Colors.explorerLight);
+    			g.fillRect(xdr, MouseInput.getMouseY() - 15, wdr, hdr);
+    			
+    			g.setColor(Colors.textLighter);
+    			g2.setStroke(new BasicStroke(2f));
+    			g2.drawRect(xdr, MouseInput.getMouseY() - 15, wdr, hdr);
+    			
+    			Fonts.drawString("Pasta Atual:", xdr + 10, ydr + 10, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+    			Fonts.drawString(scopeStr, xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+        	}
+        }
         
         g.dispose();
         g = bs.getDrawGraphics();
