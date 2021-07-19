@@ -15,6 +15,7 @@ import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.main.Screen;
 import ide.util.Colors;
 
 public class Explorer extends IDEComponent {
@@ -53,7 +54,7 @@ public class Explorer extends IDEComponent {
     	
     	if (ListableFile.files.isEmpty() && files.isEmpty()) hoveringListableFile = false;
     	
-    	if (!(Main.baseFolder != null) || !Main.baseFolder.exists()) { // resumindo, se for null
+    	if (Main.baseFolder == null || !Main.baseFolder.exists()) {
     		CommandTerminal.runCommand("closebasefolder");
     		
     		return;
@@ -145,7 +146,10 @@ public class Explorer extends IDEComponent {
         g2.setStroke(new BasicStroke(3f));
         g2.drawLine(width - 1, 0, width - 1, height);
         
-        for (ListableFile f : Explorer.files)
+        for (ListableFile f : Explorer.files) {
+        	if (f.getY() < 200 || f.getY() > Screen.HEIGHT) continue;
+        	
         	f.render(g);
+        }
     }
 }

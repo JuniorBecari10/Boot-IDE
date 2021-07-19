@@ -5480,8 +5480,11 @@ public class CodeEditor extends IDEComponent {
 		} // não ligue pra isso :)
 		
 		if (tabs != null) {
-			for (Tab t : tabs)
+			for (Tab t : tabs) {
+				//if (t.getX() + tabScr < x || t.getX() + tabScr > Main.screen.getWidth()) continue; // infelizmente vai ter que fazer o tick mesmo assim, bom que não pesa muito
+				
 				t.tick();
+			}
 		
 			tabs.addAll(toAdd);
 			toAdd.clear();
@@ -5730,8 +5733,11 @@ public class CodeEditor extends IDEComponent {
 		g.setColor(Colors.background);
 		g.fillRect(x, 0, width, 35);
 		
-		for (Tab t : CodeEditor.tabs)
+		for (Tab t : CodeEditor.tabs) {
+			if (t.getX() + tabScr < x || t.getX() + tabScr > Main.screen.getWidth()) continue;
+			
 			t.render(g);
+		}
 		
 		if (alternateTabsMode) {
 			g.setColor(new Color(0, 0, 0, 0.3f));

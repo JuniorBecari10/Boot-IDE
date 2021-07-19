@@ -1,31 +1,3 @@
-/**
- * Boot IDE
- * 
- * Actual Version: Release 3.0
- * 
- * Changelog:
- * 
- * 1.0
- * 
- * - Release
- * 
- * 1.1
- * 
- * - Adicionada opção "Limpar linha".
- * - Adicionado suporte para a linguagem Lua.
- * - Terminado coloração de comentários de uma linha só pra todas as linguagens.
- * - Ainda não há coloração para comentários multi-linha
- * 
- * 1.2
- * 
- * - Corrigido Bugs:
- *  * Alternar para outra guia sem salvar o arquivo o corrompe;
- *  * Deletar o arquivo e a sua guia correspondente ficar aberta;
- *  * <Ainda não corrigido> Clicar em um arquivo que já tem guia aberta e cria de novo outra guia com o mesmo arquivo. // Esse pode para corrigir mais pra frente pois ele não é crítico.
- *  
- *  - Adicionado suporte para a linguagem SQL.
- */
-
 package ide.main;
 
 import java.awt.BasicStroke;
@@ -317,12 +289,16 @@ public class Main implements Runnable, Tickable {
         t.start();
     }
     
+    /**
+     * Retorna true ou false se o usu�rio interagiu com a janela, como por exemplo: Apertou uma tecla,
+     * moveu o mouse, moveu a janela...
+     */
     public static boolean hasUserInteraction() {
     	return KeyInput.isKeyPressed() | KeyInput.isControlDown() | KeyInput.isShiftDown() |
-    		   KeyInput.isAltDown() | KeyInput.isAltGrDown() | MouseInput.mouseMoved() |
-    		   MouseInput.isMousePressed() | MouseInput.isMouseClicked() | MouseInput.isMouseDragged() |
-    		   WindowInput.isActivated() | ComponentInput.windowMoved() | ComponentInput.windowResized() |
-    		   WindowInput.isActivated() | CommandTerminal.active | SetFileName.added;
+     		   KeyInput.isAltDown() | KeyInput.isAltGrDown() | MouseInput.mouseMoved() |
+     		   MouseInput.isMousePressed() | MouseInput.isMouseClicked() | MouseInput.isMouseDragged() |
+     		   WindowInput.isActivated() | ComponentInput.windowMoved() | ComponentInput.windowResized() |
+     		   WindowInput.isActivated() | CommandTerminal.active | SetFileName.added;
     }
 
     @Override
@@ -333,6 +309,7 @@ public class Main implements Runnable, Tickable {
         for (ListableFile f : Explorer.files)
         	f.tick();
         
+        KeyInput.updateKeys();
         MouseInput.updateMouse();
         ComponentInput.update();
         
@@ -490,9 +467,6 @@ public class Main implements Runnable, Tickable {
         	if (hasUserInteraction()) {
 		        tick();
 		        render();
-		        
-		        //KeyInput.chars.clear();
-		        //KeyInput.keyCodes.clear();
             }
         	
         	if (WindowInput.isClosing()) {

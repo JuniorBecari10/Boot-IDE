@@ -168,8 +168,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		
 		this.regent = regent;
 		this.parent = parent;
-		
-		
 	}
 	
 	public ListableFile getParent() {
@@ -188,6 +186,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	public String toString() {
 		return "ListableFile: [parent: " + parent + ", regent: " + regent + "]";
 	}
+	/*
+	 * Fazer não renderizar nem tickar ListableFiles nem Tabs fora da tela
+	 * 
+	 * if (y < 200 || y > Main.screen.getHeight()) return;
+	 */
 	
 	public static String getFileExtension(File file) { // Fonte: StackOverflow
 	    String name = file.getName();
