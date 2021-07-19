@@ -689,7 +689,7 @@ public class CommandTerminal extends IDEComponent {
 					
 					break;
 					
-				case "htmlnew": // renomear para html5
+				case "html5":
 					String[] htmlnewstrs = { "<!DOCTYPE html>", "<html>", "    <head>", "        <title></title>", "        ", "        <meta charset=\"UTF-8\">", "        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", "    </head>", "    <body>", "    </body>", "</html>" };
 					
 					strs = htmlnewstrs;
