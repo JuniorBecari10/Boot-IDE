@@ -512,7 +512,7 @@ public class CodeEditor extends IDEComponent {
 				 ext.equalsIgnoreCase(".jl") || ext.equalsIgnoreCase(".pl") || ext.equalsIgnoreCase(".has") || ext.equalsIgnoreCase(".hs") || ext.equalsIgnoreCase(".fs") || ext.equalsIgnoreCase(".coffee") ||
 				 ext.equalsIgnoreCase(".m") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".pas") || ext.equalsIgnoreCase(".pp") || ext.equalsIgnoreCase(".scala") ||
 				 ext.equalsIgnoreCase(".dart") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
-				 ext.equalsIgnoreCase(".url"))) { // não verificaremos mais o html aqui kikikikiki
+				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig"))) { // não verificaremos mais o html aqui kikikikiki
 				
 				indxs = findWord(new String(chars), ")");
 				
@@ -797,7 +797,7 @@ public class CodeEditor extends IDEComponent {
 			}
 			}
 				
-				if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd")) {
+				if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".zig")) {
 					indxs = findWord(new String(chars), "@");
 					
 					int len = 0;
@@ -827,6 +827,8 @@ public class CodeEditor extends IDEComponent {
 		
 		return fs;
 	}
+	
+	// TODO colocar as declarações de arrays na classe!
 	
 	public static List<IDEFont> colorKeywords(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
@@ -2011,6 +2013,27 @@ public class CodeEditor extends IDEComponent {
 					"not", "or", "repeat", "return", "then", "true", "until", "while" };
 			
 			for (String s : luaKeys) { // colorir keywordss
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+			break;
+			
+		case ".zig":
+			if (!foundExt) {
+				extType = "Zig";
+				foundExt = true;
+			}
+			
+			String[] zigKeys = { "align", "allowzero", "and", "anyframe", "anytype", "asm", "async", "await",
+					"break", "catch", "comptime", "const", "continue", "defer", "else", "enum", "errdefer",
+					"error", "export", "extern", "false", "fn", "for", "if", "inline", "noalias",
+					"nosuspend", "null", "or", "orelse", "packed", "pub", "resume", "return", "linksection",
+					"struct", "suspend", "switch", "test", "threadlocal", "true", "try", "undefined",
+					"union", "unreachable", "usingnamespace", "var", "volatile", "while" };
+			
+			for (String s : zigKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs)
@@ -3488,7 +3511,7 @@ public class CodeEditor extends IDEComponent {
 				 ext.equalsIgnoreCase(".m") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".pas") || ext.equalsIgnoreCase(".pp") || ext.equalsIgnoreCase(".scala") || ext.equalsIgnoreCase(".dart") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") ||
 				 ext.equalsIgnoreCase(".json") || ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xml") ||
 				 ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
-				 ext.equalsIgnoreCase(".url"))) {
+				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig"))) {
 			
 			String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
 					  "1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "0a", // hex

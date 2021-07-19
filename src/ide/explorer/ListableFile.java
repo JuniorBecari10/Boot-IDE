@@ -79,6 +79,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType(".pp", Main.spritesheet.getSprite (432, 16, 16, 16)),
 			new FileType(".scala",Main.spritesheet.getSprite(448,16, 16, 16)),
 			new FileType(".dart",Main.spritesheet.getSprite(464, 16, 16, 16)),
+			new FileType(".zig", Main.spritesheet.getSprite(480, 16, 16, 16)),
 			
 			new FileType(".html", Main.spritesheet.getSprite (0, 32, 16, 16)),
 			new FileType(".htm", Main.spritesheet.getSprite  (0, 32, 16, 16)),
