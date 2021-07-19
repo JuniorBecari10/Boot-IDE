@@ -640,6 +640,20 @@ public class CommandTerminal extends IDEComponent {
 					
 					break;
 					
+				case "javainterface":
+					String[] javaintstrs = { "public interface " + classname + " {", "    ", "}"};
+					
+					strs = javaintstrs;
+					
+					break;
+					
+				case "javaenum":
+					String[] javaenstrs = { "public enum " + classname + " {", "    ", "}"};
+					
+					strs = javaenstrs;
+					
+					break;
+					
 				case "javamain":
 					String[] javamstrs = { "public class " + classname + " {", "", "    public static void main(String[] args) {", "        ", "    }", "}"};
 					
@@ -675,7 +689,7 @@ public class CommandTerminal extends IDEComponent {
 					
 					break;
 					
-				case "htmlnew":
+				case "htmlnew": // renomear para html5
 					String[] htmlnewstrs = { "<!DOCTYPE html>", "<html>", "    <head>", "        <title></title>", "        ", "        <meta charset=\"UTF-8\">", "        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", "    </head>", "    <body>", "    </body>", "</html>" };
 					
 					strs = htmlnewstrs;

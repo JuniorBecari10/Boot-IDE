@@ -116,6 +116,8 @@ public class Explorer extends IDEComponent {
     	if (Main.baseFolder.getName().length() > 15)
     		showBaseFolderCard = true;
     	
+    	// if (f.getY() < 200 || f.getY() > Main.screen.getHeight()) continue;
+    	
     	for (ListableFile f : Explorer.files)
         	f.tick();
     }

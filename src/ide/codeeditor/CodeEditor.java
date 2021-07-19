@@ -4443,6 +4443,17 @@ public class CodeEditor extends IDEComponent {
 		
 		String[] sp = clipboard.split("\n");
 		
+		/*if (sp.length > 1)
+			for (int i = 0; i < sp.length; i++) {
+				StringBuilder spaces = new StringBuilder();
+				
+				for (int j = 0; j < countChar(new String(toCharArray(lines.get(cursorY - 1).getChars())), ' '); j++) {
+					spaces.append(' ');
+				}
+				
+				addNewLine(cursorY - 1, spaces.toString());
+			}*/
+		
 		int index = 0;
 		
 		if (sp.length == 1) { // se é só uma linha
@@ -5161,9 +5172,11 @@ public class CodeEditor extends IDEComponent {
 					
 				return;
 			}
-			// por enquanto essa função está desativada
+			
 			/*if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
 				KeyInput.updateKeys();
+				
+				if (undo.isEmpty()) return;
 				
 				List<IDELine> peek = undo.peek();
 				
@@ -5179,6 +5192,8 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Y (Refazer)
 				KeyInput.updateKeys();
 				
+				if (redo.isEmpty()) return;
+				
 				List<IDELine> peek = redo.peek();
 				
 				lines = peek;
@@ -5190,7 +5205,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}*/
 			
-			if (!(KeyInput.isAltDown()|| KeyInput.isControlDown()) && !isReadOnly && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados
+			if (!(KeyInput.isAltDown() || KeyInput.isControlDown()) && !isReadOnly && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados
 			
 				if (!KeyInput.isShiftDown()) {
 					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
@@ -5297,6 +5312,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
 				KeyInput.updateKeys();
+				undo.push(lines);
 				
 				if (!selecting) {
 					if (cursorX > 0) {
@@ -5337,6 +5353,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				KeyInput.updateKeys();
+				undo.push(lines);
 				
 				if (cursorX < cY.length()) {
 					cY.deleteCharAt(cursorX);
@@ -5353,6 +5370,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 				KeyInput.updateKeys();
+				undo.push(lines);
 				
 				cY.insert(cursorX, "    ");
 				
@@ -5362,6 +5380,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
+				undo.push(lines);
 				
 				StringBuilder spaces = new StringBuilder();
 				String s = cY.substring(cursorX);
@@ -5458,6 +5477,8 @@ public class CodeEditor extends IDEComponent {
 			int keyCode = KeyInput.getKeyCodePressed();
 			char c = KeyInput.getCharPressed();
 			
+			//System.out.println(c);
+			
 			c = addAccents(keyCode, c);
 			
 			cY = write(cY, c);
@@ -5472,9 +5493,8 @@ public class CodeEditor extends IDEComponent {
 			setCursorWithinBounds();
 			
 			if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
-		
-			undo.push(lines);
 			
+			undo.push(lines);
 			editing.setSaved(false);
 		} // <-
 		} // não ligue pra isso :)

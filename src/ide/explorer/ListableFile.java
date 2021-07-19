@@ -1006,7 +1006,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		if (hovered() && !RenameFile.added)
 			Explorer.hoveringListableFile = true;
 		
-		if (leftClicked()) {
+		if (leftClicked() && !(y < 200 || y > Main.screen.getHeight())) {
 			MouseInput.updateMouse();
 			
 			if (Explorer.folderPath.length() > 22)
