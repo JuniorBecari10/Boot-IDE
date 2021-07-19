@@ -306,9 +306,6 @@ public class Main implements Runnable, Tickable {
         for (IDEComponent c : IDEComponent.components)
             c.tick();
         
-        for (ListableFile f : Explorer.files)
-        	f.tick();
-        
         KeyInput.updateKeys();
         MouseInput.updateMouse();
         ComponentInput.update();

@@ -15,7 +15,6 @@ import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
-import ide.main.Screen;
 import ide.util.Colors;
 
 public class Explorer extends IDEComponent {
@@ -116,6 +115,9 @@ public class Explorer extends IDEComponent {
     	
     	if (Main.baseFolder.getName().length() > 15)
     		showBaseFolderCard = true;
+    	
+    	for (ListableFile f : Explorer.files)
+        	f.tick();
     }
 
     public void render(Graphics g) {
@@ -147,7 +149,7 @@ public class Explorer extends IDEComponent {
         g2.drawLine(width - 1, 0, width - 1, height);
         
         for (ListableFile f : Explorer.files) {
-        	if (f.getY() < 200 || f.getY() > Screen.HEIGHT) continue;
+        	if (f.getY() < 200 || f.getY() > Main.screen.getHeight()) continue;
         	
         	f.render(g);
         }
