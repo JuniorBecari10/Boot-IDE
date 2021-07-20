@@ -662,9 +662,16 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "cs":
-					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname + " ", "{", "    ", "    public class Program ", "    {", "        ", "        static void Main(string[] args)", "        {", "            ", "        }", "    }", "}"};
+					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname + " ", "{", "    ", "    public class Program ", "    {", "        ", "    }", "}"};
 					
 					strs = csstrs;
+					
+					break;
+					
+				case "csmain":
+					String[] csmstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname + " ", "{", "    ", "    public class Program ", "    {", "        ", "        static void Main(string[] args)", "        {", "            ", "        }", "    }", "}"};
+					
+					strs = csmstrs;
 					
 					break;
 					

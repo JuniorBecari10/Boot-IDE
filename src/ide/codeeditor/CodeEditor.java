@@ -123,10 +123,442 @@ public class CodeEditor extends IDEComponent {
 	
 	public static boolean isReadOnly = false;
 	
-	//private Thread syntaxErrors;
+	///////
 	
-	//private static List<Integer> numopenbrackets = new ArrayList<>();
-	//private static List<Integer> numclosebrackets = new ArrayList<>();
+	private static String[] javaKeys = { "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
+			"continue", "default", "do", "double", "else", "enum", "extends", "final", "finally", "float",
+			"for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long", "native",
+			"new", "package", "private", "protected", "public", "return", "short", "static", "strictfp", "super",
+			"switch", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile", "while",
+			"true", "false", "null", "@interface" };
+	
+	private static String[] tags = { "<!--", "<!doctype", "<?php", "<!DOCTYPE", "<a", "<abbr", "<acronym", "<address", "<applet", "<area", "<article",
+			"<aside", "<audio", "<b", "<base", "<basefont", "<bdi", "<bdo", "<big", "<blockquote", "<body", "<br", "<button",
+			"<canvas", "<caption", "<center", "<cite", "<code", "<col", "<colgroup", "<data", "<datalist", "<dd", "<del",
+			"<details", "<dfn", "<dialog", "<dir", "<div", "<dl", "<dt", "<em", "<embed", "<fieldset", "<figcaption", "<figure",
+			"<font", "<footer", "<form", "<frame", "<frameset", "<h1", "<h2", "<h3", "<h4", "<h5", "<h6", "<head", "<header",
+			"<hr", "<html", "<i", "<iframe", "<img", "<input", "<ins", "<kbd", "<label", "<legend", "<li", "<link", "<main",
+			"<map", "<mark", "<meta", "<meter", "<nav", "<noframes", "<noscript", "<object", "<ol", "<optgroup", "<option",
+			"<output", "<p", "<param", "<picture", "<pre", "<progress", "<q", "<rp", "<rt", "<ruby", "<s", "<samp", "<script",
+			"<section", "<select", "<small", "<source", "<span", "<strike", "<strong", "<style", "<sup", "<svg", "<table",
+			"<tbody", "<td", "<template", "<textarea", "<tfoot", "<th", "<thead", "<time", "<title", "<tr", "<track", "<tt",
+			"<u", "<ul", "<var", "<video", "<wbr",
+			"</a", "</abbr", "</acronym", "</address", "</applet", "</area", "</article",
+			"</aside", "</audio", "</b", "</base", "</basefont", "</bdi", "</bdo", "</big", "</blockquote", "</body", "</br", "</button",
+			"</canvas", "</caption", "</center", "</cite", "</code", "</col", "</colgroup", "</data", "</datalist", "</dd", "</del",
+			"</details", "</dfn", "</dialog", "</dir", "</div", "</dl", "</dt", "</em", "</embed", "</fieldset", "</figcaption", "</figure",
+			"</font", "</footer", "</form", "</frame", "</frameset", "</h1", "</h2", "</h3", "</h4", "</h5", "</h6", "</head", "</header",
+			"</hr", "</html", "</i", "</iframe", "</img", "</input", "</ins", "</kbd", "</label", "</legend", "</li", "</link", "</main",
+			"</map", "</mark", "</meta", "</meter", "</nav", "</noframes", "</noscript", "</object", "</ol", "</optgroup", "</option",
+			"</output", "</p", "</param", "</picture", "</pre", "</progress", "</q", "</rp", "</rt", "</ruby", "</s", "</samp", "</script",
+			"</section", "</select", "</small", "</source", "</span", "</strike", "</strong", "</style", "</sup", "</svg", "</table",
+			"</tbody", "</td", "</template", "</textarea", "</tfoot", "</th", "</thead", "</time", "</title", "</tr", "</track", "</tt",
+			"</u", "</ul", "</var", "</video", "</wbr" };
+	
+	private static String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+			  "1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "0a", // hex
+			  "1b", "2b", "3b", "4b", "5b", "6b", "7b", "8b", "9b", "0b",
+			  "1c", "2c", "3c", "4c", "5c", "6c", "7c", "8c", "9c", "0c",
+			  "1d", "2d", "3d", "4d", "5d", "6d", "7d", "8d", "9d", "0d",
+			  "1e", "2e", "3e", "4e", "5e", "6e", "7e", "8e", "9e", "0e",
+			  "1f", "2f", "3f", "4f", "5f", "6f", "7f", "8f", "9f", "0f",
+			  "1l", "2l", "3l", "4l", "5l", "6l", "7l", "8l", "9l", "0l",
+			  "1A", "2A", "3A", "4A", "5A", "6A", "7A", "8A", "9A", "0A", // HEX
+			  "1B", "2B", "3B", "4B", "5B", "6B", "7B", "8B", "9B", "0B",
+			  "1C", "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "0C",
+			  "1D", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "0D",
+			  "1E", "2E", "3E", "4E", "5E", "6E", "7E", "8E", "9E", "0E",
+			  "1F", "2F", "3F", "4F", "5F", "6F", "7F", "8F", "9F", "0F",
+			  "1L", "2L", "3L", "4L", "5L", "6L", "7L", "8L", "9L", "0L",
+			  "1x", "2x", "3x", "4x", "5x", "6x", "7x", "8x", "9x", "0x",
+			  "1X", "2X", "3X", "4X", "5X", "6X", "7X", "8X", "9X", "0X",
+			  "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "0h",
+			  "1H", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "0H"
+			  };
+	
+	private static String[] phpKeys = { "abstract", "and", "as", "break", "callable", "case", "catch", "class", "clone",
+			"const", "continue", "declare", "default", "do", "echo", "else", "elseif", "enddeclare", "endfor",
+			"endforeach", "endif", "endswitch", "endwhile", "extends", "final", "finally", "fn", "for", "foreach",
+			"function", "global", "goto", "if", "implements", "include", "include_once", "instanceof", "insteadof",
+			"interface", "match", "namespace", "new", "or", "print", "private", "protected", "public", "require",
+			"require_once", "return", "static", "switch", "throw", "trait", "try", "use", "var", "while", "yield",
+			"yield from", "__CLASS__", "__DIR__", "__FILE__", "__FUNCTION__", "__LINE__", "__METHOD__", "__NAMESPACE__",
+			"__TRAIT__" };
+	
+	private static String[] jsKeys = { "abstract", "arguments", "await", "boolean", "break", "byte", "case", "catch",
+			"char", "class", "const", "continue", "debugger", "default", "delete", "do", "double", "else",
+			"enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function",
+			"goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long",
+			"native", "new", "null", "package", "private", "protected", "public", "return", "short", "static",
+			"super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof",
+			"var", "void", "volatile", "while", "with", "yield", "undefined", "of" };
+	
+	private static String[] cssTags = { "a", "abbr", "acronym", "address", "applet", "area", "article",
+			"aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button",
+			"canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del",
+			"details", "dfn", "dialog", "dir", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure",
+			"font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header",
+			"hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "label", "legend", "li", "link", "main",
+			"map", "mark", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option",
+			"output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script",
+			"section", "select", "small", "source", "span", "strike", "strong", "style", "sup", "svg", "table",
+			"tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt",
+			"u", "ul", "var", "video", "wbr", "important"
+	};
+	
+	private static String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
+			"animation-duration", "animation-fill-mode", "animation-iteration-count", "animation-name",
+			"animation-play-state", "animation-timing-function", "backface-visibility", "background",
+			"background-attachment", "background-blend-mode", "background-clip", "background-color",
+			"background-image", "background-origin", "background-position", "background-repeat",
+			"background-size", "border", "border-bottom", "border-bottom-color", "border-bottom-left-radius",
+			"border-bottom-right-radius", "border-bottom-style", "border-bottom-width", "border-collapse",
+			"border-color", "border-image", "border-image-outset", "border-image-repeat", "border-image-slice",
+			"border-image-source", "border-image-width", "border-radius", "border-right", "border-right-color",
+			"border-right-style", "border-right-width", "border-spacing", "border-style", "border-top",
+			"border-top-color", "border-top-left-radius", "border-top-right-radius", "border-top-style",
+			"border-top-width", "border-width", "bottom", "box-decoration-break", "box-shadow", "box-sizing",
+			"break-after", "break-before", "break-inside", "caption-side", "caret-color", "@charset", "clear",
+			"clip", "color", "column-count", "column-fill", "column-gap", "column-rule", "column-rule-color",
+			"column-rule-style", "column-rule-width", "column-span", "column-width", "columns", "content",
+			"counter-increment", "counter-reset", "cursor", "direction", "display", "empty-cells", "filter",
+			"flex", "flex-basis", "flex-direction", "flex-flow", "flex-grow", "flex-shrink", "flex-wrap",
+			"float", "font", "@font-face", "font-family", "font-feature-settings", "@font-feature-values",
+			"font-kerning", "font-language-override", "font-size", "font-size-adjust", "font-stretch",
+			"font-style", "font-synthesis", "font-variant", "font-variant-alternates", "font-variant-caps",
+			"font-variant-east-asian", "font-variant-ligatures", "font-variant-numeric", "font-variant-position",
+			"font-weight", "gap", "grid", "grid-area", "grid-auto-columns", "grid-auto-flow", "grid-auto-rows",
+			"grid-column", "grid-column-end", "grid-column-gap", "grid-column-start", "grid-template",
+			"grid-template-areas", "grid-template-columns", "grid-template-rows", "hanging-ponctuation",
+			"height", "hyphens", "image-rendering", "@import", "isolation", "justify-content", "@keyframes",
+			"left", "letter-spacing", "line-break", "line-height", "list-style", "list-style-image",
+			"list-style-position", "list-style-type", "margin", "margin-bottom", "margin-left",
+			"margin-right", "margin-top", "mask", "mask-type", "max-height", "max-width", "@media",
+			"min-height", "min-width", "mix-blend-mode", "object-fit", "object-position", "opacity",
+			"order", "orphans", "outline", "outline-color", "outline-offset", "outline-style",
+			"outline-width", "overflow", "overflow-wrap", "overflow-x", "overflow-y", "padding",
+			"padding-bottom", "padding-left", "padding-right", "padding-top", "page-break-after",
+			"page-break-before", "page-break-inside", "perspective", "perspective-origin", "pointer-events",
+			"position", "quotes", "resize", "right", "row-gap", "scroll-behavior", "tab-size", "table-layout",
+			"text-align", "text-align-last", "text-combine-upright", "text-decoration", "text-decoration-color",
+			"text-decoration-line", "text-decoration-style", "text-indent", "text-justify", "text-orientation",
+			"text-overflow", "text-shadow", "text-transform", "text-underline-position", "top", "transform",
+			"transform-origin", "transform-style", "transition", "transition-delay", "transition-duration",
+			"transition-property", "transition-timing-function", "unicode-bidi", "user-select", "vertical-align",
+			"visibility", "white-space", "widows", "width", "word-break", "word-spacing", "word-wrap",
+			"writing-mode", "z-index" };
+	
+	private static String[] units = { "px", "em", "rem", "cm", "mm", "in", "pt", "pc", "ex", "ch", "vw", "vh", "vmin", "vmax" };
+	
+	private static String[] pyKeys = { "and", "as", "assert", "break", "class",
+			"continue", "def", "del", "elif", "else", "except", "False",
+			"finally", "for", "from", "global", "if", "import", "in", "is",
+			"lambda", "None", "nonlocal", "not", "or", "pass", "raise", "return",
+			"True", "try", "while", "with", "yield", "self" };
+	
+	private static String[] dartKeys = { "abstract", "else", "import", "super", "as", "enum", "in",
+			"switch", "assert", "export", "interface", "sync", "async", "extends", "is",
+			"this", "await", "extension", "library", "throw", "break", "external", "mixin",
+			"true", "case", "factory", "new", "try", "class", "final", "catch", "false",
+			"null", "typedef", "on", "var", "const", "finally", "operator", "void", "continue",
+			"for", "part", "while", "covariant", "Function", "rethrow", "with", "default",
+			"get", "return", "yield", "deferred", "hide", "set", "do", "if", "show", "dynamic",
+			"implements", "static" };
+	
+	private static String[] ldKeys = { "ENTRY", "OUTPUT_FORMAT", "STARTUP", "SEARCH_DIR", "INPUT", "OUTPUT",
+			"MEMORY", "SECTIONS", "KEEP" };
+	
+	private static String[] pasKeys = { "and", "begin", "boolean", "break", "byte", "continue", "div", "do", "double",
+			"else", "end", "false", "if", "integer", "longint", "mod", "not", "or", "repeat", "shl",
+			"shortint", "shr", "single", "then", "true", "until", "while", "word", "xor", "function" };
+	
+	private static String[] cKeys = { "auto", "break", "case", "char", "const",
+			"continue", "default", "do", "double", "else", "enum", "extern",
+			"float", "for", "goto", "if", "int", "long", "register", "return",
+			"short", "signed", "sizeof", "static", "struct", "switch", "typedef",
+			"union", "unsigned", "void", "volatile", "while", "true", "false", "null", "include",
+			"bool", "duint", "uint16_t" };
+	
+	private static String[] cppKeys = { "auto", "break", "case", "char", "const",
+			"continue", "default", "do", "double", "else", "enum", "extern",
+			"float", "for", "goto", "if", "int", "long", "register", "return",
+			"short", "signed", "sizeof", "static", "struct", "switch", "typedef",
+			"union", "unsigned", "void", "volatile", "while",
+			"asm", "dynamic_cast", "namespace", "reinterpret_cast", "bool",
+			"explicit", "new", "static_cast", "false", "catch", "operator", "template",
+			"friend", "private", "class", "this", "inline", "public", "throw", "const_cast",
+			"delete", "mutable", "protected", "true", "try", "typeid", "typename", "using", "virtual",
+			"wchar_t", "include", "define", "string", "ifdef", "ifndef", "error", "pragma", "endif",
+			"override" };
+	
+	private static String[] csKeys = { "abstract", "async", "const", "event", "extern", "new",
+			"override", "partial", "readonly", "sealed", "static", "unsafe", "virtual",
+			"volatile", "public", "private", "internal", "protected", "if", "else", "switch",
+			"case", "do", "for", "foreach", "in", "while", "break", "continue", "default", "goto",
+			"return", "yield", "throw", "try", "catch", "finally", "checked", "unchecked", "fixed",
+			"lock", "params", "ref", "out", "using", "alias", "await", "sizeof", "typeof",
+			"stackalloc", "is", "base", "this", "null", "false", "true", "value", "void", "bool", "byte",
+			"char", "class", "decimal", "double", "enum", "float", "int", "long", "sbyte", "short", "string",
+			"struct", "uint", "ulong", "ushort", "add", "var", "dynamic", "global", "set", "namespace", "object", "as", "get" };
+	
+	private static String[] rKeys = { "if", "else", "repeat", "while", "function", "for", "in", "next", "break",
+			"TRUE", "FALSE", "NULL", "Inf", "NaN", "NA", "NA_integer", "NA_real", "NA_complex", "NA_character" };
+	
+	private static String[] batCom = { "ver", "assoc", "cd", "cls", "copy", "del", "dir", "date",
+			"echo", "@echo", "exit", "md", "move", "path", "pause", "prompt", "rd",
+			"rem", "start", "time", "type", "vol", "attrib", "chkdsk", "choice", "cmd",
+			"comp", "convert", "driverquery", "expand", "find", "format", "help", "ipconfig",
+			"label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo",
+			"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto",
+			"rmdir", "icacls", "takeown", "if", "for", "else", "git", "npm", "call", "exist", "end",
+			"java", "javac", "nodemon",
+			"VER", "ASSOC", "CD", "CLS",
+			"COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
+			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
+			"CMD", "COMP", "CONVERT", "DRIVERQUERY", "EXPAND", "FIND", "FORMAT", "HELP", "IPCONFIG",
+			"LABEL", "MORE", "NET", "PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO",
+			"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH", "NODE", "OFF", "GOTO",
+			"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM", "CALL", "EXIST", "END",
+			"JAVA", "JAVAC", "NODEMON" };
+	
+	private static String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
+			"false", "for", "function", "if", "in", "local", "nil",
+			"not", "or", "repeat", "return", "then", "true", "until", "while" };
+	
+	private static String[] zigKeys = { "align", "allowzero", "and", "anyframe", "anytype", "asm", "async", "await",
+			"break", "catch", "comptime", "const", "continue", "defer", "else", "enum", "errdefer",
+			"error", "export", "extern", "false", "fn", "for", "if", "inline", "noalias",
+			"nosuspend", "null", "or", "orelse", "packed", "pub", "resume", "return", "linksection",
+			"struct", "suspend", "switch", "test", "threadlocal", "true", "try", "undefined",
+			"union", "unreachable", "usingnamespace", "var", "volatile", "while" };
+	
+	private static String[] sqlKeys = { "ADD", "ADD CONSTRAINT", "ALTER", "ALTER COLUMN", "ALTER TABLE",
+			"ALL", "AND", "ANY", "AS", "ASC", "BACKUP DATABASE", "BETWEEN", "CASE", "CHECK",
+			"COLUMN", "CONSTRAINT", "CREATE", "CREATE DATABASE", "CREATE INDEX", "CREATE OR REPLACE VIEW",
+			"CREATE TABLE", "CREATE PROCEDURE", "CREATE UNIQUE INDEX", "CREATE VIEW", "DATABASE", "DEFAULT",
+			"DELETE", "DESC", "DISTINCT", "DROP", "DROP COLUMN", "DROP CONSTRAINT", "DROP DATABASE",
+			"DROP DEFAULT", "DROP INDEX", "DROP TABLE", "DROP VIEW", "EXEC", "EXISTS", "FOREIGN KEY",
+			"FROM", "FULL OUTER JOIN", "GROUP BY", "HAVING", "IN", "INDEX", "INNER JOIN", "INSERT INTO",
+			"INSERT INTO SELECT", "IS NULL", "IS NOT NULL", "JOIN", "LEFT JOIN", "LIKE", "LIMIT", "NOT",
+			"NOT NULL", "OR", "ORDER BY", "OUTER JOIN", "PRIMARY KEY", "PROCEDURE", "RIGHT JOIN", "ROWNUM",
+			"SELECT", "SELECT DISTINCT", "SELECT INTO", "SELECT TOP", "SET", "TABLE", "TOP", "TRUNCATE TABLE",
+			"UNION", "UNION ALL", "UNIQUE", "UPDATE", "VALUES", "VIEW", "WHERE", "add", "add constraint", "alter",
+			"alter column", "alter table", "all", "and", "any", "as", "asc", "backup database", "between", "case",
+			"check", "column", "constraint", "create", "create database", "create index", "create or replace view",
+			"create table", "create procedure", "create unique index", "create view", "database", "default",
+			"delete", "desc", "distinct", "drop", "drop column", "drop constraint", "drop database",
+			"drop default", "drop index", "drop table", "drop view", "exec", "exists", "foreign key",
+			"from", "full outer join", "group by", "having", "in", "index", "inner join", "insert into",
+			"insert into select", "is null", "is not null", "join", "left join", "like", "limit", "not",
+			"not null", "or", "order by", "outer join", "primary key", "procedure", "right join", "rownum",
+			"select", "select distinct", "select into", "select top", "set", "table", "top", "truncate table",
+			"union", "union all", "unique", "update", "values", "view", "where" };
+	
+	private static String[] asmRegs = { "rax", "rbx", "rcx", "rdx", "rsi", "rdi", "rbp", "rsp", "r8", "r9", "r10", "r11", "r12", "r13",
+			"r14", "r15", "eax", "ebx", "ecx", "esi", "edi", "ebp", "esp", "r8d", "r9d", "r10d", "r11d", "r12d", "r13d",
+			"r14d", "r15d", "ax", "bx", "cx", "dx", "si", "di", "bp", "sp", "r8w", "r9w", "r10w", "r11w", "r12w", "r13w",
+			"r14w", "r15w", "al", "bl", "cl", "dl", "sil", "dil", "bpl", "spl", "r8b", "r9b", "r10b", "r11b", "r12b",
+			"r13b", "r14b", "r15b", "ah", "bh", "ch", "dh", "edx" };
+	
+	// não vai colorir keys de uma só letra
+	private static String[] asmKeys = { "global", "db", "dw", "equ", "extern", "include", "times", "org", "syscall", "aaa", "aad", "aam", "aas", "adc",
+			"add", "addpd", "addps", "addressing", "addsd", "addss", "align", "and", "andnpd", "andnps", "andpd",
+			"andps", "arpl", "as", "commandline", "ELFobjectfile", "macroprocessing", "syntaxUNIXversusIntel", "ascii",
+			"assemblerSeeasB", "bcd", "binaryarithmeticinstructions", "bitinstructions", "bound", "bsf", "bsr",
+			"bss", "bswap", "bt", "btc", "btr", "bts", "byte", "byte", "byte", "byte", "byteinstructionsC", "call",
+			"cbtw", "clc", "cld", "clflush", "cli", "cltd", "cltq", "clts", "cmc", "cmova", "cmova", "cmovae",
+			"cmovae", "cmovb", "cmovb", "cmovbe", "cmovbe", "cmovc", "cmovc", "cmove", "cmove", "cmovg", "cmovg",
+			"cmovge", "cmovge", "cmovl", "cmovl", "cmovle", "cmovle", "cmovna", "cmovna", "cmovnae", "cmovnae",
+			"cmovnb", "cmovnb", "cmovnbe", "cmovnbe", "cmovnc", "cmovnc", "cmovne", "cmovne", "cmovng", "cmovng",
+			"cmovnge", "cmovnge", "cmovnl", "cmovnl", "cmovnle", "cmovnle", "cmovno", "cmovno", "cmovnp", "cmovnp",
+			"cmovns", "cmovns", "cmovnz", "cmovnz", "cmovo", "cmovo", "cmovp", "cmovp", "cmovpe", "cmovpo", "cmovs",
+			"cmovz", "cmp", "cmppd", "cmpps", "cmps", "cmpsb", "cmpsd", "cmpsl", "cmpss", "cmpsw", "cmpxchg",
+			"cmpxchgb", "comisd", "comiss", "comm", "comment", "controltransferinstructions", "cpp", "cpuid",
+			"cqtd", "cqto", "cvtdqpd", "cvtdqps", "cvtpddq", "cvtpdpi", "cvtpdps", "cvtpipd", "cvtpips", "cvtpsdq",
+			"cvtpspd", "cvtpspi", "cvtsdsi", "cvtsdss", "cvtsisd", "cvtsiss", "cvtsssd", "cvtsssi", "cvttpddq",
+			"cvttpdpi", "cvttpsdq", "cvttpspi", "cvttsdsi", "cvttsssi", "cwtd", "cwtlD", "daa", "das", "data",
+			"datatransferinstructions", "dec", "decimalarithmeticinstructions", "directives", "div", "divpd", "divps",
+			"divsd", "divss", "doubleE", "ELFobjectfile", "emms", "enter", "even", "extF", "fxm", "fabs", "fadd",
+			"faddp", "fbe", "Seeas", "fbld", "fbstp", "fchs", "fclex", "fcmovb", "fcmovbe", "fcmove", "fcmovnb",
+			"fcmovnbe", "fcmovne", "fcmovnu", "fcmovu", "fcom", "fcomi", "fcomip", "fcomp", "fcompp", "fcos",
+			"fdecstp", "fdiv", "fdivp", "fdivr", "fdivrp", "ffree", "fiadd", "ficom", "ficomp", "fidiv", "fidivr",
+			"fild", "file", "fimul", "fincstp", "finit", "fist", "fistp", "fisub", "fisubr", "flagcontrolinstructions",
+			"fld", "fld", "fldcw", "fldenv", "fldle", "fldlt", "fldlg", "fldln", "fldpi", "fldz", "float",
+			"floating-pointinstructions", "basicarithmetic", "comparison", "control", "datatransfer", "loadconstants",
+			"logarithmic", "Seetranscendental", "transcendental", "trigonometric", "Seetranscendental", "fmul",
+			"fmulp", "fnclex", "fninit", "fnop", "fnsave", "fnstcw", "fnstenv", "fnstsw", "fpatan", "fprem", "fprem",
+			"fptan", "frndint", "frstor", "fsave", "fscale", "fsin", "fsincos", "fsqrt", "fst", "fstcw", "fstenv",
+			"fstp", "fstsw", "fsub", "fsubp", "fsubr", "fsubrp", "ftst", "fucom", "fucomi", "fucomip", "fucomp",
+			"fucompp", "fwait", "fxam", "fxch", "fxrstor", "fxsave", "fxtract", "fylx", "fylxp", "G", "gas", "globl",
+			"group", "H", "hidden", "hlt", "ident", "identifier", "idiv", "imul", "in", "inc", "ins", "insb", "insl",
+			"instruction", "format", "suffixes", "instructions", "binaryarithmetic", "bit", "byte", "controltransfer",
+			"datatransfer", "decimalarithmetic", "flagcontrol", "floating-point-", "logical", "miscellaneous", "MMX-",
+			"operatingsystemsupport-", "Opteron", "rotate", "segmentregister", "shift", "SIMDstatemanagement", "SSE-",
+			"SSE-", "string", "insw", "int", "into", "invd", "invlpg", "iretJ", "ja", "jae", "jb", "jbe", "jc", "jcxz",
+			"je", "jecxz", "jg", "jge", "jl", "jle", "jmp", "jnae", "jnb", "jnbe", "jnc", "jne", "jng", "jnge", "jnl",
+			"jnle", "jno", "jnp", "jns", "jnz", "jo", "jp", "jpe", "jpo", "js", "jzK", "keywordL", "label", "numeric",
+			"symbolic", "lahf", "lar", "lcall", "lcomm", "ldmxcsr", "lds", "lea", "leave", "les", "lfence", "lfs",
+			"lgdt", "lgs", "lidt", "lldt", "lmsw", "local", "lock", "lods", "lodsb", "lodsl", "lodsw",
+			"logicalinstructions", "long", "loop", "loope", "loopne", "loopnz", "loopz", "lret", "lsl", "lss", "ltr",
+			"m", "maskmovdqu", "maskmovq", "maxpd", "maxps", "maxsd", "maxss", "mfence", "minpd", "minps", "minsd",
+			"minss", "miscellaneousinstructions", "MMXinstructions", "comparison", "conversion", "datatransfer",
+			"logical", "packedarithmetic", "rotate", "shift", "statemanagement", "mov", "movabs", "movabsA", "movapd",
+			"movaps", "movd", "movdqq", "movdqa", "movdqu", "movhlps", "movhpd", "movhps", "movlhps", "movlpd",
+			"movlps", "movmskpd", "movmskps", "movntdq", "movnti", "movntpd", "movntps", "movntq", "movq", "movqdq",
+			"movs", "movsb", "movsd", "movsl", "movss", "movsw", "movupd", "movups", "movzb", "movzw", "mul", "mulpd",
+			"mulps", "mulsd", "mulss", "N", "neg", "nop", "not", "numbers", "floatingpoint", "integers", "binary",
+			"decimal", "hexadecimal", "octal", "operands", "immediate", "indirect", "memory", "addressing",
+			"ordering", "register", "operatingsystemsupportinstructions", "Opteroninstructions", "or", "orpd",
+			"orps", "out", "outs", "outsb", "outsl", "outswP", "packssdw", "packsswb", "packuswb", "paddb", "paddd",
+			"paddq", "paddsb", "paddsw", "paddusb", "paddusw", "paddw", "pand", "pandn", "pause", "pavgb", "pavgw",
+			"pcmpeqb", "pcmpeqd", "pcmpeqw", "pcmpgtb", "pcmpgtd", "pcmpgtw", "pextrw", "pinsrw", "pmaddwd", "pmaxsw",
+			"pmaxub", "pminsw", "pminub", "pmovmskb", "pmulhuw", "pmulhw", "pmullw", "pmuludq", "pop", "popa", "popal",
+			"popaw", "popf", "popfw", "popsection", "por", "prefetchnta", "prefetcht", "prefetcht", "prefetcht",
+			"previous", "psadbw", "pshufd", "pshufhw", "pshuflw", "pshufw", "pslld", "pslldq", "psllq", "psllw", "psrad",
+			"psraw", "psrld", "psrldq", "psrlq", "psrlw", "psubb", "psubd", "psubq", "psubsb", "psubsw", "psubusb",
+			"psubusw", "psubw", "punpckhbw", "punpckhdq", "punpckhqdq", "punpckhwd", "punpcklbw", "punpckldq",
+			"punpcklqdq", "punpcklwd", "push", "pusha", "pushal", "pushaw", "pushf", "pushfw", "pushsection",
+			"pxor", "quad", "rcl", "rcpps", "rcpss", "rcr", "rdmsr", "rdpmc", "rdtsc", "rel", "rep", "repnz", "repz",
+			"ret", "rol", "ror", "rotateinstructions", "rsm", "rsqrtps", "rsqrtss", "sahf", "sal", "sar", "sbb",
+			"scas", "scasb", "scasl", "scasw", "section", "segmentregisterinstructions", "set", "seta", "setae",
+			"setb", "setbe", "setc", "sete", "setg", "setge", "setl", "setle", "setna", "setnae", "setnb", "setnbe",
+			"setnc", "setne", "setng", "setnge", "setnl", "setnle", "setno", "setnp", "setns", "setnz", "seto", "setp",
+			"setpe", "setpo", "sets", "setz", "sfence", "sgdt", "shiftinstructions", "shl", "shld", "shr", "shrd",
+			"shufpd", "shufps", "sidt", "SIMDstatemanagementinstructions", "skip", "sldt", "sleb", "smovl", "smsw",
+			"sqrtpd", "sqrtps", "sqrtsd", "sqrtss", "SSEinstructions", "compare", "conversion", "datatransfer",
+			"integer", "logical", "miscellaneous", "MXCSRstatemanagement", "packedarithmetic", "shuffle", "unpack",
+			"SSEinstructions", "compare", "conversion", "datamovement", "logical", "miscellaneous", "packedarithmetic",
+			"packedsingle-precisionfloating-point", "shuffle", "SIMDintegerinstructions", "unpack", "statement",
+			"empty", "stc", "std", "sti", "stmxcsr", "stos", "stosb", "stosl", "stosw", "str", "string", "string",
+			"stringinstructions", "sub", "subpd", "subps", "subsd", "subss", "symbolic", "sysenter", "sysexit", "tbss",
+			"tcomm", "tdata", "test", "text", "ucomisd", "ucomiss", "ud", "uleb", "unpckhpd", "unpckhps", "unpcklpd",
+			"unpcklps", "value", "verr", "verw", "wait", "wbinvd", "weak", "whitespace", "wrmsr", "xadd", "xchg",
+			"xchgA", "xlat", "xlatb", "xor", "xorpd", "xorps", "zero" };
+	
+	private static String[] jlKeys = { "baremodule", "begin", "break", "catch", "const", "continue", "do", "else",
+			"elseif", "end", "export", "false", "finally", "for", "function", "global", "if", "import",
+			"let", "local", "macro", "module", "quote", "return", "struct", "true", "try", "using", "while" };
+	
+	private static String[] plKeys = { "-A", "END", "length", "setpgrp", "-B", "endgrent", "link", "setpriority", "-b",
+			"endhostnet", "listen", "setprotoent", "-C", "endnetent", "local", "setpwent", "-c", "endprotoent",
+			"localtime", "setservent", "-d", "endpwent", "log", "setsockopt", "-e", "endservent", "lstat",
+			"shift", "-f", "eof", "map", "shmctl", "-g", "eval", "mkdir", "shmget", "-k", "exec", "msgctl",
+			"shmread", "-l", "exists", "msgget", "shmwrite", "-M", "exit", "msgrcv", "shutdown", "-O", "fcntl",
+			"msgsnd", "sin", "-o", "fileno", "my", "sleep", "-p", "flock", "next", "socket", "-r", "fork", "not",
+			"socketpair", "-R", "format", "oct", "sort", "-S", "formline", "open", "splice", "-s", "getc", "opendir",
+			"split", "-T", "getgrent", "ord", "sprintf", "-t", "getgrgid", "our", "sqrt", "-u", "getgrnam", "pack",
+			"srand", "-w", "gethostbyaddr", "pipe", "stat", "-W", "gethostbyname", "pop", "state", "-X", "gethostent",
+			"pos", "study", "-x", "getlogin", "print", "substr", "-z", "getnetbyaddr", "printf", "symlink", "abs",
+			"getnetbyname", "prototype", "syscall", "accept", "getnetent", "push", "sysopen", "alarm", "getpeername",
+			"quotemeta", "sysread", "atan2", "getpgrp", "rand", "sysseek", "AUTOLOAD", "getppid", "read", "system",
+			"BEGIN", "getpriority", "readdir", "syswrite", "bind", "getprotobyname", "readline", "tell", "binmode",
+			"getprotobynumber", "readlink", "telldir", "bless", "getprotoent", "readpipe", "tie", "break", "getpwent",
+			"recv", "tied", "caller", "getpwnam", "redo", "time", "chdir", "getpwuid", "ref", "times", "CHECK",
+			"getservbyname", "rename", "truncate", "chmod", "getservbyport", "rename", "umask", "chown", "getsockopt",
+			"reverse", "undef", "chr", "glob", "rewinddir", "UNITCHECK", "chroot", "gmtime", "rindex", "unlink",
+			"close", "goto", "rmdir", "unpack", "closedir", "grep", "say", "unshift", "connect", "hex", "scalar",
+			"untie", "cos", "index", "seek", "use", "crypt", "INIT", "seekdir", "utime", "dbmclose", "int",
+			"select", "values", "dbmopen", "ioctl", "semctl", "vec", "defined", "join", "semget", "wait", "delete",
+			"keys", "semop", "waitpid", "DESTROY", "kill", "send", "wantarray", "die", "last", "setgrent", "warn",
+			"dump", "lc", "sethostent", "write", "each", "lcfirst", "setnetent", "__DATA__", "else", "lock", "qw",
+			"__END__", "elsif", "lt", "qx", "__FILE__", "eq", "m", "s", "__LINE__", "exp", "ne", "sub", "__PACKAGE__",
+			"for", "no", "tr", "and", "foreach", "or", "unless", "cmp", "ge", "package", "until", "continue", "gt",
+			"q", "while", "CORE", "if", "qq", "xor", "do", "le", "qr", "y" };
+	
+	private static String[] hasKeys = { "as", "case", "of", "class", "data", "family", "data", "instance",
+			"default", "deriving", "do", "forall", "foreign", "hiding", "if", "then", "else",
+			"import", "infix", "infixl", "infixr", "let", "in", "mdo", "module", "newtype", "proc",
+			"qualified", "rec", "type", "where" };
+	
+	private static String[] fsKeys = { "abstract", "and", "as", "assert", "base", "begin", "class", "default",
+			"delegate", "do", "done", "downcast", "downto", "elif", "else", "end", "exception",
+			"extern", "false", "finally", "fixed", "for", "fun", "function", "global", "if", "in",
+			"inherit", "inline", "interface", "internal", "lazy", "let", "match", "member", "module",
+			"mutable", "namespace", "new", "not", "null", "of", "open", "or", "override", "private",
+			"public", "rec", "return", "select", "static", "struct", "then", "to", "true", "try", "type",
+			"upcast", "use", "val", "void", "when", "while", "with", "yield", "const", "asr", "land", "lor",
+			"lsl", "lsr", "lxor", "mod", "sig", "atomic", "break", "checked", "component", "const", "constraint",
+			"constructor", "continue", "eager", "event", "external", "functor", "include", "method", "mixin",
+			"object", "parallel", "process", "protected", "pure", "sealed", "tailcall", "trait", "virtual", "volatile" };
+	
+	private static String[] cfKeys = { "for", "while", "loop", "by", "in", "of", "break", "continue", "if",
+			"then", "else", "unless", "switch", "when", "default", "return", "do", "is", "isnt",
+			"and", "or", "not", "true", "yes", "on", "false", "no", "off", "throw", "try", "catch",
+			"finally", "new", "delete", "class", "extends", "super", "typeof", "instanceof", "this",
+			"arguments", "await", "defer", "yield", "null", "undefined", "Infinity", "NaN", "export",
+			"import", "package", "let", "case", "debugger", "function", "var", "with", "private",
+			"protected", "public", "native", "static", "const", "implements", "interface", "void", "enum" };
+	
+	private static String[] swKeys = { "associatedtype", "class", "deinit", "enum", "extension", "fileprivate",
+			"func", "import" , "init", "inout", "internal", "let", "open", "operator", "private",
+			"protocol", "public", "rethrows", "static", "struct", "subscript", "typealias", "var",
+			"break", "case", "continue", "default", "defer", "do", "else", "fallthrough", "for",
+			"guard", "if", "in", "repeat", "return", "switch", "where", "while", "as", "Any", "catch",
+			"false", "is", "nil", "super", "self", "self", "throw", "throws", "true", "try", "_",
+			"#available", "#colorLiteral", "#column", "#else", "#elseif", "#endif", "#error", "#file",
+			"#fileID", "#fileLiteral", "#filePath", "#function", "#if", "#imageLiteral", "#line",
+			"#selector", "#sourceLocation", "#warning", "associativity", "convenience", "dynamic",
+			"didset", "final", "get", "infix", "indirect", "lazy", "left", "mutating", "none", "nonmutating",
+			"optional", "override", "postfix", "precendence", "prefix", "Protocol", "required", "right",
+			"set", "Type", "unowned", "weak", "willSet" };
+	
+	private static String[] rsKeys = { "as", "break", "const", "continue", "crate", "else", "enum", "extern", "false",
+			"fn", "for", "if", "impl", "in", "let", "loop", "match", "mod", "move", "mut", "pub", "ref",
+			"return", "self", "Self", "static", "struct", "super", "trait", "true", "type", "unsafe", "use",
+			"where", "while", "async", "await", "dyn", "abstract", "become", "box", "do", "final", "macro",
+			"override", "priv", "typeof", "unsized", "virtual", "yield", "try", "union", "'static", "dyn" };
+	
+	// Colorir maiúsculos tbm
+	private static String[] shKeys = { "pwd", "cd", "ls", "cat", "cp", "mv", "mkdir", "rmdir", "rm", "touch", "locate", "find",
+			"grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs", "kill", "ping",
+			"wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd", "userdel",
+			"clear" };
+	
+	private static String[] tsKeys = { "break", "as", "any", "switch", "case", "if", "throw",
+			"else", "var", "number", "string", "get", "module", "type", "instanceof",
+			"typeof", "public", "private", "enum", "export", "finally", "for", "while",
+			"void", "null", "super", "this", "new", "in", "return", "true", "false",
+			"extends", "static", "let", "package", "implements", "interface", "function",
+			"new", "try", "yield", "const", "continue", "do", "catch" };
+	
+	private static String[] ktKeys = { "as", "as?", "break", "class", "continue", "do", "else", "false", "for", "fun",
+			"if", "in", "!in", "interface", "is", "!is", "null", "object", "package", "return", "super",
+			"this", "throw", "true", "try", "typealias", "typeof", "val", "var", "when", "while", "by",
+			"catch", "constructor", "delegate", "dynamic", "field", "file", "finally", "get", "import",
+			"init", "param", "property", "receiver", "set", "setparam", "value", "class", "where", "actual",
+			"abstract", "annotation", "companion", "const", "crossinline", "data", "enum", "expect",
+			"external", "final", "infix", "inline", "inner", "internal", "lateinit", "noinline", "open",
+			"operator", "out", "override", "private", "protected", "public", "reified", "sealed", "suspend",
+			"tailrec", "vararg", "field", "it" };
+	
+	private static String[] rbKeys = { "_ENCODING_", "_LINE_", "_FILE_", "BEGIN", "END", "alias", "and", "begin",
+			"break", "case", "class", "def", "defined?", "do", "else", "elsif", "end", "ensure", "false",
+			"for", "if", "in", "module", "next", "nil", "not", "or", "redo", "rescue", "retry", "return",
+			"self", "super", "then", "true", "undef", "unless", "until", "when", "while", "yield" };
+	
+	private static String[] scaKeys = { "abstract", "finally", "object", "trait", "catch", "forSome", "package",
+			"try", "class", "if", "private", "type", "def", "implicit", "protected", "val", "else",
+			"lazy", "sealed", "while", "false", "new", "this", "yield", "final", "null", "throw" };
+	
+	private static String[] goKeys = { "break", "default", "func", "interface", "select", "case",
+			"defer", "go", "map", "struct", "chan", "else", "goto", "package", "switch",
+			"const", "fallthrough", "if", "range", "type", "continue", "for", "import", "return", "var" };
+	
+	private static String[] objKeys = { "auto", "break", "case", "char", "const", "continue", "default", "do", "double",
+			"else", "enum", "extern", "float", "for", "goto", "if", "inline", "int", "long", "register",
+			"restrict", "return", "short", "signed", "sizeof", "static", "struct", "switch", "typedef",
+			"union", "unsigned", "void", "volatile", "while", "_Bool", "_Complex", "_Imaginary", "BOOL",
+			"Class", "bycopy", "byref", "id", "IMP", "in", "inout", "nil", "NO", "NULL", "oneway", "out",
+			"Protocol", "SEL", "self", "super", "YES", "@interface", "@end", "@implementation", "@protocol",
+			"@class", "@public", "@protected", "@private", "@property", "@try", "@throw", "@catch", "@finally",
+			"@synthesize", "@dynamic", "@selector", "atomic", "nonatomic", "retain" };
+	
+	private static String[] ideConfKeys = { "Arquivo de Configurações da Boot IDE", "Colors", "Files", "Settings", "default" };
+	
+	private static String[] makeKeys = { "if", "else", "make", "echo", "elif", "then", "fi", "exit", "export" };
+	
+	private static String[] dkKeys = { "FROM", "RUN", "VOLUME", "WORKDIR", "ADD", "CMD", "ENTRYPOINT", "ENV", "EXPOSE", "MAINTAINER", "USER",
+			"from", "run", "volume", "workdir", "add", "cmd", "entrypoint", "env", "expose", "maintainer", "user" };
 
 	public CodeEditor(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
@@ -647,440 +1079,7 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
-	private static String[] javaKeys = { "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
-			"continue", "default", "do", "double", "else", "enum", "extends", "final", "finally", "float",
-			"for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long", "native",
-			"new", "package", "private", "protected", "public", "return", "short", "static", "strictfp", "super",
-			"switch", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile", "while",
-			"true", "false", "null", "@interface" };
 	
-	private static String[] tags = { "<!--", "<!doctype", "<?php", "<!DOCTYPE", "<a", "<abbr", "<acronym", "<address", "<applet", "<area", "<article",
-			"<aside", "<audio", "<b", "<base", "<basefont", "<bdi", "<bdo", "<big", "<blockquote", "<body", "<br", "<button",
-			"<canvas", "<caption", "<center", "<cite", "<code", "<col", "<colgroup", "<data", "<datalist", "<dd", "<del",
-			"<details", "<dfn", "<dialog", "<dir", "<div", "<dl", "<dt", "<em", "<embed", "<fieldset", "<figcaption", "<figure",
-			"<font", "<footer", "<form", "<frame", "<frameset", "<h1", "<h2", "<h3", "<h4", "<h5", "<h6", "<head", "<header",
-			"<hr", "<html", "<i", "<iframe", "<img", "<input", "<ins", "<kbd", "<label", "<legend", "<li", "<link", "<main",
-			"<map", "<mark", "<meta", "<meter", "<nav", "<noframes", "<noscript", "<object", "<ol", "<optgroup", "<option",
-			"<output", "<p", "<param", "<picture", "<pre", "<progress", "<q", "<rp", "<rt", "<ruby", "<s", "<samp", "<script",
-			"<section", "<select", "<small", "<source", "<span", "<strike", "<strong", "<style", "<sup", "<svg", "<table",
-			"<tbody", "<td", "<template", "<textarea", "<tfoot", "<th", "<thead", "<time", "<title", "<tr", "<track", "<tt",
-			"<u", "<ul", "<var", "<video", "<wbr",
-			"</a", "</abbr", "</acronym", "</address", "</applet", "</area", "</article",
-			"</aside", "</audio", "</b", "</base", "</basefont", "</bdi", "</bdo", "</big", "</blockquote", "</body", "</br", "</button",
-			"</canvas", "</caption", "</center", "</cite", "</code", "</col", "</colgroup", "</data", "</datalist", "</dd", "</del",
-			"</details", "</dfn", "</dialog", "</dir", "</div", "</dl", "</dt", "</em", "</embed", "</fieldset", "</figcaption", "</figure",
-			"</font", "</footer", "</form", "</frame", "</frameset", "</h1", "</h2", "</h3", "</h4", "</h5", "</h6", "</head", "</header",
-			"</hr", "</html", "</i", "</iframe", "</img", "</input", "</ins", "</kbd", "</label", "</legend", "</li", "</link", "</main",
-			"</map", "</mark", "</meta", "</meter", "</nav", "</noframes", "</noscript", "</object", "</ol", "</optgroup", "</option",
-			"</output", "</p", "</param", "</picture", "</pre", "</progress", "</q", "</rp", "</rt", "</ruby", "</s", "</samp", "</script",
-			"</section", "</select", "</small", "</source", "</span", "</strike", "</strong", "</style", "</sup", "</svg", "</table",
-			"</tbody", "</td", "</template", "</textarea", "</tfoot", "</th", "</thead", "</time", "</title", "</tr", "</track", "</tt",
-			"</u", "</ul", "</var", "</video", "</wbr" };
-	
-	private static String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
-			  "1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "0a", // hex
-			  "1b", "2b", "3b", "4b", "5b", "6b", "7b", "8b", "9b", "0b",
-			  "1c", "2c", "3c", "4c", "5c", "6c", "7c", "8c", "9c", "0c",
-			  "1d", "2d", "3d", "4d", "5d", "6d", "7d", "8d", "9d", "0d",
-			  "1e", "2e", "3e", "4e", "5e", "6e", "7e", "8e", "9e", "0e",
-			  "1f", "2f", "3f", "4f", "5f", "6f", "7f", "8f", "9f", "0f",
-			  "1l", "2l", "3l", "4l", "5l", "6l", "7l", "8l", "9l", "0l",
-			  "1A", "2A", "3A", "4A", "5A", "6A", "7A", "8A", "9A", "0A", // HEX
-			  "1B", "2B", "3B", "4B", "5B", "6B", "7B", "8B", "9B", "0B",
-			  "1C", "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "0C",
-			  "1D", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "0D",
-			  "1E", "2E", "3E", "4E", "5E", "6E", "7E", "8E", "9E", "0E",
-			  "1F", "2F", "3F", "4F", "5F", "6F", "7F", "8F", "9F", "0F",
-			  "1L", "2L", "3L", "4L", "5L", "6L", "7L", "8L", "9L", "0L",
-			  "1x", "2x", "3x", "4x", "5x", "6x", "7x", "8x", "9x", "0x",
-			  "1X", "2X", "3X", "4X", "5X", "6X", "7X", "8X", "9X", "0X",
-			  "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "0h",
-			  "1H", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "0H"
-			  };
-	
-	private static String[] phpKeys = { "abstract", "and", "as", "break", "callable", "case", "catch", "class", "clone",
-			"const", "continue", "declare", "default", "do", "echo", "else", "elseif", "enddeclare", "endfor",
-			"endforeach", "endif", "endswitch", "endwhile", "extends", "final", "finally", "fn", "for", "foreach",
-			"function", "global", "goto", "if", "implements", "include", "include_once", "instanceof", "insteadof",
-			"interface", "match", "namespace", "new", "or", "print", "private", "protected", "public", "require",
-			"require_once", "return", "static", "switch", "throw", "trait", "try", "use", "var", "while", "yield",
-			"yield from", "__CLASS__", "__DIR__", "__FILE__", "__FUNCTION__", "__LINE__", "__METHOD__", "__NAMESPACE__",
-			"__TRAIT__" };
-	
-	private static String[] jsKeys = { "abstract", "arguments", "await", "boolean", "break", "byte", "case", "catch",
-			"char", "class", "const", "continue", "debugger", "default", "delete", "do", "double", "else",
-			"enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function",
-			"goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long",
-			"native", "new", "null", "package", "private", "protected", "public", "return", "short", "static",
-			"super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof",
-			"var", "void", "volatile", "while", "with", "yield", "undefined", "of" };
-	
-	private static String[] cssTags = { "a", "abbr", "acronym", "address", "applet", "area", "article",
-			"aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button",
-			"canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del",
-			"details", "dfn", "dialog", "dir", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure",
-			"font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header",
-			"hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "label", "legend", "li", "link", "main",
-			"map", "mark", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option",
-			"output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script",
-			"section", "select", "small", "source", "span", "strike", "strong", "style", "sup", "svg", "table",
-			"tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt",
-			"u", "ul", "var", "video", "wbr", "important"
-	};
-	
-	private static String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
-			"animation-duration", "animation-fill-mode", "animation-iteration-count", "animation-name",
-			"animation-play-state", "animation-timing-function", "backface-visibility", "background",
-			"background-attachment", "background-blend-mode", "background-clip", "background-color",
-			"background-image", "background-origin", "background-position", "background-repeat",
-			"background-size", "border", "border-bottom", "border-bottom-color", "border-bottom-left-radius",
-			"border-bottom-right-radius", "border-bottom-style", "border-bottom-width", "border-collapse",
-			"border-color", "border-image", "border-image-outset", "border-image-repeat", "border-image-slice",
-			"border-image-source", "border-image-width", "border-radius", "border-right", "border-right-color",
-			"border-right-style", "border-right-width", "border-spacing", "border-style", "border-top",
-			"border-top-color", "border-top-left-radius", "border-top-right-radius", "border-top-style",
-			"border-top-width", "border-width", "bottom", "box-decoration-break", "box-shadow", "box-sizing",
-			"break-after", "break-before", "break-inside", "caption-side", "caret-color", "@charset", "clear",
-			"clip", "color", "column-count", "column-fill", "column-gap", "column-rule", "column-rule-color",
-			"column-rule-style", "column-rule-width", "column-span", "column-width", "columns", "content",
-			"counter-increment", "counter-reset", "cursor", "direction", "display", "empty-cells", "filter",
-			"flex", "flex-basis", "flex-direction", "flex-flow", "flex-grow", "flex-shrink", "flex-wrap",
-			"float", "font", "@font-face", "font-family", "font-feature-settings", "@font-feature-values",
-			"font-kerning", "font-language-override", "font-size", "font-size-adjust", "font-stretch",
-			"font-style", "font-synthesis", "font-variant", "font-variant-alternates", "font-variant-caps",
-			"font-variant-east-asian", "font-variant-ligatures", "font-variant-numeric", "font-variant-position",
-			"font-weight", "gap", "grid", "grid-area", "grid-auto-columns", "grid-auto-flow", "grid-auto-rows",
-			"grid-column", "grid-column-end", "grid-column-gap", "grid-column-start", "grid-template",
-			"grid-template-areas", "grid-template-columns", "grid-template-rows", "hanging-ponctuation",
-			"height", "hyphens", "image-rendering", "@import", "isolation", "justify-content", "@keyframes",
-			"left", "letter-spacing", "line-break", "line-height", "list-style", "list-style-image",
-			"list-style-position", "list-style-type", "margin", "margin-bottom", "margin-left",
-			"margin-right", "margin-top", "mask", "mask-type", "max-height", "max-width", "@media",
-			"min-height", "min-width", "mix-blend-mode", "object-fit", "object-position", "opacity",
-			"order", "orphans", "outline", "outline-color", "outline-offset", "outline-style",
-			"outline-width", "overflow", "overflow-wrap", "overflow-x", "overflow-y", "padding",
-			"padding-bottom", "padding-left", "padding-right", "padding-top", "page-break-after",
-			"page-break-before", "page-break-inside", "perspective", "perspective-origin", "pointer-events",
-			"position", "quotes", "resize", "right", "row-gap", "scroll-behavior", "tab-size", "table-layout",
-			"text-align", "text-align-last", "text-combine-upright", "text-decoration", "text-decoration-color",
-			"text-decoration-line", "text-decoration-style", "text-indent", "text-justify", "text-orientation",
-			"text-overflow", "text-shadow", "text-transform", "text-underline-position", "top", "transform",
-			"transform-origin", "transform-style", "transition", "transition-delay", "transition-duration",
-			"transition-property", "transition-timing-function", "unicode-bidi", "user-select", "vertical-align",
-			"visibility", "white-space", "widows", "width", "word-break", "word-spacing", "word-wrap",
-			"writing-mode", "z-index" };
-	
-	private static String[] units = { "px", "em", "rem", "cm", "mm", "in", "pt", "pc", "ex", "ch", "vw", "vh", "vmin", "vmax" };
-	
-	private static String[] pyKeys = { "and", "as", "assert", "break", "class",
-			"continue", "def", "del", "elif", "else", "except", "False",
-			"finally", "for", "from", "global", "if", "import", "in", "is",
-			"lambda", "None", "nonlocal", "not", "or", "pass", "raise", "return",
-			"True", "try", "while", "with", "yield", "self" };
-	
-	private static String[] dartKeys = { "abstract", "else", "import", "super", "as", "enum", "in",
-			"switch", "assert", "export", "interface", "sync", "async", "extends", "is",
-			"this", "await", "extension", "library", "throw", "break", "external", "mixin",
-			"true", "case", "factory", "new", "try", "class", "final", "catch", "false",
-			"null", "typedef", "on", "var", "const", "finally", "operator", "void", "continue",
-			"for", "part", "while", "covariant", "Function", "rethrow", "with", "default",
-			"get", "return", "yield", "deferred", "hide", "set", "do", "if", "show", "dynamic",
-			"implements", "static" };
-	
-	private static String[] ldKeys = { "ENTRY", "OUTPUT_FORMAT", "STARTUP", "SEARCH_DIR", "INPUT", "OUTPUT",
-			"MEMORY", "SECTIONS", "KEEP" };
-	
-	private static String[] pasKeys = { "and", "begin", "boolean", "break", "byte", "continue", "div", "do", "double",
-			"else", "end", "false", "if", "integer", "longint", "mod", "not", "or", "repeat", "shl",
-			"shortint", "shr", "single", "then", "true", "until", "while", "word", "xor", "function" };
-	
-	private static String[] cKeys = { "auto", "break", "case", "char", "const",
-			"continue", "default", "do", "double", "else", "enum", "extern",
-			"float", "for", "goto", "if", "int", "long", "register", "return",
-			"short", "signed", "sizeof", "static", "struct", "switch", "typedef",
-			"union", "unsigned", "void", "volatile", "while", "true", "false", "null", "include",
-			"bool", "duint", "uint16_t" };
-	
-	private static String[] cppKeys = { "auto", "break", "case", "char", "const",
-			"continue", "default", "do", "double", "else", "enum", "extern",
-			"float", "for", "goto", "if", "int", "long", "register", "return",
-			"short", "signed", "sizeof", "static", "struct", "switch", "typedef",
-			"union", "unsigned", "void", "volatile", "while",
-			"asm", "dynamic_cast", "namespace", "reinterpret_cast", "bool",
-			"explicit", "new", "static_cast", "false", "catch", "operator", "template",
-			"friend", "private", "class", "this", "inline", "public", "throw", "const_cast",
-			"delete", "mutable", "protected", "true", "try", "typeid", "typename", "using", "virtual",
-			"wchar_t", "include", "define", "string", "ifdef", "ifndef", "error", "pragma", "endif",
-			"override" };
-	
-	private static String[] csKeys = { "abstract", "async", "const", "event", "extern", "new",
-			"override", "partial", "readonly", "sealed", "static", "unsafe", "virtual",
-			"volatile", "public", "private", "internal", "protected", "if", "else", "switch",
-			"case", "do", "for", "foreach", "in", "while", "break", "continue", "default", "goto",
-			"return", "yield", "throw", "try", "catch", "finally", "checked", "unchecked", "fixed",
-			"lock", "params", "ref", "out", "using", "alias", "await", "sizeof", "typeof",
-			"stackalloc", "is", "base", "this", "null", "false", "true", "value", "void", "bool", "byte",
-			"char", "class", "decimal", "double", "enum", "float", "int", "long", "sbyte", "short", "string",
-			"struct", "uint", "ulong", "ushort", "add", "var", "dynamic", "global", "set", "namespace", "object", "as", "get" };
-	
-	private static String[] rKeys = { "if", "else", "repeat", "while", "function", "for", "in", "next", "break",
-			"TRUE", "FALSE", "NULL", "Inf", "NaN", "NA", "NA_integer", "NA_real", "NA_complex", "NA_character" };
-	
-	private static String[] batCom = { "ver", "assoc", "cd", "cls", "copy", "del", "dir", "date",
-			"echo", "@echo", "exit", "md", "move", "path", "pause", "prompt", "rd",
-			"rem", "start", "time", "type", "vol", "attrib", "chkdsk", "choice", "cmd",
-			"comp", "convert", "driverquery", "expand", "find", "format", "help", "ipconfig",
-			"label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo",
-			"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto",
-			"rmdir", "icacls", "takeown", "if", "for", "else", "git", "npm", "call", "exist", "end",
-			"java", "javac", "nodemon",
-			"VER", "ASSOC", "CD", "CLS",
-			"COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
-			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
-			"CMD", "COMP", "CONVERT", "DRIVERQUERY", "EXPAND", "FIND", "FORMAT", "HELP", "IPCONFIG",
-			"LABEL", "MORE", "NET", "PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO",
-			"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH", "NODE", "OFF", "GOTO",
-			"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM", "CALL", "EXIST", "END",
-			"JAVA", "JAVAC", "NODEMON" };
-	
-	private static String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
-			"false", "for", "function", "if", "in", "local", "nil",
-			"not", "or", "repeat", "return", "then", "true", "until", "while" };
-	
-	private static String[] zigKeys = { "align", "allowzero", "and", "anyframe", "anytype", "asm", "async", "await",
-			"break", "catch", "comptime", "const", "continue", "defer", "else", "enum", "errdefer",
-			"error", "export", "extern", "false", "fn", "for", "if", "inline", "noalias",
-			"nosuspend", "null", "or", "orelse", "packed", "pub", "resume", "return", "linksection",
-			"struct", "suspend", "switch", "test", "threadlocal", "true", "try", "undefined",
-			"union", "unreachable", "usingnamespace", "var", "volatile", "while" };
-	
-	private static String[] sqlKeys = { "ADD", "ADD CONSTRAINT", "ALTER", "ALTER COLUMN", "ALTER TABLE",
-			"ALL", "AND", "ANY", "AS", "ASC", "BACKUP DATABASE", "BETWEEN", "CASE", "CHECK",
-			"COLUMN", "CONSTRAINT", "CREATE", "CREATE DATABASE", "CREATE INDEX", "CREATE OR REPLACE VIEW",
-			"CREATE TABLE", "CREATE PROCEDURE", "CREATE UNIQUE INDEX", "CREATE VIEW", "DATABASE", "DEFAULT",
-			"DELETE", "DESC", "DISTINCT", "DROP", "DROP COLUMN", "DROP CONSTRAINT", "DROP DATABASE",
-			"DROP DEFAULT", "DROP INDEX", "DROP TABLE", "DROP VIEW", "EXEC", "EXISTS", "FOREIGN KEY",
-			"FROM", "FULL OUTER JOIN", "GROUP BY", "HAVING", "IN", "INDEX", "INNER JOIN", "INSERT INTO",
-			"INSERT INTO SELECT", "IS NULL", "IS NOT NULL", "JOIN", "LEFT JOIN", "LIKE", "LIMIT", "NOT",
-			"NOT NULL", "OR", "ORDER BY", "OUTER JOIN", "PRIMARY KEY", "PROCEDURE", "RIGHT JOIN", "ROWNUM",
-			"SELECT", "SELECT DISTINCT", "SELECT INTO", "SELECT TOP", "SET", "TABLE", "TOP", "TRUNCATE TABLE",
-			"UNION", "UNION ALL", "UNIQUE", "UPDATE", "VALUES", "VIEW", "WHERE", "add", "add constraint", "alter",
-			"alter column", "alter table", "all", "and", "any", "as", "asc", "backup database", "between", "case",
-			"check", "column", "constraint", "create", "create database", "create index", "create or replace view",
-			"create table", "create procedure", "create unique index", "create view", "database", "default",
-			"delete", "desc", "distinct", "drop", "drop column", "drop constraint", "drop database",
-			"drop default", "drop index", "drop table", "drop view", "exec", "exists", "foreign key",
-			"from", "full outer join", "group by", "having", "in", "index", "inner join", "insert into",
-			"insert into select", "is null", "is not null", "join", "left join", "like", "limit", "not",
-			"not null", "or", "order by", "outer join", "primary key", "procedure", "right join", "rownum",
-			"select", "select distinct", "select into", "select top", "set", "table", "top", "truncate table",
-			"union", "union all", "unique", "update", "values", "view", "where" };
-	
-	private static String[] asmRegs = { "rax", "rbx", "rcx", "rdx", "rsi", "rdi", "rbp", "rsp", "r8", "r9", "r10", "r11", "r12", "r13",
-			"r14", "r15", "eax", "ebx", "ecx", "esi", "edi", "ebp", "esp", "r8d", "r9d", "r10d", "r11d", "r12d", "r13d",
-			"r14d", "r15d", "ax", "bx", "cx", "dx", "si", "di", "bp", "sp", "r8w", "r9w", "r10w", "r11w", "r12w", "r13w",
-			"r14w", "r15w", "al", "bl", "cl", "dl", "sil", "dil", "bpl", "spl", "r8b", "r9b", "r10b", "r11b", "r12b",
-			"r13b", "r14b", "r15b", "ah", "bh", "ch", "dh", "edx" };
-	
-	// não vai colorir keys de uma só letra
-	private static String[] asmKeys = { "global", "db", "dw", "equ", "extern", "include", "times", "org", "syscall", "aaa", "aad", "aam", "aas", "adc",
-			"add", "addpd", "addps", "addressing", "addsd", "addss", "align", "and", "andnpd", "andnps", "andpd",
-			"andps", "arpl", "as", "commandline", "ELFobjectfile", "macroprocessing", "syntaxUNIXversusIntel", "ascii",
-			"assemblerSeeasB", "bcd", "binaryarithmeticinstructions", "bitinstructions", "bound", "bsf", "bsr",
-			"bss", "bswap", "bt", "btc", "btr", "bts", "byte", "byte", "byte", "byte", "byteinstructionsC", "call",
-			"cbtw", "clc", "cld", "clflush", "cli", "cltd", "cltq", "clts", "cmc", "cmova", "cmova", "cmovae",
-			"cmovae", "cmovb", "cmovb", "cmovbe", "cmovbe", "cmovc", "cmovc", "cmove", "cmove", "cmovg", "cmovg",
-			"cmovge", "cmovge", "cmovl", "cmovl", "cmovle", "cmovle", "cmovna", "cmovna", "cmovnae", "cmovnae",
-			"cmovnb", "cmovnb", "cmovnbe", "cmovnbe", "cmovnc", "cmovnc", "cmovne", "cmovne", "cmovng", "cmovng",
-			"cmovnge", "cmovnge", "cmovnl", "cmovnl", "cmovnle", "cmovnle", "cmovno", "cmovno", "cmovnp", "cmovnp",
-			"cmovns", "cmovns", "cmovnz", "cmovnz", "cmovo", "cmovo", "cmovp", "cmovp", "cmovpe", "cmovpo", "cmovs",
-			"cmovz", "cmp", "cmppd", "cmpps", "cmps", "cmpsb", "cmpsd", "cmpsl", "cmpss", "cmpsw", "cmpxchg",
-			"cmpxchgb", "comisd", "comiss", "comm", "comment", "controltransferinstructions", "cpp", "cpuid",
-			"cqtd", "cqto", "cvtdqpd", "cvtdqps", "cvtpddq", "cvtpdpi", "cvtpdps", "cvtpipd", "cvtpips", "cvtpsdq",
-			"cvtpspd", "cvtpspi", "cvtsdsi", "cvtsdss", "cvtsisd", "cvtsiss", "cvtsssd", "cvtsssi", "cvttpddq",
-			"cvttpdpi", "cvttpsdq", "cvttpspi", "cvttsdsi", "cvttsssi", "cwtd", "cwtlD", "daa", "das", "data",
-			"datatransferinstructions", "dec", "decimalarithmeticinstructions", "directives", "div", "divpd", "divps",
-			"divsd", "divss", "doubleE", "ELFobjectfile", "emms", "enter", "even", "extF", "fxm", "fabs", "fadd",
-			"faddp", "fbe", "Seeas", "fbld", "fbstp", "fchs", "fclex", "fcmovb", "fcmovbe", "fcmove", "fcmovnb",
-			"fcmovnbe", "fcmovne", "fcmovnu", "fcmovu", "fcom", "fcomi", "fcomip", "fcomp", "fcompp", "fcos",
-			"fdecstp", "fdiv", "fdivp", "fdivr", "fdivrp", "ffree", "fiadd", "ficom", "ficomp", "fidiv", "fidivr",
-			"fild", "file", "fimul", "fincstp", "finit", "fist", "fistp", "fisub", "fisubr", "flagcontrolinstructions",
-			"fld", "fld", "fldcw", "fldenv", "fldle", "fldlt", "fldlg", "fldln", "fldpi", "fldz", "float",
-			"floating-pointinstructions", "basicarithmetic", "comparison", "control", "datatransfer", "loadconstants",
-			"logarithmic", "Seetranscendental", "transcendental", "trigonometric", "Seetranscendental", "fmul",
-			"fmulp", "fnclex", "fninit", "fnop", "fnsave", "fnstcw", "fnstenv", "fnstsw", "fpatan", "fprem", "fprem",
-			"fptan", "frndint", "frstor", "fsave", "fscale", "fsin", "fsincos", "fsqrt", "fst", "fstcw", "fstenv",
-			"fstp", "fstsw", "fsub", "fsubp", "fsubr", "fsubrp", "ftst", "fucom", "fucomi", "fucomip", "fucomp",
-			"fucompp", "fwait", "fxam", "fxch", "fxrstor", "fxsave", "fxtract", "fylx", "fylxp", "G", "gas", "globl",
-			"group", "H", "hidden", "hlt", "ident", "identifier", "idiv", "imul", "in", "inc", "ins", "insb", "insl",
-			"instruction", "format", "suffixes", "instructions", "binaryarithmetic", "bit", "byte", "controltransfer",
-			"datatransfer", "decimalarithmetic", "flagcontrol", "floating-point-", "logical", "miscellaneous", "MMX-",
-			"operatingsystemsupport-", "Opteron", "rotate", "segmentregister", "shift", "SIMDstatemanagement", "SSE-",
-			"SSE-", "string", "insw", "int", "into", "invd", "invlpg", "iretJ", "ja", "jae", "jb", "jbe", "jc", "jcxz",
-			"je", "jecxz", "jg", "jge", "jl", "jle", "jmp", "jnae", "jnb", "jnbe", "jnc", "jne", "jng", "jnge", "jnl",
-			"jnle", "jno", "jnp", "jns", "jnz", "jo", "jp", "jpe", "jpo", "js", "jzK", "keywordL", "label", "numeric",
-			"symbolic", "lahf", "lar", "lcall", "lcomm", "ldmxcsr", "lds", "lea", "leave", "les", "lfence", "lfs",
-			"lgdt", "lgs", "lidt", "lldt", "lmsw", "local", "lock", "lods", "lodsb", "lodsl", "lodsw",
-			"logicalinstructions", "long", "loop", "loope", "loopne", "loopnz", "loopz", "lret", "lsl", "lss", "ltr",
-			"m", "maskmovdqu", "maskmovq", "maxpd", "maxps", "maxsd", "maxss", "mfence", "minpd", "minps", "minsd",
-			"minss", "miscellaneousinstructions", "MMXinstructions", "comparison", "conversion", "datatransfer",
-			"logical", "packedarithmetic", "rotate", "shift", "statemanagement", "mov", "movabs", "movabsA", "movapd",
-			"movaps", "movd", "movdqq", "movdqa", "movdqu", "movhlps", "movhpd", "movhps", "movlhps", "movlpd",
-			"movlps", "movmskpd", "movmskps", "movntdq", "movnti", "movntpd", "movntps", "movntq", "movq", "movqdq",
-			"movs", "movsb", "movsd", "movsl", "movss", "movsw", "movupd", "movups", "movzb", "movzw", "mul", "mulpd",
-			"mulps", "mulsd", "mulss", "N", "neg", "nop", "not", "numbers", "floatingpoint", "integers", "binary",
-			"decimal", "hexadecimal", "octal", "operands", "immediate", "indirect", "memory", "addressing",
-			"ordering", "register", "operatingsystemsupportinstructions", "Opteroninstructions", "or", "orpd",
-			"orps", "out", "outs", "outsb", "outsl", "outswP", "packssdw", "packsswb", "packuswb", "paddb", "paddd",
-			"paddq", "paddsb", "paddsw", "paddusb", "paddusw", "paddw", "pand", "pandn", "pause", "pavgb", "pavgw",
-			"pcmpeqb", "pcmpeqd", "pcmpeqw", "pcmpgtb", "pcmpgtd", "pcmpgtw", "pextrw", "pinsrw", "pmaddwd", "pmaxsw",
-			"pmaxub", "pminsw", "pminub", "pmovmskb", "pmulhuw", "pmulhw", "pmullw", "pmuludq", "pop", "popa", "popal",
-			"popaw", "popf", "popfw", "popsection", "por", "prefetchnta", "prefetcht", "prefetcht", "prefetcht",
-			"previous", "psadbw", "pshufd", "pshufhw", "pshuflw", "pshufw", "pslld", "pslldq", "psllq", "psllw", "psrad",
-			"psraw", "psrld", "psrldq", "psrlq", "psrlw", "psubb", "psubd", "psubq", "psubsb", "psubsw", "psubusb",
-			"psubusw", "psubw", "punpckhbw", "punpckhdq", "punpckhqdq", "punpckhwd", "punpcklbw", "punpckldq",
-			"punpcklqdq", "punpcklwd", "push", "pusha", "pushal", "pushaw", "pushf", "pushfw", "pushsection",
-			"pxor", "quad", "rcl", "rcpps", "rcpss", "rcr", "rdmsr", "rdpmc", "rdtsc", "rel", "rep", "repnz", "repz",
-			"ret", "rol", "ror", "rotateinstructions", "rsm", "rsqrtps", "rsqrtss", "sahf", "sal", "sar", "sbb",
-			"scas", "scasb", "scasl", "scasw", "section", "segmentregisterinstructions", "set", "seta", "setae",
-			"setb", "setbe", "setc", "sete", "setg", "setge", "setl", "setle", "setna", "setnae", "setnb", "setnbe",
-			"setnc", "setne", "setng", "setnge", "setnl", "setnle", "setno", "setnp", "setns", "setnz", "seto", "setp",
-			"setpe", "setpo", "sets", "setz", "sfence", "sgdt", "shiftinstructions", "shl", "shld", "shr", "shrd",
-			"shufpd", "shufps", "sidt", "SIMDstatemanagementinstructions", "skip", "sldt", "sleb", "smovl", "smsw",
-			"sqrtpd", "sqrtps", "sqrtsd", "sqrtss", "SSEinstructions", "compare", "conversion", "datatransfer",
-			"integer", "logical", "miscellaneous", "MXCSRstatemanagement", "packedarithmetic", "shuffle", "unpack",
-			"SSEinstructions", "compare", "conversion", "datamovement", "logical", "miscellaneous", "packedarithmetic",
-			"packedsingle-precisionfloating-point", "shuffle", "SIMDintegerinstructions", "unpack", "statement",
-			"empty", "stc", "std", "sti", "stmxcsr", "stos", "stosb", "stosl", "stosw", "str", "string", "string",
-			"stringinstructions", "sub", "subpd", "subps", "subsd", "subss", "symbolic", "sysenter", "sysexit", "tbss",
-			"tcomm", "tdata", "test", "text", "ucomisd", "ucomiss", "ud", "uleb", "unpckhpd", "unpckhps", "unpcklpd",
-			"unpcklps", "value", "verr", "verw", "wait", "wbinvd", "weak", "whitespace", "wrmsr", "xadd", "xchg",
-			"xchgA", "xlat", "xlatb", "xor", "xorpd", "xorps", "zero" };
-	
-	private static String[] jlKeys = { "baremodule", "begin", "break", "catch", "const", "continue", "do", "else",
-			"elseif", "end", "export", "false", "finally", "for", "function", "global", "if", "import",
-			"let", "local", "macro", "module", "quote", "return", "struct", "true", "try", "using", "while" };
-	
-	private static String[] plKeys = { "-A", "END", "length", "setpgrp", "-B", "endgrent", "link", "setpriority", "-b",
-			"endhostnet", "listen", "setprotoent", "-C", "endnetent", "local", "setpwent", "-c", "endprotoent",
-			"localtime", "setservent", "-d", "endpwent", "log", "setsockopt", "-e", "endservent", "lstat",
-			"shift", "-f", "eof", "map", "shmctl", "-g", "eval", "mkdir", "shmget", "-k", "exec", "msgctl",
-			"shmread", "-l", "exists", "msgget", "shmwrite", "-M", "exit", "msgrcv", "shutdown", "-O", "fcntl",
-			"msgsnd", "sin", "-o", "fileno", "my", "sleep", "-p", "flock", "next", "socket", "-r", "fork", "not",
-			"socketpair", "-R", "format", "oct", "sort", "-S", "formline", "open", "splice", "-s", "getc", "opendir",
-			"split", "-T", "getgrent", "ord", "sprintf", "-t", "getgrgid", "our", "sqrt", "-u", "getgrnam", "pack",
-			"srand", "-w", "gethostbyaddr", "pipe", "stat", "-W", "gethostbyname", "pop", "state", "-X", "gethostent",
-			"pos", "study", "-x", "getlogin", "print", "substr", "-z", "getnetbyaddr", "printf", "symlink", "abs",
-			"getnetbyname", "prototype", "syscall", "accept", "getnetent", "push", "sysopen", "alarm", "getpeername",
-			"quotemeta", "sysread", "atan2", "getpgrp", "rand", "sysseek", "AUTOLOAD", "getppid", "read", "system",
-			"BEGIN", "getpriority", "readdir", "syswrite", "bind", "getprotobyname", "readline", "tell", "binmode",
-			"getprotobynumber", "readlink", "telldir", "bless", "getprotoent", "readpipe", "tie", "break", "getpwent",
-			"recv", "tied", "caller", "getpwnam", "redo", "time", "chdir", "getpwuid", "ref", "times", "CHECK",
-			"getservbyname", "rename", "truncate", "chmod", "getservbyport", "rename", "umask", "chown", "getsockopt",
-			"reverse", "undef", "chr", "glob", "rewinddir", "UNITCHECK", "chroot", "gmtime", "rindex", "unlink",
-			"close", "goto", "rmdir", "unpack", "closedir", "grep", "say", "unshift", "connect", "hex", "scalar",
-			"untie", "cos", "index", "seek", "use", "crypt", "INIT", "seekdir", "utime", "dbmclose", "int",
-			"select", "values", "dbmopen", "ioctl", "semctl", "vec", "defined", "join", "semget", "wait", "delete",
-			"keys", "semop", "waitpid", "DESTROY", "kill", "send", "wantarray", "die", "last", "setgrent", "warn",
-			"dump", "lc", "sethostent", "write", "each", "lcfirst", "setnetent", "__DATA__", "else", "lock", "qw",
-			"__END__", "elsif", "lt", "qx", "__FILE__", "eq", "m", "s", "__LINE__", "exp", "ne", "sub", "__PACKAGE__",
-			"for", "no", "tr", "and", "foreach", "or", "unless", "cmp", "ge", "package", "until", "continue", "gt",
-			"q", "while", "CORE", "if", "qq", "xor", "do", "le", "qr", "y" };
-	
-	private static String[] hasKeys = { "as", "case", "of", "class", "data", "family", "data", "instance",
-			"default", "deriving", "do", "forall", "foreign", "hiding", "if", "then", "else",
-			"import", "infix", "infixl", "infixr", "let", "in", "mdo", "module", "newtype", "proc",
-			"qualified", "rec", "type", "where" };
-	
-	private static String[] fsKeys = { "abstract", "and", "as", "assert", "base", "begin", "class", "default",
-			"delegate", "do", "done", "downcast", "downto", "elif", "else", "end", "exception",
-			"extern", "false", "finally", "fixed", "for", "fun", "function", "global", "if", "in",
-			"inherit", "inline", "interface", "internal", "lazy", "let", "match", "member", "module",
-			"mutable", "namespace", "new", "not", "null", "of", "open", "or", "override", "private",
-			"public", "rec", "return", "select", "static", "struct", "then", "to", "true", "try", "type",
-			"upcast", "use", "val", "void", "when", "while", "with", "yield", "const", "asr", "land", "lor",
-			"lsl", "lsr", "lxor", "mod", "sig", "atomic", "break", "checked", "component", "const", "constraint",
-			"constructor", "continue", "eager", "event", "external", "functor", "include", "method", "mixin",
-			"object", "parallel", "process", "protected", "pure", "sealed", "tailcall", "trait", "virtual", "volatile" };
-	
-	private static String[] cfKeys = { "for", "while", "loop", "by", "in", "of", "break", "continue", "if",
-			"then", "else", "unless", "switch", "when", "default", "return", "do", "is", "isnt",
-			"and", "or", "not", "true", "yes", "on", "false", "no", "off", "throw", "try", "catch",
-			"finally", "new", "delete", "class", "extends", "super", "typeof", "instanceof", "this",
-			"arguments", "await", "defer", "yield", "null", "undefined", "Infinity", "NaN", "export",
-			"import", "package", "let", "case", "debugger", "function", "var", "with", "private",
-			"protected", "public", "native", "static", "const", "implements", "interface", "void", "enum" };
-	
-	private static String[] swKeys = { "associatedtype", "class", "deinit", "enum", "extension", "fileprivate",
-			"func", "import" , "init", "inout", "internal", "let", "open", "operator", "private",
-			"protocol", "public", "rethrows", "static", "struct", "subscript", "typealias", "var",
-			"break", "case", "continue", "default", "defer", "do", "else", "fallthrough", "for",
-			"guard", "if", "in", "repeat", "return", "switch", "where", "while", "as", "Any", "catch",
-			"false", "is", "nil", "super", "self", "self", "throw", "throws", "true", "try", "_",
-			"#available", "#colorLiteral", "#column", "#else", "#elseif", "#endif", "#error", "#file",
-			"#fileID", "#fileLiteral", "#filePath", "#function", "#if", "#imageLiteral", "#line",
-			"#selector", "#sourceLocation", "#warning", "associativity", "convenience", "dynamic",
-			"didset", "final", "get", "infix", "indirect", "lazy", "left", "mutating", "none", "nonmutating",
-			"optional", "override", "postfix", "precendence", "prefix", "Protocol", "required", "right",
-			"set", "Type", "unowned", "weak", "willSet" };
-	
-	private static String[] rsKeys = { "as", "break", "const", "continue", "crate", "else", "enum", "extern", "false",
-			"fn", "for", "if", "impl", "in", "let", "loop", "match", "mod", "move", "mut", "pub", "ref",
-			"return", "self", "Self", "static", "struct", "super", "trait", "true", "type", "unsafe", "use",
-			"where", "while", "async", "await", "dyn", "abstract", "become", "box", "do", "final", "macro",
-			"override", "priv", "typeof", "unsized", "virtual", "yield", "try", "union", "'static", "dyn" };
-	
-	// Colorir maiúsculos tbm
-	private static String[] shKeys = { "pwd", "cd", "ls", "cat", "cp", "mv", "mkdir", "rmdir", "rm", "touch", "locate", "find",
-			"grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs", "kill", "ping",
-			"wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd", "userdel",
-			"clear" };
-	
-	private static String[] tsKeys = { "break", "as", "any", "switch", "case", "if", "throw",
-			"else", "var", "number", "string", "get", "module", "type", "instanceof",
-			"typeof", "public", "private", "enum", "export", "finally", "for", "while",
-			"void", "null", "super", "this", "new", "in", "return", "true", "false",
-			"extends", "static", "let", "package", "implements", "interface", "function",
-			"new", "try", "yield", "const", "continue", "do", "catch" };
-	
-	private static String[] ktKeys = { "as", "as?", "break", "class", "continue", "do", "else", "false", "for", "fun",
-			"if", "in", "!in", "interface", "is", "!is", "null", "object", "package", "return", "super",
-			"this", "throw", "true", "try", "typealias", "typeof", "val", "var", "when", "while", "by",
-			"catch", "constructor", "delegate", "dynamic", "field", "file", "finally", "get", "import",
-			"init", "param", "property", "receiver", "set", "setparam", "value", "class", "where", "actual",
-			"abstract", "annotation", "companion", "const", "crossinline", "data", "enum", "expect",
-			"external", "final", "infix", "inline", "inner", "internal", "lateinit", "noinline", "open",
-			"operator", "out", "override", "private", "protected", "public", "reified", "sealed", "suspend",
-			"tailrec", "vararg", "field", "it" };
-	
-	private static String[] rbKeys = { "_ENCODING_", "_LINE_", "_FILE_", "BEGIN", "END", "alias", "and", "begin",
-			"break", "case", "class", "def", "defined?", "do", "else", "elsif", "end", "ensure", "false",
-			"for", "if", "in", "module", "next", "nil", "not", "or", "redo", "rescue", "retry", "return",
-			"self", "super", "then", "true", "undef", "unless", "until", "when", "while", "yield" };
-	
-	private static String[] scaKeys = { "abstract", "finally", "object", "trait", "catch", "forSome", "package",
-			"try", "class", "if", "private", "type", "def", "implicit", "protected", "val", "else",
-			"lazy", "sealed", "while", "false", "new", "this", "yield", "final", "null", "throw" };
-	
-	private static String[] goKeys = { "break", "default", "func", "interface", "select", "case",
-			"defer", "go", "map", "struct", "chan", "else", "goto", "package", "switch",
-			"const", "fallthrough", "if", "range", "type", "continue", "for", "import", "return", "var" };
-	
-	private static String[] objKeys = { "auto", "break", "case", "char", "const", "continue", "default", "do", "double",
-			"else", "enum", "extern", "float", "for", "goto", "if", "inline", "int", "long", "register",
-			"restrict", "return", "short", "signed", "sizeof", "static", "struct", "switch", "typedef",
-			"union", "unsigned", "void", "volatile", "while", "_Bool", "_Complex", "_Imaginary", "BOOL",
-			"Class", "bycopy", "byref", "id", "IMP", "in", "inout", "nil", "NO", "NULL", "oneway", "out",
-			"Protocol", "SEL", "self", "super", "YES", "@interface", "@end", "@implementation", "@protocol",
-			"@class", "@public", "@protected", "@private", "@property", "@try", "@throw", "@catch", "@finally",
-			"@synthesize", "@dynamic", "@selector", "atomic", "nonatomic", "retain" };
-	
-	private static String[] ideConfKeys = { "Arquivo de Configurações da Boot IDE", "Colors", "Files", "Settings", "default" };
-	
-	private static String[] makeKeys = { "if", "else", "make", "echo", "elif", "then", "fi", "exit", "export" };
-	
-	private static String[] dkKeys = { "FROM", "RUN", "VOLUME", "WORKDIR", "ADD", "CMD", "ENTRYPOINT", "ENV", "EXPOSE", "MAINTAINER", "USER",
-			"from", "run", "volume", "workdir", "add", "cmd", "entrypoint", "env", "expose", "maintainer", "user" };
 	
 	// TODO
 	
