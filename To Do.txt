@@ -1,5 +1,3 @@
-- Fazer alguma coisa quando vc abre o terminal de comando e o arquivo é somente leitura e os cards ficam na frente do mouse
-
 - Colorir métodos ANTES das keywords [ARQUIVADO]
 
 - Digitar mais rápido [ARQUIVADO]

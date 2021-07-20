@@ -1,5 +1,6 @@
 package ide.codeeditor;
 
+import java.awt.AWTException;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -7,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.HeadlessException;
 import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
@@ -560,8 +562,19 @@ public class CodeEditor extends IDEComponent {
 	private static String[] dkKeys = { "FROM", "RUN", "VOLUME", "WORKDIR", "ADD", "CMD", "ENTRYPOINT", "ENV", "EXPOSE", "MAINTAINER", "USER",
 			"from", "run", "volume", "workdir", "add", "cmd", "entrypoint", "env", "expose", "maintainer", "user" };
 
+	///////
+	
+	private static boolean hasPressed = false;
+	private static Robot robot;
+	
 	public CodeEditor(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
+		
+		try {
+			robot = new Robot();
+		} catch (AWTException e1) {
+			e1.printStackTrace();
+		}
 		
 		tabs = new ArrayList<>();
 		toAdd = new ArrayList<>();
@@ -4285,6 +4298,14 @@ public class CodeEditor extends IDEComponent {
 	
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
+		
+		robot.keyRelease(KeyEvent.VK_F1);
+		
+		if (!hasPressed) {
+			robot.keyPress(KeyEvent.VK_F1); // bug resolvido com uma gambiarrinha kkkk
+			
+			hasPressed = true;
+		}
 		
 		if (tabs == null) tabs = new ArrayList<>();
 		verifyDuplicateTabs();

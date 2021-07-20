@@ -476,11 +476,11 @@ public class Main implements Runnable, Tickable {
 	    		writeFile(settingsFile);
 	    	}
         	
-            try {
-				Thread.sleep(1000/120);
+            /*try {
+				Thread.sleep(1000/120);			// loop removido - para escrever rápido
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}
+			}*/
         }
     }
 }
