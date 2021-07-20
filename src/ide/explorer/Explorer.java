@@ -136,7 +136,7 @@ public class Explorer extends IDEComponent {
         g2.setStroke(new BasicStroke(2f));
         g.drawLine(x + 40, y + 60, x + 220, y + 60);
         
-        if (Main.baseFolder != null) {
+        if (Main.baseFolder != null || baseFolderName == null) {
     		Fonts.drawString(baseFolderName, x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 23), g);
         
     		g2.setStroke(new BasicStroke(4f));

@@ -288,18 +288,6 @@ public class Main implements Runnable, Tickable {
         t = new Thread(this);
         t.start();
     }
-    
-    /**
-     * Retorna true ou false se o usuário interagiu com a janela, como por exemplo: Apertou uma tecla,
-     * moveu o mouse, moveu a janela...
-     */
-    public static boolean hasUserInteraction() {
-    	return KeyInput.isKeyPressed() | KeyInput.isControlDown() | KeyInput.isShiftDown() |
-     		   KeyInput.isAltDown() | KeyInput.isAltGrDown() | MouseInput.mouseMoved() |
-     		   MouseInput.isMousePressed() | MouseInput.isMouseClicked() | MouseInput.isMouseDragged() |
-     		   WindowInput.isActivated() | ComponentInput.windowMoved() | ComponentInput.windowResized() |
-     		   WindowInput.isActivated() | CommandTerminal.active | SetFileName.added;
-    }
 
     @Override
     public void tick() {
@@ -460,11 +448,26 @@ public class Main implements Runnable, Tickable {
 
     @Override
     public void run() {
+    	//boolean hasUserInteraction = false;
+    	
         while (running) {
-        	if (hasUserInteraction()) {
+        	/*hasUserInteraction = KeyInput.isKeyPressed() || MouseInput.mouseMoved() ||
+          		   MouseInput.isMousePressed() || MouseInput.isMouseClicked() || MouseInput.isMouseDragged() ||
+         		   MouseInput.wheelDown() || MouseInput.wheelUp() ||
+         		   ComponentInput.windowMoved() || ComponentInput.windowResized();
+        	
+        	if (hasUserInteraction) {
 		        tick();
-		        render();
+		        
+		        hasUserInteraction = false;
             }
+        	
+        	render();*/
+        	
+        	if (WindowInput.isActivated() || WindowInput.isOpened()) {
+        		tick();
+        		render();
+        	}
         	
         	if (WindowInput.isClosing()) {
 	    		if (CodeEditor.editing != null)
@@ -474,7 +477,7 @@ public class Main implements Runnable, Tickable {
 	    	}
         	
             try {
-				Thread.sleep(1000/120); // 120
+				Thread.sleep(1000/120);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

@@ -3074,36 +3074,6 @@ public class CodeEditor extends IDEComponent {
 				 ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
 				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig"))) {
 			
-			if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs"))) {
-				for (String s : nums) { // colorir números
-					indxs = findWord(new String(chars), s);
-	
-					for (Integer i : indxs)
-						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-				}
-				
-				indxs = findWord(new String(chars), "0x");
-				
-				int len = 0;
-	
-				for (Integer i : indxs) {
-					while (i + len < chars.length &&
-							chars[i + len] != ' ' &&
-							chars[i + len] != '[' &&
-							chars[i + len] != ']' &&
-							chars[i + len] != '(' &&
-							chars[i + len] != ')' &&
-							chars[i + len] != ',' &&
-							chars[i + len] != ';' &&
-							chars[i + len] != '.' &&
-							chars[i + len] != ':')
-							len++;
-	
-					if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-				}
-			}
-			
 			// primeira vez usando labels!
 			methods:
 				if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
@@ -3145,6 +3115,36 @@ public class CodeEditor extends IDEComponent {
 						fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
 					}
 			}
+		
+		if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs"))) {
+			for (String s : nums) { // colorir números
+				indxs = findWord(new String(chars), s);
+
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "0x");
+			
+			int len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length &&
+						chars[i + len] != ' ' &&
+						chars[i + len] != '[' &&
+						chars[i + len] != ']' &&
+						chars[i + len] != '(' &&
+						chars[i + len] != ')' &&
+						chars[i + len] != ',' &&
+						chars[i + len] != ';' &&
+						chars[i + len] != '.' &&
+						chars[i + len] != ':')
+						len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+			}
+		}
 	
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// gens = genéricos

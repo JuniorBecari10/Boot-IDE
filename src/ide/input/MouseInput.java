@@ -50,7 +50,7 @@ public final class MouseInput extends MouseInputAdapter {
     	rightPressed = false;
     	
     	mouseRolled = false;
-    	//mouseMoved = false;
+    	mouseMoved = false;
     }
 
     public static boolean isMouseDragged() {
@@ -78,11 +78,11 @@ public final class MouseInput extends MouseInputAdapter {
 	}
 	
 	public static boolean wheelUp() {
-		return roll == MouseWheelRoll.UP;
+		return roll == MouseWheelRoll.UP && mouseRolled;
 	}
 	
 	public static boolean wheelDown() {
-		return roll == MouseWheelRoll.DOWN;
+		return roll == MouseWheelRoll.DOWN && mouseRolled;
 	}
 	
 	public static boolean isMouseRolling() {
