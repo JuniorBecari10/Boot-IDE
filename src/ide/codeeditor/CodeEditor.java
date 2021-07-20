@@ -4299,14 +4299,6 @@ public class CodeEditor extends IDEComponent {
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
 		
-		robot.keyRelease(KeyEvent.VK_F1);
-		
-		if (!hasPressed) {
-			robot.keyPress(KeyEvent.VK_F1); // bug resolvido com uma gambiarrinha kkkk
-			
-			hasPressed = true;
-		}
-		
 		if (tabs == null) tabs = new ArrayList<>();
 		verifyDuplicateTabs();
 		
@@ -4958,6 +4950,14 @@ public class CodeEditor extends IDEComponent {
 			editing.setSaved(false);
 		} // <-
 		} // não ligue pra isso :)
+		
+		robot.keyRelease(KeyEvent.VK_F1);
+		
+		if (!hasPressed) {
+			robot.keyPress(KeyEvent.VK_F1);
+			
+			hasPressed = true;
+		}
 		
 		if (tabs != null) {
 			for (Tab t : tabs) {
