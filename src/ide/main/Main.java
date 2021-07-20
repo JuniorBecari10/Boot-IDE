@@ -464,7 +464,7 @@ public class Main implements Runnable, Tickable {
         	
         	render();*/
         	
-        	if (WindowInput.isActivated() || WindowInput.isOpened()) {
+        	if (WindowInput.isActivated() || WindowInput.isOpened()) { // ARQUIVADO - Por enquanto isso não será alterado
         		tick();
         		render();
         	}

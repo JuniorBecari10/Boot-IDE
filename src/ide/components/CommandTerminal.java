@@ -974,6 +974,8 @@ public class CommandTerminal extends IDEComponent {
 					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
 				}
 				
+				//CodeEditor.cursorY += strs.length - 1;
+				
 				CodeEditor.editing.setSaved(false);
 				
 				break;
@@ -1010,6 +1012,8 @@ public class CommandTerminal extends IDEComponent {
 					
 					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
 				}
+				
+				//CodeEditor.cursorY += strss.length - 1;
 				
 				CodeEditor.editing.setSaved(false);
 				
