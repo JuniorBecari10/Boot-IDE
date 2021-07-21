@@ -111,7 +111,7 @@ public class CodeEditor extends IDEComponent {
 	public static List<Tab> toAdd;
 	public static List<Tab> toRemove;
 	
-	public static BufferedImage gradient;
+	//public static BufferedImage gradient;
 	
 	public static String clipboard = "";
 	
@@ -360,10 +360,10 @@ public class CodeEditor extends IDEComponent {
 			"r14", "r15", "eax", "ebx", "ecx", "esi", "edi", "ebp", "esp", "r8d", "r9d", "r10d", "r11d", "r12d", "r13d",
 			"r14d", "r15d", "ax", "bx", "cx", "dx", "si", "di", "bp", "sp", "r8w", "r9w", "r10w", "r11w", "r12w", "r13w",
 			"r14w", "r15w", "al", "bl", "cl", "dl", "sil", "dil", "bpl", "spl", "r8b", "r9b", "r10b", "r11b", "r12b",
-			"r13b", "r14b", "r15b", "ah", "bh", "ch", "dh", "edx" };
+			"r13b", "r14b", "r15b", "ah", "bh", "ch", "dh", "edx", "ss", "sp" };
 	
 	// não vai colorir keys de uma só letra
-	private static String[] asmKeys = { "global", "db", "dw", "equ", "extern", "include", "times", "org", "syscall", "aaa", "aad", "aam", "aas", "adc",
+	private static String[] asmKeys = { "global", "db", "dw", "equ", "extern", "include", "times", "org", "bits", "syscall", "aaa", "aad", "aam", "aas", "adc",
 			"add", "addpd", "addps", "addressing", "addsd", "addss", "align", "and", "andnpd", "andnps", "andpd",
 			"andps", "arpl", "as", "commandline", "ELFobjectfile", "macroprocessing", "syntaxUNIXversusIntel", "ascii",
 			"assemblerSeeasB", "bcd", "binaryarithmeticinstructions", "bitinstructions", "bound", "bsf", "bsr",
@@ -392,7 +392,7 @@ public class CodeEditor extends IDEComponent {
 			"fptan", "frndint", "frstor", "fsave", "fscale", "fsin", "fsincos", "fsqrt", "fst", "fstcw", "fstenv",
 			"fstp", "fstsw", "fsub", "fsubp", "fsubr", "fsubrp", "ftst", "fucom", "fucomi", "fucomip", "fucomp",
 			"fucompp", "fwait", "fxam", "fxch", "fxrstor", "fxsave", "fxtract", "fylx", "fylxp", "G", "gas", "globl",
-			"group", "H", "hidden", "hlt", "ident", "identifier", "idiv", "imul", "in", "inc", "ins", "insb", "insl",
+			"group", "H", "hidden", "hlt", "ident", "identifier", "idiv", "imul", "inc", "ins", "insb", "insl",
 			"instruction", "format", "suffixes", "instructions", "binaryarithmetic", "bit", "byte", "controltransfer",
 			"datatransfer", "decimalarithmetic", "flagcontrol", "floating-point-", "logical", "miscellaneous", "MMX-",
 			"operatingsystemsupport-", "Opteron", "rotate", "segmentregister", "shift", "SIMDstatemanagement", "SSE-",
@@ -402,13 +402,13 @@ public class CodeEditor extends IDEComponent {
 			"symbolic", "lahf", "lar", "lcall", "lcomm", "ldmxcsr", "lds", "lea", "leave", "les", "lfence", "lfs",
 			"lgdt", "lgs", "lidt", "lldt", "lmsw", "local", "lock", "lods", "lodsb", "lodsl", "lodsw",
 			"logicalinstructions", "long", "loop", "loope", "loopne", "loopnz", "loopz", "lret", "lsl", "lss", "ltr",
-			"m", "maskmovdqu", "maskmovq", "maxpd", "maxps", "maxsd", "maxss", "mfence", "minpd", "minps", "minsd",
+			"maskmovdqu", "maskmovq", "maxpd", "maxps", "maxsd", "maxss", "mfence", "minpd", "minps", "minsd",
 			"minss", "miscellaneousinstructions", "MMXinstructions", "comparison", "conversion", "datatransfer",
 			"logical", "packedarithmetic", "rotate", "shift", "statemanagement", "mov", "movabs", "movabsA", "movapd",
 			"movaps", "movd", "movdqq", "movdqa", "movdqu", "movhlps", "movhpd", "movhps", "movlhps", "movlpd",
 			"movlps", "movmskpd", "movmskps", "movntdq", "movnti", "movntpd", "movntps", "movntq", "movq", "movqdq",
 			"movs", "movsb", "movsd", "movsl", "movss", "movsw", "movupd", "movups", "movzb", "movzw", "mul", "mulpd",
-			"mulps", "mulsd", "mulss", "N", "neg", "nop", "not", "numbers", "floatingpoint", "integers", "binary",
+			"mulps", "mulsd", "mulss", "neg", "nop", "not", "numbers", "floatingpoint", "integers", "binary",
 			"decimal", "hexadecimal", "octal", "operands", "immediate", "indirect", "memory", "addressing",
 			"ordering", "register", "operatingsystemsupportinstructions", "Opteroninstructions", "or", "orpd",
 			"orps", "out", "outs", "outsb", "outsl", "outswP", "packssdw", "packsswb", "packuswb", "paddb", "paddd",
@@ -668,11 +668,11 @@ public class CodeEditor extends IDEComponent {
 			}
 		}.start();
 		
-		try {
+		/*try {
 			gradient = ImageIO.read(getClass().getResource("/gradient.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public boolean hovered() {
@@ -910,7 +910,7 @@ public class CodeEditor extends IDEComponent {
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // mais tarde arrumar os outros bugs, ou em outra update
 					}
 					
-					indxs = findWord(new String(chars), ";");
+					indxs = findWord(new String(chars), ";"); // TODO se algum dia fizer, colorir variáveis antes da vírgula
 					
 					for (Integer i : indxs) {
 						int c = i;
@@ -930,27 +930,6 @@ public class CodeEditor extends IDEComponent {
 						}
 							
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-					}
-					
-					indxs = findWord(new String(chars), ".");
-					
-					for (Integer i : indxs) {
-						int c = i;
-						int len = 0;
-							
-						while (c < chars.length && 
-								c + len < chars.length &&
-								c > 0 &&
-								chars[c] != ' ' &&
-								chars[c] != '[' &&
-								chars[c] != ']' &&
-								chars[c] != ',' &&
-								chars[c] != ':') {
-							c--;
-							len++;
-						}
-							
-						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // mais tarde arrumar os outros bugs, ou em outra update
 					}
 					
 					indxs = findWord(new String(chars), "[");
@@ -4328,7 +4307,7 @@ public class CodeEditor extends IDEComponent {
 		if (drawcy < realcy) drawcy += speed;
 		if (drawcy > realcy) drawcy -= speed;*/
 		
-		if ((KeyInput.isKeyPressed() && !KeyInput.isControlDown() && !KeyInput.isShiftDown()) || ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2)))
+		if (MouseInput.isMousePressed() || (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() != KeyEvent.VK_BACK_SPACE) && ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2)))
 			selecting = false;
 		
 		drawcx = realcx;
@@ -4560,7 +4539,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D && !isReadOnly && !alternateTabsMode) { // Ctrl + D (Desselecionar)
+			if ((KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D || KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) && !isReadOnly && !alternateTabsMode) { // Ctrl + D (Desselecionar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("deselect");
@@ -4819,9 +4798,14 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
 				KeyInput.updateKeys();
-				undo.push(lines);
+				//undo.push(lines);
 				
-				if (!selecting) {
+				if (selecting) {
+					CommandTerminal.runCommand("del");
+					
+					return;
+				}
+				else {
 					if (cursorX > 0) {
 						cY.deleteCharAt(cursorX - 1);
 					
@@ -4852,15 +4836,11 @@ public class CodeEditor extends IDEComponent {
 					
 					return;
 				}
-				
-				CommandTerminal.runCommand("del");
-				
-				return;
 			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				KeyInput.updateKeys();
-				undo.push(lines);
+				//undo.push(lines);
 				
 				if (cursorX < cY.length()) {
 					cY.deleteCharAt(cursorX);
@@ -4877,7 +4857,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 				KeyInput.updateKeys();
-				undo.push(lines);
+				//undo.push(lines);
 				
 				cY.insert(cursorX, "    ");
 				
@@ -4887,7 +4867,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
-				undo.push(lines);
+				//undo.push(lines);
 				
 				StringBuilder spaces = new StringBuilder();
 				String s = cY.substring(cursorX);
@@ -4944,7 +4924,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
-			undo.push(lines);
+			//undo.push(lines);
 			editing.setSaved(false);
 		} // <-
 		} // não ligue pra isso :)
