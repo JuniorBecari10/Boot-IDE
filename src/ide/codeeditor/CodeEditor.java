@@ -1097,7 +1097,7 @@ public class CodeEditor extends IDEComponent {
 	public static List<IDEFont> colorKeywords(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
-		switch (ext.toLowerCase()) { // olha só :0
+		switch (ext.toLowerCase()) {
 		case ".java":
 			if (!foundExt) {
 				extType = "Java";

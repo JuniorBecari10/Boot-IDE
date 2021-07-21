@@ -343,11 +343,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			w.write("variables: default\n");
 			w.write("comments: default\n");
 			w.write("strings: default\n");
-			w.write("generics: default\n");
-			w.write("select1: default\n");
-			w.write("select2: default\n");
-			w.write("selectCursor: default\n");
+			w.write("symbols: default\n");
 			w.write("cursor: default\n");
+			w.write("select: default\n");
 			w.write("other: default\n");
 			w.write("error: default\n");
 			w.write("lineNumber: default\n");
@@ -610,45 +608,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				}
 				
 				break;
-				
-			/*case "select1:":
-				if (split[1].equals("default")) break;
-				
-				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
-				
-				try {
-					Colors.select1 = Color.decode(split[1]);
-				} catch (NumberFormatException e) {
-					break;
-				}
-				
-				break;
-				
-			case "select2:":
-				if (split[1].equals("default")) break;
-				
-				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
-				
-				try {
-					Colors.select2 = Color.decode(split[1]);
-				} catch (NumberFormatException e) {
-					break;
-				}
-				
-				break;
-				
-			case "selectCursor:":
-				if (split[1].equals("default")) break;
-				
-				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
-				
-				try {
-					Colors.selectCursor = Color.decode(split[1]);
-				} catch (NumberFormatException e) {
-					break;
-				}
-				
-				break;*/
 				
 			case "select:":
 				if (split[1].equals("default")) break;
