@@ -48,15 +48,15 @@ public class CommandTerminal extends IDEComponent {
 	private boolean showCursor;
 	private Animation cursor;
 	
-	private static String lastCommand = "";
+	public static String lastCommand = ""; // TODO debugar isso aqui
 	
 	private static JFileChooser chooser;
 	
-	public static String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
+	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "stdcout", "writeline", "syserr", "clog", "gendiv", "closebasefolder",
-			"revertconfigfile", "togglecodehints", "gotocursor", "togglereadonly", "closetab int:tab",
+			"revertconfigfile", "togglecodehints", "gotocursor", "togglereadonly", "closetab int:tab_index",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
 			"gendiv str:div_name", "genbase str:type[html, css, java, javainterface, javaenum, javamain, cs, csmain, cpp, c, ino, html5]",
 			"search str:word", "searchsel str:word", "lorem int:num_words", "ordertab int:tab_from int:tab_to",
@@ -65,8 +65,25 @@ public class CommandTerminal extends IDEComponent {
 			"gengetter str:lang str:variable_name str:variable_type",
 			"gensetter str:lang str:variable_name str:variable_type" };
 	
+	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
+			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline",
+			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
+			"sysout", "syso", "cout", "stdcout", "writeline", "syserr", "clog", "gendiv", "closebasefolder",
+			"revertconfigfile", "togglecodehints", "gotocursor", "togglereadonly", "closetab",
+			"gotoline", "setfontsize", "insertchar",
+			"gendiv", "genbase",
+			"search", "searchsel", "lorem", "ordertab",
+			"setcursorpos", "search", "searchsel",
+			"replace", "replacesel",
+			"gengetter",
+			"gensetter" };
+	
+	public static List<String> commandHints = new ArrayList<>();
+	
 	public CommandTerminal(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
+		
+		commandHints.clear();
 		
 		builder = new StringBuilder();
 		chooser = new JFileChooser();
@@ -93,7 +110,7 @@ public class CommandTerminal extends IDEComponent {
 	/**
 	 * Esse é o meu primeiro lexer/parser custom!
 	 * 
-	 * @param command
+	 * @param command - o comando, oras
 	 */
 	public static void runCommand(String command) {
 		lastCommand = command;
@@ -509,7 +526,7 @@ public class CommandTerminal extends IDEComponent {
 			case "gotocursor":
 				if (CodeEditor.isReadOnly) break;
 				
-				CodeEditor.scrY = (CodeEditor.cursorY - 1) * (CodeEditor.FONT_SIZE);
+				CodeEditor.scrY = (CodeEditor.cursorY * (CodeEditor.FONT_SIZE + 4)); // TODO arrumar isso aqui
 				break;
 				
 			case "togglereadonly":
@@ -1025,25 +1042,6 @@ public class CommandTerminal extends IDEComponent {
 				break;
 			}
 		}
-			
-		/*else if (args.length == 4) {
-			switch (com) {
-			case "select":
-				if (CodeEditor.isReadOnly) break;
-				
-				CodeEditor.index1 = Integer.parseInt(args[0]);
-				CodeEditor.line1 = Integer.parseInt(args[1]);
-				CodeEditor.index2 = Integer.parseInt(args[2]);
-				CodeEditor.line2 = Integer.parseInt(args[3]);
-				
-				if (CodeEditor.line1 < 1) CodeEditor.line1 = 1;
-				if (CodeEditor.line2 < 1) CodeEditor.line2 = 1;
-				
-				CodeEditor.selecting = true;
-				
-				break;
-			}
-		}*/
 		
 		new Thread() {
 			public void run() {
@@ -1083,11 +1081,17 @@ public class CommandTerminal extends IDEComponent {
 			
 			if (KeyInput.isControlDown() || KeyInput.isAltDown() || KeyInput.isAltGrDown()) return;
 			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP)
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 				builder = new StringBuilder(lastCommand);
 			
-			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN)
+				commandHints.clear();
+			}
+			
+			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
 				builder = new StringBuilder();
+			
+				commandHints.clear();
+			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && cursorIndex > 0) {
 				cursorIndex--;
@@ -1099,6 +1103,15 @@ public class CommandTerminal extends IDEComponent {
 				cursorIndex++;
 				
 				return;
+			}
+			
+			commandHints.clear();
+			
+			for (int i = 0; i < onlyCommands.length; i++) {
+				String s = onlyCommands[i];
+				String dgt = builder.toString().split(" ")[0]; // dgt = digitado
+				
+				if (s.contains(dgt)) commandHints.add(commands[i]);
 			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_SPACE) {
@@ -1145,7 +1158,7 @@ public class CommandTerminal extends IDEComponent {
 			if (KeyInput.getCharPressed() < 33 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
 			if (builder.length() == 0 || cursorIndex == builder.length()) builder.append(c);
-			else builder.insert(cursorIndex, c); // o erro era ordem de parâmetros
+			else builder.insert(cursorIndex, c); // o erro era ordem de parâmetros, pois usar um char como
 			
 			cursorIndex++;
 		}
@@ -1174,6 +1187,12 @@ public class CommandTerminal extends IDEComponent {
 		if (showCursor) {
 			g.setColor(Colors.cursor);
 			g.drawLine(((x - 100) + 4) + (cursorIndex * 14), y + 8, (x - 100) + 4 + (cursorIndex * 14), y + 8 + 18);
+		}
+		
+		for (int i = 0; i < commandHints.size(); i++) {
+			String cmd = commandHints.get(i);
+			
+			Fonts.drawString(cmd, x - 100, y + height + 20 + (22 * i), new IDEFont(Fonts.otherNormal, 20), g2);
 		}
 		
 		Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
