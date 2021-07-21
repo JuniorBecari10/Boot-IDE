@@ -1021,14 +1021,14 @@ public class CommandTerminal extends IDEComponent {
 			}
 		}
 			
-		else if (args.length == 4) {
+		/*else if (args.length == 4) {
 			switch (com) {
 			case "select":
 				if (CodeEditor.isReadOnly) break;
 				
 				CodeEditor.index1 = Integer.parseInt(args[0]);
-				CodeEditor.index2 = Integer.parseInt(args[1]);
-				CodeEditor.line1 = Integer.parseInt(args[2]);
+				CodeEditor.line1 = Integer.parseInt(args[1]);
+				CodeEditor.index2 = Integer.parseInt(args[2]);
 				CodeEditor.line2 = Integer.parseInt(args[3]);
 				
 				if (CodeEditor.line1 < 1) CodeEditor.line1 = 1;
@@ -1038,7 +1038,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 			}
-		}
+		}*/
 		
 		new Thread() {
 			public void run() {
