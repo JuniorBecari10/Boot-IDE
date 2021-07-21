@@ -345,7 +345,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			w.write("strings: default\n");
 			w.write("symbols: default\n");
 			w.write("cursor: default\n");
-			w.write("select: default\n");
+			w.write("selection: default\n");
 			w.write("other: default\n");
 			w.write("error: default\n");
 			w.write("lineNumber: default\n");
@@ -609,14 +609,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				break;
 				
-			case "select:":
+			case "selection:":
 				if (split[1].equals("default")) break;
 				
 				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
 				hasAltered = true;
 				
 				try {
-					Colors.select = Color.decode(split[1]);
+					Colors.selection = Color.decode(split[1]);
 				} catch (NumberFormatException e) {
 					break;
 				}

@@ -26,7 +26,7 @@ public class Colors {
     public static Color strings = 					    textLight;
     public static Color symbols = 						 comments;
     
-    public static Color select = 		  Color.decode("#8c8c8c");
+    public static Color selection = 		  Color.decode("#8c8c8c");
     
     public static Color select1 = 		  Color.decode("#ff6961");
     public static Color select2 = 		  Color.decode("#ff5147");

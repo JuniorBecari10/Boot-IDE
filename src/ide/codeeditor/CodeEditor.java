@@ -5023,7 +5023,7 @@ public class CodeEditor extends IDEComponent {
 		try {
 			for (int i = 0; i < lines.size(); i++) {
 				if (selecting) {
-					g.setColor(Colors.select);
+					g.setColor(Colors.selection);
 					
 					if (i > line1 && i < line2) {
 						g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
@@ -5052,7 +5052,7 @@ public class CodeEditor extends IDEComponent {
 				} // não mais x + 50
 				
 				if (selecting) {
-					g.setColor(Colors.select);
+					g.setColor(Colors.selection);
 					
 					if (i == line1 - 1) { // - 1 porque a line1 é base 1
 						if (i == line2 - 1) {
