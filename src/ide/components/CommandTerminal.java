@@ -52,6 +52,19 @@ public class CommandTerminal extends IDEComponent {
 	
 	private static JFileChooser chooser;
 	
+	public static String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
+			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline",
+			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
+			"sysout", "syso", "cout", "stdcout", "writeline", "syserr", "clog", "gendiv", "closebasefolder",
+			"revertconfigfile", "togglecodehints", "gotocursor", "togglereadonly", "closetab int:tab",
+			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
+			"gendiv str:div_name", "genbase str:type[html, css, java, javainterface, javaenum, javamain, cs, csmain, cpp, c, ino, html5]",
+			"search str:word", "searchsel str:word", "lorem int:num_words", "ordertab int:tab_from int:tab_to",
+			"setcursorpos int:x int:y", "search str:word int:occurence_index", "searchsel str:word int:occurence_index",
+			"replace str:word_from str:word_to", "replacesel str:word_from str:word_to",
+			"gengetter str:lang str:variable_name str:variable_type",
+			"gensetter str:lang str:variable_name str:variable_type" };
+	
 	public CommandTerminal(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
 		
@@ -133,7 +146,7 @@ public class CommandTerminal extends IDEComponent {
 			case "deselect":
 				if (CodeEditor.isReadOnly) break;
 				
-				CodeEditor.line1 = 0;
+				CodeEditor.line1 = 0; // 0, não é 1 não?
 				CodeEditor.line2 = 0;
 				
 				CodeEditor.index1 = 0;
@@ -287,10 +300,6 @@ public class CommandTerminal extends IDEComponent {
 				
 				CodeEditor.selecting = true;
 				break;
-				
-			/*case "selectmode":
-				CodeEditor.selectMode = true;
-				break;*/
 				
 			case "generateconfigfile":
 				int option = chooser.showSaveDialog(Main.screen.frame);
@@ -492,10 +501,6 @@ public class CommandTerminal extends IDEComponent {
 				CodeEditor.FONT_SIZE = 16;
 				
 				break;
-				
-			/*case "togglesyntaxerrors":
-				CodeEditor.syntaxErrorsOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor syntaxerrorson, true
-				break;*/
 				
 			case "togglecodehints":
 				CodeEditor.codeHintsOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor syntaxerrorson, true (lógico que o nome da variável n seria esse né :/)
