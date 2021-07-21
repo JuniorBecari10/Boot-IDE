@@ -12,7 +12,6 @@ import java.awt.Robot;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -26,7 +25,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 
-import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import ide.components.CommandTerminal;
@@ -743,7 +741,7 @@ public class CodeEditor extends IDEComponent {
 		
 		String ext = ListableFile.getFileExtension(file);
 		
-		if (ext.equalsIgnoreCase(".pdf") || ext.equalsIgnoreCase(".jar") || ext.equalsIgnoreCase(".class") || ext.equalsIgnoreCase(".exe") || ext.equalsIgnoreCase(".urna") || ext.equalsIgnoreCase(".save") || ext.equalsIgnoreCase(".docx") || ext.equalsIgnoreCase(".pptx") || ext.equalsIgnoreCase(".one") || ext.equalsIgnoreCase(".psd") || ext.equalsIgnoreCase(".aed") || ext.equalsIgnoreCase(".ai") || ext.equalsIgnoreCase(".indd") || ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".dll") || ext.equalsIgnoreCase(".png") || ext.equalsIgnoreCase(".jpg") || ext.equalsIgnoreCase(".jpeg") || ext.equalsIgnoreCase(".gif") || ext.equalsIgnoreCase(".bmp") || ext.equalsIgnoreCase(".ico") || ext.equalsIgnoreCase(".webp") || ext.equalsIgnoreCase(".mp4") || ext.equalsIgnoreCase(".wmv") || ext.equalsIgnoreCase(".avi") || ext.equalsIgnoreCase(".wav") || ext.equalsIgnoreCase(".mp3") || ext.equalsIgnoreCase(".ogg") || ext.equalsIgnoreCase(".otf") || ext.equalsIgnoreCase(".ttf") || ext.equalsIgnoreCase(".woff") || ext.equalsIgnoreCase(".woff2") || ext.equalsIgnoreCase(".zip") || ext.equalsIgnoreCase(".rar") || ext.equalsIgnoreCase(".7z") || ext.equalsIgnoreCase(".bin") || editing.isReadOnly) {
+		if (ext.equalsIgnoreCase(".pdf") || ext.equalsIgnoreCase(".jar") || ext.equalsIgnoreCase(".img") || ext.equalsIgnoreCase(".flp") || ext.equalsIgnoreCase(".class") || ext.equalsIgnoreCase(".exe") || ext.equalsIgnoreCase(".urna") || ext.equalsIgnoreCase(".save") || ext.equalsIgnoreCase(".docx") || ext.equalsIgnoreCase(".pptx") || ext.equalsIgnoreCase(".one") || ext.equalsIgnoreCase(".psd") || ext.equalsIgnoreCase(".aed") || ext.equalsIgnoreCase(".ai") || ext.equalsIgnoreCase(".indd") || ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".dll") || ext.equalsIgnoreCase(".png") || ext.equalsIgnoreCase(".jpg") || ext.equalsIgnoreCase(".jpeg") || ext.equalsIgnoreCase(".gif") || ext.equalsIgnoreCase(".bmp") || ext.equalsIgnoreCase(".ico") || ext.equalsIgnoreCase(".webp") || ext.equalsIgnoreCase(".mp4") || ext.equalsIgnoreCase(".wmv") || ext.equalsIgnoreCase(".avi") || ext.equalsIgnoreCase(".wav") || ext.equalsIgnoreCase(".mp3") || ext.equalsIgnoreCase(".ogg") || ext.equalsIgnoreCase(".otf") || ext.equalsIgnoreCase(".ttf") || ext.equalsIgnoreCase(".woff") || ext.equalsIgnoreCase(".woff2") || ext.equalsIgnoreCase(".zip") || ext.equalsIgnoreCase(".rar") || ext.equalsIgnoreCase(".7z") || ext.equalsIgnoreCase(".bin") || editing.isReadOnly) {
 			isReadOnly = true;
 		}
 			
@@ -2804,6 +2802,20 @@ public class CodeEditor extends IDEComponent {
 		case ".jar":
 			if (!foundExt) {
 				extType = "Arquivo Jar";
+				foundExt = true;
+			}
+			break;
+			
+		case ".img":
+			if (!foundExt) {
+				extType = "Arquivo de Imagem de Disco";
+				foundExt = true;
+			}
+			break;
+			
+		case ".flp":
+			if (!foundExt) {
+				extType = "Arquivo de Disquete";
 				foundExt = true;
 			}
 			break;

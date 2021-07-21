@@ -123,7 +123,7 @@ public class Explorer extends IDEComponent {
     }
 
     public void render(Graphics g) {
-    	if (CommandTerminal.expOff) return;
+    	if (CommandTerminal.expOff) return; // melhorar o ícone do img
     	
     	Graphics2D g2 = (Graphics2D) g;
     	
