@@ -58,7 +58,7 @@ public class CommandTerminal extends IDEComponent {
 			"sysout", "syso", "cout", "stdcout", "writeline", "syserr", "clog", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehints", "gotocursor", "togglereadonly", "closetab int:tab_index",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
-			"gendiv str:div_name", "genbase str:type[html, css, java, javainterface, javaenum, javamain, cs, csmain, cpp, c, ino, html5]",
+			"gendiv str:class_name", "genbase str:type[html, css, java, javainterface, javaenum, javamain, cs, csmain, cpp, c, ino, html5]",
 			"search str:word", "searchsel str:word", "lorem int:num_words", "ordertab int:tab_from int:tab_to",
 			"setcursorpos int:x int:y", "search str:word int:occurence_index", "searchsel str:word int:occurence_index",
 			"replace str:word_from str:word_to", "replacesel str:word_from str:word_to",
@@ -112,9 +112,7 @@ public class CommandTerminal extends IDEComponent {
 	 * 
 	 * @param command - o comando, oras
 	 */
-	public static void runCommand(String command) {
-		lastCommand = command;
-		
+	public static void runCommand(String command) { // o lastCommand muda pq vc seleciona e dps desseleciona e o sistema executa o comando, e salva ele
 		String[] tokens = command.split(" ");
 		
 		String com = tokens[0];
@@ -1138,6 +1136,8 @@ public class CommandTerminal extends IDEComponent {
 			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+				lastCommand = builder.toString(); // tem que ser o último que você digitou, não o último que executou (pq o sistema executa)
+				
 				runCommand(builder.toString());
 				
 				IDEComponent.toRemove.add(this);
