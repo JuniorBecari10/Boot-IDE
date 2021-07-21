@@ -36,7 +36,7 @@ closetab int:tab
 gotoline int:line
 setfontsize int:size/default
 insertchar int:ascii_code
-gendiv str:div_name
+gendiv str:class_name
 genbase str:type[html, css, java, javainterface, javaenum, javamain, cs, csmain, cpp, c, ino, html5]
 search str:word
 searchsel str:word

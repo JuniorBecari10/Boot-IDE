@@ -1045,6 +1045,8 @@ public class CodeEditor extends IDEComponent {
 							!isCharsEqual(chars[i + len], ']') &&
 							!isCharsEqual(chars[i + len], '(') &&
 							!isCharsEqual(chars[i + len], ')') &&
+							!isCharsEqual(chars[i + len], '{') &&
+							!isCharsEqual(chars[i + len], '}') &&
 							!isCharsEqual(chars[i + len], ',') &&
 							!isCharsEqual(chars[i + len], ';') &&
 							!isCharsEqual(chars[i + len], '.') &&
@@ -1091,10 +1093,6 @@ public class CodeEditor extends IDEComponent {
 		
 		return fs;
 	}
-	
-	
-	
-	// TODO
 	
 	public static List<IDEFont> colorKeywords(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
@@ -4674,7 +4672,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE | (selecting & KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) && !isReadOnly && !alternateTabsMode) { // Ctrl + Delete ou Backspace (Apenas Selecionando) (Deletar)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE && !isReadOnly && !alternateTabsMode) { // Ctrl + Delete ou Backspace (Apenas Selecionando) (Deletar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("del");

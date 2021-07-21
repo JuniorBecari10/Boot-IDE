@@ -1081,6 +1081,8 @@ public class CommandTerminal extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 				builder = new StringBuilder(lastCommand);
+				
+				cursorIndex = lastCommand.length();
 			
 				commandHints.clear();
 			}
@@ -1158,10 +1160,12 @@ public class CommandTerminal extends IDEComponent {
 			if (KeyInput.getCharPressed() < 33 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
 			if (builder.length() == 0 || cursorIndex == builder.length()) builder.append(c);
-			else builder.insert(cursorIndex, c); // o erro era ordem de parâmetros, pois usar um char como
+			else builder.insert(cursorIndex, c); // o erro era ordem de parâmetros, pois usar um char como int tbm vale
 			
 			cursorIndex++;
 		}
+		
+		if (builder.toString().equals("")) commandHints.clear();
 	}
 	
 	public void render(Graphics g) {

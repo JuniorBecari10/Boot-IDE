@@ -2,24 +2,18 @@
 
 - Digitar mais rápido [ARQUIVADO]
 
-- O gengetters/gensetters criar linhas sozinhos
-
 - Deletar com backspace.
 
-- A primeira linha de seleção n vai até o final da janela
+- A primeira linha de seleção n vai até o final da janela [ARQUIVADO]
 
 - Colocar uma linha pra ver onde é o começo da linha
 
-- Arrumar bug de quando sai da janela e dps volta o cursor n volta
+- Arrumar bug de quando sai da janela e dps volta o cursor n volta [ARQUIVADO]
 
-- Arrumar bug de clicar com botão direito encima do Explorador (na parte que fica o nome da pasta base) e pairar o mouse no listablefile e o efeito de hover fica encima das opções
-
-- Quando colorir variáveis/classes guardá-los numa lista e quando aparecer de novo colorir pq está na lista, mesmo se houver bug, vai colorir certo, por causa da lista
+- Quando colorir variáveis/classes guardá-los numa lista e quando aparecer de novo colorir pq está na lista, mesmo se houver bug, vai colorir certo, por causa da lista [ARQUIVADO]
 
 - O closebasefolder deleta o config file (não o arquivo, descarrega ele)
 
-- Adicionar comando gentag str:tag [TALVEZ NÃO ADICIONO ESSE]
-
 - Arrumar bug de às vezes trocar de Tab quando troca
 
-- O card somente leitura fica escondido atrás do Explorer com a tela menor
+- O card somente leitura fica escondido atrás do Explorer com a tela menor [ARQUIVADO]
