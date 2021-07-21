@@ -281,6 +281,14 @@ public class Main implements Runnable, Tickable {
 			IDEComponent.toAdd.add(Main.reload);
     	} catch (Exception e) {}
     }
+    
+    public static boolean hasUserInteraction() {
+    	return KeyInput.isKeyPressed() | KeyInput.isControlDown() | KeyInput.isShiftDown() |
+    		   KeyInput.isAltDown() | KeyInput.isAltGrDown() | MouseInput.mouseMoved() |
+    		   MouseInput.isMousePressed() | MouseInput.isMouseClicked() | MouseInput.isMouseDragged() |
+    		   WindowInput.isActivated() | ComponentInput.windowMoved() | ComponentInput.windowResized() |
+    		   WindowInput.isActivated() | CommandTerminal.active | SetFileName.added;
+    }
 
     public synchronized void start() {
         running = true;
@@ -464,7 +472,7 @@ public class Main implements Runnable, Tickable {
         	
         	render();*/
         	
-        	if (WindowInput.isActivated() || WindowInput.isOpened()) { // ARQUIVADO - Por enquanto isso não será alterado
+        	if (hasUserInteraction()) {
         		tick();
         		render();
         	}
