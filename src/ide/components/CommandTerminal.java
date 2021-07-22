@@ -1105,15 +1105,6 @@ public class CommandTerminal extends IDEComponent {
 				return;
 			}
 			
-			commandHints.clear();
-			
-			for (int i = 0; i < onlyCommands.length; i++) {
-				String s = onlyCommands[i];
-				String dgt = builder.toString().split(" ")[0]; // dgt = digitado
-				
-				if (s.contains(dgt)) commandHints.add(commands[i]);
-			}
-			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_SPACE) {
 				if (builder.length() == 0 || cursorIndex == builder.length()) builder.append(" ");
 				else builder.insert(cursorIndex, " ");
@@ -1163,6 +1154,17 @@ public class CommandTerminal extends IDEComponent {
 			else builder.insert(cursorIndex, c); // o erro era ordem de parâmetros, pois usar um char como int tbm vale
 			
 			cursorIndex++;
+		}
+		
+		commandHints.clear();
+		
+		for (int i = 0; i < onlyCommands.length; i++) {
+			String s = onlyCommands[i];
+			String dgt = builder.toString().split(" ")[0];// dgt = digitado
+			
+			System.out.println(dgt);
+			
+			if (s.contains(dgt)) commandHints.add(commands[i]);
 		}
 		
 		if (builder.toString().equals("")) commandHints.clear();
