@@ -50,7 +50,7 @@ public final class MouseInput extends MouseInputAdapter {
     	rightPressed = false;
     	
     	mouseRolled = false;
-    	mouseMoved = false;
+    	//mouseMoved = false; // olha o comentário
     }
 
     public static boolean isMouseDragged() {

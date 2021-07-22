@@ -283,11 +283,9 @@ public class Main implements Runnable, Tickable {
     }
     
     public static boolean hasUserInteraction() {
-    	return KeyInput.isKeyPressed() | KeyInput.isControlDown() | KeyInput.isShiftDown() |
-    		   KeyInput.isAltDown() | KeyInput.isAltGrDown() | MouseInput.mouseMoved() |
-    		   MouseInput.isMousePressed() | MouseInput.isMouseClicked() | MouseInput.isMouseDragged() |
-    		   WindowInput.isActivated() | ComponentInput.windowMoved() | ComponentInput.windowResized() |
-    		   WindowInput.isActivated() | CommandTerminal.active | SetFileName.added;
+    	return KeyInput.isKeyPressed() || MouseInput.mouseMoved() ||
+    		   MouseInput.isMousePressed() || MouseInput.isMouseClicked() || MouseInput.isMouseDragged() ||
+    		   WindowInput.isActivated() || ComponentInput.windowMoved() || ComponentInput.windowResized();
     }
 
     public synchronized void start() {
@@ -485,7 +483,7 @@ public class Main implements Runnable, Tickable {
 	    	}
         	
             try {
-				Thread.sleep(1000/120);
+				Thread.sleep(1000/240); // 120
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
