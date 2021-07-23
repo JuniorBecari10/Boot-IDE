@@ -207,7 +207,7 @@ public class Main implements Runnable, Tickable {
 					
 					if (i == 0) {
 						Fonts.initFonts(fntnr, fntbl);
-				        spritesheet = new Spritesheet(sprsh);
+				        spritesheet = new Spritesheet(sprsh); // fazer o closebasefolder não descarregar o config file
 						
 				        if (s.equals("none")) baseFolder = null;
 				        else {

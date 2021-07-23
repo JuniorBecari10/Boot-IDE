@@ -1015,7 +1015,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 						try {
 							CodeEditor.lines = CodeEditor.readFile(regent);
 						} catch (IOException e) {
-							JOptionPane.showMessageDialog(null, "Esse arquivo não é suportado, por favor escolha outro. \n Pode ser que esse arquivo seja codificado em um formato diferente do que UTF-8 ou ele seja binário.", "Esse arquivo não é compatível", JOptionPane.OK_OPTION);
+							JOptionPane.showMessageDialog(null, "Esse arquivo não é suportado, por favor escolha outro. \n Pode ser que esse arquivo seja codificado em um formato diferente do que UTF-8/ANSI ou ele seja binário.", "Esse arquivo não é compatível", JOptionPane.OK_OPTION);
 							
 							return;
 						}
@@ -1027,6 +1027,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				CodeEditor.cursorX = 0;
 				CodeEditor.cursorY = 1;
 				
+				CodeEditor.scrX = 0;
 				CodeEditor.scrY = 0;
 				
 				CodeEditor.isMultilineCommenting = false;

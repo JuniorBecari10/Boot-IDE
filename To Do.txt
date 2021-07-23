@@ -4,7 +4,7 @@
 
 - A primeira linha de seleção n vai até o final da janela [ARQUIVADO]
 
-- Colocar uma linha pra ver onde é o começo da linha
+- Colocar uma linha pra ver onde é o começo da linha [ARQUIVADO]
 
 - Arrumar bug de quando sai da janela e dps volta o cursor n volta [ARQUIVADO]
 
