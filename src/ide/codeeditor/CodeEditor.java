@@ -4657,9 +4657,8 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 					
 				cursorX = 0;
-				cursorY = 1;
 				
-				CommandTerminal.runCommand("selectall");
+				CommandTerminal.runCommand("selectline");
 					
 				return;
 			}
@@ -4668,8 +4667,9 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 				
 				cursorX = 0;
-					
-				CommandTerminal.runCommand("selectline");
+				cursorY = 1;
+				
+				CommandTerminal.runCommand("selectall");
 					
 				return;
 			}
