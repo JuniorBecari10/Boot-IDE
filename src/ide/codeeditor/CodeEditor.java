@@ -5083,7 +5083,7 @@ public class CodeEditor extends IDEComponent {
 						else {
 							g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o fim da linha
 								(line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 14 ? 5 : 0),
-								(((x + 50) + lines.get(i).getChars().size() * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - (((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
+								Main.screen.getWidth() + scrX,
 								FONT_SIZE + 4);
 						}
 					}
@@ -5091,7 +5091,7 @@ public class CodeEditor extends IDEComponent {
 						if (i != line1 - 1) {
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
 								(line2 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 15 ? 5 : 0),
-								(((x + 38) + (index2 - (FONT_SIZE == 15 ? 28 : 29)) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) + (Math.abs(14 - FONT_SIZE) * FONT_SIZE) + 2,// + FONT_SIZE == 15 ? FONT_SIZE : 0,
+								(((x + 38) + index2 * (FONT_SIZE - (FONT_SIZE / 4)))) - (29 * (FONT_SIZE - (FONT_SIZE / 4))),// + FONT_SIZE == 15 ? FONT_SIZE : 0,
 								FONT_SIZE + 4);
 						}
 					}
@@ -5102,8 +5102,8 @@ public class CodeEditor extends IDEComponent {
 				if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 				
 				//font = i == linesWithErrors.get(i) ? new IDEFont(Fonts.select1Normal, FONT_SIZE) : save;
-				Fonts.drawString(String.valueOf(i + 1), x + 1, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, font, g);
 				Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 2), g);
+				Fonts.drawString(String.valueOf(i + 1), x + 1, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, font, g);
 			}
 		} catch (Exception e) { }
 		

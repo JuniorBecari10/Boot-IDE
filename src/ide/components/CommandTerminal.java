@@ -484,8 +484,6 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "closebasefolder":
-				System.out.println(Main.conffile);
-				
 				CodeEditor.tabs.clear();
 				Main.baseFolder = null;
 				
@@ -504,8 +502,6 @@ public class CommandTerminal extends IDEComponent {
 				IDEComponent.toRemove.add(Main.reload);
 				
 				Main.writeFile(Main.settingsFile);
-				
-				System.out.println(Main.conffile);
 				
 				break;
 				
@@ -1163,8 +1159,6 @@ public class CommandTerminal extends IDEComponent {
 		for (int i = 0; i < onlyCommands.length; i++) {
 			String s = onlyCommands[i];
 			String dgt = builder.toString().split(" ")[0];// dgt = digitado
-			
-			System.out.println(dgt);
 			
 			if (s.contains(dgt)) commandHints.add(commands[i]);
 		}
