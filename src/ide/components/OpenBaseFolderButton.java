@@ -83,14 +83,15 @@ public class OpenBaseFolderButton extends IDEComponent {
 		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x - 1, y - 1, width + 4, height + 4);
-			
-			g.setColor(new Color(0, 0, 0, 0.5f));
-			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, 335, 28);
 		}
 		
 		super.render(g);
 		
-		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active))
+		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
+			g.setColor(new Color(0, 0, 0, 0.5f));
+			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, 335, 28);
+			
 			Fonts.drawString("Selecionar Pasta Base", MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		}
 	}
 }

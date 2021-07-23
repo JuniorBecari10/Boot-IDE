@@ -483,7 +483,7 @@ public class Main implements Runnable, Tickable {
 	    	}
         	
             try {
-				Thread.sleep(1000/240); // 120
+				Thread.sleep(1000/250); // 120 -- talvez pra 300 (ou 340) ajude
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
