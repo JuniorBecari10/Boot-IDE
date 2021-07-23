@@ -77,10 +77,11 @@ public class DragListener implements DropTargetListener {
 						IDEComponent.toAdd.add(Main.reload);
 					}
 		          
+		          ListableFile.files.clear();
+				  Explorer.files.clear();
+		          
 		          		if (files.get(0).isDirectory()) {
 		          			Main.baseFolder = files.get(0);
-		          			
-							ListableFile.files.clear();
 							
 							Explorer.scope = null;
 			        	  	
