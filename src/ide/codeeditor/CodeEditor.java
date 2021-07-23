@@ -3214,13 +3214,6 @@ public class CodeEditor extends IDEComponent {
 			for (FileType f : ListableFile.types) {
 				if (f.getExtension().equalsIgnoreCase(editing.getRegent().getRegent().getName())) { // tenta ver se tem algum especial
 					String st = capitalizeFirstLetter(f.getExtension());
-					//extType = st;
-					indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
-					
-					//if (fs.size() == 0) break; // q noia é essa mermão
-					
-					if (indxs.size() != 0)
-						fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 					
 					switch (st.toLowerCase()) {
 					case "dockerfile":
@@ -3290,6 +3283,40 @@ public class CodeEditor extends IDEComponent {
 							extType = "Git Ignore";
 							foundExt = true;
 						}
+						break;
+					}
+					
+					// Comentários de uma linha
+					
+					switch (st.toLowerCase()) {
+					case "dockerfile":
+					case "makefile":
+						indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
+						
+						if (indxs.size() != 0)
+							fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+						break;
+					}
+					
+					// Comentários Multi-linha
+					
+					switch (st.toLowerCase()) {
+					case "makefile":
+						indxs = findWord(new String(chars), "/*");						// colorir comentários multi-linha - caracteres diferentes
+						List<Integer> finals = findWord(new String(chars), "*/");
+						
+						if (indxs.size() > 0) {
+							fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+							isMultilineCommenting = true;
+						}
+						
+						if (finals.size() > 0) {
+							fs = color(indxs.size() > 0 ? indxs.get(indxs.size() - 1) : 0, finals.get(0), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+							isMultilineCommenting = false;
+						}
+						
+						if (isMultilineCommenting)
+							fs = color(0, fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 						break;
 					}
 				}

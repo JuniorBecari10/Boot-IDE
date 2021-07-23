@@ -2,8 +2,6 @@
 
 - Digitar mais rápido [ARQUIVADO]
 
-- Deletar com backspace.
-
 - A primeira linha de seleção n vai até o final da janela [ARQUIVADO]
 
 - Colocar uma linha pra ver onde é o começo da linha
