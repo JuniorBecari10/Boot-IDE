@@ -58,7 +58,7 @@ public class CommandTerminal extends IDEComponent {
 			"sysout", "syso", "cout", "stdcout", "writeline", "syserr", "clog", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehints", "gotocursor", "togglereadonly", "closetab int:tab_index",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
-			"gendiv str:class_name", "genbase str:type[html, css, java, javainterface, javaenum, javamain, cs, csmain, cpp, c, ino, html5]",
+			"gendiv str:class_name", "genbase str:type",
 			"search str:word", "searchsel str:word", "lorem int:num_words", "ordertab int:tab_from int:tab_to",
 			"setcursorpos int:x int:y", "search str:word int:occurence_index", "searchsel str:word int:occurence_index",
 			"replace str:word_from str:word_to", "replacesel str:word_from str:word_to",
@@ -484,7 +484,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "closebasefolder":
-				if (Main.baseFolder == null) return;
+				System.out.println(Main.conffile);
 				
 				CodeEditor.tabs.clear();
 				Main.baseFolder = null;
@@ -504,6 +504,8 @@ public class CommandTerminal extends IDEComponent {
 				IDEComponent.toRemove.add(Main.reload);
 				
 				Main.writeFile(Main.settingsFile);
+				
+				System.out.println(Main.conffile);
 				
 				break;
 				

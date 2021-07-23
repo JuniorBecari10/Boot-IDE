@@ -5097,9 +5097,6 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 				
-				//g.setColor(Colors.select);
-				//g.fillRect((x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, FONT_SIZE, FONT_SIZE + 4);
-				
 				IDEFont font = i == cursorY - 1 ? new IDEFont(Fonts.selectedLineNumberNormal, FONT_SIZE) : new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 				
 				if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);

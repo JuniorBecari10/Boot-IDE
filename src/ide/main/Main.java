@@ -156,9 +156,6 @@ public class Main implements Runnable, Tickable {
     	try {
 			wr = new BufferedWriter(new FileWriter(setFile));
 			
-			/*wr.write((fntnr.equals("/font.png")) ? "default\n" : fntnr + "\n");
-			wr.write((fntbl.equals("/bold.png")) ? "default\n" : fntbl + "\n");
-			wr.write((sprsh.equals("/spritesheet.png")) ? "default\n" : sprsh + "\n");*/
 			wr.write((baseFolder != null ? baseFolder.getPath() : "none") + "\n");
 			wr.write(conffile + "\n");
 			wr.write(CodeEditor.tabs.indexOf(CodeEditor.editing) + "\n");
@@ -208,17 +205,15 @@ public class Main implements Runnable, Tickable {
 				for (int i = 0; i < lines.size(); i++) {
 					String s = lines.get(i);
 					
-					/*if (i == 0)
-						fntnr = (fntnr.equals("default")) ? s : "/font.png";
-					else if (i == 1)
-						fntbl = (fntbl.equals("default")) ? s : "/bold.png";
-					else if (i == 2)
-						sprsh = (sprsh.equals("default")) ? s : "/spritesheet.png";*/
 					if (i == 0) {
 						Fonts.initFonts(fntnr, fntbl);
 				        spritesheet = new Spritesheet(sprsh);
 						
-						baseFolder = new File(s);
+				        if (s.equals("none")) baseFolder = null;
+				        else {
+				        	baseFolder = new File(s);
+				        	Explorer.baseFolderName = baseFolder.getName();
+				        }
 						
 						if (Explorer.files.size() == 0) {
 							int index = 0;

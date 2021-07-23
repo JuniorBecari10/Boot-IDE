@@ -136,13 +136,13 @@ public class Explorer extends IDEComponent {
         g2.setStroke(new BasicStroke(2f));
         g.drawLine(x + 40, y + 60, x + 220, y + 60);
         
-        if (Main.baseFolder != null || baseFolderName == null) {
-    		Fonts.drawString(baseFolderName, x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 23), g);
+        if (Main.baseFolder == null || baseFolderName == null) return;
         
-    		g2.setStroke(new BasicStroke(4f));
-            g.setColor(Colors.explorerLight);
-            g2.drawLine(0, 199, width, 199);
-        }
+        Fonts.drawString(baseFolderName, x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 23), g);
+        
+    	g2.setStroke(new BasicStroke(4f));
+        g.setColor(Colors.explorerLight);
+        g2.drawLine(0, 199, width, 199);
         
         Fonts.drawString(folderPath, x + 10, 170, new IDEFont(Fonts.lighterGrayNormal, 15), g);
         

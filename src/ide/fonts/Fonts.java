@@ -224,7 +224,9 @@ public class Fonts {
      * 
      * @author Boot
      */
-	public static void drawString(String s, int x, int y, IDEFont font, Graphics g) { ///// continuar arrumando o texto pra branco e arrumar o explorador e adicionar guias.
+	public static void drawString(String s, int x, int y, IDEFont font, Graphics g) {
+		if (s == null) throw new NullPointerException("A String não pode ser nula!");
+		
     	char[] ca = s.toCharArray(); // ca = char array								   converte a string em um char array
     	
     	BufferedImage[] text = new BufferedImage[ca.length];						// declara o array das imagens
@@ -468,6 +470,8 @@ public class Fonts {
     }
 	
 	public static void drawString(String s, int x, int y, IDEFont font, int maxPos, Graphics g) {
+		if (s == null) throw new NullPointerException("A String não pode ser nula!");
+		
     	char[] ca = s.toCharArray(); // ca = char array								   converte a string em um char array
     	
     	BufferedImage[] text = new BufferedImage[ca.length];						// declara o array das imagens
@@ -717,6 +721,8 @@ public class Fonts {
 	 * @param g - O parâmetro {@code Graphics}.
 	 */
 	public static void drawChars(char[] c, int x, int y, IDEFont[] fonts, int minX, Graphics g) {
+		if (c == null) throw new NullPointerException("O array de chars não pode ser nulo!");
+		
     	BufferedImage[] text = new BufferedImage[c.length];
     	
     	for (int i = 0; i < c.length; i++) {
