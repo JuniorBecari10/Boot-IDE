@@ -56,7 +56,7 @@ public class CommandTerminal extends IDEComponent {
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "stdcout", "writeline", "syserr", "clog", "gendiv", "closebasefolder",
-			"revertconfigfile", "togglecodehints", "gotocursor", "togglereadonly", "closetab int:tab_index",
+			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
 			"gendiv str:class_name", "genbase str:type",
 			"search str:word", "searchsel str:word", "lorem int:num_words", "ordertab int:tab_from int:tab_to",
@@ -69,7 +69,7 @@ public class CommandTerminal extends IDEComponent {
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "stdcout", "writeline", "syserr", "clog", "gendiv", "closebasefolder",
-			"revertconfigfile", "togglecodehints", "gotocursor", "togglereadonly", "closetab",
+			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab",
 			"gotoline", "setfontsize", "insertchar",
 			"gendiv", "genbase",
 			"search", "searchsel", "lorem", "ordertab",
@@ -515,8 +515,8 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "togglecodehints":
-				CodeEditor.codeHintsOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor syntaxerrorson, true (lógico que o nome da variável n seria esse né :/)
+			case "togglecodehelpers":
+				CodeEditor.codeHelpersOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor syntaxerrorson, true (lógico que o nome da variável n seria esse né :/)
 				break;
 				
 			case "gotocursor":

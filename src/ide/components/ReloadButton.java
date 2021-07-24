@@ -11,6 +11,8 @@ import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
+import ide.util.Language;
+import ide.util.Texts;
 
 public class ReloadButton extends IDEComponent {
 
@@ -45,9 +47,9 @@ public class ReloadButton extends IDEComponent {
 		
 		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
 			g.setColor(new Color(0, 0, 0, 0.5f));
-			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, 160, 28);
+			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, Main.lang == Language.PORT ? 160 : 110, 28);
 			
-			Fonts.drawString("Recarregar", MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString(Texts.reload, MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		}
 	}
 }

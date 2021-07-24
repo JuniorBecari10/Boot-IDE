@@ -74,7 +74,7 @@ public class CodeEditor extends IDEComponent {
 	public static boolean isJSPart;
 	public static boolean isPhpPart;
 	
-	public static boolean codeHintsOn = true;
+	public static boolean codeHelpersOn = true;
 	
 	public static String codeType = "";
 	public static String extType = "";
@@ -3787,7 +3787,7 @@ public class CodeEditor extends IDEComponent {
 	 * @param pre - O {@code StringBuilder} anterior, a base.
 	 * @return O {@code StringBuilder} anterior com as modificações.
 	 */
-	private StringBuilder addCodeHints(StringBuilder pre) {
+	private StringBuilder addCodeHelps(StringBuilder pre) {
 		switch (KeyInput.getCharPressed()) {
 		case '{':
 			if (pre.length() == 0 || cursorX == pre.length()) pre.append('}');
@@ -4701,7 +4701,7 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_P && !isReadOnly && !alternateTabsMode) { // Ctrl + P (Toggle Code Hints)
 				KeyInput.updateKeys();
 				
-				CommandTerminal.runCommand("togglecodehints");
+				CommandTerminal.runCommand("togglecodehelpers");
 					
 				return;
 			}
@@ -4952,8 +4952,8 @@ public class CodeEditor extends IDEComponent {
 			
 			cY = write(cY, c);
 			
-			if (codeHintsOn)
-				cY = addCodeHints(cY);
+			if (codeHelpersOn)
+				cY = addCodeHelps(cY);
 			
 			register(cY, cursorY - 1);
 			

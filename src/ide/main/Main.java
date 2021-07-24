@@ -41,7 +41,9 @@ import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
 import ide.util.Colors;
+import ide.util.Language;
 import ide.util.Spritesheet;
+import ide.util.Texts;
 import ide.util.Tickable;
 
 public class Main implements Runnable, Tickable {
@@ -83,6 +85,8 @@ public class Main implements Runnable, Tickable {
     
     public static boolean hasConfigFile = false;
     
+    public static Language lang;
+    
     public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings.conf"); // 08/05/2021 - 15:48
     
     public Main() {
@@ -91,6 +95,8 @@ public class Main implements Runnable, Tickable {
     	
         toolkit = Toolkit.getDefaultToolkit();
         screen = new Screen("Boot IDE");
+        
+        lang = Language.ENG; // default
         
         Fonts.initFonts(fntnr, fntbl);
         spritesheet = new Spritesheet(sprsh);
@@ -126,8 +132,7 @@ public class Main implements Runnable, Tickable {
         //openWith();
         
         ListableFile.readConfigFile(conffile);
-        Fonts.initFonts(fntnr, fntbl);
-        spritesheet = new Spritesheet(sprsh);
+        Texts.setTexts(lang);
     }
     
    /*private void openWith() {
@@ -377,17 +382,17 @@ public class Main implements Runnable, Tickable {
 					Fonts.drawString(t.getRegent().getRegent().getPath().substring(index), (x - 10) + 20, (y - 10) + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					
 					if (!hasConfigFile)
-						Fonts.drawString("Não há nenhum Arquivo de Configurações carregado.", (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+						Fonts.drawString(Texts.noConfigFileLoaded, (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					else
-						Fonts.drawString("Arquivo de Configurações carregado.", (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+						Fonts.drawString(Texts.configFileLoaded, (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					
-					if (CodeEditor.codeHintsOn)
-						Fonts.drawString("Os CodeHints estão ativados.", (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					if (CodeEditor.codeHelpersOn)
+						Fonts.drawString(Texts.codeHelpersOn, (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					else
-						Fonts.drawString("Os CodeHints estão desativados.", (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+						Fonts.drawString(Texts.codeHelpersOff, (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				
 					if (CodeEditor.editing.isReadOnly)
-						Fonts.drawString("Esse arquivo está como somente leitura.", (x - 10) + 20, (y - 10)+ 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+						Fonts.drawString(Texts.fileAsReadOnly, (x - 10) + 20, (y - 10)+ 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				}
 	        }
         
@@ -411,7 +416,7 @@ public class Main implements Runnable, Tickable {
     			g2.setStroke(new BasicStroke(2f));
     			g2.drawRect(xdr, MouseInput.getMouseY() - 15, wdr, hdr);
     			
-    			Fonts.drawString("Pasta Base:", xdr + 10, ydr + 10, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+    			Fonts.drawString(Texts.baseFolder_, xdr + 10, ydr + 10, new IDEFont(Fonts.lighterGrayNormal, 16), g);
     			Fonts.drawString(Main.baseFolder.getName(), xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
         	}
         	
@@ -436,7 +441,7 @@ public class Main implements Runnable, Tickable {
     			g2.setStroke(new BasicStroke(2f));
     			g2.drawRect(xdr, MouseInput.getMouseY() - 15, wdr, hdr);
     			
-    			Fonts.drawString("Pasta Atual:", xdr + 10, ydr + 10, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+    			Fonts.drawString(Texts.actualFolder_, xdr + 10, ydr + 10, new IDEFont(Fonts.lighterGrayNormal, 16), g);
     			Fonts.drawString(scopeStr, xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
         	}
         }

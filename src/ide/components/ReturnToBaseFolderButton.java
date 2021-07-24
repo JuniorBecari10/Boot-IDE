@@ -12,6 +12,7 @@ import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
+import ide.util.Texts;
 
 public class ReturnToBaseFolderButton extends IDEComponent {
 
@@ -58,7 +59,7 @@ public class ReturnToBaseFolderButton extends IDEComponent {
 			g.setColor(new Color(0, 0, 0, 0.5f));
 			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, 330, 28);
 			
-			Fonts.drawString("Retornar à Pasta Base", MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString(Texts.returnBaseFolder, MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		}
 	}
 }

@@ -14,6 +14,8 @@ import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
+import ide.util.Language;
+import ide.util.Texts;
 
 public class OpenBaseFolderButton extends IDEComponent {
 	
@@ -24,11 +26,12 @@ public class OpenBaseFolderButton extends IDEComponent {
 		
 		chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		chooser.setDialogTitle("Selecionar Pasta Base");
 	}
 	
 	public void tick() {
 		if (CommandTerminal.expOff) return;
+		
+		chooser.setDialogTitle(Texts.selectBaseFolder + "...");
 		
 		super.tick();
 		
@@ -89,9 +92,9 @@ public class OpenBaseFolderButton extends IDEComponent {
 		
 		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
 			g.setColor(new Color(0, 0, 0, 0.5f));
-			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, 335, 28);
+			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, Main.lang == Language.PORT ? 335 : 280, 28);
 			
-			Fonts.drawString("Selecionar Pasta Base", MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString(Texts.selectBaseFolder, MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		}
 	}
 }

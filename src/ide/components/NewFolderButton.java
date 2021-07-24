@@ -10,6 +10,8 @@ import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
+import ide.util.Language;
+import ide.util.Texts;
 
 public class NewFolderButton extends IDEComponent {
 
@@ -51,9 +53,9 @@ public class NewFolderButton extends IDEComponent {
 		
 		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
 			g.setColor(new Color(0, 0, 0, 0.5f));
-			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, 255, 28);
+			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, Main.lang == Language.PORT ? 255 : 270, 28);
 			
-			Fonts.drawString("Criar Nova Pasta", MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString(Texts.createFolder, MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		}
 	}
 }

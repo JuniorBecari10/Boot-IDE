@@ -31,6 +31,7 @@ import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
+import ide.util.Language;
 
 public class ListableFile extends IDEComponent implements ExecuteCommand, Serializable {
 	
@@ -385,6 +386,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			w.write("Colorir Strings: true\n");
 			w.write("Colorir Genéricos: true\n");*/
 			w.write("font_size: default\n");
+			w.write("language: default\n");
 			
 			w.close();
 			
@@ -730,6 +732,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				}
 				
 				CodeEditor.FONT_SIZE = size;
+				hasAltered = true;
+				
+				break;
+				
+			case "language":
+				if (split[1].equals("default")) break;
+				
+				Main.lang = Language.valueOf(split[1]);
+				
 				hasAltered = true;
 				
 				break;

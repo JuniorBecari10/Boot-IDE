@@ -16,6 +16,7 @@ import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
+import ide.util.Texts;
 
 public class Explorer extends IDEComponent {
 	
@@ -130,7 +131,7 @@ public class Explorer extends IDEComponent {
         g.setColor(Colors.explorer);
         g.fillRect(x, y, width, height);   
         
-        Fonts.drawString("Explorador", x + 40, y + 30, new IDEFont(Fonts.lightGrayNormal, 23), g);
+        Fonts.drawString(Texts.explorerText, x + 40, y + 30, new IDEFont(Fonts.lightGrayNormal, 23), g);
         g.setColor(Colors.textLight);
         
         g2.setStroke(new BasicStroke(2f));
