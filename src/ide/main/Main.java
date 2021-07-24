@@ -17,6 +17,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import ide.codeeditor.CodeEditor;
 import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
@@ -470,12 +472,27 @@ public class Main implements Runnable, Tickable {
         		render();
         	}
         	
-        	if (WindowInput.isClosing()) {
-	    		if (CodeEditor.editing != null)
-	    			CodeEditor.editing.save();
-	    		
-	    		writeFile(settingsFile);
-	    	}
+        	closing:
+	        	if (WindowInput.isClosing()) {
+	        		writeFile(settingsFile);
+	        		
+		    		if (CodeEditor.editing != null) { // não for nulo
+		    			if (!CodeEditor.editing.isSaved()) { // não estiver salvo
+		    				String[] options = { "Sim", "Não", "Cancelar" };
+		    				
+		    				int selectedOption = JOptionPane.showOptionDialog(null, "O arquivo " + CodeEditor.editing.getRegent().getRegent().getName() + " não está salvo. Deseja salvá-lo antes de sair?", "Confirmar Salvamento do Arquivo", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		    				
+		    				if (selectedOption == 0) CodeEditor.editing.save();
+		    				else if (selectedOption == 2) {
+		    					WindowInput.update();
+		    					
+		    					break closing;
+		    				}
+		    			}
+		    		}
+		    		
+		    		System.exit(0);
+		    	}
         	
             try {
 				Thread.sleep(1000/250); // 120 -- talvez pra 300 (ou 340) ajude

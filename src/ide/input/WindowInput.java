@@ -12,6 +12,16 @@ public class WindowInput implements WindowListener {
 	private static boolean maximized;
 	private static boolean minimized;
 	private static boolean opened;
+	
+	public static void update() {
+		activated = false;
+		closed = false;
+		closing = false;
+		deactivated = false;
+		maximized = false;
+		minimized = false;
+		opened = false;
+	}
 
 	public static boolean isActivated() {
 		return activated;
