@@ -36,6 +36,45 @@ public class Texts {
 	public static String readOnlyText1;
 	public static String readOnlyText2;
 	
+	public static String insertCommand;
+	
+	public static String enter_Execute;
+	public static String ctrl_del_Clear;
+	
+	public static String open;
+	
+	public static String delete;
+	public static String rename;
+	public static String openCmd;
+	public static String openTerminal;
+	public static String openExplorer;
+	public static String setBaseFolder;
+	public static String openDefault;
+	
+	public static String execute;
+	
+	public static String selectLine;
+	public static String selectAll;
+	
+	public static String save;
+	
+	public static String copy;
+	public static String paste;
+	public static String cut;
+	public static String deselect;
+	
+	public static String closeTab;
+	public static String closeAllTabs;
+	
+	public static String closeOtherTabs;
+	
+	public static String openBootExplorer;
+	
+	public static String orderTabs;
+	
+	public static String selectTabOrder;
+	public static String leftClickTab;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -74,6 +113,44 @@ public class Texts {
 			readOnlyText1 = "Para alternar os modos Somente Leitura, aperte";
 			readOnlyText2 = "Ctrl + Shift + H, ou digite togglereadonly no Terminal de Comando.";
 			
+			insertCommand = "Insira o comando";
+			
+			enter_Execute = "[Enter] Executar";
+			ctrl_del_Clear = "[Ctrl + Delete] Limpar";
+			
+			open = "Abrir";
+			
+			delete = "Deletar";
+			rename = "Renomear";
+			openCmd = "Abrir Prompt de Comando";
+			openTerminal = "Abrir Terminal de Comando";
+			openExplorer = "Abrir no Explorador de Arquivos";
+			setBaseFolder = "Definir pasta atual como Pasta Base";
+			openDefault = "Abrir arquivo com o programa padrão";
+			
+			execute = "Executar";
+			
+			selectLine = "Selecionar Linha";
+			selectAll = "Selecionar Tudo";
+			
+			save = "Salvar";
+			
+			copy = "Copiar";
+			paste = "Colar";
+			cut = "Cortar";
+			deselect = "Desselecionar";
+			
+			closeTab = "Fechar aba";
+			closeAllTabs = "Fechar todas as abas";
+			closeOtherTabs = "Fechar outras abas";
+			
+			openBootExplorer = "Abrir no Explorador";
+			
+			orderTabs = "Ordenar Abas";
+			
+			selectTabOrder = "Selecione a aba que deseja trocar:";
+			leftClickTab = "[Clique Esquerdo -> Aba] Trocar";
+			
 			break;
 		
 		case ENG:
@@ -111,6 +188,44 @@ public class Texts {
 			
 			readOnlyText1 = "To toggle the Read Only modes, press";
 			readOnlyText2 = "Ctrl + Shift + H, or type togglereadonly in the Command Terminal.";
+			
+			insertCommand = "Insert command:";
+			
+			enter_Execute = "[Enter] Execute";
+			ctrl_del_Clear = "[Ctrl + Delete] Clear";
+			
+			open = "Open";
+			
+			delete = "Delete";
+			rename = "Rename";
+			openCmd = "Open Command Prompt";
+			openTerminal = "Open Command Terminal";
+			openExplorer = "Open in File Explorer";
+			setBaseFolder = "Set current folder as Base Folder";
+			openDefault = "Open file with default program";
+			
+			execute = "Executar";
+			
+			selectLine = "Select Line";
+			selectAll = "Select All";
+			
+			save = "Save";
+			
+			copy = "Copy";
+			paste = "Paste";
+			cut = "Cut";
+			deselect = "Deselect";
+			
+			closeTab = "Close tab";
+			closeAllTabs = "Close all tabs";
+			closeOtherTabs = "Close other tabs";
+			
+			openBootExplorer = "Open in Explorer";
+			
+			orderTabs = "Order tabs";
+			
+			selectTabOrder = "Select the tab you want to order:";
+			leftClickTab = "[Left Click -> Tab] Order";
 			
 			break;
 		}

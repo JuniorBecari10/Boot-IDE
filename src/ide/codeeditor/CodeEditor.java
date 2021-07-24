@@ -44,6 +44,7 @@ import ide.main.Main;
 import ide.main.Screen;
 import ide.util.Animation;
 import ide.util.Colors;
+import ide.util.Language;
 import ide.util.Texts;
 
 // Nota: para escrever em vermelho no console, ao invés de digitar System.out.println("texto"); use System.err.println("texto");
@@ -4347,7 +4348,7 @@ public class CodeEditor extends IDEComponent {
 		if (drawcy < realcy) drawcy += speed;
 		if (drawcy > realcy) drawcy -= speed;*/
 		
-		if (MouseInput.isMousePressed() || (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() != KeyEvent.VK_BACK_SPACE) && ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2)))
+		if (MouseInput.isLeftPressed() || (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() != KeyEvent.VK_BACK_SPACE) && ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2)))
 			selecting = false;
 		
 		drawcx = realcx;
@@ -4465,30 +4466,32 @@ public class CodeEditor extends IDEComponent {
 			Main.screen.setCursor(Cursor.getDefaultCursor());
 		
 		if (rightClicked() && !alternateTabsMode) {
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), 550, "Abrir Prompt de Comando", (s) -> execute(s), "cmd");
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, 550, "Abrir Terminal de Comando", (s) -> execute(s), "term");
+			int width = Main.lang == Language.PORT ? 550 : 510;
+			
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), width, Texts.openCmd, (s) -> execute(s), "cmd");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, width, Texts.openTerminal, (s) -> execute(s), "term");
 			
 			if (Main.baseFolder != null) {
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, 550, "Abrir no Explorador de Arquivos", (s) -> execute(s), "sysexp");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (isReadOnly ? 90 : (editing != null ? (selecting ? 330 : 210) : 90)), 550, "Definir pasta atual como Pasta Base", (s) -> execute(s), "setbase");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, width, Texts.openExplorer, (s) -> execute(s), "sysexp");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (isReadOnly ? 90 : (editing != null ? (selecting ? 330 : 210) : 90)), width, Texts.setBaseFolder, (s) -> execute(s), "setbase");
 			}
 			
 			if (!isReadOnly) {
 					if (editing != null) {
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), 550, "Selecionar Linha", (s) -> CommandTerminal.runCommand(s), "selectline");
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, 550, "Salvar", (s) -> execute(s), "save");
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), 550, "Colar", (s) -> execute(s), "paste");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), width, Texts.selectLine, (s) -> CommandTerminal.runCommand(s), "selectline");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, width, Texts.save, (s) -> execute(s), "save");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), width, Texts.paste, (s) -> execute(s), "paste");
 					
 					if (selecting) {
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, 550, "Copiar", (s) -> CommandTerminal.runCommand(s), "copy");
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 180, 550, "Cortar", (s) -> CommandTerminal.runCommand(s), "cut");
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 210, 550, "Deletar", (s) -> CommandTerminal.runCommand(s), "del");
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 300, 550, "Desselecionar", (s) -> CommandTerminal.runCommand(s), "deselect");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, width, Texts.copy, (s) -> CommandTerminal.runCommand(s), "copy");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 180, width, Texts.cut, (s) -> CommandTerminal.runCommand(s), "cut");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 210, width, Texts.delete, (s) -> CommandTerminal.runCommand(s), "del");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 300, width, Texts.deselect, (s) -> CommandTerminal.runCommand(s), "deselect");
 					}
 					
 					if (Main.baseFolder != null && editing != null) {
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 270 : 180), 550, "Selecionar Tudo", (s) -> CommandTerminal.runCommand(s), "selectall");
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 360 : 240), 550, "Abrir arquivo com o programa padrão", (s) -> execute(s), "opendef");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 270 : 180), width, Texts.selectAll, (s) -> CommandTerminal.runCommand(s), "selectall");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 360 : 240), width, Texts.openDefault, (s) -> execute(s), "opendef");
 					}
 				}
 			}
@@ -5159,12 +5162,12 @@ public class CodeEditor extends IDEComponent {
 			g.fillRect(x, y + 35, width, height);
 			
 			int xdr = MouseInput.getMouseX() + 10;
-			int ydr = MouseInput.getMouseY() - 30; // TODO alterar texto trocar por algo melhor
+			int ydr = MouseInput.getMouseY() - 30; // TODO alterar texto "trocar aba" por algo melhor
 			
-			Fonts.drawString("Selecione a aba que deseja trocar:", xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			Fonts.drawString(Texts.selectTabOrder, xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 			
-			Fonts.drawString("[Esc] Cancelar", xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
-			Fonts.drawString("[Clique Esquerdo -> Aba] Trocar", xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			Fonts.drawString(Texts.esc_Cancel, xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			Fonts.drawString(Texts.leftClickTab, xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 		}
 		
 		if (isReadOnly && hovered() && !(CommandTerminal.active || SetFileName.added || RenameFile.added || alternateTabsMode) && !RightClickOption.isRightClickActive()) {

@@ -24,6 +24,8 @@ import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
+import ide.util.Language;
+import ide.util.Texts;
 
 /**
  * Representa uma aba da IDE.
@@ -353,20 +355,22 @@ public class Tab extends IDEComponent implements Serializable {
 		if (rightClicked() && !CodeEditor.alternateTabsMode) {
 			MouseInput.updateMouse();
 			
-			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3, 305, "Fechar Aba", (s) -> execute(s), "this");
-			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 30, 305, "Fechar todas as abas", (s) -> execute(s), "all");
-			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 60, 305, "Fechar outras abas", (s) -> execute(s), "closeother");
-			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 90, 305, "Salvar", (s) -> execute(s), "save");
-			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 120, 305, "Abrir no Explorador", (s) -> execute(s), "showexp");
-			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 150, 305, "Ordenar Abas", (s) -> execute(s), "alternate");
+			int width = Main.lang == Language.PORT ? 305 : 260;
+			
+			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3, width, Texts.closeTab, (s) -> execute(s), "this");
+			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 30, width, Texts.closeAllTabs, (s) -> execute(s), "all");
+			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 60, width, Texts.closeOtherTabs, (s) -> execute(s), "closeother");
+			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 90, width, Texts.save, (s) -> execute(s), "save");
+			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 120, width, Texts.openBootExplorer, (s) -> execute(s), "showexp");
+			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 150, width, Texts.orderTabs, (s) -> execute(s), "alternate");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			if ((ListableFile.getFileExtension(regent.getRegent()).equals(".bat") || ListableFile.getFileExtension(regent.getRegent()).equals(".cmd") || ListableFile.getFileExtension(regent.getRegent()).equals(".com") || ListableFile.getFileExtension(regent.getRegent()).equals(".ps1")) && isWindows)
-				IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 180, 305, "Executar", (s) -> execute(s), "run");
+				IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 180, width, Texts.execute, (s) -> execute(s), "run");
 			
 			if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && !isWindows)
-				IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 180, 305, "Executar", (s) -> execute(s), "runbash");
+				IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 180, width, Texts.execute, (s) -> execute(s), "runbash");
 		}
 		
 		if (isSaved)

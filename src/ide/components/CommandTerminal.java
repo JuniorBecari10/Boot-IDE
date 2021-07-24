@@ -29,6 +29,7 @@ import ide.main.Screen;
 import ide.util.Animation;
 import ide.util.Colors;
 import ide.util.Spritesheet;
+import ide.util.Texts;
 
 /**
  * Um terminal onde você coloca os comandos nele e ele executa de acordo com que você mandar. Simples, não?
@@ -1182,7 +1183,7 @@ public class CommandTerminal extends IDEComponent {
 		g.setColor(Colors.explorerLight);
 		g2.drawRect(x - 100, y, width + 200, height);
 		
-		Fonts.drawString("Insira o comando:", Main.screen.getWidth() / 2 - 100, y - 25, new IDEFont(Fonts.otherNormal, 20), g);
+		Fonts.drawString(Texts.insertCommand, Main.screen.getWidth() / 2 - 100, y - 25, new IDEFont(Fonts.otherNormal, 20), g);
 		
 		Fonts.drawString(builder.toString(), (x - 100) + 4, y + 8, new IDEFont(Fonts.otherNormal, 18), g);
 		
@@ -1199,8 +1200,8 @@ public class CommandTerminal extends IDEComponent {
 			Fonts.drawString(cmd, x - 100, y + height + 20 + (22 * i), new IDEFont(Fonts.otherNormal, 20), g2);
 		}
 		
-		Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString("[Enter] Executar", MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString("[Ctrl + Delete] Limpar", MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString(Texts.esc_Cancel, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString(Texts.enter_Execute, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString(Texts.ctrl_del_Clear, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.lightGrayNormal, 20), g);
 	}
 }
