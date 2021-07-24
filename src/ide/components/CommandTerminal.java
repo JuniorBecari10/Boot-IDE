@@ -526,6 +526,8 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "togglereadonly":
+				runCommand("deselect");
+				
 				CodeEditor.isReadOnly ^= true;
 				CodeEditor.editing.isReadOnly ^= true;
 				

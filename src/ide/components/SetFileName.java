@@ -18,6 +18,7 @@ import ide.main.Main;
 import ide.main.Screen;
 import ide.util.Animation;
 import ide.util.Colors;
+import ide.util.Texts;
 
 public class SetFileName extends IDEComponent {
 	
@@ -155,14 +156,14 @@ public class SetFileName extends IDEComponent {
 			g.fillRect(cursorIndex * (16 - 2), y, 2, height);
 		
 		if (isFile)
-			Fonts.drawString("Criar Novo Arquivo...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 40, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString(Texts.createFile + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 40, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		else
-			Fonts.drawString("Criar Nova Pasta...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 40, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString(Texts.createFolder + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 40, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		
-		Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString("[Enter] Criar", MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString(Texts.esc_Cancel, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString(Texts.enter_Create, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		
 		if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())))
-			Fonts.drawString("Já existe um arquivo nessa pasta com esse nome.", MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
+			Fonts.drawString(Texts.fileExists, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
 	}
 }

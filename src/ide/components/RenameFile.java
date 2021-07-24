@@ -17,6 +17,7 @@ import ide.main.Main;
 import ide.main.Screen;
 import ide.util.Animation;
 import ide.util.Colors;
+import ide.util.Texts;
 
 public class RenameFile extends IDEComponent {
 
@@ -148,14 +149,14 @@ public class RenameFile extends IDEComponent {
 		g2.setStroke(new BasicStroke(2f));
 		
 		if (showCursor)
-			g.fillRect(cursorIndex * (16 - 2), y, 2, height);
+			g.fillRect(cursorIndex * (16 - 2), y, 2, height); // TODO arrumar a frase
 		
-		Fonts.drawString("Renomear Arquivo...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 40, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString(Texts.renameFile + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 40, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		
-		Fonts.drawString("[Esc] Cancelar", MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString("[Enter] Renomear", MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
-	
-		if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())) && !text.toString().equalsIgnoreCase(old.getName()))
-			Fonts.drawString("Já existe um arquivo nessa pasta com esse nome.", MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
+		Fonts.drawString(Texts.esc_Cancel, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString(Texts.enter_Rename, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		
+		if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())))
+			Fonts.drawString(Texts.fileExists, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
 	}
 }

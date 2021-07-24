@@ -44,6 +44,7 @@ import ide.main.Main;
 import ide.main.Screen;
 import ide.util.Animation;
 import ide.util.Colors;
+import ide.util.Texts;
 
 // Nota: para escrever em vermelho no console, ao invés de digitar System.out.println("texto"); use System.err.println("texto");
 
@@ -3713,7 +3714,7 @@ public class CodeEditor extends IDEComponent {
 		
 		/////////////////////////////////////////////////////
 		
-		if (isReadOnly && !extType.contains("(Somente Leitura)")) extType += " (Somente Leitura)";
+		if (isReadOnly && !extType.contains("(" + Texts.readOnly + ")")) extType += " (" + Texts.readOnly + ")";
 		
 		return fs;
 	}
@@ -4698,7 +4699,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_P && !isReadOnly && !alternateTabsMode) { // Ctrl + P (Toggle Code Hints)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_P && !isReadOnly && !alternateTabsMode) { // Ctrl + P (Toggle Code Helpers)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("togglecodehelpers");

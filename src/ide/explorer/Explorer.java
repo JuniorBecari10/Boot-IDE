@@ -16,6 +16,7 @@ import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
+import ide.util.Language;
 import ide.util.Texts;
 
 public class Explorer extends IDEComponent {
@@ -129,13 +130,16 @@ public class Explorer extends IDEComponent {
     	Graphics2D g2 = (Graphics2D) g;
     	
         g.setColor(Colors.explorer);
-        g.fillRect(x, y, width, height);   
+        g.fillRect(x, y, width, height); 
         
-        Fonts.drawString(Texts.explorerText, x + 40, y + 30, new IDEFont(Fonts.lightGrayNormal, 23), g);
+        int xd = Main.lang == Language.PORT ? x + 40 : x + 60;
+        int x2d = Main.lang == Language.PORT ? x + 220 : x + 200;
+        
+        Fonts.drawString(Texts.explorerText, xd, y + 30, new IDEFont(Fonts.lightGrayNormal, 23), g);
         g.setColor(Colors.textLight);
         
         g2.setStroke(new BasicStroke(2f));
-        g.drawLine(x + 40, y + 60, x + 220, y + 60);
+        g.drawLine(xd, y + 60, x2d, y + 60);
         
         if (Main.baseFolder == null || baseFolderName == null) return;
         

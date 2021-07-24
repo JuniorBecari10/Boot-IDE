@@ -23,6 +23,16 @@ public class Texts {
 	public static String baseFolder_; // _ é dois pontos :
 	public static String actualFolder_;
 	
+	public static String esc_Cancel;
+	public static String enter_Create;
+	public static String enter_Rename;
+	
+	public static String renameFile;
+	
+	public static String fileExists;
+	
+	public static String readOnly;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -47,6 +57,17 @@ public class Texts {
 			baseFolder_ = "Pasta Base:";
 			actualFolder_ = "Pasta Atual:";
 			
+			esc_Cancel = "[Esc] Cancelar";
+			
+			enter_Create = "[Enter] Criar";
+			enter_Rename = "[Enter] Renomear";
+			
+			renameFile = "Renomear Arquivo";
+			
+			fileExists = "Já existe um arquivo nessa pasta com esse nome.";
+			
+			readOnly = "Somente Leitura";
+			
 			break;
 		
 		case ENG:
@@ -70,6 +91,17 @@ public class Texts {
 			
 			baseFolder_ = "Base Folder:";
 			actualFolder_ = "Current Folder:";
+			
+			esc_Cancel = "[Esc] Cancel";
+			
+			enter_Create = "[Enter] Create";
+			enter_Rename = "[Enter] Rename";
+			
+			renameFile = "Rename File";
+			
+			fileExists = "There is already a file in that folder with that name.";
+			
+			readOnly = "Read Only";
 			
 			break;
 		}

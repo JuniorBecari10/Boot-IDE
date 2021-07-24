@@ -351,16 +351,25 @@ public class Main implements Runnable, Tickable {
 					int y = MouseInput.getMouseY() + 10;
 					
 					if (!hasConfigFile) {
-						if (width < 600)
-							width = 600;
+						if (lang == Language.PORT)
+							if (width < 600)
+								width = 600;
+						
+						if (lang == Language.ENG)
+							if (width < 470)
+								width = 470;
 					}
 					else if (CodeEditor.editing.isReadOnly) {
 						if (width < 480)
 							width = 480;
 					}
 					else {
-						if (width < 435)
-							width = 435;
+						if (lang == Language.PORT)
+							if (width < 435)
+								width = 435;
+						if (lang == Language.ENG)
+							if (width < 360)
+								width = 360;
 					}
 					
 					if (CodeEditor.editing.isReadOnly)
