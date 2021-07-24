@@ -75,6 +75,14 @@ public class Texts {
 	public static String selectTabOrder;
 	public static String leftClickTab;
 	
+	public static String noFolderLoadedLogoText;
+	public static String clickOnButton;
+	public static String loadOne;
+	
+	public static String ctrl_Win_Prompt;
+	public static String ctrl_T_terminal;
+	public static String rightClick_Options;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -151,6 +159,14 @@ public class Texts {
 			selectTabOrder = "Selecione a aba que deseja trocar:";
 			leftClickTab = "[Clique Esquerdo -> Aba] Trocar";
 			
+			noFolderLoadedLogoText = "Não há nenhuma pasta carregada.";
+			clickOnButton = "Clique no botão [Selecionar Pasta Base]";
+			loadOne = "para carregar uma.";
+			
+			ctrl_Win_Prompt = "[Ctrl + Windows] Prompt de Comando";
+			ctrl_T_terminal = "[Ctrl + T] Terminal de Comando";
+			rightClick_Options = "[Clique Direito] Mais Opções";
+			
 			break;
 		
 		case ENG:
@@ -226,6 +242,14 @@ public class Texts {
 			
 			selectTabOrder = "Select the tab you want to order:";
 			leftClickTab = "[Left Click -> Tab] Order";
+			
+			noFolderLoadedLogoText = "There is no folder loaded.";
+			clickOnButton = "Click on button [Select Base Folder]";
+			loadOne = "to load one.";
+			
+			ctrl_Win_Prompt = "[Ctrl + Windows] Command Prompt";
+			ctrl_T_terminal = "[Ctrl + T] Command Terminal";
+			rightClick_Options = "[Right Click] More Options";
 			
 			break;
 		}
