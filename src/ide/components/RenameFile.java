@@ -31,10 +31,14 @@ public class RenameFile extends IDEComponent {
 	private boolean showCursor;
 	private Animation cursor;
 	
+	private boolean canShow = false;
+	
 	public RenameFile(int x, int y, int width, int height, File old) {
 		super(x, y, width, height, null);
 		
 		this.old = old;
+		
+		canShow = false;
 		
 		cursor = new Animation(2, true) { // 20
 			private boolean flip = false;
@@ -69,6 +73,8 @@ public class RenameFile extends IDEComponent {
 			IDEComponent.toRemove.add(this);
 			added = false;
 		}
+		
+		if (KeyInput.isKeyPressed()) canShow = true;
 		
 		if (KeyInput.isKeyPressed()) {
 			KeyInput.updateKeys();
@@ -149,14 +155,14 @@ public class RenameFile extends IDEComponent {
 		g2.setStroke(new BasicStroke(2f));
 		
 		if (showCursor)
-			g.fillRect(cursorIndex * (16 - 2), y, 2, height); // TODO arrumar a frase
+			g.fillRect(cursorIndex * (16 - 2), y, 2, height);
 		
 		Fonts.drawString(Texts.renameFile + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 40, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		
 		Fonts.drawString(Texts.esc_Cancel, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
 		Fonts.drawString(Texts.enter_Rename, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		
-		if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())))
+		if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())) && canShow)
 			Fonts.drawString(Texts.fileExists, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
 	}
 }
