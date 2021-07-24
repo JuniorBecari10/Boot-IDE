@@ -1104,7 +1104,7 @@ public class CodeEditor extends IDEComponent {
 		case ".cfg":
 		case ".config":
 			if (!foundExt) {
-				extType = "Arquivo de Configurações";
+				extType = Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File";
 				foundExt = true;
 			}
 		case ".xml":
@@ -1829,20 +1829,20 @@ public class CodeEditor extends IDEComponent {
 		
 		case ".license":
 			if (!foundExt) {
-				extType = "Arquivo de Licença";
+				extType = Main.lang == Language.PORT ? "Arquivo de Licença" : "License File";
 				foundExt = true;
 			}
 			break;
 			
 		case ".ps1":
 			if (!foundExt) {
-				extType = "Arquivo PowerShell";
+				extType = Main.lang == Language.PORT ? "Arquivo PowerShell" : "PowerShell File";
 				foundExt = true;
 			}
 		case ".cmd":
 		case ".com":
 			if (!foundExt) {
-				extType = "Arquivo do Prompt de Comando";
+				extType = Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File";
 				foundExt = true;
 			}
 		case ".bat":
@@ -2179,19 +2179,19 @@ public class CodeEditor extends IDEComponent {
 		
 		case ".log":
 			if (!foundExt) {
-				extType = "Arquivo de Log";
+				extType = Main.lang == Language.PORT ? "Arquivo de Log" : "Log File";
 				foundExt = true;
 			}
 		case ".txt":
 			if (!foundExt) {
-				extType = "Arquivo de Texto";
+				extType = Main.lang == Language.PORT ? "Arquivo de Texto" : "Text File";
 				foundExt = true;
 			}
 			break;
 			
 		case ".ini":
 			if (!foundExt) {
-				extType = "Arquivo de Parâmetros de Configurações"; // remover 'arquivo de'
+				extType = Main.lang == Language.PORT ? "Arquivo de Parâmetros de Configurações" : "Configuration Parameters File"; // remover 'arquivo de'
 				foundExt = true;
 			}
 			
@@ -2807,54 +2807,54 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".jar":
 			if (!foundExt) {
-				extType = "Arquivo Jar";
+				extType = Main.lang == Language.PORT ? "Arquivo Jar" : "Jar File";
 				foundExt = true;
 			}
 			break;
 			
 		case ".img":
 			if (!foundExt) {
-				extType = "Arquivo de Imagem de Disco";
+				extType = Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disk Image File";
 				foundExt = true;
 			}
 			break;
 			
 		case ".flp":
 			if (!foundExt) {
-				extType = "Arquivo de Disquete";
+				extType = Main.lang == Language.PORT ? "Arquivo de Disquete" : "Floppy Disk File";
 				foundExt = true;
 			}
 			break;
 			
 		case ".exe":
-			extType = "Executável do Windows - EXE";
+			extType = Main.lang == Language.PORT ? "Executável do Windows - EXE" : "Windows Executable - EXE";
 			foundExt = true;
 			break;
 			
 		case ".urna":
 			if (!foundExt) {
-				extType = "Urna Salva do Criador de Urnas";
+				extType = Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas" : "Urn Saved from Criador de Urnas"; // vc sabe que nome próprio não se traduz né
 				foundExt = true;
 			}
 			break;
 			
 		case ".class":
 			if (!foundExt) {
-				extType = "Arquivo Bytecode do Java";
+				extType = Main.lang == Language.PORT ? "Arquivo Bytecode do Java" : "Java Bytecode File";
 				foundExt = true;
 			}
 			break;
 			
 		case ".save":
 			if (!foundExt) {
-				extType = "Jogo Salvo do World's Hardest Game Maker 2";
+				extType = Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2" : "Saved Game from World's Hardest Game Maker 2";
 				foundExt = true;
 			}
 			break;
 			
 		case ".conf":
 			if (!foundExt) {
-				extType = "Arquivo de Configurações da Boot IDE";
+				extType = Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE" : "Boot IDE Configuration File";
 				foundExt = true;
 			}
 			
@@ -2893,14 +2893,14 @@ public class CodeEditor extends IDEComponent {
 		case ".rar":
 		case ".zip":
 			if (!foundExt) {
-				extType = "Arquivo Compactado";
+				extType = Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File";
 				foundExt = true;
 			}
 			break;
 			
 		case ".bin":
 			if (!foundExt) {
-				extType = "Arquivo Binário";
+				extType = Main.lang == Language.PORT ? "Arquivo Binário" : "Binary File";
 				foundExt = true;
 			}
 			break;
@@ -2949,7 +2949,7 @@ public class CodeEditor extends IDEComponent {
 		case ".woff":
 		case ".woff2":
 			if (!foundExt) {
-				extType = "Arquivo de Fonte";
+				extType = Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File";
 				foundExt = true;
 			}
 			break;
@@ -2979,7 +2979,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".docx":
 			if (!foundExt) {
-				extType = "Documento do Microsoft Word";
+				extType = Main.lang == Language.PORT ? "Documento do Microsoft Word" : "Micrsofot Word Document";
 				foundExt = true;
 			}
 			
@@ -2987,7 +2987,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".xlsx":
 			if (!foundExt) {
-				extType = "Planilha do Microsoft Excel";
+				extType = Main.lang == Language.PORT ? "Planilha do Microsoft Excel" : "Microsoft Excel Spreadsheet";
 				foundExt = true;
 			}
 			
@@ -2995,7 +2995,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".pptx":
 			if (!foundExt) {
-				extType = "Apresentação do Microsoft PowerPoint";
+				extType = Main.lang == Language.PORT ? "Apresentação do Microsoft PowerPoint" : "Microsoft PowerPoint Presentation File";
 				foundExt = true;
 			}
 			
@@ -3003,7 +3003,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".one":
 			if (!foundExt) {
-				extType = "Arquivo do Microsoft OneNote";
+				extType = Main.lang == Language.PORT ? "Arquivo do Microsoft OneNote" : "Microsoft OneNote File";
 				foundExt = true;
 			}
 			
@@ -3011,7 +3011,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".psd":
 			if (!foundExt) {
-				extType = "Arquivo do Photoshop";
+				extType = Main.lang == Language.PORT ? "Arquivo do Photoshop" : "Photoshop File";
 				foundExt = true;
 			}
 			
@@ -3019,7 +3019,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".aed":
 			if (!foundExt) {
-				extType = "Arquivo do After Effects";
+				extType = Main.lang == Language.PORT ? "Arquivo do After Effects" : "After Effects File";
 				foundExt = true;
 			}
 			
@@ -3027,7 +3027,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".ai":
 			if (!foundExt) {
-				extType = "Arquivo do Illustrator";
+				extType = Main.lang == Language.PORT ? "Arquivo do Illustrator" : "Illustrator File";
 				foundExt = true;
 			}
 			
@@ -3035,7 +3035,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".indd":
 			if (!foundExt) {
-				extType = "Arquivo do InDesign";
+				extType = Main.lang == Language.PORT ? "Arquivo do InDesign" : "InDesign File";
 				foundExt = true;
 			}
 			
@@ -3272,14 +3272,14 @@ public class CodeEditor extends IDEComponent {
 						
 					case "license":
 						if (!foundExt) {
-							extType = "Arquivo de Licença";
+							extType = Main.lang == Language.PORT ? "Arquivo de Licença" : "License File";
 							foundExt = true;
 						}
 						break;
 						
 					case "authors":
 						if (!foundExt) {
-							extType = "Nomes dos Autores";
+							extType = Main.lang == Language.PORT ? "Nomes dos Autores" : "Authors' Names";
 							foundExt = true;
 						}
 						break;
