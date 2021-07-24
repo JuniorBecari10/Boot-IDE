@@ -5186,10 +5186,10 @@ public class CodeEditor extends IDEComponent {
 			g2.setStroke(new BasicStroke(2f));
 			g2.drawRect(xdr, MouseInput.getMouseY() - 35, wdr, hdr);
 			
-			Fonts.drawString("Este arquivo está como Somente Leitura.", xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			Fonts.drawString(Texts.fileAsReadOnly, xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 			
-			Fonts.drawString("Para alternar os modos Somente Leitura, aperte", xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
-			Fonts.drawString("Ctrl + Shift + H, ou digite togglereadonly no Terminal de Comando.", xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			Fonts.drawString(Texts.readOnlyText1, xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			Fonts.drawString(Texts.readOnlyText2, xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 		}
 	}
 }

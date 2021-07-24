@@ -33,6 +33,9 @@ public class Texts {
 	
 	public static String readOnly;
 	
+	public static String readOnlyText1;
+	public static String readOnlyText2;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -68,6 +71,9 @@ public class Texts {
 			
 			readOnly = "Somente Leitura";
 			
+			readOnlyText1 = "Para alternar os modos Somente Leitura, aperte";
+			readOnlyText2 = "Ctrl + Shift + H, ou digite togglereadonly no Terminal de Comando.";
+			
 			break;
 		
 		case ENG:
@@ -87,7 +93,7 @@ public class Texts {
 			codeHelpersOn = "The CodeHelpers are enabled.";
 			codeHelpersOff = "The CodeHelpers are disabled.";
 			
-			fileAsReadOnly = "This file is as read-only.";
+			fileAsReadOnly = "This file is as Read-Only.";
 			
 			baseFolder_ = "Base Folder:";
 			actualFolder_ = "Current Folder:";
@@ -102,6 +108,9 @@ public class Texts {
 			fileExists = "There is already a file in that folder with that name.";
 			
 			readOnly = "Read Only";
+			
+			readOnlyText1 = "To toggle the Read Only modes, press";
+			readOnlyText2 = "Ctrl + Shift + H, or type togglereadonly in the Command Terminal.";
 			
 			break;
 		}

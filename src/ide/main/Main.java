@@ -360,8 +360,12 @@ public class Main implements Runnable, Tickable {
 								width = 470;
 					}
 					else if (CodeEditor.editing.isReadOnly) {
-						if (width < 480)
-							width = 480;
+						if (lang == Language.PORT)
+							if (width < 480)
+								width = 480;
+						if (lang == Language.ENG)
+							if (width < 360)
+								width = 360;
 					}
 					else {
 						if (lang == Language.PORT)
