@@ -409,7 +409,7 @@ public class Main implements Runnable, Tickable {
 				}
 	        }
         
-        if (explorer.hovered()) {
+        if (explorer.hovered() && !CommandTerminal.expOff) {
         	if (MouseInput.hovered(explorer.getX() + 10, 140, explorer.getWidth() - 10, 23) && Explorer.showBaseFolderCard) {
         		int xdr = MouseInput.getMouseX() + 10;
     			int ydr = MouseInput.getMouseY() - 10;

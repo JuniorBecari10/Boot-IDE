@@ -5026,7 +5026,7 @@ public class CodeEditor extends IDEComponent {
 			g.fillRect(x, MIN_Y, Main.screen.getWidth(), height);
 		}
 		
-//		if (editing != null &&																	// não vamos mostrar imagens aqui
+//		if (editing != null &&																	// não vamos mostrar imagens aqui, vai abrir o aplicativo do sistema
 //			(ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".png") || // se for uma imagem
 //			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".jpg") ||
 //			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".jpeg")||
@@ -5048,7 +5048,7 @@ public class CodeEditor extends IDEComponent {
 				if (selecting) {
 					g.setColor(Colors.selection);
 					
-					if (i > line1 && i < line2) {
+					if (i > line1 && i < line2) { // do meio
 						g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
 								(i + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 14 ? 5 : 0),
 								Main.screen.getWidth() + scrX,
@@ -5092,10 +5092,10 @@ public class CodeEditor extends IDEComponent {
 						}
 					}
 					if (i == line2 - 1) {
-						if (i != line1 - 1) {
+						if (i != line1 - 1) { // do 0 ao index2
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
 								(line2 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 15 ? 5 : 0),
-								(((x + 38) + index2 * (FONT_SIZE - (FONT_SIZE / 4)))) - (29 * (FONT_SIZE - (FONT_SIZE / 4))),// + FONT_SIZE == 15 ? FONT_SIZE : 0,
+								(((x + 38) + index2 * (FONT_SIZE - (FONT_SIZE / 4)))) - (29 * (FONT_SIZE - (FONT_SIZE / 4))) + (CommandTerminal.expOff ? (20 * FONT_SIZE) : 0),// + FONT_SIZE == 15 ? FONT_SIZE : 0,
 								FONT_SIZE + 4);
 						}
 					}
