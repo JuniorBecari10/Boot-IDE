@@ -738,11 +738,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				break;
 				
-			case "language":
+			case "language:":
 				if (split[1].equals("default")) break;
 				
-				Main.lang = Language.valueOf(split[1]);
-				
+				try {
+					Main.lang = Language.valueOf(split[1].toUpperCase());
+				} catch (IllegalArgumentException e) {
+					break;
+				}
+					
 				hasAltered = true;
 				
 				break;
