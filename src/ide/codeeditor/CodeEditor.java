@@ -1036,8 +1036,12 @@ public class CodeEditor extends IDEComponent {
 							len++;
 					}
 
-					if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
+					if (i + len < chars.length) {
+						if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile"))
+							fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+						else
+							fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
+					}
 				}
 			}
 			}
@@ -5106,18 +5110,7 @@ public class CodeEditor extends IDEComponent {
 				if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 				
 				Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 2), g);
-				
-				/*g.setColor(Colors.explorerLight);
-				g2.setStroke(new BasicStroke(2f));
-				g2.drawLine(x + 50 - scrX, y, x + 50 - scrX, y + height);*/
-				
 				Fonts.drawString(String.valueOf(i + 1), x + 1, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, font, g);
-			
-				/*if (i == cursorY - 1) {
-					g.setColor(Colors.explorerLight);
-					g2.setStroke(new BasicStroke(2f));
-					g2.drawLine(x + 50, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, x + 50, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY + FONT_SIZE + 1);
-				}*/
 			}
 		} catch (Exception e) { }
 		
