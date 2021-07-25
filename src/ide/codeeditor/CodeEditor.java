@@ -1836,7 +1836,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".ps1":
 			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo PowerShell" : "PowerShell File";
+				extType = Main.lang == Language.PORT ? "Arquivo do PowerShell" : "PowerShell File";
 				foundExt = true;
 			}
 		case ".cmd":
