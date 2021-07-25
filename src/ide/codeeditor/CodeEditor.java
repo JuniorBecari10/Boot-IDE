@@ -121,7 +121,8 @@ public class CodeEditor extends IDEComponent {
 	
 	private static Animation cursor;
 	
-	private static int mx, my;
+	public static int mx;
+	public static int my;
 	
 	public static boolean isReadOnly = false;
 	

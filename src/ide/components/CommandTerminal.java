@@ -253,6 +253,11 @@ public class CommandTerminal extends IDEComponent {
 					CodeEditor.setCursorWithinBounds();
 					CodeEditor.editing.setSaved(false);
 					
+					CodeEditor.cursorX = CodeEditor.mx;
+					CodeEditor.cursorY = CodeEditor.my;
+					
+					CodeEditor.setCursorWithinBounds();
+					
 					break;
 				}
 				else {
