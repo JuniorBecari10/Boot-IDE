@@ -2979,7 +2979,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".docx":
 			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Documento do Microsoft Word" : "Micrsofot Word Document";
+				extType = Main.lang == Language.PORT ? "Documento do Microsoft Word" : "Microsoft Word Document";
 				foundExt = true;
 			}
 			
