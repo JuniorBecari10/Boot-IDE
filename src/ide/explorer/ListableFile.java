@@ -331,7 +331,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		try {
 			BufferedWriter w = /*Files.newBufferedWriter(path, StandardCharsets.UTF_8);*/ new BufferedWriter(new FileWriter(s));
 			
-			w.write("Arquivo de Configurações da Boot IDE\n");
+			w.write(Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE" : "Boot IDE Configuration File" + "\n");
 			w.write("\n");
 			w.write("- Colors\n");
 			w.write("\n");

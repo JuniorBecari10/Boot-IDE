@@ -587,7 +587,7 @@ public class CodeEditor extends IDEComponent {
 			"@class", "@public", "@protected", "@private", "@property", "@try", "@throw", "@catch", "@finally",
 			"@synthesize", "@dynamic", "@selector", "atomic", "nonatomic", "retain" };
 	
-	private static String[] ideConfKeys = { "Arquivo de Configurações da Boot IDE", "Colors", "Files", "Settings", "default" };
+	private static String[] ideConfKeys = { "Arquivo de Configurações da Boot IDE", "Boot IDE Configuration File", "Colors", "Files", "Settings", "default" };
 	
 	private static String[] makeKeys = { "if", "else", "make", "echo", "elif", "then", "fi", "exit", "export" };
 	
