@@ -2833,7 +2833,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".urna":
 			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas" : "Urn Saved from Criador de Urnas"; // vc sabe que nome próprio não se traduz né
+				extType = Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas" : "Bollot Box Saved from Criador de Urnas"; // vc sabe que nome próprio não se traduz né
 				foundExt = true;
 			}
 			break;
