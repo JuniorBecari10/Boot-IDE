@@ -243,9 +243,6 @@ public class CommandTerminal extends IDEComponent {
 							continue;
 						}
 						
-						/*CodeEditor.lines.get(i).setChars(new ArrayList<>());
-						CodeEditor.lines.get(i).setFonts(new ArrayList<>());*/
-						
 						CodeEditor.linesToRemove.add(CodeEditor.lines.get(i)); // pra evitar concurrentmodificationexception
 					}
 					
@@ -253,10 +250,10 @@ public class CommandTerminal extends IDEComponent {
 					CodeEditor.setCursorWithinBounds();
 					CodeEditor.editing.setSaved(false);
 					
-					CodeEditor.cursorX = CodeEditor.mx;		// tomar cuidado quando o comando é chamado pelo sistema e vc ver seu cursor andando adoidado por ai viu TODO
-					CodeEditor.cursorY = CodeEditor.my;
+					/*CodeEditor.cursorX = CodeEditor.mx;		// tomar cuidado quando o comando é chamado pelo sistema e vc ver seu cursor andando adoidado por ai viu TODO
+					CodeEditor.cursorY = CodeEditor.my;			// melhor desabilitar isso
 					
-					CodeEditor.setCursorWithinBounds();
+					CodeEditor.setCursorWithinBounds();*/
 					
 					break;
 				}

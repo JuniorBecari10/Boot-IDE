@@ -128,6 +128,37 @@ public class CodeEditor extends IDEComponent {
 	
 	///////
 	
+	private static String[] words = { "dolor", "sit", "amet", "consectetur",
+			"adipiscing", "elit", "curabitur", "vel", "hendrerit", "libero",
+			"eleifend", "blandit", "nunc", "ornare", "odio", "ut",
+			"orci", "gravida", "imperdiet", "nullam", "purus", "lacinia",
+			"a", "pretium", "quis", "congue", "praesent", "sagittis", 
+			"laoreet", "auctor", "mauris", "non", "velit", "eros",
+			"dictum", "proin", "accumsan", "sapien", "nec", "massa",
+			"volutpat", "venenatis", "sed", "eu", "molestie", "lacus",
+			"quisque", "porttitor", "ligula", "dui", "mollis", "tempus",
+			"at", "magna", "vestibulum", "turpis", "ac", "diam",
+			"tincidunt", "id", "condimentum", "enim", "sodales", "in",
+			"hac", "habitasse", "platea", "dictumst", "aenean", "neque",
+			"fusce", "augue", "leo", "eget", "semper", "mattis", 
+			"tortor", "scelerisque", "nulla", "interdum", "tellus", "malesuada",
+			"rhoncus", "porta", "sem", "aliquet", "et", "nam",
+			"suspendisse", "potenti", "vivamus", "luctus", "fringilla", "erat",
+			"donec", "justo", "vehicula", "ultricies", "varius", "ante",
+			"primis", "faucibus", "ultrices", "posuere", "cubilia", "curae",
+			"etiam", "cursus", "aliquam", "quam", "dapibus", "nisl",
+			"feugiat", "egestas", "class", "aptent", "taciti", "sociosqu",
+			"ad", "litora", "torquent", "per", "conubia", "nostra",
+			"inceptos", "himenaeos", "phasellus", "nibh", "pulvinar", "vitae",
+			"urna", "iaculis", "lobortis", "nisi", "viverra", "arcu",
+			"morbi", "pellentesque", "metus", "commodo", "ut", "facilisis",
+			"felis", "tristique", "ullamcorper", "placerat", "aenean", "convallis",
+			"sollicitudin", "integer", "rutrum", "duis", "est", "etiam",
+			"bibendum", "donec", "pharetra", "vulputate", "maecenas", "mi",
+			"fermentum", "consequat", "suscipit", "aliquam", "habitant", "senectus",
+			"netus", "fames", "quisque", "euismod", "curabitur", "lectus",
+			"elementum", "tempor", "risus", "cras" };
+	
 	private static String[] javaKeys = { "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
 			"continue", "default", "do", "double", "else", "enum", "extends", "final", "finally", "float",
 			"for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long", "native",
@@ -1872,7 +1903,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		case ".js":
 			if (!foundExt) {
-				extType = "JavaScript";
+				extType = "JavaScript";	// TODO - tomar cuidado em colorir tags em HTML mesmo dentro da JSPart ou CssPart viu
 				foundExt = true;
 			}
 			
@@ -4169,6 +4200,14 @@ public class CodeEditor extends IDEComponent {
 		return result.toString();
 	}
 	
+	public static int pxToPt(int px) {
+		return ruleOf3(16, 12, px);
+	}
+	
+	/*public static int ptToPx(int pt) {
+		return ruleOf3(12, 16, pt);
+	}*/
+	
 	/**
 	 * Gera um Lorem Ipsum aleatório a partir das palavras do array, com pontuação e tudo.
 	 * <pre>Ele suporta somente um parágrafo.</pre>
@@ -4177,38 +4216,7 @@ public class CodeEditor extends IDEComponent {
 	 * @return O texto gerado.
 	 */
 	public static String generateLoremIpsum(int numWords) {
-		String[] words = { "dolor", "sit", "amet", "consectetur",
-				"adipiscing", "elit", "curabitur", "vel", "hendrerit", "libero",
-				"eleifend", "blandit", "nunc", "ornare", "odio", "ut",
-				"orci", "gravida", "imperdiet", "nullam", "purus", "lacinia",
-				"a", "pretium", "quis", "congue", "praesent", "sagittis", 
-				"laoreet", "auctor", "mauris", "non", "velit", "eros",
-				"dictum", "proin", "accumsan", "sapien", "nec", "massa",
-				"volutpat", "venenatis", "sed", "eu", "molestie", "lacus",
-				"quisque", "porttitor", "ligula", "dui", "mollis", "tempus",
-				"at", "magna", "vestibulum", "turpis", "ac", "diam",
-				"tincidunt", "id", "condimentum", "enim", "sodales", "in",
-				"hac", "habitasse", "platea", "dictumst", "aenean", "neque",
-				"fusce", "augue", "leo", "eget", "semper", "mattis", 
-				"tortor", "scelerisque", "nulla", "interdum", "tellus", "malesuada",
-				"rhoncus", "porta", "sem", "aliquet", "et", "nam",
-				"suspendisse", "potenti", "vivamus", "luctus", "fringilla", "erat",
-				"donec", "justo", "vehicula", "ultricies", "varius", "ante",
-				"primis", "faucibus", "ultrices", "posuere", "cubilia", "curae",
-				"etiam", "cursus", "aliquam", "quam", "dapibus", "nisl",
-				"feugiat", "egestas", "class", "aptent", "taciti", "sociosqu",
-				"ad", "litora", "torquent", "per", "conubia", "nostra",
-				"inceptos", "himenaeos", "phasellus", "nibh", "pulvinar", "vitae",
-				"urna", "iaculis", "lobortis", "nisi", "viverra", "arcu",
-				"morbi", "pellentesque", "metus", "commodo", "ut", "facilisis",
-				"felis", "tristique", "ullamcorper", "placerat", "aenean", "convallis",
-				"sollicitudin", "integer", "rutrum", "duis", "est", "etiam",
-				"bibendum", "donec", "pharetra", "vulputate", "maecenas", "mi",
-				"fermentum", "consequat", "suscipit", "aliquam", "habitant", "senectus",
-				"netus", "fames", "quisque", "euismod", "curabitur", "lectus",
-				"elementum", "tempor", "risus", "cras" };
-		
-		String[] points = { ". ", ", ", "; ", ", ", ", ", "; " }; // tem mais chances de ser ; ou , do que .
+		String[] points = { ". ", ", ", ", " }; // tem mais chances de ser , do que . (a cada 2 , ocorre 1 .)
 		
 		Random rd = new Random();
 		

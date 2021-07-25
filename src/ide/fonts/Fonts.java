@@ -208,6 +208,17 @@ public class Fonts {
     }
     
     /**
+     * Retorna true ou false se o char em c pertence à tabela Ascii.
+     * Note que no return deveria ser 128, mas essa é a Ascii estendida.
+     * 
+     * @param c - O char
+     * @return true ou false se o char em c pertence à tabela Ascii.
+     *
+    public static boolean isAscii(char c) {
+    	return c < 200;
+    }*/
+    
+    /**
      * Desenha um texto na tela de acordo com a posição, o tamanho e a fonte especificados.
      * 
      * <pre>Como foi feito?</pre>
@@ -967,6 +978,7 @@ public class Fonts {
     		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + 2 : y;
     		
     		g.drawImage(text[i], (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw, fonts[i].getSize() + ((ch == 'i' || ch == ',' || ch == ';') && (CodeEditor.FONT_SIZE == 14 || CodeEditor.FONT_SIZE == 13) ? 1 : 0), fonts[i].getSize(), null);
+    			
     	}
     }
 }

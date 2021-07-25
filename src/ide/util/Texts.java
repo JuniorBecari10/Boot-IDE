@@ -200,7 +200,7 @@ public class Texts {
 			
 			fileExists = "There is already a file in that folder with that name.";
 			
-			readOnly = "Read Only";
+			readOnly = "Read-Only";
 			
 			readOnlyText1 = "To toggle the Read Only modes, press";
 			readOnlyText2 = "Ctrl + Shift + H, or type togglereadonly in the Command Terminal.";
