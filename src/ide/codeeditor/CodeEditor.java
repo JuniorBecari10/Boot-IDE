@@ -3058,7 +3058,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".url":
 			if (!foundExt) {
-				extType = "Uniform Resource Locator (URL)";
+				extType = "Uniform Resource Locator - URL";
 				foundExt = true;
 			}
 			
