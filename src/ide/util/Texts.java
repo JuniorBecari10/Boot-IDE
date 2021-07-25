@@ -83,6 +83,15 @@ public class Texts {
 	public static String ctrl_T_terminal;
 	public static String rightClick_Options;
 	
+	public static String yes;
+	public static String no;
+	
+	public static String sureDelete;
+	public static String confirmDelete;
+	
+	public static String delError;
+	public static String cantDelete;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -167,6 +176,15 @@ public class Texts {
 			ctrl_T_terminal = "[Ctrl + T] Terminal de Comando";
 			rightClick_Options = "[Clique Direito] Mais Opções";
 			
+			yes = "Sim";
+			no = "Não";
+			
+			sureDelete = "Tem certeza de que deseja deletar esse arquivo?";
+			confirmDelete = "Confirmar Exclusão";
+			
+			delError = "Ocorreu um erro ao deletar. Lembre-se que pastas não podem ser excluídas se não estiverem vazias!";
+			cantDelete = "Não foi possível deletar.";
+			
 			break;
 		
 		case ENG:
@@ -220,7 +238,7 @@ public class Texts {
 			setBaseFolder = "Set current folder as Base Folder";
 			openDefault = "Open file with default program";
 			
-			execute = "Executar";
+			execute = "Execute";
 			
 			selectLine = "Select Line";
 			selectAll = "Select All";
@@ -250,6 +268,15 @@ public class Texts {
 			ctrl_Win_Prompt = "[Ctrl + Windows] Command Prompt";
 			ctrl_T_terminal = "[Ctrl + T] Command Terminal";
 			rightClick_Options = "[Right Click] More Options";
+			
+			yes = "Yes";
+			no = "No";
+			
+			sureDelete = "Are you sure you want to delete this file?";
+			confirmDelete = "Confirm Deletion";
+			
+			delError = "An error has occurred while deleting. Remember that folders cannot be deleted if they are not empty!";
+			cantDelete = "Could not delete.";
 			
 			break;
 		}

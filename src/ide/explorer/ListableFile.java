@@ -832,14 +832,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	public void execute(String arg) {
 		switch (arg) {
 		case "del":
-			String[] options = { "Sim", "Não" };
+			String[] options = { Texts.yes, Texts.no };
 			
-			int selectedOption = JOptionPane.showOptionDialog(null, "Tem certeza de que deseja deletar esse arquivo?", "Confirmar Exclusão", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+			int selectedOption = JOptionPane.showOptionDialog(null, Texts.sureDelete, Texts.confirmDelete, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 			
 			if (selectedOption != 0) break;
 			
 			if (!regent.delete())
-				JOptionPane.showMessageDialog(null, "Ocorreu um erro ao deletar. Lembre-se que pastas não podem ser excluídas se não estiverem vazias!", "Não foi possível deletar.", JOptionPane.OK_OPTION);
+				JOptionPane.showMessageDialog(null, Texts.delError, Texts.cantDelete, JOptionPane.OK_OPTION);
 			
 			for (Tab t : CodeEditor.tabs)
 				if (t.getRegent().equals(this)) t.close();
