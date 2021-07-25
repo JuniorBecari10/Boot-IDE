@@ -469,22 +469,7 @@ public class Main implements Runnable, Tickable {
 
     @Override
     public void run() {
-    	//boolean hasUserInteraction = false;
-    	
-        while (running) {
-        	/*hasUserInteraction = KeyInput.isKeyPressed() || MouseInput.mouseMoved() ||
-          		   MouseInput.isMousePressed() || MouseInput.isMouseClicked() || MouseInput.isMouseDragged() ||
-         		   MouseInput.wheelDown() || MouseInput.wheelUp() ||
-         		   ComponentInput.windowMoved() || ComponentInput.windowResized();
-        	
-        	if (hasUserInteraction) {
-		        tick();
-		        
-		        hasUserInteraction = false;
-            }
-        	
-        	render();*/
-        	
+        while (running) {   	
         	if (hasUserInteraction()) {
         		tick();
         		render();
@@ -513,7 +498,7 @@ public class Main implements Runnable, Tickable {
 		    	}
         	
             try {
-				Thread.sleep(1000/250); // 120 -- talvez pra 300 (ou 340) ajude
+				Thread.sleep(1000/260); // 120 -- talvez pra 300 (ou 340) ajude
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

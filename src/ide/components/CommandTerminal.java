@@ -28,7 +28,6 @@ import ide.main.Main;
 import ide.main.Screen;
 import ide.util.Animation;
 import ide.util.Colors;
-import ide.util.Language;
 import ide.util.Spritesheet;
 import ide.util.Texts;
 
