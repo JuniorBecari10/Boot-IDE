@@ -1031,7 +1031,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 					public void run() {
 						try {
 							CodeEditor.lines = CodeEditor.readFile(regent);
-						} catch (IOException e) { // não suportado
+						} catch (IOException e) { // não suportado, se caiu aqui
 							return;
 						}
 					}

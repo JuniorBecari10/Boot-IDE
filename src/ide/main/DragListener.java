@@ -8,6 +8,7 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,7 +115,7 @@ public class DragListener implements DropTargetListener {
 		          
 				int lastX = CodeEditor.tabs.size() > 0 ? CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() : Tab.MIN_X;
 	        	
-	        	Tab toAdd = new Tab(CodeEditor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : lastX - (Tab.WIDTH * 2), ListableFile.search(files.get(0)));
+	        	Tab toAdd = new Tab(CodeEditor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : Tab.MIN_X - Tab.WIDTH, ListableFile.search(files.get(0)));
 	        	
   				CodeEditor.cursorX = 0;
   				CodeEditor.cursorY = 1;
@@ -122,35 +123,19 @@ public class DragListener implements DropTargetListener {
   				CodeEditor.scrX = 0;
   				CodeEditor.scrY = 0;
   				
-  				/*for (Tab t : CodeEditor.tabs)
-  					if (t.getRegent().getRegent().getPath().equals(ListableFile.search(files.get(0)).getRegent().getPath())) {
-  						CodeEditor.editing = t;
-  						
-  						return;
-  					}*/
-  				
-	        	  	CodeEditor.toAdd.add(toAdd);
 	        	  	CodeEditor.editing = toAdd;
-	        	  	
-	        	  	/*if (prevBase != null) {
-	        	  		Main.baseFolder = prevBase;
-	        	  		
-	        	  		Explorer.files.clear();
-						ListableFile.files.clear();
-						
-						Explorer.scope = null;
-	        	  		
-	        	  		index = 0;
-						
-						for (File f : Main.baseFolder.listFiles()) {
-							Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
-							
-							index++;
-						}
-	        	  	}*/
-	        	  	
-	        	  	CodeEditor.tabs.add(new Tab((lastX + Tab.WIDTH) + 3, ListableFile.search(files.get(0))));
+	        	  	CodeEditor.tabs.add(toAdd);
 					
+	        	  	new Thread() {
+						public void run() {
+							try {
+								CodeEditor.lines = CodeEditor.readFile(files.get(0));
+							} catch (IOException e) { // não suportado, se caiu aqui
+								return;
+							}
+						}
+					}.start();
+	        	  	
 					Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
 		          
 		          dtde.dropComplete(true);
