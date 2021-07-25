@@ -28,6 +28,7 @@ import ide.main.Main;
 import ide.main.Screen;
 import ide.util.Animation;
 import ide.util.Colors;
+import ide.util.Language;
 import ide.util.Spritesheet;
 import ide.util.Texts;
 
@@ -88,6 +89,7 @@ public class CommandTerminal extends IDEComponent {
 		
 		builder = new StringBuilder();
 		chooser = new JFileChooser();
+		chooser.setDialogTitle(Texts.open);
 		
 		cursor = new Animation(2, true) {
 			private boolean flip = false;
