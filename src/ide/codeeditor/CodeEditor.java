@@ -346,7 +346,7 @@ public class CodeEditor extends IDEComponent {
 			"label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo",
 			"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto",
 			"rmdir", "icacls", "takeown", "if", "for", "else", "git", "npm", "call", "exist", "end",
-			"java", "javac", "nodemon", "csc", "nasm",
+			"java", "javac", "nodemon", "csc", "nasm", "qemu",
 			"VER", "ASSOC", "CD", "CLS",
 			"COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
@@ -354,7 +354,7 @@ public class CodeEditor extends IDEComponent {
 			"LABEL", "MORE", "NET", "PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO",
 			"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH", "NODE", "OFF", "GOTO",
 			"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM", "CALL", "EXIST", "END",
-			"JAVA", "JAVAC", "NODEMON", "CSC", "NASM" };
+			"JAVA", "JAVAC", "NODEMON", "CSC", "NASM", "QEMU" };
 	
 	private static String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
 			"false", "for", "function", "if", "in", "local", "nil",
@@ -547,11 +547,12 @@ public class CodeEditor extends IDEComponent {
 	private static String[] shKeys = { "pwd", "cd", "ls", "cat", "cp", "mv", "mkdir", "rmdir", "rm", "touch", "locate", "find",
 			"grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs", "kill", "ping",
 			"wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd", "userdel",
-			"clear", "git", "npm", "call", "exist", "end", "java", "javac", "nodemon", "csc", "node", "nasm", "PWD", "CD", "LS", "CAT", "CP", "MV", "MKDIR", "RMDIR", "RM", "TOUCH", "LOCATE", "FIND",
+			"clear", "git", "npm", "call", "exist", "end", "java", "javac", "nodemon", "csc", "node", "nasm", "qemu",
+			"PWD", "CD", "LS", "CAT", "CP", "MV", "MKDIR", "RMDIR", "RM", "TOUCH", "LOCATE", "FIND",
 			"GREP", "SUDO", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR", "CHMOD", "CHOWN", "JOBS", "KILL", "PING",
 			"WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP", "HOSTNAME", "USERADD", "USERDEL",
 			"CLEAR", "GIT", "NPM", "CALL", "EXIST", "END",
-			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "" };
+			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU" };
 	
 	private static String[] tsKeys = { "break", "as", "any", "switch", "case", "if", "throw",
 			"else", "var", "number", "string", "get", "module", "type", "instanceof",
@@ -872,7 +873,7 @@ public class CodeEditor extends IDEComponent {
 					}
 			}
 				
-				if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
+				if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
 					indxs = findWord(new String(chars), "=");
 					
 					for (Integer i : indxs) {
@@ -886,7 +887,8 @@ public class CodeEditor extends IDEComponent {
 								c > 0 &&
 								chars[c] != '(' &&
 								chars[c] != ':' &&
-								chars[c] != '\"') {
+								chars[c] != '\"' &&
+								chars[c] != '\'') {
 							c--;
 							len++;
 							
@@ -1077,7 +1079,7 @@ public class CodeEditor extends IDEComponent {
 					}
 
 					if (i + len < chars.length) {
-						if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile"))
+						if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))
 							fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 						else
 							fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
