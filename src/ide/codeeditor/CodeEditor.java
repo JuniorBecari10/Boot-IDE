@@ -833,44 +833,46 @@ public class CodeEditor extends IDEComponent {
 				 ext.equalsIgnoreCase(".jl") || ext.equalsIgnoreCase(".pl") || ext.equalsIgnoreCase(".has") || ext.equalsIgnoreCase(".hs") || ext.equalsIgnoreCase(".fs") || ext.equalsIgnoreCase(".coffee") ||
 				 ext.equalsIgnoreCase(".m") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".pas") || ext.equalsIgnoreCase(".pp") || ext.equalsIgnoreCase(".scala") ||
 				 ext.equalsIgnoreCase(".dart") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
-				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig"))) { // não verificaremos mais o html aqui kikikikiki
+				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) { // não verificaremos mais o html aqui kikikikiki
 				
-				indxs = findWord(new String(chars), ")");
-				
-				for (Integer i : indxs) {
-					int c = i;
-					int len = 0;
-						
-					while (c < chars.length && 
-							c + len < chars.length &&
-							c > 0 &&
-							chars[c] != '(') {
-						c--;
-						len++;
+			if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
+					indxs = findWord(new String(chars), ")");
+					
+					for (Integer i : indxs) {
+						int c = i;
+						int len = 0;
+							
+						while (c < chars.length && 
+								c + len < chars.length &&
+								c > 0 &&
+								chars[c] != '(') {
+							c--;
+							len++;
+						}
+							
+						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
-						
-					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-				}
-				
-				indxs = findWord(new String(chars), "]");
-				
-				for (Integer i : indxs) {
-					int c = i;
-					int len = 0;
-						
-					while (c < chars.length && 
-							c + len < chars.length &&
-							c > 0 &&
-							chars[c] != '[' &&
-							chars[c] != ':') {
-						c--;
-						len++;
+					
+					indxs = findWord(new String(chars), "]");
+					
+					for (Integer i : indxs) {
+						int c = i;
+						int len = 0;
+							
+						while (c < chars.length && 
+								c + len < chars.length &&
+								c > 0 &&
+								chars[c] != '[' &&
+								chars[c] != ':') {
+							c--;
+							len++;
+						}
+							
+						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
-						
-					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-				}
+			}
 				
-				if (!ext.equalsIgnoreCase(".md") && !ext.equalsIgnoreCase(".markdown")) {
+				if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
 					indxs = findWord(new String(chars), "=");
 					
 					for (Integer i : indxs) {
@@ -883,7 +885,8 @@ public class CodeEditor extends IDEComponent {
 								c + len < chars.length &&
 								c > 0 &&
 								chars[c] != '(' &&
-								chars[c] != ':') {
+								chars[c] != ':' &&
+								chars[c] != '\"') {
 							c--;
 							len++;
 							
@@ -3048,77 +3051,80 @@ public class CodeEditor extends IDEComponent {
 				 ext.equalsIgnoreCase(".m") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".pas") || ext.equalsIgnoreCase(".pp") || ext.equalsIgnoreCase(".scala") || ext.equalsIgnoreCase(".dart") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") ||
 				 ext.equalsIgnoreCase(".json") || ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xml") ||
 				 ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
-				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig"))) {
+				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
 			
-			// primeira vez usando labels!
-			methods:
-				if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
-					if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs")) {
-						if (!(isCssPart || isJSPart || isPhpPart)) break methods;
-					}
-					
-					indxs = findWord(new String(chars), "(");
-					
-					for (Integer i : indxs) {
-						int c = i;
-						int len = 0;
-						
-						while (c < chars.length && 
-								c + len < chars.length &&
-								c > 0 &&
-								chars[c] != ' ' &&
-								chars[c] != '[' &&
-								chars[c] != ']' &&
-								chars[c] != ',' &&
-								chars[c] != ';' &&
-								chars[c] != '.' &&
-								chars[c] != '-' &&
-								chars[c] != '+' &&
-								chars[c] != '*' &&
-								chars[c] != '/' &&
-								chars[c] != '?' &&
-								chars[c] != ':' &&
-								chars[c] != '=' &&
-								chars[c] != '$' &&
-								chars[c] != '#' &&
-								chars[c] != '@' &&
-								chars[c] != '!' &&
-								chars[c] != '%') {
-							c--;
-							len++;
+			if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
+				
+				// primeira vez usando labels!
+				methods:
+					if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
+						if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs")) {
+							if (!(isCssPart || isJSPart || isPhpPart)) break methods;
 						}
 						
-						fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
-					}
-			}
-		
-		if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs"))) {
-			for (String s : nums) { // colorir números
-				indxs = findWord(new String(chars), s);
-
-				for (Integer i : indxs)
-					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-			}
+						indxs = findWord(new String(chars), "(");
+						
+						for (Integer i : indxs) {
+							int c = i;
+							int len = 0;
+							
+							while (c < chars.length && 
+									c + len < chars.length &&
+									c > 0 &&
+									chars[c] != ' ' &&
+									chars[c] != '[' &&
+									chars[c] != ']' &&
+									chars[c] != ',' &&
+									chars[c] != ';' &&
+									chars[c] != '.' &&
+									chars[c] != '-' &&
+									chars[c] != '+' &&
+									chars[c] != '*' &&
+									chars[c] != '/' &&
+									chars[c] != '?' &&
+									chars[c] != ':' &&
+									chars[c] != '=' &&
+									chars[c] != '$' &&
+									chars[c] != '#' &&
+									chars[c] != '@' &&
+									chars[c] != '!' &&
+									chars[c] != '%') {
+								c--;
+								len++;
+							}
+							
+							fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
+						}
+				}
 			
-			indxs = findWord(new String(chars), "0x");
-			
-			int len = 0;
-
-			for (Integer i : indxs) {
-				while (i + len < chars.length &&
-						chars[i + len] != ' ' &&
-						chars[i + len] != '[' &&
-						chars[i + len] != ']' &&
-						chars[i + len] != '(' &&
-						chars[i + len] != ')' &&
-						chars[i + len] != ',' &&
-						chars[i + len] != ';' &&
-						chars[i + len] != '.' &&
-						chars[i + len] != ':')
-						len++;
-
-				if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+			if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs"))) {
+				for (String s : nums) { // colorir números
+					indxs = findWord(new String(chars), s);
+	
+					for (Integer i : indxs)
+						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+				}
+				
+				indxs = findWord(new String(chars), "0x");
+				
+				int len = 0;
+	
+				for (Integer i : indxs) {
+					while (i + len < chars.length &&
+							chars[i + len] != ' ' &&
+							chars[i + len] != '[' &&
+							chars[i + len] != ']' &&
+							chars[i + len] != '(' &&
+							chars[i + len] != ')' &&
+							chars[i + len] != ',' &&
+							chars[i + len] != ';' &&
+							chars[i + len] != '.' &&
+							chars[i + len] != ':')
+							len++;
+	
+					if (i + len < chars.length)
+						fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+				}
 			}
 		}
 	
