@@ -346,7 +346,7 @@ public class CodeEditor extends IDEComponent {
 			"label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo",
 			"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto",
 			"rmdir", "icacls", "takeown", "if", "for", "else", "git", "npm", "call", "exist", "end",
-			"java", "javac", "nodemon", "csc",
+			"java", "javac", "nodemon", "csc", "nasm",
 			"VER", "ASSOC", "CD", "CLS",
 			"COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
@@ -354,7 +354,7 @@ public class CodeEditor extends IDEComponent {
 			"LABEL", "MORE", "NET", "PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO",
 			"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH", "NODE", "OFF", "GOTO",
 			"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM", "CALL", "EXIST", "END",
-			"JAVA", "JAVAC", "NODEMON", "CSC" };
+			"JAVA", "JAVAC", "NODEMON", "CSC", "NASM" };
 	
 	private static String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
 			"false", "for", "function", "if", "in", "local", "nil",
@@ -547,10 +547,11 @@ public class CodeEditor extends IDEComponent {
 	private static String[] shKeys = { "pwd", "cd", "ls", "cat", "cp", "mv", "mkdir", "rmdir", "rm", "touch", "locate", "find",
 			"grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs", "kill", "ping",
 			"wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd", "userdel",
-			"clear", "PWD", "CD", "LS", "CAT", "CP", "MV", "MKDIR", "RMDIR", "RM", "TOUCH", "LOCATE", "FIND",
+			"clear", "git", "npm", "call", "exist", "end", "java", "javac", "nodemon", "csc", "node", "nasm", "PWD", "CD", "LS", "CAT", "CP", "MV", "MKDIR", "RMDIR", "RM", "TOUCH", "LOCATE", "FIND",
 			"GREP", "SUDO", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR", "CHMOD", "CHOWN", "JOBS", "KILL", "PING",
 			"WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP", "HOSTNAME", "USERADD", "USERDEL",
-			"CLEAR" };
+			"CLEAR", "GIT", "NPM", "CALL", "EXIST", "END",
+			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "" };
 	
 	private static String[] tsKeys = { "break", "as", "any", "switch", "case", "if", "throw",
 			"else", "var", "number", "string", "get", "module", "type", "instanceof",
