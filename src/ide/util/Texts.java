@@ -1,7 +1,11 @@
 package ide.util;
 
-public class Texts {
+public final class Texts {
+	
+	private Texts() {} // não vai instanciar não viu
 
+	// --------------------------------------
+	
 	public static String explorerText;
 	
 	public static String selectBaseFolder;

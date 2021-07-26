@@ -23,7 +23,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.Stack;
 
 import javax.swing.JOptionPane;
 
@@ -96,8 +95,8 @@ public class CodeEditor extends IDEComponent {
 	public static List<IDELine> lines = new ArrayList<>();
 	public static List<IDELine> linesToRemove = new ArrayList<>();
 	
-	public static Stack<List<IDELine>> undo = new Stack<>();
-	public static Stack<List<IDELine>> redo = new Stack<>();
+	/*public static Stack<List<IDELine>> undo = new Stack<>();
+	public static Stack<List<IDELine>> redo = new Stack<>();*/
 	
 	public static int cursorX = 0;
 	public static int cursorY = 1;
@@ -128,7 +127,7 @@ public class CodeEditor extends IDEComponent {
 	
 	///////
 	
-	private static String[] words = { "dolor", "sit", "amet", "consectetur",
+	private static String[] loremWords = { "dolor", "sit", "amet", "consectetur",
 			"adipiscing", "elit", "curabitur", "vel", "hendrerit", "libero",
 			"eleifend", "blandit", "nunc", "ornare", "odio", "ut",
 			"orci", "gravida", "imperdiet", "nullam", "purus", "lacinia",
@@ -4226,7 +4225,7 @@ public class CodeEditor extends IDEComponent {
 		StringBuilder bl = new StringBuilder(initialText);
 			
 		for (int i = 0; i < numWords; i++) {
-			String word = capitalize ? capitalizeFirstLetter(words[rd.nextInt(words.length)]) : words[rd.nextInt(words.length)];
+			String word = capitalize ? capitalizeFirstLetter(loremWords[rd.nextInt(loremWords.length)]) : loremWords[rd.nextInt(loremWords.length)];
 				
 			bl.append(word + (i == numWords - 1 ? "." : ""));
 				
