@@ -122,7 +122,7 @@ public class Main implements Runnable, Tickable {
         
         IDEComponent.components.add(logo);
         
-        IDEComponent.components.add(openBase);
+        IDEComponent.components.add(openBase); // Versão Lançada! - v3.8 (26/07/2021 - 11:22)
         
         if (settingsFile.exists())
     		readFile(settingsFile);

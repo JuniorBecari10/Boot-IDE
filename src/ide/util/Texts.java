@@ -1,5 +1,17 @@
 package ide.util;
 
+/**
+ * Uma classe que lista todos os textos e palavras que estão na Boot IDE. Somente não listam os nomes das linguagens que aparecem embaixo da tela. Temos em português e inglês aqui.
+ * 
+ * Linguagens:
+ * 	Português
+ * 	Inglês
+ * 
+ * Tradutores de Inglês: Boot (eu hehe) e <a href="https://www.deepl.com/translator">DeepL</a>.
+ * 
+ * @author junio
+ *
+ */
 public final class Texts {
 	
 	private Texts() {} // não vai instanciar não viu

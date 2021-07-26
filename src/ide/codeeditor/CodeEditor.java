@@ -226,7 +226,7 @@ public class CodeEditor extends IDEComponent {
 			"goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long",
 			"native", "new", "null", "package", "private", "protected", "public", "return", "short", "static",
 			"super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof",
-			"var", "void", "volatile", "while", "with", "yield", "undefined", "of", "window", "document" };
+			"var", "void", "volatile", "while", "with", "yield", "undefined", "of", "async", "window", "document" };
 	
 	private static String[] cssTags = { "a", "abbr", "acronym", "address", "applet", "area", "article",
 			"aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button",
@@ -3046,7 +3046,7 @@ public class CodeEditor extends IDEComponent {
 		List<Integer> indxs = new ArrayList<>();
 		
 		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") ||
-				 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") ||
+				 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") ||
 				 ext.equalsIgnoreCase(".php") || ext.equalsIgnoreCase(".kt") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".rb") || ext.equalsIgnoreCase(".ino") ||
 				 ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".swift") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".r") ||
 				 ext.equalsIgnoreCase(".jl") || ext.equalsIgnoreCase(".pl") || ext.equalsIgnoreCase(".has") || ext.equalsIgnoreCase(".hs") || ext.equalsIgnoreCase(".fs") || ext.equalsIgnoreCase(".coffee") ||
