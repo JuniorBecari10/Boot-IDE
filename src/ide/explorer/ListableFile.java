@@ -834,12 +834,16 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		case "del":
 			String[] options = { Texts.yes, Texts.no };
 			
+			CodeEditor.setSystemLook();
 			int selectedOption = JOptionPane.showOptionDialog(null, Texts.sureDelete, Texts.confirmDelete, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 			
 			if (selectedOption != 0) break;
 			
-			if (!regent.delete())
+			if (!regent.delete()) {
+				CodeEditor.setSystemLook();
+				
 				JOptionPane.showMessageDialog(null, Texts.delError, Texts.cantDelete, JOptionPane.OK_OPTION);
+			}
 			
 			for (Tab t : CodeEditor.tabs)
 				if (t.getRegent().equals(this)) t.close();
@@ -918,7 +922,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 					try {
 						Main.desktop.open(regent);
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "O sistema não encontrou um programa padrão para abrir esse arquivo.", "Não encontrou nada!", JOptionPane.OK_OPTION);
+						CodeEditor.setSystemLook();
+						
+						JOptionPane.showMessageDialog(null, Texts.cantFindDefault, Texts.nothingFound, JOptionPane.OK_OPTION);
 					}
 				}
 			}.start();

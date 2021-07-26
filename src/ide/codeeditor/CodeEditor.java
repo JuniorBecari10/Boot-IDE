@@ -25,6 +25,8 @@ import java.util.Random;
 import java.util.Set;
 
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
@@ -541,11 +543,14 @@ public class CodeEditor extends IDEComponent {
 			"where", "while", "async", "await", "dyn", "abstract", "become", "box", "do", "final", "macro",
 			"override", "priv", "typeof", "unsized", "virtual", "yield", "try", "union", "'static", "dyn" };
 	
-	// Colorir maiúsculos tbm
+	
 	private static String[] shKeys = { "pwd", "cd", "ls", "cat", "cp", "mv", "mkdir", "rmdir", "rm", "touch", "locate", "find",
 			"grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs", "kill", "ping",
 			"wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd", "userdel",
-			"clear" };
+			"clear", "PWD", "CD", "LS", "CAT", "CP", "MV", "MKDIR", "RMDIR", "RM", "TOUCH", "LOCATE", "FIND",
+			"GREP", "SUDO", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR", "CHMOD", "CHOWN", "JOBS", "KILL", "PING",
+			"WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP", "HOSTNAME", "USERADD", "USERDEL",
+			"CLEAR" };
 	
 	private static String[] tsKeys = { "break", "as", "any", "switch", "case", "if", "throw",
 			"else", "var", "number", "string", "get", "module", "type", "instanceof",
@@ -4028,6 +4033,15 @@ public class CodeEditor extends IDEComponent {
 		lines.add(yPos, new IDELine(chars, fs));
 	}
 	
+	public static void setSystemLook() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void execTerminal() {
 		CommandTerminal term = new CommandTerminal(Screen.WIDTH / 2 - 250, 25, 500, 30);
 		
@@ -4079,7 +4093,9 @@ public class CodeEditor extends IDEComponent {
 					try {
 						Main.desktop.open(editing.getRegent().getRegent());
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "O sistema não encontrou um programa padrão para abrir esse arquivo.", "Não encontrou nada!", JOptionPane.OK_OPTION);
+						setSystemLook();
+						
+						JOptionPane.showMessageDialog(null, Texts.cantFindDefault, Texts.nothingFound, JOptionPane.OK_OPTION);
 					}
 				}
 			}.start();

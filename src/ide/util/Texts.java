@@ -96,6 +96,19 @@ public final class Texts {
 	public static String delError;
 	public static String cantDelete;
 	
+	public static String cantFindDefault;
+	public static String nothingFound;
+	
+	public static String cancel;
+	
+	public static String theFile;
+	public static String isNotSaved;
+	
+	public static String confirmSave;
+	
+	public static String configFileNotChanged;
+	public static String didNothing;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -189,6 +202,19 @@ public final class Texts {
 			delError = "Ocorreu um erro ao deletar. Lembre-se que pastas não podem ser excluídas se não estiverem vazias!";
 			cantDelete = "Não foi possível deletar.";
 			
+			cantFindDefault = "O sistema não encontrou um programa padrão para abrir esse arquivo.";
+			nothingFound = "Não encontrou nada!";
+			
+			cancel = "Cancelar";
+			
+			theFile = "O arquivo";
+			isNotSaved = "não está salvo. Deseja salvá-lo antes de sair?";
+			
+			confirmSave = "Confirmar Salvamento do Arquivo";
+			
+			configFileNotChanged = "O Arquivo de Configurações foi carregado, mas nada foi alterado. Deseja que ele continue carregado?";
+			didNothing = "Não fez nada!";
+			
 			break;
 		
 		case ENG:
@@ -281,6 +307,19 @@ public final class Texts {
 			
 			delError = "An error has occurred while deleting. Remember that folders cannot be deleted if they are not empty!";
 			cantDelete = "Could not delete.";
+			
+			cantFindDefault = "The system could not find a default program to open this file.";
+			nothingFound = "Nothing found!";
+			
+			cancel = "Cancel";
+			
+			theFile = "The file";
+			isNotSaved = "is not saved. Do you want to save it before you leave?";
+			
+			confirmSave = "Confirm File Save";
+			
+			configFileNotChanged = "The Configuration File has been loaded, but nothing has changed. Do you want it to continue loaded?";
+			didNothing = "It did nothing!";
 			
 			break;
 		}

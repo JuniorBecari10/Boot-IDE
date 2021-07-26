@@ -213,9 +213,7 @@ public class CommandTerminal extends IDEComponent {
 					}
 				}
 				else {
-					if (CodeEditor.index2 < CodeEditor.index1) {
-						JOptionPane.showMessageDialog(null, "O index 2 não pode ser menor que o index 1!", "Valores invertidos", JOptionPane.OK_OPTION);
-						
+					if (CodeEditor.index2 < CodeEditor.index1) { // que coisa não? (provavelmente isso nunca vai acontecer)
 						runCommand("deselect");
 						
 						break;
@@ -269,8 +267,6 @@ public class CommandTerminal extends IDEComponent {
 				}
 				else {
 					if (CodeEditor.index2 < CodeEditor.index1) {
-						JOptionPane.showMessageDialog(null, "O index 2 não pode ser menor que o index 1!", "Valores invertidos", JOptionPane.OK_OPTION);
-						
 						runCommand("deselect");
 						
 						break;
@@ -368,9 +364,10 @@ public class CommandTerminal extends IDEComponent {
 					Main.hasConfigFile = true;
 					
 					if (!ListableFile.hasAltered) {
-						String[] options = { "Sim", "Não" };
+						String[] options = { Texts.yes, Texts.no };
 						
-						int selectedOption = JOptionPane.showOptionDialog(null, "O Arquivo de Configurações foi carregado, mas nada foi alterado. Deseja que ele continue carregado?", "Não fez nada!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+						CodeEditor.setSystemLook();
+						int selectedOption = JOptionPane.showOptionDialog(null, Texts.configFileNotChanged, Texts.didNothing, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 						
 						if (selectedOption != 1) break;
 						

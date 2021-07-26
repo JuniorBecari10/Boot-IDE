@@ -481,9 +481,10 @@ public class Main implements Runnable, Tickable {
 	        		
 		    		if (CodeEditor.editing != null) { // não for nulo
 		    			if (!CodeEditor.editing.isSaved()) { // não estiver salvo
-		    				String[] options = { "Sim", "Não", "Cancelar" };
+		    				String[] options = { Texts.yes, Texts.no, Texts.cancel };
 		    				
-		    				int selectedOption = JOptionPane.showOptionDialog(null, "O arquivo " + CodeEditor.editing.getRegent().getRegent().getName() + " não está salvo. Deseja salvá-lo antes de sair?", "Confirmar Salvamento do Arquivo", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		    				CodeEditor.setSystemLook();
+		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + CodeEditor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 		    				
 		    				if (selectedOption == 0) CodeEditor.editing.save();
 		    				else if (selectedOption == 2) {
@@ -498,7 +499,7 @@ public class Main implements Runnable, Tickable {
 		    	}
         	
             try {
-				Thread.sleep(1000/260); // 120 -- talvez pra 300 (ou 340) ajude
+				Thread.sleep(1000/260);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
