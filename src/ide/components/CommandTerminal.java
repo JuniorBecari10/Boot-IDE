@@ -15,6 +15,8 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import ide.codeeditor.CodeEditor;
 import ide.codeeditor.IDELine;
@@ -87,8 +89,16 @@ public class CommandTerminal extends IDEComponent {
 		commandHints.clear();
 		
 		builder = new StringBuilder();
-		chooser = new JFileChooser();
-		chooser.setDialogTitle(Texts.open);
+		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				
+			chooser = new JFileChooser();
+			chooser.setDialogTitle(Texts.open);
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 		
 		cursor = new Animation(2, true) {
 			private boolean flip = false;
