@@ -999,21 +999,21 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	    	
 			Explorer.baseFolderName = Main.baseFolder.getName().length() > 15 ? Main.baseFolder.getName().substring(0, 12) + "..." : Main.baseFolder.getName();
 			
-			if (getFileExtension(regent).equals(".png") ||
-					getFileExtension(regent).equals(".jpg") || // provavelmente fazer isso com excel e mais coisas do word
-					getFileExtension(regent).equals(".jpeg")||
-					getFileExtension(regent).equals(".png") ||
-					getFileExtension(regent).equals(".gif") ||
-					getFileExtension(regent).equals(".bmp") ||
-					getFileExtension(regent).equals(".wav") ||
-					getFileExtension(regent).equals(".mp3") ||
-					getFileExtension(regent).equals(".ogg") ||
-					getFileExtension(regent).equals(".mp4") ||
-					getFileExtension(regent).equals(".wmv") ||
-					getFileExtension(regent).equals(".avi") ||
+			if (getFileExtension(regent).equalsIgnoreCase(".png") ||
+					getFileExtension(regent).equalsIgnoreCase(".jpg") || // provavelmente fazer isso com excel e mais coisas do word
+					getFileExtension(regent).equalsIgnoreCase(".jpeg")||
+					getFileExtension(regent).equalsIgnoreCase(".png") ||
+					getFileExtension(regent).equalsIgnoreCase(".gif") ||
+					getFileExtension(regent).equalsIgnoreCase(".bmp") ||
+					getFileExtension(regent).equalsIgnoreCase(".wav") ||
+					getFileExtension(regent).equalsIgnoreCase(".mp3") ||
+					getFileExtension(regent).equalsIgnoreCase(".ogg") ||
+					getFileExtension(regent).equalsIgnoreCase(".mp4") ||
+					getFileExtension(regent).equalsIgnoreCase(".wmv") ||
+					getFileExtension(regent).equalsIgnoreCase(".avi") ||
 					getFileExtension(regent).equalsIgnoreCase(".exe") ||
-					getFileExtension(regent).equals(".pdf") ||
-					getFileExtension(regent).equals(".webp")) {
+					getFileExtension(regent).equalsIgnoreCase(".pdf") ||
+					getFileExtension(regent).equalsIgnoreCase(".webp")) {
 					try {
 						Main.desktop.open(regent);
 					} catch (IOException e) {
