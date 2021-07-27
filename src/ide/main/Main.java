@@ -127,8 +127,6 @@ public class Main implements Runnable, Tickable {
         if (settingsFile.exists())
     		readFile(settingsFile);
         
-        System.out.println(Main.conffile);
-        
         //System.out.println(args[0]);
         
         //openWith();
@@ -513,7 +511,7 @@ public class Main implements Runnable, Tickable {
     	screen.requestFocus();
     	
     	long lastTime = System.nanoTime();
-    	double targetFps = 120.0;				// 120.0 ficou melhor :)
+    	double targetFps = 60.0;
     	double ns = 1E9 / targetFps;
     	double delta = 0;
     	

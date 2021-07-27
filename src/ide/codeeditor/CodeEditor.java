@@ -58,9 +58,6 @@ public class CodeEditor extends IDEComponent {
 	
 	private boolean showCursorData = false;
 	
-	//public static boolean selectMode;
-	//public static boolean isSelectingFirst = true;
-	
 	public static boolean isMultilineCommenting = false;
 	
 	public static boolean selecting;

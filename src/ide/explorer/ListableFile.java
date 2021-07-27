@@ -844,7 +844,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			String[] options = { Texts.yes, Texts.no };
 			
 			CodeEditor.setSystemLook();
-			int selectedOption = JOptionPane.showOptionDialog(null, Texts.sureDelete, Texts.confirmDelete, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+			int selectedOption = JOptionPane.showOptionDialog(null, Texts.sureDelete + " " + regent.getName() + "?", Texts.confirmDelete, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 			
 			if (selectedOption != 0) break;
 			
