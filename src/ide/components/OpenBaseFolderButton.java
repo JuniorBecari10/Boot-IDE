@@ -81,8 +81,7 @@ public class OpenBaseFolderButton extends IDEComponent {
 					IDEComponent.toAdd.add(Main.reload);
 				}
 				
-				Main.writeFile(Main.settingsFile);
-	    		Main.readFile(Main.settingsFile);
+				//Main.writeFile(Main.settingsFile);
 				
 				MouseInput.updateMouse();
 			}
