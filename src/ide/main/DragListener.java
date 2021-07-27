@@ -56,7 +56,8 @@ public class DragListener implements DropTargetListener {
 		        
 		        if (flavors[i].isFlavorJavaFileListType()) {
 		          dtde.acceptDrop(DnDConstants.ACTION_COPY);
-		          System.out.println("success!");
+		          
+		          System.out.println("Success!");
 
 		          List<Object> list = (List<Object>) tr.getTransferData(flavors[i]);
 		          List<File> files = new ArrayList<>();
@@ -64,11 +65,6 @@ public class DragListener implements DropTargetListener {
 		          for (Object o : list)
 		        	  if (o instanceof File)
 		        		  files.add((File) o);
-		          		
-		          		/*File prevBase = null;
-		          
-		          		if (Main.baseFolder != null)
-		          			prevBase = Main.baseFolder;*/
 		          
 		          if (Main.baseFolder == null) {
 						IDEComponent.toAdd.add(Main.oneLevel);
@@ -115,7 +111,7 @@ public class DragListener implements DropTargetListener {
 		          
 				int lastX = CodeEditor.tabs.size() > 0 ? CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() : Tab.MIN_X;
 	        	
-	        	Tab toAdd = new Tab(CodeEditor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : Tab.MIN_X - Tab.WIDTH, ListableFile.search(files.get(0)));
+	        	Tab toAdd = new Tab(CodeEditor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : Tab.MIN_X - Tab.WIDTH, ListableFile.searchListableFiles(files.get(0)));
 	        	
   				CodeEditor.cursorX = 0;
   				CodeEditor.cursorY = 1;

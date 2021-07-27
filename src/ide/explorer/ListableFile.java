@@ -233,6 +233,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		return null;
 	}
 	
+	public static ListableFile searchListableFiles(File regent) {
+		for (ListableFile l : files) {
+			if (l.getRegent().equals(regent))
+				return l;
+		}
+		System.out.println("não achei nada");
+		return null;
+	}
+	
 	public static boolean hasDuplicateFileNames(String name, File folder) {
 		for (String s : folder.list()) {
 			if (s.equalsIgnoreCase(name)) return true;

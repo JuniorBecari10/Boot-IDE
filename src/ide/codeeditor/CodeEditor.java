@@ -393,10 +393,10 @@ public class CodeEditor extends IDEComponent {
 			"r14", "r15", "eax", "ebx", "ecx", "esi", "edi", "ebp", "esp", "r8d", "r9d", "r10d", "r11d", "r12d", "r13d",
 			"r14d", "r15d", "ax", "bx", "cx", "dx", "si", "di", "bp", "sp", "r8w", "r9w", "r10w", "r11w", "r12w", "r13w",
 			"r14w", "r15w", "al", "bl", "cl", "dl", "sil", "dil", "bpl", "spl", "r8b", "r9b", "r10b", "r11b", "r12b",
-			"r13b", "r14b", "r15b", "ah", "bh", "ch", "dh", "edx", "ss", "sp" };
+			"r13b", "r14b", "r15b", "ah", "bh", "ch", "dh", "edx", "ss", "sp", "ds", "es" };
 	
 	// não vai colorir keys de uma só letra
-	private static String[] asmKeys = { "global", "db", "dw", "equ", "extern", "include", "times", "org", "bits", "syscall", "aaa", "aad", "aam", "aas", "adc",
+	private static String[] asmKeys = { "global", "define", "db", "dw", "equ", "extern", "include", "times", "org", "bits", "syscall", "aaa", "aad", "aam", "aas", "adc",
 			"add", "addpd", "addps", "addressing", "addsd", "addss", "align", "and", "andnpd", "andnps", "andpd",
 			"andps", "arpl", "as", "commandline", "ELFobjectfile", "macroprocessing", "syntaxUNIXversusIntel", "ascii",
 			"assemblerSeeasB", "bcd", "binaryarithmeticinstructions", "bitinstructions", "bound", "bsf", "bsr",
@@ -3122,9 +3122,9 @@ public class CodeEditor extends IDEComponent {
 		}
 	
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// gens = genéricos
+		
 		String[] syms = { " ", "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`" };
-			
+		
 		for (String s : syms) {
 			indxs = findWord(new String(chars), s);
 	
