@@ -341,7 +341,7 @@ public class CodeEditor extends IDEComponent {
 	
 	private static String[] batCom = { "ver", "assoc", "cd", "cls", "copy", "del", "dir", "date",
 			"echo", "@echo", "exit", "md", "move", "path", "pause", "prompt", "rd",
-			"rem", "start", "time", "type", "vol", "attrib", "chkdsk", "choice", "cmd",
+			"rem", "start", "time", "type", "on", "vol", "attrib", "chkdsk", "choice", "cmd",
 			"comp", "convert", "driverquery", "expand", "find", "format", "help", "ipconfig",
 			"label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo",
 			"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto",
@@ -350,7 +350,7 @@ public class CodeEditor extends IDEComponent {
 			"VER", "ASSOC", "CD", "CLS",
 			"COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
-			"CMD", "COMP", "CONVERT", "DRIVERQUERY", "EXPAND", "FIND", "FORMAT", "HELP", "IPCONFIG",
+			"CMD", "COMP", "CONVERT", "ON", "DRIVERQUERY", "EXPAND", "FIND", "FORMAT", "HELP", "IPCONFIG",
 			"LABEL", "MORE", "NET", "PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO",
 			"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH", "NODE", "OFF", "GOTO",
 			"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM", "CALL", "EXIST", "END",
