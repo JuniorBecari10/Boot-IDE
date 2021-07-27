@@ -65,7 +65,7 @@ public class OpenBaseFolderButton extends IDEComponent {
 				
 				int index = 0;
 				
-				for (File f : Main.baseFolder.listFiles()) {
+				for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
 					Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
 					
 					index++;
