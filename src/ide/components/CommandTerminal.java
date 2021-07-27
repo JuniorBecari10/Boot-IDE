@@ -94,7 +94,7 @@ public class CommandTerminal extends IDEComponent {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 				
 			chooser = new JFileChooser();
-			chooser.setDialogTitle(Texts.open);
+			chooser.setDialogTitle(Texts.open + "/" + Texts.save);
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();

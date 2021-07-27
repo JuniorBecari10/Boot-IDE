@@ -122,7 +122,7 @@ public class Main implements Runnable, Tickable {
         
         IDEComponent.components.add(logo);
         
-        IDEComponent.components.add(openBase); // Versão Lançada! - v3.8 (26/07/2021 - 11:22)
+        IDEComponent.components.add(openBase);
         
         if (settingsFile.exists())
     		readFile(settingsFile);
@@ -467,7 +467,7 @@ public class Main implements Runnable, Tickable {
         bs.show();
     }
 
-    @Override
+   /* @Override
     public void run() {
         while (running) {   	
         	if (hasUserInteraction()) {
@@ -504,5 +504,63 @@ public class Main implements Runnable, Tickable {
 				e.printStackTrace();
 			}
         }
+    }*/
+    
+    @Override
+    public void run() {
+    	long lastTime = System.nanoTime();
+    	double targetFps = 60.0;
+    	double ns = 1E9 / targetFps;
+    	double delta = 0;
+    	
+    	int frames = 0;
+    	double timer = System.currentTimeMillis();
+    	
+    	while (running) {
+    		long now = System.nanoTime();
+    		
+    		delta += (now - lastTime) / ns;
+    		lastTime = now;
+    		
+    		if (delta >= 1) {
+    			if (hasUserInteraction()) {
+	            	tick();
+	            	render();
+    			}
+            	
+            	closing:
+    	        	if (WindowInput.isClosing()) {
+    	        		writeFile(settingsFile);
+    	        		
+    		    		if (CodeEditor.editing != null) { // não for nulo
+    		    			if (!CodeEditor.editing.isSaved()) { // não estiver salvo
+    		    				String[] options = { Texts.yes, Texts.no, Texts.cancel };
+    		    				
+    		    				CodeEditor.setSystemLook();
+    		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + CodeEditor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+    		    				
+    		    				if (selectedOption == 0) CodeEditor.editing.save();
+    		    				else if (selectedOption == 2) {
+    		    					WindowInput.update();
+    		    					
+    		    					break closing;
+    		    				}
+    		    			}
+    		    		}
+    		    		
+    		    		System.exit(0);
+    		    	}
+    			
+    			delta--;
+    			frames++;
+    		}
+    		
+    		if (System.currentTimeMillis() - timer >= 1000) {
+    			System.out.println("FPS: " + frames);
+    			
+    			frames = 0;
+    			timer += 1000;
+    		}
+    	}
     }
 }
