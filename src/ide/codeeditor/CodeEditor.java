@@ -3079,18 +3079,9 @@ public class CodeEditor extends IDEComponent {
 									chars[c] != ',' &&
 									chars[c] != ';' &&
 									chars[c] != '.' &&
-									chars[c] != '-' &&
-									chars[c] != '+' &&
-									chars[c] != '*' &&
-									chars[c] != '/' &&
-									chars[c] != '?' &&
 									chars[c] != ':' &&
-									chars[c] != '=' &&
-									chars[c] != '$' &&
 									chars[c] != '#' &&
-									chars[c] != '@' &&
-									chars[c] != '!' &&
-									chars[c] != '%') {
+									chars[c] != '!') {
 								c--;
 								len++;
 							}

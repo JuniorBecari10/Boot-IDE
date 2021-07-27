@@ -508,6 +508,8 @@ public class Main implements Runnable, Tickable {
     
     @Override
     public void run() {
+    	screen.requestFocus();
+    	
     	long lastTime = System.nanoTime();
     	double targetFps = 60.0;
     	double ns = 1E9 / targetFps;
