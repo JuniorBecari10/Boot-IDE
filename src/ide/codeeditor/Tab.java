@@ -62,14 +62,12 @@ public class Tab extends IDEComponent implements Serializable {
 		regent = null;
 	}
 	
-	public Tab(int x, ListableFile regent) {
+	public Tab(int x, ListableFile regent) { // v3.8.2 - 27/07/2021 - 14:20
 		super(x, Y, WIDTH, HEIGHT, null);
 		
 		this.regent = regent;
 		
 		button = new CloseTabButton((x + WIDTH) - 20, Y + 8, 13, 13, Main.spritesheet.getSprite(16, 0, 5, 5), this);
-		
-		//CodeEditor.tabScr = 0; // mas oq é isso
 		
 		String ext = ListableFile.getFileExtension(regent.getRegent());
 		
