@@ -17,3 +17,7 @@
 - Arrumar bug de às vezes trocar de Tab quando troca
 
 - O card somente leitura fica escondido atrás do Explorer com a tela menor [ARQUIVADO]
+
+- Executar o comando replace com a barra invertida "\" dá uma Exception
+
+- Colorir 'python' em Batch e Bash
