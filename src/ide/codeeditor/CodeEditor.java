@@ -1222,7 +1222,7 @@ public class CodeEditor extends IDEComponent {
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 				}
-			}
+			}		 
 			
 			for (String s : tags) { // colorir tags
 				indxs = findWord(new String(chars), s);
