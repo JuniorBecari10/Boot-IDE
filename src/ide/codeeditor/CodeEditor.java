@@ -1129,8 +1129,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : javaKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}	
 			}
 			
 			break;
@@ -1166,8 +1169,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : tags) { // colorir tags
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			if (isCssPart || isJSPart || isPhpPart)
@@ -1303,8 +1309,11 @@ public class CodeEditor extends IDEComponent {
 				for (String s : phpKeys) { // colorir keywordss
 					indxs = findWord(new String(chars), s);
 					
-					for (Integer i : indxs)
+					for (Integer i : indxs) {
+						if (Character.isLetter(chars[i + s.length()])) continue;
+						
 						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+					}
 				}
 			}
 			
@@ -1312,8 +1321,11 @@ public class CodeEditor extends IDEComponent {
 				for (String s : jsKeys) { // colorir keywordss
 					indxs = findWord(new String(chars), s);
 					
-					for (Integer i : indxs)
+					for (Integer i : indxs) {
+						if (Character.isLetter(chars[i + s.length()])) continue;
+						
 						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+					}
 				}
 				
 				indxs = findWord(new String(chars), ")");
@@ -1613,15 +1625,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : cssTags) { // colorir tags
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
-			}
-			
-			for (String s : props) { // colorir tags
-				indxs = findWord(new String(chars), s);
-				
-				for (Integer i : indxs)
-					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			for (String s : units) { // colorir tags
@@ -1658,7 +1666,41 @@ public class CodeEditor extends IDEComponent {
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
+			for (String s : props) { // colorir tags
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+			
 			indxs = findWord(new String(chars), ".");
+			
+			len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length && chars[i + len] != ' ')
+					len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "#");
+			
+			len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length && chars[i + len] != ' ')
+					len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), ":");
 			
 			len = 0;
 
@@ -1737,8 +1779,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : pyKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -1752,8 +1797,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : dartKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -1767,8 +1815,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : ldKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s); // descobrir pq algumas coisas não colorem
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -1783,8 +1834,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : pasKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s); // descobrir pq algumas coisas não colorem
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -1798,8 +1852,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : cKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}	
 			
 			break;
@@ -1830,8 +1887,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : cppKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -1845,8 +1905,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : csKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -1860,8 +1923,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : rKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -1893,8 +1959,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : batCom) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			break;
 			
@@ -1917,8 +1986,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : jsKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -1932,8 +2004,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : luaKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			break;
 			
@@ -1946,8 +2021,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : zigKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			break;
 			
@@ -1960,8 +2038,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : sqlKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			break;
 		
@@ -1982,8 +2063,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : asmKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 
 			indxs = findWord(new String(chars), "db");
@@ -2005,7 +2089,7 @@ public class CodeEditor extends IDEComponent {
 					c--;
 					len++;
 					
-					if (chars[c] != ' ') {
+					if (chars[c] == ' ') {
 						if (!hasSpace)
 							hasSpace = true;
 						else
@@ -2035,7 +2119,7 @@ public class CodeEditor extends IDEComponent {
 					c--;
 					len++;
 					
-					if (chars[c] != ' ') {
+					if (chars[c] == ' ') {
 						if (!hasSpace)
 							hasSpace = true;
 						else
@@ -2067,8 +2151,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : jlKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -2082,8 +2169,12 @@ public class CodeEditor extends IDEComponent {
 			for (String s : plKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+					
+				}
 			}
 			
 			break;
@@ -2098,8 +2189,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : hasKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
-					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset	
+				}
 			}
 			
 			break;
@@ -2113,8 +2207,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : fsKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -2128,8 +2225,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : cfKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -2223,8 +2323,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : swKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
-					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset	
+				}
 			}
 			
 			break;
@@ -2238,8 +2341,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : rsKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
 			}
 			
 			break;
@@ -2253,8 +2359,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : shKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
 			}
 			
 			break;
@@ -2268,8 +2377,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : phpKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
 			}
 			
 			indxs = findWord(new String(chars), ">"); // colorir final de tags
@@ -2571,22 +2683,31 @@ public class CodeEditor extends IDEComponent {
 				for (String s : cssTags) { // colorir tags
 					indxs = findWord(new String(chars), s);
 					
-					for (Integer i : indxs)
+					for (Integer i : indxs) {
+						if (Character.isLetter(chars[i + s.length()])) continue;
+						
 						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+					}
 				}
 				
 				for (String s : props) { // colorir tags
 					indxs = findWord(new String(chars), s);
 					
-					for (Integer i : indxs)
+					for (Integer i : indxs) {
+						if (Character.isLetter(chars[i + s.length()])) continue;
+						
 						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+					}
 				}
 				
 				for (String s : units) { // colorir tags
 					indxs = findWord(new String(chars), s);
 					
-					for (Integer i : indxs)
+					for (Integer i : indxs) {
+						if (Character.isLetter(chars[i + s.length()])) continue;
+						
 						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+					}
 				}
 				
 				indxs = findWord(new String(chars), ".");
@@ -2668,8 +2789,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : tsKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			break;
 		
@@ -2689,8 +2813,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : jsonKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -2704,8 +2831,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : ktKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
 			}
 			break;
 			
@@ -2718,8 +2848,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : rbKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -2733,8 +2866,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : scaKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -2748,8 +2884,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : goKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -2763,8 +2902,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : objKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			break;
@@ -2887,8 +3029,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : makeKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			indxs = findWord(new String(chars), ":");
@@ -3021,8 +3166,11 @@ public class CodeEditor extends IDEComponent {
 			for (String s : dkKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
-				for (Integer i : indxs)
+				for (Integer i : indxs) {
+					if (Character.isLetter(chars[i + s.length()])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
 			}
 			
 			break;
@@ -3039,7 +3187,7 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
-	public static List<IDEFont> colorExtras(String ext, char[] chars, List<IDEFont> fs) {
+	public static List<IDEFont> colorMethods(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
 		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") ||
@@ -3085,7 +3233,24 @@ public class CodeEditor extends IDEComponent {
 							
 							fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
 						}
+					}
 				}
+			}
+		
+		return fs;
+	}	
+	public static List<IDEFont> colorExtras(String ext, char[] chars, List<IDEFont> fs) {
+		List<Integer> indxs = new ArrayList<>();
+		
+		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") ||
+				 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") ||
+				 ext.equalsIgnoreCase(".php") || ext.equalsIgnoreCase(".kt") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".rb") || ext.equalsIgnoreCase(".ino") ||
+				 ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".swift") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".r") ||
+				 ext.equalsIgnoreCase(".jl") || ext.equalsIgnoreCase(".pl") || ext.equalsIgnoreCase(".has") || ext.equalsIgnoreCase(".hs") || ext.equalsIgnoreCase(".fs") || ext.equalsIgnoreCase(".coffee") ||
+				 ext.equalsIgnoreCase(".m") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".pas") || ext.equalsIgnoreCase(".pp") || ext.equalsIgnoreCase(".scala") || ext.equalsIgnoreCase(".dart") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") ||
+				 ext.equalsIgnoreCase(".json") || ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xml") ||
+				 ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
+				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
 			
 			if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs"))) {
 				for (String s : nums) { // colorir números
@@ -3172,7 +3337,6 @@ public class CodeEditor extends IDEComponent {
 				
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
-		}
 		}
 		
 		return fs;
@@ -3677,6 +3841,7 @@ public class CodeEditor extends IDEComponent {
 		/////////////////////////////////////////////////////
 		
 		fs = colorVariablesAndObjects(ext, chars, fs);
+		fs = colorMethods(ext, chars, fs);
 		fs = colorKeywords(ext, chars, fs);
 		fs = colorExtras(ext, chars, fs);
 		fs = colorNoExtensions(ext, chars, fs);

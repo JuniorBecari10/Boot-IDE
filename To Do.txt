@@ -21,3 +21,38 @@
 - Executar o comando replace com a barra invertida "\" dá uma Exception
 
 - Colorir 'python' em Batch e Bash
+
+- Ao detectar uma tecla ao Renomear, não detectar as setas
+
+- Ao escrever "then" ou "do" escrever "end" depois
+
+- Adicionar comando "print" que escreve "print(|)" | é o cursor
+
+- Arrumar comentários multilinha em Lua (especialmente o de fechar)
+
+- Não colorir strings ou chars com aspas com \ atrás
+
+-  Colorir ~ ^ ´ ` como Symbols.
+
+- Nos arquivos sh, não escrever mais Bash, mas Bourne Again Shell - Bash
+
+- Fazer uma lista de keywords que devem ser coloridas depois dos métodos
+
+- Tomar cuidado ao fazer operações aritméticas assim val+(10+2), val vai ser colorido como método
+
+- Adicionar suporte ao formato ipynb (Jupyter Notebook) - Colorir como Python
+
+- Adicionar comando genscript str:type str:script
+[commit, javarun etc.]
+
+- No gendiv não usar aspas simples (talvez com o emmet esse comando derá depreciado)
+
+- Colorir cssKeys depois de colorir coisas como variáveis
+
+- colorir símbolos antes das keywords
+
+- Colorir coisas depois de : no css como variável
+
+- Se o Search ou o replace não encontrarem nada, avisar que não encontraram, e se encontrou, avisar quantas ocorrências encontraram.
+
+- O search mudar também o x do cursor

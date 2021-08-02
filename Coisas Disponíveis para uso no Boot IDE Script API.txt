@@ -1,0 +1,35 @@
+- Components
+Ler e modificar Components existentes;
+Criar Components novos;
+
+- Tabs
+Ler e modificar Tabs existentes;
+Criar novas Tabs;
+
+- CodeEditor
+Ler e modificar a posição do cursor;
+Ler e modificar linhas de código abertas, de qualquer Tab aberta;
+Ler e modificar a List de Fonts que colorem o código;
+
+- Geral
+Ler e modificar as variáveis de controle de todas as classes de Input disponíveis;
+
+- Cores
+Adicionar cores novas
+
+- Config File
+Ler o Config File carregado
+Alterar o script de criação de config files
+
+--------------------------------------------------------------------
+
+---------------------------- Detalhes ------------------------------
+
+- Components
+package: component
+
+- Ler e modificar Components existentes
+component.components[index] (ordem em que foram colocados na lista, veja Documentação) - return table { x, y, width, height, sprite }
+
+- Criar Components novos
+component.create(x, y, w, h, spr) - function

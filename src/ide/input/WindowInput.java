@@ -5,7 +5,7 @@ import java.awt.event.WindowListener;
 
 public class WindowInput implements WindowListener {
 	
-	private static boolean activated;
+	private static boolean activated = true;
 	private static boolean closed;
 	private static boolean closing;
 	private static boolean deactivated;
