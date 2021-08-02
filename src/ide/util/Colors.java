@@ -28,9 +28,9 @@ public class Colors {
     
     public static Color selection = 		  Color.decode("#8c8c8c");
     
-    public static Color select1 = 		  Color.decode("#ff6961");
+    /*public static Color select1 = 		  Color.decode("#ff6961");
     public static Color select2 = 		  Color.decode("#ff5147");
-    public static Color selectCursor = 	  			   Color.blue;
+    public static Color selectCursor = 	  			   Color.blue;*/
     public static Color other =						  Color.white;
     public static Color error =			  Color.decode("#ff6961");
     public static Color cursor = 					  Color.white;

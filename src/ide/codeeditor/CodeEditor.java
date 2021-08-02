@@ -223,7 +223,7 @@ public class CodeEditor extends IDEComponent {
 			"goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long",
 			"native", "new", "null", "package", "private", "protected", "public", "return", "short", "static",
 			"super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof",
-			"var", "void", "volatile", "while", "with", "yield", "undefined", "of", "async", "window", "document" };
+			"var", "void", "volatile", "while", "with", "yield", "undefined", "of", "async", "window", "document", "console" };
 	
 	private static String[] cssTags = { "a", "abbr", "acronym", "address", "applet", "area", "article",
 			"aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button",
@@ -717,6 +717,18 @@ public class CodeEditor extends IDEComponent {
         return mouse.intersects(comp);
 	}
 	
+	public static int getLineIndex(char[] chars) {
+		for (int i = 0; i < lines.size(); i++) {
+			IDELine l = lines.get(i);
+			
+			char[] c = toCharArray(l.getChars());
+			
+			if (c == chars) return i;
+		}
+		
+		return -1;
+	}
+	
 	public static <T> List<T> removeDuplicates(List<T> list) {
 		return new ArrayList<>(new LinkedHashSet<>(list));
 	}
@@ -1150,7 +1162,7 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			for (String s : javaKeys) { // colorir keywords
-				indxs = findWord(new String(chars), s);
+				indxs = findWord(new String(chars), s);			// !(lines.get(getLineIndex(chars)).getFonts().get(i + s.length()).getFont().equals(Fonts.methodsNormal))
 				
 				for (Integer i : indxs) {
 					if (i + s.length() < chars.length && Character.isLetter(chars[i + s.length()])) continue;

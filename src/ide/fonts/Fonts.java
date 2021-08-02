@@ -49,11 +49,11 @@ public class Fonts {
     public static BufferedImage[] symbolsNormal;
     public static BufferedImage[] symbolsBold;
     
-    public static BufferedImage[] select1Normal;
+    /*public static BufferedImage[] select1Normal;
     public static BufferedImage[] select1Bold;
     
     public static BufferedImage[] select2Normal;
-    public static BufferedImage[] select2Bold;
+    public static BufferedImage[] select2Bold;*/
     
     public static BufferedImage[] otherNormal;
     public static BufferedImage[] otherBold;
@@ -131,14 +131,14 @@ public class Fonts {
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
         
-         select1Normal = Fonts.initFont(normal, Color.white, Colors.select1);
+         /*select1Normal = Fonts.initFont(normal, Color.white, Colors.select1);
          select1Bold = Fonts.initFont(bold, Color.white, Colors.select1);
         
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
          
          select2Normal = Fonts.initFont(normal, Color.white, Colors.select2);
-         select2Bold = Fonts.initFont(bold, Color.white, Colors.select2);
+         select2Bold = Fonts.initFont(bold, Color.white, Colors.select2);*/
         
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
