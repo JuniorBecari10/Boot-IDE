@@ -3300,9 +3300,7 @@ public class CodeEditor extends IDEComponent {
 					indxs = findWord(new String(chars), s);
 	
 					for (Integer i : indxs) {
-						if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) {
-							if (new String(chars).startsWith("#")) continue;
-						}
+						if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
 						
 						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 					}
@@ -3333,7 +3331,7 @@ public class CodeEditor extends IDEComponent {
 	
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		String[] syms = { " ", "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`" };
+		String[] syms = { "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`", "´", "^", "~" };
 		
 		for (String s : syms) {
 			indxs = findWord(new String(chars), s);
