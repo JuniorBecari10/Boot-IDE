@@ -703,7 +703,7 @@ public class Fonts {
     		}
     		
     		
-    		int ind = ca[i]; 						// pega o valor na tabela AScaII
+    		int ind = ca[i]; 						// pega o valor na tabela ASCII
     		
     		if (ind > 225) continue;
     		

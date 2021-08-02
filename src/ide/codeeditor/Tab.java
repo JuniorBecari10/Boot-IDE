@@ -13,6 +13,8 @@ import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
+import javax.swing.JOptionPane;
+
 import ide.components.CloseTabButton;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
@@ -62,7 +64,7 @@ public class Tab extends IDEComponent implements Serializable {
 		regent = null;
 	}
 	
-	public Tab(int x, ListableFile regent) { // v3.8.2 - 27/07/2021 - 14:20
+	public Tab(int x, ListableFile regent) {
 		super(x, Y, WIDTH, HEIGHT, null);
 		
 		this.regent = regent;
@@ -71,7 +73,7 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		String ext = ListableFile.getFileExtension(regent.getRegent());
 		
-		if (ext.equalsIgnoreCase(".pdf") || ext.equalsIgnoreCase(".jar") || ext.equalsIgnoreCase(".img") || ext.equalsIgnoreCase(".flp") || ext.equalsIgnoreCase(".class") || ext.equalsIgnoreCase(".exe") || ext.equalsIgnoreCase(".urna") || ext.equalsIgnoreCase(".save") || ext.equalsIgnoreCase(".docx") || ext.equalsIgnoreCase(".pptx") || ext.equalsIgnoreCase(".one") || ext.equalsIgnoreCase(".psd") || ext.equalsIgnoreCase(".aed") || ext.equalsIgnoreCase(".ai") || ext.equalsIgnoreCase(".indd") || ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".dll") || ext.equalsIgnoreCase(".png") || ext.equalsIgnoreCase(".jpg") || ext.equalsIgnoreCase(".jpeg") || ext.equalsIgnoreCase(".gif") || ext.equalsIgnoreCase(".bmp") || ext.equalsIgnoreCase(".ico") || ext.equalsIgnoreCase(".webp") || ext.equalsIgnoreCase(".mp4") || ext.equalsIgnoreCase(".wmv") || ext.equalsIgnoreCase(".avi") || ext.equalsIgnoreCase(".wav") || ext.equalsIgnoreCase(".mp3") || ext.equalsIgnoreCase(".ogg") || ext.equalsIgnoreCase(".otf") || ext.equalsIgnoreCase(".ttf") || ext.equalsIgnoreCase(".woff") || ext.equalsIgnoreCase(".woff2") || ext.equalsIgnoreCase(".zip") || ext.equalsIgnoreCase(".rar") || ext.equalsIgnoreCase(".7z") || ext.equalsIgnoreCase(".bin")) {
+		if (ext.equalsIgnoreCase(".pdf") || ext.equalsIgnoreCase(".jar") || ext.equalsIgnoreCase(".iso") || ext.equalsIgnoreCase(".img") || ext.equalsIgnoreCase(".flp") || ext.equalsIgnoreCase(".class") || ext.equalsIgnoreCase(".exe") || ext.equalsIgnoreCase(".urna") || ext.equalsIgnoreCase(".save") || ext.equalsIgnoreCase(".docx") || ext.equalsIgnoreCase(".pptx") || ext.equalsIgnoreCase(".one") || ext.equalsIgnoreCase(".psd") || ext.equalsIgnoreCase(".aed") || ext.equalsIgnoreCase(".ai") || ext.equalsIgnoreCase(".indd") || ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".dll") || ext.equalsIgnoreCase(".png") || ext.equalsIgnoreCase(".jpg") || ext.equalsIgnoreCase(".jpeg") || ext.equalsIgnoreCase(".gif") || ext.equalsIgnoreCase(".bmp") || ext.equalsIgnoreCase(".ico") || ext.equalsIgnoreCase(".webp") || ext.equalsIgnoreCase(".mp4") || ext.equalsIgnoreCase(".wmv") || ext.equalsIgnoreCase(".avi") || ext.equalsIgnoreCase(".wav") || ext.equalsIgnoreCase(".mp3") || ext.equalsIgnoreCase(".ogg") || ext.equalsIgnoreCase(".otf") || ext.equalsIgnoreCase(".ttf") || ext.equalsIgnoreCase(".woff") || ext.equalsIgnoreCase(".woff2") || ext.equalsIgnoreCase(".zip") || ext.equalsIgnoreCase(".rar") || ext.equalsIgnoreCase(".7z") || ext.equalsIgnoreCase(".bin")) {
 			isReadOnly = true;
 			
 			CodeEditor.isReadOnly = true;
@@ -292,6 +294,32 @@ public class Tab extends IDEComponent implements Serializable {
 	public void tick() {
 		if (!regent.getRegent().exists())
 			close();
+		
+		if (ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".png") ||
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".jpg") || // provavelmente fazer isso com excel e mais coisas do word
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".jpeg")||
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".png") ||
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".gif") ||
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".bmp") ||
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".wav") ||
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".mp3") ||
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".ogg") ||
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".mp4") ||
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".wmv") ||
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".avi") ||
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".exe") ||
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".pdf") ||
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".webp")) {
+			close();
+			
+			try {
+				Main.desktop.open(regent.getRegent());
+			} catch (IOException e) {
+				CodeEditor.setSystemLook();
+				
+				JOptionPane.showMessageDialog(null, Texts.cantFindDefault, Texts.nothingFound, JOptionPane.OK_OPTION);
+			}
+		}
 		
 		MIN_X = CommandTerminal.expOff ? -WIDTH : 77;	// -WIDTH é um macete kkk
 		

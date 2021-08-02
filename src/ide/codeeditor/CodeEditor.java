@@ -800,7 +800,7 @@ public class CodeEditor extends IDEComponent {
 		
 		String ext = ListableFile.getFileExtension(file);
 		
-		if (ext.equalsIgnoreCase(".pdf") || ext.equalsIgnoreCase(".jar") || ext.equalsIgnoreCase(".img") || ext.equalsIgnoreCase(".flp") || ext.equalsIgnoreCase(".class") || ext.equalsIgnoreCase(".exe") || ext.equalsIgnoreCase(".urna") || ext.equalsIgnoreCase(".save") || ext.equalsIgnoreCase(".docx") || ext.equalsIgnoreCase(".pptx") || ext.equalsIgnoreCase(".one") || ext.equalsIgnoreCase(".psd") || ext.equalsIgnoreCase(".aed") || ext.equalsIgnoreCase(".ai") || ext.equalsIgnoreCase(".indd") || ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".dll") || ext.equalsIgnoreCase(".png") || ext.equalsIgnoreCase(".jpg") || ext.equalsIgnoreCase(".jpeg") || ext.equalsIgnoreCase(".gif") || ext.equalsIgnoreCase(".bmp") || ext.equalsIgnoreCase(".ico") || ext.equalsIgnoreCase(".webp") || ext.equalsIgnoreCase(".mp4") || ext.equalsIgnoreCase(".wmv") || ext.equalsIgnoreCase(".avi") || ext.equalsIgnoreCase(".wav") || ext.equalsIgnoreCase(".mp3") || ext.equalsIgnoreCase(".ogg") || ext.equalsIgnoreCase(".otf") || ext.equalsIgnoreCase(".ttf") || ext.equalsIgnoreCase(".woff") || ext.equalsIgnoreCase(".woff2") || ext.equalsIgnoreCase(".zip") || ext.equalsIgnoreCase(".rar") || ext.equalsIgnoreCase(".7z") || ext.equalsIgnoreCase(".bin") || editing.isReadOnly) {
+		if (ext.equalsIgnoreCase(".pdf") || ext.equalsIgnoreCase(".jar") || ext.equalsIgnoreCase(".iso") || ext.equalsIgnoreCase(".img") || ext.equalsIgnoreCase(".flp") || ext.equalsIgnoreCase(".class") || ext.equalsIgnoreCase(".exe") || ext.equalsIgnoreCase(".urna") || ext.equalsIgnoreCase(".save") || ext.equalsIgnoreCase(".docx") || ext.equalsIgnoreCase(".pptx") || ext.equalsIgnoreCase(".one") || ext.equalsIgnoreCase(".psd") || ext.equalsIgnoreCase(".aed") || ext.equalsIgnoreCase(".ai") || ext.equalsIgnoreCase(".indd") || ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".dll") || ext.equalsIgnoreCase(".png") || ext.equalsIgnoreCase(".jpg") || ext.equalsIgnoreCase(".jpeg") || ext.equalsIgnoreCase(".gif") || ext.equalsIgnoreCase(".bmp") || ext.equalsIgnoreCase(".ico") || ext.equalsIgnoreCase(".webp") || ext.equalsIgnoreCase(".mp4") || ext.equalsIgnoreCase(".wmv") || ext.equalsIgnoreCase(".avi") || ext.equalsIgnoreCase(".wav") || ext.equalsIgnoreCase(".mp3") || ext.equalsIgnoreCase(".ogg") || ext.equalsIgnoreCase(".otf") || ext.equalsIgnoreCase(".ttf") || ext.equalsIgnoreCase(".woff") || ext.equalsIgnoreCase(".woff2") || ext.equalsIgnoreCase(".zip") || ext.equalsIgnoreCase(".rar") || ext.equalsIgnoreCase(".7z") || ext.equalsIgnoreCase(".bin") || editing.isReadOnly) {
 			isReadOnly = true;
 		}
 			
@@ -2954,13 +2954,6 @@ public class CodeEditor extends IDEComponent {
 			
 			break;
 			
-		case ".pdf":
-			if (!foundExt) {
-				extType = "Portable Document Format - PDF";
-				foundExt = true;
-			}
-			break;
-			
 		case ".jar":
 			if (!foundExt) {
 				extType = Main.lang == Language.PORT ? "Arquivo Jar" : "Jar File";
@@ -2968,9 +2961,10 @@ public class CodeEditor extends IDEComponent {
 			}
 			break;
 			
+		case ".iso":
 		case ".img":
 			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disk Image File";
+				extType = Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File";
 				foundExt = true;
 			}
 			break;
@@ -2980,11 +2974,6 @@ public class CodeEditor extends IDEComponent {
 				extType = Main.lang == Language.PORT ? "Arquivo de Disquete" : "Floppy Disk File";
 				foundExt = true;
 			}
-			break;
-			
-		case ".exe":
-			extType = Main.lang == Language.PORT ? "Executável do Windows - EXE" : "Windows Executable - EXE";
-			foundExt = true;
 			break;
 			
 		case ".urna":
