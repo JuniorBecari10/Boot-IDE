@@ -235,7 +235,7 @@ public class CodeEditor extends IDEComponent {
 			"output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script",
 			"section", "select", "small", "source", "span", "strike", "strong", "style", "sup", "svg", "table",
 			"tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt",
-			"u", "ul", "var", "video", "wbr", "important"
+			"u", "ul", "var", "video", "wbr", "important", "screen", "and", "or"
 	};
 	
 	private static String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
