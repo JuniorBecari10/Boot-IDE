@@ -286,7 +286,7 @@ public class CodeEditor extends IDEComponent {
 			"continue", "def", "del", "elif", "else", "except", "False",
 			"finally", "for", "from", "global", "if", "import", "in", "is",
 			"lambda", "None", "nonlocal", "not", "or", "pass", "raise", "return",
-			"True", "try", "while", "with", "yield", "self", "async", "await", "of" };
+			"True", "try", "while", "with", "yield", "self", "async", "await", "of", "str", "int", "float", "complex", "list", "tuple", "dict", "set", "frozenset", "bool", "bytes", "bytearray", "memoryview" };
 	
 	private static String[] dartKeys = { "abstract", "else", "import", "super", "as", "enum", "in",
 			"switch", "assert", "export", "interface", "sync", "async", "extends", "is",
@@ -343,7 +343,7 @@ public class CodeEditor extends IDEComponent {
 			"label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo",
 			"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto",
 			"rmdir", "icacls", "takeown", "if", "for", "else", "git", "npm", "call", "exist", "end",
-			"java", "javac", "nodemon", "csc", "nasm", "qemu", "gcc", "g++",
+			"java", "javac", "nodemon", "csc", "nasm", "qemu", "gcc", "g++", "python", "lua",
 			"VER", "ASSOC", "CD", "CLS",
 			"COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
@@ -351,7 +351,7 @@ public class CodeEditor extends IDEComponent {
 			"LABEL", "MORE", "NET", "PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO",
 			"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH", "NODE", "OFF", "GOTO",
 			"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM", "CALL", "EXIST", "END",
-			"JAVA", "JAVAC", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++" };
+			"JAVA", "JAVAC", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON", "LUA" };
 	
 	private static String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
 			"false", "for", "function", "if", "in", "local", "nil",
@@ -545,11 +545,12 @@ public class CodeEditor extends IDEComponent {
 			"grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs", "kill", "ping",
 			"wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd", "userdel",
 			"clear", "git", "npm", "call", "exist", "end", "java", "javac", "nodemon", "csc", "node", "nasm", "qemu", "gcc", "g++",
+			"python", "lua",
 			"PWD", "CD", "LS", "CAT", "CP", "MV", "MKDIR", "RMDIR", "RM", "TOUCH", "LOCATE", "FIND",
 			"GREP", "SUDO", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR", "CHMOD", "CHOWN", "JOBS", "KILL", "PING",
 			"WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP", "HOSTNAME", "USERADD", "USERDEL",
 			"CLEAR", "GIT", "NPM", "CALL", "EXIST", "END",
-			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++" };
+			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA" };
 	
 	private static String[] tsKeys = { "break", "as", "any", "switch", "case", "if", "throw",
 			"else", "var", "number", "string", "get", "module", "type", "instanceof",

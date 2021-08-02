@@ -255,8 +255,11 @@ public class CommandTerminal extends IDEComponent {
 						CodeEditor.linesToRemove.add(CodeEditor.lines.get(i)); // pra evitar concurrentmodificationexception
 					}
 					
+					CodeEditor.cursorX = CodeEditor.index1;
+					
 					runCommand("deselect");
 					CodeEditor.setCursorWithinBounds();
+					
 					CodeEditor.editing.setSaved(false);
 					
 					/*CodeEditor.cursorX = CodeEditor.mx;		// tomar cuidado quando o comando é chamado pelo sistema e vc ver seu cursor andando adoidado por ai viu TODO
@@ -277,6 +280,8 @@ public class CommandTerminal extends IDEComponent {
 					
 					Main.editor.register(s, CodeEditor.line1 - 1);
 				}
+				
+				CodeEditor.cursorX = CodeEditor.index1;
 				
 				runCommand("deselect");
 				CodeEditor.editing.setSaved(false);
@@ -526,7 +531,6 @@ public class CommandTerminal extends IDEComponent {
 				CodeEditor.FONT_SIZE = 16;
 				
 				Main.lang = Language.ENG;
-				
 				Texts.setTexts(Main.lang);
 				
 				break;
