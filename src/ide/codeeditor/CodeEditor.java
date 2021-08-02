@@ -598,6 +598,8 @@ public class CodeEditor extends IDEComponent {
 	private static String[] dkKeys = { "FROM", "RUN", "VOLUME", "WORKDIR", "ADD", "CMD", "ENTRYPOINT", "ENV", "EXPOSE", "MAINTAINER", "USER",
 			"from", "run", "volume", "workdir", "add", "cmd", "entrypoint", "env", "expose", "maintainer", "user" };
 
+	private static String[] specialHtmlVariables = { "html" };
+	
 	///////
 	
 	private static boolean hasPressed = false;
@@ -1210,6 +1212,16 @@ public class CodeEditor extends IDEComponent {
 			if (!foundExt) {
 				extType = "Hyper Text Markup Language - HTML";
 				foundExt = true;
+			}
+			
+			for (String s : specialHtmlVariables) { // colorir tags
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]))) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			for (String s : tags) { // colorir tags
