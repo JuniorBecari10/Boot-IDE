@@ -162,7 +162,7 @@ public class CodeEditor extends IDEComponent {
 			"for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long", "native",
 			"new", "package", "private", "protected", "public", "return", "short", "static", "strictfp", "super",
 			"switch", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile", "while",
-			"true", "false", "null", "@interface" };
+			"true", "false", "null", "yield" };
 	
 	private static String[] tags = { "<!--", "<!doctype", "<?php", "<!DOCTYPE", "<a", "<abbr", "<acronym", "<address", "<applet", "<area", "<article",
 			"<aside", "<audio", "<b", "<base", "<basefont", "<bdi", "<bdo", "<big", "<blockquote", "<body", "<br", "<button",
@@ -286,7 +286,7 @@ public class CodeEditor extends IDEComponent {
 			"continue", "def", "del", "elif", "else", "except", "False",
 			"finally", "for", "from", "global", "if", "import", "in", "is",
 			"lambda", "None", "nonlocal", "not", "or", "pass", "raise", "return",
-			"True", "try", "while", "with", "yield", "self" };
+			"True", "try", "while", "with", "yield", "self", "async", "await", "of" };
 	
 	private static String[] dartKeys = { "abstract", "else", "import", "super", "as", "enum", "in",
 			"switch", "assert", "export", "interface", "sync", "async", "extends", "is",
@@ -2291,6 +2291,39 @@ public class CodeEditor extends IDEComponent {
 			for (Integer i : indxs)
 				fs = color(i, fs.size(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 			
+			for (String s : tags) { // colorir keywordss
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]))) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+			
+			indxs = findWord(new String(chars), "="); // html
+			
+			for (Integer i : indxs) {
+				int c = i;
+				len = 0;
+				
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0 &&
+						chars[c] != ' ' &&
+						chars[c] != '[' &&
+						chars[c] != ']' &&
+						chars[c] != ',' &&
+						chars[c] != ';' &&
+						chars[c] != '.' &&
+						chars[c] != ':') {
+					c--;
+					len++;
+				}
+				
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
 			break;
 		
 		case ".log":
@@ -3266,8 +3299,13 @@ public class CodeEditor extends IDEComponent {
 				for (String s : nums) { // colorir números
 					indxs = findWord(new String(chars), s);
 	
-					for (Integer i : indxs)
+					for (Integer i : indxs) {
+						if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) {
+							if (new String(chars).startsWith("#")) continue;
+						}
+						
 						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+					}
 				}
 				
 				indxs = findWord(new String(chars), "0x");
