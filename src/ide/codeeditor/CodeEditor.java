@@ -14,6 +14,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.lang.Thread.State;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -4529,7 +4530,7 @@ public class CodeEditor extends IDEComponent {
 		if (tabs == null) tabs = new ArrayList<>();
 		verifyDuplicateTabs();
 		
-		if (!cursorThread.isAlive()) {
+		if (!cursorThread.isAlive() || cursorThread.getState() == State.TERMINATED) {
 			cursorThread = new Thread() {
 				public void run() {
 					cursor.play();
