@@ -576,7 +576,7 @@ public class Main implements Runnable, Tickable {
     	        		
     		    		if (CodeEditor.editing != null) { // não for nulo
     		    			if (!CodeEditor.editing.isSaved()) { // não estiver salvo
-    		    				String[] options = { Texts.yes, Texts.no, Texts.cancel };
+    		    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
     		    				
     		    				CodeEditor.setSystemLook();
     		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + CodeEditor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);

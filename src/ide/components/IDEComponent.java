@@ -27,8 +27,6 @@ public abstract class IDEComponent implements Tickable, Renderable, Clickable { 
     protected int width, height;
 
     protected transient BufferedImage sprite;
-    
-    protected boolean enabled;
 
     public IDEComponent(int x, int y, int width, int height, BufferedImage sprite) {
         this.x = x;
@@ -38,14 +36,6 @@ public abstract class IDEComponent implements Tickable, Renderable, Clickable { 
         this.height = height;
 
         this.sprite = sprite;
-    }
-    
-    public void setEnabled(boolean b) {
-    	enabled = b;
-    }
-    
-    public boolean isEnabled() {
-    	return enabled;
     }
 
     public void setX(int x) {

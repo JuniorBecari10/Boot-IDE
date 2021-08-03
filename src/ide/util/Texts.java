@@ -150,6 +150,8 @@ public final class Texts {
 	
 	public static String success;
 	
+	public static String dont;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -285,6 +287,8 @@ public final class Texts {
 			
 			success = "Sucesso";
 			
+			dont = "Não";
+			
 			break;
 		
 		case ENG:
@@ -419,6 +423,8 @@ public final class Texts {
 			occurences = "ocurrence(s)";
 			
 			success = "Success";
+			
+			dont = "Don't";
 			
 			break;
 		}
