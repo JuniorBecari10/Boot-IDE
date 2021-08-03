@@ -5258,6 +5258,11 @@ public class CodeEditor extends IDEComponent {
 //			return; // pra n renderizar texto, aquele monte de coisa estranha
 //		}
 		
+		if (!isReadOnly) {
+			g.setColor(Colors.backgroundLight);
+			g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4) + 1);
+		}
+		
 		try {
 			for (int i = 0; i < lines.size(); i++) {
 				if (selecting) {
@@ -5284,10 +5289,10 @@ public class CodeEditor extends IDEComponent {
 				
 				if (MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY < MIN_Y - 15) continue;
 				
-				if (i == cursorY - 1 && !isReadOnly) {
+				/*if (i == cursorY - 1 && !isReadOnly) {
 					g.setColor(Colors.backgroundLight);
 					g.fillRect(x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4) + 1);
-				} // não mais x + 50
+				}*/
 				
 				if (selecting) {
 					g.setColor(Colors.selection);

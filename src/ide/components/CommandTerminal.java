@@ -254,6 +254,7 @@ public class CommandTerminal extends IDEComponent {
 					}
 					
 					CodeEditor.cursorX = CodeEditor.index1;
+					CodeEditor.cursorY = CodeEditor.line1;
 					
 					runCommand("deselect");
 					CodeEditor.setCursorWithinBounds();
@@ -540,7 +541,10 @@ public class CommandTerminal extends IDEComponent {
 			case "gotocursor":
 				if (CodeEditor.isReadOnly) break;
 				
-				CodeEditor.scrY = (CodeEditor.cursorY * (CodeEditor.FONT_SIZE + 4)); // TODO arrumar isso aqui
+				CodeEditor.scrY = (CodeEditor.cursorY * (CodeEditor.FONT_SIZE)); // TODO arrumar isso aqui
+				
+				if (CodeEditor.cursorX == 0 && CodeEditor.cursorY == 1) CodeEditor.scrY = 0;
+				
 				break;
 				
 			case "togglereadonly":
