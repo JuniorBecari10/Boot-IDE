@@ -543,7 +543,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				CodeEditor.scrY = (CodeEditor.cursorY * (CodeEditor.FONT_SIZE)); // TODO arrumar isso aqui
 				
-				if (CodeEditor.cursorX == 0 && CodeEditor.cursorY == 1) CodeEditor.scrY = 0;
+				if (CodeEditor.cursorY <= 7) CodeEditor.scrY = 0;
 				
 				break;
 				
