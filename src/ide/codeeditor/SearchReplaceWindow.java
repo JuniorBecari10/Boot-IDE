@@ -14,12 +14,14 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import ide.components.CommandTerminal;
 import ide.main.Main;
 import ide.util.Texts;
 
@@ -30,6 +32,8 @@ public class SearchReplaceWindow extends JFrame {
 	private JPanel contentPane;
 	private JTextField txbSearch;
 	private JTextField txbReplace;
+	
+	private int occurnum = 0;
 
 	/**
 	 * Launch the application.
@@ -79,7 +83,7 @@ public class SearchReplaceWindow extends JFrame {
 		contentPane.add(txbReplace);
 		
 		JRadioButton rdbtnEntireDocument = new JRadioButton(Texts.entireDocument);
-		rdbtnEntireDocument.setBounds(10, 121, 183, 23);
+		rdbtnEntireDocument.setBounds(10, 121, 142, 23);
 		contentPane.add(rdbtnEntireDocument);
 		rdbtnEntireDocument.doClick();
 		
@@ -98,11 +102,11 @@ public class SearchReplaceWindow extends JFrame {
 		contentPane.add(lblScope);
 		
 		JCheckBox chkCaseSensitive = new JCheckBox(Texts.caseSensitive);
-		chkCaseSensitive.setBounds(207, 121, 131, 23);
+		chkCaseSensitive.setBounds(184, 121, 164, 23);
 		contentPane.add(chkCaseSensitive);
 		
 		JLabel lblNewLabel = new JLabel(Texts.options);
-		lblNewLabel.setBounds(228, 103, 46, 14);
+		lblNewLabel.setBounds(209, 103, 46, 14);
 		contentPane.add(lblNewLabel);
 		
 		JButton btnSearchNext = new JButton(Texts.searchNext);
@@ -132,17 +136,34 @@ public class SearchReplaceWindow extends JFrame {
 					IDELine l = CodeEditor.lines.get(i);
 					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
 					
-					String text = chkCaseSensitive.isSelected() ? txbSearch.getText().toLowerCase() : txbSearch.getText();
+					String text = chkCaseSensitive.isSelected() ? txbSearch.getText() : txbSearch.getText().toLowerCase();
 					
 					if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
 				}
 				
-				if (linesfound.size() == 0) return;
+				if (linesfound.size() == 0) {
+					CodeEditor.setSystemLook();
+					JOptionPane.showMessageDialog(null, Texts.cannotFindWord, Texts.nothingFound, JOptionPane.WARNING_MESSAGE);
+					
+					return;
+				}
 				
-				// como é automaticamente occur 0, pegamos automaticamente ela.
+				try {
+					CodeEditor.cursorY = (linesfound.get(occurnum) - 1) + 2;
+				} catch (IndexOutOfBoundsException f) {
+					occurnum = 0;
+					
+					CodeEditor.cursorY = (linesfound.get(occurnum) - 1) + 2;
+					CommandTerminal.runCommand("gotocursor");
+					
+					CodeEditor.setSystemLook();
+					JOptionPane.showMessageDialog(null, Texts.didNotFindAfterThat, Texts.itsTheEnd, JOptionPane.INFORMATION_MESSAGE);
+					
+				}
 				
-				CodeEditor.scrY = (linesfound.get(0) + 1) * (CodeEditor.FONT_SIZE);// + 4);
-				CodeEditor.cursorY = (linesfound.get(0) - 1) + 2;
+				occurnum++;
+				
+				CommandTerminal.runCommand("gotocursor");
 				
 				//setVisible(false);
 				Main.screen.requestFocus();

@@ -96,7 +96,7 @@ public class Main implements Runnable, Tickable {
         toolkit = Toolkit.getDefaultToolkit();
         screen = new Screen("Boot IDE");
         
-        lang = Language.PORT; // default
+        lang = Language.ENG; // default
         
         Fonts.initFonts(fntnr, fntbl);
         spritesheet = new Spritesheet(sprsh);

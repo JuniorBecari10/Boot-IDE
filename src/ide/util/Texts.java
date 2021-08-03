@@ -140,6 +140,11 @@ public final class Texts {
 	
 	public static String close;
 	
+	public static String cannotFindWord;
+	
+	public static String didNotFindAfterThat;
+	public static String itsTheEnd;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -263,7 +268,12 @@ public final class Texts {
 			
 			close = "Fechar";
 			
-			caseSensitive = "Diferenciar maiúsculas de minúsculas";
+			caseSensitive = "Sensível a letras maiúsculas";
+			
+			cannotFindWord = "O Localizar/Substituir não encontrou nesse documento as palavras solicitadas.";
+			
+			didNotFindAfterThat = "Não foram mais encontradas palavras correspondentes.";
+			itsTheEnd = "É o fim!";
 			
 			break;
 		
@@ -389,6 +399,11 @@ public final class Texts {
 			close = "Close";
 			
 			caseSensitive = "Case Sensitive";
+			
+			cannotFindWord = "Search/Replace did not find the requested words in that document.";
+			
+			didNotFindAfterThat = "No more matching words were found.";
+			itsTheEnd = "It's the end!";
 			
 			break;
 		}
