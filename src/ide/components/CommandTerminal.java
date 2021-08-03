@@ -52,7 +52,7 @@ public class CommandTerminal extends IDEComponent {
 	private boolean showCursor;
 	private Animation cursor;
 	
-	public static String lastCommand = ""; // TODO debugar isso aqui
+	public static String lastCommand = "";
 	
 	private static JFileChooser chooser;
 	
@@ -414,21 +414,6 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "print":
-				if (CodeEditor.isReadOnly) break;
-				
-				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
-				
-				b.insert(CodeEditor.cursorX, "print()");
-				
-				Main.editor.register(b, CodeEditor.cursorY - 1);
-				
-				CodeEditor.editing.setSaved(false);
-				
-				CodeEditor.cursorX += 6;
-				
-				break;
-				
 			case "cout":
 				if (CodeEditor.isReadOnly) break;
 				
@@ -650,7 +635,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
 				
-				b.insert(CodeEditor.cursorX, "<div class='" + args[0] + "'></div>");
+				b.insert(CodeEditor.cursorX, "<div class=\"" + args[0] + "\"></div>");
 				
 				Main.editor.register(b, CodeEditor.cursorY - 1);
 				

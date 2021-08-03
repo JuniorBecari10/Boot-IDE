@@ -3923,9 +3923,9 @@ public class CodeEditor extends IDEComponent {
 		/////////////////////////////////////////////////////
 		
 		fs = colorVariablesAndObjects(ext, chars, fs);
-		fs = colorNumbers(ext, chars, fs);
 		fs = colorMethods(ext, chars, fs);
 		fs = colorKeywords(ext, chars, fs);
+		fs = colorNumbers(ext, chars, fs);
 		fs = colorExtras(ext, chars, fs);
 		fs = colorNoExtensions(ext, chars, fs);
 		fs = colorComments(ext, chars, fs);
