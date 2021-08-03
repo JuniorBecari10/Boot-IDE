@@ -11,6 +11,7 @@ del
 cut
 paste
 selectline
+print
 selectall
 generateconfigfile
 toggleexplorer
@@ -38,18 +39,12 @@ setfontsize int:size/default
 insertchar int:ascii_code
 gendiv str:class_name
 genbase str:type[html, css, java, javainterface, javaenum, javamain, cs, csmain, cpp, c, ino, html5]
-search str:word
-searchsel str:word
 lorem int:num_words
 
 2 args
 
 ordertab int:tab_from int:tab_to
 setcursorpos int:x int:y
-search str:word int:occurence_index
-searchsel str:word int:occurence_index
-replace str:word_from str:word_to
-replacesel str:word_from str:word_to
 
 3 args
 

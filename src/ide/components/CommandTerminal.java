@@ -56,6 +56,9 @@ public class CommandTerminal extends IDEComponent {
 	
 	private static JFileChooser chooser;
 	
+	private static boolean changeHints = true;
+	private static int comIndex = 0;
+	
 	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
@@ -75,7 +78,7 @@ public class CommandTerminal extends IDEComponent {
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab",
 			"gotoline", "setfontsize", "insertchar",
 			"gendiv", "genbase",
-			"lorem", "ordertab",
+			"search", "searchsel", "lorem", "ordertab",
 			"setcursorpos",
 			"gengetter",
 			"gensetter" };
@@ -408,6 +411,21 @@ public class CommandTerminal extends IDEComponent {
 				CodeEditor.editing.setSaved(false);
 				
 				CodeEditor.cursorX += 19;
+				
+				break;
+				
+			case "print":
+				if (CodeEditor.isReadOnly) break;
+				
+				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				
+				b.insert(CodeEditor.cursorX, "print()");
+				
+				Main.editor.register(b, CodeEditor.cursorY - 1);
+				
+				CodeEditor.editing.setSaved(false);
+				
+				CodeEditor.cursorX += 6;
 				
 				break;
 				
@@ -1162,6 +1180,21 @@ public class CommandTerminal extends IDEComponent {
 				return;
 			}
 			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
+				KeyInput.updateKeys();
+				
+				if (commandHints.isEmpty()) return;
+				
+				builder = new StringBuilder(commandHints.get(comIndex).split(" ")[0]);
+				
+				cursorIndex = builder.length();
+				comIndex++;
+				
+				changeHints = false;
+				
+				return;
+			}
+			
 			if (cursorIndex < 0) cursorIndex = 0;
 			if (cursorIndex > builder.length()) cursorIndex = builder.length();
 			
@@ -1169,6 +1202,9 @@ public class CommandTerminal extends IDEComponent {
 			char c = KeyInput.getCharPressed();
 			
 			c = Main.editor.addAccents(keyCode, c);
+			
+			comIndex = 0;
+			changeHints = true;
 			
 			if (KeyInput.getCharPressed() < 33 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
@@ -1178,16 +1214,18 @@ public class CommandTerminal extends IDEComponent {
 			cursorIndex++;
 		}
 		
-		commandHints.clear();
-		
-		for (int i = 0; i < onlyCommands.length; i++) {
-			String s = onlyCommands[i];
-			String dgt = builder.toString().split(" ")[0];// dgt = digitado
+		if (changeHints) {
+			commandHints.clear();
 			
-			if (s.contains(dgt)) commandHints.add(commands[i]);
+			for (int i = 0; i < onlyCommands.length; i++) {
+				String s = onlyCommands[i];
+				String dgt = builder.toString().split(" ")[0]; // dgt = digitado
+				
+				if (s.contains(dgt)) commandHints.add(commands[i]);
+			}
+			
+			if (builder.toString().equals("")) commandHints.clear();
 		}
-		
-		if (builder.toString().equals("")) commandHints.clear();
 	}
 	
 	public void render(Graphics g) {
