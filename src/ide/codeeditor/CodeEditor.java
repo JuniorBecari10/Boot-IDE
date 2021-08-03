@@ -120,6 +120,7 @@ public class CodeEditor extends IDEComponent {
 	
 	private boolean showCursor;
 	
+	private static Thread cursorThread;
 	private static Animation cursor;
 	
 	public static int mx;
@@ -633,11 +634,13 @@ public class CodeEditor extends IDEComponent {
 			}
 		};
 		
-		new Thread() {
+		cursorThread = new Thread() {
 			public void run() {
 				cursor.play();
 			}
-		}.start();
+		};
+		
+		cursorThread.start();
 		
 		new Thread() {
 			public void run() { // 25 pra frente com o explorer desligado, isso é uma gambiarrinha viu
@@ -4526,6 +4529,16 @@ public class CodeEditor extends IDEComponent {
 		if (tabs == null) tabs = new ArrayList<>();
 		verifyDuplicateTabs();
 		
+		if (!cursorThread.isAlive()) {
+			cursorThread = new Thread() {
+				public void run() {
+					cursor.play();
+				}
+			};
+			
+			cursorThread.start();
+		}
+			
 		if (!selecting) {
 			index1 = cursorX;
 			line1 = cursorY;
