@@ -64,8 +64,7 @@ public class CommandTerminal extends IDEComponent {
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
 			"gendiv str:class_name", "genbase str:type",
 			"search str:word", "searchsel str:word", "lorem int:num_words", "ordertab int:tab_from int:tab_to",
-			"setcursorpos int:x int:y", "search str:word int:occurence_index", "searchsel str:word int:occurence_index",
-			"replace str:word_from str:word_to", "replacesel str:word_from str:word_to",
+			"setcursorpos int:x int:y",
 			"gengetter str:lang str:variable_name str:variable_type",
 			"gensetter str:lang str:variable_name str:variable_type" };
 	
@@ -76,9 +75,8 @@ public class CommandTerminal extends IDEComponent {
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab",
 			"gotoline", "setfontsize", "insertchar",
 			"gendiv", "genbase",
-			"search", "searchsel", "lorem", "ordertab",
-			"setcursorpos", "search", "searchsel",
-			"replace", "replacesel",
+			"lorem", "ordertab",
+			"setcursorpos",
 			"gengetter",
 			"gensetter" };
 	
@@ -761,7 +759,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "search":
+			/*case "search":									// Deprecated. Use Search/Replace.
 				List<Integer> linesfound = new ArrayList<>();
 				
 				//args[0] = CodeEditor.arrayToStr(args); // -- n da certo pq esse comando n vai ser executado pq o numero de args é maior
@@ -801,7 +799,7 @@ public class CommandTerminal extends IDEComponent {
 				CodeEditor.scrY = (linesfound.get(0) - 1) * (CodeEditor.FONT_SIZE);// + 4);
 				CodeEditor.cursorY = (linesfound.get(0) - 1) + 2;
 				
-				break;
+				break;*/
 				
 			case "lorem":
 				if (CodeEditor.isReadOnly) break;
@@ -906,7 +904,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "replace":
+			/*case "replace":						// Deprecated. Use Search/Replace.
 				if (CodeEditor.isReadOnly) break;
 				
 				linesfound = new ArrayList<>();
@@ -958,7 +956,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				CodeEditor.editing.setSaved(false);
 				
-				break;
+				break;*/
 				
 			/*case "select":
 				line1 = Integer.parseInt(args[0]);

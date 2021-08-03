@@ -56,7 +56,7 @@ public class SearchReplaceWindow extends JFrame {
 	 */
 	public SearchReplaceWindow() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 354, 391);
+		setBounds(100, 100, 354, 351);
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("InternalFrame.borderColor"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -113,16 +113,12 @@ public class SearchReplaceWindow extends JFrame {
 		btnSearchNext.setBounds(10, 208, 328, 23);
 		contentPane.add(btnSearchNext);
 		
-		JButton btnReplaceNext = new JButton(Texts.replaceNext);
-		btnReplaceNext.setBounds(10, 242, 328, 23);
-		contentPane.add(btnReplaceNext);
-		
 		JButton btnReplaceAll = new JButton(Texts.replaceAll);
-		btnReplaceAll.setBounds(10, 276, 328, 23);
+		btnReplaceAll.setBounds(10, 242, 328, 23);
 		contentPane.add(btnReplaceAll);
 		
 		JButton btnClose = new JButton(Texts.close);
-		btnClose.setBounds(10, 328, 328, 23);
+		btnClose.setBounds(10, 288, 328, 23);
 		contentPane.add(btnClose);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -130,15 +126,29 @@ public class SearchReplaceWindow extends JFrame {
 		btnSearchNext.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (txbSearch.getText().equals("")) return;
+				
 				List<Integer> linesfound = new ArrayList<>();
 				
-				for (int i = 0; i < CodeEditor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
-					IDELine l = CodeEditor.lines.get(i);
-					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
-					
-					String text = chkCaseSensitive.isSelected() ? txbSearch.getText() : txbSearch.getText().toLowerCase();
-					
-					if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+				if (!rdbtnSelectedLines.isSelected()) {
+					for (int i = 0; i < CodeEditor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
+						IDELine l = CodeEditor.lines.get(i);
+						String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+						
+						String text = chkCaseSensitive.isSelected() ? txbSearch.getText() : txbSearch.getText().toLowerCase();
+						
+						if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+					}
+				}
+				else {
+					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+						IDELine l = CodeEditor.lines.get(i);
+						String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+						
+						String text = chkCaseSensitive.isSelected() ? txbSearch.getText() : txbSearch.getText().toLowerCase();
+						
+						if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+					}
 				}
 				
 				if (linesfound.size() == 0) {
@@ -167,6 +177,64 @@ public class SearchReplaceWindow extends JFrame {
 				
 				//setVisible(false);
 				Main.screen.requestFocus();
+			}
+		});
+		
+		btnReplaceAll.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (CodeEditor.isReadOnly) return;
+				if (txbSearch.getText().equals("")) return;
+				
+				List<Integer> linesfound = new ArrayList<>();
+				
+				String text = chkCaseSensitive.isSelected() ? txbSearch.getText() : txbSearch.getText().toLowerCase();
+				String replText = txbReplace.getText();
+				
+				if (!rdbtnSelectedLines.isSelected()) {
+					for (int i = 0; i < CodeEditor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
+						IDELine l = CodeEditor.lines.get(i);
+						String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+						
+						if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+					}
+				}
+				else {
+					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+						IDELine l = CodeEditor.lines.get(i);
+						String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+						
+						if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+					}
+				}
+				
+				if (linesfound.size() == 0) {
+					CodeEditor.setSystemLook();
+					JOptionPane.showMessageDialog(null, Texts.cannotFindWord, Texts.nothingFound, JOptionPane.WARNING_MESSAGE);
+					
+					return;
+				}
+				
+				int count = 0;
+				
+				for (Integer i : linesfound) {
+					String s = new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars()));
+					
+					s = s.replaceAll(text, replText);
+					
+					Main.editor.register(new StringBuilder(s), i);
+					
+					count++;
+				}
+				
+				CodeEditor.editing.setSaved(false);
+				
+				CommandTerminal.runCommand("gotocursor");
+				
+				Main.screen.requestFocus();
+				
+				CodeEditor.setSystemLook();
+				JOptionPane.showMessageDialog(null, Texts.replaced + " " + count + " " + Texts.occurences + ".", Texts.success + "!", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
