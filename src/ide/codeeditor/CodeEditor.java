@@ -109,6 +109,9 @@ public class CodeEditor extends IDEComponent {
 	public static List<Tab> toAdd;
 	public static List<Tab> toRemove;
 	
+	public static SearchReplaceWindow searchWindow;
+	public static boolean alreadyAddedFrame = false;
+	
 	//public static BufferedImage gradient;
 	
 	public static String clipboard = "";
@@ -4406,6 +4409,18 @@ public class CodeEditor extends IDEComponent {
 			
 			IDEComponent.toAdd.add(set);
 			break;
+			
+		case "searchrep":
+			RightClickOption.removeAllRightClickOptions();
+			
+			if (!alreadyAddedFrame) {
+				searchWindow = new SearchReplaceWindow();
+				alreadyAddedFrame = true;
+			}
+			else
+				searchWindow.requestFocus();
+			
+			break;
 		}
 	}
 	
@@ -4668,12 +4683,13 @@ public class CodeEditor extends IDEComponent {
 			
 			if (Main.baseFolder != null) {
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, width, Texts.openExplorer, (s) -> execute(s), "sysexp");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (isReadOnly ? 90 : (editing != null ? (selecting ? 330 : 210) : 90)), width, Texts.setBaseFolder, (s) -> execute(s), "setbase");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (isReadOnly ? 90 : (editing != null ? (selecting ? 330 : 240) : 90)), width, Texts.setBaseFolder, (s) -> execute(s), "setbase");
 			}
 			
 			if (!isReadOnly) {
 					if (editing != null) {
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), width, Texts.selectLine, (s) -> CommandTerminal.runCommand(s), "selectline");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 240 : 150), width, Texts.open + " " + Texts.searchReplace, (s) -> execute(s), "searchrep");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 270 : 180), width, Texts.selectLine, (s) -> CommandTerminal.runCommand(s), "selectline");
 						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, width, Texts.save, (s) -> execute(s), "save");
 						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 150 : 120), width, Texts.paste, (s) -> execute(s), "paste");
 					
@@ -4685,8 +4701,8 @@ public class CodeEditor extends IDEComponent {
 					}
 					
 					if (Main.baseFolder != null && editing != null) {
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 270 : 180), width, Texts.selectAll, (s) -> CommandTerminal.runCommand(s), "selectall");
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 360 : 240), width, Texts.openDefault, (s) -> execute(s), "opendef");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 300 : 210), width, Texts.selectAll, (s) -> CommandTerminal.runCommand(s), "selectall");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 360 : 270), width, Texts.openDefault, (s) -> execute(s), "opendef");
 					}
 				}
 			}
@@ -4727,6 +4743,14 @@ public class CodeEditor extends IDEComponent {
 				cursorY = 0;
 				
 				setCursorWithinBounds();
+					
+				return;
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_F && !isReadOnly && !alternateTabsMode) { // Ctrl + F - Abrir janela Localizar/Substituir
+				KeyInput.updateKeys();
+				
+				execute("searchrep");
 					
 				return;
 			}

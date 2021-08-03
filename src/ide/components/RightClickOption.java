@@ -39,6 +39,12 @@ public class RightClickOption extends IDEComponent {
 		return false;
 	}
 	
+	public static synchronized void removeAllRightClickOptions() {
+		for (IDEComponent i : IDEComponent.components)
+			if (i instanceof RightClickOption)
+				IDEComponent.toRemove.add(i);
+	}
+	
 	public void tick() {		
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE || (MouseInput.isMousePressed() && !(leftClicked() || rightClicked()))) // obs: o bug não é aqui
 			IDEComponent.toRemove.add(this);

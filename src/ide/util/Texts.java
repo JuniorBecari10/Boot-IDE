@@ -121,6 +121,25 @@ public final class Texts {
 	public static String configFileNotChanged;
 	public static String didNothing;
 	
+	public static String searchReplace;
+	
+	public static String search;
+	public static String replace;
+	
+	public static String entireDocument;
+	public static String selectedLines;
+	
+	public static String caseSensitive;
+	
+	public static String scope;
+	public static String options;
+	
+	public static String searchNext;
+	public static String replaceNext;
+	public static String replaceAll;
+	
+	public static String close;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -227,6 +246,25 @@ public final class Texts {
 			configFileNotChanged = "O Arquivo de Configurações foi carregado, mas nada foi alterado. Deseja que ele continue carregado?";
 			didNothing = "Não fez nada!";
 			
+			searchReplace = "Localizar/Substituir";
+			
+			search = "Localizar";
+			replace = "Substituir";
+			
+			entireDocument = "Documento Inteiro";
+			selectedLines = "Linhas Selecionadas";
+			
+			scope = "Âmbito"; // por incrível que pareça, é isso mesmo, foi o deepl que disse
+			options = "Opções";
+			
+			searchNext = "Localizar Próximo";
+			replaceNext = "Substituir Próximo";
+			replaceAll = "Substituir Todos";
+			
+			close = "Fechar";
+			
+			caseSensitive = "Diferenciar maiúsculas de minúsculas";
+			
 			break;
 		
 		case ENG:
@@ -332,6 +370,25 @@ public final class Texts {
 			
 			configFileNotChanged = "The Configuration File has been loaded, but nothing has changed. Do you want it to continue loaded?";
 			didNothing = "It did nothing!";
+			
+			searchReplace = "Search/Replace";
+			
+			search = "Search";
+			replace = "Replace";
+			
+			entireDocument = "Entire Document";
+			selectedLines = "Selected Lines";
+			
+			scope = "Scope";
+			options = "Options";
+			
+			searchNext = "Search Next";
+			replaceNext = "Replace Next";
+			replaceAll = "Replace All";
+			
+			close = "Close";
+			
+			caseSensitive = "Case Sensitive";
 			
 			break;
 		}
