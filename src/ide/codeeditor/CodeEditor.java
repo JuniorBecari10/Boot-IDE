@@ -3286,7 +3286,47 @@ public class CodeEditor extends IDEComponent {
 			}
 		
 		return fs;
-	}	
+	}
+	
+	public static List<IDEFont> colorNumbers(String ext, char[] chars, List<IDEFont> fs) {
+		List<Integer> indxs = new ArrayList<>();
+		
+		if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs"))) {
+			for (String s : nums) { // colorir números
+				indxs = findWord(new String(chars), s);
+
+				for (Integer i : indxs) {
+					if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+				}
+			}
+			
+			indxs = findWord(new String(chars), "0x");
+			
+			int len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length &&
+						chars[i + len] != ' ' &&
+						chars[i + len] != '[' &&
+						chars[i + len] != ']' &&
+						chars[i + len] != '(' &&
+						chars[i + len] != ')' &&
+						chars[i + len] != ',' &&
+						chars[i + len] != ';' &&
+						chars[i + len] != '.' &&
+						chars[i + len] != ':')
+						len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+			}
+		}
+	
+		return fs;
+	}
+	
 	public static List<IDEFont> colorExtras(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
@@ -3299,40 +3339,6 @@ public class CodeEditor extends IDEComponent {
 				 ext.equalsIgnoreCase(".json") || ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xml") ||
 				 ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
 				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
-			
-			if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs"))) {
-				for (String s : nums) { // colorir números
-					indxs = findWord(new String(chars), s);
-	
-					for (Integer i : indxs) {
-						if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
-						
-						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-					}
-				}
-				
-				indxs = findWord(new String(chars), "0x");
-				
-				int len = 0;
-	
-				for (Integer i : indxs) {
-					while (i + len < chars.length &&
-							chars[i + len] != ' ' &&
-							chars[i + len] != '[' &&
-							chars[i + len] != ']' &&
-							chars[i + len] != '(' &&
-							chars[i + len] != ')' &&
-							chars[i + len] != ',' &&
-							chars[i + len] != ';' &&
-							chars[i + len] != '.' &&
-							chars[i + len] != ':')
-							len++;
-	
-					if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-				}
-			}
-		}
 	
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -3389,7 +3395,7 @@ public class CodeEditor extends IDEComponent {
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 		}
-		
+		}
 		return fs;
 	}
 	
@@ -3917,6 +3923,7 @@ public class CodeEditor extends IDEComponent {
 		/////////////////////////////////////////////////////
 		
 		fs = colorVariablesAndObjects(ext, chars, fs);
+		fs = colorNumbers(ext, chars, fs);
 		fs = colorMethods(ext, chars, fs);
 		fs = colorKeywords(ext, chars, fs);
 		fs = colorExtras(ext, chars, fs);
