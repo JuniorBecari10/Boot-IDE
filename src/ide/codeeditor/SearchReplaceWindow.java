@@ -25,6 +25,15 @@ import ide.components.CommandTerminal;
 import ide.main.Main;
 import ide.util.Texts;
 
+/**
+ * Classe da janela do Search/Replace. É feita com Java Swing, mas não se preocupe, você não vai ver aquele ui feia do swing, eu alterei
+ * pra vc ver como a ui do sistema.
+ * 
+ * Feito com a ajuda do WindowBuilder, plugin do Eclipse.
+ * 
+ * @author junio
+ *
+ */
 public class SearchReplaceWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -34,7 +43,9 @@ public class SearchReplaceWindow extends JFrame {
 	private JTextField txbReplace;
 	
 	private int occurnum = 0;
-
+	
+	public static boolean active = false;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -55,6 +66,8 @@ public class SearchReplaceWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public SearchReplaceWindow() {
+		active = true;
+		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 354, 351);
 		contentPane = new JPanel();
@@ -243,6 +256,8 @@ public class SearchReplaceWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				CodeEditor.alreadyAddedFrame = false;
+				
+				active = false;
 			}
 		});
 		
@@ -259,6 +274,7 @@ public class SearchReplaceWindow extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				CodeEditor.alreadyAddedFrame = false;
+				active = false;
 			}
 		});
 		
@@ -271,6 +287,7 @@ public class SearchReplaceWindow extends JFrame {
 				if (keyCode == KeyEvent.VK_ESCAPE) {
 					CodeEditor.searchWindow.setVisible(false);
 					CodeEditor.alreadyAddedFrame = false;
+					active = false;
 				}
 			}
 		});
