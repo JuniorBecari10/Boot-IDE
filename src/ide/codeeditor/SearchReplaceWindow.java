@@ -24,6 +24,8 @@ import javax.swing.border.EmptyBorder;
 import ide.components.CommandTerminal;
 import ide.main.Main;
 import ide.util.Texts;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 /**
  * Classe da janela do Search/Replace. É feita com Java Swing, mas não se preocupe, você não vai ver aquele ui feia do swing, eu alterei
@@ -101,7 +103,7 @@ public class SearchReplaceWindow extends JFrame {
 		rdbtnEntireDocument.doClick();
 		
 		JRadioButton rdbtnSelectedLines = new JRadioButton(Texts.selectedLines);
-		rdbtnSelectedLines.setBounds(10, 147, 166, 23);
+		rdbtnSelectedLines.setBounds(10, 147, 155, 23);
 		contentPane.add(rdbtnSelectedLines);
 		
 		rdbtnSelectedLines.setEnabled(CodeEditor.selecting);
@@ -115,7 +117,7 @@ public class SearchReplaceWindow extends JFrame {
 		contentPane.add(lblScope);
 		
 		JCheckBox chkCaseSensitive = new JCheckBox(Texts.caseSensitive);
-		chkCaseSensitive.setBounds(184, 121, 164, 23);
+		chkCaseSensitive.setBounds(184, 121, 158, 23);
 		contentPane.add(chkCaseSensitive);
 		
 		JLabel lblNewLabel = new JLabel(Texts.options);
@@ -133,6 +135,16 @@ public class SearchReplaceWindow extends JFrame {
 		JButton btnClose = new JButton(Texts.close);
 		btnClose.setBounds(10, 288, 328, 23);
 		contentPane.add(btnClose);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setBounds(5, 89, 164, 93);
+		contentPane.add(panel);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_1.setBounds(181, 89, 165, 67);
+		contentPane.add(panel_1);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		
