@@ -362,7 +362,8 @@ public class CodeEditor extends IDEComponent {
 	
 	private static String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
 			"false", "for", "function", "if", "in", "local", "nil",
-			"not", "or", "repeat", "return", "then", "true", "until", "while" };
+			"not", "or", "repeat", "return", "then", "true", "until", "while",
+			"os", "io", "math", "string", "require", "table", "debug" };
 	
 	private static String[] zigKeys = { "align", "allowzero", "and", "anyframe", "anytype", "asm", "async", "await",
 			"break", "catch", "comptime", "const", "continue", "defer", "else", "enum", "errdefer",
@@ -3702,7 +3703,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".lua": // Lua
 			indxs = findWord(new String(chars), "--[[");						// colorir comentários multi-linha - caracteres diferentes
-			finals = findWord(new String(chars), "]]--");
+			finals = findWord(new String(chars), "--]]");
 			
 			if (indxs.size() > 0) {
 				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
