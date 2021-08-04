@@ -152,6 +152,8 @@ public final class Texts {
 	
 	public static String dont;
 	
+	public static String tab_Cycle;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -289,6 +291,8 @@ public final class Texts {
 			
 			dont = "Não";
 			
+			tab_Cycle = "[Tab] Alternar Entre Opções";
+			
 			break;
 		
 		case ENG:
@@ -425,6 +429,8 @@ public final class Texts {
 			success = "Success";
 			
 			dont = "Don't";
+			
+			tab_Cycle = "[Tab] Cycle Through Options";
 			
 			break;
 		}
