@@ -4642,12 +4642,16 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (hovered() && editing != null) {
-			if (!isReadOnly && !alternateTabsMode) {
-				Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+			if (!isReadOnly && !alternateTabsMode && !RightClickOption.isRightClickActive()) {
+				Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));	// se for pra descomentar o de baixo, mover a ultima condição desse if pra dentro do if, assim o else não verifica essa condição
 			}
 			else {
 				Main.screen.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
+			
+			/*if (RightClickOption.isRightClickActive() && RightClickOption.anyRightClickOptionHovered()) {
+				Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}*/
 			
 			if (MouseInput.isMouseRolling()) {
 				new Thread() {

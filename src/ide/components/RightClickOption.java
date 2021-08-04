@@ -39,6 +39,14 @@ public class RightClickOption extends IDEComponent {
 		return false;
 	}
 	
+	public static boolean anyRightClickOptionHovered() {
+		for (IDEComponent i : IDEComponent.components)
+			if (i instanceof RightClickOption)
+				if (i.hovered()) return true;
+		
+		return false;
+	}
+	
 	public static synchronized void removeAllRightClickOptions() {
 		for (IDEComponent i : IDEComponent.components)
 			if (i instanceof RightClickOption)
