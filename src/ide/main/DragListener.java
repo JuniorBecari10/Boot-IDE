@@ -67,10 +67,10 @@ public class DragListener implements DropTargetListener {
 		        		  files.add((File) o);
 		          
 		          if (Main.baseFolder == null) {
+		        	    IDEComponent.toAdd.add(Main.newFile);
+						IDEComponent.toAdd.add(Main.newFolder);
 						IDEComponent.toAdd.add(Main.oneLevel);
 						IDEComponent.toAdd.add(Main.returnBase);
-						IDEComponent.toAdd.add(Main.newFile);
-						IDEComponent.toAdd.add(Main.newFolder);
 						IDEComponent.toAdd.add(Main.reload);
 					}
 		          

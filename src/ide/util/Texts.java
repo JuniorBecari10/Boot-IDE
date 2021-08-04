@@ -266,7 +266,7 @@ public final class Texts {
 			entireDocument = "Documento Inteiro";
 			selectedLines = "Linhas Selecionadas";
 			
-			scope = "Âmbito"; // por incrível que pareça, é isso mesmo, foi o deepl que disse
+			scope = "Local";
 			options = "Opções";
 			
 			searchNext = "Localizar Próximo";

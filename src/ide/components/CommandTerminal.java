@@ -15,8 +15,6 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import ide.codeeditor.CodeEditor;
 import ide.codeeditor.IDELine;
@@ -59,13 +57,29 @@ public class CommandTerminal extends IDEComponent {
 	private static boolean changeHints = true;
 	private static int comIndex = 0;
 	
+	/*
+	 * 	 Nota para novos comandos, queridos adicionadores de comandos
+	 *  
+	 *   [...]
+	 *  
+	 *   n° 103: 
+	 *   Se colocar num array tem que colocar no outro tbm senão não dá certo
+	 *   
+	 *   n° 104:
+	 *   Somente adicionem comandos se realmente forem necessários
+	 *   
+	 *   [...]
+	 */
+	
+	// O Emmet não está disponível ainda, talvez na v4.0 ele venha
+	
 	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "stdcout", "writeline", "syserr", "clog", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
-			"gendiv str:class_name", "genbase str:type",
+			"gendiv str:class_name", "genbase str:type", //"emmet str:expression",
 			"search str:word", "searchsel str:word", "lorem int:num_words", "ordertab int:tab_from int:tab_to",
 			"setcursorpos int:x int:y",
 			"gengetter str:lang str:variable_name str:variable_type",
@@ -77,7 +91,7 @@ public class CommandTerminal extends IDEComponent {
 			"sysout", "syso", "cout", "stdcout", "writeline", "syserr", "clog", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab",
 			"gotoline", "setfontsize", "insertchar",
-			"gendiv", "genbase",
+			"gendiv", "genbase", //"emmet",
 			"search", "searchsel", "lorem", "ordertab",
 			"setcursorpos",
 			"gengetter",
@@ -92,15 +106,7 @@ public class CommandTerminal extends IDEComponent {
 		
 		builder = new StringBuilder();
 		
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				
-			chooser = new JFileChooser();
-			chooser.setDialogTitle(Texts.open + "/" + Texts.save);
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
+		CodeEditor.setSystemLook();
 		
 		cursor = new Animation(2, true) {
 			private boolean flip = false;

@@ -98,6 +98,8 @@ public class CodeEditor extends IDEComponent {
 	/*public static Stack<List<IDELine>> undo = new Stack<>();
 	public static Stack<List<IDELine>> redo = new Stack<>();*/
 	
+	// Undo e Redo não estão disponíveis, talvez na v4.0
+	
 	public static int cursorX = 0;
 	public static int cursorY = 1;
 	
@@ -4725,7 +4727,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		
-		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active) {
+		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active) { // TODO
 			setCursorWithinBounds();
 			
 			new Thread() {

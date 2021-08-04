@@ -90,6 +90,8 @@ public class Main implements Runnable, Tickable {
     
     public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings.conf"); // 08/05/2021 - 15:48
     
+    // verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
+    
     public Main() {
     	if (args == null)
     		args = new String[10];
@@ -128,35 +130,97 @@ public class Main implements Runnable, Tickable {
         if (settingsFile.exists())
     		readFile(settingsFile);
         
-        //System.out.println(args[0]);
-        
-        //openWith();
+        try {
+        	String arg = args[0].toLowerCase().contains("boot") || args[0].toLowerCase().contains("ide") ? args[1] : args[0];
+        	
+        	openWith(arg);
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
+        	e.printStackTrace();
+        	System.err.println("[PORT] Não há argumentos suficientes! \n [ENG] There are no enough arguments!");
+        }
         
         ListableFile.readConfigFile(conffile);
         Texts.setTexts(lang);
     }
     
-   /*private void openWith() {
-    	if (args == null || args[0] == null) return;
+   private void openWith(String locale) {
+    	if (locale == null) return;
     	
     	try {
-    		File f = new File(args[0]);
-    		
-    		baseFolder = f.getParentFile();
-    		
-    		CodeEditor.tabs.add(new Tab(Tab.MIN_X, ListableFile.search(f.getParentFile())));
+    		File file = new File(locale);
 			
-			Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
+			if (Main.baseFolder == null) {
+				IDEComponent.toAdd.add(Main.newFile);
+				IDEComponent.toAdd.add(Main.newFolder);
+				IDEComponent.toAdd.add(Main.oneLevel);
+				IDEComponent.toAdd.add(Main.returnBase);
+				IDEComponent.toAdd.add(Main.reload);
+			}
 			
-			IDEComponent.toAdd.add(Main.oneLevel);
-			IDEComponent.toAdd.add(Main.returnBase);
-			IDEComponent.toAdd.add(Main.newFile);
-			IDEComponent.toAdd.add(Main.newFolder);
-			IDEComponent.toAdd.add(Main.reload);
+			 ListableFile.files.clear();
+			  Explorer.files.clear();
+	          
+	          		if (file.isDirectory()) {
+	          			Main.baseFolder = file;
+						
+						Explorer.scope = null;
+		        	  	
+		        	  	int index = 0;
+						
+						for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
+							ListableFile.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+							
+							index++;
+						}
+	          			return;
+	          		}
+	          
+	        	  	Main.baseFolder = file.getParentFile();
+	        	  	
+	        	  	Explorer.files.clear();
+					ListableFile.files.clear();
+					
+					Explorer.scope = null;
+	        	  	
+	        	  	int index = 0;
+					
+					for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
+						ListableFile.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+						
+						index++;
+					}
+	          
+			int lastX = CodeEditor.tabs.size() > 0 ? CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() : Tab.MIN_X;
+       	
+			if (!(file.getName().equalsIgnoreCase(".pdf") || file.getName().equalsIgnoreCase(".jar") || file.getName().equalsIgnoreCase(".iso") || file.getName().equalsIgnoreCase(".img") || file.getName().equalsIgnoreCase(".flp") || file.getName().equalsIgnoreCase(".class") || file.getName().equalsIgnoreCase(".exe") || file.getName().equalsIgnoreCase(".urna") || file.getName().equalsIgnoreCase(".save") || file.getName().equalsIgnoreCase(".docx") || file.getName().equalsIgnoreCase(".pptx") || file.getName().equalsIgnoreCase(".one") || file.getName().equalsIgnoreCase(".psd") || file.getName().equalsIgnoreCase(".aed") || file.getName().equalsIgnoreCase(".ai") || file.getName().equalsIgnoreCase(".indd") || file.getName().equalsIgnoreCase(".ini") || file.getName().equalsIgnoreCase(".dll") || file.getName().equalsIgnoreCase(".png") || file.getName().equalsIgnoreCase(".jpg") || file.getName().equalsIgnoreCase(".jpeg") || file.getName().equalsIgnoreCase(".gif") || file.getName().equalsIgnoreCase(".bmp") || file.getName().equalsIgnoreCase(".ico") || file.getName().equalsIgnoreCase(".webp") || file.getName().equalsIgnoreCase(".mp4") || file.getName().equalsIgnoreCase(".wmv") || file.getName().equalsIgnoreCase(".avi") || file.getName().equalsIgnoreCase(".wav") || file.getName().equalsIgnoreCase(".mp3") || file.getName().equalsIgnoreCase(".ogg") || file.getName().equalsIgnoreCase(".otf") || file.getName().equalsIgnoreCase(".ttf") || file.getName().equalsIgnoreCase(".woff") || file.getName().equalsIgnoreCase(".woff2") || file.getName().equalsIgnoreCase(".zip") || file.getName().equalsIgnoreCase(".rar") || file.getName().equalsIgnoreCase(".7z") || file.getName().equalsIgnoreCase(".bin"))) {
+	        	Tab toAdd = new Tab(CodeEditor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : Tab.MIN_X - Tab.WIDTH, ListableFile.searchListableFiles(file));
+	        	
+ 				CodeEditor.cursorX = 0;
+ 				CodeEditor.cursorY = 1;
+ 				
+ 				CodeEditor.scrX = 0;
+ 				CodeEditor.scrY = 0;
+ 				
+	        	  	CodeEditor.editing = toAdd;
+	        	  	CodeEditor.tabs.add(toAdd);
+					
+	        	  	new Thread() {
+						public void run() {
+							try {
+								CodeEditor.lines = CodeEditor.readFile(file);
+							} catch (IOException e) { // não suportado, se caiu aqui
+								return;
+							}
+						}
+					}.start();
+	        	  	
+					Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
+			}
+			
     	} catch (NullPointerException e) {
     		return;
     	}
-    }*/
+    }
     
     public static void writeFile(File setFile) {
     	BufferedWriter wr = null;
