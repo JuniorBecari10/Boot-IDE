@@ -74,7 +74,7 @@ public class RenameFile extends IDEComponent {
 			added = false;
 		}
 		
-		if (KeyInput.isKeyPressed()) canShow = true;
+		if (KeyInput.isKeyPressed() && Character.isLetter(KeyInput.getCharPressed())) canShow = true;
 		
 		if (KeyInput.isKeyPressed()) {
 			KeyInput.updateKeys();
