@@ -328,7 +328,7 @@ public class CodeEditor extends IDEComponent {
 			"friend", "private", "class", "this", "inline", "public", "throw", "const_cast",
 			"delete", "mutable", "protected", "true", "try", "typeid", "typename", "using", "virtual",
 			"wchar_t", "include", "define", "string", "ifdef", "ifndef", "error", "pragma", "endif",
-			"override" };
+			"override", "std" };
 	
 	private static String[] csKeys = { "abstract", "async", "const", "event", "extern", "new",
 			"override", "partial", "readonly", "sealed", "static", "unsafe", "virtual",
@@ -962,11 +962,23 @@ public class CodeEditor extends IDEComponent {
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
 					
+					indxs = findWord(new String(chars), ":");
+					
+					int len = 0;
+
+					for (Integer i : indxs) {
+						while (i + len < chars.length && chars[i + len] != ' ')
+							len++;
+
+						if (i + len < chars.length)
+							fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+					}
+					
 					indxs = findWord(new String(chars), ".");
 					
 					for (Integer i : indxs) {
 						int c = i;
-						int len = 0;
+						len = 0;
 							
 						while (c < chars.length && 
 								c + len < chars.length &&
@@ -987,7 +999,7 @@ public class CodeEditor extends IDEComponent {
 					
 					for (Integer i : indxs) {
 						int c = i;
-						int len = 0;
+						len = 0;
 							
 						while (c < chars.length && 
 								c + len < chars.length &&
@@ -1007,7 +1019,7 @@ public class CodeEditor extends IDEComponent {
 					
 					for (Integer i : indxs) {
 						int c = i;
-						int len = 0;
+						len = 0;
 							
 						while (c < chars.length && 
 								c + len < chars.length &&
@@ -1029,7 +1041,7 @@ public class CodeEditor extends IDEComponent {
 					
 					for (Integer i : indxs) {
 						int c = i;
-						int len = 0;
+						len = 0;
 							
 						while (c < chars.length && 
 								c + len < chars.length &&
@@ -1050,7 +1062,7 @@ public class CodeEditor extends IDEComponent {
 					
 					for (Integer i : indxs) {
 						int c = i;
-						int len = 0;
+						len = 0;
 							
 						while (c < chars.length && 
 								c + len < chars.length &&
@@ -1702,33 +1714,6 @@ public class CodeEditor extends IDEComponent {
 				
 				for (Integer i : indxs)
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
-			}
-			
-			indxs = findWord(new String(chars), ":");
-			
-			for (Integer i : indxs) {
-				int c = i;
-				len = 0;
-				
-				boolean hasSpace = false;
-					
-				while (c < chars.length && 
-						c + len < chars.length &&
-						c > 0 &&
-						chars[c] != '(') {
-					c--;
-					len++;
-					
-					if (chars[c] == ' ') {
-						if (hasSpace)
-							break;
-						
-						if (!hasSpace)
-							hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
-					}
-				}
-					
-				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
 			for (String s : props) { // colorir tags

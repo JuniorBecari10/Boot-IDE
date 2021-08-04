@@ -362,8 +362,8 @@ public final class Texts {
 			
 			orderTabs = "Order tabs";
 			
-			selectTabOrder = "Select the tab you want to order:";
-			leftClickTab = "[Left Click -> Tab] Order";
+			selectTabOrder = "Select the tab you want to swap:";
+			leftClickTab = "[Left Click -> Tab] Swap";
 			
 			noFolderLoadedLogoText = "There is no folder loaded.";
 			clickOnButton = "Click on button [Select Base Folder]";
