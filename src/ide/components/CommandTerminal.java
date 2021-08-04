@@ -1176,12 +1176,12 @@ public class CommandTerminal extends IDEComponent {
 				
 				if (commandHints.isEmpty()) return;
 				
-				builder = new StringBuilder(commandHints.get(comIndex).split(" ")[0]);
+				builder = new StringBuilder(commandHints.get(comIndex >= commandHints.size() ? commandHints.size() - 1 : comIndex).split(" ")[0]);
 				
 				cursorIndex = builder.length();
 				comIndex++;
 				
-				if (comIndex >= commandHints.size()) comIndex = 0;
+				if (comIndex > commandHints.size()) comIndex = 0;
 				
 				changeHints = false;
 				
@@ -1249,7 +1249,10 @@ public class CommandTerminal extends IDEComponent {
 		for (int i = 0; i < commandHints.size(); i++) {
 			String cmd = commandHints.get(i);
 			
-			IDEFont font = (!changeHints && i == comIndex - 1) ? new IDEFont(Fonts.lightGrayNormal, 20) : new IDEFont(Fonts.otherNormal, 20);
+			System.out.println(comIndex + ", " + commandHints.size());
+			System.out.println(comIndex + 1 == commandHints.size());
+			
+			IDEFont font = (!changeHints && i == comIndex - 1) || (comIndex == commandHints.size() && i == comIndex) ? new IDEFont(Fonts.lightGrayNormal, 20) : new IDEFont(Fonts.otherNormal, 20);
 			
 			Fonts.drawString(cmd, x - 100, y + height + 20 + (22 * i), font, g2);
 		}

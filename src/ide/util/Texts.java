@@ -328,7 +328,7 @@ public final class Texts {
 			
 			readOnly = "Read-Only";
 			
-			readOnlyText1 = "To toggle the Read Only modes, press";
+			readOnlyText1 = "To toggle the Read-Only modes, press";
 			readOnlyText2 = "Ctrl + Shift + H, or type togglereadonly in the Command Terminal.";
 			
 			insertCommand = "Insert command:";
