@@ -1076,6 +1076,16 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			}
 		}
 		
+		/*if (KeyInput.isKeyPressed() && hovered()) {
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_F2) { // F2 - Renomear
+				KeyInput.updateKeys();
+				
+				execute("rename");
+				
+				return;
+			}
+		}*/
+		
 		if (rightClicked()) {
 			MouseInput.updateMouse();
 			

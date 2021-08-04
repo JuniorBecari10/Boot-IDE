@@ -130,20 +130,20 @@ public class Main implements Runnable, Tickable {
         if (settingsFile.exists())
     		readFile(settingsFile);
         
-        try {
+        /*try {
         	String arg = args[0].toLowerCase().contains("boot") || args[0].toLowerCase().contains("ide") ? args[1] : args[0];
         	
         	openWith(arg);
         } catch (NullPointerException | IndexOutOfBoundsException e) {
         	e.printStackTrace();
         	System.err.println("[PORT] Não há argumentos suficientes! \n [ENG] There are no enough arguments!");
-        }
+        }*/
         
         ListableFile.readConfigFile(conffile);
         Texts.setTexts(lang);
     }
     
-   private void openWith(String locale) {
+   /*private void openWith(String locale) {
     	if (locale == null) return;
     	
     	try {
@@ -220,7 +220,7 @@ public class Main implements Runnable, Tickable {
     	} catch (NullPointerException e) {
     		return;
     	}
-    }
+    }*/
     
     public static void writeFile(File setFile) {
     	BufferedWriter wr = null;

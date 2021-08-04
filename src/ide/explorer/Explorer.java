@@ -3,6 +3,7 @@ package ide.explorer;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
@@ -71,6 +73,26 @@ public class Explorer extends IDEComponent {
     	
     	showBaseFolderCard = false;
     	showFolderPathCard = false;
+    	
+    	if (KeyInput.isKeyPressed()) {
+    		// Atalhos
+    		
+    		if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + Shift + N (Criar Nova Pasta)
+    			KeyInput.updateKeys();
+    			
+    			Main.editor.execute("newfolder");
+    			
+    			return;
+    		}
+    		
+    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + N (Criar Novo Arquivo)
+    			KeyInput.updateKeys();
+    			
+    			Main.editor.execute("newfile");
+    			
+    			return;
+    		}
+    	}
     	
     	if (rightClicked() && !hoveringListableFile) {
     		int widthDraw = Main.lang == Language.PORT ? 540 : 520;
