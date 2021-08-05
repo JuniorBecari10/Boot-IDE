@@ -75,6 +75,10 @@ public class CodeEditor extends IDEComponent {
 	public static boolean isJSPart;
 	public static boolean isPhpPart;
 	
+	private static boolean keyTimeout;
+	
+	public static int keyWait = 0, maxKeyWait = 5;
+	
 	public static boolean codeHelpersOn = true;
 	
 	public static String codeType = "";
@@ -4534,7 +4538,20 @@ public class CodeEditor extends IDEComponent {
 			
 			cursorThread.start();
 		}
+		
+		if (KeyInput.isKeyPressed())
+			keyTimeout = true;
+		
+		if (keyTimeout) {
+			keyWait++;
 			
+			if (keyWait >= maxKeyWait) {
+				keyWait = 0;
+				
+				keyTimeout = false;
+			}
+		}
+		
 		if (!selecting) {
 			index1 = cursorX;
 			line1 = cursorY;
@@ -5354,6 +5371,8 @@ public class CodeEditor extends IDEComponent {
 			Fonts.drawString("Coluna: " + (cursorX + 1), MouseInput.getMouseX() + 10, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, 16), g);
 			Fonts.drawString(" Linha: " + cursorY, MouseInput.getMouseX() + 10, MouseInput.getMouseY() + 16 + 3, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 		}
+		
+		if (keyTimeout) showCursor = true;
 		
 		// Desenhar cursor
 		if (!isReadOnly)
