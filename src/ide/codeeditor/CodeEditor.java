@@ -2184,6 +2184,36 @@ public class CodeEditor extends IDEComponent {
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
+			indxs = findWord(new String(chars), "dw");
+			
+			for (Integer i : indxs) {
+				int c = i;
+				len = 0;
+				
+				boolean hasSpace = false;
+				
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0 &&
+						chars[c] != '[' &&
+						chars[c] != ']' &&
+						chars[c] != ';' &&
+						chars[c] != '.' &&
+						chars[c] != ':') {
+					c--;
+					len++;
+					
+					if (chars[c] == ' ') {
+						if (!hasSpace)
+							hasSpace = true;
+						else
+							break;
+					}
+				}
+				
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
 			indxs = findWord(new String(chars), "equ");
 			
 			for (Integer i : indxs) {
