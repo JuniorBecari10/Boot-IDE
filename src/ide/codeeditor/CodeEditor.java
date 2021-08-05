@@ -2063,7 +2063,7 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
-			indxs = findWord(new String(chars), "%");
+			indxs = findWord(new String(chars), "%");		// se quiser fazer entre %% tem que fazer uma variável boolean de controle, como o multilinecommenting.
 			
 			len = 0;
 

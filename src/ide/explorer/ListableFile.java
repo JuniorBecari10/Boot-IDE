@@ -42,7 +42,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	private static final long serialVersionUID = 1L;
 
 	public static transient FileType[] types = {
-			new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16)),
+			new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16)),	// adicionar suporte aos formatos .o e .out
 			new FileType(".class",Main.spritesheet.getSprite(272,32, 16, 16)),
 			new FileType(".c", Main.spritesheet.getSprite   (16, 16, 16, 16)),
 			new FileType(".cpp", Main.spritesheet.getSprite (32, 16, 16, 16)),
@@ -230,7 +230,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			if (l.getRegent().equals(regent))
 				return l;
 		}
-		System.out.println("não achei nada");
+		System.out.println("Não achei nada");
 		return null;
 	}
 	
@@ -239,7 +239,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			if (l.getRegent().equals(regent))
 				return l;
 		}
-		System.out.println("não achei nada");
+		System.out.println("Não achei nada");
 		return null;
 	}
 	
@@ -252,9 +252,17 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	}
 	
 	public static ListableFile search(File regent, File folder) { // deu certo pq ficou pegando o parent sempre da pasta que está o scope, e vai indo até a pasta base
-		ListableFile prdoprdoparent = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile().getParentFile(), null);
-		ListableFile prdoparent = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile(), prdoprdoparent);
-		ListableFile parent = new ListableFile(0, 0, 0, 0, folder, prdoparent); // o parent não precisa ter outro parent, ou precisa?
+		ListableFile parent10 = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile(), null);
+		ListableFile parent9 = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile(), parent10);
+		ListableFile parent8 = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile(), parent9);
+		ListableFile parent7 = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile(), parent8);
+		ListableFile parent6 = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getParentFile(), parent7);
+		ListableFile parent5 = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile(), parent6);
+		ListableFile parent4 = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile().getParentFile().getParentFile().getParentFile(), parent5);
+		ListableFile parent3 = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile().getParentFile().getParentFile(), parent4);
+		ListableFile parent2 = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile().getParentFile(), parent3);
+		ListableFile parent1 = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath()) ? new ListableFile(0, 0, 0, 0, Main.baseFolder, null) : new ListableFile(0, 0, 0, 0, folder.getParentFile(), parent2);
+		ListableFile parent = new ListableFile(0, 0, 0, 0, folder, parent1); // o parent não precisa ter outro parent, ou precisa?
 		
 		if (folder.getAbsolutePath().equals(Main.baseFolder.getAbsolutePath())) // se o parent for a pasta base, defina o
 			parent = null;														// parent como null.
