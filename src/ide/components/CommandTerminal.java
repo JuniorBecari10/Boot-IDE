@@ -80,7 +80,7 @@ public class CommandTerminal extends IDEComponent {
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
 			"gendiv str:class_name", "genbase str:type", //"emmet str:expression",
-			"search str:word", "searchsel str:word", "lorem int:num_words", "ordertab int:tab_from int:tab_to",
+			"lorem int:num_words", "ordertab int:tab_from int:tab_to",
 			"setcursorpos int:x int:y",
 			"gengetter str:lang str:variable_name str:variable_type",
 			"gensetter str:lang str:variable_name str:variable_type" };
@@ -92,7 +92,7 @@ public class CommandTerminal extends IDEComponent {
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab",
 			"gotoline", "setfontsize", "insertchar",
 			"gendiv", "genbase", //"emmet",
-			"search", "searchsel", "lorem", "ordertab",
+			"lorem", "ordertab",
 			"setcursorpos",
 			"gengetter",
 			"gensetter" };
@@ -1229,19 +1229,19 @@ public class CommandTerminal extends IDEComponent {
 		
 		g2.setStroke(new BasicStroke(3f));
 		
-		g.setColor(Colors.explorer);
-		g2.fillRect(x - 110, y + height + 15, width + 320, height * 20);
-		
-		g.setColor(Colors.explorerLight);
-		g2.drawRect(x - 110, y + height + 15, width + 320, height * 20);
-		
 		if (!builder.toString().isEmpty()) {
 			g.setColor(Colors.explorer);
-			g2.fillRect(x - 100, y, width + 200, height);
+			g2.fillRect(x - 155, y + height + 15, width + 320, height * 20); // centralizar essa borda
 			
 			g.setColor(Colors.explorerLight);
-			g2.drawRect(x - 100, y, width + 200, height);
+			g2.drawRect(x - 155, y + height + 15, width + 320, height * 20);
 		}
+		
+		g.setColor(Colors.explorer);
+		g2.fillRect(x - 100, y, width + 200, height);
+			
+		g.setColor(Colors.explorerLight);
+		g2.drawRect(x - 100, y, width + 200, height);
 		
 		Fonts.drawString(Texts.insertCommand, Main.screen.getWidth() / 2 - 100, y - 25, new IDEFont(Fonts.otherNormal, 20), g);
 		
@@ -1259,7 +1259,7 @@ public class CommandTerminal extends IDEComponent {
 			
 			IDEFont font = (!changeHints && i == comIndex - 1) || (comIndex == commandHints.size() && i == comIndex) ? new IDEFont(Fonts.lightGrayNormal, 20) : new IDEFont(Fonts.otherNormal, 20);
 			
-			Fonts.drawString(cmd, x - 100, y + height + 20 + (22 * i), font, g2);
+			Fonts.drawString(cmd, x - 145, y + height + 20 + (22 * i), font, g2);
 		}
 		
 		Fonts.drawString(Texts.esc_Cancel, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);

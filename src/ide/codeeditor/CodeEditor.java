@@ -4692,7 +4692,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (Main.baseFolder != null) {
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, width, Texts.openExplorer, (s) -> execute(s), "sysexp");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (isReadOnly ? 90 : (editing != null ? (selecting ? 330 : 240) : 90)), width, Texts.setBaseFolder, (s) -> execute(s), "setbase");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (isReadOnly ? 90 : (editing != null ? (selecting ? 360 : 240) : 90)), width, Texts.setBaseFolder, (s) -> execute(s), "setbase");
 			}
 			
 			if (!isReadOnly) {
@@ -4706,12 +4706,12 @@ public class CodeEditor extends IDEComponent {
 						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, width, Texts.copy, (s) -> CommandTerminal.runCommand(s), "copy");
 						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 180, width, Texts.cut, (s) -> CommandTerminal.runCommand(s), "cut");
 						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 210, width, Texts.delete, (s) -> CommandTerminal.runCommand(s), "del");
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 300, width, Texts.deselect, (s) -> CommandTerminal.runCommand(s), "deselect");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 330, width, Texts.deselect, (s) -> CommandTerminal.runCommand(s), "deselect");
 					}
 					
 					if (Main.baseFolder != null && editing != null) {
 						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 300 : 210), width, Texts.selectAll, (s) -> CommandTerminal.runCommand(s), "selectall");
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 360 : 270), width, Texts.openDefault, (s) -> execute(s), "opendef");
+						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (selecting ? 390 : 270), width, Texts.openDefault, (s) -> execute(s), "opendef");
 					}
 				}
 			}
