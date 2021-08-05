@@ -364,7 +364,7 @@ public class Main implements Runnable, Tickable {
     public synchronized void start() {
         running = true;
 
-        t = new Thread(this, "Main");
+        t = new Thread(this, "Main-Thread");
         t.start();
     }
 

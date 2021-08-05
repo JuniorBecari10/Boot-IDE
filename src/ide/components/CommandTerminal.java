@@ -125,6 +125,8 @@ public class CommandTerminal extends IDEComponent {
 				cursor.play();
 			}
 		}.start();
+		
+		chooser = new JFileChooser(Texts.save + "/" + Texts.open);
 	}
 	
 	/**
