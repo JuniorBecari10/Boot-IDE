@@ -2039,6 +2039,42 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
+			indxs = findWord(new String(chars), "/");
+			
+			len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length && chars[i + len] != ' ')
+					len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "-");
+			
+			len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length && chars[i + len] != ' ')
+					len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "%");
+			
+			len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length && chars[i + len] != ' ')
+					len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
 			break;
 			
 		case ".jsx":
@@ -2521,6 +2557,30 @@ public class CodeEditor extends IDEComponent {
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 				}
+			}
+			
+			indxs = findWord(new String(chars), "/");
+			
+			len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length && chars[i + len] != ' ')
+					len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "-");
+			
+			len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length && chars[i + len] != ' ')
+					len++;
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
 			break;
