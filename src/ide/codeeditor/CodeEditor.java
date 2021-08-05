@@ -479,11 +479,11 @@ public class CodeEditor extends IDEComponent {
 			"integer", "logical", "miscellaneous", "MXCSRstatemanagement", "packedarithmetic", "shuffle", "unpack",
 			"SSEinstructions", "compare", "conversion", "datamovement", "logical", "miscellaneous", "packedarithmetic",
 			"packedsingle-precisionfloating-point", "shuffle", "SIMDintegerinstructions", "unpack", "statement",
-			"empty", "stc", "std", "sti", "stmxcsr", "stos", "stosb", "stosl", "stosw", "str", "string", "string",
+			"empty", "stc", "std", "sti", "stmxcsr", "stos", "stosb", "stosl", "stosw",
 			"stringinstructions", "sub", "subpd", "subps", "subsd", "subss", "symbolic", "sysenter", "sysexit", "tbss",
 			"tcomm", "tdata", "test", "text", "ucomisd", "ucomiss", "ud", "uleb", "unpckhpd", "unpckhps", "unpcklpd",
 			"unpcklps", "value", "verr", "verw", "wait", "wbinvd", "weak", "whitespace", "wrmsr", "xadd", "xchg",
-			"xchgA", "xlat", "xlatb", "xor", "xorpd", "xorps", "zero" };
+			"xchgA", "xlat", "xlatb", "xor", "xorpd", "xorps", "zero" }; // não vai colorir "str", "string"
 	
 	private static String[] sections = { "data", "text", "bss", "DATA", "TEXT", "BSS" };
 	
@@ -2163,13 +2163,6 @@ public class CodeEditor extends IDEComponent {
 				foundExt = true;
 			}
 			
-			for (String s : asmRegs) {
-				indxs = findWord(new String(chars), s);
-				
-				for (Integer i : indxs)
-					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
-			}
-			
 			for (String s : asmKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2178,6 +2171,13 @@ public class CodeEditor extends IDEComponent {
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
+			}
+			
+			for (String s : asmRegs) {
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
 			for (String s : sections) { // colorir keywordss

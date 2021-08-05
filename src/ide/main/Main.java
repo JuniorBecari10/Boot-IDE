@@ -141,6 +141,12 @@ public class Main implements Runnable, Tickable {
         
         ListableFile.readConfigFile(conffile);
         Texts.setTexts(lang);
+        
+        IDEComponent.toAdd.add(Main.newFile);
+		IDEComponent.toAdd.add(Main.newFolder);
+		IDEComponent.toAdd.add(Main.oneLevel);
+		IDEComponent.toAdd.add(Main.returnBase);
+		IDEComponent.toAdd.add(Main.reload);
     }
     
    /*private void openWith(String locale) {
