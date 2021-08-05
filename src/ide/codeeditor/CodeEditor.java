@@ -364,6 +364,11 @@ public class CodeEditor extends IDEComponent {
 			"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM", "CALL", "EXIST", "END",
 			"JAVA", "JAVAC", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON", "LUA" };
 	
+	private static String[] extensions = { ".java", ".c", ".cpp", ".cs", ".py", ".js", ".bat", ".cmd", ".com", ".ps1", ".h", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
+			".html", ".htm", ".css", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp",
+			".JAVA", ".C", ".CPP", ".CS", ".PY", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".GO", ".R", ".PL", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
+			".HTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP"};
+	
 	private static String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
 			"false", "for", "function", "if", "in", "local", "nil",
 			"not", "or", "repeat", "return", "then", "true", "until", "while",
@@ -2020,6 +2025,17 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
 			}
+			
+			for (String s : extensions) { // colorir keywordss
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+			
 			break;
 			
 		case ".jsx":
@@ -2451,6 +2467,16 @@ public class CodeEditor extends IDEComponent {
 					if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
+			}
+			
+			for (String s : extensions) { // colorir keywordss
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 				}
 			}
 			
@@ -4473,6 +4499,14 @@ public class CodeEditor extends IDEComponent {
 	}*/
 	
 	/**
+	 * <!-- Slk mermão vc pode estilizar com css -->
+	 * <style>
+	 * 	pre {
+	 *  	font-family: "Calibri";
+	 *  	font-size: 15px;
+	 *  }
+	 * </style>
+	 * 
 	 * Gera um Lorem Ipsum aleatório a partir das palavras do array, com pontuação e tudo.
 	 * <pre>Ele suporta somente um parágrafo.</pre>
 	 * 
@@ -4511,7 +4545,7 @@ public class CodeEditor extends IDEComponent {
 		return bl.toString();
 	}
 	
-	public static String mergeStringArrays(String[]... arrays) {
+	/*public static String mergeStringArrays(String[]... arrays) {
 		StringBuilder bl = new StringBuilder();
 		
 		for (int i = 0; i < arrays.length; i++) {
@@ -4521,7 +4555,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		return bl.toString();
-	}
+	}*/
 	
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
