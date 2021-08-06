@@ -41,7 +41,7 @@ public class SearchReplaceWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel contentPane;
-	private JTextField txbSearch;
+	public  JTextField txbSearch;
 	private JTextField txbReplace;
 	
 	private int occurnum = 0;
@@ -301,10 +301,50 @@ public class SearchReplaceWindow extends JFrame {
 					CodeEditor.alreadyAddedFrame = false;
 					active = false;
 				}
+				
+				if (keyCode == KeyEvent.VK_ENTER) {
+					btnSearchNext.doClick();
+				}
+			}
+		});
+		
+		txbSearch.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int keyCode = e.getKeyCode();
+				
+				if (keyCode == KeyEvent.VK_ESCAPE) {
+					CodeEditor.searchWindow.setVisible(false);
+					CodeEditor.alreadyAddedFrame = false;
+					active = false;
+				}
+				
+				if (keyCode == KeyEvent.VK_ENTER) {
+					btnSearchNext.doClick();
+				}
+			}
+		});
+		
+		txbReplace.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int keyCode = e.getKeyCode();
+				
+				if (keyCode == KeyEvent.VK_ESCAPE) {
+					CodeEditor.searchWindow.setVisible(false);
+					CodeEditor.alreadyAddedFrame = false;
+					active = false;
+				}
+				
+				if (keyCode == KeyEvent.VK_ENTER) {
+					btnSearchNext.doClick();
+				}
 			}
 		});
 		
 		setVisible(true);
-		requestFocus();
+		txbSearch.requestFocus();
 	}
 }

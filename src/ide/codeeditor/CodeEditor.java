@@ -4551,6 +4551,8 @@ public class CodeEditor extends IDEComponent {
 			else {
 				searchWindow.setState(Frame.NORMAL);
 				searchWindow.requestFocus();
+				
+				searchWindow.txbSearch.requestFocus();
 			}
 			
 			break;
