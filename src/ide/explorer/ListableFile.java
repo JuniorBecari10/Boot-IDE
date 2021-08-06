@@ -10,9 +10,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -210,19 +208,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	}
 	
 	/**
-	 * Retorna true ou false se o caminho especificado em path é um caminho válido.
+	 * Retorna true ou false se o caminho especificado em path é um caminho válido, ou seja, se o arquivo existe.
 	 * 
 	 * @param path - O caminho
 	 * @return true, se é um caminho válido, false se não.
 	 */
 	public static boolean isPath(String path) {
-		try {
-			Paths.get(path);
-		} catch (InvalidPathException | NullPointerException e) {
-			return false;
-		}
-		
-		return true;
+		return new File(path).exists();
 	}
 	
 	public static ListableFile search(File regent) {
