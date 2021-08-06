@@ -58,12 +58,6 @@ public class Tab extends IDEComponent implements Serializable {
 	private transient BufferedImage closeSpr = Main.spritesheet.getSprite(16, 0, 5, 5);
 	private transient BufferedImage notSavedSpr = Main.spritesheet.getSprite(16, 5, 5, 5);
 	
-	public Tab() {
-		super(MIN_X, Y, WIDTH, HEIGHT, null);
-		
-		regent = null;
-	}
-	
 	public Tab(int x, ListableFile regent) {
 		super(x, Y, WIDTH, HEIGHT, null);
 		

@@ -94,7 +94,7 @@ public class Main implements Runnable, Tickable {
     
     public Main() {
     	if (args == null)
-    		args = new String[10];
+    		args = new String[1];
     	
         toolkit = Toolkit.getDefaultToolkit();
         screen = new Screen("Boot IDE");
@@ -136,7 +136,7 @@ public class Main implements Runnable, Tickable {
         	openWith(arg);
         } catch (NullPointerException | IndexOutOfBoundsException e) {
         	e.printStackTrace();
-        	System.err.println("[PORT] Não há argumentos suficientes! \n [ENG] There are no enough arguments!");
+        	System.err.println("[PORT] Não há argumentos suficientes! \n [ENG] No enough arguments!");
         }*/
         
         ListableFile.readConfigFile(conffile);
@@ -323,14 +323,16 @@ public class Main implements Runnable, Tickable {
 						CodeEditor.tabScr = Integer.parseInt(s);
 					
 					if (i > 5) {
-						if (!ListableFile.isPath(s)) continue;
+						//if (!ListableFile.isPath(s)) continue;
 						
 						File reg = new File(s);
 						File par = reg.getParentFile();
 						
-						if (!reg.exists()) continue;
+						//if (!reg.exists()) continue;
 						
-						CodeEditor.tabs.add(new Tab((i - 4) * Tab.WIDTH, ListableFile.search(reg, par))); // 12/05/2021 - 16:17
+						Tab t = new Tab((i - 4) * Tab.WIDTH, ListableFile.search(reg, par));
+						
+						CodeEditor.tabs.add(t);
 					}
 				}
 			} catch (IOException e) {
@@ -346,12 +348,6 @@ public class Main implements Runnable, Tickable {
 					e.printStackTrace();
 				}
 	    	}
-	    	
-			IDEComponent.toAdd.add(Main.oneLevel);
-			IDEComponent.toAdd.add(Main.returnBase);
-			IDEComponent.toAdd.add(Main.newFile);
-			IDEComponent.toAdd.add(Main.newFolder);
-			IDEComponent.toAdd.add(Main.reload);
     	} catch (Exception e) {}
     }
     

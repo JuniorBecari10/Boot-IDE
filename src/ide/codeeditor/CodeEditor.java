@@ -412,7 +412,7 @@ public class CodeEditor extends IDEComponent {
 	
 	// não vai colorir keys de uma só letra
 	private static String[] asmKeys = { "global", "define", "db", "dw", "equ", "extern", "include", "times", "org", "bits", "syscall", "aaa", "aad", "aam", "aas", "adc",
-			"add", "addpd", "addps", "addressing", "addsd", "addss", "align", "and", "andnpd", "andnps", "andpd",
+			"add", "addpd", "addps", "addressing", "addsd", "addss", "jz", "align", "and", "andnpd", "andnps", "andpd",
 			"andps", "arpl", "as", "commandline", "ELFobjectfile", "macroprocessing", "syntaxUNIXversusIntel", "ascii",
 			"assemblerSeeasB", "bcd", "binaryarithmeticinstructions", "bitinstructions", "bound", "bsf", "bsr",
 			"bss", "bswap", "bt", "btc", "btr", "bts", "byte", "byte", "byte", "byte", "byteinstructionsC", "call",
@@ -2163,6 +2163,13 @@ public class CodeEditor extends IDEComponent {
 				foundExt = true;
 			}
 			
+			for (String s : asmRegs) {
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs)
+					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+			
 			for (String s : asmKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2171,13 +2178,6 @@ public class CodeEditor extends IDEComponent {
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
-			}
-			
-			for (String s : asmRegs) {
-				indxs = findWord(new String(chars), s);
-				
-				for (Integer i : indxs)
-					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
 			for (String s : sections) { // colorir keywordss
@@ -4539,7 +4539,9 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case "searchrep":
-			RightClickOption.removeAllRightClickOptions();
+			if (editing == null) return; // Vai modificar o que não existe?
+			
+			RightClickOption.removeAllRightClickOptions(); // arrumar o negócio
 			
 			if (!alreadyAddedFrame) {
 				searchWindow = new SearchReplaceWindow();

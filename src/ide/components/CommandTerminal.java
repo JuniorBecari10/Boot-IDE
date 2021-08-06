@@ -1087,7 +1087,7 @@ public class CommandTerminal extends IDEComponent {
 			}
 		}.start();
 		
-		Main.writeFile(Main.settingsFile);
+		//Main.writeFile(Main.settingsFile);
 		CodeEditor.setCursorWithinBounds();
 	}
 	
