@@ -1,58 +1,53 @@
-- Colorir métodos ANTES das keywords [ARQUIVADO]
+- Inibir alguns comandos ao não ter arquivos abertos
 
-- Digitar mais rápido [ARQUIVADO]
+- Corrigir bug de às vezes o select seguir o mouse sem tar apertado
 
-- A primeira linha de seleção n vai até o final da janela [ARQUIVADO]
+- Colorir coisas antes de símbolos como variáveis (antes de objetos!)
 
-- Colocar uma linha pra ver onde é o começo da linha [ARQUIVADO]
+- O Search/Replace ficou desalinhado
 
-- Arrumar bug de quando sai da janela e dps volta o cursor n volta [ARQUIVADO]
+- O i, por ser esticado para o lado, parece que ele tá mais à direita do que realmente está
 
-- Quando colorir variáveis/classes guardá-los numa lista e quando aparecer de novo colorir pq está na lista, mesmo se houver bug, vai colorir certo, por causa da lista [ARQUIVADO]
+- Colorir javaw em Batch e Bash
 
-- O closebasefolder deleta o config file (não o arquivo, descarrega ele)
+- Fazer a função abaixo, no ListableFile, que gera os ancestrais, e consertar aquela função search
 
-- Redefinir o cursor ao abrir o setfilename ou o terminal
+public ListableFile getAncestrals(ListableFile l) {
+	return new ListableFile(0, 0, 0, 0, getAncestrals(l.getParent()));
+}
 
-- Arrumar bug de às vezes trocar de Tab quando troca
+- Arrumar a memória heap em execução
 
-- O card somente leitura fica escondido atrás do Explorer com a tela menor [ARQUIVADO]
+- Adicionar um aviso que o RenameFile não pode ser vazio, e no SetFileName tbm
 
-- Executar o comando replace com a barra invertida "\" dá uma Exception
+- A coloração de variáveis em html, antes do = sobrepõe as tags html
 
-- Colorir 'python' em Batch e Bash
+- Colorir "as" e "from" em JavaScript
 
-- Ao detectar uma tecla ao Renomear, não detectar as setas
+- Não verificar o Mouse Hover na janela para dar tick
 
-- Ao escrever "then" ou "do" escrever "end" depois
+- Adicionar suporte ao formato .mjs
 
-- Adicionar comando "print" que escreve "print(|)" | é o cursor
+- Colorir comentários // em Markdown
 
-- Arrumar comentários multilinha em Lua (especialmente o de fechar)
+- Continua colorindo números em HTML sem a minha permissão [ARQUIVADO]
 
-- Não colorir strings ou chars com aspas com \ atrás
+- No começo do automaticcolor resetar todas as variáveis, tipo ismultilinecommenting, isjspart
 
--  Colorir ~ ^ ´ ` como Symbols.
+- Quando renomear um arquivo, automaticamente abrir uma Tab pra ele, pra voltar o que ela fechou
 
-- Nos arquivos sh, não escrever mais Bash, mas Bourne Again Shell - Bash
+- Quando dar um enter numa linha, não descolorir ela
 
-- Fazer uma lista de keywords que devem ser coloridas depois dos métodos
+- No CSS, arrumar problemas em colorir ids e classes como variáveis quando tem um { logo na frente, como na coloração de objetos, adicionar verificação para {.
 
-- Tomar cuidado ao fazer operações aritméticas assim val+(10+2), val vai ser colorido como método
+- Números são coloridos em CSS em seletores, solução: fazer como o multilinecommenting, só que ao invés de comentar, permitir a coloração de números entre { }.
 
-- Adicionar suporte ao formato ipynb (Jupyter Notebook) - Colorir como Python
+- Ao colar (paste) e se tiver algo selecionado, deletar o que tá selecionado com o del, e depois colar.
 
-- Adicionar comando genscript str:type str:script
-[commit, javarun etc.]
+- O ; em CSS sobrepõe a coloração de métodos
 
-- No gendiv não usar aspas simples (talvez com o emmet esse comando derá depreciado)
+- [NÃO CONSIDERADO BUG] Abrir o Prompt de Comando pelo CodeEditor abre pela pasta do Explorer, não pelo arquivo do CodeEditor
 
-- Colorir cssKeys depois de colorir coisas como variáveis
+- Adicionar efeito de Hover na Pasta Base e FolderPath, quando tem as reticências à frente
 
-- colorir símbolos antes das keywords
-
-- Colorir coisas depois de : no css como variável
-
-- Se o Search ou o replace não encontrarem nada, avisar que não encontraram, e se encontrou, avisar quantas ocorrências encontraram.
-
-- O search mudar também o x do cursor
+--- Coisas antigas visualizar no GitHub
