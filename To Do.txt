@@ -50,4 +50,11 @@ public ListableFile getAncestrals(ListableFile l) {
 
 - Adicionar efeito de Hover na Pasta Base e FolderPath, quando tem as reticências à frente
 
+- Não mais colorir classes como variáveis, aliás, não colorir classes em Batch e Bash.
+
+- Colorir moz, webkit e ms no CSS
+- Também user, drag, select.
+
+- Atualizar no CodeEditor instantaneamente quando o arquivo original muda, exceto pela própria Boot IDE.
+
 --- Coisas antigas visualizar no GitHub

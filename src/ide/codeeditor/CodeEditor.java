@@ -573,12 +573,15 @@ public class CodeEditor extends IDEComponent {
 			"CLEAR", "GIT", "NPM", "CALL", "EXIST", "END",
 			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA" };
 	
-	private static String[] tsKeys = { "break", "as", "any", "switch", "case", "if", "throw",
-			"else", "var", "number", "string", "get", "module", "type", "instanceof",
-			"typeof", "public", "private", "enum", "export", "finally", "for", "while",
-			"void", "null", "super", "this", "new", "in", "return", "true", "false",
-			"extends", "static", "let", "package", "implements", "interface", "function",
-			"new", "try", "yield", "const", "continue", "do", "catch" };
+	private static String[] tsKeys = { "type", "number", "protected", "else", "let", "catch", "if",
+			"case", "in", "byte", "double", "var", "module", "enum", "as", "transient", "document",
+			"long", "undefined", "default", "goto", "native", "yield", "get", "typeof", "break",
+			"abstract", "throw", "char", "return", "synchronized", "debugger", "do", "float", "while",
+			"continue", "function", "export", "new", "package", "static", "void", "finally", "this",
+			"throws", "eval", "extends", "null", "final", "true", "try", "implements", "private", "const",
+			"import", "string", "for", "interface", "delete", "switch", "public", "of", "await", "class",
+			"console", "false", "volatile", "any", "int", "instanceof", "super", "with", "async",
+			"boolean", "short", "arguments", "window" };
 	
 	private static String[] ktKeys = { "as", "as?", "break", "class", "continue", "do", "else", "false", "for", "fun",
 			"if", "in", "!in", "interface", "is", "!is", "null", "object", "package", "return", "super",
