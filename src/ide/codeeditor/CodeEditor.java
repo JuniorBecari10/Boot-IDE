@@ -2537,7 +2537,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".sh":
 			if (!foundExt) {
-				extType = "Bash";
+				extType = "Bourne Again Shell - Bash";
 				foundExt = true;
 			}
 			
