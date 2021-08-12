@@ -356,7 +356,7 @@ public class CodeEditor extends IDEComponent {
 			"label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo",
 			"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto",
 			"rmdir", "icacls", "takeown", "if", "for", "else", "git", "npm", "call", "exist", "end",
-			"java", "javac", "nodemon", "csc", "nasm", "qemu", "gcc", "g++", "python", "lua",
+			"java", "javac", "javaw", "nodemon", "csc", "nasm", "qemu", "gcc", "g++", "python", "lua",
 			"VER", "ASSOC", "CD", "CLS",
 			"COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
@@ -364,7 +364,7 @@ public class CodeEditor extends IDEComponent {
 			"LABEL", "MORE", "NET", "PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO",
 			"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH", "NODE", "OFF", "GOTO",
 			"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM", "CALL", "EXIST", "END",
-			"JAVA", "JAVAC", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON", "LUA" };
+			"JAVA", "JAVAC", "JAVAW", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON", "LUA" };
 	
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
 	private static String[] extensions = { ".java", ".c", ".cpp", ".cs", ".py", ".js", ".bat", ".cmd", ".com", ".ps1", ".h", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
@@ -566,13 +566,13 @@ public class CodeEditor extends IDEComponent {
 	private static String[] shKeys = { "pwd", "cd", "ls", "cat", "cp", "mv", "mkdir", "rmdir", "rm", "touch", "locate", "find",
 			"grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs", "kill", "ping",
 			"wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd", "userdel",
-			"clear", "git", "npm", "call", "exist", "end", "java", "javac", "nodemon", "csc", "node", "nasm", "qemu", "gcc", "g++",
+			"clear", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc", "node", "nasm", "qemu", "gcc", "g++",
 			"python", "lua",
 			"PWD", "CD", "LS", "CAT", "CP", "MV", "MKDIR", "RMDIR", "RM", "TOUCH", "LOCATE", "FIND",
 			"GREP", "SUDO", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR", "CHMOD", "CHOWN", "JOBS", "KILL", "PING",
 			"WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP", "HOSTNAME", "USERADD", "USERDEL",
 			"CLEAR", "GIT", "NPM", "CALL", "EXIST", "END",
-			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA" };
+			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA", "JAVAW" };
 	
 	private static String[] tsKeys = { "type", "number", "protected", "else", "let", "catch", "if",
 			"case", "in", "byte", "double", "var", "module", "enum", "as", "transient", "document",
