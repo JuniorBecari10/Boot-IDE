@@ -1711,6 +1711,8 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
+			fs = colorMethods(ext, chars, fs);
+			
 			break;
 			
 		case ".css":
@@ -2957,6 +2959,8 @@ public class CodeEditor extends IDEComponent {
 					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				}
 			}
+			
+			fs = colorMethods(ext, chars, fs);
 			
 			break;
 			
