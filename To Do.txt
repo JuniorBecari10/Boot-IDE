@@ -48,4 +48,6 @@ public ListableFile getAncestrals(ListableFile l) {
 
 - Atualizar no CodeEditor instantaneamente quando o arquivo original muda, exceto pela própria Boot IDE.
 
+- Adicionar comando openconfigfile, que abre o arquivo de configurações carregado numa nova Tab.
+
 --- Coisas antigas visualizar no GitHub

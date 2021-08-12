@@ -1795,8 +1795,6 @@ public class CodeEditor extends IDEComponent {
 						c > 0 &&
 						chars[c] != '[' &&
 						chars[c] != ']' &&
-						chars[c] != '.' &&
-						chars[c] != '#' &&
 						chars[c] != ':' &&
 						chars[c] != '{') {
 					c--;
@@ -1828,7 +1826,7 @@ public class CodeEditor extends IDEComponent {
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
-			// Eu sei que a linha de código abaixo infringe a lei do Boot de Código n° 547, e pode accaretar problemas :/
+			// Eu sei que a linha de código abaixo infringe a lei do Boot de Código-Fonte bem escrito n° 547, e pode accaretar problemas :/
 			
 			fs = colorMethods(ext, chars, fs);
 			
@@ -3419,9 +3417,10 @@ public class CodeEditor extends IDEComponent {
 		if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))) {
 			for (String s : nums) { // colorir números
 				indxs = findWord(new String(chars), s);
-
+				
 				for (Integer i : indxs) {
 					if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
+					//if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 				}
@@ -3452,6 +3451,31 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
+	public static List<IDEFont> colorSymbols(String ext, char[] chars, List<IDEFont> fs) {
+		List<Integer> indxs = new ArrayList<>();
+		
+		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") ||
+				 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") ||
+				 ext.equalsIgnoreCase(".php") || ext.equalsIgnoreCase(".kt") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".rb") || ext.equalsIgnoreCase(".ino") ||
+				 ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".swift") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".r") ||
+				 ext.equalsIgnoreCase(".jl") || ext.equalsIgnoreCase(".pl") || ext.equalsIgnoreCase(".has") || ext.equalsIgnoreCase(".hs") || ext.equalsIgnoreCase(".fs") || ext.equalsIgnoreCase(".coffee") ||
+				 ext.equalsIgnoreCase(".m") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".pas") || ext.equalsIgnoreCase(".pp") || ext.equalsIgnoreCase(".scala") || ext.equalsIgnoreCase(".dart") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") ||
+				 ext.equalsIgnoreCase(".json") || ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xml") ||
+				 ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
+				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
+			
+			String[] syms = { "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`", "´", "^", "~" };
+			
+			for (String s : syms) {
+				indxs = findWord(new String(chars), s);
+		
+				for (Integer i : indxs)
+					fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
+			}
+		}
+		
+		return fs;
+	}
 	public static List<IDEFont> colorExtras(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
@@ -3464,17 +3488,6 @@ public class CodeEditor extends IDEComponent {
 				 ext.equalsIgnoreCase(".json") || ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xml") ||
 				 ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
 				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
-	
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		String[] syms = { "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`", "´", "^", "~" };
-		
-		for (String s : syms) {
-			indxs = findWord(new String(chars), s);
-	
-			for (Integer i : indxs)
-				fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
-		}
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -4046,7 +4059,7 @@ public class CodeEditor extends IDEComponent {
 		isJSPart = false;
 		isPhpPart = false;*/
 		
-		List<IDEFont> fs = new ArrayList<>();
+		List<IDEFont> fs = new ArrayList<>(); // eliminar a necessidade de ter que apertar alguma tecla pra algumas coisas funcionarem
 		
 		for (int i = 0; i < chars.length; i++)
 			fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
@@ -4057,6 +4070,7 @@ public class CodeEditor extends IDEComponent {
 		fs = colorMethods(ext, chars, fs);
 		fs = colorKeywords(ext, chars, fs);
 		fs = colorNumbers(ext, chars, fs);
+		fs = colorSymbols(ext, chars, fs);
 		fs = colorExtras(ext, chars, fs);
 		fs = colorNoExtensions(ext, chars, fs);
 		fs = colorComments(ext, chars, fs);

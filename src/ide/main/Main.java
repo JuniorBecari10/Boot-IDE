@@ -142,6 +142,8 @@ public class Main implements Runnable, Tickable {
         ListableFile.readConfigFile(conffile);
         Texts.setTexts(lang);
         
+        Fonts.initFonts(fntnr, fntbl);
+        
         IDEComponent.toAdd.add(Main.newFile);
 		IDEComponent.toAdd.add(Main.newFolder);
 		IDEComponent.toAdd.add(Main.oneLevel);
