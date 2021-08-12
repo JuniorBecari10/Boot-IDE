@@ -69,7 +69,7 @@ public class RightClickOption extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		Color c = hovered() ? Colors.explorerLight : Color.decode("#29394a");
+		Color c = hovered() ? Colors.explorerLight : Colors.background2;
 		
 		g.setColor(c);
 		g.fillRect(x, y, width, HEIGHT);

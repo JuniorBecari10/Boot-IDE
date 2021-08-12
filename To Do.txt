@@ -50,4 +50,6 @@ public ListableFile getAncestrals(ListableFile l) {
 
 - Adicionar comando openconfigfile, que abre o arquivo de configurações carregado numa nova Tab.
 
+- O comentário multi-linha de fechar não colore
+
 --- Coisas antigas visualizar no GitHub

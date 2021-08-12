@@ -338,6 +338,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			w.write("- Colors\n");
 			w.write("\n");
 			w.write("background: default\n");
+			w.write("background2: default\n");
 			w.write("backgroundLight: default\n");
 			w.write("explorer: default\n");
 			w.write("explorerLight: default\n");
@@ -429,6 +430,20 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				try {
 					Colors.background = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
+				
+				break;
+				
+			case "background2:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
+				
+				try {
+					Colors.background2 = Color.decode(split[1]);
 				} catch (NumberFormatException e) {
 					break;
 				}
