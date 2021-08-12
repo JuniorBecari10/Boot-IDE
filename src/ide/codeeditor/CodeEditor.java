@@ -3849,6 +3849,15 @@ public class CodeEditor extends IDEComponent {
 			
 			//if (indxs.size() == 0  && finals.size() == 0)
 				//isMultilineCommenting = false;
+			
+			indxs = findWord(new String(chars), "*/");
+			
+			for (Integer i : indxs) {
+				if (i + "*/".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "*/".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "*/".length()] == '_'))) continue;
+				
+				fs = color(i, i + "*/".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+			
 			break;
 			
 		case ".lua": // Lua
@@ -3870,6 +3879,14 @@ public class CodeEditor extends IDEComponent {
 			
 			//if (indxs.size() == 0  && finals.size() == 0)
 				//isMultilineCommenting = false;
+			
+			indxs = findWord(new String(chars), "--]]");
+			
+			for (Integer i : indxs) {
+				if (i + "--]]".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "--]]".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "--]]".length()] == '_'))) continue;
+				
+				fs = color(i, i + "--]]".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
 			break;
 			
 		case ".rb": // Ruby
@@ -3891,6 +3908,14 @@ public class CodeEditor extends IDEComponent {
 			
 			//if (indxs.size() == 0  && finals.size() == 0)
 				//isMultilineCommenting = false;
+			
+			indxs = findWord(new String(chars), "=end");
+			
+			for (Integer i : indxs) {
+				if (i + "=end".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "=end".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "=end".length()] == '_'))) continue;
+				
+				fs = color(i, i + "=end".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
 			break;
 			
 		case ".jl": // Julia
@@ -3912,6 +3937,14 @@ public class CodeEditor extends IDEComponent {
 			
 			//if (indxs.size() == 0  && finals.size() == 0)
 				//isMultilineCommenting = false;
+			
+			indxs = findWord(new String(chars), "=#");
+			
+			for (Integer i : indxs) {
+				if (i + "=#".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "=#".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "=#".length()] == '_'))) continue;
+				
+				fs = color(i, i + "=#".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
 			break;
 			
 		case ".has": // Haskell
@@ -3934,29 +3967,17 @@ public class CodeEditor extends IDEComponent {
 			
 			//if (indxs.size() == 0  && finals.size() == 0)
 				//isMultilineCommenting = false;
+			
+			indxs = findWord(new String(chars), "-}");
+			
+			for (Integer i : indxs) {
+				if (i + "-}".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "-}".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "-}".length()] == '_'))) continue;
+				
+				fs = color(i, i + "-}".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
 			break;
 			
 		case ".fs": // F#
-			indxs = findWord(new String(chars), "(*");						// colorir comentários multi-linha - caracteres diferentes
-			finals = findWord(new String(chars), "*)");
-			
-			if (indxs.size() > 0) {
-				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
-				isMultilineCommenting = true;
-			}
-			
-			if (finals.size() > 0) {
-				fs = color(indxs.size() > 0 ? indxs.get(indxs.size() - 1) : 0, finals.get(0), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
-				isMultilineCommenting = false;
-			}
-			
-			if (isMultilineCommenting)
-				fs = color(0, fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
-			
-			//if (indxs.size() == 0  && finals.size() == 0)
-				//isMultilineCommenting = false;
-			break;
-			
 		case ".pas":
 		case ".pp":
 			indxs = findWord(new String(chars), "(*");						// colorir comentários multi-linha - caracteres diferentes
@@ -3977,6 +3998,14 @@ public class CodeEditor extends IDEComponent {
 			
 			//if (indxs.size() == 0  && finals.size() == 0)
 				//isMultilineCommenting = false;
+			
+			indxs = findWord(new String(chars), "*)");
+			
+			for (Integer i : indxs) {
+				if (i + "*)".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "*)".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "*)".length()] == '_'))) continue;
+				
+				fs = color(i, i + "*)".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
 			break;
 			
 		case ".py":
@@ -3999,6 +4028,14 @@ public class CodeEditor extends IDEComponent {
 			
 			if (isMultilineCommenting)
 				fs = color(0, fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			
+			indxs = findWord(new String(chars), "\'\'\'");
+			
+			for (Integer i : indxs) {
+				if (i + "\'\'\'".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "\'\'\'".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "\'\'\'".length()] == '_'))) continue;
+				
+				fs = color(i, i + "\'\'\'".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
 			
 			break;
 			
@@ -4039,10 +4076,50 @@ public class CodeEditor extends IDEComponent {
 				
 				if (isMultilineCommenting)
 					fs = color(0, fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+				
+				indxs = findWord(new String(chars), "*/");
+				
+				for (Integer i : indxs) {
+					if (i + "*/".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "*/".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "*/".length()] == '_'))) continue;
+					
+					fs = color(i, i + "*/".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
-			//if (indxs.size() == 0  && finals.size() == 0)
-				//isMultilineCommenting = false;
+			indxs = findWord(new String(chars), "-->");
+			
+			for (Integer i : indxs) {
+				if (i + "-->".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "-->".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "-->".length()] == '_'))) continue;
+				
+				fs = color(i, i + "-->".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+			break;
+			
+		case ".md":
+		case ".markdown":
+			indxs = findWord(new String(chars), "<!--");						// colorir comentários multi-linha - caracteres diferentes
+			finals = findWord(new String(chars), "-->");
+			
+			if (indxs.size() > 0) {
+				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+				isMultilineCommenting = true;
+			}
+			
+			if (finals.size() > 0) {
+				fs = color(indxs.size() > 0 ? indxs.get(indxs.size() - 1) : 0, finals.get(0), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+				isMultilineCommenting = false;
+			}
+			
+			if (isMultilineCommenting)
+				fs = color(0, fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			
+			indxs = findWord(new String(chars), "-->");
+			
+			for (Integer i : indxs) {
+				if (i + "-->".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "-->".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "-->".length()] == '_'))) continue;
+				
+				fs = color(i, i + "-->".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
 			break;
 		}
 		

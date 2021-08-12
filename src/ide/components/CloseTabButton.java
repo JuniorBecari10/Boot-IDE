@@ -1,11 +1,11 @@
 package ide.components;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 import ide.codeeditor.Tab;
+import ide.util.Colors;
 
 public class CloseTabButton extends IDEComponent implements Serializable {
 	
@@ -26,7 +26,7 @@ public class CloseTabButton extends IDEComponent implements Serializable {
 	
 	public void render(Graphics g) {
 		if (hovered()) {
-			g.setColor(Color.decode("#354d69"));
+			g.setColor(Colors.explorerLighter);
 			g.fillRect(x - 2, y - 2, width + 4, height + 4);
 		}
 		
