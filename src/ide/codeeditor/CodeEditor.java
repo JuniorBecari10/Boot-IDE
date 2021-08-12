@@ -953,152 +953,154 @@ public class CodeEditor extends IDEComponent {
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
 					
-					indxs = findWord(new String(chars), ":");
-					
-					for (Integer i : indxs) {
-						int c = i;
-						int len = 0;
+					if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1"))) {
+						indxs = findWord(new String(chars), ":");
 						
-						boolean hasSpace = false;
+						for (Integer i : indxs) {
+							int c = i;
+							int len = 0;
 							
-						while (c < chars.length && 
-								c + len < chars.length &&
-								c > 0 &&
-								chars[c] != '(') {
-							c--;
-							len++;
-							
-							if (chars[c] == ' ') {
-								if (hasSpace)
-									break;
+							boolean hasSpace = false;
 								
-								if (!hasSpace)
-									hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
+							while (c < chars.length && 
+									c + len < chars.length &&
+									c > 0 &&
+									chars[c] != '(') {
+								c--;
+								len++;
+								
+								if (chars[c] == ' ') {
+									if (hasSpace)
+										break;
+									
+									if (!hasSpace)
+										hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
+								}
 							}
+								
+							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 						}
-							
-						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-					}
-					
-					indxs = findWord(new String(chars), ":");
-					
-					int len = 0;
-
-					for (Integer i : indxs) {
-						while (i + len < chars.length && chars[i + len] != ' ')
-							len++;
-
-						if (i + len < chars.length)
-							fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-					}
-					
-					indxs = findWord(new String(chars), ".");
-					
-					for (Integer i : indxs) {
-						int c = i;
-						len = 0;
-							
-						while (c < chars.length && 
-								c + len < chars.length &&
-								c > 0 &&
-								chars[c] != ' ' &&
-								chars[c] != '[' &&
-								chars[c] != ']' &&
-								chars[c] != ',' &&
-								chars[c] != ':') {
-							c--;
-							len++;
+						
+						indxs = findWord(new String(chars), ":");
+						
+						int len = 0;
+	
+						for (Integer i : indxs) {
+							while (i + len < chars.length && chars[i + len] != ' ')
+								len++;
+	
+							if (i + len < chars.length)
+								fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 						}
-							
-						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // mais tarde arrumar os outros bugs, ou em outra update
-					}
-					
-					indxs = findWord(new String(chars), ",");
-					
-					for (Integer i : indxs) {
-						int c = i;
-						len = 0;
-							
-						while (c < chars.length && 
-								c + len < chars.length &&
-								c > 0 &&
-								chars[c] != ' ' &&
-								chars[c] != '[' &&
-								chars[c] != ']' &&
-								chars[c] != ':') {
-							c--;
-							len++;
+						
+						indxs = findWord(new String(chars), ".");
+						
+						for (Integer i : indxs) {
+							int c = i;
+							len = 0;
+								
+							while (c < chars.length && 
+									c + len < chars.length &&
+									c > 0 &&
+									chars[c] != ' ' &&
+									chars[c] != '[' &&
+									chars[c] != ']' &&
+									chars[c] != ',' &&
+									chars[c] != ':') {
+								c--;
+								len++;
+							}
+								
+							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // mais tarde arrumar os outros bugs, ou em outra update
 						}
-							
-						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // mais tarde arrumar os outros bugs, ou em outra update
-					}
-					
-					indxs = findWord(new String(chars), ";");
-					
-					for (Integer i : indxs) {
-						int c = i;
-						len = 0;
-							
-						while (c < chars.length && 
-								c + len < chars.length &&
-								c > 0 &&
-								chars[c] != ' ' &&
-								chars[c] != '[' &&
-								chars[c] != ']' &&
-								chars[c] != ',' &&
-								chars[c] != '.' &&
-								chars[c] != ':') {
-							c--;
-							len++;
+						
+						indxs = findWord(new String(chars), ",");
+						
+						for (Integer i : indxs) {
+							int c = i;
+							len = 0;
+								
+							while (c < chars.length && 
+									c + len < chars.length &&
+									c > 0 &&
+									chars[c] != ' ' &&
+									chars[c] != '[' &&
+									chars[c] != ']' &&
+									chars[c] != ':') {
+								c--;
+								len++;
+							}
+								
+							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // mais tarde arrumar os outros bugs, ou em outra update
 						}
-							
-						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-					}
-					
-					indxs = findWord(new String(chars), "[");
-					
-					for (Integer i : indxs) {
-						int c = i;
-						len = 0;
-							
-						while (c < chars.length && 
-								c + len < chars.length &&
-								c > 0 &&
-								chars[c] != ' ' &&
-								chars[c] != ']' &&
-								chars[c] != ',' &&
-								chars[c] != '.' &&
-								chars[c] != ':') {
-							c--;
-							len++;
+						
+						indxs = findWord(new String(chars), ";");
+						
+						for (Integer i : indxs) {
+							int c = i;
+							len = 0;
+								
+							while (c < chars.length && 
+									c + len < chars.length &&
+									c > 0 &&
+									chars[c] != ' ' &&
+									chars[c] != '[' &&
+									chars[c] != ']' &&
+									chars[c] != ',' &&
+									chars[c] != '.' &&
+									chars[c] != ':') {
+								c--;
+								len++;
+							}
+								
+							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 						}
-							
-						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-					}
-					
-					indxs = findWord(new String(chars), "->");
-					
-					for (Integer i : indxs) {
-						int c = i;
-						len = 0;
-							
-						while (c < chars.length && 
-								c + len < chars.length &&
-								c > 0 &&
-								chars[c] != ' ' &&
-								chars[c] != ']' &&
-								chars[c] != ',' &&
-								chars[c] != '.' &&
-								chars[c] != ':') {
-							c--;
-							len++;
+						
+						indxs = findWord(new String(chars), "[");
+						
+						for (Integer i : indxs) {
+							int c = i;
+							len = 0;
+								
+							while (c < chars.length && 
+									c + len < chars.length &&
+									c > 0 &&
+									chars[c] != ' ' &&
+									chars[c] != ']' &&
+									chars[c] != ',' &&
+									chars[c] != '.' &&
+									chars[c] != ':') {
+								c--;
+								len++;
+							}
+								
+							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 						}
-							
-						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+						
+						indxs = findWord(new String(chars), "->");
+						
+						for (Integer i : indxs) {
+							int c = i;
+							len = 0;
+								
+							while (c < chars.length && 
+									c + len < chars.length &&
+									c > 0 &&
+									chars[c] != ' ' &&
+									chars[c] != ']' &&
+									chars[c] != ',' &&
+									chars[c] != '.' &&
+									chars[c] != ':') {
+								c--;
+								len++;
+							}
+								
+							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+						}
 					}
 				}
 				
-				if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
+				if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1"))) {
 				
 				String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
 						"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
