@@ -1749,43 +1749,31 @@ public class CodeEditor extends IDEComponent {
 			len = 0;
 
 			for (Integer i : indxs) {
-				while (i + len < chars.length && chars[i + len] != ' ')
+				while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '{') 
 					len++;
 
 				if (i + len < chars.length)
 					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
-			indxs = findWord(new String(chars), "#");
+			indxs = findWord(new String(chars), "#"); // ids
 			
 			len = 0;
 
 			for (Integer i : indxs) {
-				while (i + len < chars.length && chars[i + len] != ' ')
+				while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '{')
 					len++;
 
 				if (i + len < chars.length)
 					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
-			indxs = findWord(new String(chars), ":");
+			indxs = findWord(new String(chars), ":"); // atributos de tags
 			
 			len = 0;
 
 			for (Integer i : indxs) {
-				while (i + len < chars.length && chars[i + len] != ' ')
-					len++;
-
-				if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-			}
-			
-			indxs = findWord(new String(chars), "#");
-			
-			len = 0;
-
-			for (Integer i : indxs) {
-				while (i + len < chars.length && chars[i + len] != ' ')
+				while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '{')
 					len++;
 
 				if (i + len < chars.length)
@@ -1805,7 +1793,8 @@ public class CodeEditor extends IDEComponent {
 						chars[c] != ']' &&
 						chars[c] != '.' &&
 						chars[c] != '#' &&
-						chars[c] != ':') {
+						chars[c] != ':' &&
+						chars[c] != '{') {
 					c--;
 					len++;
 				}

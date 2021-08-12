@@ -8,8 +8,6 @@
 
 - O i, por ser esticado para o lado, parece que ele tá mais à direita do que realmente está
 
-- Colorir javaw em Batch e Bash
-
 - Fazer a função abaixo, no ListableFile, que gera os ancestrais, e consertar aquela função search
 
 public ListableFile getAncestrals(ListableFile l) {
@@ -30,11 +28,11 @@ public ListableFile getAncestrals(ListableFile l) {
 
 - Continua colorindo números em HTML sem a minha permissão [ARQUIVADO]
 
-- No começo do automaticcolor resetar todas as variáveis, tipo ismultilinecommenting, isjspart
+- No começo do automaticcolor resetar todas as variáveis, tipo ismultilinecommenting, isjspart [ARQUIVADO]
 
 - Quando renomear um arquivo, automaticamente abrir uma Tab pra ele, pra voltar o que ela fechou
 
-- Quando dar um enter numa linha, não descolorir ela
+- Quando dar um enter numa linha, não descolorir a de trás
 
 - No CSS, arrumar problemas em colorir ids e classes como variáveis quando tem um { logo na frente, como na coloração de objetos, adicionar verificação para {.
 
