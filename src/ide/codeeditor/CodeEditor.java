@@ -2585,11 +2585,11 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
-			break;
+			break; // Release v3.9.1 - 12/08/2021 - 08:03
 			
 		case ".php":
 			if (!foundExt) {
-				extType = "Hypertext Preprocessor - PHP";
+				extType = "Hypertext Preprocessor - PHP"; // será q esse hypertext tá certo?
 				foundExt = true;
 			}
 			
