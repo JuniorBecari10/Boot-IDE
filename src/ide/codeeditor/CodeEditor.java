@@ -1826,6 +1826,10 @@ public class CodeEditor extends IDEComponent {
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
+			// Eu sei que a linha de código abaixo infringe a lei do Boot de Código n° 547, e pode accaretar problemas :/
+			
+			fs = colorMethods(ext, chars, fs);
+			
 			break;
 			
 		case ".py":
