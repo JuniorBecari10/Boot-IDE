@@ -182,6 +182,7 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "deselect":
 				if (CodeEditor.isReadOnly) break;
+				if (CodeEditor.editing == null) break;
 				
 				CodeEditor.line1 = 0; // 0, não é 1 não?
 				CodeEditor.line2 = 0;
@@ -193,6 +194,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "copy":
+				if (CodeEditor.editing == null) break;
 				if (!CodeEditor.selecting || CodeEditor.isReadOnly) break;
 				
 				List<String> lines = new ArrayList<>();
@@ -239,7 +241,8 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "del":
+			case "del":		// TODO arrumar direito isso aqui
+				if (CodeEditor.editing == null) break;
 				if (!CodeEditor.selecting) break;
 				if (CodeEditor.isReadOnly) break;
 				
@@ -299,6 +302,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "cut":
+				if (CodeEditor.editing == null) break;
 				if (!CodeEditor.selecting) break;
 				if (CodeEditor.isReadOnly) break;
 				
@@ -307,6 +311,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "paste":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				Main.editor.paste();
@@ -314,6 +319,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "selectline":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				int y = CodeEditor.cursorY - 1;
@@ -408,6 +414,7 @@ public class CommandTerminal extends IDEComponent {
 			
 			case "sysout":
 			case "syso":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
@@ -423,6 +430,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "cout":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
@@ -438,6 +446,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "stdcout":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
@@ -453,6 +462,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "writeline":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
@@ -468,6 +478,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "syserr":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
@@ -483,6 +494,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "clog":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
@@ -498,6 +510,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "gendiv":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
@@ -546,10 +559,13 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "togglecodehelpers":
+				if (CodeEditor.editing == null) break;
+				
 				CodeEditor.codeHelpersOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor syntaxerrorson, true (lógico que o nome da variável n seria esse né :/)
 				break;
 				
 			case "gotocursor":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				CodeEditor.scrY = (CodeEditor.cursorY * (CodeEditor.FONT_SIZE)); // TODO arrumar isso aqui
@@ -559,6 +575,8 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "togglereadonly":
+				if (CodeEditor.editing == null) break;
+				
 				runCommand("deselect");
 				
 				CodeEditor.isReadOnly ^= true;
@@ -579,7 +597,7 @@ public class CommandTerminal extends IDEComponent {
 						    args0 > CodeEditor.tabs.size())
 							return;
 						
-					CodeEditor.tabs.remove(args0);
+					CodeEditor.tabs.get(args0).close();
 						
 					break;
 				} catch (NumberFormatException e) {
@@ -587,6 +605,7 @@ public class CommandTerminal extends IDEComponent {
 				}
 				
 			case "gotoline":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				try {
@@ -599,6 +618,8 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "setfontsize":
+				if (CodeEditor.editing == null) break;
+				
 				if (args[0].equals("default"))
 					CodeEditor.FONT_SIZE = 16;
 				
@@ -615,6 +636,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "insertchar":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				int ascii = 0;
@@ -639,6 +661,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "gendiv":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
@@ -665,6 +688,7 @@ public class CommandTerminal extends IDEComponent {
 				break;*/
 				
 			case "genbase":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				String[] strs = { };
@@ -817,6 +841,7 @@ public class CommandTerminal extends IDEComponent {
 				break;*/
 				
 			case "lorem":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				StringBuilder bl = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
@@ -850,6 +875,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "setcursorpos":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				try {
@@ -866,7 +892,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "search":
+			/*case "search":
 				List<Integer> linesfound = new ArrayList<>();
 				
 				for (int i = 0; i < CodeEditor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
@@ -917,7 +943,7 @@ public class CommandTerminal extends IDEComponent {
 				CodeEditor.scrY = (linesfound.get(occurnum - 1) - 1) * (CodeEditor.FONT_SIZE);// + 4);
 				CodeEditor.cursorY = (linesfound.get(occurnum - 1) - 1) + 2;
 				
-				break;
+				break;*/
 				
 			/*case "replace":						// Deprecated. Use Search/Replace.
 				if (CodeEditor.isReadOnly) break;
@@ -988,6 +1014,7 @@ public class CommandTerminal extends IDEComponent {
 		else if (args.length == 3) {
 			switch (com) {
 			case "gengetter":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				String[] strs = { };
@@ -1034,6 +1061,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "gensetter":
+				if (CodeEditor.editing == null) break;
 				if (CodeEditor.isReadOnly) break;
 				
 				String[] strss = { };
