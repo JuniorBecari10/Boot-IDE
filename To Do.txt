@@ -22,8 +22,6 @@ public ListableFile getAncestrals(ListableFile l) {
 
 - A coloração de variáveis em html, antes do = sobrepõe as tags html
 
-- Colorir "as" e "from" em JavaScript
-
 - Não verificar o Mouse Hover na janela para dar tick
 
 - Adicionar suporte ao formato .mjs
