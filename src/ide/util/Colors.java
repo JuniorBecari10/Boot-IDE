@@ -3,11 +3,15 @@ package ide.util;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+import ide.main.Main;
+
 /**
  * Uma classe para organizar as cores. Como se fosse uma paleta. Também tem outras coisas úteis.
  */
 public class Colors {
     
+	public static final Color textLightDefault = Color.decode("#95afc0");
+	
     public static Color background = 	  Color.decode("#353b48");
     public static Color background2 = 	  Color.decode("#29394a");
     public static Color backgroundLight = Color.decode("#28394d");
@@ -40,6 +44,8 @@ public class Colors {
     public static Color selectedLineNumber=Color.decode("#c5d5ea");
     
     public static void revertColors() {
+    	Color textLightOld = textLight;
+    	
     	 background = 		  Color.decode("#353b48");
          backgroundLight = 	  Color.decode("#28394d");
          explorer = 		  Color.decode("#222f3e");
@@ -62,6 +68,24 @@ public class Colors {
          select2 = 		 	  Color.decode("#ff5147");
          selectCursor = 	  			   Color.blue;*/
          other =						  Color.white;
+         
+         ////
+         
+         Main.baseFolderSpr = Colors.swapColor(Main.baseFolderSpr, textLightOld, Colors.textLight);
+         
+         Main.newFileSpr = Colors.swapColor(Main.newFileSpr, textLightOld, Colors.textLight);
+         Main.newFolderSpr = Colors.swapColor(Main.newFolderSpr, textLightOld, Colors.textLight);
+         Main.folderUp = Colors.swapColor(Main.folderUp, textLightOld, Colors.textLight);
+         Main.backBaseFolder = Colors.swapColor(Main.backBaseFolder, textLightOld, Colors.textLight);
+         Main.reloadSpr = Colors.swapColor(Main.reloadSpr, textLightOld, Colors.textLight);
+         
+         Main.star = Colors.swapColor(Main.star, textLightOld, Colors.textLight);
+         Main.folder = Colors.swapColor(Main.folder, textLightOld, Colors.textLight);
+         
+         Main.closeTab = Colors.swapColor(Main.closeTab, textLightOld, Colors.textLight);
+         Main.notSavedTab = Colors.swapColor(Main.notSavedTab, textLightOld, Colors.textLight);
+         
+         Main.lock = Colors.swapColor(Main.lock, textLightOld, Colors.textLight);
     }
     
     /**
