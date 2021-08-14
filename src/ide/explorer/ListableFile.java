@@ -1158,7 +1158,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		if (regent.isDirectory()) {
 			Fonts.drawString(regent.getName(), x + 40, y + 4, new IDEFont(Fonts.lightGrayNormal, 16), width, g);
 			
-			g.drawImage(Main.spritesheet.getSprite(48, 0, 16, 16), x + 6, y, height - 5, height - 5, null);
+			g.drawImage(Main.folder, x + 6, y, height - 5, height - 5, null);
 		}
 		else if (regent.isFile()) {
 			Fonts.drawString(regent.getName(), x + 40, y + 4, new IDEFont(Fonts.lightGrayNormal, 16), width, g);

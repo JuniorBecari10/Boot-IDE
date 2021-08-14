@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -54,9 +53,6 @@ public class Tab extends IDEComponent implements Serializable {
 	private ListableFile regent;
 	
 	public boolean isReadOnly;
-	
-	private transient BufferedImage closeSpr = Main.spritesheet.getSprite(16, 0, 5, 5);
-	private transient BufferedImage notSavedSpr = Main.spritesheet.getSprite(16, 5, 5, 5);
 	
 	public Tab(int x, ListableFile regent) {
 		super(x, Y, WIDTH, HEIGHT, null);
@@ -400,9 +396,9 @@ public class Tab extends IDEComponent implements Serializable {
 		}
 		
 		if (isSaved)
-			button.setSprite(closeSpr);
+			button.setSprite(Main.closeTab);
 		else
-			button.setSprite(notSavedSpr);
+			button.setSprite(Main.notSavedTab);
 		
 		this.x = x;
 	}
@@ -431,7 +427,7 @@ public class Tab extends IDEComponent implements Serializable {
 		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, isReadOnly ? (x + WIDTH) - 35 : (x + WIDTH) - 15, g);
 	
 		if (isReadOnly)
-			g.drawImage(Main.spritesheet.getSprite(27, 0, 5, 5), (x + WIDTH) - 40, y + 7, 15, 15, null);
+			g.drawImage(Main.lock, (x + WIDTH) - 40, y + 7, 15, 15, null);
 		
 		button.render(g);
 		

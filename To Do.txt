@@ -14,6 +14,10 @@ public ListableFile getAncestrals(ListableFile l) {
 	return new ListableFile(0, 0, 0, 0, getAncestrals(l.getParent()));
 }
 
+- Colorir "o" em CSS
+
+- Colocar o mouse na barra inferior voltar pro normal
+
 - Arrumar a memória heap em execução
 
 - Adicionar um aviso que o RenameFile não pode ser vazio, e no SetFileName tbm
@@ -50,6 +54,26 @@ public ListableFile getAncestrals(ListableFile l) {
 
 - Adicionar comando openconfigfile, que abre o arquivo de configurações carregado numa nova Tab.
 
-- O comentário multi-linha de fechar não colore
+- Aumentar pra direita o Search/Replace
+
+- Adicionar comando reloadconfigfile, pra atualizar as mudanças
+
+- Adicionar comando comment, e multilinecomment, que gera os caracteres de comentário pra vc
+
+- Colorir coisas depois de / e - como variáveis em Makefile
+
+- Quando vc toggla o explorer com a tela cheia, ali na frente aparece uma linha medonha
+
+- Quando a cor do textlight ou lighter é alterada, mudar automaticamente a cor dos ícones, ou fazer uma lista de images que é automaticamente alterada e no render somente pega da lista, algo assim
+
+- Tratar formatos gyp e gypi como JSON, mesmo o GitHub tratando-o como Python.
+
+- Exibir um ícone padrão <?> quando tem caracteres desconhecidos
+
+- Fazer o handler de fechamento numa Thread separada
+
+- Quando vai colorir tags em CSS, se colocar três tags em um seletor, a terceira não é colorida
+
+- Fazer a Boot IDE não travar quando tem muito texto renderizando ao mesmo tempo
 
 --- Coisas antigas visualizar no GitHub

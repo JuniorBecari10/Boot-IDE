@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -90,7 +91,27 @@ public class Main implements Runnable, Tickable {
     
     public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings.conf"); // 08/05/2021 - 15:48
     
-    // verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
+    // Sprites
+    
+    public static BufferedImage baseFolderSpr;
+    
+    public static BufferedImage newFileSpr;
+    public static BufferedImage newFolderSpr;
+    public static BufferedImage folderUp;
+    public static BufferedImage backBaseFolder;
+    public static BufferedImage reloadSpr;
+    
+    public static BufferedImage folder;
+    public static BufferedImage star;
+    
+    public static BufferedImage closeTab;
+    public static BufferedImage notSavedTab;
+    
+    public static BufferedImage lock;
+    
+    ///
+    
+    // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
     
     public Main() {
     	if (args == null)
@@ -104,19 +125,39 @@ public class Main implements Runnable, Tickable {
         Fonts.initFonts(fntnr, fntbl);
         spritesheet = new Spritesheet(sprsh);
         
+        ///////
+        
+        baseFolderSpr = spritesheet.getSprite(0, 0, 16, 16);
+        
+        newFileSpr = spritesheet.getSprite(96, 0, 16, 16);
+        newFolderSpr = spritesheet.getSprite(112, 0, 16, 16);
+        folderUp = spritesheet.getSprite(64, 0, 16, 16);
+        backBaseFolder = spritesheet.getSprite(80, 0, 16, 16);
+        reloadSpr = spritesheet.getSprite(128, 0, 16, 16);
+        
+        folder = spritesheet.getSprite(48, 0, 16, 16);
+        star = spritesheet.getSprite(32, 0, 16, 16);
+        
+        closeTab = spritesheet.getSprite(16, 0, 5, 5);
+        notSavedTab = spritesheet.getSprite(16, 5, 5, 5);
+        
+        lock = spritesheet.getSprite(27, 0, 5, 5);
+        
+        ///////
+        
         explorer = new Explorer(0, 0, 280, Screen.HEIGHT);
         editor = new CodeEditor(280, 0, Screen.WIDTH - 280, Screen.HEIGHT); // esses 2 precisa ser inicializados depois das fontes e da spritesheet
         
-        logo = new Logo(Screen.WIDTH / 2 + 80, Screen.HEIGHT / 2 - 120, 160, 160, spritesheet.getSprite(32, 0, 16, 16));
+        logo = new Logo(Screen.WIDTH / 2 + 80, Screen.HEIGHT / 2 - 120, 160, 160, star);
         
         screen.setFrameIcon(spritesheet.getSprite(32, 0, 16, 16));
         
-        openBase = new OpenBaseFolderButton(20, 70, 48, 48, spritesheet.getSprite(0, 0, 16, 16));
-        oneLevel = new OneLevelAboveButton(160, 85, 32, 32, spritesheet.getSprite(64, 0, 16, 16));
-        returnBase = new ReturnToBaseFolderButton(200, 85, 32, 32, spritesheet.getSprite(80, 0, 16, 16));
-        newFile = new NewFileButton(80, 85, 32, 32, spritesheet.getSprite(96, 0, 16, 16));
-        newFolder = new NewFolderButton(120, 85, 32, 32, spritesheet.getSprite(112, 0, 16, 16));
-        reload = new ReloadButton(240, 85, 32, 32, spritesheet.getSprite(128, 0, 16, 16));
+        openBase = new OpenBaseFolderButton(20, 70, 48, 48, baseFolderSpr);
+        oneLevel = new OneLevelAboveButton(160, 85, 32, 32, folderUp);
+        returnBase = new ReturnToBaseFolderButton(200, 85, 32, 32, backBaseFolder);
+        newFile = new NewFileButton(80, 85, 32, 32, newFileSpr);
+        newFolder = new NewFolderButton(120, 85, 32, 32, newFolderSpr);
+        reload = new ReloadButton(240, 85, 32, 32, reloadSpr);
         
         desktop = Desktop.getDesktop();
         
