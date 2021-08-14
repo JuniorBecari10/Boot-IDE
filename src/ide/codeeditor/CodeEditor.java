@@ -186,7 +186,7 @@ public class CodeEditor extends IDEComponent {
 			"<output", "<p", "<param", "<picture", "<pre", "<progress", "<q", "<rp", "<rt", "<ruby", "<s", "<samp", "<script",
 			"<section", "<select", "<small", "<source", "<span", "<strike", "<strong", "<style", "<sup", "<svg", "<table",
 			"<tbody", "<td", "<template", "<textarea", "<tfoot", "<th", "<thead", "<time", "<title", "<tr", "<track", "<tt",
-			"<u", "<ul", "<var", "<video", "<wbr",
+			"<u", "<ul", "<var", "<video", "<wbr", "<applet",
 			"</a", "</abbr", "</acronym", "</address", "</applet", "</area", "</article",
 			"</aside", "</audio", "</b", "</base", "</basefont", "</bdi", "</bdo", "</big", "</blockquote", "</body", "</br", "</button",
 			"</canvas", "</caption", "</center", "</cite", "</code", "</col", "</colgroup", "</data", "</datalist", "</dd", "</del",
@@ -197,7 +197,7 @@ public class CodeEditor extends IDEComponent {
 			"</output", "</p", "</param", "</picture", "</pre", "</progress", "</q", "</rp", "</rt", "</ruby", "</s", "</samp", "</script",
 			"</section", "</select", "</small", "</source", "</span", "</strike", "</strong", "</style", "</sup", "</svg", "</table",
 			"</tbody", "</td", "</template", "</textarea", "</tfoot", "</th", "</thead", "</time", "</title", "</tr", "</track", "</tt",
-			"</u", "</ul", "</var", "</video", "</wbr" };
+			"</u", "</ul", "</var", "</video", "</wbr", "</applet" };
 	
 	private static String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
 			  "1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "0a", // hex
@@ -248,7 +248,7 @@ public class CodeEditor extends IDEComponent {
 			"output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script",
 			"section", "select", "small", "source", "span", "strike", "strong", "style", "sup", "svg", "table",
 			"tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt",
-			"u", "ul", "var", "video", "wbr", "important", "screen", "and", "or", "moz", "webkit", "ms", "user", "select", "drag" // TODO colocar mais desses ultimos
+			"u", "ul", "var", "video", "wbr", "applet", "important", "screen", "and", "or", "moz", "webkit", "ms", "user", "select", "drag" // TODO colocar mais desses ultimos
 	};
 	
 	private static String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
