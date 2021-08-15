@@ -4,7 +4,15 @@
 
 - Colorir coisas antes de símbolos como variáveis (antes de objetos!)
 
-- O Search/Replace ficou desalinhado
+- Colorir if, else e essas coisas em Bash
+
+- Talvez sempre chamar o garbage collector a cada x segundos
+
+- Colorir tudo depois de # como variável no css, mesmo com : na frente
+
+- Alinhar os números de linha à direita, e com isso não precisa colocar linha de início
+
+- Colorir comentários em Python com aspas duplas tbm
 
 - O i, por ser esticado para o lado, parece que ele tá mais à direita do que realmente está
 
