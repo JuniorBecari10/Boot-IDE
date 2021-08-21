@@ -5589,7 +5589,7 @@ public class CodeEditor extends IDEComponent {
 						if (i != line1 - 1) { // do 0 ao index2
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
 								(line2 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 15 ? 5 : 0),
-								(((x + 38) + index2 * (FONT_SIZE - (FONT_SIZE / 4)))) - (29 * (FONT_SIZE - (FONT_SIZE / 4))) + (CommandTerminal.expOff ? (20 * FONT_SIZE) : 0),// + FONT_SIZE == 15 ? FONT_SIZE : 0,
+								(((x + 38) + index2 * (FONT_SIZE - (FONT_SIZE / 4)))) - (29 * (FONT_SIZE - (FONT_SIZE / 4))) + (CommandTerminal.expOff ? (20 * FONT_SIZE) : ((2 * FONT_SIZE) - 3)),// + FONT_SIZE == 15 ? FONT_SIZE : 0,
 								FONT_SIZE + 4);
 						}
 					}
