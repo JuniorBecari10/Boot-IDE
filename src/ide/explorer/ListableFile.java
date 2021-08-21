@@ -236,7 +236,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	}
 	
 	public static boolean hasDuplicateFileNames(String name, File folder) {
-		for (String s : folder.list()) {
+		String[] list = folder.list();
+		
+		if (list == null) list = new String[0];
+		
+		for (String s : list) {
 			if (s.equalsIgnoreCase(name)) return true;
 		}
 		
@@ -802,6 +806,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
     			return f.isFile();
     		}
     	});
+    	
+    	if (dirs == null) dirs = new File[0];
+    	if (fls == null) fls = new File[0];
     	
     	List<File> dirsList = Arrays.asList(dirs);
     	List<File> flsList = Arrays.asList(fls);

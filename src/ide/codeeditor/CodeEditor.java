@@ -3491,14 +3491,14 @@ public class CodeEditor extends IDEComponent {
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		indxs = findWord(new String(chars), new Character((char) 34).toString()); // colorir strings
+		indxs = findWord(new String(chars), Character.toString((char) 34)); // colorir strings
 		
 		for (int i = 0; i < indxs.size() - 1; i += 2)
 			fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		indxs = findWord(new String(chars), new Character((char) 39).toString()); // colorir chars
+		indxs = findWord(new String(chars), Character.toString((char) 39)); // colorir chars
 
 		for (int i = 0; i < indxs.size() - 1; i += 2)
 			fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
@@ -4480,7 +4480,7 @@ public class CodeEditor extends IDEComponent {
 		List<Character> chars = new ArrayList<>();
 		List<IDEFont> fs = new ArrayList<>();
 		
-		chars.add(new Character('\0'));
+		chars.add('\0');
 		fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
 		
 		lines.add(yPos, new IDELine(chars, fs));
