@@ -241,7 +241,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "del":		// TODO arrumar direito isso aqui
+			case "del":
 				if (CodeEditor.editing == null) break;
 				if (!CodeEditor.selecting) break;
 				if (CodeEditor.isReadOnly) break;
@@ -753,16 +753,30 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "cpp":
-					String[] cppstrs = { "#include <iostream>", "", "using namespace std;", "", "int main()", "{", "    return 0;", "}"};
+					String[] cppstrs = { "#include <iostream>", "", "using namespace std;" };
 					
 					strs = cppstrs;
 					
 					break;
 					
+				case "cppmain":
+					String[] cppmstrs = { "#include <iostream>", "", "using namespace std;", "", "int main()", "{", "    return 0;", "}"};
+					
+					strs = cppmstrs;
+					
+					break;
+					
 				case "c":
-					String[] cstrs = { "#include <stdio.h>", "", "int main()", "{", "    return 0;", "}"};
+					String[] cstrs = { "#include <stdio.h>", "#include <stdlib.h>" };
 					
 					strs = cstrs;
+					
+					break;
+					
+				case "cmain":
+					String[] cmstrs = { "#include <stdio.h>", "#include <stdlib.h>", "", "int main()", "{", "    return 0;", "}"};
+					
+					strs = cmstrs;
 					
 					break;
 					

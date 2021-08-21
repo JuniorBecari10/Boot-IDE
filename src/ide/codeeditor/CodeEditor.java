@@ -816,7 +816,7 @@ public class CodeEditor extends IDEComponent {
 			ls.add(gen);
 		}
 		
-		new Thread() {
+		new Thread() {				// quando vc deleta as linhas isso acontece mesmo
 			public void run() {
 				if (editing != null && editing.getRegent() != null && editing.getRegent().getRegent() != null)
 				for (IDELine l : lines) {
