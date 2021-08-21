@@ -108,8 +108,6 @@ public class Tab extends IDEComponent implements Serializable {
 	 * Fecha essa Tab.
 	 */
 	public void close() {
-		save();			// provisório
-		
 		CodeEditor.isMultilineCommenting = false; // TODO closeother reseta o cursor
 		CodeEditor.isAnotherIteration = false;
 		CodeEditor.foundExt = false;

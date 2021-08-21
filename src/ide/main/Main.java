@@ -21,7 +21,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
-import ide.codeeditor.SearchReplaceWindow;
 import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
@@ -694,10 +693,8 @@ public class Main implements Runnable, Tickable {
     		lastTime = now;
     		
     		if (delta >= 1) {
-    			if ((WindowInput.isActivated() || SearchReplaceWindow.active) && ((MouseInput.mouseMoved() || KeyInput.isKeyPressed()) || (ComponentInput.windowMoved() || ComponentInput.windowResized()))) {
-	            	tick();
-	            	render();
-    			}
+	            tick();
+	           	render();
             	
             	closing:
     	        	if (WindowInput.isClosing()) {

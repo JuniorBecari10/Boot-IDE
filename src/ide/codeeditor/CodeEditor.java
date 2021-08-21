@@ -567,12 +567,12 @@ public class CodeEditor extends IDEComponent {
 			"grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs", "kill", "ping",
 			"wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd", "userdel",
 			"clear", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc", "node", "nasm", "qemu", "gcc", "g++",
-			"python", "lua", "bin",
+			"python", "lua", "bin", "if", "then", "else", "fi", "date",
 			"PWD", "CD", "LS", "CAT", "CP", "MV", "MKDIR", "RMDIR", "RM", "TOUCH", "LOCATE", "FIND",
 			"GREP", "SUDO", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR", "CHMOD", "CHOWN", "JOBS", "KILL", "PING",
 			"WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP", "HOSTNAME", "USERADD", "USERDEL",
 			"CLEAR", "GIT", "NPM", "CALL", "EXIST", "END",
-			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA", "JAVAW", "BIN" };
+			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA", "JAVAW", "BIN", "IF", "THEN", "ELSE", "FI", "DATE" };
 	
 	private static String[] tsKeys = { "type", "number", "protected", "else", "let", "catch", "if",
 			"case", "in", "byte", "double", "var", "module", "enum", "as", "transient", "document",
