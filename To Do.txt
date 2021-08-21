@@ -1,8 +1,6 @@
 - Inibir alguns comandos ao não ter arquivos abertos
 
-- Corrigir bug de às vezes o select seguir o mouse sem tar apertado
-
-- Colorir coisas antes de símbolos como variáveis (antes de objetos!)
+- Corrigir bug de às vezes o select seguir o mouse sem estar apertado
 
 - Alinhar os números de linha à direita, e com isso não precisa colocar linha de início
 

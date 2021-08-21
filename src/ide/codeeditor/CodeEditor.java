@@ -5642,7 +5642,16 @@ public class CodeEditor extends IDEComponent {
 				if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 				
 				Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 2), g);
-				Fonts.drawString(String.valueOf(i + 1), x + 1, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, font, g);
+				
+				String nums = String.valueOf(i + 1); // nums = num string
+				int num = i + 1;
+				
+				int nx = x + 1;
+				
+				if (num < 10) nx = x + 1 + (2 * FONT_SIZE);
+				if (num > 10 && num < 100) nx = x + 1 + FONT_SIZE;
+				
+				Fonts.drawString(nums, nx, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, font, g);
 			}
 		} catch (Exception e) { }
 		
