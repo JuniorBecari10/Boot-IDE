@@ -138,6 +138,8 @@ public class CodeEditor extends IDEComponent {
 	
 	///////
 	
+	private static String[] syms = { "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`", "´", "^", "~" };
+	
 	private static String[] loremWords = { "dolor", "sit", "amet", "consectetur",
 			"adipiscing", "elit", "curabitur", "vel", "hendrerit", "libero",
 			"eleifend", "blandit", "nunc", "ornare", "odio", "ut",
@@ -885,6 +887,48 @@ public class CodeEditor extends IDEComponent {
 				 ext.equalsIgnoreCase(".dart") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
 				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) { // não verificaremos mais o html aqui kikikikiki
 				
+			if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
+				for (String s : syms) {
+					indxs = findWord(new String(chars), s); // antes de
+					
+					for (Integer i : indxs) {
+						int c = i;
+						int len = 0;
+						
+						boolean hasSpace = false;
+							
+						while (c < chars.length && 
+								c + len < chars.length &&
+								c > 0) {
+							c--;
+							len++;
+							
+							if (chars[c] == ' ') {
+								if (hasSpace)
+									break;
+								
+								if (!hasSpace)
+									hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
+							}
+						}
+							
+						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+					}
+					
+					indxs = findWord(new String(chars), s);
+					
+					int len = 0;
+
+					for (Integer i : indxs) {
+						while (i + len < chars.length)
+							len++;
+
+						if (i + len < chars.length)
+							fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+					}
+				}
+			}
+			
 			if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
 					indxs = findWord(new String(chars), ")");
 					
@@ -3464,8 +3508,6 @@ public class CodeEditor extends IDEComponent {
 				 ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
 				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
 			
-			String[] syms = { "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`", "´", "^", "~" };
-			
 			for (String s : syms) {
 				indxs = findWord(new String(chars), s);
 		
@@ -5589,7 +5631,7 @@ public class CodeEditor extends IDEComponent {
 						if (i != line1 - 1) { // do 0 ao index2
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
 								(line2 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 15 ? 5 : 0),
-								(((x + 38) + index2 * (FONT_SIZE - (FONT_SIZE / 4)))) - (29 * (FONT_SIZE - (FONT_SIZE / 4))) + (CommandTerminal.expOff ? (20 * FONT_SIZE) : ((2 * FONT_SIZE) - 3)),// + FONT_SIZE == 15 ? FONT_SIZE : 0,
+								(((x + 38) + index2 * (FONT_SIZE - (FONT_SIZE / 4)))) - (29 * (FONT_SIZE - (FONT_SIZE / 4))) + (CommandTerminal.expOff ? (19 * FONT_SIZE) + 5 : ((2 * FONT_SIZE) - 3)),// + FONT_SIZE == 15 ? FONT_SIZE : 0,
 								FONT_SIZE + 4);
 						}
 					}
