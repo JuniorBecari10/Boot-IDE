@@ -1011,6 +1011,43 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		}
 	}
 	
+	public static void addTab(ListableFile file) {
+		if (file.getRegent().isFile() && CodeEditor.tabs != null) {
+			int lastX = CodeEditor.tabs.size() > 0 ? CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() : Tab.MIN_X;
+			
+			new Thread() {
+				public void run() {
+					try {
+						CodeEditor.lines = CodeEditor.readFile(file.getRegent());
+					} catch (IOException e) { // não suportado, se caiu aqui
+						return;
+					}
+				}
+			}.start();
+			
+			Tab toAdd = new Tab((lastX + Tab.WIDTH) + 3, file);
+			
+			CodeEditor.cursorX = 0;
+			CodeEditor.cursorY = 1;
+			
+			CodeEditor.scrX = 0;
+			CodeEditor.scrY = 0;
+			
+			CodeEditor.isMultilineCommenting = false;
+			CodeEditor.isAnotherIteration = false;
+			
+			for (Tab t : CodeEditor.tabs)
+				if (t.getRegent().getRegent().getPath().equals(file.getRegent().getPath())) {
+					CodeEditor.editing = t;
+					
+					return;
+				}
+			
+			CodeEditor.toAdd.add(toAdd);
+			CodeEditor.editing = toAdd;
+		}
+	}
+	
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
 		if (CommandTerminal.expOff) return;

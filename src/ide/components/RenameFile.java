@@ -123,6 +123,8 @@ public class RenameFile extends IDEComponent {
 				
 				Explorer.files = ListableFile.loadFolder(Explorer.scope);
 				
+				ListableFile.addTab(ListableFile.search(newf, newf.getParentFile()));
+				
 				return;
 			}
 			

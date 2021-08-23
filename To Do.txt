@@ -16,23 +16,13 @@ public ListableFile getAncestrals(ListableFile l) {
 
 - Colorir "o" em CSS
 
-- Colocar o mouse na barra inferior voltar pro normal
-
-- A coloração de variáveis em html, antes do = sobrepõe as tags html [Pelo jeito, tentei e não deu certo, então ARQUIVADO]
-
 - Não verificar o Mouse Hover na janela para dar tick
 
 - Colorir comentários // em Markdown
 
-- Continua colorindo números em HTML sem a minha permissão [ARQUIVADO]
-
-- No começo do automaticcolor resetar todas as variáveis, tipo ismultilinecommenting, isjspart [ARQUIVADO]
-
 - Quando renomear um arquivo, automaticamente abrir uma Tab pra ele, pra voltar o que ela fechou
 
 - Quando dar um enter numa linha, não descolorir a de trás
-
-- No CSS, arrumar problemas em colorir ids e classes como variáveis quando tem um { logo na frente, como na coloração de objetos, adicionar verificação para {.
 
 - Números são coloridos em CSS em seletores, solução: fazer como o multilinecommenting, só que ao invés de comentar, permitir a coloração de números entre { }.
 
