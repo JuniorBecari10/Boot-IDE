@@ -250,7 +250,8 @@ public class CodeEditor extends IDEComponent {
 			"output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script",
 			"section", "select", "small", "source", "span", "strike", "strong", "style", "sup", "svg", "table",
 			"tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt",
-			"u", "ul", "var", "video", "wbr", "applet", "important", "screen", "and", "or", "moz", "webkit", "ms", "user", "select", "drag" // TODO colocar mais desses ultimos
+			"u", "ul", "var", "video", "wbr", "applet", "important", "screen", "and", "or", "moz", "webkit", "ms",
+			"user", "select", "drag" /* TODO colocar mais desses ultimos */, "deg", "rad"
 	};
 	
 	private static String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
@@ -300,7 +301,7 @@ public class CodeEditor extends IDEComponent {
 	private static String[] pyKeys = { "and", "as", "assert", "break", "class",
 			"continue", "def", "del", "elif", "else", "except", "False",
 			"finally", "for", "from", "global", "if", "import", "in", "is",
-			"lambda", "None", "nonlocal", "not", "or", "pass", "raise", "return",
+			"lambda", "None", "nonlocal", "not", "or", "pass", "raise", "return", "super",
 			"True", "try", "while", "with", "yield", "self", "async", "await", "of", "str", "int", "float", "complex", "list", "tuple", "dict", "set", "frozenset", "bool", "bytes", "bytearray", "memoryview" };
 	
 	private static String[] dartKeys = { "abstract", "else", "import", "super", "as", "enum", "in",
@@ -345,7 +346,7 @@ public class CodeEditor extends IDEComponent {
 			"return", "yield", "throw", "try", "catch", "finally", "checked", "unchecked", "fixed",
 			"lock", "params", "ref", "out", "using", "alias", "await", "sizeof", "typeof",
 			"stackalloc", "is", "base", "this", "null", "false", "true", "value", "void", "bool", "byte",
-			"char", "class", "decimal", "double", "enum", "float", "int", "long", "sbyte", "short", "string",
+			"char", "class", "decimal", "double", "enum", "float", "int", "long", "sbyte", "short", "string", "super",
 			"struct", "uint", "ulong", "ushort", "add", "var", "dynamic", "global", "set", "namespace", "object", "as", "get" };
 	
 	private static String[] rKeys = { "if", "else", "repeat", "while", "function", "for", "in", "next", "break",
@@ -369,7 +370,7 @@ public class CodeEditor extends IDEComponent {
 			"JAVA", "JAVAC", "JAVAW", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON", "LUA", "BIN" };
 	
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
-	private static String[] extensions = { ".java", ".c", ".cpp", ".cs", ".py", ".js", ".bat", ".cmd", ".com", ".ps1", ".h", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
+	private static String[] extensions = { ".java", ".c", ".cpp", ".cs", ".py", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
 			".html", ".htm", ".css", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp",
 			".JAVA", ".C", ".CPP", ".CS", ".PY", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".GO", ".R", ".PL", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
 			".HTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP"};
@@ -878,7 +879,7 @@ public class CodeEditor extends IDEComponent {
 	public static List<IDEFont> colorVariablesAndObjects(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
-		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") ||
+		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".mjs") ||
 				 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") ||
 				 ext.equalsIgnoreCase(".php") || ext.equalsIgnoreCase(".kt") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".rb") || ext.equalsIgnoreCase(".ino") ||
 				 ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".swift")  || ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".r") ||
@@ -2131,6 +2132,7 @@ public class CodeEditor extends IDEComponent {
 				extType = "Vue.js";
 				foundExt = true;
 			}
+		case ".mjs":
 		case ".js":
 			if (!foundExt) {
 				extType = "JavaScript";	// TODO - tomar cuidado em colorir tags em HTML mesmo dentro da JSPart ou CssPart viu
@@ -3464,7 +3466,9 @@ public class CodeEditor extends IDEComponent {
 				
 				for (Integer i : indxs) {
 					if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
-					//if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) continue;
+					
+					if (s.length() > 1)
+						if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 				}
@@ -3498,7 +3502,7 @@ public class CodeEditor extends IDEComponent {
 	public static List<IDEFont> colorSymbols(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
-		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") ||
+		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".mjs") ||
 				 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") ||
 				 ext.equalsIgnoreCase(".php") || ext.equalsIgnoreCase(".kt") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".rb") || ext.equalsIgnoreCase(".ino") ||
 				 ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".swift") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".r") ||
@@ -3521,7 +3525,7 @@ public class CodeEditor extends IDEComponent {
 	public static List<IDEFont> colorExtras(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
-		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") ||
+		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".mjs") ||
 				 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") ||
 				 ext.equalsIgnoreCase(".php") || ext.equalsIgnoreCase(".kt") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".rb") || ext.equalsIgnoreCase(".ino") ||
 				 ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".swift") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".r") ||
@@ -3720,6 +3724,7 @@ public class CodeEditor extends IDEComponent {
 		case ".cpp":
 		case ".cs":
 		case ".js":
+		case ".mjs":
 		case ".vue":
 		case ".jsx":
 		case ".h":
@@ -3854,6 +3859,7 @@ public class CodeEditor extends IDEComponent {
 		case ".cxx":
 		case ".cs":
 		case ".js":
+		case ".mjs":
 		case ".h":
 		case ".hpp":
 		case ".hxx":

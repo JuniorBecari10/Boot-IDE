@@ -31,6 +31,8 @@ public class SetFileName extends IDEComponent {
 	
 	private boolean showCursor;
 	private Animation cursor;
+	
+	private boolean canShow = false;
 
 	public SetFileName(int x, int y, int width, int height, boolean isFile) {
 		super(x, y, width, height, null);
@@ -69,6 +71,8 @@ public class SetFileName extends IDEComponent {
 		
 		if (KeyInput.isKeyPressed()) {
 			KeyInput.updateKeys();
+			
+			if (KeyInput.isKeyPressed() && Character.isLetter(KeyInput.getCharPressed()) || KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) canShow = true;
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
 				IDEComponent.toRemove.add(this);
@@ -165,5 +169,8 @@ public class SetFileName extends IDEComponent {
 		
 		if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())))
 			Fonts.drawString(Texts.fileExists, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
+		
+		if (text.isEmpty() && canShow)
+			Fonts.drawString(Texts.cannotBeEmpty, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
 	}
 }

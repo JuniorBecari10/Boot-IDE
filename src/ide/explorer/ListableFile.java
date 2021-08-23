@@ -49,6 +49,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType(".py", Main.spritesheet.getSprite  (64, 16, 16, 16)),
 			new FileType(".pyd", Main.spritesheet.getSprite (64, 16, 16, 16)),
 			new FileType(".js", Main.spritesheet.getSprite  (80, 16, 16, 16)),
+			new FileType(".mjs", Main.spritesheet.getSprite (80, 16, 16, 16)),
 			new FileType(".bat", Main.spritesheet.getSprite (96, 16, 16, 16)),
 			new FileType(".com", Main.spritesheet.getSprite(592, 32, 16, 16)),
 			new FileType(".cmd", Main.spritesheet.getSprite(592, 32, 16, 16)),

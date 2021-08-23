@@ -154,6 +154,8 @@ public final class Texts {
 	
 	public static String tab_Cycle;
 	
+	public static String cannotBeEmpty;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -293,6 +295,8 @@ public final class Texts {
 			
 			tab_Cycle = "[Tab] Alternar Entre Opções";
 			
+			cannotBeEmpty = "O nome do arquivo não pode ser vazio!";
+			
 			break;
 		
 		case ENG:
@@ -431,6 +435,8 @@ public final class Texts {
 			dont = "Don't";
 			
 			tab_Cycle = "[Tab] Cycle Through Options";
+			
+			cannotBeEmpty = "The file name cannot be empty!";
 			
 			break;
 		}

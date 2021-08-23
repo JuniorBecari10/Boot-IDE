@@ -74,7 +74,7 @@ public class RenameFile extends IDEComponent {
 			added = false;
 		}
 		
-		if (KeyInput.isKeyPressed() && Character.isLetter(KeyInput.getCharPressed())) canShow = true;
+		if (KeyInput.isKeyPressed() && Character.isLetter(KeyInput.getCharPressed()) || KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) canShow = true;
 		
 		if (KeyInput.isKeyPressed()) {
 			KeyInput.updateKeys();
@@ -164,5 +164,8 @@ public class RenameFile extends IDEComponent {
 		
 		if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())) && canShow)
 			Fonts.drawString(Texts.fileExists, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
+		
+		if (text.isEmpty() && canShow)
+			Fonts.drawString(Texts.cannotBeEmpty, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
 	}
 }
