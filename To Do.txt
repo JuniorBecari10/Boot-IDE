@@ -28,7 +28,6 @@ public ListableFile getAncestrals(ListableFile l) {
 
 - Ao colar (paste) e se tiver algo selecionado, deletar o que tá selecionado com o del, e depois colar.
 
-- O ; em CSS sobrepõe a coloração de métodos
 
 - [NÃO CONSIDERADO BUG] Abrir o Prompt de Comando pelo CodeEditor abre pela pasta do Explorer, não pelo arquivo do CodeEditor
 

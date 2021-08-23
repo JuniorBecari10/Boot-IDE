@@ -4484,6 +4484,8 @@ public class CodeEditor extends IDEComponent {
 	public void paste() {		// terminar o paste com mais de uma linha
 		if (editing == null) return;
 		
+		CommandTerminal.runCommand("del");
+		
 		String[] sp = clipboard.split("\n");
 		
 		int index = 0;
