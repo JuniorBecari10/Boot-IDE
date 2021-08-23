@@ -4881,7 +4881,7 @@ public class CodeEditor extends IDEComponent {
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;
 		
-		if (MouseInput.leftDragged() && !isReadOnly && !alternateTabsMode && hovered()) {
+		if (MouseInput.leftDragged() && !isReadOnly && !alternateTabsMode && hovered() && !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
 			selecting = true;
 			
 			index1 = cursorX;
@@ -4952,9 +4952,13 @@ public class CodeEditor extends IDEComponent {
 		
 		if (hovered() && editing != null) {
 			if (!isReadOnly && !alternateTabsMode && !RightClickOption.isRightClickActive()) {
-				Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));	// se for pra descomentar o de baixo, mover a ultima condição desse if pra dentro do if, assim o else não verifica essa condição
+				Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));	// se for pra descomentar o de baixo, mover a ultima condição (a depois do &&) desse if pra dentro do if, assim o else não verifica essa condição
 			}
 			else {
+				Main.screen.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			
+			if (MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
 				Main.screen.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 			
@@ -4983,7 +4987,7 @@ public class CodeEditor extends IDEComponent {
 				}.start();
 			}
 			
-			if (leftClicked() && !RightClickOption.isRightClickActive() && !isReadOnly && !alternateTabsMode) {
+			if (leftClicked() && !RightClickOption.isRightClickActive() && !isReadOnly && !alternateTabsMode && !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
 				cursorX = mx;
 				cursorY = my;
 				

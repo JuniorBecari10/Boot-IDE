@@ -18,15 +18,9 @@ public ListableFile getAncestrals(ListableFile l) {
 
 - Colocar o mouse na barra inferior voltar pro normal
 
-- Arrumar a memória heap em execução
-
-- Adicionar um aviso que o RenameFile não pode ser vazio, e no SetFileName tbm
-
-- A coloração de variáveis em html, antes do = sobrepõe as tags html
+- A coloração de variáveis em html, antes do = sobrepõe as tags html [Pelo jeito, tentei e não deu certo, então ARQUIVADO]
 
 - Não verificar o Mouse Hover na janela para dar tick
-
-- Adicionar suporte ao formato .mjs
 
 - Colorir comentários // em Markdown
 
