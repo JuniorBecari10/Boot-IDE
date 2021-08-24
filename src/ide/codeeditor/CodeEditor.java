@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -135,6 +136,8 @@ public class CodeEditor extends IDEComponent {
 	public static int my;
 	
 	public static boolean isReadOnly = false;
+	
+	public static Set<String> autocomplete = new LinkedHashSet<>();
 	
 	///////
 	
@@ -1259,6 +1262,8 @@ public class CodeEditor extends IDEComponent {
 				extType = "Java";
 				foundExt = true;
 			}
+			
+			addToAutoComplete(javaKeys);
 			
 			for (String s : javaKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);			// !(lines.get(getLineIndex(chars)).getFonts().get(i + s.length()).getFont().equals(Fonts.methodsNormal))
@@ -4174,6 +4179,10 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
+	public static void addToAutoComplete(String... expressions) {
+		autocomplete.addAll(Arrays.asList(expressions));
+	}
+	
 	public static List<IDEFont> automaticColor(char[] chars, String ext) {
 		extType = "";
 		foundExt = false;
@@ -5653,7 +5662,7 @@ public class CodeEditor extends IDEComponent {
 				
 				if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 				
-				Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 2), g);
+				Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 3), g);
 				
 				String nums = String.valueOf(i + 1); // nums = num string
 				//int num = i + 1;
@@ -5713,7 +5722,7 @@ public class CodeEditor extends IDEComponent {
 			int xdr = MouseInput.getMouseX() + 10;
 			int ydr = MouseInput.getMouseY() - 30; // TODO alterar texto "trocar aba" por algo melhor
 			
-			Fonts.drawString(Texts.selectTabOrder, xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			Fonts.drawString(Texts.selectTabOrder, xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g); // TODO colocar pra 20
 			
 			Fonts.drawString(Texts.esc_Cancel, xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 			Fonts.drawString(Texts.leftClickTab, xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);
