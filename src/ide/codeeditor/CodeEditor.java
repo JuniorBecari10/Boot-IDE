@@ -5628,13 +5628,13 @@ public class CodeEditor extends IDEComponent {
 					if (i == line1 - 1) { // - 1 porque a line1 é base 1
 						if (i == line2 - 1) {
 							g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do index1 até o index2
-								(line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 14 ? 5 : 0),
+								(((line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY) - (FONT_SIZE > 14 ? 5 : 0)),
 								(((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - (((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 								FONT_SIZE + 4);
 						}
 						else {
 							g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o fim da linha
-								(line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 14 ? 5 : 0),
+								((line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY) - (FONT_SIZE > 14 ? 5 : 0),
 								Main.screen.getWidth() + scrX,
 								FONT_SIZE + 4);
 						}
@@ -5642,8 +5642,8 @@ public class CodeEditor extends IDEComponent {
 					if (i == line2 - 1) {
 						if (i != line1 - 1) { // do 0 ao index2
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
-								(line2 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 15 ? 5 : 0),
-								(((x + 38) + index2 * (FONT_SIZE - (FONT_SIZE / 4)))) - (29 * (FONT_SIZE - (FONT_SIZE / 4))) + (CommandTerminal.expOff ? (19 * FONT_SIZE) + 5 : ((2 * FONT_SIZE) - 3)),// + FONT_SIZE == 15 ? FONT_SIZE : 0,
+								((line2 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 15 ? 5 : 0)) - (FONT_SIZE == 15 ? 4 : 0),
+								((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 								FONT_SIZE + 4);
 						}
 					}
@@ -5656,12 +5656,13 @@ public class CodeEditor extends IDEComponent {
 				Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 2), g);
 				
 				String nums = String.valueOf(i + 1); // nums = num string
-				int num = i + 1;
+				//int num = i + 1;
 				
 				int nx = x + 1;
 				
-				if (num < 10) nx = x + 1 + (2 * FONT_SIZE);
-				if (num > 10 && num < 100) nx = x + 1 + FONT_SIZE;
+				/*if (num < 10) nx = x + 1 + (2 * FONT_SIZE) + 3;
+				if (num >= 10 && num < 100) nx = x + 1 + FONT_SIZE + 3 + 3; // não será feito, pelo menos por enquanto
+				if (num >= 100 && num < 1000) nx = x + 1 + 6;*/
 				
 				Fonts.drawString(nums, nx, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, font, g);
 			}
