@@ -25,7 +25,6 @@ import java.util.ConcurrentModificationException;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -137,7 +136,8 @@ public class CodeEditor extends IDEComponent {
 	
 	public static boolean isReadOnly = false;
 	
-	public static Set<String> autocomplete = new LinkedHashSet<>();
+	public static List<String> autocomplete = new ArrayList<>();
+	public static String wordSinceSpace = "";
 	
 	///////
 	
@@ -843,6 +843,10 @@ public class CodeEditor extends IDEComponent {
 		return ls;
 	}
 	
+	public static String[] getKeywords(String ext) {
+		return new String[0];
+	}
+	
 	public static List<Integer> findWord(String textString, String word) { // Fonte: baeldung.com
         List<Integer> indexes = new ArrayList<Integer>();
         
@@ -1262,8 +1266,6 @@ public class CodeEditor extends IDEComponent {
 				extType = "Java";
 				foundExt = true;
 			}
-			
-			addToAutoComplete(javaKeys);
 			
 			for (String s : javaKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);			// !(lines.get(getLineIndex(chars)).getFonts().get(i + s.length()).getFont().equals(Fonts.methodsNormal))
@@ -4736,16 +4738,6 @@ public class CodeEditor extends IDEComponent {
 		} catch (Exception e) {}
 	}
 	
-	public static <T> List<T> removeAllDuplicates(List<T> list) {
-		Set<T> linkedSet = new LinkedHashSet<>();
-		
-		linkedSet.addAll(list);
-		list.clear();
-		list.addAll(linkedSet);
-		
-		return list;
-	}
-	
 	public static int ruleOf3(int a, int b, int c) {
 		return (b * c) / a;
 	}
@@ -4825,6 +4817,41 @@ public class CodeEditor extends IDEComponent {
 		
 		return bl.toString();
 	}*/
+	
+	public static List<Character> toListChar(char[] ch) {
+		List<Character> list = new ArrayList<>();
+		
+		for (char c : ch)
+			list.add(c);
+		
+		return list;
+	}
+	
+	public static void makeChanges(String e) {
+		String s = new String(toCharArray(lines.get(cursorY - 1).getChars()));
+		
+		s = s.substring(0, s.length() - wordSinceSpace.length());
+		s += e;
+		
+		lines.get(cursorY - 1).setChars(toListChar(s.toCharArray()));
+	}
+	
+	/**
+	 * Hardcoded no cursor
+	 */
+	public void addAutoCompleteOptions() {
+		if (autocomplete.isEmpty()) return;
+		
+		RightClickOption.removeAllRightClickOptions();
+		
+		int index = 0;
+		
+		for (String s : autocomplete) {
+			IDEComponent.toAdd.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 31, 128, 32, 16, s, (e) -> makeChanges(e), s));
+			
+			index++;
+		}
+	}
 	
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return; // 06/08/2021 - 11:43
@@ -5395,6 +5422,9 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 				//undo.push(lines);
 				
+				if (wordSinceSpace.length() > 0)
+					wordSinceSpace = wordSinceSpace.substring(0, wordSinceSpace.length() - 1);
+				
 				if (selecting) {
 					CommandTerminal.runCommand("del");
 					
@@ -5454,6 +5484,8 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 				//undo.push(lines);
 				
+				wordSinceSpace = "";
+				
 				cY.insert(cursorX, "    ");
 				
 				cursorX += 4;
@@ -5463,6 +5495,8 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
 				//undo.push(lines);
+				
+				wordSinceSpace = "";
 				
 				StringBuilder spaces = new StringBuilder();
 				String s = cY.substring(cursorX);
@@ -5513,14 +5547,35 @@ public class CodeEditor extends IDEComponent {
 			
 			register(cY, cursorY - 1);
 			
+			if (Character.isLetter(c)) wordSinceSpace += c;
+			if (keyCode == KeyEvent.VK_SPACE) wordSinceSpace = "";
+			
 			cursorX++;
 			
 			setCursorWithinBounds();
+			
+			// Add AutoComplete
+			
+			if (Character.isLetter(c)) {
+				List<String> autoc = autocomplete;
+				autocomplete.clear();
+				
+				for (String s : autoc) {
+					if (s.contains(wordSinceSpace)) {
+						autocomplete.add(s);
+					}
+				}
+				
+				autocomplete = removeDuplicates(autocomplete);
+				
+				addAutoCompleteOptions();
+			}
 			
 			if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
 			//undo.push(lines);
 			editing.setSaved(false);
+			
 		} // <-
 		} // não ligue pra isso :)
 		

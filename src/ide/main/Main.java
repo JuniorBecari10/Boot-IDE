@@ -444,7 +444,7 @@ public class Main implements Runnable, Tickable {
         Explorer.files.removeAll(Explorer.toRemove);
         Explorer.toRemove.clear();
         
-        IDEComponent.components = CodeEditor.removeAllDuplicates(IDEComponent.components);
+        IDEComponent.components = CodeEditor.removeDuplicates(IDEComponent.components);
         
         if (!ListableFile.files.isEmpty())
         	Explorer.files = new ArrayList<>(ListableFile.files);
