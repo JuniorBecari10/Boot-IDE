@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -140,6 +141,8 @@ public class CodeEditor extends IDEComponent {
 	public static String wordSinceSpace = "";
 	
 	public static int autocompleteindex = 0;
+	
+	public static List<String> autocompleteadds;
 	
 	///
 	
@@ -928,6 +931,19 @@ public class CodeEditor extends IDEComponent {
 			
 			default -> null;
 		};
+	}
+	
+	public static BufferedImage getAutoCompleteIcon(AutoCompleteType type) {
+		return switch (type) {
+			case FUNCTION -> functions;
+			case OBJECT -> objects;
+			case KEYWORD -> keywords;
+			case VARIABLE -> variables;
+		};
+	}
+	
+	public static void addAutoCompleteAdds(List<String> list, AutoCompleteType type) {
+		
 	}
 	
 	public static List<Integer> findWord(String textString, String word) { // Fonte: baeldung.com
