@@ -146,6 +146,7 @@ public class RightClickOption extends IDEComponent {
 		
 		Fonts.drawString(text, x + 2, y + 2, new IDEFont(Fonts.lightGrayNormal, textSize), g);
 		
-		g.drawImage(sprite, (x + width) - 18, y + 2, 16, 16, null); // 18 pq se o sprite é 16, fica com 2 de espaço
+		if (isAutoComplete)
+			g.drawImage(sprite, (x + width) - 20, y + 4, 16, 16, null);
 	}
 }

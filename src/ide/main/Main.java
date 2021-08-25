@@ -60,6 +60,8 @@ public class Main implements Runnable, Tickable {
     public static CodeEditor editor;
     
     public static Spritesheet spritesheet;
+    public static Spritesheet icons;
+    
     public static Logo logo;
     
     public static OpenBaseFolderButton openBase;
@@ -77,6 +79,7 @@ public class Main implements Runnable, Tickable {
     public static String fntnr = "/font.png";
     public static String fntbl = "/bold.png";
     public static String conffile = "none";
+    public static String iconsfile = "/autocomplete-icons.png";
     
     private static int tabindex = -1;
     
@@ -122,7 +125,9 @@ public class Main implements Runnable, Tickable {
         lang = Language.ENG; // default
         
         Fonts.initFonts(fntnr, fntbl);
+        
         spritesheet = new Spritesheet(sprsh);
+        icons = new Spritesheet(iconsfile);
         
         ///////
         

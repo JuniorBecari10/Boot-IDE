@@ -13,6 +13,7 @@ import java.awt.Robot;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.lang.Thread.State;
@@ -20,7 +21,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -140,6 +140,15 @@ public class CodeEditor extends IDEComponent {
 	public static String wordSinceSpace = "";
 	
 	public static int autocompleteindex = 0;
+	
+	///
+	
+	public static BufferedImage functions = Main.icons.getSprite(0, 0, 8, 8);
+	public static BufferedImage objects = Main.icons.getSprite(8, 0, 8, 8);
+	public static BufferedImage keywords = Main.icons.getSprite(16, 0, 8, 8);
+	public static BufferedImage variables = Main.icons.getSprite(24, 0, 8, 8);
+	
+	///
 	
 	///////
 	
@@ -4939,7 +4948,7 @@ public class CodeEditor extends IDEComponent {
 		int index = 0;
 		
 		for (String s : autocomplete) {
-			IDEComponent.toAdd.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 31, 128, 32, 16, s, (e) -> makeChanges(e), s));
+			IDEComponent.toAdd.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 31, 192, 32, 16, s, keywords, (e) -> makeChanges(e), s));
 			
 			index++;
 		}
