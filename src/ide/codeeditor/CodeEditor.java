@@ -139,6 +139,8 @@ public class CodeEditor extends IDEComponent {
 	public static List<String> autocomplete = new ArrayList<>();
 	public static String wordSinceSpace = "";
 	
+	public static int autocompleteindex = 0;
+	
 	///////
 	
 	private static String[] syms = { "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`", "´", "^", "~" };
@@ -4895,15 +4897,17 @@ public class CodeEditor extends IDEComponent {
 	
 	public void makeChanges(String e) {
 		String s = new String(toCharArray(lines.get(cursorY - 1).getChars()));
-		
 		s = s.substring(0, s.length() - wordSinceSpace.length());
+		
+		StringBuilder sb = new StringBuilder(s);
+		
+		if (cursorX >= s.length() - 1) sb.append(e);
+		else sb.insert(cursorX, e);
+		
 		cursorX -= s.length() - wordSinceSpace.length();
-		
-		s += e;
-		
 		cursorX += e.length();
 		
-		register(new StringBuilder(s), cursorY - 1);
+		register(sb, cursorY - 1);
 		
 		new Thread() {
 			public void run() {
@@ -5572,7 +5576,10 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 				//undo.push(lines);
 				
-				//wordSinceSpace = ""; // somente verificar se não apertar tab pra scrollar
+				if (!RightClickOption.isAutoCompleteActive()) {
+					wordSinceSpace = ""; // somente verificar se não apertar tab pra scrollar
+					RightClickOption.removeAllRightClickOptions();
+				}
 				
 				cY.insert(cursorX, "    ");
 				

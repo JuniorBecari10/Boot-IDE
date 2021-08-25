@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
+import ide.codeeditor.CodeEditor;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
@@ -72,6 +75,14 @@ public class RightClickOption extends IDEComponent {
 		return false;
 	}
 	
+	public static boolean isAutoCompleteActive() {
+		for (IDEComponent i : IDEComponent.components)
+			if (i instanceof RightClickOption && ((RightClickOption) i).isAutoComplete)
+				return true;
+		
+		return false;
+	}
+	
 	public static boolean anyRightClickOptionHovered() {
 		for (IDEComponent i : IDEComponent.components)
 			if (i instanceof RightClickOption)
@@ -84,6 +95,28 @@ public class RightClickOption extends IDEComponent {
 		for (IDEComponent i : IDEComponent.components)
 			if (i instanceof RightClickOption)
 				IDEComponent.toRemove.add(i);
+	}
+	
+	public static List<RightClickOption> listRightClicks(boolean autoComplete) {
+		List<RightClickOption> rc = new ArrayList<>();
+		
+		try {
+			for (IDEComponent i : IDEComponent.components) {
+				RightClickOption e = (RightClickOption) i;
+				
+				if (i instanceof RightClickOption) {
+					if (autoComplete) {
+						if (e.isAutoComplete)
+							rc.add((RightClickOption) i);
+					}
+					else rc.add((RightClickOption) i);
+				}
+			}
+		} catch (Exception e) {
+			return rc;
+		}
+		
+		return rc;
 	}
 	
 	public void tick() {		
@@ -103,6 +136,10 @@ public class RightClickOption extends IDEComponent {
 	
 	public void render(Graphics g) {
 		Color c = hovered() ? Colors.explorerLight : Colors.background2;
+		Color d = c;
+		
+		if (isAutoComplete)
+			c = listRightClicks(true).indexOf(this) == CodeEditor.autocompleteindex ? Colors.explorerLight : d;
 		
 		g.setColor(c);
 		g.fillRect(x, y, width, HEIGHT);
