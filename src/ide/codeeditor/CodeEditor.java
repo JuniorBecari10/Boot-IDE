@@ -631,6 +631,8 @@ public class CodeEditor extends IDEComponent {
 
 	private static String[] specialHtmlVariables = { "html" };
 	
+	private static String[] jsonKeys = { "true", "false" };
+	
 	///////
 	
 	private static boolean hasPressed = false;
@@ -843,8 +845,78 @@ public class CodeEditor extends IDEComponent {
 		return ls;
 	}
 	
+	// Se for usar em arquivos que não têm extensão, use o método debaixo desse
 	public static String[] getKeywords(String ext) {
-		return new String[0];
+		return switch (ext.toLowerCase()) {
+			case ".java" -> javaKeys;
+			case ".c" -> cKeys;
+			case ".cpp" -> cppKeys;
+			case ".hpp" -> cppKeys;
+			case ".cxx" -> cppKeys;
+			case ".hxx" -> cppKeys;
+			case ".h" -> cppKeys;
+			case ".cs" -> csKeys;
+			case ".py" -> pyKeys;
+			case ".pyd" -> pyKeys;
+			case ".js" -> jsKeys;
+			case ".mjs" -> jsKeys;
+			case ".bat" -> batCom;
+			case ".cmd" -> batCom;
+			case ".com" -> batCom;
+			case ".asm" -> asmKeys;
+			case ".s" -> asmKeys;
+			case ".lua" -> luaKeys;
+			case ".sql" -> sqlKeys;
+			case ".swift" -> swKeys;
+			case ".rs" -> rsKeys;
+			case ".php" -> phpKeys;
+			case ".kt" -> ktKeys;
+			case ".vue" -> jsKeys;
+			case ".rb" -> rbKeys;
+			case ".ino" -> cppKeys;
+			case ".ts" -> tsKeys;
+			case ".go" -> goKeys;
+			case ".r" -> rKeys;
+			case ".jl" -> jlKeys;
+			case ".pl" -> plKeys;
+			case ".has" -> hasKeys;
+			case ".hs" -> hasKeys;
+			case ".fs" -> fsKeys;
+			case ".coffee" -> cfKeys;
+			case ".m" -> objKeys;
+			case ".pas" -> pasKeys;
+			case ".pp" -> pasKeys;
+			case ".scala" -> scaKeys;
+			case ".dart" -> dartKeys;
+			case ".zig" -> zigKeys;
+			
+			case ".html" -> tags;
+			case ".htm" -> tags;
+			case ".css" -> cssTags;
+			case ".json" -> jsonKeys;
+			case ".jsonc" -> jsonKeys;
+			case ".conf" -> ideConfKeys;
+			case ".mk" -> makeKeys;
+			case ".make" -> makeKeys;
+			case ".makefile" -> makeKeys;
+			case ".dockerfile" -> dkKeys;
+			case ".jsx" -> jsKeys;
+			case ".ps1" -> batCom;
+			case ".sh" -> shKeys;
+			case ".ejs" -> tags;
+			case ".ld" -> ldKeys;
+			
+			default -> null;
+		};
+	}
+	
+	public static String[] getKeywordsSpecial(String filename) {
+		return switch (filename.toLowerCase()) {
+			case "makefile" -> makeKeys;
+			case "dockerfile" -> dkKeys;
+			
+			default -> null;
+		};
 	}
 	
 	public static List<Integer> findWord(String textString, String word) { // Fonte: baeldung.com
@@ -3043,8 +3115,6 @@ public class CodeEditor extends IDEComponent {
 				foundExt = true;
 			}
 			
-			String[] jsonKeys = { "true", "false" };
-			
 			for (String s : jsonKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
@@ -4181,10 +4251,6 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
-	public static void addToAutoComplete(String... expressions) {
-		autocomplete.addAll(Arrays.asList(expressions));
-	}
-	
 	public static List<IDEFont> automaticColor(char[] chars, String ext) {
 		extType = "";
 		foundExt = false;
@@ -4827,13 +4893,35 @@ public class CodeEditor extends IDEComponent {
 		return list;
 	}
 	
-	public static void makeChanges(String e) {
+	public void makeChanges(String e) {
 		String s = new String(toCharArray(lines.get(cursorY - 1).getChars()));
 		
 		s = s.substring(0, s.length() - wordSinceSpace.length());
+		cursorX -= s.length() - wordSinceSpace.length();
+		
 		s += e;
 		
-		lines.get(cursorY - 1).setChars(toListChar(s.toCharArray()));
+		cursorX += e.length();
+		
+		register(new StringBuilder(s), cursorY - 1);
+		
+		new Thread() {
+			public void run() {
+				try {
+					if (editing == null) return;
+					
+					for (IDELine l : lines) {
+						l.setFonts(
+								automaticColor(
+										toCharArray(
+												l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
+					
+					}
+				} catch (ConcurrentModificationException e) {}
+			}
+		}.start();
+		
+		setCursorWithinBounds();
 	}
 	
 	/**
@@ -5484,7 +5572,7 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 				//undo.push(lines);
 				
-				wordSinceSpace = "";
+				//wordSinceSpace = ""; // somente verificar se não apertar tab pra scrollar
 				
 				cY.insert(cursorX, "    ");
 				
@@ -5497,6 +5585,7 @@ public class CodeEditor extends IDEComponent {
 				//undo.push(lines);
 				
 				wordSinceSpace = "";
+				RightClickOption.removeAllRightClickOptions();
 				
 				StringBuilder spaces = new StringBuilder();
 				String s = cY.substring(cursorX);
@@ -5548,7 +5637,10 @@ public class CodeEditor extends IDEComponent {
 			register(cY, cursorY - 1);
 			
 			if (Character.isLetter(c)) wordSinceSpace += c;
-			if (keyCode == KeyEvent.VK_SPACE) wordSinceSpace = "";
+			if (keyCode == KeyEvent.VK_SPACE) {
+				wordSinceSpace = "";
+				RightClickOption.removeAllRightClickOptions();
+			}
 			
 			cursorX++;
 			
@@ -5556,15 +5648,14 @@ public class CodeEditor extends IDEComponent {
 			
 			// Add AutoComplete
 			
-			if (Character.isLetter(c)) {
-				List<String> autoc = autocomplete;
+			if (Character.isLetter(c)) { // adicionar esse código no backspace, e se tiver espaços na frente, a keyword vai no lugar errado
+				String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent()) ? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent())) : getKeywordsSpecial(editing.getRegent().getRegent().getName());
+				
 				autocomplete.clear();
 				
-				for (String s : autoc) {
-					if (s.contains(wordSinceSpace)) {
+				for (String s : autoc)
+					if (s.contains(wordSinceSpace))
 						autocomplete.add(s);
-					}
-				}
 				
 				autocomplete = removeDuplicates(autocomplete);
 				

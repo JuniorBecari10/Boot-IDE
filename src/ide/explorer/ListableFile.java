@@ -208,6 +208,10 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	    return name.substring(lastIndexOf);
 	}
 	
+	public static boolean fileHasExtension(File file) {
+		return file.getName().contains(".");
+	}
+	
 	/**
 	 * Retorna true ou false se o caminho especificado em path é um caminho válido, ou seja, se o arquivo existe.
 	 * 

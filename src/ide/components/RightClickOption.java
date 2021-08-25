@@ -19,6 +19,8 @@ public class RightClickOption extends IDEComponent {
 	
 	private int textSize;
 	
+	public boolean isAutoComplete;
+	
 	private static final int HEIGHT = 30;
 
 	public RightClickOption(int x, int y, int width, String text, ExecuteCommand command, String clickArg) {
@@ -29,6 +31,8 @@ public class RightClickOption extends IDEComponent {
 		this.clickArg = clickArg;
 		
 		this.textSize = 20;
+		
+		isAutoComplete = false;
 	}
 	
 	public RightClickOption(int x, int y, int width, int height, int textSize, String text, ExecuteCommand command, String clickArg) {
@@ -39,6 +43,8 @@ public class RightClickOption extends IDEComponent {
 		this.clickArg = clickArg;
 		
 		this.textSize = textSize;
+		
+		isAutoComplete = true;
 	}
 	
 	public RightClickOption(int x, int y, int width, int height, int textSize, String text, BufferedImage icon, ExecuteCommand command, String clickArg) {
@@ -49,6 +55,8 @@ public class RightClickOption extends IDEComponent {
 		this.clickArg = clickArg;
 		
 		this.textSize = textSize;
+		
+		isAutoComplete = true;
 	}
 	
 	/**
