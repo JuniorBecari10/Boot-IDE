@@ -255,7 +255,7 @@ public final class Texts {
 			cancel = "Cancelar";
 			
 			theFile = "O arquivo";
-			isNotSaved = "não está salvo. Deseja salvá-lo antes de sair?";
+			isNotSaved = "não está salvo. Deseja salvá-lo antes de fechar?";
 			
 			confirmSave = "Confirmar Salvamento do Arquivo";
 			
@@ -396,7 +396,7 @@ public final class Texts {
 			cancel = "Cancel";
 			
 			theFile = "The file";
-			isNotSaved = "is not saved. Do you want to save it before you leave?";
+			isNotSaved = "is not saved. Do you want to save it before you close?";
 			
 			confirmSave = "Confirm File Save";
 			

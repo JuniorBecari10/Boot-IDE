@@ -17,12 +17,14 @@ import javax.swing.JOptionPane;
 import ide.components.CloseTabButton;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.RightClickOption;
 import ide.explorer.Explorer;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.MouseInput;
+import ide.input.WindowInput;
 import ide.main.Main;
 import ide.util.Colors;
 import ide.util.Language;
@@ -108,6 +110,24 @@ public class Tab extends IDEComponent implements Serializable {
 	 * Fecha essa Tab.
 	 */
 	public void close() {
+        		if (CodeEditor.editing != null) { // não for nulo
+	    			if (!CodeEditor.editing.isSaved()) { // não estiver salvo
+	    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
+	    				
+	    				CodeEditor.setSystemLook();
+	    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + CodeEditor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+	    				
+	    				if (selectedOption == 0) save();
+	    				else if (selectedOption == 2) {
+	    					WindowInput.update();
+	    					
+	    					return;
+	    				}
+	    			}
+	    		}
+        
+        RightClickOption.removeAllRightClickOptions();
+		
 		CodeEditor.isMultilineCommenting = false; // TODO closeother reseta o cursor
 		CodeEditor.isAnotherIteration = false;
 		CodeEditor.foundExt = false;
