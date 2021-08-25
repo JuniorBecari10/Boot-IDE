@@ -21,7 +21,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -142,7 +141,8 @@ public class CodeEditor extends IDEComponent {
 	
 	public static int autocompleteindex = 0;
 	
-	public static List<String> autocompleteadds;
+	public static List<AutoComplete> autocompleteadds = new ArrayList<>();
+	public static List<AutoComplete> addautocompleteadds = new ArrayList<>();
 	
 	///
 	
@@ -943,7 +943,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public static void addAutoCompleteAdds(List<String> list, AutoCompleteType type) {
-		
+		for (String s : list)
+			addautocompleteadds.add(new AutoComplete(s, type));
 	}
 	
 	public static List<Integer> findWord(String textString, String word) { // Fonte: baeldung.com
@@ -1018,7 +1019,8 @@ public class CodeEditor extends IDEComponent {
 									hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
 							}
 						}
-							
+						
+						addautocompleteadds.add(new AutoComplete(wordSinceSpace, AutoCompleteType.VARIABLE));
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
 					
@@ -4968,6 +4970,17 @@ public class CodeEditor extends IDEComponent {
 			
 			index++;
 		}
+		
+		for (AutoComplete a : autocompleteadds) {
+			if (a == null) continue;
+			
+			IDEComponent.toAdd.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 31, 192, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
+			
+			index++;
+		}
+		
+		autocomplete.clear();
+		autocompleteadds.clear();
 	}
 	
 	public void tick() {
@@ -5690,6 +5703,7 @@ public class CodeEditor extends IDEComponent {
 						autocomplete.add(s);
 				
 				autocomplete = removeDuplicates(autocomplete);
+				autocompleteadds = removeDuplicates(autocompleteadds);
 				
 				addAutoCompleteOptions();
 			}
@@ -5725,6 +5739,9 @@ public class CodeEditor extends IDEComponent {
 			
 			lines.removeAll(linesToRemove);
 			linesToRemove.clear();
+			
+			autocompleteadds.addAll(addautocompleteadds);
+			addautocompleteadds.clear();
 		}
 		
 		if (index1 < 0) index1 = 0;
