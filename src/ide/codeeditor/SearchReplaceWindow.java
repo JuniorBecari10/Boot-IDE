@@ -71,7 +71,7 @@ public class SearchReplaceWindow extends JFrame {
 		active = true;
 		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 364, 351); // deixa assim mesmo
+		setBounds(100, 100, 364, 361); // deixa assim mesmo
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("InternalFrame.borderColor"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
