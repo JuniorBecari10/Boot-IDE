@@ -4192,6 +4192,33 @@ public class CodeEditor extends IDEComponent {
 				fs = color(i, i + "\'\'\'".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
+			indxs = findWord(new String(chars), "\"\"\"");						// colorir comentários multi-linha - caracteres iguais
+			
+			if (indxs.size() > 0 && !isMultilineCommenting) { // provavelmente esse é o abrimento
+				fs = color(indxs.get(0), indxs.size() > 1 ? indxs.get(1) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+				isMultilineCommenting = true;
+				
+				isAnotherIteration = false;
+			}
+			
+			if (indxs.size() > 0 && isMultilineCommenting && isAnotherIteration) { // provavelmente esse é o fechamento
+				fs = color(0, indxs.get(0) + 2, new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+				isMultilineCommenting = false;
+			}
+			
+			isAnotherIteration = true;
+			
+			if (isMultilineCommenting)
+				fs = color(0, fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			
+			indxs = findWord(new String(chars), "\"\"\"");
+			
+			for (Integer i : indxs) {
+				if (i + "\"\"\"".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "\"\"\"".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "\"\"\"".length()] == '_'))) continue;
+				
+				fs = color(i, i + "\"\"\"".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+			
 			break;
 			
 		case ".ejs":

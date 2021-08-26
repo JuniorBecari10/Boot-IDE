@@ -1,8 +1,8 @@
 - Inibir alguns comandos ao não ter arquivos abertos
 
-- Corrigir bug de às vezes o select seguir o mouse sem estar apertado
+- Corrigir bug de às vezes o select seguir o mouse sem estar apertado [ARQUIVADO]
 
-- Alinhar os números de linha à direita, e com isso não precisa colocar linha de início
+- Alinhar os números de linha à direita, e com isso não precisa colocar linha de início [ARQUIVADO]
 
 - Colorir comentários em Python com aspas duplas tbm
 
