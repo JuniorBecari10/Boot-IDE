@@ -363,7 +363,7 @@ public class CodeEditor extends IDEComponent {
 			"case", "do", "for", "foreach", "in", "while", "break", "continue", "default", "goto",
 			"return", "yield", "throw", "try", "catch", "finally", "checked", "unchecked", "fixed",
 			"lock", "params", "ref", "out", "using", "alias", "await", "sizeof", "typeof",
-			"stackalloc", "is", "base", "this", "null", "false", "true", "value", "void", "bool", "byte",
+			"stackalloc", "is", "base", "this", "null", "false", "true", "value", "void", "bool", "byte", "interface",
 			"char", "class", "decimal", "double", "enum", "float", "int", "long", "sbyte", "short", "string", "super",
 			"struct", "uint", "ulong", "ushort", "add", "var", "dynamic", "global", "set", "namespace", "object", "as", "get" };
 	
