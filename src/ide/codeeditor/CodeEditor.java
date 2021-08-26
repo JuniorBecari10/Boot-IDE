@@ -5064,7 +5064,8 @@ public class CodeEditor extends IDEComponent {
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return; // 06/08/2021 - 11:43
 		
-		if (tabs == null) tabs = new ArrayList<>();
+		if (tabs == null) tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
+		
 		verifyDuplicateTabs();
 		
 		if (!cursorThread.isAlive() || cursorThread.getState() == State.TERMINATED) {

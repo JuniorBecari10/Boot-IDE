@@ -30,6 +30,8 @@ public class Logo extends IDEComponent {
 		
 		show = CodeEditor.editing == null;
 		
+		if (Main.screen.getWidth() < 690) show = false;
+		
 		if (!CommandTerminal.expOff) {
 			x = (int) (Main.screen.getWidth() / 2 + 80);
 			y = (int) (Main.screen.getHeight() / 2 - 120);
