@@ -1,7 +1,9 @@
 package ide.components;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -147,6 +149,8 @@ public class RightClickOption extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		
 		Color c = hovered() ? Colors.explorerLight : Colors.background2;
 		Color d = c;
 		
@@ -160,7 +164,12 @@ public class RightClickOption extends IDEComponent {
 		
 		Fonts.drawString(text, x + 2, y + 2, new IDEFont(Fonts.lightGrayNormal, textSize), g);
 		
-		if (isAutoComplete)
+		if (isAutoComplete) {
 			g.drawImage(sprite, (x + width) - 20, y + 4, 16, 16, null);
+			
+			g.setColor(Colors.explorer);
+			g2.setStroke(new BasicStroke(1f));
+			g2.drawLine(x, y, x + width, y);
+		}
 	}
 }

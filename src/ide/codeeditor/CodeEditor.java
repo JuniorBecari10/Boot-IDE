@@ -4966,7 +4966,7 @@ public class CodeEditor extends IDEComponent {
 		int index = 0;
 		
 		for (String s : autocomplete) {
-			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 31, 192, 32, 16, s, keywords, (e) -> makeChanges(e), s));
+			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 30, 192, 32, 16, s, keywords, (e) -> makeChanges(e), s));
 			
 			index++;
 		}
@@ -4974,7 +4974,7 @@ public class CodeEditor extends IDEComponent {
 		for (AutoComplete a : autocompleteadds) {
 			if (a == null) continue;
 			
-			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 31, 192, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
+			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 30, 192, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
 			
 			index++;
 		}
@@ -5634,6 +5634,8 @@ public class CodeEditor extends IDEComponent {
 				//undo.push(lines);
 				
 				if (!RightClickOption.isAutoCompleteActive()) {
+					System.out.println("Olá");
+					
 					wordSinceSpace = ""; // somente verificar se não apertar tab pra scrollar
 					RightClickOption.removeAllRightClickOptions();
 				
@@ -5719,7 +5721,7 @@ public class CodeEditor extends IDEComponent {
 			
 			// Add AutoComplete
 			
-			if (Character.isLetter(c)) { // adicionar esse código no backspace, e se tiver espaços na frente, a keyword vai no lugar errado
+			if (Character.isLetter(c) && !isReadOnly && !alternateTabsMode) { // adicionar esse código no backspace, e se tiver espaços na frente, a keyword vai no lugar errado
 				String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent()) ? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent())) : getKeywordsSpecial(editing.getRegent().getRegent().getName());
 				
 				autocomplete.clear();
@@ -5735,6 +5737,8 @@ public class CodeEditor extends IDEComponent {
 				
 				addAutoCompleteOptions();
 			}
+			
+			if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB) RightClickOption.removeAllRightClickOptions();
 			
 			if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
