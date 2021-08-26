@@ -5632,6 +5632,8 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 				//undo.push(lines);
 				
+				if (RightClickOption.isAutoCompleteActive()) return;
+				
 				wordSinceSpace = "";
 				RightClickOption.removeAllRightClickOptions();
 				
@@ -5707,6 +5709,8 @@ public class CodeEditor extends IDEComponent {
 				
 				autocomplete = removeDuplicates(autocomplete);
 				autocompleteadds = removeDuplicates(autocompleteadds);
+				
+				autocompleteindex = 0;
 				
 				addAutoCompleteOptions();
 			}

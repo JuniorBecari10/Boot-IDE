@@ -132,7 +132,18 @@ public class RightClickOption extends IDEComponent {
 			}
 		}
 		
-		if (CodeEditor.autocompletes.indexOf(this) == CodeEditor.autocompleteindex && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER);
+		if (CodeEditor.autocompletes.indexOf(this) == CodeEditor.autocompleteindex && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+			command.execute(clickArg);
+			
+			for (IDEComponent i : IDEComponent.components)
+				if (i instanceof RightClickOption)
+					IDEComponent.toRemove.add(i);
+			
+			if (isAutoComplete) {
+				for (RightClickOption r : CodeEditor.autocompletes)
+					CodeEditor.toRemoveAutoCompletes.add(r);
+			}
+		}
 	}
 	
 	public void render(Graphics g) {
