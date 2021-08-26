@@ -4561,6 +4561,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public char addAccents(int keyCode, char ch) {
+		boolean capsLock = Main.toolkit.getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
+		
 		if (!pressedAccent) {
 			if (keyCode == KeyEvent.VK_DEAD_TILDE && KeyInput.isShiftDown()) { // ^ Circunflexo
 				prAcc = PressedAccent.CIRCUMFLEX;
@@ -4593,12 +4595,12 @@ public class CodeEditor extends IDEComponent {
 			
 			switch (prAcc) {
 			case ACUTE:
-				if (ch == 'A') return 'Á';
-				 if (ch == 'E') return 'É';
-				 if (ch == 'I') return 'Í';
-				 if (ch == 'O') return 'Ó';
-				 if (ch == 'U') return 'Ú';
-				 if (ch == 'Y') return 'Ý';
+				 if (ch == 'A' || (capsLock && ch == 'a')) return 'Á';
+				 if (ch == 'E' || (capsLock && ch == 'e')) return 'É';
+				 if (ch == 'I' || (capsLock && ch == 'i')) return 'Í';
+				 if (ch == 'O' || (capsLock && ch == 'o')) return 'Ó';
+				 if (ch == 'U' || (capsLock && ch == 'u')) return 'Ú';
+				 if (ch == 'Y' || (capsLock && ch == 'y')) return 'Ý';
 				
 				 if (ch == 'a') return 'á';
 				 if (ch == 'e') return 'é';
@@ -4610,11 +4612,11 @@ public class CodeEditor extends IDEComponent {
 				 if (keyCode == KeyEvent.VK_DEAD_ACUTE) return '´';
 				break;
 			case BACK_QUOTE:
-				if (ch == 'A') return 'À';
-				 if (ch == 'E') return 'È';
-				 if (ch == 'I') return 'Ì';
-				 if (ch == 'O') return 'Ò';
-				 if (ch == 'U') return 'Ù';
+				 if (ch == 'A' || (capsLock && ch == 'a')) return 'À';
+				 if (ch == 'E' || (capsLock && ch == 'e')) return 'È';
+				 if (ch == 'I' || (capsLock && ch == 'i')) return 'Ì';
+				 if (ch == 'O' || (capsLock && ch == 'o')) return 'Ò';
+				 if (ch == 'U' || (capsLock && ch == 'u')) return 'Ù';
 				
 				 if (ch == 'a') return 'à';
 				 if (ch == 'e') return 'è';
@@ -4625,11 +4627,11 @@ public class CodeEditor extends IDEComponent {
 				 if (keyCode == KeyEvent.VK_DEAD_ACUTE && KeyInput.isShiftDown()) return '`';
 				break;
 			case CIRCUMFLEX:
-				if (ch == 'A') return 'Â';
-				 if (ch == 'E') return 'Ê';
-				 if (ch == 'I') return 'Î';
-				 if (ch == 'O') return 'Ô';
-				 if (ch == 'U') return 'Û';
+				 if (ch == 'A' || (capsLock && ch == 'a')) return 'Â';
+				 if (ch == 'E' || (capsLock && ch == 'e')) return 'Ê';
+				 if (ch == 'I' || (capsLock && ch == 'i')) return 'Î';
+				 if (ch == 'O' || (capsLock && ch == 'o')) return 'Ô';
+				 if (ch == 'U' || (capsLock && ch == 'u')) return 'Û';
 				
 				 if (ch == 'a') return 'â';
 				 if (ch == 'e') return 'ê';
@@ -4640,14 +4642,13 @@ public class CodeEditor extends IDEComponent {
 				 if (keyCode == KeyEvent.VK_DEAD_TILDE && KeyInput.isShiftDown()) return '^';
 				break;
 			case TILDE:
+				if (ch == 'A' || (capsLock && ch == 'a')) return 'Ã';
+				if (ch == 'O' || (capsLock && ch == 'o')) return 'Õ';
+				if (ch == 'N' || (capsLock && ch == 'n')) return 'Ñ';
+				
 				if (ch == 'a') return 'ã';
-				else if (ch == 'A') return 'Ã';
-				
-				if (ch == 'O') return 'Õ';
-				else if (ch == 'N') return 'Ñ';
-				
 				if (ch == 'o') return 'õ';
-				else if (ch == 'n') return 'ñ';
+				if (ch == 'n') return 'ñ';
 				
 				if (keyCode == KeyEvent.VK_DEAD_TILDE) return '~';
 				break;
