@@ -1021,7 +1021,7 @@ public class CodeEditor extends IDEComponent {
 							}
 						}
 						
-						addautocompleteadds.add(new AutoComplete(wordSinceSpace, AutoCompleteType.VARIABLE));
+						//addautocompleteadds.add(new AutoComplete(wordSinceSpace, AutoCompleteType.VARIABLE));
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
 					
@@ -5419,6 +5419,23 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_SPACE && !isReadOnly && !alternateTabsMode) {
+				String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent()) ? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent())) : getKeywordsSpecial(editing.getRegent().getRegent().getName());
+				
+				autocomplete.clear();
+				
+				for (String s : autoc)
+					if (s.contains(wordSinceSpace))
+						autocomplete.add(s);
+				
+				autocomplete = removeDuplicates(autocomplete);
+				autocompleteadds = removeDuplicates(autocompleteadds);
+				
+				autocompleteindex = 0;
+				
+				addAutoCompleteOptions();
+			}
+			
 			/*if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
 				KeyInput.updateKeys();
 				
@@ -5552,6 +5569,8 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 				//undo.push(lines);
 				
+				RightClickOption.removeAllRightClickOptions();
+				
 				if (wordSinceSpace.length() > 0)
 					wordSinceSpace = wordSinceSpace.substring(0, wordSinceSpace.length() - 1);
 				
@@ -5625,6 +5644,8 @@ public class CodeEditor extends IDEComponent {
 				}
 				else {
 					autocompleteindex++;
+					
+					if (autocompleteindex == autocompletes.size()) autocompleteindex = 0;
 				}
 			}
 			
