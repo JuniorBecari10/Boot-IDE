@@ -58,8 +58,6 @@ public class CodeEditor extends IDEComponent {
 	
 	public static Tab editing;
 	
-	private boolean showCursorData = false;
-	
 	public static boolean isMultilineCommenting = false;
 	
 	public static boolean selecting;
@@ -1075,165 +1073,13 @@ public class CodeEditor extends IDEComponent {
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
 			}
-					indxs = findWord(new String(chars), "=");
-					
-					for (Integer i : indxs) {
-						int c = i;
-						int len = 0;
-						
-						boolean hasSpace = false;
-							
-						while (c < chars.length && 
-								c + len < chars.length &&
-								c > 0 &&
-								chars[c] != '(' &&
-								chars[c] != ':' &&
-								chars[c] != '\"' &&
-								chars[c] != '\'') {
-							c--;
-							len++;
-							
-							if (chars[c] == ' ') {
-								if (hasSpace)
-									break;
-								
-								if (!hasSpace)
-									hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
-							}
-						}
-							
-						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-					}
 					
 					if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1"))) {
-						indxs = findWord(new String(chars), ":");
-						
-						for (Integer i : indxs) {
-							int c = i;
-							int len = 0;
-							
-							boolean hasSpace = false;
-								
-							while (c < chars.length && 
-									c + len < chars.length &&
-									c > 0 &&
-									chars[c] != '(') {
-								c--;
-								len++;
-								
-								if (chars[c] == ' ') {
-									if (hasSpace)
-										break;
-									
-									if (!hasSpace)
-										hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
-								}
-							}
-								
-							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-						}
-						
-						indxs = findWord(new String(chars), ":");
-						
-						int len = 0;
-	
-						for (Integer i : indxs) {
-							while (i + len < chars.length && chars[i + len] != ' ')
-								len++;
-	
-							if (i + len < chars.length)
-								fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-						}
-						
-						indxs = findWord(new String(chars), ".");
-						
-						for (Integer i : indxs) {
-							int c = i;
-							len = 0;
-								
-							while (c < chars.length && 
-									c + len < chars.length &&
-									c > 0 &&
-									chars[c] != ' ' &&
-									chars[c] != '[' &&
-									chars[c] != ']' &&
-									chars[c] != ',' &&
-									chars[c] != ':') {
-								c--;
-								len++;
-							}
-								
-							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // mais tarde arrumar os outros bugs, ou em outra update
-						}
-						
-						indxs = findWord(new String(chars), ",");
-						
-						for (Integer i : indxs) {
-							int c = i;
-							len = 0;
-								
-							while (c < chars.length && 
-									c + len < chars.length &&
-									c > 0 &&
-									chars[c] != ' ' &&
-									chars[c] != '[' &&
-									chars[c] != ']' &&
-									chars[c] != ':') {
-								c--;
-								len++;
-							}
-								
-							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // mais tarde arrumar os outros bugs, ou em outra update
-						}
-						
-						indxs = findWord(new String(chars), ";");
-						
-						for (Integer i : indxs) {
-							int c = i;
-							len = 0;
-								
-							while (c < chars.length && 
-									c + len < chars.length &&
-									c > 0 &&
-									chars[c] != ' ' &&
-									chars[c] != '[' &&
-									chars[c] != ']' &&
-									chars[c] != ',' &&
-									chars[c] != '.' &&
-									chars[c] != ':') {
-								c--;
-								len++;
-							}
-								
-							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-						}
-						
-						indxs = findWord(new String(chars), "[");
-						
-						for (Integer i : indxs) {
-							int c = i;
-							len = 0;
-								
-							while (c < chars.length && 
-									c + len < chars.length &&
-									c > 0 &&
-									chars[c] != ' ' &&
-									chars[c] != ']' &&
-									chars[c] != ',' &&
-									chars[c] != '.' &&
-									chars[c] != ':') {
-								c--;
-								len++;
-							}
-								
-							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-						}
-						
 						indxs = findWord(new String(chars), "->");
 						
 						for (Integer i : indxs) {
 							int c = i;
-							len = 0;
+							int len = 0;
 								
 							while (c < chars.length && 
 									c + len < chars.length &&
@@ -5158,14 +5004,6 @@ public class CodeEditor extends IDEComponent {
 		else if (Main.baseFolder != null)
 			Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
 		
-		showCursorData = false;
-		
-		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_PAGE_UP && editing != null && hovered()) {
-			KeyInput.updateKeys();
-			
-			showCursorData = true;
-		}
-		
 		try {
 			clipboard = (String) Main.toolkit.getSystemClipboard().getData(DataFlavor.stringFlavor);
 		} catch (HeadlessException | UnsupportedFlavorException | IOException | IllegalStateException e) {
@@ -5998,18 +5836,6 @@ public class CodeEditor extends IDEComponent {
 			}
 		} catch (Exception e) { }
 		
-		if (showCursorData) {
-			KeyInput.updateKeys();
-			
-			g.setColor(new Color(0, 0, 0, 0.3f));
-			g.fillRect(0, 0, Main.screen.getWidth(), Main.screen.getHeight());
-			
-			Fonts.drawString("Posição do Cursor:", MouseInput.getMouseX() + 10, MouseInput.getMouseY() - 16 - 5, new IDEFont(Fonts.lighterGrayNormal, 16), g);
-			
-			Fonts.drawString("Coluna: " + (cursorX + 1), MouseInput.getMouseX() + 10, MouseInput.getMouseY(), new IDEFont(Fonts.lighterGrayNormal, 16), g);
-			Fonts.drawString(" Linha: " + cursorY, MouseInput.getMouseX() + 10, MouseInput.getMouseY() + 16 + 3, new IDEFont(Fonts.lighterGrayNormal, 16), g);
-		}
-		
 		if (keyTimeout) showCursor = true;
 		
 		// Desenhar cursor
@@ -6025,6 +5851,8 @@ public class CodeEditor extends IDEComponent {
 			g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
 			
 			Fonts.drawString(codeType + " - " + extType, x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
+			
+			Fonts.drawString("X: " + (cursorX + 1) + ", Y: " + cursorY, Main.screen.getWidth() - 170, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 		}
 		
 		g.setColor(Colors.background);
