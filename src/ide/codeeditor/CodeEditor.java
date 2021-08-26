@@ -1873,7 +1873,7 @@ public class CodeEditor extends IDEComponent {
 		case ".scss":
 		case ".css":
 			if (!foundExt) {
-				extType = "Cascading Style Sheets - CSS";
+				extType = "Cascading Style Sheets - CSS"; // TODO corrigir o problema do src: 
 				foundExt = true;
 			}
 			
@@ -5197,7 +5197,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (hovered() && editing != null) {
-			if (!isReadOnly && !alternateTabsMode && !RightClickOption.isRightClickActive()) {
+			if (!isReadOnly && !alternateTabsMode && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive()) {
 				Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));	// se for pra descomentar o de baixo, mover a ultima condição (a depois do &&) desse if pra dentro do if, assim o else não verifica essa condição
 			}
 			else {
@@ -5296,6 +5296,13 @@ public class CodeEditor extends IDEComponent {
 			}.start();
 			
 			// Detectar atalhos
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && !isReadOnly && !alternateTabsMode) {
+				KeyInput.updateKeys();
+				RightClickOption.removeAllRightClickOptions();
+				
+				return;
+			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && alternateTabsMode) {
 				alternateTabsMode = false;
@@ -5497,7 +5504,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_SPACE && !isReadOnly && !alternateTabsMode) {
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_SPACE && !isReadOnly && !alternateTabsMode) { // Ctrl + Space (Trigger Auto Complete)
 				String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent()) ? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent())) : getKeywordsSpecial(editing.getRegent().getRegent().getName());
 				
 				autocomplete.clear();
@@ -5547,7 +5554,6 @@ public class CodeEditor extends IDEComponent {
 			}*/
 			
 			if (!(KeyInput.isAltDown() || KeyInput.isControlDown()) && !isReadOnly && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados
-			
 				if (!KeyInput.isShiftDown()) {
 					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 						KeyInput.updateKeys();
@@ -5733,7 +5739,13 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 				//undo.push(lines);
 				
-				if (RightClickOption.isAutoCompleteActive()) return;
+				if (RightClickOption.isAutoCompleteActive()) {
+					autocompletes.get(autocompleteindex).command.execute(autocompletes.get(autocompleteindex).clickArg);
+					
+					RightClickOption.removeAllRightClickOptions();
+					
+					return;
+				}
 				
 				wordSinceSpace = "";
 				RightClickOption.removeAllRightClickOptions();

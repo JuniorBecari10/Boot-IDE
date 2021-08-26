@@ -18,8 +18,8 @@ import ide.util.Colors;
 public class RightClickOption extends IDEComponent {
 	
 	private String text;
-	private String clickArg;
-	private ExecuteCommand command;
+	public String clickArg;
+	public ExecuteCommand command;
 	
 	private int textSize;
 	
@@ -134,7 +134,7 @@ public class RightClickOption extends IDEComponent {
 			}
 		}
 		
-		if (CodeEditor.autocompletes.indexOf(this) == CodeEditor.autocompleteindex && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+		/*if (CodeEditor.autocompletes.indexOf(this) == CodeEditor.autocompleteindex && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 			command.execute(clickArg);
 			
 			for (IDEComponent i : IDEComponent.components)
@@ -145,7 +145,7 @@ public class RightClickOption extends IDEComponent {
 				for (RightClickOption r : CodeEditor.autocompletes)
 					CodeEditor.toRemoveAutoCompletes.add(r);
 			}
-		}
+		}*/
 	}
 	
 	public void render(Graphics g) {
