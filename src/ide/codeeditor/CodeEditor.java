@@ -1038,7 +1038,6 @@ public class CodeEditor extends IDEComponent {
 							fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
 				}
-			}
 			
 			if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
 					indxs = findWord(new String(chars), ")");
@@ -1076,8 +1075,6 @@ public class CodeEditor extends IDEComponent {
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
 			}
-				
-				if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
 					indxs = findWord(new String(chars), "=");
 					
 					for (Integer i : indxs) {
@@ -3615,6 +3612,16 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public static List<IDEFont> colorNumbers(String ext, char[] chars, List<IDEFont> fs) {
+		if (!(ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".mjs") ||
+				 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") ||
+				 ext.equalsIgnoreCase(".php") || ext.equalsIgnoreCase(".kt") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".rb") || ext.equalsIgnoreCase(".ino") ||
+				 ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".swift") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".r") ||
+				 ext.equalsIgnoreCase(".jl") || ext.equalsIgnoreCase(".pl") || ext.equalsIgnoreCase(".has") || ext.equalsIgnoreCase(".hs") || ext.equalsIgnoreCase(".fs") || ext.equalsIgnoreCase(".coffee") ||
+				 ext.equalsIgnoreCase(".m") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".pas") || ext.equalsIgnoreCase(".pp") || ext.equalsIgnoreCase(".scala") || ext.equalsIgnoreCase(".dart") ||
+				 ext.equalsIgnoreCase(".json") || ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xml") ||
+				 ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
+				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) return fs;
+		
 		List<Integer> indxs = new ArrayList<>();
 		
 		if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))) {
@@ -3698,6 +3705,25 @@ public class CodeEditor extends IDEComponent {
 		
 		for (int i = 0; i < indxs.size() - 1; i += 2)
 			fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+			
+			/*indxs = findWord(new String(chars), "\"");						// colorir comentários multi-linha - caracteres iguais
+			
+			if (indxs.size() > 0 && !isMultilineString) { // provavelmente esse é o abrimento
+				fs = color(indxs.get(0), indxs.size() > 1 ? indxs.get(1) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+				isMultilineString = true;
+				
+				isAnotherIteration = false;
+			}
+			
+			if (indxs.size() > 0 && isMultilineString && isAnotherIteration) { // provavelmente esse é o fechamento
+				fs = color(0, indxs.get(0) + 2, new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+				isMultilineString = false;
+			}
+			
+			isAnotherIteration = true;
+			
+			if (isMultilineString)
+				fs = color(0, fs.size(), new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);*/
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -4234,41 +4260,6 @@ public class CodeEditor extends IDEComponent {
 			
 			if (isMultilineCommenting)
 				fs = color(0, fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
-			
-			indxs = findWord(new String(chars), "\'\'\'");
-			
-			for (Integer i : indxs) {
-				if (i + "\'\'\'".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "\'\'\'".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "\'\'\'".length()] == '_'))) continue;
-				
-				fs = color(i, i + "\'\'\'".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
-			}
-			
-			indxs = findWord(new String(chars), "\"\"\"");						// colorir comentários multi-linha - caracteres iguais
-			
-			if (indxs.size() > 0 && !isMultilineCommenting) { // provavelmente esse é o abrimento
-				fs = color(indxs.get(0), indxs.size() > 1 ? indxs.get(1) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
-				isMultilineCommenting = true;
-				
-				isAnotherIteration = false;
-			}
-			
-			if (indxs.size() > 0 && isMultilineCommenting && isAnotherIteration) { // provavelmente esse é o fechamento
-				fs = color(0, indxs.get(0) + 2, new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
-				isMultilineCommenting = false;
-			}
-			
-			isAnotherIteration = true;
-			
-			if (isMultilineCommenting)
-				fs = color(0, fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
-			
-			indxs = findWord(new String(chars), "\"\"\"");
-			
-			for (Integer i : indxs) {
-				if (i + "\"\"\"".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "\"\"\"".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "\"\"\"".length()] == '_'))) continue;
-				
-				fs = color(i, i + "\"\"\"".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
-			}
 			
 			break;
 			
@@ -5816,18 +5807,20 @@ public class CodeEditor extends IDEComponent {
 			if (Character.isLetter(c) && !isReadOnly && !alternateTabsMode) { // adicionar esse código no backspace, e se tiver espaços na frente, a keyword vai no lugar errado
 				String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent()) ? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent())) : getKeywordsSpecial(editing.getRegent().getRegent().getName());
 				
-				autocomplete.clear();
+				if (autoc != null) {
+					autocomplete.clear();
 				
-				for (String s : autoc)
-					if (s.contains(wordSinceSpace))
-						autocomplete.add(s);
+					for (String s : autoc)
+						if (s.contains(wordSinceSpace))
+							autocomplete.add(s);
 				
-				autocomplete = removeDuplicates(autocomplete);
-				autocompleteadds = removeDuplicates(autocompleteadds);
+					autocomplete = removeDuplicates(autocomplete);
+					autocompleteadds = removeDuplicates(autocompleteadds);
 				
-				autocompleteindex = 0;
+					autocompleteindex = 0;
 				
-				addAutoCompleteOptions();
+					addAutoCompleteOptions();
+				}
 			}
 			
 			if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB) RightClickOption.removeAllRightClickOptions();
