@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 
 import ide.codeeditor.CodeEditor;
@@ -76,9 +75,8 @@ public class RightClickOption extends IDEComponent {
 	}
 	
 	public static boolean isAutoCompleteActive() {
-		for (IDEComponent i : IDEComponent.components)
-			if (i instanceof RightClickOption && ((RightClickOption) i).isAutoComplete)
-				return true;
+		for (RightClickOption r : CodeEditor.autocompletes)
+			if (r.isAutoComplete) return true;
 		
 		return false;
 	}
@@ -88,6 +86,11 @@ public class RightClickOption extends IDEComponent {
 			if (i instanceof RightClickOption)
 				if (i.hovered()) return true;
 		
+		
+		for (RightClickOption r : CodeEditor.autocompletes)
+			if (r.isAutoComplete)
+				if (r.hovered()) return true;
+		
 		return false;
 	}
 	
@@ -95,31 +98,22 @@ public class RightClickOption extends IDEComponent {
 		for (IDEComponent i : IDEComponent.components)
 			if (i instanceof RightClickOption)
 				IDEComponent.toRemove.add(i);
+		
+		for (RightClickOption r : CodeEditor.autocompletes)
+			if (r.isAutoComplete)
+				CodeEditor.toRemoveAutoCompletes.add(r);
+			
 	}
 	
-	public static List<RightClickOption> listRightClicks(boolean autoComplete) {
-		List<RightClickOption> rc = new ArrayList<>();
-		
-		try {
-			for (IDEComponent i : IDEComponent.components) {
-				RightClickOption e = (RightClickOption) i;
-				
-				if (i instanceof RightClickOption) {
-					if (autoComplete) {
-						if (e.isAutoComplete)
-							rc.add((RightClickOption) i);
-					}
-					else rc.add((RightClickOption) i);
-				}
-			}
-		} catch (Exception e) {
-			return rc;
+	public static int getRightClickIndex(List<RightClickOption> list, RightClickOption obj) {
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(obj)) return i;
 		}
 		
-		return rc;
+		return -1;
 	}
 	
-	public void tick() {		
+	public void tick() {
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE || (MouseInput.isMousePressed() && !(leftClicked() || rightClicked()))) // obs: o bug não é aqui
 			IDEComponent.toRemove.add(this);
 		
@@ -131,15 +125,24 @@ public class RightClickOption extends IDEComponent {
 			for (IDEComponent i : IDEComponent.components)
 				if (i instanceof RightClickOption)
 					IDEComponent.toRemove.add(i);
+			
+			if (isAutoComplete) {
+				for (RightClickOption r : CodeEditor.autocompletes)
+					CodeEditor.toRemoveAutoCompletes.add(r);
+			}
 		}
+		
+		if (CodeEditor.autocompletes.indexOf(this) == CodeEditor.autocompleteindex && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER);
 	}
 	
 	public void render(Graphics g) {
 		Color c = hovered() ? Colors.explorerLight : Colors.background2;
 		Color d = c;
 		
+		//System.out.println(listRightClicks(true).indexOf(this)); // terminar
+		
 		if (isAutoComplete)
-			c = listRightClicks(true).indexOf(this) == CodeEditor.autocompleteindex ? Colors.explorerLight : d;
+			c = CodeEditor.autocompletes.indexOf(this) == CodeEditor.autocompleteindex ? Colors.explorerLight : d;
 		
 		g.setColor(c);
 		g.fillRect(x, y, width, HEIGHT);

@@ -85,10 +85,7 @@ public class CodeEditor extends IDEComponent {
 	public static String codeType = "";
 	public static String extType = "";
 	
-	public static boolean syntaxErrorsOn = true;
-	
 	public static boolean isAnotherIteration = false;
-	
 	public static boolean foundExt = false;
 	
 	private int realcx, realcy; // c = cursor
@@ -143,6 +140,10 @@ public class CodeEditor extends IDEComponent {
 	
 	public static List<AutoComplete> autocompleteadds = new ArrayList<>();
 	public static List<AutoComplete> addautocompleteadds = new ArrayList<>();
+	
+	public static List<RightClickOption> autocompletes = new ArrayList<>();
+	public static List<RightClickOption> toAddAutoCompletes = new ArrayList<>();
+	public static List<RightClickOption> toRemoveAutoCompletes = new ArrayList<>();
 	
 	///
 	
@@ -4931,7 +4932,6 @@ public class CodeEditor extends IDEComponent {
 		if (cursorX >= s.length() - 1) sb.append(e);
 		else sb.insert(cursorX, e);
 		
-		cursorX -= s.length() - wordSinceSpace.length();
 		cursorX += e.length();
 		
 		register(sb, cursorY - 1);
@@ -4966,7 +4966,7 @@ public class CodeEditor extends IDEComponent {
 		int index = 0;
 		
 		for (String s : autocomplete) {
-			IDEComponent.toAdd.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 31, 192, 32, 16, s, keywords, (e) -> makeChanges(e), s));
+			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 31, 192, 32, 16, s, keywords, (e) -> makeChanges(e), s));
 			
 			index++;
 		}
@@ -4974,7 +4974,7 @@ public class CodeEditor extends IDEComponent {
 		for (AutoComplete a : autocompleteadds) {
 			if (a == null) continue;
 			
-			IDEComponent.toAdd.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 31, 192, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
+			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 31, 192, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
 			
 			index++;
 		}
@@ -5155,7 +5155,7 @@ public class CodeEditor extends IDEComponent {
 				}.start();
 			}
 			
-			if (leftClicked() && !RightClickOption.isRightClickActive() && !isReadOnly && !alternateTabsMode && !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
+			if (leftClicked() && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive() && !isReadOnly && !alternateTabsMode && !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
 				cursorX = mx;
 				cursorY = my;
 				
@@ -5617,12 +5617,15 @@ public class CodeEditor extends IDEComponent {
 				if (!RightClickOption.isAutoCompleteActive()) {
 					wordSinceSpace = ""; // somente verificar se não apertar tab pra scrollar
 					RightClickOption.removeAllRightClickOptions();
+				
+					cY.insert(cursorX, "    ");
+					
+					cursorX += 4;
+					editing.setSaved(false);
 				}
-				
-				cY.insert(cursorX, "    ");
-				
-				cursorX += 4;
-				editing.setSaved(false);
+				else {
+					autocompleteindex++;
+				}
 			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
@@ -5730,19 +5733,28 @@ public class CodeEditor extends IDEComponent {
 				
 				t.tick();
 			}
-		
-			tabs.addAll(toAdd);
-			toAdd.clear();
-			
-			tabs.removeAll(toRemove);
-			toRemove.clear();
-			
-			lines.removeAll(linesToRemove);
-			linesToRemove.clear();
-			
-			autocompleteadds.addAll(addautocompleteadds);
-			addautocompleteadds.clear();
 		}
+		
+		for (RightClickOption r : autocompletes)
+			r.tick();
+		
+		tabs.addAll(toAdd);
+		toAdd.clear();
+			
+		tabs.removeAll(toRemove);
+		toRemove.clear();
+			
+		lines.removeAll(linesToRemove);
+		linesToRemove.clear();
+			
+		autocompleteadds.addAll(addautocompleteadds);
+		addautocompleteadds.clear();
+		
+		autocompletes.addAll(toAddAutoCompletes);
+		toAddAutoCompletes.clear();
+		
+		autocompletes.removeAll(toRemoveAutoCompletes);
+		toRemoveAutoCompletes.clear();
 		
 		if (index1 < 0) index1 = 0;
 		if (line1 < 1) line1 = 1;
@@ -5909,6 +5921,9 @@ public class CodeEditor extends IDEComponent {
 			
 			t.render(g);
 		}
+		
+		for (RightClickOption r : autocompletes)
+			r.render(g);
 		
 		if (alternateTabsMode) {
 			g.setColor(new Color(0, 0, 0, 0.3f));
