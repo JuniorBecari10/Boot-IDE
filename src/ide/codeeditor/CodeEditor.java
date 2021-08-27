@@ -4848,19 +4848,7 @@ public class CodeEditor extends IDEComponent {
 		return list;
 	}
 	
-	public void makeChanges(String e) {
-		String s = new String(toCharArray(lines.get(cursorY - 1).getChars()));
-		s = s.substring(0, s.length() - wordSinceSpace.length());
-		
-		StringBuilder sb = new StringBuilder(s);
-		
-		if (cursorX >= s.length()) sb.append(e);
-		else sb.insert(cursorX, e);
-		
-		cursorX += e.length();
-		
-		register(sb, cursorY - 1);
-		
+	public synchronized void callAutomaticColor() {
 		new Thread() {
 			public void run() {
 				try {
@@ -4876,7 +4864,29 @@ public class CodeEditor extends IDEComponent {
 				} catch (ConcurrentModificationException e) {}
 			}
 		}.start();
+	}
+	
+	/* Pseudo-Código -- FUNCIONOU!
+	 * 
+	 * deletar os chars atrás do cursor, até o tamanho da palavra digitada
+	 * ex: cx = 7, pld = 3 | cx = 7 - 3. // cx = cursorx, pld = palavra digitada
+	 * 
+	 * depois dá um insert na string e
+	 * 
+	 */
+	public void makeChanges(String e) { // [e] é a palavra que vai colocar
+		String s = new String(toCharArray(lines.get(cursorY - 1).getChars()));
+		StringBuilder sb = new StringBuilder(s);
 		
+		sb.delete(cursorX - wordSinceSpace.length(), cursorX);
+		cursorX -= wordSinceSpace.length();
+		sb.insert(cursorX, e);
+		
+		cursorX += e.length();
+		
+		register(sb, cursorY - 1);
+		
+		callAutomaticColor();
 		setCursorWithinBounds();
 	}
 	
