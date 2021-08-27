@@ -4845,7 +4845,7 @@ public class CodeEditor extends IDEComponent {
 		
 		StringBuilder sb = new StringBuilder(s);
 		
-		if (cursorX >= s.length() - 1) sb.append(e);
+		if (cursorX >= s.length()) sb.append(e);
 		else sb.insert(cursorX, e);
 		
 		cursorX += e.length();
@@ -4882,7 +4882,7 @@ public class CodeEditor extends IDEComponent {
 		int index = 0;
 		
 		for (String s : autocomplete) {
-			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 30, 192, 32, 16, s, keywords, (e) -> makeChanges(e), s));
+			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 30, 220, 32, 16, s, keywords, (e) -> makeChanges(e), s));
 			
 			index++;
 		}
@@ -4890,7 +4890,7 @@ public class CodeEditor extends IDEComponent {
 		for (AutoComplete a : autocompleteadds) {
 			if (a == null) continue;
 			
-			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 30, 192, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
+			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 30, 220, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
 			
 			index++;
 		}
@@ -5549,9 +5549,7 @@ public class CodeEditor extends IDEComponent {
 				//undo.push(lines);
 				
 				if (!RightClickOption.isAutoCompleteActive()) {
-					System.out.println("Olá");
-					
-					wordSinceSpace = ""; // somente verificar se não apertar tab pra scrollar
+					wordSinceSpace = "";
 					RightClickOption.removeAllRightClickOptions();
 				
 					cY.insert(cursorX, "    ");
