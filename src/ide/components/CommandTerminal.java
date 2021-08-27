@@ -168,53 +168,53 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "closealltabs":
-				CodeEditor.tabs.clear();
+				Main.editor.tabs.clear();
 				break;
 				
 			case "resettabscroll":
-				CodeEditor.tabScr = 0;
+				Main.editor.tabScr = 0;
 				break;
 				
 			case "reseteditorscroll":
-				CodeEditor.scrX = 0;
-				CodeEditor.scrY = 0;
+				Main.editor.scrX = 0;
+				Main.editor.scrY = 0;
 				break;
 				
 			case "deselect":
-				if (CodeEditor.isReadOnly) break;
-				if (CodeEditor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
 				
-				CodeEditor.line1 = 0; // 0, não é 1 não?
-				CodeEditor.line2 = 0;
+				Main.editor.line1 = 0; // 0, não é 1 não?
+				Main.editor.line2 = 0;
 				
-				CodeEditor.index1 = 0;
-				CodeEditor.index2 = 0;
+				Main.editor.index1 = 0;
+				Main.editor.index2 = 0;
 				
-				CodeEditor.selecting = false;
+				Main.editor.selecting = false;
 				break;
 				
 			case "copy":
-				if (CodeEditor.editing == null) break;
-				if (!CodeEditor.selecting || CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (!Main.editor.selecting || Main.editor.isReadOnly) break;
 				
 				List<String> lines = new ArrayList<>();
 				String str = "";
 				
-				if (CodeEditor.line1 != CodeEditor.line2) { // se não selecionou uma linha só (selecionou várias)
-					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) {
-						if (i == CodeEditor.line1 - 1) {
-							lines.add(new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars().subList(CodeEditor.index1, CodeEditor.lines.get(i).getChars().size()))));
+				if (Main.editor.line1 != Main.editor.line2) { // se não selecionou uma linha só (selecionou várias)
+					for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) {
+						if (i == Main.editor.line1 - 1) {
+							lines.add(new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars().subList(Main.editor.index1, Main.editor.lines.get(i).getChars().size()))));
 							
 							continue;
 						}
 						
-						if (i == CodeEditor.line2 - 1) {
-							lines.add(new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars().subList(0, CodeEditor.index2))));
+						if (i == Main.editor.line2 - 1) {
+							lines.add(new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars().subList(0, Main.editor.index2))));
 							
 							continue;
 						}
 						
-						lines.add(new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars())));
+						lines.add(new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars())));
 					}
 					
 					for (String s : lines) {
@@ -225,13 +225,13 @@ public class CommandTerminal extends IDEComponent {
 					}
 				}
 				else {
-					if (CodeEditor.index2 < CodeEditor.index1) { // que coisa não? (provavelmente isso nunca vai acontecer)
+					if (Main.editor.index2 < Main.editor.index1) { // que coisa não? (provavelmente isso nunca vai acontecer)
 						runCommand("deselect");
 						
 						break;
 					}
 					
-					str = new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.line1 - 1).getChars().subList(CodeEditor.index1, CodeEditor.index2)));
+					str = new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.line1 - 1).getChars().subList(Main.editor.index1, Main.editor.index2)));
 				}
 				
 				StringSelection sel = new StringSelection(str);
@@ -242,110 +242,110 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "del":
-				if (CodeEditor.editing == null) break;
-				if (!CodeEditor.selecting) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (!Main.editor.selecting) break;
+				if (Main.editor.isReadOnly) break;
 				
-				StringBuilder s = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.line1 - 1).getChars())));
+				StringBuilder s = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.line1 - 1).getChars())));
 				
-				if (CodeEditor.line1 != CodeEditor.line2) { // se não selecionou uma linha só (selecionou várias)
-					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) {
-						if (i == CodeEditor.line1 - 1) {
-							if (CodeEditor.lines.get(i).getChars().size() < CodeEditor.index1 || CodeEditor.lines.get(i).getChars().size() < CodeEditor.index2) continue;
+				if (Main.editor.line1 != Main.editor.line2) { // se não selecionou uma linha só (selecionou várias)
+					for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) {
+						if (i == Main.editor.line1 - 1) {
+							if (Main.editor.lines.get(i).getChars().size() < Main.editor.index1 || Main.editor.lines.get(i).getChars().size() < Main.editor.index2) continue;
 							
-							CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(0, CodeEditor.index1));
+							Main.editor.lines.get(i).setChars(Main.editor.lines.get(i).getChars().subList(0, Main.editor.index1));
 							
 							continue;
 						}
 						
-						if (i == CodeEditor.line2 - 1) {
-							CodeEditor.lines.get(i).setChars(CodeEditor.lines.get(i).getChars().subList(CodeEditor.index2, CodeEditor.lines.get(i).getChars().size()));
+						if (i == Main.editor.line2 - 1) {
+							Main.editor.lines.get(i).setChars(Main.editor.lines.get(i).getChars().subList(Main.editor.index2, Main.editor.lines.get(i).getChars().size()));
 						
 							continue;
 						}
 						
-						CodeEditor.linesToRemove.add(CodeEditor.lines.get(i)); // pra evitar concurrentmodificationexception
+						Main.editor.linesToRemove.add(Main.editor.lines.get(i)); // pra evitar concurrentmodificationexception
 					}
 					
-					CodeEditor.cursorX = CodeEditor.index1;
-					CodeEditor.cursorY = CodeEditor.line1;
+					Main.editor.cursorX = Main.editor.index1;
+					Main.editor.cursorY = Main.editor.line1;
 					
 					runCommand("deselect");
-					CodeEditor.setCursorWithinBounds();
+					Main.editor.setCursorWithinBounds();
 					
-					CodeEditor.editing.setSaved(false);
+					Main.editor.editing.setSaved(false);
 					
-					/*CodeEditor.cursorX = CodeEditor.mx;		// tomar cuidado quando o comando é chamado pelo sistema e vc ver seu cursor andando adoidado por ai viu TODO
-					CodeEditor.cursorY = CodeEditor.my;			// melhor desabilitar isso
+					/*Main.editor.cursorX = Main.editor.mx;		// tomar cuidado quando o comando é chamado pelo sistema e vc ver seu cursor andando adoidado por ai viu TODO
+					Main.editor.cursorY = Main.editor.my;			// melhor desabilitar isso
 					
-					CodeEditor.setCursorWithinBounds();*/
+					Main.editor.setCursorWithinBounds();*/
 					
 					break;
 				}
 				else {
-					if (CodeEditor.index2 < CodeEditor.index1) {
+					if (Main.editor.index2 < Main.editor.index1) {
 						runCommand("deselect");
 						
 						break;
 					}
 					
-					s.delete(CodeEditor.index1, CodeEditor.index2);
+					s.delete(Main.editor.index1, Main.editor.index2);
 					
-					Main.editor.register(s, CodeEditor.line1 - 1);
+					Main.editor.register(s, Main.editor.line1 - 1);
 				}
 				
-				CodeEditor.cursorX = CodeEditor.index1;
+				Main.editor.cursorX = Main.editor.index1;
 				
 				runCommand("deselect");
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
 				break;
 				
 			case "cut":
-				if (CodeEditor.editing == null) break;
-				if (!CodeEditor.selecting) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (!Main.editor.selecting) break;
+				if (Main.editor.isReadOnly) break;
 				
 				runCommand("copy");	// hehe :)
 				runCommand("del");
 				break;
 				
 			case "paste":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
 				Main.editor.paste();
 				
 				break;
 				
 			case "selectline":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
-				int y = CodeEditor.cursorY - 1;
+				int y = Main.editor.cursorY - 1;
 				
-				CodeEditor.index1 = 0;
-				CodeEditor.index2 = CodeEditor.lines.get(y).getChars().size();
+				Main.editor.index1 = 0;
+				Main.editor.index2 = Main.editor.lines.get(y).getChars().size();
 				
-				CodeEditor.line1 = y + 1;
-				CodeEditor.line2 = y + 1;
+				Main.editor.line1 = y + 1;
+				Main.editor.line2 = y + 1;
 				
-				CodeEditor.selecting = true;
+				Main.editor.selecting = true;
 				break;
 				
 			case "selectall":
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.isReadOnly) break;
 				
-				CodeEditor.index1 = 0;
-				CodeEditor.index2 = CodeEditor.lines.get(CodeEditor.lines.size() - 1).getChars().size();
+				Main.editor.index1 = 0;
+				Main.editor.index2 = Main.editor.lines.get(Main.editor.lines.size() - 1).getChars().size();
 				
-				CodeEditor.line1 = 1;
-				CodeEditor.line2 = CodeEditor.lines.size();
+				Main.editor.line1 = 1;
+				Main.editor.line2 = Main.editor.lines.size();
 				
-				CodeEditor.cursorX = 0;
-				CodeEditor.cursorY = 1;
+				Main.editor.cursorX = 0;
+				Main.editor.cursorY = 1;
 				
-				CodeEditor.selecting = true;
+				Main.editor.selecting = true;
 				break;
 				
 			case "generateconfigfile":
@@ -414,124 +414,124 @@ public class CommandTerminal extends IDEComponent {
 			
 			case "sysout":
 			case "syso":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
-				StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())));
 				
-				b.insert(CodeEditor.cursorX, "System.out.println();");
+				b.insert(Main.editor.cursorX, "System.out.println();");
 				
-				Main.editor.register(b, CodeEditor.cursorY - 1);
+				Main.editor.register(b, Main.editor.cursorY - 1);
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
-				CodeEditor.cursorX += 19;
+				Main.editor.cursorX += 19;
 				
 				break;
 				
 			case "cout":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
-				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())));
 				
-				b.insert(CodeEditor.cursorX, "cout << \"\" << endl;");
+				b.insert(Main.editor.cursorX, "cout << \"\" << endl;");
 				
-				Main.editor.register(b, CodeEditor.cursorY - 1);
+				Main.editor.register(b, Main.editor.cursorY - 1);
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
-				CodeEditor.cursorX += 9;
+				Main.editor.cursorX += 9;
 				
 				break;
 				
 			case "stdcout":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
-				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())));
 				
-				b.insert(CodeEditor.cursorX, "std::cout << \"\" << std::endl;");
+				b.insert(Main.editor.cursorX, "std::cout << \"\" << std::endl;");
 				
-				Main.editor.register(b, CodeEditor.cursorY - 1);
+				Main.editor.register(b, Main.editor.cursorY - 1);
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
-				CodeEditor.cursorX += 14;
+				Main.editor.cursorX += 14;
 				
 				break;
 				
 			case "writeline":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
-				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())));
 				
-				b.insert(CodeEditor.cursorX, "Console.WriteLine();");
+				b.insert(Main.editor.cursorX, "Console.WriteLine();");
 				
-				Main.editor.register(b, CodeEditor.cursorY - 1);
+				Main.editor.register(b, Main.editor.cursorY - 1);
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
-				CodeEditor.cursorX += 18;
+				Main.editor.cursorX += 18;
 				
 				break;
 				
 			case "syserr":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
-				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())));
 				
-				b.insert(CodeEditor.cursorX, "System.err.println();");
+				b.insert(Main.editor.cursorX, "System.err.println();");
 				
-				Main.editor.register(b, CodeEditor.cursorY - 1);
+				Main.editor.register(b, Main.editor.cursorY - 1);
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
-				CodeEditor.cursorX += 19;
+				Main.editor.cursorX += 19;
 				
 				break;
 				
 			case "clog":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
-				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())));
 				
-				b.insert(CodeEditor.cursorX, "console.log();");
+				b.insert(Main.editor.cursorX, "console.log();");
 				
-				Main.editor.register(b, CodeEditor.cursorY - 1);
+				Main.editor.register(b, Main.editor.cursorY - 1);
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
-				CodeEditor.cursorX += 12;
+				Main.editor.cursorX += 12;
 				
 				break;
 				
 			case "gendiv":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
-				b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())));
 				
-				b.insert(CodeEditor.cursorX, "<div></div>");
+				b.insert(Main.editor.cursorX, "<div></div>");
 				
-				Main.editor.register(b, CodeEditor.cursorY - 1);
+				Main.editor.register(b, Main.editor.cursorY - 1);
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
 				break;
 				
 			case "closebasefolder":
-				CodeEditor.tabs.clear();
+				Main.editor.tabs.clear();
 				Main.baseFolder = null;
 				
 				Explorer.files.clear();
 				ListableFile.files.clear();
 				
 				Explorer.scope = null;
-				CodeEditor.editing = null;
+				Main.editor.editing = null;
 				
 				Main.screen.frame.setTitle("Boot IDE");
 				
@@ -559,28 +559,28 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "togglecodehelpers":
-				if (CodeEditor.editing == null) break;
+				if (Main.editor.editing == null) break;
 				
-				CodeEditor.codeHelpersOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor syntaxerrorson, true (lógico que o nome da variável n seria esse né :/)
+				Main.editor.codeHelpersOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor syntaxerrorson, true (lógico que o nome da variável n seria esse né :/)
 				break;
 				
 			case "gotocursor":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
-				CodeEditor.scrY = (CodeEditor.cursorY * (CodeEditor.FONT_SIZE)); // TODO arrumar isso aqui
+				Main.editor.scrY = (Main.editor.cursorY * (CodeEditor.FONT_SIZE)); // TODO arrumar isso aqui
 				
-				if (CodeEditor.cursorY <= 7) CodeEditor.scrY = 0;
+				if (Main.editor.cursorY <= 7) Main.editor.scrY = 0;
 				
 				break;
 				
 			case "togglereadonly":
-				if (CodeEditor.editing == null) break;
+				if (Main.editor.editing == null) break;
 				
 				runCommand("deselect");
 				
-				CodeEditor.isReadOnly ^= true;
-				CodeEditor.editing.isReadOnly ^= true;
+				Main.editor.isReadOnly ^= true;
+				Main.editor.editing.isReadOnly ^= true;
 				
 				break;
 			}
@@ -592,12 +592,12 @@ public class CommandTerminal extends IDEComponent {
 				try {
 					int args0 = Integer.parseInt(args[0]);
 					
-					if (CodeEditor.tabs.size() == 0 ||
+					if (Main.editor.tabs.size() == 0 ||
 						    args0 < 0 ||
-						    args0 > CodeEditor.tabs.size())
+						    args0 > Main.editor.tabs.size())
 							return;
 						
-					CodeEditor.tabs.get(args0).close();
+					Main.editor.tabs.get(args0).close();
 						
 					break;
 				} catch (NumberFormatException e) {
@@ -605,11 +605,11 @@ public class CommandTerminal extends IDEComponent {
 				}
 				
 			case "gotoline":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
 				try {
-					CodeEditor.cursorY = Integer.parseInt(args[0]);
+					Main.editor.cursorY = Integer.parseInt(args[0]);
 					
 					runCommand("gotocursor");
 				} catch (NumberFormatException e) {
@@ -618,7 +618,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "setfontsize":
-				if (CodeEditor.editing == null) break;
+				if (Main.editor.editing == null) break;
 				
 				if (args[0].equals("default"))
 					CodeEditor.FONT_SIZE = 16;
@@ -628,16 +628,16 @@ public class CommandTerminal extends IDEComponent {
 						
 					CodeEditor.FONT_SIZE = a0;
 						
-					if (CodeEditor.editing != null)
-						CodeEditor.lines = CodeEditor.readFile(CodeEditor.editing.getRegent().getRegent());
+					if (Main.editor.editing != null)
+						Main.editor.lines = Main.editor.readFile(Main.editor.editing.getRegent().getRegent());
 				} catch (NumberFormatException | IOException e) {
 					CodeEditor.FONT_SIZE = 16;
 				}
 				break;
 				
 			case "insertchar":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
 				int ascii = 0;
 				
@@ -649,28 +649,28 @@ public class CommandTerminal extends IDEComponent {
 				
 				//if (!Character.isLetterOrDigit(c)) break; // não vai verificar mais, pode colocar o que quiser aqui :\
 				
-				StringBuilder sb = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				StringBuilder sb = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())));
 				
-				sb.insert(CodeEditor.cursorX, c);
+				sb.insert(Main.editor.cursorX, c);
 				
-				Main.editor.register(sb, CodeEditor.cursorY - 1);
+				Main.editor.register(sb, Main.editor.cursorY - 1);
 				
-				CodeEditor.cursorX++;
-				CodeEditor.editing.setSaved(false);
+				Main.editor.cursorX++;
+				Main.editor.editing.setSaved(false);
 				
 				break;
 				
 			case "gendiv":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
-				StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())));
 				
-				b.insert(CodeEditor.cursorX, "<div class=\"" + args[0] + "\"></div>");
+				b.insert(Main.editor.cursorX, "<div class=\"" + args[0] + "\"></div>");
 				
-				Main.editor.register(b, CodeEditor.cursorY - 1);
+				Main.editor.register(b, Main.editor.cursorY - 1);
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
 				break;
 				
@@ -688,12 +688,12 @@ public class CommandTerminal extends IDEComponent {
 				break;*/
 				
 			case "genbase":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
 				String[] strs = { };
 				
-				String classname = ListableFile.getFileNameWithoutExtension(CodeEditor.editing.getRegent().getRegent());
+				String classname = ListableFile.getFileNameWithoutExtension(Main.editor.editing.getRegent().getRegent());
 				
 				switch (args[0].toLowerCase()) {
 				case "html":
@@ -798,28 +798,28 @@ public class CommandTerminal extends IDEComponent {
 				if (strs.length == 0) return;
 				
 				for (int i = 0; i < strs.length; i++) {
-					if ((CodeEditor.cursorY - 1) + i >= CodeEditor.lines.size())
-						CodeEditor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
+					if ((Main.editor.cursorY - 1) + i >= Main.editor.lines.size())
+						Main.editor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
 					
-					b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
+					b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get((Main.editor.cursorY - 1) + i).getChars())));
 					
-					b.insert(CodeEditor.cursorX, strs[i]);
+					b.insert(Main.editor.cursorX, strs[i]);
 					
-					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
+					Main.editor.register(b, (Main.editor.cursorY - 1) + i);
 				}
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
 				break;
 				
 			/*case "search":									// Deprecated. Use Search/Replace.
 				List<Integer> linesfound = new ArrayList<>();
 				
-				//args[0] = CodeEditor.arrayToStr(args); // -- n da certo pq esse comando n vai ser executado pq o numero de args é maior
+				//args[0] = Main.editor.arrayToStr(args); // -- n da certo pq esse comando n vai ser executado pq o numero de args é maior
 				
-				for (int i = 0; i < CodeEditor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
-					IDELine l = CodeEditor.lines.get(i);
-					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+				for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
+					IDELine l = Main.editor.lines.get(i);
+					String s = new String(Main.editor.toCharArray(l.getChars())).toLowerCase();
 					
 					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
 				}
@@ -828,19 +828,19 @@ public class CommandTerminal extends IDEComponent {
 				
 				// como é automaticamente occur 0, pegamos automaticamente ela.
 				
-				CodeEditor.scrY = (linesfound.get(0) + 1) * (CodeEditor.FONT_SIZE);// + 4);
-				CodeEditor.cursorY = (linesfound.get(0) - 1) + 2;
+				Main.editor.scrY = (linesfound.get(0) + 1) * (Main.editor.FONT_SIZE);// + 4);
+				Main.editor.cursorY = (linesfound.get(0) - 1) + 2;
 				
 				break;
 				
 			case "searchsel":
-				if (!CodeEditor.selecting) break;
+				if (!Main.editor.selecting) break;
 				
 				linesfound = new ArrayList<>();
 				
-				for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
-					IDELine l = CodeEditor.lines.get(i);
-					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+				for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+					IDELine l = Main.editor.lines.get(i);
+					String s = new String(Main.editor.toCharArray(l.getChars())).toLowerCase();
 					
 					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
 				}
@@ -849,23 +849,23 @@ public class CommandTerminal extends IDEComponent {
 				
 				// como é automaticamente occur 0, pegamos automaticamente ela.
 				
-				CodeEditor.scrY = (linesfound.get(0) - 1) * (CodeEditor.FONT_SIZE);// + 4);
-				CodeEditor.cursorY = (linesfound.get(0) - 1) + 2;
+				Main.editor.scrY = (linesfound.get(0) - 1) * (Main.editor.FONT_SIZE);// + 4);
+				Main.editor.cursorY = (linesfound.get(0) - 1) + 2;
 				
 				break;*/
 				
 			case "lorem":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
-				StringBuilder bl = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())));
+				StringBuilder bl = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())));
 				
 				try {
 					String lorem = CodeEditor.generateLoremIpsum(Integer.parseInt(args[0]));
 					
-					bl.insert(CodeEditor.cursorX, lorem);
+					bl.insert(Main.editor.cursorX, lorem);
 					
-					Main.editor.register(bl, CodeEditor.cursorY - 1);
+					Main.editor.register(bl, Main.editor.cursorY - 1);
 				} catch (Exception e) { break; }
 					
 				break;
@@ -876,12 +876,12 @@ public class CommandTerminal extends IDEComponent {
 			switch (com) {
 			case "ordertab":
 				try {
-					if (CodeEditor.tabs.size() < 2) break;
+					if (Main.editor.tabs.size() < 2) break;
 					
 					int idx1 = Integer.parseInt(args[0]);
 					int idx2 = Integer.parseInt(args[1]);
 					
-					Collections.swap(CodeEditor.tabs, idx1, idx2);
+					Collections.swap(Main.editor.tabs, idx1, idx2);
 				} catch (NumberFormatException | IndexOutOfBoundsException e) {
 					break;
 				}
@@ -889,17 +889,17 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "setcursorpos":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
 				try {
 					int x = Integer.parseInt(args[0]) - 1;
 					int y = Integer.parseInt(args[1]);
 					
-					CodeEditor.cursorX = x;
-					CodeEditor.cursorY = y;
+					Main.editor.cursorX = x;
+					Main.editor.cursorY = y;
 					
-					CodeEditor.setCursorWithinBounds();
+					Main.editor.setCursorWithinBounds();
 				} catch (NumberFormatException e) {
 					break;
 				}
@@ -909,9 +909,9 @@ public class CommandTerminal extends IDEComponent {
 			/*case "search":
 				List<Integer> linesfound = new ArrayList<>();
 				
-				for (int i = 0; i < CodeEditor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
-					IDELine l = CodeEditor.lines.get(i);
-					String s = new String(CodeEditor.toCharArray(l.getChars()));
+				for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
+					IDELine l = Main.editor.lines.get(i);
+					String s = new String(Main.editor.toCharArray(l.getChars()));
 					
 					if (s.contains(args[0])) linesfound.add(i);
 				}
@@ -928,21 +928,21 @@ public class CommandTerminal extends IDEComponent {
 				if (occurnum > linesfound.size())
 					occurnum = linesfound.size();
 				
-				CodeEditor.scrY = (linesfound.get(occurnum - 1) - 1) * (CodeEditor.FONT_SIZE);// + 4);
-				CodeEditor.cursorY = (linesfound.get(occurnum - 1) - 1) + 2;
+				Main.editor.scrY = (linesfound.get(occurnum - 1) - 1) * (Main.editor.FONT_SIZE);// + 4);
+				Main.editor.cursorY = (linesfound.get(occurnum - 1) - 1) + 2;
 				
 				break;
 				
 			case "searchsel":
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.isReadOnly) break;
 				
-				if (!CodeEditor.selecting) break;
+				if (!Main.editor.selecting) break;
 				
 				linesfound = new ArrayList<>();
 				
-				for (int i = CodeEditor.line1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
-					IDELine l = CodeEditor.lines.get(i);
-					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+				for (int i = Main.editor.line1; i < Main.editor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+					IDELine l = Main.editor.lines.get(i);
+					String s = new String(Main.editor.toCharArray(l.getChars())).toLowerCase();
 					
 					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
 				}
@@ -954,19 +954,19 @@ public class CommandTerminal extends IDEComponent {
 				if (occurnum > linesfound.size())
 					occurnum = linesfound.size();
 				
-				CodeEditor.scrY = (linesfound.get(occurnum - 1) - 1) * (CodeEditor.FONT_SIZE);// + 4);
-				CodeEditor.cursorY = (linesfound.get(occurnum - 1) - 1) + 2;
+				Main.editor.scrY = (linesfound.get(occurnum - 1) - 1) * (Main.editor.FONT_SIZE);// + 4);
+				Main.editor.cursorY = (linesfound.get(occurnum - 1) - 1) + 2;
 				
 				break;*/
 				
 			/*case "replace":						// Deprecated. Use Search/Replace.
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.isReadOnly) break;
 				
 				linesfound = new ArrayList<>();
 				
-				for (int i = 0; i < CodeEditor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
-					IDELine l = CodeEditor.lines.get(i);
-					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+				for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
+					IDELine l = Main.editor.lines.get(i);
+					String s = new String(Main.editor.toCharArray(l.getChars())).toLowerCase();
 					
 					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
 				}
@@ -974,27 +974,27 @@ public class CommandTerminal extends IDEComponent {
 				if (linesfound.size() == 0) return;
 				
 				for (Integer i : linesfound) {
-					String s = new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars()));
+					String s = new String(Main.editor.toCharArray(Main.editor.lines.get(i).getChars()));
 					
 					s = s.replaceAll(args[0], args[1]);
 					
 					Main.editor.register(new StringBuilder(s), i);
 				}
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
 				break;
 				
 			case "replacesel":
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.isReadOnly) break;
 				
-				if (!CodeEditor.selecting) break;
+				if (!Main.editor.selecting) break;
 				
 				linesfound = new ArrayList<>();
 				
-				for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
-					IDELine l = CodeEditor.lines.get(i);
-					String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+				for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+					IDELine l = Main.editor.lines.get(i);
+					String s = new String(Main.editor.toCharArray(l.getChars())).toLowerCase();
 					
 					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
 				}
@@ -1002,14 +1002,14 @@ public class CommandTerminal extends IDEComponent {
 				if (linesfound.size() == 0) return;
 				
 				for (Integer i : linesfound) {
-					String s = new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars()));
+					String s = new String(Main.editor.toCharArray(Main.editor.lines.get(i).getChars()));
 					
 					s = s.replaceAll(args[0], args[1]);
 					
 					Main.editor.register(new StringBuilder(s), i);
 				}
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
 				break;*/
 				
@@ -1018,7 +1018,7 @@ public class CommandTerminal extends IDEComponent {
 				line2 = Integer.parseInt(args[1]);
 				
 				index1 = 0;
-				index2 = CodeEditor.lines.get(line2 - 1).getChars().size(); // é -1 porque no array é base 0, aqui é base 1
+				index2 = Main.editor.lines.get(line2 - 1).getChars().size(); // é -1 porque no array é base 0, aqui é base 1
 				
 				selecting = true;
 				
@@ -1028,8 +1028,8 @@ public class CommandTerminal extends IDEComponent {
 		else if (args.length == 3) {
 			switch (com) {
 			case "gengetter":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
 				String[] strs = { };
 				
@@ -1054,29 +1054,29 @@ public class CommandTerminal extends IDEComponent {
 				for (int i = 0; i < strs.length - 1; i++) {
 					StringBuilder spaces = new StringBuilder();
 					
-					for (int j = 0; j < Main.editor.countChar(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())), ' '); j++)
+					for (int j = 0; j < Main.editor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
 						spaces.append(' ');
 					
-					CodeEditor.addNewLine(CodeEditor.cursorY - 1, spaces.toString());
+					Main.editor.addNewLine(Main.editor.cursorY - 1, spaces.toString());
 				}
 				
 				for (int i = 0; i < strs.length; i++) {
-					StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
+					StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get((Main.editor.cursorY - 1) + i).getChars())));
 					
 					b.append(strs[i]);
 					
-					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
+					Main.editor.register(b, (Main.editor.cursorY - 1) + i);
 				}
 				
-				//CodeEditor.cursorY += strs.length - 1;
+				//Main.editor.cursorY += strs.length - 1;
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
 				break;
 				
 			case "gensetter":
-				if (CodeEditor.editing == null) break;
-				if (CodeEditor.isReadOnly) break;
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
 				
 				String[] strss = { };
 				
@@ -1094,23 +1094,23 @@ public class CommandTerminal extends IDEComponent {
 				for (int i = 0; i < strss.length - 1; i++) {
 					StringBuilder spaces = new StringBuilder();
 					
-					for (int j = 0; j < Main.editor.countChar(new String(CodeEditor.toCharArray(CodeEditor.lines.get(CodeEditor.cursorY - 1).getChars())), ' '); j++)
+					for (int j = 0; j < Main.editor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
 						spaces.append(' ');
 					
-					CodeEditor.addNewLine(CodeEditor.cursorY - 1, spaces.toString());
+					Main.editor.addNewLine(Main.editor.cursorY - 1, spaces.toString());
 				}
 				
 				for (int i = 0; i < strss.length; i++) {
-					StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(CodeEditor.lines.get((CodeEditor.cursorY - 1) + i).getChars())));
+					StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get((Main.editor.cursorY - 1) + i).getChars())));
 					
 					b.append(strss[i]);
 					
-					Main.editor.register(b, (CodeEditor.cursorY - 1) + i);
+					Main.editor.register(b, (Main.editor.cursorY - 1) + i);
 				}
 				
-				//CodeEditor.cursorY += strss.length - 1;
+				//Main.editor.cursorY += strss.length - 1;
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
 				break;
 			}
@@ -1118,19 +1118,19 @@ public class CommandTerminal extends IDEComponent {
 		
 		new Thread() {
 			public void run() {
-				if (CodeEditor.editing != null && CodeEditor.editing.getRegent() != null && CodeEditor.editing.getRegent().getRegent() != null)
-				for (IDELine l : CodeEditor.lines) {
+				if (Main.editor.editing != null && Main.editor.editing.getRegent() != null && Main.editor.editing.getRegent().getRegent() != null)
+				for (IDELine l : Main.editor.lines) {
 					l.setFonts(
-							CodeEditor.automaticColor(
+							Main.editor.automaticColor(
 									CodeEditor.toCharArray(
-											l.getChars()), ListableFile.getFileExtension(CodeEditor.editing.getRegent().getRegent())));
+											l.getChars()), ListableFile.getFileExtension(Main.editor.editing.getRegent().getRegent())));
 				
 				}
 			}
 		}.start();
 		
 		//Main.writeFile(Main.settingsFile);
-		CodeEditor.setCursorWithinBounds();
+		Main.editor.setCursorWithinBounds();
 	}
 	
 	public void tick() {

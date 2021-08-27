@@ -106,7 +106,7 @@ public class SearchReplaceWindow extends JFrame {
 		rdbtnSelectedLines.setBounds(10, 147, 155, 23);
 		contentPane.add(rdbtnSelectedLines);
 		
-		rdbtnSelectedLines.setEnabled(CodeEditor.selecting);
+		rdbtnSelectedLines.setEnabled(Main.editor.selecting);
 		
 		ButtonGroup scope = new ButtonGroup();
 		scope.add(rdbtnEntireDocument);
@@ -156,8 +156,8 @@ public class SearchReplaceWindow extends JFrame {
 				List<Integer> linesfound = new ArrayList<>();
 				
 				if (!rdbtnSelectedLines.isSelected()) {
-					for (int i = 0; i < CodeEditor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
-						IDELine l = CodeEditor.lines.get(i);
+					for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
+						IDELine l = Main.editor.lines.get(i);
 						String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
 						
 						String text = chkCaseSensitive.isSelected() ? txbSearch.getText() : txbSearch.getText().toLowerCase();
@@ -166,8 +166,8 @@ public class SearchReplaceWindow extends JFrame {
 					}
 				}
 				else {
-					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
-						IDELine l = CodeEditor.lines.get(i);
+					for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+						IDELine l = Main.editor.lines.get(i);
 						String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
 						
 						String text = chkCaseSensitive.isSelected() ? txbSearch.getText() : txbSearch.getText().toLowerCase();
@@ -184,11 +184,11 @@ public class SearchReplaceWindow extends JFrame {
 				}
 				
 				try {
-					CodeEditor.cursorY = (linesfound.get(occurnum) - 1) + 2;
+					Main.editor.cursorY = (linesfound.get(occurnum) - 1) + 2;
 				} catch (IndexOutOfBoundsException f) {
 					occurnum = 0;
 					
-					CodeEditor.cursorY = (linesfound.get(occurnum) - 1) + 2;
+					Main.editor.cursorY = (linesfound.get(occurnum) - 1) + 2;
 					CommandTerminal.runCommand("gotocursor");
 					
 					CodeEditor.setSystemLook();
@@ -208,7 +208,7 @@ public class SearchReplaceWindow extends JFrame {
 		btnReplaceAll.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (CodeEditor.isReadOnly) return;
+				if (Main.editor.isReadOnly) return;
 				if (txbSearch.getText().equals("")) return;
 				
 				List<Integer> linesfound = new ArrayList<>();
@@ -217,16 +217,16 @@ public class SearchReplaceWindow extends JFrame {
 				String replText = txbReplace.getText();
 				
 				if (!rdbtnSelectedLines.isSelected()) {
-					for (int i = 0; i < CodeEditor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
-						IDELine l = CodeEditor.lines.get(i);
+					for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
+						IDELine l = Main.editor.lines.get(i);
 						String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
 						
 						if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
 					}
 				}
 				else {
-					for (int i = CodeEditor.line1 - 1; i < CodeEditor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
-						IDELine l = CodeEditor.lines.get(i);
+					for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+						IDELine l = Main.editor.lines.get(i);
 						String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
 						
 						if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
@@ -243,7 +243,7 @@ public class SearchReplaceWindow extends JFrame {
 				int count = 0;
 				
 				for (Integer i : linesfound) {
-					String s = new String(CodeEditor.toCharArray(CodeEditor.lines.get(i).getChars()));
+					String s = new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars()));
 					
 					s = s.replaceAll(text, replText);
 					
@@ -252,7 +252,7 @@ public class SearchReplaceWindow extends JFrame {
 					count++;
 				}
 				
-				CodeEditor.editing.setSaved(false);
+				Main.editor.editing.setSaved(false);
 				
 				CommandTerminal.runCommand("gotocursor");
 				
@@ -267,7 +267,7 @@ public class SearchReplaceWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CodeEditor.alreadyAddedFrame = false;
+				Main.editor.alreadyAddedFrame = false;
 				
 				active = false;
 			}
@@ -279,13 +279,13 @@ public class SearchReplaceWindow extends JFrame {
 		this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowDeactivated(WindowEvent e) {
-				//CodeEditor.searchWindow.setVisible(false);
-				//CodeEditor.alreadyAddedFrame = false;
+				//Main.editor.searchWindow.setVisible(false);
+				//Main.editor.alreadyAddedFrame = false;
 			}
 			
 			@Override
 			public void windowClosing(WindowEvent e) {
-				CodeEditor.alreadyAddedFrame = false;
+				Main.editor.alreadyAddedFrame = false;
 				active = false;
 			}
 		});
@@ -297,8 +297,8 @@ public class SearchReplaceWindow extends JFrame {
 				int keyCode = e.getKeyCode();
 				
 				if (keyCode == KeyEvent.VK_ESCAPE) {
-					CodeEditor.searchWindow.setVisible(false);
-					CodeEditor.alreadyAddedFrame = false;
+					Main.editor.searchWindow.setVisible(false);
+					Main.editor.alreadyAddedFrame = false;
 					active = false;
 				}
 				
@@ -315,8 +315,8 @@ public class SearchReplaceWindow extends JFrame {
 				int keyCode = e.getKeyCode();
 				
 				if (keyCode == KeyEvent.VK_ESCAPE) {
-					CodeEditor.searchWindow.setVisible(false);
-					CodeEditor.alreadyAddedFrame = false;
+					Main.editor.searchWindow.setVisible(false);
+					Main.editor.alreadyAddedFrame = false;
 					active = false;
 				}
 				
@@ -333,8 +333,8 @@ public class SearchReplaceWindow extends JFrame {
 				int keyCode = e.getKeyCode();
 				
 				if (keyCode == KeyEvent.VK_ESCAPE) {
-					CodeEditor.searchWindow.setVisible(false);
-					CodeEditor.alreadyAddedFrame = false;
+					Main.editor.searchWindow.setVisible(false);
+					Main.editor.alreadyAddedFrame = false;
 					active = false;
 				}
 				

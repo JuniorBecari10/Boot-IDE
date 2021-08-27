@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ide.codeeditor.CodeEditor;
 import ide.codeeditor.Tab;
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
@@ -109,24 +108,24 @@ public class DragListener implements DropTargetListener {
 							index++;
 						}
 		          
-				int lastX = CodeEditor.tabs.size() > 0 ? CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() : Tab.MIN_X;
+				int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() : Tab.MIN_X;
 	        	
 				if (!(files.get(0).getName().equalsIgnoreCase(".pdf") || files.get(0).getName().equalsIgnoreCase(".jar") || files.get(0).getName().equalsIgnoreCase(".iso") || files.get(0).getName().equalsIgnoreCase(".img") || files.get(0).getName().equalsIgnoreCase(".flp") || files.get(0).getName().equalsIgnoreCase(".class") || files.get(0).getName().equalsIgnoreCase(".exe") || files.get(0).getName().equalsIgnoreCase(".urna") || files.get(0).getName().equalsIgnoreCase(".save") || files.get(0).getName().equalsIgnoreCase(".docx") || files.get(0).getName().equalsIgnoreCase(".pptx") || files.get(0).getName().equalsIgnoreCase(".one") || files.get(0).getName().equalsIgnoreCase(".psd") || files.get(0).getName().equalsIgnoreCase(".aed") || files.get(0).getName().equalsIgnoreCase(".ai") || files.get(0).getName().equalsIgnoreCase(".indd") || files.get(0).getName().equalsIgnoreCase(".ini") || files.get(0).getName().equalsIgnoreCase(".dll") || files.get(0).getName().equalsIgnoreCase(".png") || files.get(0).getName().equalsIgnoreCase(".jpg") || files.get(0).getName().equalsIgnoreCase(".jpeg") || files.get(0).getName().equalsIgnoreCase(".gif") || files.get(0).getName().equalsIgnoreCase(".bmp") || files.get(0).getName().equalsIgnoreCase(".ico") || files.get(0).getName().equalsIgnoreCase(".webp") || files.get(0).getName().equalsIgnoreCase(".mp4") || files.get(0).getName().equalsIgnoreCase(".wmv") || files.get(0).getName().equalsIgnoreCase(".avi") || files.get(0).getName().equalsIgnoreCase(".wav") || files.get(0).getName().equalsIgnoreCase(".mp3") || files.get(0).getName().equalsIgnoreCase(".ogg") || files.get(0).getName().equalsIgnoreCase(".otf") || files.get(0).getName().equalsIgnoreCase(".ttf") || files.get(0).getName().equalsIgnoreCase(".woff") || files.get(0).getName().equalsIgnoreCase(".woff2") || files.get(0).getName().equalsIgnoreCase(".zip") || files.get(0).getName().equalsIgnoreCase(".rar") || files.get(0).getName().equalsIgnoreCase(".7z") || files.get(0).getName().equalsIgnoreCase(".bin"))) {
-		        	Tab toAdd = new Tab(CodeEditor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : Tab.MIN_X - Tab.WIDTH, ListableFile.searchListableFiles(files.get(0)));
+		        	Tab toAdd = new Tab(Main.editor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : Tab.MIN_X - Tab.WIDTH, ListableFile.searchListableFiles(files.get(0)));
 		        	
-	  				CodeEditor.cursorX = 0;
-	  				CodeEditor.cursorY = 1;
+	  				Main.editor.cursorX = 0;
+	  				Main.editor.cursorY = 1;
 	  				
-	  				CodeEditor.scrX = 0;
-	  				CodeEditor.scrY = 0;
+	  				Main.editor.scrX = 0;
+	  				Main.editor.scrY = 0;
 	  				
-		        	  	CodeEditor.editing = toAdd;
-		        	  	CodeEditor.tabs.add(toAdd);
+		        	  	Main.editor.editing = toAdd;
+		        	  	Main.editor.tabs.add(toAdd);
 						
 		        	  	new Thread() {
 							public void run() {
 								try {
-									CodeEditor.lines = CodeEditor.readFile(files.get(0));
+									Main.editor.lines = Main.editor.readFile(files.get(0));
 								} catch (IOException e) { // não suportado, se caiu aqui
 									return;
 								}

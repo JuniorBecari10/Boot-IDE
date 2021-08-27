@@ -263,24 +263,24 @@ public class Main implements Runnable, Tickable {
 						index++;
 					}
 	          
-			int lastX = CodeEditor.tabs.size() > 0 ? CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() : Tab.MIN_X;
+			int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() : Tab.MIN_X;
        	
 			if (!(file.getName().equalsIgnoreCase(".pdf") || file.getName().equalsIgnoreCase(".jar") || file.getName().equalsIgnoreCase(".iso") || file.getName().equalsIgnoreCase(".img") || file.getName().equalsIgnoreCase(".flp") || file.getName().equalsIgnoreCase(".class") || file.getName().equalsIgnoreCase(".exe") || file.getName().equalsIgnoreCase(".urna") || file.getName().equalsIgnoreCase(".save") || file.getName().equalsIgnoreCase(".docx") || file.getName().equalsIgnoreCase(".pptx") || file.getName().equalsIgnoreCase(".one") || file.getName().equalsIgnoreCase(".psd") || file.getName().equalsIgnoreCase(".aed") || file.getName().equalsIgnoreCase(".ai") || file.getName().equalsIgnoreCase(".indd") || file.getName().equalsIgnoreCase(".ini") || file.getName().equalsIgnoreCase(".dll") || file.getName().equalsIgnoreCase(".png") || file.getName().equalsIgnoreCase(".jpg") || file.getName().equalsIgnoreCase(".jpeg") || file.getName().equalsIgnoreCase(".gif") || file.getName().equalsIgnoreCase(".bmp") || file.getName().equalsIgnoreCase(".ico") || file.getName().equalsIgnoreCase(".webp") || file.getName().equalsIgnoreCase(".mp4") || file.getName().equalsIgnoreCase(".wmv") || file.getName().equalsIgnoreCase(".avi") || file.getName().equalsIgnoreCase(".wav") || file.getName().equalsIgnoreCase(".mp3") || file.getName().equalsIgnoreCase(".ogg") || file.getName().equalsIgnoreCase(".otf") || file.getName().equalsIgnoreCase(".ttf") || file.getName().equalsIgnoreCase(".woff") || file.getName().equalsIgnoreCase(".woff2") || file.getName().equalsIgnoreCase(".zip") || file.getName().equalsIgnoreCase(".rar") || file.getName().equalsIgnoreCase(".7z") || file.getName().equalsIgnoreCase(".bin"))) {
-	        	Tab toAdd = new Tab(CodeEditor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : Tab.MIN_X - Tab.WIDTH, ListableFile.searchListableFiles(file));
+	        	Tab toAdd = new Tab(Main.editor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : Tab.MIN_X - Tab.WIDTH, ListableFile.searchListableFiles(file));
 	        	
- 				CodeEditor.cursorX = 0;
- 				CodeEditor.cursorY = 1;
+ 				Main.editor.cursorX = 0;
+ 				Main.editor.cursorY = 1;
  				
- 				CodeEditor.scrX = 0;
- 				CodeEditor.scrY = 0;
+ 				Main.editor.scrX = 0;
+ 				Main.editor.scrY = 0;
  				
-	        	  	CodeEditor.editing = toAdd;
-	        	  	CodeEditor.tabs.add(toAdd);
+	        	  	Main.editor.editing = toAdd;
+	        	  	Main.editor.tabs.add(toAdd);
 					
 	        	  	new Thread() {
 						public void run() {
 							try {
-								CodeEditor.lines = CodeEditor.readFile(file);
+								Main.editor.lines = Main.editor.readFile(file);
 							} catch (IOException e) { // não suportado, se caiu aqui
 								return;
 							}
@@ -303,14 +303,14 @@ public class Main implements Runnable, Tickable {
 			
 			wr.write((baseFolder != null ? baseFolder.getPath() : "none") + "\n");
 			wr.write(conffile + "\n");
-			wr.write(CodeEditor.tabs.indexOf(CodeEditor.editing) + "\n");
-			wr.write(CodeEditor.scrX + "\n");
-			wr.write(CodeEditor.scrY + "\n");
-			wr.write(CodeEditor.tabScr + "\n");
+			wr.write(Main.editor.tabs.indexOf(Main.editor.editing) + "\n");
+			wr.write(Main.editor.scrX + "\n");
+			wr.write(Main.editor.scrY + "\n");
+			wr.write(Main.editor.tabScr + "\n");
 			
-			if (CodeEditor.tabs.size() > 0) {
-				for (int i = 0; i < CodeEditor.tabs.size(); i++) {
-					Tab t = CodeEditor.tabs.get(i);
+			if (Main.editor.tabs.size() > 0) {
+				for (int i = 0; i < Main.editor.tabs.size(); i++) {
+					Tab t = Main.editor.tabs.get(i);
 					
 					String s = t.getRegent().getRegent().getAbsolutePath().charAt(0) < 10 ? t.getRegent().getRegent().getAbsolutePath().substring(1) : t.getRegent().getRegent().getAbsolutePath();
 					
@@ -381,13 +381,13 @@ public class Main implements Runnable, Tickable {
 						tabindex = Integer.parseInt(s);
 					
 					else if (i == 3)
-						CodeEditor.scrX = Integer.parseInt(s);
+						Main.editor.scrX = Integer.parseInt(s);
 					
 					else if (i == 4)
-						CodeEditor.scrY = Integer.parseInt(s);
+						Main.editor.scrY = Integer.parseInt(s);
 					
 					else if (i == 5)
-						CodeEditor.tabScr = Integer.parseInt(s);
+						Main.editor.tabScr = Integer.parseInt(s);
 					
 					if (i > 5) {
 						//if (!ListableFile.isPath(s)) continue;
@@ -399,18 +399,18 @@ public class Main implements Runnable, Tickable {
 						
 						Tab t = new Tab((i - 4) * Tab.WIDTH, ListableFile.search(reg, par));
 						
-						CodeEditor.tabs.add(t);
+						Main.editor.tabs.add(t);
 					}
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 	    	
-	    	if (CodeEditor.tabs.size() > 0) {
-				CodeEditor.editing = CodeEditor.tabs.get(tabindex);
+	    	if (Main.editor.tabs.size() > 0) {
+				Main.editor.editing = Main.editor.tabs.get(tabindex);
 	    	
 		    	try {
-					CodeEditor.lines = CodeEditor.readFile(CodeEditor.tabs.get(tabindex).getRegent().getRegent());
+					Main.editor.lines = Main.editor.readFile(Main.editor.tabs.get(tabindex).getRegent().getRegent());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -474,8 +474,8 @@ public class Main implements Runnable, Tickable {
             c.render(g);
         
         if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))
-	        for (Tab t : CodeEditor.tabs) {
-				if (t.hovered() && CodeEditor.editing == t && t.getX() + CodeEditor.tabScr >= editor.getX() && !t.button.hovered()) { // por algum motivo é + e não -
+	        for (Tab t : Main.editor.tabs) {
+				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() && !t.button.hovered()) { // por algum motivo é + e não -
 					int index = t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0;
 					
 					int width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
@@ -493,7 +493,7 @@ public class Main implements Runnable, Tickable {
 							if (width < 470)
 								width = 470;
 					}
-					else if (CodeEditor.editing.isReadOnly) {
+					else if (Main.editor.editing.isReadOnly) {
 						if (lang == Language.PORT)
 							if (width < 480)
 								width = 480;
@@ -510,7 +510,7 @@ public class Main implements Runnable, Tickable {
 								width = 360;
 					}
 					
-					if (CodeEditor.editing.isReadOnly)
+					if (Main.editor.editing.isReadOnly)
 						height = 130;
 					
 					Rectangle intersection = new Rectangle(x, y, width, height).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
@@ -533,12 +533,12 @@ public class Main implements Runnable, Tickable {
 					else
 						Fonts.drawString(Texts.configFileLoaded, (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					
-					if (CodeEditor.codeHelpersOn)
+					if (Main.editor.codeHelpersOn)
 						Fonts.drawString(Texts.codeHelpersOn, (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					else
 						Fonts.drawString(Texts.codeHelpersOff, (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				
-					if (CodeEditor.editing.isReadOnly)
+					if (Main.editor.editing.isReadOnly)
 						Fonts.drawString(Texts.fileAsReadOnly, (x - 10) + 20, (y - 10)+ 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				}
 	        }
@@ -613,14 +613,14 @@ public class Main implements Runnable, Tickable {
 	        	if (WindowInput.isClosing()) {
 	        		writeFile(settingsFile);
 	        		
-		    		if (CodeEditor.editing != null) { // não for nulo
-		    			if (!CodeEditor.editing.isSaved()) { // não estiver salvo
+		    		if (Main.editor.editing != null) { // não for nulo
+		    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
 		    				String[] options = { Texts.yes, Texts.no, Texts.cancel };
 		    				
-		    				CodeEditor.setSystemLook();
-		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + CodeEditor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		    				Main.editor.setSystemLook();
+		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 		    				
-		    				if (selectedOption == 0) CodeEditor.editing.save();
+		    				if (selectedOption == 0) Main.editor.editing.save();
 		    				else if (selectedOption == 2) {
 		    					WindowInput.update();
 		    					
@@ -651,14 +651,14 @@ public class Main implements Runnable, Tickable {
 	        	if (WindowInput.isClosing()) {
 	        		writeFile(settingsFile);
 	        		
-		    		if (CodeEditor.editing != null) { // não for nulo
-		    			if (!CodeEditor.editing.isSaved()) { // não estiver salvo
+		    		if (Main.editor.editing != null) { // não for nulo
+		    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
 		    				String[] options = { Texts.yes, Texts.no, Texts.cancel };
 		    				
-		    				CodeEditor.setSystemLook();
-		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + CodeEditor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		    				Main.editor.setSystemLook();
+		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 		    				
-		    				if (selectedOption == 0) CodeEditor.editing.save();
+		    				if (selectedOption == 0) Main.editor.editing.save();
 		    				else if (selectedOption == 2) {
 		    					WindowInput.update();
 		    					
@@ -705,14 +705,14 @@ public class Main implements Runnable, Tickable {
     	        	if (WindowInput.isClosing()) {
     	        		writeFile(settingsFile);
     	        		
-    		    		if (CodeEditor.editing != null) { // não for nulo
-    		    			if (!CodeEditor.editing.isSaved()) { // não estiver salvo
+    		    		if (Main.editor.editing != null) { // não for nulo
+    		    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
     		    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
     		    				
     		    				CodeEditor.setSystemLook();
-    		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + CodeEditor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+    		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
     		    				
-    		    				if (selectedOption == 0) CodeEditor.editing.save();
+    		    				if (selectedOption == 0) Main.editor.editing.save();
     		    				else if (selectedOption == 2) {
     		    					WindowInput.update();
     		    					

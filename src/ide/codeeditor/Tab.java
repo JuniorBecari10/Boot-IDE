@@ -68,13 +68,13 @@ public class Tab extends IDEComponent implements Serializable {
 		if (ext.equalsIgnoreCase(".pdf") || ext.equalsIgnoreCase(".jar") || ext.equalsIgnoreCase(".iso") || ext.equalsIgnoreCase(".img") || ext.equalsIgnoreCase(".flp") || ext.equalsIgnoreCase(".class") || ext.equalsIgnoreCase(".exe") || ext.equalsIgnoreCase(".urna") || ext.equalsIgnoreCase(".save") || ext.equalsIgnoreCase(".docx") || ext.equalsIgnoreCase(".pptx") || ext.equalsIgnoreCase(".one") || ext.equalsIgnoreCase(".psd") || ext.equalsIgnoreCase(".aed") || ext.equalsIgnoreCase(".ai") || ext.equalsIgnoreCase(".indd") || ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".dll") || ext.equalsIgnoreCase(".png") || ext.equalsIgnoreCase(".jpg") || ext.equalsIgnoreCase(".jpeg") || ext.equalsIgnoreCase(".gif") || ext.equalsIgnoreCase(".bmp") || ext.equalsIgnoreCase(".ico") || ext.equalsIgnoreCase(".webp") || ext.equalsIgnoreCase(".mp4") || ext.equalsIgnoreCase(".wmv") || ext.equalsIgnoreCase(".avi") || ext.equalsIgnoreCase(".wav") || ext.equalsIgnoreCase(".mp3") || ext.equalsIgnoreCase(".ogg") || ext.equalsIgnoreCase(".otf") || ext.equalsIgnoreCase(".ttf") || ext.equalsIgnoreCase(".woff") || ext.equalsIgnoreCase(".woff2") || ext.equalsIgnoreCase(".zip") || ext.equalsIgnoreCase(".rar") || ext.equalsIgnoreCase(".7z") || ext.equalsIgnoreCase(".bin")) {
 			isReadOnly = true;
 			
-			CodeEditor.isReadOnly = true;
+			Main.editor.isReadOnly = true;
 		}
 	}
 	
 	@Override
     public boolean hovered() {
-		int x = this.x + CodeEditor.tabScr;
+		int x = this.x + Main.editor.tabScr;
 		
         Rectangle mouse = new Rectangle(MouseInput.getMouseX(), MouseInput.getMouseY(), 1, 1);
         Rectangle comp = new Rectangle(x, y, width, height);
@@ -110,12 +110,12 @@ public class Tab extends IDEComponent implements Serializable {
 	 * Fecha essa Tab.
 	 */
 	public void close() {
-        		if (CodeEditor.editing != null) { // não for nulo
-	    			if (!CodeEditor.editing.isSaved()) { // não estiver salvo
+        		if (Main.editor.editing != null) { // não for nulo
+	    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
 	    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
 	    				
 	    				CodeEditor.setSystemLook();
-	    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + CodeEditor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+	    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 	    				
 	    				if (selectedOption == 0) save();
 	    				else if (selectedOption == 2) {
@@ -128,35 +128,35 @@ public class Tab extends IDEComponent implements Serializable {
         
         RightClickOption.removeAllRightClickOptions();
 		
-		CodeEditor.isMultilineCommenting = false; // TODO closeother reseta o cursor
-		CodeEditor.isAnotherIteration = false;
-		CodeEditor.foundExt = false;
+		Main.editor.isMultilineCommenting = false; // TODO closeother reseta o cursor
+		Main.editor.isAnotherIteration = false;
+		Main.editor.foundExt = false;
 		
-		CodeEditor.toRemove.add(this);
-		CodeEditor.lines.clear();
+		Main.editor.toRemove.add(this);
+		Main.editor.lines.clear();
 		
-		CodeEditor.selecting = false;
+		Main.editor.selecting = false;
 		
-		if (CodeEditor.tabs.size() == 1) {
-			CodeEditor.editing = null;
+		if (Main.editor.tabs.size() == 1) {
+			Main.editor.editing = null;
 			
 			return;
 		}
 		
-		CodeEditor.tabScr = (CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() + CodeEditor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? CodeEditor.tabScr : CodeEditor.tabScr + 203;
+		Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
 		
-		Tab next = CodeEditor.tabs.indexOf(this) == 0 ? CodeEditor.tabs.get(1) : CodeEditor.tabs.get(CodeEditor.tabs.indexOf(this) - 1);
+		Tab next = Main.editor.tabs.indexOf(this) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1);
 		
-		if (!CodeEditor.toRemove.get(0).equals(this))
+		if (!Main.editor.toRemove.get(0).equals(this))
 			next = this;
 		
-		CodeEditor.editing = next;
+		Main.editor.editing = next;
 		
-		CodeEditor.cursorX = 0;
-		CodeEditor.cursorY = 0;
+		Main.editor.cursorX = 0;
+		Main.editor.cursorY = 0;
 		
 		try {
-			CodeEditor.lines = CodeEditor.readFile(next.getRegent().getRegent());
+			Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -166,12 +166,12 @@ public class Tab extends IDEComponent implements Serializable {
 	 * Salvar Arquivo
 	 */
 	public void save() {
-		if (isReadOnly || CodeEditor.lines.isEmpty() || CodeEditor.lines == null) return;
+		if (isReadOnly || Main.editor.lines.isEmpty() || Main.editor.lines == null) return;
 		
 		try {
 			BufferedWriter w = Files.newBufferedWriter(regent.getRegent().toPath(), StandardCharsets.UTF_8); // precisa escrever em utf-8 tbm!!
 			
-			for (IDELine i : CodeEditor.lines) {
+			for (IDELine i : Main.editor.lines) {
 				if (i == null) continue;
 				
 				StringBuilder sb = new StringBuilder();
@@ -201,9 +201,9 @@ public class Tab extends IDEComponent implements Serializable {
 			break;
 			
 		case "all":
-			CodeEditor.tabs.forEach((e) -> e.close());
+			Main.editor.tabs.forEach((e) -> e.close());
 			
-			CodeEditor.editing = null;
+			Main.editor.editing = null;
 			break;
 			
 		case "save":
@@ -266,36 +266,36 @@ public class Tab extends IDEComponent implements Serializable {
 			break;
 			
 		case "closeother":
-			for (Tab t : CodeEditor.tabs)
+			for (Tab t : Main.editor.tabs)
 				if (t != this) t.close();
 			
-			CodeEditor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
+			Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
 			
-			CodeEditor.editing = this;
+			Main.editor.editing = this;
 			
-			CodeEditor.isMultilineCommenting = false;
-			CodeEditor.isAnotherIteration = false;
-			CodeEditor.foundExt = false;
+			Main.editor.isMultilineCommenting = false;
+			Main.editor.isAnotherIteration = false;
+			Main.editor.foundExt = false;
 			
-			CodeEditor.tabScr = 0;
+			Main.editor.tabScr = 0;
 			
 			try {
-				CodeEditor.lines = CodeEditor.readFile(regent.getRegent());
+				Main.editor.lines = Main.editor.readFile(regent.getRegent());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
-			CodeEditor.cursorX = 0;
-			CodeEditor.cursorY = 1;
+			Main.editor.cursorX = 0;
+			Main.editor.cursorY = 1;
 			
-			CodeEditor.scrX = scrX;
-			CodeEditor.scrY = scrY;
+			Main.editor.scrX = scrX;
+			Main.editor.scrY = scrY;
 			
 			break;
 			
 		case "alternate":
-			CodeEditor.alternateTabsMode = true;
-			CodeEditor.exchanging = this;
+			Main.editor.alternateTabsMode = true;
+			Main.editor.exchanging = this;
 			
 			break;
 		}
@@ -333,86 +333,89 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		MIN_X = CommandTerminal.expOff ? -WIDTH : 77;	// -WIDTH é um macete kkk
 		
-		int x = this.x + CodeEditor.tabScr;
+		int x = this.x + Main.editor.tabScr;
 		
-		if (CodeEditor.tabs.indexOf(this) - 1 > -1)
-			x = CodeEditor.tabs.get(CodeEditor.tabs.indexOf(this) - 1).getX() + WIDTH + 3;
+		if (Main.editor.tabs.indexOf(this) - 1 > -1)
+			x = Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1).getX() + WIDTH + 3;
 		else
 			x = Tab.MIN_X + WIDTH + 3;
 		
-		button.setX(((this.x + WIDTH) - 20) + CodeEditor.tabScr);
+		button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
 		button.tick();
 		
-		if (CodeEditor.editing == this) {
-			scrX = CodeEditor.scrX; // TODO
-			scrY = CodeEditor.scrY;
+		if (Main.editor.editing == this) {
+			scrX = Main.editor.scrX; // TODO
+			scrY = Main.editor.scrY;
 		}
 		
-		if (leftClicked() && !button.leftClicked() && !CodeEditor.alternateTabsMode) {
-			CodeEditor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
+		if (!regent.getRegent().exists()) close();
+		
+		if (leftClicked() && !button.leftClicked() && !Main.editor.alternateTabsMode) {
+			if (Main.editor.editing != null)
+				Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
 			
-			CodeEditor.editing = this;
+			Main.editor.editing = this;
 			
-			CodeEditor.isMultilineCommenting = false;
-			CodeEditor.isAnotherIteration = false;
-			CodeEditor.foundExt = false;
+			Main.editor.isMultilineCommenting = false;
+			Main.editor.isAnotherIteration = false;
+			Main.editor.foundExt = false;
 			
-			if (CodeEditor.searchWindow != null) {
-				CodeEditor.searchWindow.setVisible(false);
-				CodeEditor.alreadyAddedFrame = false;
+			if (Main.editor.searchWindow != null) {
+				Main.editor.searchWindow.setVisible(false);
+				Main.editor.alreadyAddedFrame = false;
 				SearchReplaceWindow.active = false;
 			}
 			
 			try {
-				CodeEditor.lines = CodeEditor.readFile(regent.getRegent());
+				Main.editor.lines = Main.editor.readFile(regent.getRegent());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
-			CodeEditor.cursorX = 0;
-			CodeEditor.cursorY = 1;
+			Main.editor.cursorX = 0;
+			Main.editor.cursorY = 1;
 			
-			CodeEditor.scrX = scrX;
-			CodeEditor.scrY = scrY;
+			Main.editor.scrX = scrX;
+			Main.editor.scrY = scrY;
 			
-			//if (CodeEditor.scrY > CodeEditor.lines.size() * (CodeEditor.FONT_SIZE / 4))
+			//if (Main.editor.scrY > Main.editor.lines.size() * (Main.editor.FONT_SIZE / 4))
 				//CommandTerminal.runCommand("gotocursor");
 			
 			save();
 		}
 		
-		if (leftClicked() && !button.leftClicked() && CodeEditor.alternateTabsMode) {
-			CodeEditor.exchanged = this;
+		if (leftClicked() && !button.leftClicked() && Main.editor.alternateTabsMode) {
+			Main.editor.exchanged = this;
 			
-			CommandTerminal.runCommand("ordertab " + CodeEditor.tabs.indexOf(CodeEditor.exchanging) + " " + CodeEditor.tabs.indexOf(CodeEditor.exchanged));
+			CommandTerminal.runCommand("ordertab " + Main.editor.tabs.indexOf(Main.editor.exchanging) + " " + Main.editor.tabs.indexOf(Main.editor.exchanged));
 			
-			CodeEditor.alternateTabsMode = false;
+			Main.editor.alternateTabsMode = false;
 			
-			CodeEditor.exchanging = null;
-			CodeEditor.exchanged = null;
+			Main.editor.exchanging = null;
+			Main.editor.exchanged = null;
 			
 			return;
 		}
 		
-		if (rightClicked() && !CodeEditor.alternateTabsMode) {
+		if (rightClicked() && !Main.editor.alternateTabsMode) {
 			MouseInput.updateMouse();
 			
 			int width = Main.lang == Language.PORT ? 305 : 260;
 			
-			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3, width, Texts.closeTab, (s) -> execute(s), "this");
-			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 30, width, Texts.closeAllTabs, (s) -> execute(s), "all");
-			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 60, width, Texts.closeOtherTabs, (s) -> execute(s), "closeother");
-			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 90, width, Texts.save, (s) -> execute(s), "save");
-			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 120, width, Texts.openBootExplorer, (s) -> execute(s), "showexp");
-			IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 150, width, Texts.orderTabs, (s) -> execute(s), "alternate");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3, width, Texts.closeTab, (s) -> execute(s), "this");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 30, width, Texts.closeAllTabs, (s) -> execute(s), "all");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 60, width, Texts.closeOtherTabs, (s) -> execute(s), "closeother");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 90, width, Texts.save, (s) -> execute(s), "save");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 120, width, Texts.openBootExplorer, (s) -> execute(s), "showexp");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 150, width, Texts.orderTabs, (s) -> execute(s), "alternate");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			if ((ListableFile.getFileExtension(regent.getRegent()).equals(".bat") || ListableFile.getFileExtension(regent.getRegent()).equals(".cmd") || ListableFile.getFileExtension(regent.getRegent()).equals(".com") || ListableFile.getFileExtension(regent.getRegent()).equals(".ps1")) && isWindows)
-				IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 180, width, Texts.execute, (s) -> execute(s), "run");
+				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 180, width, Texts.execute, (s) -> execute(s), "run");
 			
 			if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && !isWindows)
-				IDEComponent.addRightClickOption(x + CodeEditor.tabScr, y + height + 3 + 180, width, Texts.execute, (s) -> execute(s), "runbash");
+				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 180, width, Texts.execute, (s) -> execute(s), "runbash");
 		}
 		
 		if (isSaved)
@@ -426,11 +429,11 @@ public class Tab extends IDEComponent implements Serializable {
 	public void render(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		int x = this.x + CodeEditor.tabScr;
+		int x = this.x + Main.editor.tabScr;
 		
 		if (x < Main.editor.getX()) return;
 		
-		Color c = CodeEditor.editing == this ? Colors.textLight : Colors.explorerLight;
+		Color c = Main.editor.editing == this ? Colors.textLight : Colors.explorerLight;
 		Color bg = hovered() ? Colors.explorerLight : Colors.explorer;
 		
 		g.setColor(bg);
@@ -466,7 +469,7 @@ public class Tab extends IDEComponent implements Serializable {
 		}
 		g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 3, Y + 1, HEIGHT, HEIGHT, null);
 		
-		/*if (CodeEditor.alternateTabsMode && CodeEditor.exchanging == this) {
+		/*if (Main.editor.alternateTabsMode && Main.editor.exchanging == this) {
 			int xdr = (MouseInput.getMouseX() - WIDTH) - 10;
 			int ydr = MouseInput.getMouseY();
 			

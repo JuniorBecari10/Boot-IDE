@@ -8,11 +8,11 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import ide.codeeditor.CodeEditor;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
+import ide.main.Main;
 import ide.util.Colors;
 
 public class RightClickOption extends IDEComponent {
@@ -77,7 +77,7 @@ public class RightClickOption extends IDEComponent {
 	}
 	
 	public static boolean isAutoCompleteActive() {
-		for (RightClickOption r : CodeEditor.autocompletes)
+		for (RightClickOption r : Main.editor.autocompletes)
 			if (r.isAutoComplete) return true;
 		
 		return false;
@@ -89,7 +89,7 @@ public class RightClickOption extends IDEComponent {
 				if (i.hovered()) return true;
 		
 		
-		for (RightClickOption r : CodeEditor.autocompletes)
+		for (RightClickOption r : Main.editor.autocompletes)
 			if (r.isAutoComplete)
 				if (r.hovered()) return true;
 		
@@ -101,9 +101,9 @@ public class RightClickOption extends IDEComponent {
 			if (i instanceof RightClickOption)
 				IDEComponent.toRemove.add(i);
 		
-		for (RightClickOption r : CodeEditor.autocompletes)
+		for (RightClickOption r : Main.editor.autocompletes)
 			if (r.isAutoComplete)
-				CodeEditor.toRemoveAutoCompletes.add(r);
+				Main.editor.toRemoveAutoCompletes.add(r);
 			
 	}
 	
@@ -129,12 +129,12 @@ public class RightClickOption extends IDEComponent {
 					IDEComponent.toRemove.add(i);
 			
 			if (isAutoComplete) {
-				for (RightClickOption r : CodeEditor.autocompletes)
-					CodeEditor.toRemoveAutoCompletes.add(r);
+				for (RightClickOption r : Main.editor.autocompletes)
+					Main.editor.toRemoveAutoCompletes.add(r);
 			}
 		}
 		
-		/*if (CodeEditor.autocompletes.indexOf(this) == CodeEditor.autocompleteindex && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+		/*if (Main.editor.autocompletes.indexOf(this) == Main.editor.autocompleteindex && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 			command.execute(clickArg);
 			
 			for (IDEComponent i : IDEComponent.components)
@@ -142,8 +142,8 @@ public class RightClickOption extends IDEComponent {
 					IDEComponent.toRemove.add(i);
 			
 			if (isAutoComplete) {
-				for (RightClickOption r : CodeEditor.autocompletes)
-					CodeEditor.toRemoveAutoCompletes.add(r);
+				for (RightClickOption r : Main.editor.autocompletes)
+					Main.editor.toRemoveAutoCompletes.add(r);
 			}
 		}*/
 	}
@@ -157,7 +157,7 @@ public class RightClickOption extends IDEComponent {
 		//System.out.println(listRightClicks(true).indexOf(this)); // terminar
 		
 		if (isAutoComplete)
-			c = CodeEditor.autocompletes.indexOf(this) == CodeEditor.autocompleteindex ? Colors.explorerLight : d;
+			c = Main.editor.autocompletes.indexOf(this) == Main.editor.autocompleteindex ? Colors.explorerLight : d;
 		
 		g.setColor(c);
 		g.fillRect(x, y, width, HEIGHT);

@@ -56,35 +56,41 @@ public class CodeEditor extends IDEComponent {
 	
 	public static volatile int FONT_SIZE = 16; // 18, 16 (Padrão: 16)
 	
-	public static Tab editing;
+	public Tab editing;
 	
-	public static boolean isMultilineCommenting = false;
+	public boolean isMultilineCommenting = false;
 	
-	public static boolean selecting;
+	public boolean selecting;
 
-	public static int line1, line2;
-	public static int index1, index2;
+	public int line1, line2;
+	public int index1, index2;
 	
-	public static boolean alternateTabsMode = false;
+	public boolean alternateTabsMode = false;
 	
-	public static Tab exchanging;
-	public static Tab exchanged;
+	public Tab exchanging;
+	public Tab exchanged;
 	
-	public static boolean isCssPart;
-	public static boolean isJSPart;
-	public static boolean isPhpPart;
+	public boolean isCssPart;
+	public boolean isJSPart;
+	public boolean isPhpPart;
 	
-	private static boolean keyTimeout;
+	private boolean keyTimeout;
 	
-	public static int keyWait = 0, maxKeyWait = 5;
+	public int keyWait = 0, maxKeyWait = 5;
 	
-	public static boolean codeHelpersOn = true;
+	public boolean codeHelpersOn = true;
 	
-	public static String codeType = "";
-	public static String extType = "";
+	public String codeType = "";
+	public String extType = "";
 	
-	public static boolean isAnotherIteration = false;
-	public static boolean foundExt = false;
+	public boolean isAnotherIteration = false;
+	public boolean foundExt = false;
+	
+	public int cursorX = 0;
+	public int cursorY = 1;
+	
+	public int scrX = 0;
+	public int scrY = 0;
 	
 	private int realcx, realcy; // c = cursor
 	private int drawcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, drawcy = MIN_Y + cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;
@@ -92,28 +98,22 @@ public class CodeEditor extends IDEComponent {
 	private PressedAccent prAcc;
 	private boolean pressedAccent = false;
 	
-	public static List<IDELine> lines = new ArrayList<>();
-	public static List<IDELine> linesToRemove = new ArrayList<>();
+	public List<IDELine> lines = new ArrayList<>();
+	public List<IDELine> linesToRemove = new ArrayList<>();
 	
 	/*public static Stack<List<IDELine>> undo = new Stack<>();
 	public static Stack<List<IDELine>> redo = new Stack<>();*/
 	
 	// Undo e Redo não estão disponíveis, talvez na v4.0
 	
-	public static int cursorX = 0;
-	public static int cursorY = 1;
+	public int tabScr = 0;
 	
-	public static int scrX = 0;
-	public static int scrY = 0;
+	public List<Tab> tabs;
+	public List<Tab> toAdd;
+	public List<Tab> toRemove;
 	
-	public static int tabScr = 0;
-	
-	public static List<Tab> tabs;
-	public static List<Tab> toAdd;
-	public static List<Tab> toRemove;
-	
-	public static SearchReplaceWindow searchWindow;
-	public static boolean alreadyAddedFrame = false;
+	public SearchReplaceWindow searchWindow;
+	public boolean alreadyAddedFrame = false;
 	
 	//public static BufferedImage gradient;
 	
@@ -123,25 +123,25 @@ public class CodeEditor extends IDEComponent {
 	
 	private boolean showCursor;
 	
-	private static Thread cursorThread;
-	private static Animation cursor;
+	private Thread cursorThread;
+	private Animation cursor;
 	
-	public static int mx;
-	public static int my;
+	public int mx;
+	public int my;
 	
-	public static boolean isReadOnly = false;
+	public boolean isReadOnly = false;
 	
-	public static List<String> autocomplete = new ArrayList<>();
-	public static String wordSinceSpace = "";
+	public List<String> autocomplete = new ArrayList<>();
+	public String wordSinceSpace = "";
 	
-	public static int autocompleteindex = 0;
+	public int autocompleteindex = 0;
 	
-	public static List<AutoComplete> autocompleteadds = new ArrayList<>();
-	public static List<AutoComplete> addautocompleteadds = new ArrayList<>();
+	public List<AutoComplete> autocompleteadds = new ArrayList<>();
+	public List<AutoComplete> addautocompleteadds = new ArrayList<>();
 	
-	public static List<RightClickOption> autocompletes = new ArrayList<>();
-	public static List<RightClickOption> toAddAutoCompletes = new ArrayList<>();
-	public static List<RightClickOption> toRemoveAutoCompletes = new ArrayList<>();
+	public List<RightClickOption> autocompletes = new ArrayList<>();
+	public List<RightClickOption> toAddAutoCompletes = new ArrayList<>();
+	public List<RightClickOption> toRemoveAutoCompletes = new ArrayList<>();
 	
 	///
 	
@@ -154,9 +154,9 @@ public class CodeEditor extends IDEComponent {
 	
 	///////
 	
-	private static String[] syms = { "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`", "´", "^", "~" };
+	public static final String[] syms = { "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`", "´", "^", "~" };
 	
-	private static String[] loremWords = { "dolor", "sit", "amet", "consectetur",
+	public static final String[] loremWords = { "dolor", "sit", "amet", "consectetur",
 			"adipiscing", "elit", "curabitur", "vel", "hendrerit", "libero",
 			"eleifend", "blandit", "nunc", "ornare", "odio", "ut",
 			"orci", "gravida", "imperdiet", "nullam", "purus", "lacinia",
@@ -187,14 +187,14 @@ public class CodeEditor extends IDEComponent {
 			"netus", "fames", "quisque", "euismod", "curabitur", "lectus",
 			"elementum", "tempor", "risus", "cras" };
 	
-	private static String[] javaKeys = { "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
+	public static final String[] javaKeys = { "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
 			"continue", "default", "do", "double", "else", "enum", "extends", "final", "finally", "float",
 			"for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long", "native",
 			"new", "package", "private", "protected", "public", "return", "short", "static", "strictfp", "super",
 			"switch", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile", "while",
 			"true", "false", "null", "yield" };
 	
-	private static String[] tags = { "<!--", "<!doctype", "<?php", "<!DOCTYPE", "<a", "<abbr", "<acronym", "<address", "<applet", "<area", "<article",
+	public static final String[] tags = { "<!--", "<!doctype", "<?php", "<!DOCTYPE", "<a", "<abbr", "<acronym", "<address", "<applet", "<area", "<article",
 			"<aside", "<audio", "<b", "<base", "<basefont", "<bdi", "<bdo", "<big", "<blockquote", "<body", "<br", "<button",
 			"<canvas", "<caption", "<center", "<cite", "<code", "<col", "<colgroup", "<data", "<datalist", "<dd", "<del",
 			"<details", "<dfn", "<dialog", "<dir", "<div", "<dl", "<dt", "<em", "<embed", "<fieldset", "<figcaption", "<figure",
@@ -217,7 +217,7 @@ public class CodeEditor extends IDEComponent {
 			"</tbody", "</td", "</template", "</textarea", "</tfoot", "</th", "</thead", "</time", "</title", "</tr", "</track", "</tt",
 			"</u", "</ul", "</var", "</video", "</wbr", "</applet" };
 	
-	private static String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+	public static final String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
 			  "1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "0a", // hex
 			  "1b", "2b", "3b", "4b", "5b", "6b", "7b", "8b", "9b", "0b",
 			  "1c", "2c", "3c", "4c", "5c", "6c", "7c", "8c", "9c", "0c",
@@ -238,7 +238,7 @@ public class CodeEditor extends IDEComponent {
 			  "1H", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "0H"
 			  };
 	
-	private static String[] phpKeys = { "abstract", "and", "as", "break", "callable", "case", "catch", "class", "clone",
+	public static final String[] phpKeys = { "abstract", "and", "as", "break", "callable", "case", "catch", "class", "clone",
 			"const", "continue", "declare", "default", "do", "echo", "else", "elseif", "enddeclare", "endfor",
 			"endforeach", "endif", "endswitch", "endwhile", "extends", "final", "finally", "fn", "for", "foreach",
 			"function", "global", "goto", "if", "implements", "include", "include_once", "instanceof", "insteadof",
@@ -247,7 +247,7 @@ public class CodeEditor extends IDEComponent {
 			"yield from", "__CLASS__", "__DIR__", "__FILE__", "__FUNCTION__", "__LINE__", "__METHOD__", "__NAMESPACE__",
 			"__TRAIT__" };
 	
-	private static String[] jsKeys = { "abstract", "arguments", "await", "boolean", "break", "byte", "case", "catch",
+	public static final String[] jsKeys = { "abstract", "arguments", "await", "boolean", "break", "byte", "case", "catch",
 			"char", "class", "const", "continue", "debugger", "default", "delete", "do", "double", "else",
 			"enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function",
 			"goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long",
@@ -256,7 +256,7 @@ public class CodeEditor extends IDEComponent {
 			"var", "void", "volatile", "while", "with", "yield", "undefined", "of", "async", "window", "document",
 			"console", "as", "from", "navigator" };
 	
-	private static String[] cssTags = { "a", "abbr", "acronym", "address", "applet", "area", "article",
+	public static final String[] cssTags = { "a", "abbr", "acronym", "address", "applet", "area", "article",
 			"aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button",
 			"canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del",
 			"details", "dfn", "dialog", "dir", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure",
@@ -270,7 +270,7 @@ public class CodeEditor extends IDEComponent {
 			"user", "select", "drag" /* TODO colocar mais desses ultimos */, "deg", "rad"
 	};
 	
-	private static String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
+	public static final String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
 			"animation-duration", "animation-fill-mode", "animation-iteration-count", "animation-name",
 			"animation-play-state", "animation-timing-function", "backface-visibility", "background",
 			"background-attachment", "background-blend-mode", "background-clip", "background-color",
@@ -312,15 +312,15 @@ public class CodeEditor extends IDEComponent {
 			"visibility", "white-space", "widows", "width", "word-break", "word-spacing", "word-wrap",
 			"writing-mode", "z-index" };
 	
-	private static String[] units = { "px", "em", "rem", "cm", "mm", "in", "pt", "pc", "ex", "ch", "vw", "vh", "vmin", "vmax" };
+	public static final String[] units = { "px", "em", "rem", "cm", "mm", "in", "pt", "pc", "ex", "ch", "vw", "vh", "vmin", "vmax" };
 	
-	private static String[] pyKeys = { "and", "as", "assert", "break", "class",
+	public static final String[] pyKeys = { "and", "as", "assert", "break", "class",
 			"continue", "def", "del", "elif", "else", "except", "False",
 			"finally", "for", "from", "global", "if", "import", "in", "is",
 			"lambda", "None", "nonlocal", "not", "or", "pass", "raise", "return", "super",
 			"True", "try", "while", "with", "yield", "self", "async", "await", "of", "str", "int", "float", "complex", "list", "tuple", "dict", "set", "frozenset", "bool", "bytes", "bytearray", "memoryview" };
 	
-	private static String[] dartKeys = { "abstract", "else", "import", "super", "as", "enum", "in",
+	public static final String[] dartKeys = { "abstract", "else", "import", "super", "as", "enum", "in",
 			"switch", "assert", "export", "interface", "sync", "async", "extends", "is",
 			"this", "await", "extension", "library", "throw", "break", "external", "mixin",
 			"true", "case", "factory", "new", "try", "class", "final", "catch", "false",
@@ -329,21 +329,21 @@ public class CodeEditor extends IDEComponent {
 			"get", "return", "yield", "deferred", "hide", "set", "do", "if", "show", "dynamic",
 			"implements", "static" };
 	
-	private static String[] ldKeys = { "ENTRY", "OUTPUT_FORMAT", "STARTUP", "SEARCH_DIR", "INPUT", "OUTPUT",
+	public static final String[] ldKeys = { "ENTRY", "OUTPUT_FORMAT", "STARTUP", "SEARCH_DIR", "INPUT", "OUTPUT",
 			"MEMORY", "SECTIONS", "KEEP" };
 	
-	private static String[] pasKeys = { "and", "begin", "boolean", "break", "byte", "continue", "div", "do", "double",
+	public static final String[] pasKeys = { "and", "begin", "boolean", "break", "byte", "continue", "div", "do", "double",
 			"else", "end", "false", "if", "integer", "longint", "mod", "not", "or", "repeat", "shl",
 			"shortint", "shr", "single", "then", "true", "until", "while", "word", "xor", "function" };
 	
-	private static String[] cKeys = { "auto", "break", "case", "char", "const",
+	public static final String[] cKeys = { "auto", "break", "case", "char", "const",
 			"continue", "default", "do", "double", "else", "enum", "extern",
 			"float", "for", "goto", "if", "int", "long", "register", "return",
 			"short", "signed", "sizeof", "static", "struct", "switch", "typedef",
 			"union", "unsigned", "void", "volatile", "while", "true", "false", "null", "include",
 			"bool", "duint", "uint16_t" };
 	
-	private static String[] cppKeys = { "auto", "break", "case", "char", "const",
+	public static final String[] cppKeys = { "auto", "break", "case", "char", "const",
 			"continue", "default", "do", "double", "else", "enum", "extern",
 			"float", "for", "goto", "if", "int", "long", "register", "return",
 			"short", "signed", "sizeof", "static", "struct", "switch", "typedef",
@@ -355,7 +355,7 @@ public class CodeEditor extends IDEComponent {
 			"wchar_t", "include", "define", "string", "ifdef", "ifndef", "error", "pragma", "endif",
 			"override", "std" };
 	
-	private static String[] csKeys = { "abstract", "async", "const", "event", "extern", "new",
+	public static final String[] csKeys = { "abstract", "async", "const", "event", "extern", "new",
 			"override", "partial", "readonly", "sealed", "static", "unsafe", "virtual",
 			"volatile", "public", "private", "internal", "protected", "if", "else", "switch",
 			"case", "do", "for", "foreach", "in", "while", "break", "continue", "default", "goto",
@@ -365,10 +365,10 @@ public class CodeEditor extends IDEComponent {
 			"char", "class", "decimal", "double", "enum", "float", "int", "long", "sbyte", "short", "string", "super",
 			"struct", "uint", "ulong", "ushort", "add", "var", "dynamic", "global", "set", "namespace", "object", "as", "get" };
 	
-	private static String[] rKeys = { "if", "else", "repeat", "while", "function", "for", "in", "next", "break",
+	public static final String[] rKeys = { "if", "else", "repeat", "while", "function", "for", "in", "next", "break",
 			"TRUE", "FALSE", "NULL", "Inf", "NaN", "NA", "NA_integer", "NA_real", "NA_complex", "NA_character" };
 	
-	private static String[] batCom = { "ver", "assoc", "cd", "cls", "copy", "del", "dir", "date",
+	public static final String[] batCom = { "ver", "assoc", "cd", "cls", "copy", "del", "dir", "date",
 			"echo", "@echo", "exit", "md", "move", "path", "pause", "prompt", "rd",
 			"rem", "start", "time", "type", "on", "vol", "attrib", "chkdsk", "choice", "cmd",
 			"comp", "convert", "driverquery", "expand", "find", "format", "help", "ipconfig",
@@ -386,24 +386,24 @@ public class CodeEditor extends IDEComponent {
 			"JAVA", "JAVAC", "JAVAW", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON", "LUA", "BIN" };
 	
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
-	private static String[] extensions = { ".java", ".c", ".cpp", ".cs", ".py", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
+	public static final String[] extensions = { ".java", ".c", ".cpp", ".cs", ".py", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
 			".html", ".htm", ".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp",
 			".JAVA", ".C", ".CPP", ".CS", ".PY", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".GO", ".R", ".PL", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
 			".HTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP"};
 	
-	private static String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
+	public static final String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
 			"false", "for", "function", "if", "in", "local", "nil",
 			"not", "or", "repeat", "return", "then", "true", "until", "while",
 			"os", "io", "math", "string", "require", "table", "debug" };
 	
-	private static String[] zigKeys = { "align", "allowzero", "and", "anyframe", "anytype", "asm", "async", "await",
+	public static final String[] zigKeys = { "align", "allowzero", "and", "anyframe", "anytype", "asm", "async", "await",
 			"break", "catch", "comptime", "const", "continue", "defer", "else", "enum", "errdefer",
 			"error", "export", "extern", "false", "fn", "for", "if", "inline", "noalias",
 			"nosuspend", "null", "or", "orelse", "packed", "pub", "resume", "return", "linksection",
 			"struct", "suspend", "switch", "test", "threadlocal", "true", "try", "undefined",
 			"union", "unreachable", "usingnamespace", "var", "volatile", "while" };
 	
-	private static String[] sqlKeys = { "ADD", "ADD CONSTRAINT", "ALTER", "ALTER COLUMN", "ALTER TABLE",
+	public static final String[] sqlKeys = { "ADD", "ADD CONSTRAINT", "ALTER", "ALTER COLUMN", "ALTER TABLE",
 			"ALL", "AND", "ANY", "AS", "ASC", "BACKUP DATABASE", "BETWEEN", "CASE", "CHECK",
 			"COLUMN", "CONSTRAINT", "CREATE", "CREATE DATABASE", "CREATE INDEX", "CREATE OR REPLACE VIEW",
 			"CREATE TABLE", "CREATE PROCEDURE", "CREATE UNIQUE INDEX", "CREATE VIEW", "DATABASE", "DEFAULT",
@@ -425,14 +425,14 @@ public class CodeEditor extends IDEComponent {
 			"select", "select distinct", "select into", "select top", "set", "table", "top", "truncate table",
 			"union", "union all", "unique", "update", "values", "view", "where" };
 	
-	private static String[] asmRegs = { "rax", "rbx", "rcx", "rdx", "rsi", "rdi", "rbp", "rsp", "r8", "r9", "r10", "r11", "r12", "r13",
+	public static final String[] asmRegs = { "rax", "rbx", "rcx", "rdx", "rsi", "rdi", "rbp", "rsp", "r8", "r9", "r10", "r11", "r12", "r13",
 			"r14", "r15", "eax", "ebx", "ecx", "esi", "edi", "ebp", "esp", "r8d", "r9d", "r10d", "r11d", "r12d", "r13d",
 			"r14d", "r15d", "ax", "bx", "cx", "dx", "si", "di", "bp", "sp", "r8w", "r9w", "r10w", "r11w", "r12w", "r13w",
 			"r14w", "r15w", "al", "bl", "cl", "dl", "sil", "dil", "bpl", "spl", "r8b", "r9b", "r10b", "r11b", "r12b",
 			"r13b", "r14b", "r15b", "ah", "bh", "ch", "dh", "edx", "ss", "sp", "ds", "es" };
 	
 	// não vai colorir keys de uma só letra
-	private static String[] asmKeys = { "global", "define", "db", "dw", "equ", "extern", "include", "times", "org", "bits", "syscall", "aaa", "aad", "aam", "aas", "adc",
+	public static final String[] asmKeys = { "global", "define", "db", "dw", "equ", "extern", "include", "times", "org", "bits", "syscall", "aaa", "aad", "aam", "aas", "adc",
 			"add", "addpd", "addps", "addressing", "addsd", "addss", "jz", "align", "and", "andnpd", "andnps", "andpd",
 			"andps", "arpl", "as", "commandline", "ELFobjectfile", "macroprocessing", "syntaxUNIXversusIntel", "ascii",
 			"assemblerSeeasB", "bcd", "binaryarithmeticinstructions", "bitinstructions", "bound", "bsf", "bsr",
@@ -506,13 +506,13 @@ public class CodeEditor extends IDEComponent {
 			"unpcklps", "value", "verr", "verw", "wait", "wbinvd", "weak", "whitespace", "wrmsr", "xadd", "xchg",
 			"xchgA", "xlat", "xlatb", "xor", "xorpd", "xorps", "zero" }; // não vai colorir "str", "string"
 	
-	private static String[] sections = { "data", "text", "bss", "DATA", "TEXT", "BSS" };
+	public static final String[] sections = { "data", "text", "bss", "DATA", "TEXT", "BSS" };
 	
-	private static String[] jlKeys = { "baremodule", "begin", "break", "catch", "const", "continue", "do", "else",
+	public static final String[] jlKeys = { "baremodule", "begin", "break", "catch", "const", "continue", "do", "else",
 			"elseif", "end", "export", "false", "finally", "for", "function", "global", "if", "import",
 			"let", "local", "macro", "module", "quote", "return", "struct", "true", "try", "using", "while" };
 	
-	private static String[] plKeys = { "-A", "END", "length", "setpgrp", "-B", "endgrent", "link", "setpriority", "-b",
+	public static final String[] plKeys = { "-A", "END", "length", "setpgrp", "-B", "endgrent", "link", "setpriority", "-b",
 			"endhostnet", "listen", "setprotoent", "-C", "endnetent", "local", "setpwent", "-c", "endprotoent",
 			"localtime", "setservent", "-d", "endpwent", "log", "setsockopt", "-e", "endservent", "lstat",
 			"shift", "-f", "eof", "map", "shmctl", "-g", "eval", "mkdir", "shmget", "-k", "exec", "msgctl",
@@ -538,12 +538,12 @@ public class CodeEditor extends IDEComponent {
 			"for", "no", "tr", "and", "foreach", "or", "unless", "cmp", "ge", "package", "until", "continue", "gt",
 			"q", "while", "CORE", "if", "qq", "xor", "do", "le", "qr", "y" };
 	
-	private static String[] hasKeys = { "as", "case", "of", "class", "data", "family", "data", "instance",
+	public static final String[] hasKeys = { "as", "case", "of", "class", "data", "family", "data", "instance",
 			"default", "deriving", "do", "forall", "foreign", "hiding", "if", "then", "else",
 			"import", "infix", "infixl", "infixr", "let", "in", "mdo", "module", "newtype", "proc",
 			"qualified", "rec", "type", "where" };
 	
-	private static String[] fsKeys = { "abstract", "and", "as", "assert", "base", "begin", "class", "default",
+	public static final String[] fsKeys = { "abstract", "and", "as", "assert", "base", "begin", "class", "default",
 			"delegate", "do", "done", "downcast", "downto", "elif", "else", "end", "exception",
 			"extern", "false", "finally", "fixed", "for", "fun", "function", "global", "if", "in",
 			"inherit", "inline", "interface", "internal", "lazy", "let", "match", "member", "module",
@@ -554,7 +554,7 @@ public class CodeEditor extends IDEComponent {
 			"constructor", "continue", "eager", "event", "external", "functor", "include", "method", "mixin",
 			"object", "parallel", "process", "protected", "pure", "sealed", "tailcall", "trait", "virtual", "volatile" };
 	
-	private static String[] cfKeys = { "for", "while", "loop", "by", "in", "of", "break", "continue", "if",
+	public static final String[] cfKeys = { "for", "while", "loop", "by", "in", "of", "break", "continue", "if",
 			"then", "else", "unless", "switch", "when", "default", "return", "do", "is", "isnt",
 			"and", "or", "not", "true", "yes", "on", "false", "no", "off", "throw", "try", "catch",
 			"finally", "new", "delete", "class", "extends", "super", "typeof", "instanceof", "this",
@@ -562,7 +562,7 @@ public class CodeEditor extends IDEComponent {
 			"import", "package", "let", "case", "debugger", "function", "var", "with", "private",
 			"protected", "public", "native", "static", "const", "implements", "interface", "void", "enum" };
 	
-	private static String[] swKeys = { "associatedtype", "class", "deinit", "enum", "extension", "fileprivate",
+	public static final String[] swKeys = { "associatedtype", "class", "deinit", "enum", "extension", "fileprivate",
 			"func", "import" , "init", "inout", "internal", "let", "open", "operator", "private",
 			"protocol", "public", "rethrows", "static", "struct", "subscript", "typealias", "var",
 			"break", "case", "continue", "default", "defer", "do", "else", "fallthrough", "for",
@@ -575,14 +575,14 @@ public class CodeEditor extends IDEComponent {
 			"optional", "override", "postfix", "precendence", "prefix", "Protocol", "required", "right",
 			"set", "Type", "unowned", "weak", "willSet" };
 	
-	private static String[] rsKeys = { "as", "break", "const", "continue", "crate", "else", "enum", "extern", "false",
+	public static final String[] rsKeys = { "as", "break", "const", "continue", "crate", "else", "enum", "extern", "false",
 			"fn", "for", "if", "impl", "in", "let", "loop", "match", "mod", "move", "mut", "pub", "ref",
 			"return", "self", "Self", "static", "struct", "super", "trait", "true", "type", "unsafe", "use",
 			"where", "while", "async", "await", "dyn", "abstract", "become", "box", "do", "final", "macro",
 			"override", "priv", "typeof", "unsized", "virtual", "yield", "try", "union", "'static", "dyn" };
 	
 	
-	private static String[] shKeys = { "pwd", "cd", "ls", "cat", "cp", "mv", "mkdir", "rmdir", "rm", "touch", "locate", "find",
+	public static final String[] shKeys = { "pwd", "cd", "ls", "cat", "cp", "mv", "mkdir", "rmdir", "rm", "touch", "locate", "find",
 			"grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs", "kill", "ping",
 			"wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd", "userdel",
 			"clear", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc", "node", "nasm", "qemu", "gcc", "g++",
@@ -593,7 +593,7 @@ public class CodeEditor extends IDEComponent {
 			"CLEAR", "GIT", "NPM", "CALL", "EXIST", "END",
 			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA", "JAVAW", "BIN", "IF", "THEN", "ELSE", "FI", "DATE" };
 	
-	private static String[] tsKeys = { "type", "number", "protected", "else", "let", "catch", "if",
+	public static final String[] tsKeys = { "type", "number", "protected", "else", "let", "catch", "if",
 			"case", "in", "byte", "double", "var", "module", "enum", "as", "transient", "document",
 			"long", "undefined", "default", "goto", "native", "yield", "get", "typeof", "break",
 			"abstract", "throw", "char", "return", "synchronized", "debugger", "do", "float", "while",
@@ -603,7 +603,7 @@ public class CodeEditor extends IDEComponent {
 			"console", "false", "volatile", "any", "int", "instanceof", "super", "with", "async",
 			"boolean", "short", "arguments", "window", "as", "from", "navigator" };
 	
-	private static String[] ktKeys = { "as", "as?", "break", "class", "continue", "do", "else", "false", "for", "fun",
+	public static final String[] ktKeys = { "as", "as?", "break", "class", "continue", "do", "else", "false", "for", "fun",
 			"if", "in", "!in", "interface", "is", "!is", "null", "object", "package", "return", "super",
 			"this", "throw", "true", "try", "typealias", "typeof", "val", "var", "when", "while", "by",
 			"catch", "constructor", "delegate", "dynamic", "field", "file", "finally", "get", "import",
@@ -613,20 +613,20 @@ public class CodeEditor extends IDEComponent {
 			"operator", "out", "override", "private", "protected", "public", "reified", "sealed", "suspend",
 			"tailrec", "vararg", "field", "it" };
 	
-	private static String[] rbKeys = { "_ENCODING_", "_LINE_", "_FILE_", "BEGIN", "END", "alias", "and", "begin",
+	public static final String[] rbKeys = { "_ENCODING_", "_LINE_", "_FILE_", "BEGIN", "END", "alias", "and", "begin",
 			"break", "case", "class", "def", "defined?", "do", "else", "elsif", "end", "ensure", "false",
 			"for", "if", "in", "module", "next", "nil", "not", "or", "redo", "rescue", "retry", "return",
 			"self", "super", "then", "true", "undef", "unless", "until", "when", "while", "yield" };
 	
-	private static String[] scaKeys = { "abstract", "finally", "object", "trait", "catch", "forSome", "package",
+	public static final String[] scaKeys = { "abstract", "finally", "object", "trait", "catch", "forSome", "package",
 			"try", "class", "if", "private", "type", "def", "implicit", "protected", "val", "else",
 			"lazy", "sealed", "while", "false", "new", "this", "yield", "final", "null", "throw" };
 	
-	private static String[] goKeys = { "break", "default", "func", "interface", "select", "case",
+	public static final String[] goKeys = { "break", "default", "func", "interface", "select", "case",
 			"defer", "go", "map", "struct", "chan", "else", "goto", "package", "switch",
 			"const", "fallthrough", "if", "range", "type", "continue", "for", "import", "return", "var" };
 	
-	private static String[] objKeys = { "auto", "break", "case", "char", "const", "continue", "default", "do", "double",
+	public static final String[] objKeys = { "auto", "break", "case", "char", "const", "continue", "default", "do", "double",
 			"else", "enum", "extern", "float", "for", "goto", "if", "inline", "int", "long", "register",
 			"restrict", "return", "short", "signed", "sizeof", "static", "struct", "switch", "typedef",
 			"union", "unsigned", "void", "volatile", "while", "_Bool", "_Complex", "_Imaginary", "BOOL",
@@ -635,16 +635,16 @@ public class CodeEditor extends IDEComponent {
 			"@class", "@public", "@protected", "@private", "@property", "@try", "@throw", "@catch", "@finally",
 			"@synthesize", "@dynamic", "@selector", "atomic", "nonatomic", "retain" };
 	
-	private static String[] ideConfKeys = { "Arquivo de Configurações da Boot IDE", "Boot IDE Configuration File", "Colors", "Files", "Settings", "default" };
+	public static final String[] ideConfKeys = { "Arquivo de Configurações da Boot IDE", "Boot IDE Configuration File", "Colors", "Files", "Settings", "default" };
 	
-	private static String[] makeKeys = { "if", "else", "make", "echo", "elif", "then", "fi", "exit", "export" };
+	public static final String[] makeKeys = { "if", "else", "make", "echo", "elif", "then", "fi", "exit", "export" };
 	
-	private static String[] dkKeys = { "FROM", "RUN", "VOLUME", "WORKDIR", "ADD", "CMD", "ENTRYPOINT", "ENV", "EXPOSE", "MAINTAINER", "USER",
+	public static final String[] dkKeys = { "FROM", "RUN", "VOLUME", "WORKDIR", "ADD", "CMD", "ENTRYPOINT", "ENV", "EXPOSE", "MAINTAINER", "USER",
 			"from", "run", "volume", "workdir", "add", "cmd", "entrypoint", "env", "expose", "maintainer", "user" };
 
-	private static String[] specialHtmlVariables = { "html" };
+	public static final String[] specialHtmlVariables = { "html" };
 	
-	private static String[] jsonKeys = { "true", "false" };
+	public static final String[] jsonKeys = { "true", "false" };
 	
 	///////
 	
@@ -778,7 +778,7 @@ public class CodeEditor extends IDEComponent {
         return mouse.intersects(comp);
 	}
 	
-	public static int getLineIndex(char[] chars) {
+	public int getLineIndex(char[] chars) {
 		for (int i = 0; i < lines.size(); i++) {
 			IDELine l = lines.get(i);
 			
@@ -794,14 +794,14 @@ public class CodeEditor extends IDEComponent {
 		return new ArrayList<>(new LinkedHashSet<>(list));
 	}
 	
-	public static List<IDELine> readFile(File file) throws IOException {
-		CodeEditor.line1 = 0;
-		CodeEditor.line2 = 0;
+	public List<IDELine> readFile(File file) throws IOException {
+		Main.editor.line1 = 0;
+		Main.editor.line2 = 0;
 		
-		CodeEditor.index1 = 0;
-		CodeEditor.index2 = 0;
+		Main.editor.index1 = 0;
+		Main.editor.index2 = 0;
 		
-		CodeEditor.selecting = false;
+		Main.editor.selecting = false;
 		
 		List<String> l = null;
 		
@@ -942,7 +942,7 @@ public class CodeEditor extends IDEComponent {
 		};
 	}
 	
-	public static void addAutoCompleteAdds(List<String> list, AutoCompleteType type) {
+	public void addAutoCompleteAdds(List<String> list, AutoCompleteType type) {
 		for (String s : list)
 			addautocompleteadds.add(new AutoComplete(s, type));
 	}
@@ -983,7 +983,7 @@ public class CodeEditor extends IDEComponent {
 		return str1.equals(str2);
 	}
 	
-	public static List<IDEFont> colorVariablesAndObjects(String ext, char[] chars, List<IDEFont> fs) {
+	public List<IDEFont> colorVariablesAndObjects(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
 		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".mjs") ||
@@ -1203,7 +1203,7 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
-	public static List<IDEFont> colorKeywords(String ext, char[] chars, List<IDEFont> fs) {
+	public List<IDEFont> colorKeywords(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
 		switch (ext.toLowerCase()) {
@@ -3404,7 +3404,7 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
-	public static List<IDEFont> colorMethods(String ext, char[] chars, List<IDEFont> fs) {
+	public List<IDEFont> colorMethods(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
 		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") ||
@@ -3457,7 +3457,7 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
-	public static List<IDEFont> colorNumbers(String ext, char[] chars, List<IDEFont> fs) {
+	public List<IDEFont> colorNumbers(String ext, char[] chars, List<IDEFont> fs) {
 		if (!(ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".mjs") ||
 				 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") ||
 				 ext.equalsIgnoreCase(".php") || ext.equalsIgnoreCase(".kt") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".rb") || ext.equalsIgnoreCase(".ino") ||
@@ -3509,7 +3509,7 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
-	public static List<IDEFont> colorSymbols(String ext, char[] chars, List<IDEFont> fs) {
+	public List<IDEFont> colorSymbols(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
 		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".mjs") ||
@@ -3532,7 +3532,7 @@ public class CodeEditor extends IDEComponent {
 		
 		return fs;
 	}
-	public static List<IDEFont> colorExtras(String ext, char[] chars, List<IDEFont> fs) {
+	public List<IDEFont> colorExtras(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
 		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".mjs") ||
@@ -3612,7 +3612,7 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
-	public static List<IDEFont> colorNoExtensions(String ext, char[] chars, List<IDEFont> fs) {
+	public List<IDEFont> colorNoExtensions(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
 		if (!foundExt) {//(!foundExt && editing != null) || (extType.equalsIgnoreCase("") || extType == null)) { // TODO o culpado do gitignore estar assim é esse ARRUMAR DEPOIS 
@@ -3744,7 +3744,7 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
-	public static List<IDEFont> colorComments(String ext, char[] chars, List<IDEFont> fs) {
+	public List<IDEFont> colorComments(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
 		switch (ext.toLowerCase()) {
@@ -4196,7 +4196,7 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
-	public static List<IDEFont> automaticColor(char[] chars, String ext) {
+	public List<IDEFont> automaticColor(char[] chars, String ext) {
 		extType = "";
 		foundExt = false;
 		
@@ -4334,7 +4334,7 @@ public class CodeEditor extends IDEComponent {
 		return pre;
 	}
 	
-	public static void setCursorWithinBounds() { // o cursorY deve ser feito primeiro
+	public void setCursorWithinBounds() { // o cursorY deve ser feito primeiro
 		if (editing == null) return;
 		
 		try {
@@ -4549,7 +4549,7 @@ public class CodeEditor extends IDEComponent {
 		editing.setSaved(false);
 	}
 	
-	public static void addNewLine(int yPos) {
+	public void addNewLine(int yPos) {
 		List<Character> chars = new ArrayList<>();
 		List<IDEFont> fs = new ArrayList<>();
 		
@@ -4559,7 +4559,7 @@ public class CodeEditor extends IDEComponent {
 		lines.add(yPos, new IDELine(chars, fs));
 	}
 	
-	public static void addNewLine(int yPos, String initialText) {
+	public void addNewLine(int yPos, String initialText) {
 		List<Character> chars = new ArrayList<>();
 		List<IDEFont> fs = new ArrayList<>();
 		
@@ -4732,7 +4732,7 @@ public class CodeEditor extends IDEComponent {
 		}
 	}
 	
-	public static void verifyDuplicateTabs() { // continuar segundo o TODO
+	public void verifyDuplicateTabs() { // continuar segundo o TODO
 		try {
 			if (tabs == null || tabs.size() == 0) return;
 			
@@ -5685,6 +5685,8 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		
+		if (editing == null && tabs.size() == 1) tabs.forEach(e -> e.close());
+		
 		for (RightClickOption r : autocompletes)
 			r.tick();
 		
@@ -5717,6 +5719,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
+		//if (editing == null) return;
+		
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g.setColor(Colors.explorerLight);
@@ -5856,7 +5860,7 @@ public class CodeEditor extends IDEComponent {
 		g.setColor(Colors.background);
 		g.fillRect(x, 0, width, 35);
 		
-		for (Tab t : CodeEditor.tabs) {
+		for (Tab t : Main.editor.tabs) {
 			if (t.getX() + tabScr < x || t.getX() + tabScr > Main.screen.getWidth()) continue;
 			
 			t.render(g);

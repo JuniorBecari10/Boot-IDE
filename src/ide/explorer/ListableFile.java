@@ -890,7 +890,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				JOptionPane.showMessageDialog(null, Texts.delError, Texts.cantDelete, JOptionPane.OK_OPTION);
 			}
 			
-			for (Tab t : CodeEditor.tabs)
+			for (Tab t : Main.editor.tabs)
 				if (t.getRegent().equals(this)) t.close();
 			
 			IDEComponent.toRemove.add(this);
@@ -1017,13 +1017,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	}
 	
 	public static void addTab(ListableFile file) {
-		if (file.getRegent().isFile() && CodeEditor.tabs != null) {
-			int lastX = CodeEditor.tabs.size() > 0 ? CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() : Tab.MIN_X;
+		if (file.getRegent().isFile() && Main.editor.tabs != null) {
+			int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() : Tab.MIN_X;
 			
 			new Thread() {
 				public void run() {
 					try {
-						CodeEditor.lines = CodeEditor.readFile(file.getRegent());
+						Main.editor.lines = Main.editor.readFile(file.getRegent());
 					} catch (IOException e) { // não suportado, se caiu aqui
 						return;
 					}
@@ -1032,24 +1032,24 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			
 			Tab toAdd = new Tab((lastX + Tab.WIDTH) + 3, file);
 			
-			CodeEditor.cursorX = 0;
-			CodeEditor.cursorY = 1;
+			Main.editor.cursorX = 0;
+			Main.editor.cursorY = 1;
 			
-			CodeEditor.scrX = 0;
-			CodeEditor.scrY = 0;
+			Main.editor.scrX = 0;
+			Main.editor.scrY = 0;
 			
-			CodeEditor.isMultilineCommenting = false;
-			CodeEditor.isAnotherIteration = false;
+			Main.editor.isMultilineCommenting = false;
+			Main.editor.isAnotherIteration = false;
 			
-			for (Tab t : CodeEditor.tabs)
+			for (Tab t : Main.editor.tabs)
 				if (t.getRegent().getRegent().getPath().equals(file.getRegent().getPath())) {
-					CodeEditor.editing = t;
+					Main.editor.editing = t;
 					
 					return;
 				}
 			
-			CodeEditor.toAdd.add(toAdd);
-			CodeEditor.editing = toAdd;
+			Main.editor.toAdd.add(toAdd);
+			Main.editor.editing = toAdd;
 		}
 	}
 	
@@ -1057,10 +1057,10 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
 		if (CommandTerminal.expOff) return;
 		
-		if (!regent.exists() && CodeEditor.tabs != null) {
+		if (!regent.exists() && Main.editor.tabs != null) {
 			Explorer.toRemove.add(this);
 			
-			for (Tab t : CodeEditor.tabs)
+			for (Tab t : Main.editor.tabs)
 				if (t.getRegent().getRegent().getPath().equals(this.regent.getPath()))
 					t.close();
 				
@@ -1112,13 +1112,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 					Explorer.toRemove.addAll(Explorer.files);
 			}
 			
-			if (regent.isFile() && CodeEditor.tabs != null) {
-				int lastX = CodeEditor.tabs.size() > 0 ? CodeEditor.tabs.get(CodeEditor.tabs.size() - 1).getX() : Tab.MIN_X;
+			if (regent.isFile() && Main.editor.tabs != null) {
+				int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() : Tab.MIN_X;
 				
 				new Thread() {
 					public void run() {
 						try {
-							CodeEditor.lines = CodeEditor.readFile(regent);
+							Main.editor.lines = Main.editor.readFile(regent);
 						} catch (IOException e) { // não suportado, se caiu aqui
 							return;
 						}
@@ -1127,24 +1127,24 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				Tab toAdd = new Tab((lastX + Tab.WIDTH) + 3, this);
 				
-				CodeEditor.cursorX = 0;
-				CodeEditor.cursorY = 1;
+				Main.editor.cursorX = 0;
+				Main.editor.cursorY = 1;
 				
-				CodeEditor.scrX = 0;
-				CodeEditor.scrY = 0;
+				Main.editor.scrX = 0;
+				Main.editor.scrY = 0;
 				
-				CodeEditor.isMultilineCommenting = false;
-				CodeEditor.isAnotherIteration = false;
+				Main.editor.isMultilineCommenting = false;
+				Main.editor.isAnotherIteration = false;
 				
-				for (Tab t : CodeEditor.tabs)
+				for (Tab t : Main.editor.tabs)
 					if (t.getRegent().getRegent().getPath().equals(this.regent.getPath())) {
-						CodeEditor.editing = t;
+						Main.editor.editing = t;
 						
 						return;
 					}
 				
-				CodeEditor.toAdd.add(toAdd);
-				CodeEditor.editing = toAdd;
+				Main.editor.toAdd.add(toAdd);
+				Main.editor.editing = toAdd;
 			}
 		}
 		
