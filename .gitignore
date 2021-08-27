@@ -1,3 +1,4 @@
 *.conf
 /bin/
 commit.bat
+status.bat
