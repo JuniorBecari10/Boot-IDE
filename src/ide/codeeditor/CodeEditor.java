@@ -858,6 +858,15 @@ public class CodeEditor extends IDEComponent {
 		return ls;
 	}
 	
+	public static String[] mergeStringArrays(String[] arr1, String[] arr2) {
+		String[] res = new String[arr1.length + arr2.length];
+		
+		System.arraycopy(arr1, 0, res, 0, arr1.length);
+		System.arraycopy(arr2, 0, res, arr1.length, arr2.length);
+		
+		return res;
+	}
+	
 	// Se for usar em arquivos que não têm extensão, use o método debaixo desse
 	public static String[] getKeywords(String ext) {
 		return switch (ext.toLowerCase()) {
@@ -903,10 +912,10 @@ public class CodeEditor extends IDEComponent {
 			case ".dart" -> dartKeys;
 			case ".zig" -> zigKeys;
 			
-			case ".html" -> tags;
-			case ".htm" -> tags;
-			case ".css" -> cssTags;
-			case ".scss" -> cssTags;
+			case ".html" -> cssTags;
+			case ".htm" -> cssTags;
+			case ".css" -> mergeStringArrays(cssTags, props);
+			case ".scss" -> mergeStringArrays(cssTags, props);
 			case ".json" -> jsonKeys;
 			case ".jsonc" -> jsonKeys;
 			case ".conf" -> ideConfKeys;
@@ -4882,7 +4891,7 @@ public class CodeEditor extends IDEComponent {
 		int index = 0;
 		
 		for (String s : autocomplete) {
-			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 30, 220, 32, 16, s, keywords, (e) -> makeChanges(e), s));
+			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 30, 330, 32, 16, s, keywords, (e) -> makeChanges(e), s));
 			
 			index++;
 		}
@@ -4890,7 +4899,7 @@ public class CodeEditor extends IDEComponent {
 		for (AutoComplete a : autocompleteadds) {
 			if (a == null) continue;
 			
-			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 30, 220, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
+			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 30, 330, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
 			
 			index++;
 		}
@@ -5852,9 +5861,9 @@ public class CodeEditor extends IDEComponent {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
 			
-			Fonts.drawString(codeType + " - " + extType, x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
+			Fonts.drawString(codeType + " - " + extType + " | " + "X: " + (cursorX + 1) + ", Y: " + cursorY, x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 			
-			Fonts.drawString("X: " + (cursorX + 1) + ", Y: " + cursorY, Main.screen.getWidth() - 170, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
+			//Fonts.drawString("X: " + (cursorX + 1) + ", Y: " + cursorY, Main.screen.getWidth() - 170, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 		}
 		
 		g.setColor(Colors.background);
