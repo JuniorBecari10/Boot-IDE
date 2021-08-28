@@ -153,7 +153,7 @@ public class Tab extends IDEComponent implements Serializable {
 		Main.editor.editing = next;
 		
 		Main.editor.cursorX = 0;
-		Main.editor.cursorY = 0;
+		Main.editor.cursorY = 1;
 		
 		try {
 			Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());

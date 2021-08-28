@@ -926,7 +926,7 @@ public class CodeEditor extends IDEComponent {
 			case ".jsx" -> jsKeys;
 			case ".ps1" -> batCom;
 			case ".sh" -> shKeys;
-			case ".ejs" -> tags;
+			case ".ejs" -> cssTags;
 			case ".ld" -> ldKeys;
 			
 			default -> null;
@@ -940,6 +940,13 @@ public class CodeEditor extends IDEComponent {
 			
 			default -> null;
 		};
+	}
+	
+	public static boolean isFormatSupported(String format) {
+		for (FileType f : ListableFile.types)
+			if (f.getExtension().equals(format)) return true;
+		
+		return false;
 	}
 	
 	public static BufferedImage getAutoCompleteIcon(AutoCompleteType type) {
@@ -995,14 +1002,7 @@ public class CodeEditor extends IDEComponent {
 	public List<IDEFont> colorVariablesAndObjects(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
-		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".mjs") ||
-				 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") ||
-				 ext.equalsIgnoreCase(".php") || ext.equalsIgnoreCase(".kt") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".rb") || ext.equalsIgnoreCase(".ino") ||
-				 ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".swift")  || ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".r") ||
-				 ext.equalsIgnoreCase(".jl") || ext.equalsIgnoreCase(".pl") || ext.equalsIgnoreCase(".has") || ext.equalsIgnoreCase(".hs") || ext.equalsIgnoreCase(".fs") || ext.equalsIgnoreCase(".coffee") ||
-				 ext.equalsIgnoreCase(".m") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".pas") || ext.equalsIgnoreCase(".pp") || ext.equalsIgnoreCase(".scala") ||
-				 ext.equalsIgnoreCase(".dart") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
-				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) { // não verificaremos mais o html aqui kikikikiki
+		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
 				
 			if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
 				for (String s : syms) {
@@ -3420,15 +3420,7 @@ public class CodeEditor extends IDEComponent {
 	public List<IDEFont> colorMethods(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
-		if ((ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cs") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".cxx") || ext.equalsIgnoreCase(".js") ||
-				 ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hpp") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".rs") || ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") ||
-				 ext.equalsIgnoreCase(".php") || ext.equalsIgnoreCase(".kt") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".rb") || ext.equalsIgnoreCase(".ino") ||
-				 ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".swift") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".r") ||
-				 ext.equalsIgnoreCase(".jl") || ext.equalsIgnoreCase(".pl") || ext.equalsIgnoreCase(".has") || ext.equalsIgnoreCase(".hs") || ext.equalsIgnoreCase(".fs") || ext.equalsIgnoreCase(".coffee") ||
-				 ext.equalsIgnoreCase(".m") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".pas") || ext.equalsIgnoreCase(".pp") || ext.equalsIgnoreCase(".scala") || ext.equalsIgnoreCase(".dart") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") ||
-				 ext.equalsIgnoreCase(".json") || ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xml") ||
-				 ext.equalsIgnoreCase(".ini") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") ||
-				 ext.equalsIgnoreCase(".url") || ext.equalsIgnoreCase(".zig") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
+		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
 			
 			if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
 				
