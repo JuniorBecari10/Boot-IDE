@@ -366,6 +366,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			w.write("cursor: default\n");
 			w.write("selection: default\n");
 			w.write("other: default\n");
+			w.write("lowerBar: default\n");
 			w.write("error: default\n");
 			w.write("lineNumber: default\n");
 			w.write("selectedLineNumber: default\n");
@@ -414,6 +415,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	public static void readConfigFile(String path) {
 		File f = new File(path);
 		Path p = f.toPath();
+		
+		if (!f.exists()) CommandTerminal.runCommand("unloadconfigfile");
 		
 		hasAltered = false;
 		
@@ -693,6 +696,20 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				try {
 					Colors.other = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
+				
+				break;
+			
+			case "lowerBar:":
+				if (split[1].equals("default")) break;
+				
+				if (!split[1].startsWith("#")) split[1] = "#" + split[1];
+				hasAltered = true;
+				
+				try {
+					Colors.lowerBar = Color.decode(split[1]);
 				} catch (NumberFormatException e) {
 					break;
 				}

@@ -32,14 +32,12 @@ public class Colors {
     public static Color strings = 					    textLight;
     public static Color symbols = 						 comments;
     
-    public static Color selection = 		  Color.decode("#8c8c8c");
+    public static Color selection = 	  Color.decode("#8c8c8c");
     
-    /*public static Color select1 = 		  Color.decode("#ff6961");
-    public static Color select2 = 		  Color.decode("#ff5147");
-    public static Color selectCursor = 	  			   Color.blue;*/
     public static Color other =						  Color.white;
     public static Color error =			  Color.decode("#ff6961");
     public static Color cursor = 					  Color.white;
+    public static Color lowerBar = 		   Colors.backgroundLight;
     public static Color lineNumber =			 Colors.textLight;
     public static Color selectedLineNumber=Color.decode("#c5d5ea");
     
@@ -64,9 +62,7 @@ public class Colors {
          strings = 					    	textLight;
          symbols = 						 	 comments;
         
-         /*select1 = 		  Color.decode("#ff6961");
-         select2 = 		 	  Color.decode("#ff5147");
-         selectCursor = 	  			   Color.blue;*/
+         lowerBar = 		   Colors.backgroundLight;
          other =						  Color.white;
          
          ////

@@ -3176,7 +3176,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".urna":
 			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas" : "Bollot Box Saved from Criador de Urnas"; // vc sabe que nome próprio não se traduz né
+				extType = Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas" : "Saved Bollot Box from Criador de Urnas"; // vc sabe que nome próprio não se traduz né
 				foundExt = true;
 			}
 			break;
@@ -5872,7 +5872,7 @@ public class CodeEditor extends IDEComponent {
 		
 		// desenhar barra inferior
 		if (editing != null) {
-			g.setColor(Colors.backgroundLight);
+			g.setColor(Colors.lowerBar);
 			g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
 			
 			Fonts.drawString(codeType + " - " + extType + " | " + "X: " + (cursorX + 1) + ", Y: " + cursorY, x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
