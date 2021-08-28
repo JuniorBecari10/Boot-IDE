@@ -389,9 +389,9 @@ public class CodeEditor extends IDEComponent {
 	
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
 	public static final String[] extensions = { ".java", ".c", ".cpp", ".cs", ".py", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
-			".html", ".htm", ".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp",
+			".html", ".xhtml", ".htm", ".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp",
 			".JAVA", ".C", ".CPP", ".CS", ".PY", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".GO", ".R", ".PL", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
-			".HTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP"};
+			".HTML", ".XHTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP"};
 	
 	public static final String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
 			"false", "for", "function", "if", "in", "local", "nil",
@@ -915,6 +915,7 @@ public class CodeEditor extends IDEComponent {
 			case ".zig" -> zigKeys;
 			
 			case ".html" -> cssTags;
+			case ".xhtml" -> cssTags;
 			case ".htm" -> cssTags;
 			case ".css" -> mergeStringArrays(cssTags, props);
 			case ".scss" -> mergeStringArrays(cssTags, props);
@@ -1006,7 +1007,7 @@ public class CodeEditor extends IDEComponent {
 		
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
 				
-			if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
+			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
 				for (String s : syms) {
 					indxs = findWord(new String(chars), s); // antes de
 					
@@ -1109,7 +1110,7 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 				
-				if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1"))) {
+				if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1"))) {
 				
 				String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
 						"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
@@ -1257,7 +1258,9 @@ public class CodeEditor extends IDEComponent {
 				extType = "Scalable Vector Graphics - SVG";
 				foundExt = true;
 			}
-		case ".htm":	
+			
+		case ".htm":
+		case ".xhtml":
 		case ".html":
 			if (!foundExt) {
 				extType = "Hyper Text Markup Language - HTML";
@@ -3429,7 +3432,7 @@ public class CodeEditor extends IDEComponent {
 				// primeira vez usando labels!
 				methods:
 					if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
-						if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs")) {
+						if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs")) {
 							if (!(isCssPart || isJSPart || isPhpPart)) break methods;
 						}
 						
@@ -3469,7 +3472,7 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))) {
+		if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))) {
 			for (String s : nums) { // colorir números
 				indxs = findWord(new String(chars), s);
 				
@@ -3762,6 +3765,7 @@ public class CodeEditor extends IDEComponent {
 				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			break;
 			
+		case ".xhtml":
 		case ".html":
 		case ".htm":
 		case ".ejs":
@@ -4095,6 +4099,7 @@ public class CodeEditor extends IDEComponent {
 		case ".ejs":
 		case ".xml":
 		case ".htm":
+		case ".xhtml":
 		case ".html":
 		case ".svg":
 			indxs = findWord(new String(chars), "<!--");						// colorir comentários multi-linha - caracteres diferentes
@@ -4865,7 +4870,7 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	/**
-	 * Hardcoded no cursor
+	 * Hardcoded no cursor (de texto, não é do mouse não)
 	 */
 	public void addAutoCompleteOptions() {
 		if (autocomplete.isEmpty()) return;
@@ -5341,7 +5346,7 @@ public class CodeEditor extends IDEComponent {
 				autocomplete.clear();
 				
 				for (String s : autoc)
-					if (s.contains(wordSinceSpace))
+					if (s.contains(wordSinceSpace)) // deixa as keywords quietas
 						autocomplete.add(s);
 				
 				autocomplete = removeDuplicates(autocomplete);
