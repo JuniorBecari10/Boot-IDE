@@ -3442,10 +3442,11 @@ public class CodeEditor extends IDEComponent {
 							int c = i;
 							int len = 0;
 							
+							boolean hasSpace = false;
+							
 							while (c < chars.length && 
 									c + len < chars.length &&
 									c > 0 &&
-									chars[c] != ' ' &&
 									chars[c] != '[' &&
 									chars[c] != ']' &&
 									chars[c] != ',' &&
@@ -3456,6 +3457,11 @@ public class CodeEditor extends IDEComponent {
 									chars[c] != '!') {
 								c--;
 								len++;
+								
+								if (chars[c] == ' ') {
+									if (hasSpace) break;
+									else hasSpace = true;
+								}
 							}
 							
 							fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
