@@ -1723,6 +1723,10 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".scss":
+			if (!foundExt) {
+				extType = "Sass Cascading Style Sheets - SCSS"; // TODO corrigir o problema do src: 
+				foundExt = true;
+			}
 		case ".css":
 			if (!foundExt) {
 				extType = "Cascading Style Sheets - CSS"; // TODO corrigir o problema do src: 
