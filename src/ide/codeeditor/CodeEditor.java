@@ -1009,7 +1009,7 @@ public class CodeEditor extends IDEComponent {
 				
 			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
 				for (String s : syms) {
-					indxs = findWord(new String(chars), s); // antes de
+					indxs = findWord(new String(chars), s); // antes de <palavra>
 					
 					for (Integer i : indxs) {
 						int c = i;
@@ -5866,7 +5866,7 @@ public class CodeEditor extends IDEComponent {
 		g.fillRect(x, 0, width, 35);
 		
 		for (Tab t : Main.editor.tabs) {
-			if (t.getX() + tabScr < x || t.getX() + tabScr > Main.screen.getWidth()) continue;
+			if (t.getX() + tabScr < x || t.getX() + tabScr > width) continue; // o render da Tab vai ter que ficar aqui mesmo
 			
 			t.render(g);
 		}
