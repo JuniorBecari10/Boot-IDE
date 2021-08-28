@@ -125,7 +125,8 @@ public class SetFileName extends IDEComponent {
 				
 				Explorer.files = ListableFile.loadFolder(Explorer.scope);
 				
-				ListableFile.addTab(ListableFile.search(f, f.getParentFile()));
+				if (!ListableFile.formatNotSupported(ListableFile.getFileExtension(f)))
+					ListableFile.addTab(ListableFile.search(f, f.getParentFile()));
 				
 				return;
 			}

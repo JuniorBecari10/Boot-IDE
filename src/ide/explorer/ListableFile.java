@@ -1083,6 +1083,25 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		}
 	}
 	
+	public static boolean formatNotSupported(String format) {
+		return  format.equalsIgnoreCase(".png") ||
+				format.equalsIgnoreCase(".jpg") || // provavelmente fazer isso com excel e mais coisas do word
+				format.equalsIgnoreCase(".jpeg")||
+				format.equalsIgnoreCase(".png") ||
+				format.equalsIgnoreCase(".ico") ||
+				format.equalsIgnoreCase(".gif") ||
+				format.equalsIgnoreCase(".bmp") ||
+				format.equalsIgnoreCase(".wav") ||
+				format.equalsIgnoreCase(".mp3") ||
+				format.equalsIgnoreCase(".ogg") ||
+				format.equalsIgnoreCase(".mp4") ||
+				format.equalsIgnoreCase(".wmv") ||
+				format.equalsIgnoreCase(".avi") ||
+				format.equalsIgnoreCase(".exe") ||
+				format.equalsIgnoreCase(".pdf") ||
+				format.equalsIgnoreCase(".webp");
+	}
+	
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
 		if (CommandTerminal.expOff) return;
@@ -1111,25 +1130,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	    	
 			Explorer.baseFolderName = Main.baseFolder.getName().length() > 15 ? Main.baseFolder.getName().substring(0, 12) + "..." : Main.baseFolder.getName();
 			
-			if (getFileExtension(regent).equalsIgnoreCase(".png") ||
-					getFileExtension(regent).equalsIgnoreCase(".jpg") || // provavelmente fazer isso com excel e mais coisas do word
-					getFileExtension(regent).equalsIgnoreCase(".jpeg")||
-					getFileExtension(regent).equalsIgnoreCase(".png") ||
-					getFileExtension(regent).equalsIgnoreCase(".gif") ||
-					getFileExtension(regent).equalsIgnoreCase(".bmp") ||
-					getFileExtension(regent).equalsIgnoreCase(".wav") ||
-					getFileExtension(regent).equalsIgnoreCase(".mp3") ||
-					getFileExtension(regent).equalsIgnoreCase(".ogg") ||
-					getFileExtension(regent).equalsIgnoreCase(".mp4") ||
-					getFileExtension(regent).equalsIgnoreCase(".wmv") ||
-					getFileExtension(regent).equalsIgnoreCase(".avi") ||
-					getFileExtension(regent).equalsIgnoreCase(".exe") ||
-					getFileExtension(regent).equalsIgnoreCase(".pdf") ||
-					getFileExtension(regent).equalsIgnoreCase(".webp")) {
+			if (formatNotSupported(getFileExtension(regent))) {
 					try {
 						Main.desktop.open(regent);
 					} catch (IOException e) {
-						e.printStackTrace();
+						CodeEditor.setSystemLook();
+						
+						JOptionPane.showMessageDialog(null, Texts.cantFindDefault, Texts.nothingFound, JOptionPane.OK_OPTION);
 					}
 					
 					return;
