@@ -228,7 +228,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			if (l.getRegent().equals(regent))
 				return l;
 		}
-		System.out.println("Não achei nada");
+		
+		// Não achei nada
 		return null;
 	}
 	
@@ -237,7 +238,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			if (l.getRegent().equals(regent))
 				return l;
 		}
-		System.out.println("Não achei nada");
+		
+		// Não achei nada
 		return null;
 	}
 	
@@ -275,7 +277,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			if (l.getRegent().equals(regent))
 				return l;
 		}
-		System.out.println("não achei nada");
+		
+		// Não achei nada
 		return null;
 	}
 	
@@ -404,6 +407,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			w.write("Colorir Genéricos: true\n");*/
 			w.write("font_size: default\n");
 			w.write("language: default\n");
+			w.write("autocomplete_active: default\n");
 			
 			w.close();
 			
@@ -793,6 +797,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				}
 				
 				CodeEditor.FONT_SIZE = size;
+				hasAltered = true;
+				
+				break;
+				
+			case "autocomplete_active:":
+				if (split[1].equals("default")) break;
+				
+				CodeEditor.isAutoCompleteActive = Boolean.valueOf(split[1]);
+				
 				hasAltered = true;
 				
 				break;

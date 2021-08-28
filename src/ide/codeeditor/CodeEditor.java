@@ -101,6 +101,8 @@ public class CodeEditor extends IDEComponent {
 	public List<IDELine> lines = new ArrayList<>();
 	public List<IDELine> linesToRemove = new ArrayList<>();
 	
+	public static boolean isAutoCompleteActive = true;
+	
 	/*public static Stack<List<IDELine>> undo = new Stack<>();
 	public static Stack<List<IDELine>> redo = new Stack<>();*/
 	
@@ -4867,6 +4869,13 @@ public class CodeEditor extends IDEComponent {
 	 */
 	public void addAutoCompleteOptions() {
 		if (autocomplete.isEmpty()) return;
+		
+		if (!isAutoCompleteActive) {
+			autocomplete.clear();
+			autocompleteadds.clear();
+			
+			return;
+		}
 		
 		RightClickOption.removeAllRightClickOptions();
 		
