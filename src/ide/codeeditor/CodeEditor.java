@@ -1192,7 +1192,7 @@ public class CodeEditor extends IDEComponent {
 						else {
 							if (i - 1 > 0 && Character.isLetter(chars[i - 1])) continue;
 							
-							addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
+							//addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
 							fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
 						}
 					}
@@ -3481,7 +3481,7 @@ public class CodeEditor extends IDEComponent {
 								}
 							}
 							
-							addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(c + 1, c + len, chars)), AutoCompleteType.FUNCTION));
+							//addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(c + 1, c + len, chars)), AutoCompleteType.FUNCTION));
 							fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
 						}
 					}
@@ -5365,6 +5365,7 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_SPACE && !isReadOnly && !alternateTabsMode) { // Ctrl + Space (Trigger Auto Complete)
+				System.out.println("A");
 				String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent()) ? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent())) : getKeywordsSpecial(editing.getRegent().getRegent().getName());
 				
 				autocomplete.clear();
@@ -5379,6 +5380,8 @@ public class CodeEditor extends IDEComponent {
 				autocompleteindex = 0;
 				
 				addAutoCompleteOptions();
+				
+				return;
 			}
 			
 			/*if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
@@ -5688,7 +5691,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && !KeyInput.isShiftDown()) RightClickOption.removeAllRightClickOptions();
+			if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46 && !KeyInput.isShiftDown()) RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.)
 			
 			if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
