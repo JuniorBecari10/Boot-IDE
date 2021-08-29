@@ -21,10 +21,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -138,8 +140,8 @@ public class CodeEditor extends IDEComponent {
 	
 	public int autocompleteindex = 0;
 	
-	public List<AutoComplete> autocompleteadds = new ArrayList<>();
-	public List<AutoComplete> addautocompleteadds = new ArrayList<>();
+	public Set<AutoComplete> autocompleteadds = new LinkedHashSet<>();
+	public Set<AutoComplete> addautocompleteadds = new LinkedHashSet<>();
 	
 	public List<RightClickOption> autocompletes = new ArrayList<>();
 	public List<RightClickOption> toAddAutoCompletes = new ArrayList<>();
@@ -284,22 +286,22 @@ public class CodeEditor extends IDEComponent {
 			"border-right-style", "border-right-width", "border-spacing", "border-style", "border-top",
 			"border-top-color", "border-top-left-radius", "border-top-right-radius", "border-top-style",
 			"border-top-width", "border-width", "bottom", "box-decoration-break", "box-shadow", "box-sizing",
-			"break-after", "break-before", "break-inside", "caption-side", "caret-color", "@charset", "clear",
+			"break-after", "break-before", "break-inside", "caption-side", "caret-color", "charset", "clear",
 			"clip", "color", "column-count", "column-fill", "column-gap", "column-rule", "column-rule-color",
 			"column-rule-style", "column-rule-width", "column-span", "column-width", "columns", "content",
 			"counter-increment", "counter-reset", "cursor", "direction", "display", "empty-cells", "filter",
 			"flex", "flex-basis", "flex-direction", "flex-flow", "flex-grow", "flex-shrink", "flex-wrap",
-			"float", "font", "@font-face", "font-family", "font-feature-settings", "@font-feature-values",
+			"float", "font", "font-face", "font-family", "font-feature-settings", "font-feature-values",
 			"font-kerning", "font-language-override", "font-size", "font-size-adjust", "font-stretch",
 			"font-style", "font-synthesis", "font-variant", "font-variant-alternates", "font-variant-caps",
 			"font-variant-east-asian", "font-variant-ligatures", "font-variant-numeric", "font-variant-position",
 			"font-weight", "gap", "grid", "grid-area", "grid-auto-columns", "grid-auto-flow", "grid-auto-rows",
 			"grid-column", "grid-column-end", "grid-column-gap", "grid-column-start", "grid-template",
 			"grid-template-areas", "grid-template-columns", "grid-template-rows", "hanging-ponctuation",
-			"height", "hyphens", "image-rendering", "@import", "isolation", "justify-content", "@keyframes",
+			"height", "hyphens", "image-rendering", "import", "isolation", "justify-content", "keyframes",
 			"left", "letter-spacing", "line-break", "line-height", "list-style", "list-style-image",
 			"list-style-position", "list-style-type", "margin", "margin-bottom", "margin-left",
-			"margin-right", "margin-top", "mask", "mask-type", "max-height", "max-width", "@media",
+			"margin-right", "margin-top", "mask", "mask-type", "max-height", "max-width", "media",
 			"min-height", "min-width", "mix-blend-mode", "object-fit", "object-position", "opacity",
 			"order", "orphans", "outline", "outline-color", "outline-offset", "outline-style",
 			"outline-width", "overflow", "overflow-wrap", "overflow-x", "overflow-y", "padding",
@@ -1002,6 +1004,19 @@ public class CodeEditor extends IDEComponent {
 		return str1.equals(str2);
 	}
 	
+	public static <T> T[] clearArray(T[] arr) {
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = null;
+		}
+		
+		return arr;
+	}
+	
+	public static char[] sliceCharArray(int s, int e, char[] array) {
+		if (e < s) throw new RuntimeException("O index final não pode ser menor que o inicial!");
+		
+		return Arrays.copyOfRange(array, s, e);
+	}
 	public List<IDEFont> colorVariablesAndObjects(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
@@ -1032,7 +1047,7 @@ public class CodeEditor extends IDEComponent {
 							}
 						}
 						
-						//addautocompleteadds.add(new AutoComplete(wordSinceSpace, AutoCompleteType.VARIABLE));
+						//addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(c, c + len, chars)), AutoCompleteType.VARIABLE));
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
 					
@@ -1177,6 +1192,7 @@ public class CodeEditor extends IDEComponent {
 						else {
 							if (i - 1 > 0 && Character.isLetter(chars[i - 1])) continue;
 							
+							addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
 							fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
 						}
 					}
@@ -3464,6 +3480,7 @@ public class CodeEditor extends IDEComponent {
 								}
 							}
 							
+							addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(c + 1, c + len, chars)), AutoCompleteType.FUNCTION));
 							fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
 						}
 					}
@@ -5356,7 +5373,7 @@ public class CodeEditor extends IDEComponent {
 						autocomplete.add(s);
 				
 				autocomplete = removeDuplicates(autocomplete);
-				autocompleteadds = removeDuplicates(autocompleteadds);
+				//autocompleteadds = removeDuplicates(autocompleteadds);
 				
 				autocompleteindex = 0;
 				
@@ -5662,7 +5679,7 @@ public class CodeEditor extends IDEComponent {
 							autocomplete.add(s);
 				
 					autocomplete = removeDuplicates(autocomplete);
-					autocompleteadds = removeDuplicates(autocompleteadds);
+					//autocompleteadds = removeDuplicates(autocompleteadds);
 				
 					autocompleteindex = 0;
 				
@@ -5670,7 +5687,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB) RightClickOption.removeAllRightClickOptions();
+			if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && !KeyInput.isShiftDown()) RightClickOption.removeAllRightClickOptions();
 			
 			if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
