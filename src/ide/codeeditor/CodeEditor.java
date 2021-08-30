@@ -864,6 +864,10 @@ public class CodeEditor extends IDEComponent {
 		return ls;
 	}
 	
+	public static boolean isNumber(char c) {
+		return c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9';
+	}
+	
 	public static String[] mergeStringArrays(String[] arr1, String[] arr2) {
 		String[] res = new String[arr1.length + arr2.length];
 		
@@ -5257,7 +5261,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if ((KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D || KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) && !isReadOnly && !alternateTabsMode) { // Ctrl + D (Desselecionar)
+			if (((KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D) || KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) && !isReadOnly && !alternateTabsMode) { // Ctrl + D ou Esc (Desselecionar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("deselect");
@@ -5712,7 +5716,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			//if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46 && !KeyInput.isShiftDown()) RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.)
+			if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46 && !KeyInput.isShiftDown()) RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.)
 			
 			if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			

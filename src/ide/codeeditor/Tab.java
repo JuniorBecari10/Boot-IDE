@@ -386,7 +386,7 @@ public class Tab extends IDEComponent implements Serializable {
 			save();
 		}
 		
-		if (leftClicked() && !button.leftClicked() && Main.editor.alternateTabsMode) {
+		if (leftClicked() && !(Main.editor.editing == this ? button.leftClicked() : false /*pq inverte*/) && Main.editor.alternateTabsMode) {
 			Main.editor.exchanged = this;
 			
 			CommandTerminal.runCommand("ordertab " + Main.editor.tabs.indexOf(Main.editor.exchanging) + " " + Main.editor.tabs.indexOf(Main.editor.exchanged));
