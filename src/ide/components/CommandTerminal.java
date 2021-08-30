@@ -251,16 +251,26 @@ public class CommandTerminal extends IDEComponent {
 				if (Main.editor.line1 != Main.editor.line2) { // se não selecionou uma linha só (selecionou várias)
 					for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) {
 						if (i == Main.editor.line1 - 1) {
-							if (Main.editor.lines.get(i).getChars().size() < Main.editor.index1 || Main.editor.lines.get(i).getChars().size() < Main.editor.index2) continue;
+							//if (Main.editor.lines.get(i).getChars().size() < Main.editor.index1 || Main.editor.lines.get(i).getChars().size() < Main.editor.index2) continue;
 							
 							Main.editor.lines.get(i).setChars(Main.editor.lines.get(i).getChars().subList(0, Main.editor.index1));
+							
+							//StringBuilder bl = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars())));
+							//String stri = new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars()));
+							//stri = stri.substring(0, Main.editor.index1);
+							//System.out.println(stri);
+							
+							//Main.editor.register(new StringBuilder(stri), Main.editor.cursorY - 1);
 							
 							continue;
 						}
 						
 						if (i == Main.editor.line2 - 1) {
-							Main.editor.lines.get(i).setChars(Main.editor.lines.get(i).getChars().subList(Main.editor.index2, Main.editor.lines.get(i).getChars().size()));
-						
+							if (Main.editor.index2 != Main.editor.lines.get(i).getChars().size())
+								Main.editor.lines.get(i).setChars(Main.editor.lines.get(i).getChars().subList(Main.editor.index2, Main.editor.lines.get(i).getChars().size()));
+							else
+								Main.editor.linesToRemove.add(Main.editor.lines.get(i));
+							
 							continue;
 						}
 						
