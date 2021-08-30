@@ -341,7 +341,9 @@ public class Tab extends IDEComponent implements Serializable {
 			x = Tab.MIN_X + WIDTH + 3;
 		
 		button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
-		button.tick();
+		
+		if (Main.editor.editing == this)
+			button.tick();
 		
 		if (Main.editor.editing == this) {
 			scrX = Main.editor.scrX; // TODO
@@ -447,12 +449,13 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		IDEFont font = new IDEFont(Fonts.lighterGrayNormal, 16);
 		
-		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, isReadOnly ? (x + WIDTH) - 35 : (x + WIDTH) - 15, g);
+		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, isReadOnly ? (x + WIDTH) - 35 : (Main.editor.editing == this ? ((x + WIDTH) - 15) : x + width), g);
 	
 		if (isReadOnly)
 			g.drawImage(Main.lock, (x + WIDTH) - 40, y + 7, 15, 15, null);
 		
-		button.render(g);
+		if (Main.editor.editing == this)
+			button.render(g);
 		
 		for (FileType f : ListableFile.types) {
 			if (f.getExtension().equalsIgnoreCase(extension)) {

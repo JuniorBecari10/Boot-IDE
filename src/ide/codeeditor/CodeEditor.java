@@ -95,7 +95,7 @@ public class CodeEditor extends IDEComponent {
 	public int scrY = 0;
 	
 	private int realcx, realcy; // c = cursor
-	private int drawcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, drawcy = MIN_Y + cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;
+	public int drawcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, drawcy = MIN_Y + cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;
 	
 	private PressedAccent prAcc;
 	private boolean pressedAccent = false;
@@ -134,6 +134,8 @@ public class CodeEditor extends IDEComponent {
 	public int my;
 	
 	public boolean isReadOnly = false;
+	
+	public int autocompletescroll = 0;
 	
 	public List<String> autocomplete = new ArrayList<>();
 	public String wordSinceSpace = "";
@@ -4945,6 +4947,14 @@ public class CodeEditor extends IDEComponent {
 			cursorThread.start();
 		}
 		
+		int index = 0;
+		
+		for (RightClickOption r : autocompletes) {
+			r.setY(((drawcy - autocompletescroll) + FONT_SIZE) + index * 30);
+			
+			index++;
+		}
+		
 		if (KeyInput.isKeyPressed())
 			keyTimeout = true;
 		
@@ -5075,19 +5085,30 @@ public class CodeEditor extends IDEComponent {
 			if (MouseInput.isMouseRolling()) {
 				new Thread() {
 					public void run() {
-					if (KeyInput.isShiftDown()) {
-						if (MouseInput.wheelUp() && scrX > 0)
-							scrX -= FONT_SIZE * 3;
-						else if (MouseInput.wheelDown())
-							scrX += FONT_SIZE * 3;
-					}
-					else {
-						if (MouseInput.wheelUp() && scrY > 0)
-							scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 3;
-						else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size() * (FONT_SIZE + (FONT_SIZE / 4)))
-							scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 3;
-					}
-					
+						if (!RightClickOption.isAutoCompleteActive()) {
+							if (KeyInput.isShiftDown()) {
+								if (MouseInput.wheelUp() && scrX > 0)
+									scrX -= FONT_SIZE * 3;
+								else if (MouseInput.wheelDown())
+									scrX += FONT_SIZE * 3;
+							}
+						}
+						else {
+							if (KeyInput.isShiftDown()) {
+								if (MouseInput.wheelUp() && autocompletes.get(0).getY() + 30 < (y + height) - 30) // TODO aaaaaaaaaa
+									autocompletescroll -= 30;
+								else if (MouseInput.wheelDown() && autocompletes.get(autocompletes.size() - 1).getY() > MIN_Y)
+									autocompletescroll += 30;
+							}
+						}
+						
+						if (!KeyInput.isShiftDown()) {
+							if (MouseInput.wheelUp() && scrY > 0)
+								scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+							else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size() * (FONT_SIZE + (FONT_SIZE / 4)))
+								scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+						}
+						
 					return;
 					}
 				}.start();
@@ -5672,7 +5693,7 @@ public class CodeEditor extends IDEComponent {
 			
 			// Add AutoComplete
 			
-			if (Character.isLetter(c) && !isReadOnly && !alternateTabsMode) { // adicionar esse código no backspace, e se tiver espaços na frente, a keyword vai no lugar errado
+			if ((Character.isLetter(c) || KeyInput.getCharPressed() == 46) && !isReadOnly && !alternateTabsMode) { // adicionar esse código no backspace, e se tiver espaços na frente, a keyword vai no lugar errado
 				String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent()) ? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent())) : getKeywordsSpecial(editing.getRegent().getRegent().getName());
 				
 				if (autoc != null) {
@@ -5691,7 +5712,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46 && !KeyInput.isShiftDown()) RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.)
+			//if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46 && !KeyInput.isShiftDown()) RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.)
 			
 			if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
@@ -5879,15 +5900,8 @@ public class CodeEditor extends IDEComponent {
 				g.fillRect(drawcx, drawcy - 1, 2, FONT_SIZE + 1); // * 14
 			}
 		
-		// desenhar barra inferior
-		if (editing != null) {
-			g.setColor(Colors.lowerBar);
-			g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
-			
-			Fonts.drawString(codeType + " - " + extType + " | " + "X: " + (cursorX + 1) + ", Y: " + cursorY, x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
-			
-			//Fonts.drawString("X: " + (cursorX + 1) + ", Y: " + cursorY, Main.screen.getWidth() - 170, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
-		}
+		for (RightClickOption r : autocompletes)
+			r.render(g);
 		
 		g.setColor(Colors.background);
 		g.fillRect(x, 0, width, 35);
@@ -5898,8 +5912,15 @@ public class CodeEditor extends IDEComponent {
 			t.render(g);
 		}
 		
-		for (RightClickOption r : autocompletes)
-			r.render(g);
+		// desenhar barra inferior
+		if (editing != null) {
+			g.setColor(Colors.lowerBar);
+			g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
+			
+			Fonts.drawString(codeType + " - " + extType + " | " + "X: " + (cursorX + 1) + ", Y: " + cursorY, x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
+			
+			//Fonts.drawString("X: " + (cursorX + 1) + ", Y: " + cursorY, Main.screen.getWidth() - 170, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
+		}
 		
 		if (alternateTabsMode) {
 			g.setColor(new Color(0, 0, 0, 0.3f));
