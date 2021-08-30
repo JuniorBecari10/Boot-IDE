@@ -120,7 +120,8 @@ public class RightClickOption extends IDEComponent {
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE || (MouseInput.isMousePressed() && !(leftClicked() || rightClicked()))) // obs: o bug não é aqui
 			IDEComponent.toRemove.add(this);
 		
-		x = Main.editor.drawcx - Main.editor.scrX;
+		if (isAutoComplete)
+			x = Main.editor.drawcx - Main.editor.scrX;
 		
 		if (leftClicked()) {
 			MouseInput.updateMouse(); // resolver o bug de clicar com o botão direito e abrir e fechar as options

@@ -40,7 +40,7 @@ public class Tab extends IDEComponent implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static transient int MIN_X = 77;
+	public static transient int MIN_X = 77; // TODO colocar o min x pra frente, funcionando
 	
 	public static transient final int Y = 3;
 	public static transient final int WIDTH = 200;
