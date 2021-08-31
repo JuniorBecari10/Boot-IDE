@@ -1,5 +1,7 @@
 - Inibir alguns comandos ao não ter arquivos abertos
 
+- Corrigir coisas erradas que colorem em Markdown
+
 - Corrigir bug de às vezes o select seguir o mouse sem estar apertado [ARQUIVADO]
 
 - Alinhar os números de linha à direita, e com isso não precisa colocar linha de início [ARQUIVADO]
