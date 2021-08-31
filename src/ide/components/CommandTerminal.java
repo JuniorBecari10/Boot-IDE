@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
 import ide.codeeditor.IDELine;
+import ide.codeeditor.Tab;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
@@ -353,9 +354,83 @@ public class CommandTerminal extends IDEComponent {
 				int option = chooser.showSaveDialog(Main.screen.frame);
 				
 				if (option == JFileChooser.APPROVE_OPTION) {
-					File f = chooser.getSelectedFile();
+					File fl = chooser.getSelectedFile();
 					
-					ListableFile.generateConfigFile(f);
+					ListableFile.generateConfigFile(fl);
+					
+					CodeEditor.setSystemLook();
+					String[] options = { Texts.open, Texts.openFolder, Texts.cancel };
+    				
+    				CodeEditor.setSystemLook();
+    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+    				
+    				if (selectedOption == 0) {
+    					File oldbase = Main.baseFolder;
+    			          
+		        	  	Main.baseFolder = fl.getParentFile();
+		        	  	
+		        	  	Explorer.files.clear();
+						ListableFile.files.clear();
+						
+						Explorer.scope = null;
+		        	  	
+		        	  	int index = 0;
+						
+						for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
+							ListableFile.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+							
+							index++;
+						}
+		          
+				int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() : Tab.MIN_X;
+	        	
+				if (!(fl.getName().equalsIgnoreCase(".pdf") || fl.getName().equalsIgnoreCase(".jar") || fl.getName().equalsIgnoreCase(".iso") || fl.getName().equalsIgnoreCase(".img") || fl.getName().equalsIgnoreCase(".flp") || fl.getName().equalsIgnoreCase(".class") || fl.getName().equalsIgnoreCase(".exe") || fl.getName().equalsIgnoreCase(".urna") || fl.getName().equalsIgnoreCase(".save") || fl.getName().equalsIgnoreCase(".docx") || fl.getName().equalsIgnoreCase(".pptx") || fl.getName().equalsIgnoreCase(".one") || fl.getName().equalsIgnoreCase(".psd") || fl.getName().equalsIgnoreCase(".aed") || fl.getName().equalsIgnoreCase(".ai") || fl.getName().equalsIgnoreCase(".indd") || fl.getName().equalsIgnoreCase(".ini") || fl.getName().equalsIgnoreCase(".dll") || fl.getName().equalsIgnoreCase(".png") || fl.getName().equalsIgnoreCase(".jpg") || fl.getName().equalsIgnoreCase(".jpeg") || fl.getName().equalsIgnoreCase(".gif") || fl.getName().equalsIgnoreCase(".bmp") || fl.getName().equalsIgnoreCase(".ico") || fl.getName().equalsIgnoreCase(".webp") || fl.getName().equalsIgnoreCase(".mp4") || fl.getName().equalsIgnoreCase(".wmv") || fl.getName().equalsIgnoreCase(".avi") || fl.getName().equalsIgnoreCase(".wav") || fl.getName().equalsIgnoreCase(".mp3") || fl.getName().equalsIgnoreCase(".ogg") || fl.getName().equalsIgnoreCase(".otf") || fl.getName().equalsIgnoreCase(".ttf") || fl.getName().equalsIgnoreCase(".woff") || fl.getName().equalsIgnoreCase(".woff2") || fl.getName().equalsIgnoreCase(".zip") || fl.getName().equalsIgnoreCase(".rar") || fl.getName().equalsIgnoreCase(".7z") || fl.getName().equalsIgnoreCase(".bin"))) {
+		        	Tab toAdd = new Tab(Main.editor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : Tab.MIN_X - Tab.WIDTH, ListableFile.searchListableFiles(fl));
+		        	
+	  				Main.editor.cursorX = 0;
+	  				Main.editor.cursorY = 1;
+	  				
+	  				Main.editor.scrX = 0;
+	  				Main.editor.scrY = 0;
+	  				
+		        	  	Main.editor.editing = toAdd;
+		        	  	Main.editor.tabs.add(toAdd);
+						
+		        	  	new Thread() {
+							public void run() {
+								try {
+									Main.editor.lines = Main.editor.readFile(fl);
+								} catch (IOException e) { // não suportado, se caiu aqui
+									return;
+								}
+							}
+						}.start();
+		        	  	
+						Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
+				}
+				
+				Main.baseFolder = oldbase;
+        	  	
+        	  	Explorer.files.clear();
+				ListableFile.files.clear();
+				
+				Explorer.scope = null;
+        	  	
+        	  	index = 0;
+				
+				for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
+					ListableFile.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+					
+					index++;
+				}
+    				}
+    				else if (selectedOption == 1) {
+    					try {
+							Main.desktop.open(fl.getParentFile());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+    				}
 				}
 				
 				break;

@@ -1027,7 +1027,7 @@ public class CodeEditor extends IDEComponent {
 	public List<IDEFont> colorVariablesAndObjects(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf")) return fs;
 		
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
 				
@@ -3460,7 +3460,7 @@ public class CodeEditor extends IDEComponent {
 	public List<IDEFont> colorMethods(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf")) return fs;
 		
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
 			
@@ -3514,7 +3514,7 @@ public class CodeEditor extends IDEComponent {
 	public List<IDEFont> colorNumbers(String ext, char[] chars, List<IDEFont> fs) {
 		if (!isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) return fs;
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf")) return fs;
 		
 		List<Integer> indxs = new ArrayList<>();
 		

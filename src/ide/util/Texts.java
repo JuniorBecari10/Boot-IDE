@@ -156,6 +156,10 @@ public final class Texts {
 	
 	public static String cannotBeEmpty;
 	
+	public static String wantOpenFile;
+	public static String openFolder;
+	public static String wouldEdit;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -297,6 +301,10 @@ public final class Texts {
 			
 			cannotBeEmpty = "O nome do arquivo não pode ser vazio!";
 			
+			wantOpenFile = "Você deseja abrir o arquivo para editá-lo?";
+			openFolder = "Abrir Pasta";
+			wouldEdit = "Gostaria de editar o arquivo?";
+			
 			break;
 		
 		case ENG:
@@ -437,6 +445,10 @@ public final class Texts {
 			tab_Cycle = "[Tab] Cycle Through Options";
 			
 			cannotBeEmpty = "The file name cannot be empty!";
+			
+			wantOpenFile = "Do you want to open the file to edit it?";
+			openFolder = "Open Folder";
+			wouldEdit = "Would like to edit the file?";
 			
 			break;
 		}
