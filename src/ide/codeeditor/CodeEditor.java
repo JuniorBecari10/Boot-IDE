@@ -5360,7 +5360,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_S && !isReadOnly && !alternateTabsMode) { // Ctrl + S (Salvar)
 				KeyInput.updateKeys();
-					
+				
 				editing.save();
 					
 				return;
@@ -5419,8 +5419,8 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
+			// Lembrando que isso aqui só ativa quando o que vc digitou está dentro dos conformes
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_SPACE && !isReadOnly && !alternateTabsMode) { // Ctrl + Space (Trigger Auto Complete)
-				System.out.println("A");
 				String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent()) ? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent())) : getKeywordsSpecial(editing.getRegent().getRegent().getName());
 				
 				autocomplete.clear();
@@ -5847,8 +5847,8 @@ public class CodeEditor extends IDEComponent {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4) + 1);
 			
-			g.setColor(Colors.explorerLight);
-			g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, 50, FONT_SIZE + (FONT_SIZE / 4) + 1);
+			/*g.setColor(Colors.backgroundLight);
+			g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, 49, FONT_SIZE + (FONT_SIZE / 4) + 1);*/
 		}
 		
 		try {

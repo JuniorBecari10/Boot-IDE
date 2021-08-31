@@ -93,7 +93,7 @@ public class DragListener implements DropTargetListener {
 		          			return;
 		          		}
 		          		
-		          		File oldbase = Main.baseFolder;
+		          		//File oldbase = Main.baseFolder;
 		          
 		        	  	Main.baseFolder = files.get(0).getParentFile();
 		        	  	
@@ -135,21 +135,6 @@ public class DragListener implements DropTargetListener {
 						}.start();
 		        	  	
 						Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
-				}
-				
-				Main.baseFolder = oldbase;
-        	  	
-        	  	Explorer.files.clear();
-				ListableFile.files.clear();
-				
-				Explorer.scope = null;
-        	  	
-        	  	index = 0;
-				
-				for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
-					ListableFile.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
-					
-					index++;
 				}
 				
 		          dtde.dropComplete(true);

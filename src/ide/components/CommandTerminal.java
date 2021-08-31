@@ -365,9 +365,7 @@ public class CommandTerminal extends IDEComponent {
     				int selectedOption = JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
     				
     				if (selectedOption == 0) {
-    					File oldbase = Main.baseFolder;
-    			          
-		        	  	Main.baseFolder = fl.getParentFile();
+    					Main.baseFolder = fl.getParentFile();
 		        	  	
 		        	  	Explorer.files.clear();
 						ListableFile.files.clear();
@@ -407,22 +405,6 @@ public class CommandTerminal extends IDEComponent {
 						}.start();
 		        	  	
 						Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
-				}
-				
-				Main.baseFolder = oldbase;
-        	  	
-        	  	Explorer.files.clear();
-				ListableFile.files.clear();
-				
-				Explorer.scope = null;
-        	  	
-        	  	index = 0;
-				
-				for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
-					ListableFile.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
-					
-					index++;
-				}
     				}
     				else if (selectedOption == 1) {
     					try {
@@ -432,7 +414,7 @@ public class CommandTerminal extends IDEComponent {
 						}
     				}
 				}
-				
+				}
 				break;
 				
 			case "toggleexplorer":
