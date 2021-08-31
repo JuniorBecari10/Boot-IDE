@@ -13,6 +13,7 @@ paste
 selectline
 print
 selectall
+reloadconfigfile
 generateconfigfile
 toggleexplorer
 loadconfigfile
