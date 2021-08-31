@@ -17,7 +17,7 @@ public class Colors {
     public static Color backgroundLight = Color.decode("#28394d");
     public static Color explorer = 		  Color.decode("#222f3e");
 
-    public static Color explorerLight =   Color.decode("#2d3f54");
+    public static Color explorerLight =   Color.decode("#32475e"); // #2d3f54
     public static Color explorerLighter = Color.decode("#354d69");
     public static Color textLight = 	  Color.decode("#95afc0");
     public static Color textLighter =     Color.decode("#A9B4C2");
