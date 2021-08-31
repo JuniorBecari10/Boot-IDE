@@ -642,7 +642,7 @@ public class CodeEditor extends IDEComponent {
 			"@class", "@public", "@protected", "@private", "@property", "@try", "@throw", "@catch", "@finally",
 			"@synthesize", "@dynamic", "@selector", "atomic", "nonatomic", "retain" };
 	
-	public static final String[] ideConfKeys = { "Arquivo de Configurações da Boot IDE", "Boot IDE Configuration File", "Colors", "Files", "Settings", "default" };
+	public static final String[] ideConfKeys = { "Arquivo de Configurações da Boot IDE", "Boot IDE Configuration File", "port", "eng", "PORT", "ENG", "Colors", "Files", "Settings", "default", "true", "false" };
 	
 	public static final String[] makeKeys = { "if", "else", "make", "echo", "elif", "then", "fi", "exit", "export" };
 	
@@ -666,6 +666,11 @@ public class CodeEditor extends IDEComponent {
 		} catch (AWTException e1) {
 			e1.printStackTrace();
 		}
+		
+		functions = Colors.swapColor(functions, Colors.textLightDefault, Colors.textLight);
+		objects = Colors.swapColor(objects, Colors.textLightDefault, Colors.textLight);
+		keywords = Colors.swapColor(keywords, Colors.textLightDefault, Colors.textLight);
+		variables = Colors.swapColor(variables, Colors.textLightDefault, Colors.textLight);
 		
 		tabs = new ArrayList<>();
 		toAdd = new ArrayList<>();
@@ -1193,6 +1198,8 @@ public class CodeEditor extends IDEComponent {
 							!isCharsEqual(chars[i + len], ')') &&
 							!isCharsEqual(chars[i + len], '{') &&
 							!isCharsEqual(chars[i + len], '}') &&
+							!isCharsEqual(chars[i + len], '<') &&
+							!isCharsEqual(chars[i + len], '>') &&
 							!isCharsEqual(chars[i + len], ',') &&
 							!isCharsEqual(chars[i + len], ';') &&
 							!isCharsEqual(chars[i + len], '.') &&
@@ -3522,7 +3529,7 @@ public class CodeEditor extends IDEComponent {
 	public List<IDEFont> colorNumbers(String ext, char[] chars, List<IDEFont> fs) {
 		if (!isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) return fs;
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
 		
 		List<Integer> indxs = new ArrayList<>();
 		
@@ -4973,7 +4980,7 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return; // 06/08/2021 - 11:43
+		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
 		
 		if (tabs == null) tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
 		

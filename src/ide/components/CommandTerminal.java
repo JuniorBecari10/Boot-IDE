@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
 import ide.codeeditor.IDELine;
-import ide.codeeditor.Tab;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
@@ -69,12 +68,15 @@ public class CommandTerminal extends IDEComponent {
 	 *   n° 104:
 	 *   Somente adicionem comandos se realmente forem necessários
 	 *   
+	 *   n° 105:
+	 *   O comando somente vai ser adicioando se estiver em ordem correta nos dois arrays, e aparecerá no autocomplete
+	 *   
 	 *   [...]
 	 */
 	
 	// O Emmet não está disponível ainda, talvez na v4.0 ele venha
 	
-	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
+	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "reloadconfigfile",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "stdcout", "writeline", "syserr", "clog", "gendiv", "closebasefolder",
@@ -86,7 +88,7 @@ public class CommandTerminal extends IDEComponent {
 			"gengetter str:lang str:variable_name str:variable_type",
 			"gensetter str:lang str:variable_name str:variable_type" };
 	
-	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
+	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "reloadconfigfile",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "stdcout", "writeline", "syserr", "clog", "gendiv", "closebasefolder",
@@ -359,12 +361,12 @@ public class CommandTerminal extends IDEComponent {
 					ListableFile.generateConfigFile(fl);
 					
 					CodeEditor.setSystemLook();
-					String[] options = { Texts.open, Texts.openFolder, Texts.cancel };
+					String[] options = { Texts.openFolder, Texts.cancel };
     				
     				CodeEditor.setSystemLook();
     				int selectedOption = JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
     				
-    				if (selectedOption == 0) {
+    				/*if (selectedOption == 0) {
     					Main.baseFolder = fl.getParentFile();
 		        	  	
 		        	  	Explorer.files.clear();
@@ -405,15 +407,14 @@ public class CommandTerminal extends IDEComponent {
 						}.start();
 		        	  	
 						Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
-    				}
-    				else if (selectedOption == 1) {
+    				}*/
+    				if (selectedOption == 0) {
     					try {
 							Main.desktop.open(fl.getParentFile());
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
     				}
-				}
 				}
 				break;
 				
@@ -427,21 +428,17 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
+			case "reloadconfigfile":
+				Main.load();
+				break;
+				
 			case "loadconfigfile":
 				option = chooser.showOpenDialog(Main.screen.frame);
 				
 				if (option == JFileChooser.APPROVE_OPTION) {
 					Main.conffile = chooser.getSelectedFile().getPath();
-					ListableFile.readConfigFile(chooser.getSelectedFile().getPath());
 					
-					//JOptionPane.showMessageDialog(null, "As mudanças serão aplicadas na próxima vez que você iniciar a Boot IDE!");
-					
-					Main.cnfFile = chooser.getSelectedFile();
-					
-					Fonts.initFonts(Main.fntnr, Main.fntbl);
-					Main.spritesheet = new Spritesheet(Main.sprsh);
-					
-					Main.hasConfigFile = true;
+					Main.load();
 					
 					if (!ListableFile.hasAltered) {
 						String[] options = { Texts.yes, Texts.no };

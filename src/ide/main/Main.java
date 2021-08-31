@@ -73,7 +73,6 @@ public class Main implements Runnable, Tickable {
     public static ReloadButton reload;
     
     public static File baseFolder;
-    public static File cnfFile;
     
     public static String sprsh = "/spritesheet.png";
     public static String fntnr = "/font.png";
@@ -214,6 +213,35 @@ public class Main implements Runnable, Tickable {
 		IDEComponent.toAdd.add(Main.oneLevel);
 		IDEComponent.toAdd.add(Main.returnBase);
 		IDEComponent.toAdd.add(Main.reload);
+    }
+    
+    public static synchronized void load() {
+		ListableFile.readConfigFile(conffile);
+        Texts.setTexts(lang);
+        
+        ////////
+        
+        baseFolderSpr = Colors.swapColor(baseFolderSpr, Colors.textLightDefault, Colors.textLight);
+        
+        newFileSpr = Colors.swapColor(newFileSpr, Colors.textLightDefault, Colors.textLight);
+        newFolderSpr = Colors.swapColor(newFolderSpr, Colors.textLightDefault, Colors.textLight);
+        folderUp = Colors.swapColor(folderUp, Colors.textLightDefault, Colors.textLight);
+        backBaseFolder = Colors.swapColor(backBaseFolder, Colors.textLightDefault, Colors.textLight);
+        reloadSpr = Colors.swapColor(reloadSpr, Colors.textLightDefault, Colors.textLight);
+        
+        star = Colors.swapColor(star, Colors.textLightDefault, Colors.textLight);
+        folder = Colors.swapColor(folder, Colors.textLightDefault, Colors.textLight);
+        
+        closeTab = Colors.swapColor(closeTab, Colors.textLightDefault, Colors.textLight);
+        notSavedTab = Colors.swapColor(notSavedTab, Colors.textLightDefault, Colors.textLight);
+        
+        lock = Colors.swapColor(lock, Colors.textLightDefault, Colors.textLight);
+        
+        ////////
+        
+        Fonts.initFonts(fntnr, fntbl);
+        
+        hasConfigFile = true;
     }
     
    /*private void openWith(String locale) {

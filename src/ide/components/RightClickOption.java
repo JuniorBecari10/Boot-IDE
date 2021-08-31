@@ -166,7 +166,7 @@ public class RightClickOption extends IDEComponent {
 		g.setColor(c);
 		g.fillRect(x, y, width, HEIGHT);
 		
-		Fonts.drawString(text, x + 2, y + 2, new IDEFont(Fonts.lightGrayNormal, textSize), g);
+		Fonts.drawString(isAutoComplete ? (text.length() > 25 ? text.substring(0, 22) + "..." : text) : text, x + 2, y + 2, new IDEFont(Fonts.lightGrayNormal, textSize), x + width, g);
 		
 		if (isAutoComplete) {
 			g.drawImage(sprite, (x + width) - 20, y + 4, 16, 16, null);

@@ -177,7 +177,7 @@ public final class Texts {
 			noConfigFileLoaded = "Não há nenhum Arquivo de Configurações carregado.";
 			
 			codeHelpersOn = "Os CodeHelpers estão ativados.";
-			codeHelpersOff = "Os CodeHelpers estão desativados";
+			codeHelpersOff = "Os CodeHelpers estão desativados.";
 			
 			fileAsReadOnly = "Esse arquivo está como somente leitura.";
 			
