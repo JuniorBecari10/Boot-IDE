@@ -5846,6 +5846,9 @@ public class CodeEditor extends IDEComponent {
 		if (!isReadOnly) {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4) + 1);
+			
+			g.setColor(Colors.explorerLight);
+			g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, 50, FONT_SIZE + (FONT_SIZE / 4) + 1);
 		}
 		
 		try {
