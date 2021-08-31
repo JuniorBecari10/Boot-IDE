@@ -56,6 +56,13 @@ public class SetFileName extends IDEComponent {
 				cursor.play();
 			}
 		}.start();
+		
+		while (this.y > Main.screen.getHeight() - 30) {
+			for (ListableFile l : Explorer.files)
+				l.setY(l.getY() - 30);
+			
+			this.y -= 30;
+		}
 	}
 	
 	public void tick() {
