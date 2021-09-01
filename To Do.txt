@@ -1,7 +1,5 @@
 - Inibir alguns comandos ao não ter arquivos abertos
 
-- Clicar com o botão direito em uma rightclickoption dá um bug loko
-
 - Corrigir bug de às vezes o select seguir o mouse sem estar apertado [ARQUIVADO]
 
 - Alinhar os números de linha à direita, e com isso não precisa colocar linha de início [ARQUIVADO]
