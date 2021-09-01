@@ -1039,8 +1039,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
-				
-			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
+			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1"))) {
 				for (String s : syms) {
 					indxs = findWord(new String(chars), s); // antes de <palavra>
 					
@@ -2515,29 +2514,6 @@ public class CodeEditor extends IDEComponent {
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
-			}
-			
-			indxs = findWord(new String(chars), "="); // html
-			
-			for (Integer i : indxs) {
-				int c = i;
-				len = 0;
-				
-				while (c < chars.length && 
-						c + len < chars.length &&
-						c > 0 &&
-						chars[c] != ' ' &&
-						chars[c] != '[' &&
-						chars[c] != ']' &&
-						chars[c] != ',' &&
-						chars[c] != ';' &&
-						chars[c] != '.' &&
-						chars[c] != ':') {
-					c--;
-					len++;
-				}
-				
-				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
 			break;
