@@ -273,7 +273,7 @@ public class CodeEditor extends IDEComponent {
 			"section", "select", "small", "source", "span", "strike", "strong", "style", "sup", "svg", "table",
 			"tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt",
 			"u", "ul", "var", "video", "wbr", "applet", "important", "screen", "and", "or", "moz", "webkit", "ms", "mixin", "webview",
-			"user", "select", "drag" /* TODO colocar mais desses ultimos */, "deg", "rad"
+			"user", "select", "drag", "deg", "rad" /* TODO colocar mais desses ultimos */
 	};
 	
 	public static final String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
@@ -5702,7 +5702,7 @@ public class CodeEditor extends IDEComponent {
 			
 			register(cY, cursorY - 1);
 			
-			if (Character.isLetter(c)) wordSinceSpace += c;
+			if (Character.isLetter(c) || isNumber(c)) wordSinceSpace += c;
 			if (keyCode == KeyEvent.VK_SPACE) {
 				wordSinceSpace = "";
 				RightClickOption.removeAllRightClickOptions();
@@ -5714,7 +5714,7 @@ public class CodeEditor extends IDEComponent {
 			
 			// Add AutoComplete
 			
-			if ((Character.isLetter(c) || KeyInput.getCharPressed() == 46) && !isReadOnly && !alternateTabsMode) { // adicionar esse código no backspace, e se tiver espaços na frente, a keyword vai no lugar errado
+			if ((Character.isLetter(c) || isNumber(c) || KeyInput.getCharPressed() == 46) && !isReadOnly && !alternateTabsMode) { // adicionar esse código no backspace, e se tiver espaços na frente, a keyword vai no lugar errado
 				String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent()) ? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent())) : getKeywordsSpecial(editing.getRegent().getRegent().getName());
 				
 				if (autoc != null) {
