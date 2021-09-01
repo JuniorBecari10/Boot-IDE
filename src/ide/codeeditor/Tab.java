@@ -356,6 +356,8 @@ public class Tab extends IDEComponent implements Serializable {
 			if (Main.editor.editing != null)
 				Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
 			
+			Main.editor.wordSinceSpace = "";
+			
 			Main.editor.editing = this;
 			
 			Main.editor.isMultilineCommenting = false;
