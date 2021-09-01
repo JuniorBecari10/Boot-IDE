@@ -667,11 +667,6 @@ public class CodeEditor extends IDEComponent {
 			e1.printStackTrace();
 		}
 		
-		functions = Colors.swapColor(functions, Colors.textLightDefault, Colors.textLight);
-		objects = Colors.swapColor(objects, Colors.textLightDefault, Colors.textLight);
-		keywords = Colors.swapColor(keywords, Colors.textLightDefault, Colors.textLight);
-		variables = Colors.swapColor(variables, Colors.textLightDefault, Colors.textLight);
-		
 		tabs = new ArrayList<>();
 		toAdd = new ArrayList<>();
 		toRemove = new ArrayList<>();

@@ -153,7 +153,7 @@ public class Main implements Runnable, Tickable {
         
         logo = new Logo(Screen.WIDTH / 2 + 80, Screen.HEIGHT / 2 - 120, 160, 160, star);
         
-        screen.setFrameIcon(spritesheet.getSprite(32, 0, 16, 16));
+        screen.setFrameIcon(spritesheet.getSprite(144, 0, 16, 16));
         
         openBase = new OpenBaseFolderButton(20, 70, 48, 48, baseFolderSpr);
         oneLevel = new OneLevelAboveButton(160, 85, 32, 32, folderUp);
@@ -203,6 +203,13 @@ public class Main implements Runnable, Tickable {
         notSavedTab = Colors.swapColor(notSavedTab, Colors.textLightDefault, Colors.textLight);
         
         lock = Colors.swapColor(lock, Colors.textLightDefault, Colors.textLight);
+        
+        ///
+        
+        CodeEditor.functions = Colors.swapColor(CodeEditor.functions, Colors.textLightDefault, Colors.textLight);
+        CodeEditor.objects = Colors.swapColor(CodeEditor.objects, Colors.textLightDefault, Colors.textLight);
+        CodeEditor.keywords = Colors.swapColor(CodeEditor.keywords, Colors.textLightDefault, Colors.textLight);
+        CodeEditor.variables = Colors.swapColor(CodeEditor.variables, Colors.textLightDefault, Colors.textLight);
         
         ////////
         
