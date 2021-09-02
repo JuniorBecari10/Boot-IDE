@@ -451,7 +451,9 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		IDEFont font = new IDEFont(Fonts.lighterGrayNormal, 16);
 		
-		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, isReadOnly ? (x + WIDTH) - 35 : (Main.editor.editing == this ? ((x + WIDTH) - 15) : x + width), g);
+		int limit = (x + WIDTH) - 15;
+		
+		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, limit, g);
 	
 		if (isReadOnly)
 			g.drawImage(Main.lock, Main.editor.editing == this ? (x + WIDTH) - 40 : (x + WIDTH) - 20, y + 7, 15, 15, null);

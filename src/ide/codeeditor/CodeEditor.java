@@ -1028,6 +1028,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public List<IDEFont> colorVariablesAndObjects(String ext, char[] chars, List<IDEFont> fs) {
+		if (editing == null) return fs;
+		
 		List<Integer> indxs = new ArrayList<>();
 		
 		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) return fs;
@@ -1226,6 +1228,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public List<IDEFont> colorKeywords(String ext, char[] chars, List<IDEFont> fs) {
+		if (editing == null) return fs;
+		
 		List<Integer> indxs = new ArrayList<>();
 		
 		switch (ext.toLowerCase()) {
@@ -3422,6 +3426,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public List<IDEFont> colorMethods(String ext, char[] chars, List<IDEFont> fs) {
+		if (editing == null) return fs;
+		
 		List<Integer> indxs = new ArrayList<>();
 		
 		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf")) return fs;
@@ -3476,6 +3482,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public List<IDEFont> colorNumbers(String ext, char[] chars, List<IDEFont> fs) {
+		if (editing == null) return fs;
+		
 		if (!isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) return fs;
 		
 		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
@@ -3522,6 +3530,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public List<IDEFont> colorSymbols(String ext, char[] chars, List<IDEFont> fs) {
+		if (editing == null) return fs;
+		
 		List<Integer> indxs = new ArrayList<>();
 		
 		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
@@ -3539,6 +3549,8 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	public List<IDEFont> colorExtras(String ext, char[] chars, List<IDEFont> fs) {
+		if (editing == null) return fs;
+		
 		List<Integer> indxs = new ArrayList<>();
 		
 		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
@@ -3641,6 +3653,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public List<IDEFont> colorNoExtensions(String ext, char[] chars, List<IDEFont> fs) {
+		if (editing == null) return fs;
+		
 		List<Integer> indxs = new ArrayList<>();
 		
 		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
@@ -3775,6 +3789,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public List<IDEFont> colorComments(String ext, char[] chars, List<IDEFont> fs) {
+		if (editing == null) return fs;
+		
 		List<Integer> indxs = new ArrayList<>();
 		
 		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
@@ -4244,10 +4260,12 @@ public class CodeEditor extends IDEComponent {
 		isJSPart = false;
 		isPhpPart = false;*/
 		
-		List<IDEFont> fs = new ArrayList<>(); // eliminar a necessidade de ter que apertar alguma tecla pra algumas coisas funcionarem
+		List<IDEFont> fs = new ArrayList<>();
 		
 		for (int i = 0; i < chars.length; i++)
 			fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
+		
+		if (editing == null) return fs;
 		
 		/////////////////////////////////////////////////////
 		
