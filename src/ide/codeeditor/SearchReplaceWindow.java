@@ -70,6 +70,8 @@ public class SearchReplaceWindow extends JFrame {
 	public SearchReplaceWindow() {
 		active = true;
 		
+		this.setAlwaysOnTop(true);
+		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 364, 361); // deixa assim mesmo
 		contentPane = new JPanel();
