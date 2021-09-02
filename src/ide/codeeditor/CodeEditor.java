@@ -5238,7 +5238,9 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && !isReadOnly && !alternateTabsMode) {
 				KeyInput.updateKeys();
+				
 				RightClickOption.removeAllRightClickOptions();
+				CommandTerminal.runCommand("deselect");
 				
 				return;
 			}
@@ -5312,14 +5314,6 @@ public class CodeEditor extends IDEComponent {
 				
 				setCursorWithinBounds();
 					
-				return;
-			}
-			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && !isReadOnly && !alternateTabsMode) {
-				KeyInput.updateKeys();
-				
-				CommandTerminal.runCommand("deselect");
-				
 				return;
 			}
 			
