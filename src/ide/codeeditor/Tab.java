@@ -453,10 +453,7 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		int limit = (x + WIDTH) - 15;
 		
-		if (Main.editor.editing == this && isReadOnly) {
-			limit = (x + WIDTH) - 30;
-			System.out.println("aa");
-		}
+		if (Main.editor.editing == this && isReadOnly) limit = (x + WIDTH) - 30;
 		else limit = (x + WIDTH) - 15;
 		
 		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, limit, g);
