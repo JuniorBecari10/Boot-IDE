@@ -260,7 +260,7 @@ public class CodeEditor extends IDEComponent {
 			"native", "new", "null", "package", "private", "protected", "public", "return", "short", "static",
 			"super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof",
 			"var", "void", "volatile", "while", "with", "yield", "undefined", "of", "async", "window", "document",
-			"console", "as", "from", "navigator", "constructor", "debug" };
+			"console", "as", "from", "navigator", "constructor", "debug", "declare", "namespace" };
 	
 	public static final String[] cssTags = { "a", "abbr", "acronym", "address", "applet", "area", "article",
 			"aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button",
@@ -609,7 +609,7 @@ public class CodeEditor extends IDEComponent {
 			"continue", "function", "export", "new", "package", "static", "void", "finally", "this",
 			"throws", "eval", "extends", "null", "final", "true", "try", "implements", "private", "const",
 			"import", "string", "for", "interface", "delete", "switch", "public", "of", "await", "class",
-			"console", "false", "volatile", "any", "int", "instanceof", "super", "with", "async",
+			"console", "false", "volatile", "any", "int", "instanceof", "super", "with", "async", "declare", "namespace",
 			"boolean", "short", "arguments", "window", "as", "from", "navigator", "constructor", "debug" };
 	
 	public static final String[] ktKeys = { "as", "as?", "break", "class", "continue", "do", "else", "false", "for", "fun",
