@@ -133,7 +133,7 @@ public class SetFileName extends IDEComponent {
 				Explorer.files = ListableFile.loadFolder(Explorer.scope);
 				
 				if (!ListableFile.formatNotSupported(ListableFile.getFileExtension(f)))
-					ListableFile.addTab(ListableFile.search(f, f.getParentFile()));
+					ListableFile.addTab(ListableFile.search(f, f.getParentFile()), true);
 				
 				return;
 			}

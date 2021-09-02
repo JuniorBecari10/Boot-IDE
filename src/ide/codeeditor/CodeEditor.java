@@ -80,6 +80,8 @@ public class CodeEditor extends IDEComponent {
 	
 	public int keyWait = 0, maxKeyWait = 5;
 	
+	public static boolean automaticallyOpenTabs = true;
+	
 	public boolean codeHelpersOn = true;
 	
 	public String codeType = "";
@@ -3469,6 +3471,8 @@ public class CodeEditor extends IDEComponent {
 									chars[c] != '.' &&
 									chars[c] != ':' &&
 									chars[c] != '#' &&
+									chars[c] != '/' &&
+									chars[c] != '\\' &&
 									chars[c] != '!') {
 								c--;
 								len++;

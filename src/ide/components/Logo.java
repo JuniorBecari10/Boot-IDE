@@ -29,8 +29,6 @@ public class Logo extends IDEComponent {
 		
 		show = Main.editor.editing == null;
 		
-		if (Main.screen.getWidth() < 690) show = false;
-		
 		if (!CommandTerminal.expOff) {
 			x = (int) (Main.screen.getWidth() / 2 + 80);
 			y = (int) (Main.screen.getHeight() / 2 - 120);
@@ -42,6 +40,7 @@ public class Logo extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
+		if (Main.screen.getWidth() < 690) return;
 		if (!show) return;
 		
 		super.render(g);

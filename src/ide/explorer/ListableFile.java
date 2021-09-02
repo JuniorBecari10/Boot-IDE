@@ -416,6 +416,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			w.write("font_size: default\n");
 			w.write("language: default\n");
 			w.write("autocomplete_active: default\n");
+			w.write("automatically_open_tabs: default");
 			
 			w.close();
 			
@@ -818,6 +819,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				break;
 				
+			case "automatically_open_tabs:":
+				if (split[1].equals("default")) break;
+				
+				CodeEditor.automaticallyOpenTabs = Boolean.valueOf(split[1]);
+				
+				hasAltered = true;
+				
+				break;
+				
 			case "language:":
 				if (split[1].equals("default")) break;
 				
@@ -1054,7 +1064,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		}
 	}
 	
-	public static void addTab(ListableFile file) {
+	public static void addTab(ListableFile file, boolean isAutomatic) {
+		if (!CodeEditor.automaticallyOpenTabs && isAutomatic) return;
+		
+		System.out.println("aa");
+		
 		if (file.getRegent().isFile() && Main.editor.tabs != null) {
 			int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() : Tab.MIN_X;
 			
