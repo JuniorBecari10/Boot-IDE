@@ -5027,7 +5027,7 @@ public class CodeEditor extends IDEComponent {
 		if (drawcy > realcy) drawcy -= speed;*/
 		
 		if (MouseInput.isLeftPressed() || (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() != KeyEvent.VK_BACK_SPACE) && ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2)))
-			selecting = false;
+			CommandTerminal.runCommand("deselect");
 		
 		drawcx = realcx;
 		drawcy = realcy;
@@ -5186,6 +5186,16 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 		}
+		
+		/*if (KeyInput.isAltGrDown() && !SetFileName.added && !CommandTerminal.active) {
+			char c = KeyInput.getCharPressed();
+			StringBuilder bl = new StringBuilder(new String(toCharArray(lines.get(cursorY - 1).getChars())));
+			
+			bl.insert(cursorX, c);
+			register(bl, cursorY - 1);
+			
+			return;
+		}*/
 		
 		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active) { // TODO
 			setCursorWithinBounds();
@@ -5475,16 +5485,15 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}*/
 			
-			if (!(KeyInput.isAltDown() || KeyInput.isControlDown()) && !isReadOnly && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados
-				if (!KeyInput.isShiftDown()) {
-					CommandTerminal.runCommand("deselect");
-					
+			if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !isReadOnly && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados, ou se alt gr está pressionado
+				if (!KeyInput.isShiftDown()) {		
 					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 						KeyInput.updateKeys();
 						
 						cursorY--;
 						
-						setCursorWithinBounds(); // detectar teclas que usam o alt gr TODO
+						CommandTerminal.runCommand("deselect");
+						setCursorWithinBounds();
 						
 						return;
 					}
@@ -5494,6 +5503,7 @@ public class CodeEditor extends IDEComponent {
 						
 						cursorY++;
 						
+						CommandTerminal.runCommand("deselect");
 						setCursorWithinBounds();
 						
 						return;
@@ -5504,6 +5514,7 @@ public class CodeEditor extends IDEComponent {
 						
 						cursorX--;
 						
+						CommandTerminal.runCommand("deselect");
 						setCursorWithinBounds();
 						
 						return;
@@ -5514,6 +5525,7 @@ public class CodeEditor extends IDEComponent {
 						
 						cursorX++;
 						
+						CommandTerminal.runCommand("deselect");
 						setCursorWithinBounds();
 						
 						return;
