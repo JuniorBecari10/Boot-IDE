@@ -160,7 +160,7 @@ public class CodeEditor extends IDEComponent {
 	
 	///////
 	
-	public static final String[] syms = { "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`", "´", "^", "~" };
+	public static final String[] syms = { "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "\\", "|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`", "´", "^", "~" };
 	
 	public static final String[] loremWords = { "dolor", "sit", "amet", "consectetur",
 			"adipiscing", "elit", "curabitur", "vel", "hendrerit", "libero",
