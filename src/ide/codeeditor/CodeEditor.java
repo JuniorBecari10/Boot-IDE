@@ -347,7 +347,7 @@ public class CodeEditor extends IDEComponent {
 			"float", "for", "goto", "if", "int", "long", "register", "return",
 			"short", "signed", "sizeof", "static", "struct", "switch", "typedef",
 			"union", "unsigned", "void", "volatile", "while", "true", "false", "null", "include",
-			"bool", "duint", "uint16_t" };
+			"bool", "duint", "uint16_t", "size_t" };
 	
 	public static final String[] cppKeys = { "auto", "break", "case", "char", "const",
 			"continue", "default", "do", "double", "else", "enum", "extern",
@@ -359,7 +359,7 @@ public class CodeEditor extends IDEComponent {
 			"friend", "private", "class", "this", "inline", "public", "throw", "const_cast",
 			"delete", "mutable", "protected", "true", "try", "typeid", "typename", "using", "virtual",
 			"wchar_t", "include", "define", "string", "ifdef", "ifndef", "error", "pragma", "endif",
-			"override", "std" };
+			"override", "std", "size_t", "duint", "uint16_t" };
 	
 	public static final String[] csKeys = { "abstract", "async", "const", "event", "extern", "new",
 			"override", "partial", "readonly", "sealed", "static", "unsafe", "virtual",
