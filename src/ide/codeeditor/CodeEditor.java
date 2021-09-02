@@ -392,9 +392,9 @@ public class CodeEditor extends IDEComponent {
 			"JAVA", "JAVAC", "JAVAW", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON", "LUA", "BIN", "EJECT", "TSC" };
 	
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
-	public static final String[] extensions = { ".java", ".c", ".cpp", ".cs", ".py", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
+	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
 			".html", ".xhtml", ".htm", ".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp",
-			".JAVA", ".C", ".CPP", ".CS", ".PY", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".GO", ".R", ".PL", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
+			".JAVA", ".C", ".CPP", ".CC", ".CS", ".PY", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HH", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".GO", ".R", ".PL", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
 			".HTML", ".XHTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP"};
 	
 	public static final String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
@@ -884,10 +884,12 @@ public class CodeEditor extends IDEComponent {
 			case ".java" -> javaKeys;
 			case ".c" -> cKeys;
 			case ".cpp" -> cppKeys;
+			case ".cc" -> cppKeys;
 			case ".hpp" -> cppKeys;
 			case ".cxx" -> cppKeys;
 			case ".hxx" -> cppKeys;
 			case ".h" -> cppKeys;
+			case ".hh" -> cppKeys;
 			case ".cs" -> csKeys;
 			case ".py" -> pyKeys;
 			case ".pyd" -> pyKeys;
@@ -2043,6 +2045,7 @@ public class CodeEditor extends IDEComponent {
 				extType = "Arduino";
 				foundExt = true;
 			}
+		case ".hh":
 		case ".hpp":
 		case ".hxx":
 			if (!foundExt) {
@@ -2051,6 +2054,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		case ".cxx":
 		case ".cpp":
+		case ".cc":
 			if (!foundExt) {
 				extType = "C++";
 				foundExt = true;
@@ -3778,12 +3782,14 @@ public class CodeEditor extends IDEComponent {
 		case ".java":
 		case ".c":
 		case ".cpp":
+		case ".cc":
 		case ".cs":
 		case ".js":
 		case ".mjs":
 		case ".vue":
 		case ".jsx":
 		case ".h":
+		case ".hh":
 		case ".hpp":
 		case ".hxx":
 		case ".swift":
@@ -3913,11 +3919,13 @@ public class CodeEditor extends IDEComponent {
 		case ".java":
 		case ".c":
 		case ".cpp":
+		case ".cc":
 		case ".cxx":
 		case ".cs":
 		case ".js":
 		case ".mjs":
 		case ".h":
+		case ".hh":
 		case ".hpp":
 		case ".hxx":
 		case ".sql":
