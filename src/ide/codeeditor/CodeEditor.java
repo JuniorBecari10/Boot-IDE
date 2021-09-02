@@ -5287,7 +5287,15 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			if (((KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D) || KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) && !isReadOnly && !alternateTabsMode) { // Ctrl + D ou Esc (Desselecionar)
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && !isReadOnly && !alternateTabsMode) {
+				KeyInput.updateKeys();
+				
+				CommandTerminal.runCommand("deselect");
+				
+				return;
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D && !isReadOnly && !alternateTabsMode) { // Ctrl + D ou Esc (Desselecionar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("deselect");
@@ -5469,6 +5477,8 @@ public class CodeEditor extends IDEComponent {
 			
 			if (!(KeyInput.isAltDown() || KeyInput.isControlDown()) && !isReadOnly && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados
 				if (!KeyInput.isShiftDown()) {
+					CommandTerminal.runCommand("deselect");
+					
 					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 						KeyInput.updateKeys();
 						
