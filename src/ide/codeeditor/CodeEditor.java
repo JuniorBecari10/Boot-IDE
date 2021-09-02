@@ -1220,34 +1220,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			}
-				
-				if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".zig")) {
-					indxs = findWord(new String(chars), "@");
-					
-					int len = 0;
-
-					for (Integer i : indxs) {
-						while (i + len < chars.length && 
-								!isCharsEqual(chars[i + len], ' ') &&
-								!isCharsEqual(chars[i + len], '[') &&
-								!isCharsEqual(chars[i + len], ']') &&
-								!isCharsEqual(chars[i + len], '(') &&
-								!isCharsEqual(chars[i + len], ')') &&
-								!isCharsEqual(chars[i + len], ',') &&
-								!isCharsEqual(chars[i + len], ';') &&
-								!isCharsEqual(chars[i + len], '.') &&
-								!isCharsEqual(chars[i + len], ':') &&
-								!isCharsEqual(chars[i + len], '=') &&
-								!isCharsEqual(chars[i + len], '\"') &&
-								!isCharsEqual(chars[i + len], '\'')) {
-								len++;
-						}
-
-						if (i + len < chars.length)
-							fs = color(i, i + len, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), fs);
-					}
-				}
-			}
+		}
 		
 		return fs;
 	}
@@ -3635,6 +3608,34 @@ public class CodeEditor extends IDEComponent {
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 		}
+		
+		if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".zig")) {
+			indxs = findWord(new String(chars), "@");
+			
+			int len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length && 
+						!isCharsEqual(chars[i + len], ' ') &&
+						!isCharsEqual(chars[i + len], '[') &&
+						!isCharsEqual(chars[i + len], ']') &&
+						!isCharsEqual(chars[i + len], '(') &&
+						!isCharsEqual(chars[i + len], ')') &&
+						!isCharsEqual(chars[i + len], ',') &&
+						!isCharsEqual(chars[i + len], ';') &&
+						!isCharsEqual(chars[i + len], '.') &&
+						!isCharsEqual(chars[i + len], ':') &&
+						!isCharsEqual(chars[i + len], '=') &&
+						!isCharsEqual(chars[i + len], '\"') &&
+						!isCharsEqual(chars[i + len], '\'')) {
+						len++;
+				}
+
+				if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), fs);
+			}
+		}
+		
 		}
 		return fs;
 	}
