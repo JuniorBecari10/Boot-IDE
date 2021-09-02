@@ -1035,7 +1035,7 @@ public class CodeEditor extends IDEComponent {
 		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) return fs;
 		
 		if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) {
-			indxs = findWord(new String(chars), "<"); // colorir strings
+			indxs = findWord(new String(chars), "<");
 			List<Integer> finals = findWord(new String(chars), ">");
 			
 			for (int i = 0; i < indxs.size(); i++)
@@ -3558,38 +3558,39 @@ public class CodeEditor extends IDEComponent {
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		indxs = findWord(new String(chars), Character.toString((char) 34)); // colorir strings
 		
-		for (int i = 0; i < indxs.size() - 1; i += 2)
-			fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+		if (!(ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".md"))) {
+			indxs = findWord(new String(chars), Character.toString((char) 34)); // colorir strings
 			
-			/*indxs = findWord(new String(chars), "\"");						// colorir comentários multi-linha - caracteres iguais
-			
-			if (indxs.size() > 0 && !isMultilineString) { // provavelmente esse é o abrimento
-				fs = color(indxs.get(0), indxs.size() > 1 ? indxs.get(1) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
-				isMultilineString = true;
+			for (int i = 0; i < indxs.size() - 1; i += 2)
+				fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 				
-				isAnotherIteration = false;
-			}
-			
-			if (indxs.size() > 0 && isMultilineString && isAnotherIteration) { // provavelmente esse é o fechamento
-				fs = color(0, indxs.get(0) + 2, new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
-				isMultilineString = false;
-			}
-			
-			isAnotherIteration = true;
-			
-			if (isMultilineString)
-				fs = color(0, fs.size(), new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);*/
-
+				/*indxs = findWord(new String(chars), "\"");						// colorir comentários multi-linha - caracteres iguais
+				
+				if (indxs.size() > 0 && !isMultilineString) { // provavelmente esse é o abrimento
+					fs = color(indxs.get(0), indxs.size() > 1 ? indxs.get(1) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+					isMultilineString = true;
+					
+					isAnotherIteration = false;
+				}
+				
+				if (indxs.size() > 0 && isMultilineString && isAnotherIteration) { // provavelmente esse é o fechamento
+					fs = color(0, indxs.get(0) + 2, new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+					isMultilineString = false;
+				}
+				
+				isAnotherIteration = true;
+				
+				if (isMultilineString)
+					fs = color(0, fs.size(), new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);*/
+	
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		indxs = findWord(new String(chars), Character.toString((char) 39)); // colorir chars
-
-		for (int i = 0; i < indxs.size() - 1; i += 2)
-			fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
-		
+	
+			indxs = findWord(new String(chars), Character.toString((char) 39)); // colorir chars
+	
+			for (int i = 0; i < indxs.size() - 1; i += 2)
+				fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+		}
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		for (IDEFont i : fs) {
