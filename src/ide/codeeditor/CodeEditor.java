@@ -382,6 +382,7 @@ public class CodeEditor extends IDEComponent {
 			"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto",
 			"rmdir", "icacls", "takeown", "if", "for", "else", "git", "npm", "call", "exist", "end",
 			"java", "javac", "javaw", "nodemon", "csc", "nasm", "qemu", "gcc", "g++", "python", "lua", "bin", "eject", "tsc",
+			"setlocal", "endlocal",
 			"VER", "ASSOC", "CD", "CLS",
 			"COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
@@ -389,7 +390,8 @@ public class CodeEditor extends IDEComponent {
 			"LABEL", "MORE", "NET", "PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO",
 			"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH", "NODE", "OFF", "GOTO",
 			"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM", "CALL", "EXIST", "END",
-			"JAVA", "JAVAC", "JAVAW", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON", "LUA", "BIN", "EJECT", "TSC" };
+			"JAVA", "JAVAC", "JAVAW", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON", "LUA", "BIN", "EJECT", "TSC",
+			"SETLOCAL", "ENDLOCAL" };
 	
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
 	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".ipynb", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
@@ -592,11 +594,11 @@ public class CodeEditor extends IDEComponent {
 			"grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs", "kill", "ping",
 			"wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd", "userdel",
 			"clear", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc", "node", "nasm", "qemu", "gcc", "g++",
-			"python", "lua", "bin", "if", "then", "else", "fi", "date", "eject", "tsc",
+			"python", "lua", "bin", "if", "then", "else", "fi", "date", "eject", "tsc", "setlocal", "endlocal",
 			"PWD", "CD", "LS", "CAT", "CP", "MV", "MKDIR", "RMDIR", "RM", "TOUCH", "LOCATE", "FIND",
 			"GREP", "SUDO", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR", "CHMOD", "CHOWN", "JOBS", "KILL", "PING",
 			"WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP", "HOSTNAME", "USERADD", "USERDEL",
-			"CLEAR", "GIT", "NPM", "CALL", "EXIST", "END", "EJECT",
+			"CLEAR", "GIT", "NPM", "CALL", "EXIST", "END", "EJECT", "SETLOCAL", "ENDLOCAL",
 			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA", "JAVAW", "BIN", "IF", "THEN", "ELSE", "FI", "DATE",
 			"TSC"};
 	
@@ -623,7 +625,7 @@ public class CodeEditor extends IDEComponent {
 	public static final String[] rbKeys = { "_ENCODING_", "_LINE_", "_FILE_", "BEGIN", "END", "alias", "and", "begin",
 			"break", "case", "class", "def", "defined?", "do", "else", "elsif", "end", "ensure", "false",
 			"for", "if", "in", "module", "next", "nil", "not", "or", "redo", "rescue", "retry", "return",
-			"self", "super", "then", "true", "undef", "unless", "until", "when", "while", "yield" };
+			"self", "super", "then", "true", "undef", "unless", "until", "when", "while", "yield", "it", "each", "before", "new" };
 	
 	public static final String[] scaKeys = { "abstract", "finally", "object", "trait", "catch", "forSome", "package",
 			"try", "class", "if", "private", "type", "def", "implicit", "protected", "val", "else",
