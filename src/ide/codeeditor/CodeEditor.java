@@ -392,9 +392,9 @@ public class CodeEditor extends IDEComponent {
 			"JAVA", "JAVAC", "JAVAW", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON", "LUA", "BIN", "EJECT", "TSC" };
 	
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
-	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
+	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".ipynb", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
 			".html", ".xhtml", ".htm", ".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp",
-			".JAVA", ".C", ".CPP", ".CC", ".CS", ".PY", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HH", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".GO", ".R", ".PL", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
+			".JAVA", ".C", ".CPP", ".CC", ".CS", ".PY", ".IPYNB", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HH", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".GO", ".R", ".PL", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
 			".HTML", ".XHTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP"};
 	
 	public static final String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
@@ -891,6 +891,7 @@ public class CodeEditor extends IDEComponent {
 			case ".h" -> cppKeys;
 			case ".hh" -> cppKeys;
 			case ".cs" -> csKeys;
+			case ".ipynb" -> pyKeys;
 			case ".py" -> pyKeys;
 			case ".pyd" -> pyKeys;
 			case ".js" -> jsKeys;
@@ -1920,6 +1921,11 @@ public class CodeEditor extends IDEComponent {
 			
 			break;
 			
+		case ".ipynb":
+			if (!foundExt) {
+				extType = "Jupyter Notebook";
+				foundExt = true;
+			}
 		case ".py":
 		case ".pyd":
 			if (!foundExt) {
@@ -3622,7 +3628,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		
-		if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".zig")) {
+		if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".ipynb") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".zig")) {
 			indxs = findWord(new String(chars), "@");
 			
 			int len = 0;
@@ -3880,6 +3886,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".py":
+		case ".ipynb":
 		case ".pyd":
 		case ".rb":
 		case ".r":
@@ -4141,6 +4148,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".py":
+		case ".ipynb":
 		case ".pyd":
 			indxs = findWord(new String(chars), "\'\'\'");						// colorir comentários multi-linha - caracteres iguais
 			
