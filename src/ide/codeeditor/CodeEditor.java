@@ -1241,6 +1241,104 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
+	public static String getLowerBarFileName(String ext) {
+		return switch (ext.toLowerCase()) {
+		case ".java" -> "Java";
+		case ".class" -> (Main.lang == Language.PORT ? "Arquivo Bytecode do Java" : "Java Bytecode File");
+		case ".c" -> "C";
+		case ".cpp" -> "C++";
+		case ".cc" -> "C++";
+		case ".cxx" -> "C++";
+		case ".cs" -> "C#";
+		case ".py" -> "Python";
+		case ".pyd" -> "Python";
+		case ".js" -> "JavaScript";
+		case ".mjs" -> "JavaScript";
+		case ".bat" -> "Batch";
+		case ".com" -> "Command Prompt File";
+		case ".cmd" -> "Command Prompt File";
+		case ".h" -> "C/C++ Header";
+		case ".hh" -> "C++ Header";
+		case ".hxx" -> "C++ Header";
+		case ".hpp" -> "C++ Header";
+		case ".asm" -> "Assembly";
+		case ".s" -> "Assembly";
+		case ".lua" -> "Lua";
+		case ".sql" -> "Structured Query Language - SQL";
+		case ".swift" -> "Swift";
+		case ".rs" -> "Rust";
+		case ".php" -> "Hyper Text Preprocessor";
+		case ".kt" -> "Kotlin";
+		case ".vue" -> "Vue.js";
+		case ".rb" -> "Ruby";
+		case ".ino" -> "Arduino";
+		case ".ts" -> "TypeScript";
+		case ".go" -> "Go";
+		case ".r" -> "R";
+		case ".jl" -> "Julia";
+		case ".pl" -> "Perl";
+		case ".has" -> "Haskell";
+		case ".hs" -> "Haskell";
+		case ".fs" -> "F#";
+		case ".coffee" -> "CoffeeScript";
+		case ".m" -> "Objective-C";
+		case ".pas" -> "Pascal";
+		case ".pp" -> "Pascal";
+		case ".scala" -> "Scala";
+		case ".dart" -> "Dart";
+		case ".zig" -> "Zig";
+		case ".scss" -> "Sass Cascading Style Sheets - SCSS";
+		case ".ipynb" -> "Jupyter Notebook";
+		case ".vb" -> "Visual Basic";
+		
+		case ".html" -> "Hyper Text Markup Language - HTML";
+		case ".xhtml" -> "Hyper Text Markup Language - HTML";
+		case ".htm" -> "Hyper Text Markup Language - HTML";
+		case ".css" -> "Cascading Style Sheets - CSS";
+		case ".xml" -> "Extensible Markup Language - XML";
+		case ".json" -> "JavaScript Object Notation - JSON";
+		case ".jsonc" -> "JavaScript Object Notation with Comments - JSONC";
+		case ".md" -> "Markdown";
+		case ".markdown" -> "Markdown";
+		case ".txt" -> (Main.lang == Language.PORT ? "Arquivo de Texto" : "Text File");
+		case ".log" -> (Main.lang == Language.PORT ? "Arquivo de Log" : "Log File");
+		case ".pdf" -> "Portable Document Format - PDF";
+		case ".jar" -> (Main.lang == Language.PORT ? "Arquivo Jar" : "Jar File");
+		case ".exe" -> (Main.lang == Language.PORT ? "Executável do Windows - EXE" : "Windows Executable - EXE");
+		case ".svg" -> "Scalable Vector Graphics - SVG";
+		case "urna" -> (Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas" : "Saved Bollot Box from Criador de Urnas");
+		case ".save" -> (Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2" : "Saved Game from World's Hardest Game Maker 2");
+		case ".conf" -> (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE" : "Boot IDE Configuration File");
+		case ".mk" -> "Makefile";
+		case ".make" -> "Makefile";
+		case ".sh" -> "Bourne-Again Shell - Bash";
+		case ".gitignore" -> "Git Ignore";
+		case ".dockerfile" -> "Dockerfile";
+		case ".jsx" -> "React";
+		case ".config" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
+		case ".cfg" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
+		case ".ps1" -> (Main.lang == Language.PORT ? "Arquivo do PowerShell" : "PowerShell File");
+		case ".license" -> (Main.lang == Language.PORT ? "Arquivo de Licença" : "License File");
+		case ".docx" -> (Main.lang == Language.PORT ? "Documento do Microsoft Word" : "Microsoft Word Document");
+		case ".pptx" -> (Main.lang == Language.PORT ? "Apresentação do Microsoft PowerPoint" : "Microsoft PowerPoint Presentation");
+		case ".xlsx" -> (Main.lang == Language.PORT ? "Planilha do Microsoft Excel" : "Microsoft Excel Spreadsheet");
+		case ".one" -> (Main.lang == Language.PORT ? "Arquivo do Microsoft OneNote" : "Microsoft OneNote File");
+		case ".psd" -> (Main.lang == Language.PORT ? "Arquivo do Adobe Photoshop" : "Adobe Photoshop File");
+		case ".aed" -> (Main.lang == Language.PORT ? "Arquivo do Adobe After Effects" : "Adobe After Effects File");
+		case ".ai" -> (Main.lang == Language.PORT ? "Arquivo do Adobe Illustrator" : "Adobe Illustrator File");
+		case ".indd" -> (Main.lang == Language.PORT ? "Arquivo do Adobe InDesign" : "Adobe InDesign File");
+		case ".ejs" -> "Embedded JavaScript - EJS";
+		case ".ld" -> "LinkerScript";
+		case ".lock" -> "Lock";
+		case ".ini" -> (Main.lang == Language.PORT ? "Arquivo de Parâmetros de Configurações" : "Configuration Parameters File");
+		case ".dll" -> "Dynamic Link Library - DLL";
+		case ".makefile" -> "Makefile";
+		case ".url" -> "Uniform Resource Locator - URL";
+		
+		default -> (Main.lang == Language.PORT ? "Sem Extensão" : "No Extension");
+		};
+	}
+	
 	public List<IDEFont> colorKeywords(String ext, char[] chars, List<IDEFont> fs) {
 		if (editing == null) return fs;
 		
@@ -3817,7 +3915,7 @@ public class CodeEditor extends IDEComponent {
 				try {
 					extn = ListableFile.getFileExtension(editing.getRegent().getRegent()).substring(1); // tenta retornar o nome da extensão
 				} catch (Exception e) {
-					extn = "Sem Extensão"; // se não der mesmo assim, coloque "Sem Extensão".
+					extn = Main.lang == Language.PORT ? "Sem Extensão" : "No Extension"; // se não der mesmo assim, coloque "Sem Extensão".
 				}
 				
 				extType = extn;
