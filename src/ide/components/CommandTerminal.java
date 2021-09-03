@@ -79,7 +79,7 @@ public class CommandTerminal extends IDEComponent {
 	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "reloadconfigfile",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
-			"sysout", "syso", "cout", "stdcout", "writeline", "syserr", "clog", "gendiv", "closebasefolder",
+			"sysout", "syso", "cout", "stdcout", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
 			"gendiv str:class_name", "genbase str:type", //"emmet str:expression",
@@ -91,7 +91,7 @@ public class CommandTerminal extends IDEComponent {
 	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "reloadconfigfile",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
-			"sysout", "syso", "cout", "stdcout", "writeline", "syserr", "clog", "gendiv", "closebasefolder",
+			"sysout", "syso", "cout", "stdcout", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab",
 			"gotoline", "setfontsize", "insertchar",
 			"gendiv", "genbase", //"emmet",
@@ -536,6 +536,22 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
+			case "readline":
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
+				
+				b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())));
+				
+				b.insert(Main.editor.cursorX, "Console.ReadLine();");
+				
+				Main.editor.register(b, Main.editor.cursorY - 1);
+				
+				Main.editor.editing.setSaved(false);
+				
+				Main.editor.cursorX += 17;
+				
+				break;
+				
 			case "syserr":
 				if (Main.editor.editing == null) break;
 				if (Main.editor.isReadOnly) break;
@@ -766,6 +782,13 @@ public class CommandTerminal extends IDEComponent {
 					String[] cssstrs = { "* {", "    margin: 0;", "    padding: 0;", "    box-sizing: border-box;", "    font-family: sans-serif;", "}"};
 					
 					strs = cssstrs;
+					
+					break;
+					
+				case "vb":
+					String[] vbstrs = { "Imports System ", "", "Module " + classname, "    ", "    Sub Main()", "        ", "    End Sub", "    ", "End Module" };
+					
+					strs = vbstrs;
 					
 					break;
 					

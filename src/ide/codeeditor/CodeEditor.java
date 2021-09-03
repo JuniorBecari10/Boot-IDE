@@ -637,6 +637,8 @@ public class CodeEditor extends IDEComponent {
 			"defer", "go", "map", "struct", "chan", "else", "goto", "package", "switch",
 			"const", "fallthrough", "if", "range", "type", "continue", "for", "import", "return", "var" };
 	
+	public static final String[] vbKeys = { "AddHandler", "AddressOf", "Alias", "And", "AndAlso", "As", "Boolean", "ByRef", "Byte", "ByVal", "Call", "Case", "Catch", "CBool", "CByte", "CChar", "CDate", "CDbl", "CDec", "Char", "CInt", "Class", "Constraint", "Statement", "CLng" , "CObj", "Const", "Continue", "CSByte", "CShort", "CSng", "CStr", "CType", "CUInt", "CULng", "CUShort", "Date", "Decimal" , "Declare", "Default", "Delegate", "Dim", "DirectCast", "Do", "Double", "Each", "Else", "ElseIf", "End", "EndIf", "Enum", "Erase", "Error", "Event", "Exit", "False", "Finally", "For", "Friend", "Function", "Get", "GetType", "GetXMLNamespace", "Global", "GoSub", "GoTo", "Handles", "If", "Implements", "Imports", "In", "Inherits", "Integer", "Is", "IsNot", "Let", "Lib", "Like", "Long", "Loop", "Me", "Mod", "Module", "MustInherit", "MustOverride", "MyBase", "MyClass", "NameOf", "Namespace", "Narrowing", "New", "Next", "Not", "Nothing", "NotInheritable", "NotOverridable", "Object", "Of", "On", "Operator", "Option", "Optional", "Or", "OrElse", "Out", "Overloads", "Overridable", "Overrides", "ParamArray", "Partial", "Private", "Property", "Protected", "Public", "RaiseEvent", "ReadOnly", "ReDim", "REM", "RemoveHandler", "Resume", "Return", "SByte", "Select", "Set", "Shadows", "Shared", "Short", "Single", "Static", "Step", "Stop", "String", "Structure", "Sub", "SyncLock", "Then", "Throw", "To", "True", "Try", "TryCast", "TypeOf", "UInteger", "ULong", "UShort", "Using", "Variant", "Wend", "When", "While", "Widening", "With", "WithEvents", "WriteOnly", "Xor" };
+	
 	public static final String[] objKeys = { "auto", "break", "case", "char", "const", "continue", "default", "do", "double",
 			"else", "enum", "extern", "float", "for", "goto", "if", "inline", "int", "long", "register",
 			"restrict", "return", "short", "signed", "sizeof", "static", "struct", "switch", "typedef",
@@ -896,6 +898,7 @@ public class CodeEditor extends IDEComponent {
 			case ".hxx" -> cppKeys;
 			case ".h" -> cppKeys;
 			case ".hh" -> cppKeys;
+			case ".vb" -> vbKeys;
 			case ".cs" -> csKeys;
 			case ".ipynb" -> pyKeys;
 			case ".py" -> pyKeys;
@@ -1251,6 +1254,24 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			for (String s : javaKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s);			// !(lines.get(getLineIndex(chars)).getFonts().get(i + s.length()).getFont().equals(Fonts.methodsNormal))
+				
+				for (Integer i : indxs) {
+					if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}	
+			}
+			
+			break;
+			
+		case ".vb":
+			if (!foundExt) {
+				extType = "Visual Basic";
+				foundExt = true;
+			}
+			
+			for (String s : vbKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);			// !(lines.get(getLineIndex(chars)).getFonts().get(i + s.length()).getFont().equals(Fonts.methodsNormal))
 				
 				for (Integer i : indxs) {
@@ -3848,7 +3869,16 @@ public class CodeEditor extends IDEComponent {
 				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			break;
 			
-		case ".xhtml":
+		case ".vb":
+			indxs = findWord(new String(chars), "'"); // colorir comentários de uma linha
+			
+			if (fs.size() == 0) break;
+				
+			if (indxs.size() != 0)
+				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			break;
+			
+		case ".xhtml": // para o js
 		case ".html":
 		case ".htm":
 		case ".ejs":
