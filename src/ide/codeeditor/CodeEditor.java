@@ -5007,6 +5007,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
+    	//if (Main.baseFolder == null) return;
 		
 		if (tabs == null) tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
 		

@@ -13,7 +13,6 @@ import ide.util.Texts;
 public class Logo extends IDEComponent {
 	
 	private boolean showMessage1 = true;
-	private boolean show = true;
 
 	public Logo(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -27,8 +26,6 @@ public class Logo extends IDEComponent {
 		else
 			showMessage1 = true;
 		
-		show = Main.editor.editing == null;
-		
 		if (!CommandTerminal.expOff) {
 			x = (int) (Main.screen.getWidth() / 2 + 80);
 			y = (int) (Main.screen.getHeight() / 2 - 120);
@@ -40,8 +37,15 @@ public class Logo extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
+		System.out.print("a");
+		
 		if (Main.screen.getWidth() < 690) return;
-		if (!show) return;
+		
+		System.out.print("b");
+		
+		if (Main.editor.editing != null) return;
+		
+		System.out.println("c");
 		
 		super.render(g);
 		
