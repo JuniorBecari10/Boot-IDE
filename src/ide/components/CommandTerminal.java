@@ -1171,19 +1171,6 @@ public class CommandTerminal extends IDEComponent {
 			}
 		}
 		
-		new Thread() {
-			public void run() {
-				if (Main.editor.editing != null && Main.editor.editing.getRegent() != null && Main.editor.editing.getRegent().getRegent() != null)
-				for (IDELine l : Main.editor.lines) {
-					l.setFonts(
-							Main.editor.automaticColor(
-									CodeEditor.toCharArray(
-											l.getChars()), ListableFile.getFileExtension(Main.editor.editing.getRegent().getRegent())));
-				
-				}
-			}
-		}.start();
-		
 		//Main.writeFile(Main.settingsFile);
 		Main.editor.setCursorWithinBounds();
 	}

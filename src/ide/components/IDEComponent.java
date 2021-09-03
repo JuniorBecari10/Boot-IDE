@@ -16,8 +16,6 @@ import ide.util.Tickable;
  */
 public abstract class IDEComponent implements Tickable, Renderable, Clickable { // uma classe abstrata não pode ser instanciada, é boa para superclasses.
 
-    public static transient IDEComponent selected;
-
     public static transient List<IDEComponent> components = new ArrayList<>();
     
     public static transient List<IDEComponent> toRemove = new ArrayList<>();
