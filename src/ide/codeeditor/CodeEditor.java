@@ -848,6 +848,20 @@ public class CodeEditor extends IDEComponent {
 			ls.add(gen);
 		}
 		
+		try {
+			new Thread() {				// quando vc deleta as linhas isso acontece mesmo
+				public void run() {
+					if (editing != null && editing.getRegent() != null && editing.getRegent().getRegent() != null)
+					for (IDELine l : lines) {
+						l.setFonts(
+								automaticColor(
+										toCharArray(
+												l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
+					}
+				}
+			}.start();
+		} catch (Exception e) {}
+		
 		String ext = ListableFile.getFileExtension(file);
 		
 		if (isBinary(ext)) {
@@ -5506,99 +5520,103 @@ public class CodeEditor extends IDEComponent {
 			}*/
 			
 			if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !isReadOnly && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados, ou se alt gr está pressionado
-				if (!KeyInput.isShiftDown()) {		
-					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
-						KeyInput.updateKeys();
+				try {
+					if (!KeyInput.isShiftDown()) {
+						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
+							KeyInput.updateKeys();
+							
+							cursorY--;
+							
+							CommandTerminal.runCommand("deselect");
+							setCursorWithinBounds();
+							
+							return;
+						}
 						
-						cursorY--;
+						else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
+							KeyInput.updateKeys();
+							
+							cursorY++;
+							
+							CommandTerminal.runCommand("deselect");
+							setCursorWithinBounds();
+							
+							return;
+						}
 						
-						CommandTerminal.runCommand("deselect");
-						setCursorWithinBounds();
+						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
+							KeyInput.updateKeys();
+							
+							cursorX--;
+							
+							CommandTerminal.runCommand("deselect");
+							setCursorWithinBounds();
+							
+							return;
+						}
 						
-						return;
+						else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
+							KeyInput.updateKeys();
+							
+							cursorX++;
+							
+							CommandTerminal.runCommand("deselect");
+							setCursorWithinBounds();
+							
+							return;
+						}
 					}
-					
-					else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
-						KeyInput.updateKeys();
+					else {
+						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) { // aperfeiçoar
+							KeyInput.updateKeys();
+							
+							line1--;
+							
+							selecting = true;
+							
+							line1 = setWithinBounds(index1, line1, false);
+							
+							return;
+						}
 						
-						cursorY++;
+						else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
+							KeyInput.updateKeys();
+							
+							line2++;
+							
+							selecting = true;
+							
+							line2 = setWithinBounds(index2, line2, false);
+							
+							return;
+						}
 						
-						CommandTerminal.runCommand("deselect");
-						setCursorWithinBounds();
+						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
+							KeyInput.updateKeys();
+							
+							index1--;
+							
+							selecting = true;
+							
+							index1 = setWithinBounds(index1, line1, true);
+							
+							return;
+						}
 						
-						return;
+						else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
+							KeyInput.updateKeys();
+							
+							index2++;
+							
+							selecting = true;
+							
+							index2 = setWithinBounds(index2, line2, true);
+							
+							return;
+						}
 					}
-					
-					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
-						KeyInput.updateKeys();
-						
-						cursorX--;
-						
-						CommandTerminal.runCommand("deselect");
-						setCursorWithinBounds();
-						
-						return;
-					}
-					
-					else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
-						KeyInput.updateKeys();
-						
-						cursorX++;
-						
-						CommandTerminal.runCommand("deselect");
-						setCursorWithinBounds();
-						
-						return;
-					}
-				}
-				else {
-					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) { // aperfeiçoar
-						KeyInput.updateKeys();
-						
-						line1--;
-						
-						selecting = true;
-						
-						line1 = setWithinBounds(index1, line1, false);
-						
-						return;
-					}
-					
-					else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
-						KeyInput.updateKeys();
-						
-						line2++;
-						
-						selecting = true;
-						
-						line2 = setWithinBounds(index2, line2, false);
-						
-						return;
-					}
-					
-					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
-						KeyInput.updateKeys();
-						
-						index1--;
-						
-						selecting = true;
-						
-						index1 = setWithinBounds(index1, line1, true);
-						
-						return;
-					}
-					
-					else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
-						KeyInput.updateKeys();
-						
-						index2++;
-						
-						selecting = true;
-						
-						index2 = setWithinBounds(index2, line2, true);
-						
-						return;
-					}
+				} catch (Exception e) {
+					CommandTerminal.runCommand("deselect");
 				}
 			
 			KeyInput.updateKeys();

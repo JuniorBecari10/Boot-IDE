@@ -249,60 +249,64 @@ public class CommandTerminal extends IDEComponent {
 				if (!Main.editor.selecting) break;
 				if (Main.editor.isReadOnly) break;
 				
-				StringBuilder s = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.line1 - 1).getChars())));
-				
-				if (Main.editor.line1 != Main.editor.line2) { // se não selecionou uma linha só (selecionou várias)
-					for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) {
-						if (i == Main.editor.line1 - 1) {
-							Main.editor.lines.get(i).setChars(Main.editor.lines.get(i).getChars().subList(0, Main.editor.index1));
+				try {
+					StringBuilder s = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.line1 - 1).getChars())));
+					
+					if (Main.editor.line1 != Main.editor.line2) { // se não selecionou uma linha só (selecionou várias)
+						for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) {
+							if (i == Main.editor.line1 - 1) {
+								Main.editor.lines.get(i).setChars(Main.editor.lines.get(i).getChars().subList(0, Main.editor.index1));
+								
+								continue;
+							}
 							
-							continue;
+							if (i == Main.editor.line2 - 1) {
+								if (Main.editor.index2 != Main.editor.lines.get(i).getChars().size())
+									Main.editor.lines.get(i).setChars(Main.editor.lines.get(i).getChars().subList(Main.editor.index2, Main.editor.lines.get(i).getChars().size()));
+								else
+									Main.editor.linesToRemove.add(Main.editor.lines.get(i));
+								
+								continue;
+							}
+							
+							Main.editor.linesToRemove.add(Main.editor.lines.get(i)); // pra evitar concurrentmodificationexception
 						}
 						
-						if (i == Main.editor.line2 - 1) {
-							if (Main.editor.index2 != Main.editor.lines.get(i).getChars().size())
-								Main.editor.lines.get(i).setChars(Main.editor.lines.get(i).getChars().subList(Main.editor.index2, Main.editor.lines.get(i).getChars().size()));
-							else
-								Main.editor.linesToRemove.add(Main.editor.lines.get(i));
+							Main.editor.cursorX = Main.editor.index1;
+							Main.editor.cursorY = Main.editor.line1;
 							
-							continue;
-						}
-						
-						Main.editor.linesToRemove.add(Main.editor.lines.get(i)); // pra evitar concurrentmodificationexception
-					}
-					
-					Main.editor.cursorX = Main.editor.index1;
-					Main.editor.cursorY = Main.editor.line1;
-					
-					runCommand("deselect");
-					Main.editor.setCursorWithinBounds();
-					
-					Main.editor.editing.setSaved(false);
+							runCommand("deselect");
+							Main.editor.setCursorWithinBounds();
+							
+							Main.editor.editing.setSaved(false);
 					
 					/*Main.editor.cursorX = Main.editor.mx;		// tomar cuidado quando o comando é chamado pelo sistema e vc ver seu cursor andando adoidado por ai viu TODO
 					Main.editor.cursorY = Main.editor.my;			// melhor desabilitar isso
 					
 					Main.editor.setCursorWithinBounds();*/
 					
-					break;
-				}
-				else {
-					if (Main.editor.index2 < Main.editor.index1) {
-						runCommand("deselect");
-						
 						break;
 					}
+					else {
+						if (Main.editor.index2 < Main.editor.index1) {
+							runCommand("deselect");
+							
+							break;
+						}
+						
+						s.delete(Main.editor.index1, Main.editor.index2);
+						
+						Main.editor.register(s, Main.editor.line1 - 1);
+					}
 					
-					s.delete(Main.editor.index1, Main.editor.index2);
+					Main.editor.cursorX = Main.editor.index1;
 					
-					Main.editor.register(s, Main.editor.line1 - 1);
+					runCommand("deselect");
+					Main.editor.editing.setSaved(false);
+				
+				} catch (Exception e) {
+					runCommand("deselect");
 				}
-				
-				Main.editor.cursorX = Main.editor.index1;
-				
-				runCommand("deselect");
-				Main.editor.editing.setSaved(false);
-				
 				break;
 				
 			case "cut":
