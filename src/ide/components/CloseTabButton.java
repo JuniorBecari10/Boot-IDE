@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 import ide.codeeditor.Tab;
-import ide.main.Main;
 import ide.util.Colors;
 
 public class CloseTabButton extends IDEComponent implements Serializable {
@@ -18,13 +17,6 @@ public class CloseTabButton extends IDEComponent implements Serializable {
 		super(x, y, width, height, sprite);
 		
 		this.regent = regent;
-	}
-	
-	@Override
-	public boolean hovered() {
-		if (Main.editor.editing != regent) return false;
-		
-		return super.hovered();
 	}
 	
 	public void tick() {

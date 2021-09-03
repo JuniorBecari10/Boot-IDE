@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 import ide.components.CloseTabButton;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
-import ide.components.RightClickOption;
 import ide.explorer.Explorer;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
@@ -110,7 +109,7 @@ public class Tab extends IDEComponent implements Serializable {
 	 * Fecha essa Tab.
 	 */
 	public void close() {
-        		if (Main.editor.editing != null) { // não for nulo
+        		/*if (Main.editor.editing != null) { // não for nulo
 	    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
 	    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
 	    				
@@ -147,6 +146,70 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		Tab next = Main.editor.tabs.indexOf(this) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1);
 		
+		//if (!Main.editor.toRemove.get(0).equals(this))
+		//	next = this;
+		
+		Main.editor.wordSinceSpace = "";
+		
+		Main.editor.editing = next;
+		
+		Main.editor.isMultilineCommenting = false;
+		Main.editor.isAnotherIteration = false;
+		Main.editor.foundExt = false;
+		
+		if (Main.editor.searchWindow != null) {
+			Main.editor.searchWindow.setVisible(false);
+			Main.editor.alreadyAddedFrame = false;
+			SearchReplaceWindow.active = false;
+		}
+		
+		try {
+			Main.editor.lines = Main.editor.readFile(next.regent.getRegent());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Main.editor.cursorX = 0;
+		Main.editor.cursorY = 1;
+		
+		Main.editor.scrX = next.scrX;
+		Main.editor.scrY = next.scrY;*/
+		
+		if (Main.editor.editing != null) { // não for nulo
+			if (!Main.editor.editing.isSaved()) { // não estiver salvo
+				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
+				
+				CodeEditor.setSystemLook();
+				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+				
+				if (selectedOption == 0) save();
+				else if (selectedOption == 2) {
+					WindowInput.update();
+					
+					return;
+				}
+			}
+		}
+		
+		Main.editor.isMultilineCommenting = false; // TODO closeother reseta o cursor
+		Main.editor.isAnotherIteration = false;
+		Main.editor.foundExt = false;
+		
+		Main.editor.toRemove.add(this);
+		Main.editor.lines.clear();
+		
+		Main.editor.selecting = false;
+		
+		if (Main.editor.tabs.size() == 1) {
+			Main.editor.editing = null;
+			
+			return;
+		}
+		
+		Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
+		
+		Tab next = Main.editor.tabs.indexOf(this) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1);
+		
 		if (!Main.editor.toRemove.get(0).equals(this))
 			next = this;
 		
@@ -154,6 +217,9 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		Main.editor.cursorX = 0;
 		Main.editor.cursorY = 1;
+		
+		Main.editor.scrX = next.scrX;
+		Main.editor.scrY = next.scrY;
 		
 		try {
 			Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
@@ -381,9 +447,6 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			Main.editor.scrX = scrX;
 			Main.editor.scrY = scrY;
-			
-			//if (Main.editor.scrY > Main.editor.lines.size() * (Main.editor.FONT_SIZE / 4))
-				//CommandTerminal.runCommand("gotocursor");
 			
 			save();
 		}

@@ -305,7 +305,7 @@ public class CommandTerminal extends IDEComponent {
 					Main.editor.editing.setSaved(false);
 				
 				} catch (Exception e) {
-					runCommand("deselect");
+					runCommand("deselect"); // TODO talvez não desselecionar, deletar com algum index no 0, né?
 				}
 				break;
 				
