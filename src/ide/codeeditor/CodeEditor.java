@@ -1236,6 +1236,13 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
+	/*public void setFileName(String ext) { // fazer isso, copiar o colorkeywords e tirar a parte que colore
+		return switch(ext) {
+		
+		default -> ""
+		}
+	}*/			// testar se o closebasefolder descarrega o config file
+	
 	public List<IDEFont> colorKeywords(String ext, char[] chars, List<IDEFont> fs) {
 		if (editing == null) return fs;
 		
@@ -5192,7 +5199,7 @@ public class CodeEditor extends IDEComponent {
 		else
 			Main.screen.setCursor(Cursor.getDefaultCursor());
 		
-		if (rightClicked() && !alternateTabsMode) {
+		if ((rightClicked() || KeyInput.getKeyCodePressed() == 525) && !alternateTabsMode) {
 			int width = Main.lang == Language.PORT ? 550 : 510;
 			
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), width, Texts.openCmd, (s) -> execute(s), "cmd");
