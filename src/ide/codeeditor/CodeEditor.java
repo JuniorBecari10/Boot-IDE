@@ -848,18 +848,6 @@ public class CodeEditor extends IDEComponent {
 			ls.add(gen);
 		}
 		
-		new Thread() {				// quando vc deleta as linhas isso acontece mesmo
-			public void run() {
-				if (editing != null && editing.getRegent() != null && editing.getRegent().getRegent() != null)
-				for (IDELine l : lines) {
-					l.setFonts(
-							automaticColor(
-									toCharArray(
-											l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
-				}
-			}
-		}.start();
-		
 		String ext = ListableFile.getFileExtension(file);
 		
 		if (isBinary(ext)) {
