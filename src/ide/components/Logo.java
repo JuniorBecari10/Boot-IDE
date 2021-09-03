@@ -37,15 +37,8 @@ public class Logo extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		System.out.print("a");
-		
 		if (Main.screen.getWidth() < 690) return;
-		
-		System.out.print("b");
-		
 		if (Main.editor.editing != null) return;
-		
-		System.out.println("c");
 		
 		super.render(g);
 		

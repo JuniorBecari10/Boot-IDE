@@ -350,8 +350,6 @@ public class Tab extends IDEComponent implements Serializable {
 			scrY = Main.editor.scrY;
 		}
 		
-		if (!regent.getRegent().exists()) close();
-		
 		if (leftClicked() && !button.leftClicked() && !Main.editor.alternateTabsMode) {
 			if (Main.editor.editing != null)
 				Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!

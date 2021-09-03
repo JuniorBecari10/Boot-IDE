@@ -5861,6 +5861,8 @@ public class CodeEditor extends IDEComponent {
 		
 		if (scrX < 0) scrX = 0;
 		if (scrY < 0) scrY = 0;
+		
+		if (tabs.size() == 0) editing = null;
 	}
 	
 	public void render(Graphics g) {
