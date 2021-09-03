@@ -333,7 +333,6 @@ public class Main implements Runnable, Tickable {
     public static void writeFile(File setFile) {
     	BufferedWriter wr = null;
     	
-    	
     	try {
 			wr = new BufferedWriter(new FileWriter(setFile));
 			

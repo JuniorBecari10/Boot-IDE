@@ -1236,13 +1236,6 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
-	/*public void setFileName(String ext) { // fazer isso, copiar o colorkeywords e tirar a parte que colore
-		return switch(ext) {
-		
-		default -> ""
-		}
-	}*/			// testar se o closebasefolder descarrega o config file
-	
 	public List<IDEFont> colorKeywords(String ext, char[] chars, List<IDEFont> fs) {
 		if (editing == null) return fs;
 		
@@ -5007,7 +5000,6 @@ public class CodeEditor extends IDEComponent {
 	
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
-    	//if (Main.baseFolder == null) return;
 		
 		if (tabs == null) tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
 		
@@ -5200,7 +5192,7 @@ public class CodeEditor extends IDEComponent {
 		else
 			Main.screen.setCursor(Cursor.getDefaultCursor());
 		
-		if ((rightClicked() || KeyInput.getKeyCodePressed() == 525) && !alternateTabsMode) {
+		if (rightClicked() && !alternateTabsMode) {
 			int width = Main.lang == Language.PORT ? 550 : 510;
 			
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), width, Texts.openCmd, (s) -> execute(s), "cmd");
@@ -5861,8 +5853,6 @@ public class CodeEditor extends IDEComponent {
 		
 		if (scrX < 0) scrX = 0;
 		if (scrY < 0) scrY = 0;
-		
-		if (tabs.size() == 0) editing = null;
 	}
 	
 	public void render(Graphics g) {

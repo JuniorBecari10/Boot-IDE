@@ -446,7 +446,7 @@ public class CommandTerminal extends IDEComponent {
 						CodeEditor.setSystemLook();
 						int selectedOption = JOptionPane.showOptionDialog(null, Texts.configFileNotChanged, Texts.didNothing, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 						
-						if (selectedOption == 0) break;
+						if (selectedOption != 1) break;
 						
 						Main.conffile = "none";
 						Main.hasConfigFile = false;
@@ -1171,7 +1171,7 @@ public class CommandTerminal extends IDEComponent {
 			}
 		}
 		
-		/*new Thread() {
+		new Thread() {
 			public void run() {
 				if (Main.editor.editing != null && Main.editor.editing.getRegent() != null && Main.editor.editing.getRegent().getRegent() != null)
 				for (IDELine l : Main.editor.lines) {
@@ -1182,7 +1182,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				}
 			}
-		}.start();*/
+		}.start();
 		
 		//Main.writeFile(Main.settingsFile);
 		Main.editor.setCursorWithinBounds();
