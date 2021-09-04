@@ -1392,11 +1392,6 @@ public class CodeEditor extends IDEComponent {
 		
 		switch (ext.toLowerCase()) {
 		case ".java":
-			if (!foundExt) {
-				extType = "Java";
-				foundExt = true;
-			}
-			
 			for (String s : javaKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);			// !(lines.get(getLineIndex(chars)).getFonts().get(i + s.length()).getFont().equals(Fonts.methodsNormal))
 				
@@ -1410,11 +1405,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".vb":
-			if (!foundExt) {
-				extType = "Visual Basic";
-				foundExt = true;
-			}
-			
 			for (String s : vbKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);			// !(lines.get(getLineIndex(chars)).getFonts().get(i + s.length()).getFont().equals(Fonts.methodsNormal))
 				
@@ -1426,46 +1416,15 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			break;
-			
-		case ".o":
-		case ".out":
-		case ".obj":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File";
-				foundExt = true;
-			}
-			break;
 		
 		case ".ejs":
-			if (!foundExt) {
-				extType = "Embedded JavaScript - EJS";
-				foundExt = true;
-			}
 		case ".cfg":
 		case ".config":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File";
-				foundExt = true;
-			}
 		case ".xml":
-			if (!foundExt) {
-				extType = "Extensible Markup Language - XML";
-				foundExt = true;
-			}
 		case ".svg":
-			if (!foundExt) {
-				extType = "Scalable Vector Graphics - SVG";
-				foundExt = true;
-			}
-			
 		case ".htm":
 		case ".xhtml":
 		case ".html":
-			if (!foundExt) {
-				extType = "Hyper Text Markup Language - HTML";
-				foundExt = true;
-			}
-			
 			for (String s : specialHtmlVariables) { // colorir tags
 				indxs = findWord(new String(chars), s);
 				
@@ -1927,16 +1886,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".scss":
-			if (!foundExt) {
-				extType = "Sass Cascading Style Sheets - SCSS";
-				foundExt = true;
-			}
 		case ".css":
-			if (!foundExt) {
-				extType = "Cascading Style Sheets - CSS"; // o bug do scr: foi arquivado, pois ele não aparece quando há mais de um espaço antes dele, algo que as pessoas, e eu tbm não faria. Mas talvez depois eu possa arrumar isso
-				foundExt = true;
-			}
-			
 			indxs = findWord(new String(chars), ":");
 			
 			for (Integer i : indxs) {
@@ -2097,17 +2047,8 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".ipynb":
-			if (!foundExt) {
-				extType = "Jupyter Notebook";
-				foundExt = true;
-			}
 		case ".py":
 		case ".pyd":
-			if (!foundExt) {
-				extType = "Python";
-				foundExt = true;
-			}
-			
 			for (String s : pyKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2121,11 +2062,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".dart":
-			if (!foundExt) {
-				extType = "Dart";
-				foundExt = true;
-			}
-			
 			for (String s : dartKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2139,11 +2075,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".ld":
-			if (!foundExt) {
-				extType = "LinkerScript";
-				foundExt = true;
-			}
-			
 			for (String s : ldKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s); // descobrir pq algumas coisas não colorem
 				
@@ -2158,11 +2089,6 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".pp":
 		case ".pas":
-			if (!foundExt) {
-				extType = "Pascal";
-				foundExt = true;
-			}
-			
 			for (String s : pasKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s); // descobrir pq algumas coisas não colorem
 				
@@ -2176,11 +2102,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".c":
-			if (!foundExt) {
-				extType = "C";
-				foundExt = true;
-			}
-			
 			for (String s : cKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2194,30 +2115,13 @@ public class CodeEditor extends IDEComponent {
 			break;
 		
 		case ".h":
-			if (!foundExt) {
-				extType = "C/C++ Header";
-				foundExt = true;
-			}
 		case ".ino":
-			if (!foundExt) {
-				extType = "Arduino";
-				foundExt = true;
-			}
 		case ".hh":
 		case ".hpp":
 		case ".hxx":
-			if (!foundExt) {
-				extType = "C++ Header";
-				foundExt = true;
-			}
 		case ".cxx":
 		case ".cpp":
 		case ".cc":
-			if (!foundExt) {
-				extType = "C++";
-				foundExt = true;
-			}
-			
 			for (String s : cppKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2231,11 +2135,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".cs":
-			if (!foundExt) {
-				extType = "C#";
-				foundExt = true;
-			}
-			
 			for (String s : csKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2249,11 +2148,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".r":
-			if (!foundExt) {
-				extType = "R";
-				foundExt = true;
-			}
-			
 			for (String s : rKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2265,31 +2159,11 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			break;
-		
-		case ".license":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo de Licença" : "License File";
-				foundExt = true;
-			}
-			break;
 			
 		case ".ps1":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo do PowerShell" : "PowerShell File";
-				foundExt = true;
-			}
 		case ".cmd":
 		case ".com":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File";
-				foundExt = true;
-			}
 		case ".bat":
-			if (!foundExt) {
-				extType = "Batch";
-				foundExt = true;
-			}
-			
 			for (String s : batCom) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2349,24 +2223,11 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".jsx":
-			if (!foundExt) {
-				extType = "React";
-				foundExt = true;
-			}
 		case ".vue":	
-			if (!foundExt) {
-				extType = "Vue.js";
-				foundExt = true;
-			}
 		case ".mjs":
 		case ".js":
-			if (!foundExt) {
-				extType = "JavaScript";	// TODO - tomar cuidado em colorir tags em HTML mesmo dentro da JSPart ou CssPart viu
-				foundExt = true;
-			}
-			
 			for (String s : jsKeys) { // colorir keywordss
-				indxs = findWord(new String(chars), s);
+				indxs = findWord(new String(chars), s);				// TODO - tomar cuidado em colorir tags em HTML mesmo dentro da JSPart ou CssPart viu
 				
 				for (Integer i : indxs) {
 					if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) continue;
@@ -2378,11 +2239,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".lua":
-			if (!foundExt) {
-				extType = "Lua";
-				foundExt = true;
-			}
-			
 			for (String s : luaKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2395,11 +2251,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".zig":
-			if (!foundExt) {
-				extType = "Zig";
-				foundExt = true;
-			}
-			
 			for (String s : zigKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2412,11 +2263,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".sql":
-			if (!foundExt) {
-				extType = "Structured Query Language - SQL";
-				foundExt = true;
-			}
-			
 			for (String s : sqlKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2430,11 +2276,6 @@ public class CodeEditor extends IDEComponent {
 		
 		case ".s":
 		case ".asm":
-			if (!foundExt) {
-				extType = "Assembly";
-				foundExt = true;
-			}
-			
 			for (String s : asmRegs) {
 				indxs = findWord(new String(chars), s);
 				
@@ -2567,9 +2408,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".jl":
-			extType = "Julia";
-			foundExt = true;
-			
 			for (String s : jlKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2583,11 +2421,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".pl":
-			if (!foundExt) {
-				extType = "Perl";
-				foundExt = true;
-			}
-			
 			for (String s : plKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2603,11 +2436,6 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".hs":
 		case ".has":
-			if (!foundExt) {
-				extType = "Haskell";
-				foundExt = true;
-			}
-			
 			for (String s : hasKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2621,11 +2449,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".fs":
-			if (!foundExt) {
-				extType = "F#";
-				foundExt = true;
-			}
-			
 			for (String s : fsKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2639,11 +2462,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".coffee":
-			if (!foundExt) {
-				extType = "CoffeeScript";
-				foundExt = true;
-			}
-			
 			for (String s : cfKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2658,11 +2476,6 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".markdown":
 		case ".md":
-			if (!foundExt) {
-				extType = "Markdown";
-				foundExt = true;
-			}
-			
 			indxs = findWord(new String(chars), "#");
 			
 			for (Integer i : indxs)
@@ -2679,25 +2492,8 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			break;
-		
-		case ".log":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo de Log" : "Log File";
-				foundExt = true;
-			}
-		case ".txt":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo de Texto" : "Text File";
-				foundExt = true;
-			}
-			break;
 			
 		case ".ini":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo de Parâmetros de Configurações" : "Configuration Parameters File"; // remover 'arquivo de'
-				foundExt = true;
-			}
-			
 			indxs = findWord(new String(chars), "]");
 			
 			for (Integer i : indxs) {
@@ -2747,11 +2543,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".swift":
-			if (!foundExt) {
-				extType = "Swift";
-				foundExt = true;
-			}
-			
 			for (String s : swKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2765,11 +2556,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".rs":
-			if (!foundExt) {
-				extType = "Rust";
-				foundExt = true;
-			}
-			
 			for (String s : rsKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2783,11 +2569,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".sh":
-			if (!foundExt) {
-				extType = "Bourne Again Shell - Bash";
-				foundExt = true;
-			}
-			
 			for (String s : shKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -2835,11 +2616,6 @@ public class CodeEditor extends IDEComponent {
 			break; // Release v3.9.1 - 12/08/2021 - 08:03
 			
 		case ".php":
-			if (!foundExt) {
-				extType = "Hypertext Preprocessor - PHP"; // será q esse hypertext tá certo?
-				foundExt = true;
-			}
-			
 			for (String s : phpKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -3212,11 +2988,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".ts":
-			if (!foundExt) {
-				extType = "TypeScript";
-				foundExt = true;
-			}
-			
 			for (String s : tsKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
@@ -3229,16 +3000,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 		
 		case ".jsonc":
-			if (!foundExt) {
-				extType = "JavaScript Object Notation with Comments - JSONC";
-				foundExt = true;
-			}
 		case ".json":
-			if (!foundExt) {
-				extType = "JavaScript Object Notation - JSON";
-				foundExt = true;
-			}
-			
 			for (String s : jsonKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
@@ -3252,11 +3014,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".kt":
-			if (!foundExt) {
-				extType = "Kotlin";
-				foundExt = true;
-			}
-			
 			for (String s : ktKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
@@ -3269,11 +3026,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".rb":
-			if (!foundExt) {
-				extType = "Ruby";
-				foundExt = true;
-			}
-			
 			for (String s : rbKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
@@ -3287,11 +3039,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".scala":
-			if (!foundExt) {
-				extType = "Scala";
-				foundExt = true;
-			}
-			
 			for (String s : scaKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
@@ -3305,11 +3052,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".go":
-			if (!foundExt) {
-				extType = "Go";
-				foundExt = true;
-			}
-			
 			for (String s : goKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
@@ -3323,11 +3065,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".m":
-			if (!foundExt) {
-				extType = "Objective-C";
-				foundExt = true;
-			}
-			
 			for (String s : objKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
@@ -3340,55 +3077,7 @@ public class CodeEditor extends IDEComponent {
 			
 			break;
 			
-		case ".jar":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo Jar" : "Jar File";
-				foundExt = true;
-			}
-			break;
-			
-		case ".iso":
-		case ".img":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File";
-				foundExt = true;
-			}
-			break;
-			
-		case ".flp":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo de Disquete" : "Floppy Disk File";
-				foundExt = true;
-			}
-			break;
-			
-		case ".urna":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas" : "Saved Bollot Box from Criador de Urnas"; // vc sabe que nome próprio não se traduz né
-				foundExt = true;
-			}
-			break;
-			
-		case ".class":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo Bytecode do Java" : "Java Bytecode File";
-				foundExt = true;
-			}
-			break;
-			
-		case ".save":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2" : "Saved Game from World's Hardest Game Maker 2";
-				foundExt = true;
-			}
-			break;
-			
 		case ".conf":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE" : "Boot IDE Configuration File";
-				foundExt = true;
-			}
-			
 			for (String s : ideConfKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);			// haha slk mermão colorir coisas de até próprio arquivo de configurações
 				
@@ -3420,31 +3109,9 @@ public class CodeEditor extends IDEComponent {
 			
 			break;
 		
-		case ".7z":
-		case ".gz":
-		case ".rar":
-		case ".zip":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File";
-				foundExt = true;
-			}
-			break;
-			
-		case ".bin":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo Binário" : "Binary File";
-				foundExt = true;
-			}
-			break;
-		
 		case ".makefile":
 		case ".mk":
 		case ".make":
-			if (!foundExt) {
-				extType = "Makefile";
-				foundExt = true;
-			}
-			
 			for (String s : makeKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
@@ -3479,103 +3146,6 @@ public class CodeEditor extends IDEComponent {
 			
 			break;
 
-		case ".ttf":
-		case ".otf":
-		case ".woff":
-		case ".woff2":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File";
-				foundExt = true;
-			}
-			break;
-			
-		case ".dll":
-			if (!foundExt) {
-				extType = "Dynamic Link Library - DLL";
-				foundExt = true;
-			}
-			
-			break;
-			
-		case ".lock":
-			if (!foundExt) {
-				extType = "Lock File";
-				foundExt = true;
-			}
-			break;
-			
-		case ".gitignore":
-			if (!foundExt) {
-				extType = "Git Ignore";
-				foundExt = true;
-			}
-			
-			break;
-			
-		case ".docx":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Documento do Microsoft Word" : "Microsoft Word Document";
-				foundExt = true;
-			}
-			
-			break;
-			
-		case ".xlsx":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Planilha do Microsoft Excel" : "Microsoft Excel Spreadsheet";
-				foundExt = true;
-			}
-			
-			break;
-			
-		case ".pptx":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Apresentação do Microsoft PowerPoint" : "Microsoft PowerPoint Presentation File";
-				foundExt = true;
-			}
-			
-			break;
-			
-		case ".one":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo do Microsoft OneNote" : "Microsoft OneNote File";
-				foundExt = true;
-			}
-			
-			break;
-			
-		case ".psd":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo do Photoshop" : "Photoshop File";
-				foundExt = true;
-			}
-			
-			break;
-			
-		case ".aed":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo do After Effects" : "After Effects File";
-				foundExt = true;
-			}
-			
-			break;
-			
-		case ".ai":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo do Illustrator" : "Illustrator File";
-				foundExt = true;
-			}
-			
-			break;
-			
-		case ".indd":
-			if (!foundExt) {
-				extType = Main.lang == Language.PORT ? "Arquivo do InDesign" : "InDesign File";
-				foundExt = true;
-			}
-			
-			break;
-			
 		case ".dockerfile":
 			if (!foundExt) {
 				extType = "Dockerfile";
@@ -3590,14 +3160,6 @@ public class CodeEditor extends IDEComponent {
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 				}
-			}
-			
-			break;
-			
-		case ".url":
-			if (!foundExt) {
-				extType = "Uniform Resource Locator - URL";
-				foundExt = true;
 			}
 			
 			break;
@@ -4459,6 +4021,11 @@ public class CodeEditor extends IDEComponent {
 		
 		for (int i = 0; i < chars.length; i++)
 			fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
+		
+		if (ListableFile.fileHasExtension(ext))
+			extType = getLowerBarFileName(ext);
+		else
+			extType = getLowerBarFileNameWithoutExtension(ext);
 		
 		if (editing == null) return fs;
 		if ((isBinary(ext) || !isFormatSupported(ext)) && !(ext.equalsIgnoreCase(".ini"))) return fs;
