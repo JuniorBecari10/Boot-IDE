@@ -1069,6 +1069,10 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			
 			IDEComponent.toAdd.add(set);
 			break;
+			
+		case "openeditor":
+			addTab(this, false);
+			break;
 		}
 	}
 	
@@ -1118,9 +1122,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	 * @param format - O formato
 	 * @return true se não é suportado, false se é suportado.
 	 * 
-	 * @deprecated Use o isBinary(String) do CodeEditor. Acesse-o por CodeEditor.isBinary(string).
+	 * deprecated Use o isBinary(String) do CodeEditor. Acesse-o por CodeEditor.isBinary(string).
 	 *
-	@Deprecated
+	Deprecated
 	public static boolean formatNotSupported(String format) {
 		return  format.equalsIgnoreCase(".png") ||
 				format.equalsIgnoreCase(".jpg") || // provavelmente fazer isso com excel e mais coisas do word
@@ -1247,13 +1251,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			IDEComponent.addRightClickOption((x + width), y - 60, widthDraw, Texts.createFile, (s) -> execute(s), "newfile");
 			IDEComponent.addRightClickOption((x + width), y - 30, widthDraw, Texts.createFolder, (s) -> execute(s), "newfolder");
 			
-			IDEComponent.addRightClickOption((x + width), y, widthDraw, Texts.delete, (s) -> execute(s), "del");
-			IDEComponent.addRightClickOption((x + width), y + 30, widthDraw, Texts.rename, (s) -> execute(s), "rename");
-			IDEComponent.addRightClickOption((x + width), y + 60, widthDraw, Texts.openCmd, (s) -> execute(s), "cmd");
-			IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openTerminal, (s) -> execute(s), "term");
-			IDEComponent.addRightClickOption((x + width), y + 120, widthDraw, Texts.openExplorer, (s) -> execute(s), "sysexp");
-			IDEComponent.addRightClickOption((x + width), y + 150, widthDraw, Texts.setBaseFolder, (s) -> execute(s), "setbase");
-			IDEComponent.addRightClickOption((x + width), y + 180, widthDraw, Texts.openDefault, (s) -> execute(s), "opendef");
+			IDEComponent.addRightClickOption((x + width), y, widthDraw, Texts.openInEditor, (s) -> execute(s), "openeditor");
+			IDEComponent.addRightClickOption((x + width), y + 30, widthDraw, Texts.delete, (s) -> execute(s), "del");
+			IDEComponent.addRightClickOption((x + width), y + 60, widthDraw, Texts.rename, (s) -> execute(s), "rename");
+			IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> execute(s), "cmd");
+			IDEComponent.addRightClickOption((x + width), y + 120, widthDraw, Texts.openTerminal, (s) -> execute(s), "term");
+			IDEComponent.addRightClickOption((x + width), y + 150, widthDraw, Texts.openExplorer, (s) -> execute(s), "sysexp");
+			IDEComponent.addRightClickOption((x + width), y + 180, widthDraw, Texts.setBaseFolder, (s) -> execute(s), "setbase");
+			IDEComponent.addRightClickOption((x + width), y + 210, widthDraw, Texts.openDefault, (s) -> execute(s), "opendef");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			

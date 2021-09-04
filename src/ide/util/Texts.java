@@ -163,6 +163,8 @@ public final class Texts {
 	public static String openFolder;
 	public static String wouldEdit;
 	
+	public static String openInEditor;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -311,6 +313,8 @@ public final class Texts {
 			in = "em";
 			lines = "linhas";
 			
+			openInEditor = "Abrir no Editor";
+			
 			break;
 		
 		case ENG:
@@ -458,6 +462,8 @@ public final class Texts {
 			
 			in = "in";
 			lines = "lines";
+			
+			openInEditor = "Open in Editor";
 			
 			break;
 		}
