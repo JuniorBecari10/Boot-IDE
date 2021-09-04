@@ -868,7 +868,7 @@ public class CodeEditor extends IDEComponent {
 		
 		String ext = ListableFile.getFileExtension(file);
 		
-		if (isBinary(ext)) {
+		if (isBinary(ext) || editing.isReadOnly) {
 			isReadOnly = true;
 		}
 			
@@ -4619,6 +4619,18 @@ public class CodeEditor extends IDEComponent {
 		} catch (Exception e) {}
 	}
 	
+	/**
+	 * Faz a conta de Regra de Três, com os números dados no argumento.
+	 * 
+	 * <br />
+	 * 
+	 * Pode-se pensar nessa conta da seguinte maneira: se o número em a equivale, na mesma proporção, ao número em b, se der um número em c, quantos será o número em d?
+	 * 
+	 * @param a - o número 1
+	 * @param b - o número 2
+	 * @param c - o número 3
+	 * @return O resultado, como se fosse a letra d dos argumentos
+	 */
 	public static int ruleOf3(int a, int b, int c) {
 		return (b * c) / a;
 	}
