@@ -5079,10 +5079,11 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 				
 				//scrX = (lines.get(lines.size() - 1).getChars().size() * FONT_SIZE) - FONT_SIZE * 10; // esse - FONT_SIZE * 5 é pra dar um offset para trás e ficar no meio da tela.
-				scrY = (lines.size() * FONT_SIZE) - (FONT_SIZE * 3);
 				
 				cursorX = lines.get(lines.size() - 1).getChars().size();
 				cursorY = lines.size();
+				
+				CommandTerminal.runCommand("gotocursor");
 				
 				setCursorWithinBounds();
 					
