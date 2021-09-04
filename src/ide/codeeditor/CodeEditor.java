@@ -1255,8 +1255,8 @@ public class CodeEditor extends IDEComponent {
 		case ".js" -> "JavaScript";
 		case ".mjs" -> "JavaScript";
 		case ".bat" -> "Batch";
-		case ".com" -> "Command Prompt File";
-		case ".cmd" -> "Command Prompt File";
+		case ".com" -> (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
+		case ".cmd" -> (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
 		case ".h" -> "C/C++ Header";
 		case ".hh" -> "C++ Header";
 		case ".hxx" -> "C++ Header";
@@ -1368,6 +1368,18 @@ public class CodeEditor extends IDEComponent {
 		case ".o" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
 		case ".out" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
 		case ".obj" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
+		
+		default -> (Main.lang == Language.PORT ? "Sem Extensão" : "No Extension");
+		};
+	}
+	
+	public static String getLowerBarFileNameWithoutExtension(String filename) {
+		return switch (filename.toLowerCase()) {
+		case "makefile" -> "Makefile";
+		case "dockerfile" -> "Dockerfile";
+		case "license" -> (Main.lang == Language.PORT ? "Arquivo de Licença" : "License File");
+		case "authors" -> (Main.lang == Language.PORT ? "Nomes dos Autores" : "Authors' Names");
+		case "gitignore" -> "Git Ignore";
 		
 		default -> (Main.lang == Language.PORT ? "Sem Extensão" : "No Extension");
 		};
