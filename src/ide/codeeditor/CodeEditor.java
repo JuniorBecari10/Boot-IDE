@@ -1335,7 +1335,39 @@ public class CodeEditor extends IDEComponent {
 		case ".makefile" -> "Makefile";
 		case ".url" -> "Uniform Resource Locator - URL";
 		
+		case ".png" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".jpg" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".jpeg" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".gif" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".bmp" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".ico" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".webp" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		
+		case ".mp4" -> (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
+		case ".wmv" -> (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
+		case ".avi" -> (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
+		
+		case ".wav" -> (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
+		case ".mp3" -> (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
+		case ".ogg" -> (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
+		
+		case ".otf" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
+		case ".ttf" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
+		case ".woff" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
+		case ".woff2" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
+		
+		case ".zip" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
+		case ".gz" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
+		case ".rar" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
+		case ".7z" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
+		
+		case ".bin" -> (Main.lang == Language.PORT ? "Arquivo Binário" : "Binary File");
+		case ".img" -> (Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File");
+		case ".iso" -> (Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File");
+		case ".flp" -> (Main.lang == Language.PORT ? "Arquivo de Disquete" : "Floppy Disk File");
+		case ".o" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
+		case ".out" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
+		case ".obj" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
 		
 		default -> (Main.lang == Language.PORT ? "Sem Extensão" : "No Extension");
 		};
