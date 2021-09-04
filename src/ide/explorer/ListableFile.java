@@ -1210,6 +1210,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 						return;
 					}
 				
+				Main.editor.wordSinceSpace = "";
+				
 				Main.editor.toAdd.add(toAdd);
 				Main.editor.editing = toAdd;
 			}
