@@ -106,7 +106,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType(".urna",Main.spritesheet.getSprite(160, 32, 16, 16)),		// easter egg! (Criador de Urnas)
 			new FileType(".save",Main.spritesheet.getSprite(176, 32, 16, 16)),		// easter egg! (World's Hardest Game Maker 2)
 			new FileType(".conf",Main.spritesheet.getSprite(192, 32, 16, 16)),
-			new FileType(".mk", Main.spritesheet.getSprite (208, 32, 16, 16)),
+			new FileType(".mk", Main.spritesheet.getSprite (352, 32, 16, 16)),
 			new FileType(".make",Main.spritesheet.getSprite(208, 32, 16, 16)),
 			new FileType(".sh", Main.spritesheet.getSprite (224, 32, 16, 16)),
 			new FileType(".gitignore",Main.spritesheet.getSprite(240,32,16,16)),
@@ -138,7 +138,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType(".jpeg", Main.spritesheet.getSprite (0, 48, 16, 16)),
 			new FileType(".gif", Main.spritesheet.getSprite  (0, 48, 16, 16)),
 			new FileType(".bmp", Main.spritesheet.getSprite  (0, 48, 16, 16)),
-			new FileType(".ico", Main.spritesheet.getSprite  (0, 48, 16, 16)),
+			new FileType(".ico", Main.spritesheet.getSprite (64, 48, 16, 16)),
 			new FileType(".webp", Main.spritesheet.getSprite (0, 48, 16, 16)),
 			
 			new FileType(".mp4", Main.spritesheet.getSprite (16, 48, 16, 16)),
