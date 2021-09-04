@@ -4964,7 +4964,7 @@ public class CodeEditor extends IDEComponent {
 		else
 			Main.screen.setCursor(Cursor.getDefaultCursor());
 		
-		if (rightClicked() && !alternateTabsMode) {
+		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered())) && !alternateTabsMode) {
 			int width = Main.lang == Language.PORT ? 550 : 510;
 			
 			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), width, Texts.openCmd, (s) -> execute(s), "cmd");

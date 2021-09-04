@@ -22,6 +22,7 @@ import ide.explorer.FileType;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
 import ide.main.Main;
@@ -464,7 +465,7 @@ public class Tab extends IDEComponent implements Serializable {
 			return;
 		}
 		
-		if (rightClicked() && !Main.editor.alternateTabsMode) {
+		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered())) && !Main.editor.alternateTabsMode) {
 			MouseInput.updateMouse();
 			
 			int width = Main.lang == Language.PORT ? 305 : 260;

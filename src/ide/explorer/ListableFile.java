@@ -27,6 +27,7 @@ import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
@@ -1224,7 +1225,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			}
 		}*/
 		
-		if (rightClicked()) {
+		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered()))) {
 			MouseInput.updateMouse();
 			
 			int widthDraw = Main.lang == Language.PORT ? 540 : 520;

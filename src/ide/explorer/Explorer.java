@@ -96,7 +96,7 @@ public class Explorer extends IDEComponent {
     		}
     	}
     	
-    	if (rightClicked() && !hoveringListableFile) {
+    	if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered())) && !hoveringListableFile) {
     		int widthDraw = Main.lang == Language.PORT ? 540 : 520;
     		
     		IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), widthDraw, Texts.createFile, (s) -> Main.editor.execute(s), "newfile");
