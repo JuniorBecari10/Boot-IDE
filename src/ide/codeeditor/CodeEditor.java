@@ -3275,7 +3275,7 @@ public class CodeEditor extends IDEComponent {
 		
 		if (!isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) return fs;
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".lock")) return fs;
 		
 		List<Integer> indxs = new ArrayList<>();
 		
@@ -5186,6 +5186,14 @@ public class CodeEditor extends IDEComponent {
 					
 				return;
 			}
+			
+			/*if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_R) { // Ctrl + Shift + R (Close Other Tabs)
+				KeyInput.updateKeys();
+					
+				execute("closeother");
+					
+				return;
+			}*/ // larga de mão
 			
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + T (Terminal)
 				KeyInput.updateKeys();
