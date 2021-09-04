@@ -257,6 +257,7 @@ public class SearchReplaceWindow extends JFrame {
 				Main.editor.editing.setSaved(false);
 				
 				CommandTerminal.runCommand("gotocursor");
+				CommandTerminal.runCommand("deselect");
 				
 				Main.screen.requestFocus();
 				
@@ -264,8 +265,6 @@ public class SearchReplaceWindow extends JFrame {
 				
 				CodeEditor.setSystemLook();
 				JOptionPane.showMessageDialog(null, Texts.replaced + " " + Texts.occurences + " " + Texts.in +  " " + count + " " + Texts.lines + ".", Texts.success + "!", JOptionPane.INFORMATION_MESSAGE);
-				
-				CommandTerminal.runCommand("deselect");
 			}
 		});
 		
