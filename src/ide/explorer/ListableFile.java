@@ -1113,6 +1113,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		}
 	}
 	
+	/**
+	 * 
+	 * @param format - O formato
+	 * @return true se não é suportado, false se é suportado.
+	 * 
+	 * @deprecated Use o isBinary(String) do CodeEditor. Acesse-o por CodeEditor.isBinary(string).
+	 *
+	@Deprecated
 	public static boolean formatNotSupported(String format) {
 		return  format.equalsIgnoreCase(".png") ||
 				format.equalsIgnoreCase(".jpg") || // provavelmente fazer isso com excel e mais coisas do word
@@ -1129,8 +1137,12 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				format.equalsIgnoreCase(".avi") ||
 				format.equalsIgnoreCase(".exe") ||
 				format.equalsIgnoreCase(".pdf") ||
+				format.equalsIgnoreCase(".ttf") ||
+				format.equalsIgnoreCase(".pdf") ||
+				format.equalsIgnoreCase(".pdf") ||
+				format.equalsIgnoreCase(".pdf") ||
 				format.equalsIgnoreCase(".webp");
-	}
+	}*/
 	
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
@@ -1160,7 +1172,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	    	
 			Explorer.baseFolderName = Main.baseFolder.getName().length() > 15 ? Main.baseFolder.getName().substring(0, 12) + "..." : Main.baseFolder.getName();
 			
-			if (formatNotSupported(getFileExtension(regent))) {
+			if (CodeEditor.isBinary(getFileExtension(regent))) {
 					try {
 						Main.desktop.open(regent);
 					} catch (IOException e) {

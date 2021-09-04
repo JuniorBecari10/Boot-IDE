@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
+import ide.codeeditor.CodeEditor;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
@@ -132,7 +133,7 @@ public class SetFileName extends IDEComponent {
 				
 				Explorer.files = ListableFile.loadFolder(Explorer.scope);
 				
-				if (!ListableFile.formatNotSupported(ListableFile.getFileExtension(f)))
+				if (!CodeEditor.isBinary(ListableFile.getFileExtension(f)))
 					ListableFile.addTab(ListableFile.search(f, f.getParentFile()), true);
 				
 				return;
