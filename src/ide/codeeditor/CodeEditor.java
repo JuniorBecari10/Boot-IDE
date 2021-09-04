@@ -888,7 +888,7 @@ public class CodeEditor extends IDEComponent {
 		return res;
 	}
 	
-	// Se for usar em arquivos que não têm extensão, use o método debaixo desse
+	// Se for usar em arquivos que não têm extensão, use o método debaixo desse, o getKeywordsSpecial().
 	public static String[] getKeywords(String ext) {
 		return switch (ext.toLowerCase()) {
 			case ".java" -> javaKeys;
@@ -959,6 +959,15 @@ public class CodeEditor extends IDEComponent {
 		};
 	}
 	
+	public static String[] getKeywordsSpecial(String filename) {
+		return switch (filename.toLowerCase()) {
+			case "makefile" -> makeKeys;
+			case "dockerfile" -> dkKeys;
+			
+			default -> null;
+		};
+	}
+	
 	public static boolean isBinary(String ext) {
 		return ext.equalsIgnoreCase(".pdf") || ext.equalsIgnoreCase(".jar") || ext.equalsIgnoreCase(".o")
 				|| ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".iso")
@@ -974,15 +983,6 @@ public class CodeEditor extends IDEComponent {
 				|| ext.equalsIgnoreCase(".ogg") || ext.equalsIgnoreCase(".otf") || ext.equalsIgnoreCase(".ttf")
 				|| ext.equalsIgnoreCase(".woff") || ext.equalsIgnoreCase(".woff2") || ext.equalsIgnoreCase(".zip")
 				|| ext.equalsIgnoreCase(".rar") || ext.equalsIgnoreCase(".7z") || ext.equalsIgnoreCase(".bin");
-	}
-	
-	public static String[] getKeywordsSpecial(String filename) {
-		return switch (filename.toLowerCase()) {
-			case "makefile" -> makeKeys;
-			case "dockerfile" -> dkKeys;
-			
-			default -> null;
-		};
 	}
 	
 	public static boolean isFormatSupported(String format) {
