@@ -148,6 +148,9 @@ public final class Texts {
 	public static String replaced;
 	public static String occurences;
 	
+	public static String in;
+	public static String lines;
+	
 	public static String success;
 	
 	public static String dont;
@@ -305,6 +308,9 @@ public final class Texts {
 			openFolder = "Abrir Pasta";
 			wouldEdit = "Gostaria de editar o arquivo?";
 			
+			in = "em";
+			lines = "linhas";
+			
 			break;
 		
 		case ENG:
@@ -449,6 +455,9 @@ public final class Texts {
 			wantOpenFile = "Do you want to open the file to edit it?";
 			openFolder = "Open Folder";
 			wouldEdit = "Would like to edit the file?";
+			
+			in = "in";
+			lines = "lines";
 			
 			break;
 		}

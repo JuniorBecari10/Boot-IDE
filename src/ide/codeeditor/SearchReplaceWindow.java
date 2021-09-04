@@ -1,5 +1,6 @@
 package ide.codeeditor;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -20,12 +21,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import ide.components.CommandTerminal;
 import ide.main.Main;
 import ide.util.Texts;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
 
 /**
  * Classe da janela do Search/Replace. É feita com Java Swing, mas não se preocupe, você não vai ver aquele ui feia do swing, eu alterei
@@ -70,7 +70,7 @@ public class SearchReplaceWindow extends JFrame {
 	public SearchReplaceWindow() {
 		active = true;
 		
-		this.setAlwaysOnTop(true);
+		//this.setAlwaysOnTop(true);
 		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 364, 361); // deixa assim mesmo
@@ -260,8 +260,10 @@ public class SearchReplaceWindow extends JFrame {
 				
 				Main.screen.requestFocus();
 				
+				Main.editor.callAutomaticColor();
+				
 				CodeEditor.setSystemLook();
-				JOptionPane.showMessageDialog(null, Texts.replaced + " " + count + " " + Texts.occurences + ".", Texts.success + "!", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, Texts.replaced + " " + Texts.occurences + " " + Texts.in +  " " + count + " " + Texts.lines + ".", Texts.success + "!", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
