@@ -1204,7 +1204,7 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 				
-				if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1"))) {
+				if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock"))) {
 				
 				String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
 						"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
@@ -3692,6 +3692,7 @@ public class CodeEditor extends IDEComponent {
 		case ".config":
 		case ".cfg":
 		case ".ini":
+		case ".lock":
 			indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;

@@ -372,7 +372,7 @@ public class Tab extends IDEComponent implements Serializable {
 		if (!regent.getRegent().exists())
 			close();
 		
-		if (ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".png") ||
+		/*if (ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".png") ||
 				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".jpg") || // provavelmente fazer isso com excel e mais coisas do word
 				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".jpeg")||
 				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".png") ||
@@ -396,7 +396,7 @@ public class Tab extends IDEComponent implements Serializable {
 				
 				JOptionPane.showMessageDialog(null, Texts.cantFindDefault, Texts.nothingFound, JOptionPane.OK_OPTION);
 			}
-		}
+		}*/
 		
 		MIN_X = CommandTerminal.expOff ? -WIDTH : 77;	// -WIDTH é um macete kkk
 		
@@ -518,7 +518,8 @@ public class Tab extends IDEComponent implements Serializable {
 		int limit = (x + WIDTH) - 15;
 		
 		if (Main.editor.editing == this && isReadOnly) limit = (x + WIDTH) - 30;
-		else limit = (x + WIDTH) - 15;
+		else if (Main.editor.editing != this && isReadOnly) limit = (x + WIDTH) - 15;
+		else if (Main.editor.editing != this && !isReadOnly) limit = x + WIDTH;
 		
 		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, limit, g);
 	
