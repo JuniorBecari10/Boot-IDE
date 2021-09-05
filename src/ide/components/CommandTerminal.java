@@ -857,6 +857,13 @@ public class CommandTerminal extends IDEComponent {
 					
 					break;
 					
+				case "cppmainargs":
+					String[] cppmastrs = { "#include <iostream>", "", "using namespace std;", "", "int main(int argc, char *argv[])", "{", "    return 0;", "}"};
+					
+					strs = cppmastrs;
+					
+					break;
+					
 				case "c":
 					String[] cstrs = { "#include <stdio.h>", "#include <stdlib.h>" };
 					

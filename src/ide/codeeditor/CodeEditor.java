@@ -146,6 +146,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public Set<AutoComplete> autocompleteadds = new LinkedHashSet<>();
 	public Set<AutoComplete> addautocompleteadds = new LinkedHashSet<>();
+	public Set<AutoComplete> removeautocompleteadds = new LinkedHashSet<>();
 	
 	public List<RightClickOption> autocompletes = new ArrayList<>();
 	public List<RightClickOption> toAddAutoCompletes = new ArrayList<>();
@@ -888,6 +889,16 @@ public class CodeEditor extends IDEComponent {
 		return res;
 	}
 	
+	public boolean autoCompletesEqual() {
+		for (AutoComplete c : autocompleteadds) {
+			for (AutoComplete d : autocompleteadds) {
+				if (c.text.equals(d.text)) return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	// Se for usar em arquivos que não têm extensão, use o método debaixo desse, o getKeywordsSpecial().
 	public static String[] getKeywords(String ext) {
 		return switch (ext.toLowerCase()) {
@@ -1273,7 +1284,7 @@ public class CodeEditor extends IDEComponent {
 						else {
 							if (i - 1 > 0 && Character.isLetter(chars[i - 1])) continue;
 							
-							//addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
+							addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
 							fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
 						}
 					}
@@ -3260,7 +3271,16 @@ public class CodeEditor extends IDEComponent {
 								}
 							}
 							
-							//addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(c + 1, c + len, chars)), AutoCompleteType.FUNCTION));
+							String methodname = new String(sliceCharArray(c + 1, c + len, chars));
+							
+							try {
+								if (methodname.contains(" "))
+									methodname = methodname.split(" ")[1];
+							} catch (Exception e) {}
+							
+							if (!autoCompletesEqual())
+								addautocompleteadds.add(new AutoComplete(methodname, AutoCompleteType.FUNCTION));
+							
 							fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
 						}
 					}
@@ -4087,6 +4107,12 @@ public class CodeEditor extends IDEComponent {
 		fs = colorComments(ext, chars, fs);
 		
 		/////////////////////////////////////////////////////
+		
+		/*for (AutoComplete c : autocompleteadds) {
+			for (AutoComplete d : autocompleteadds) {
+				if (c.text.equals(d.text)) autocompleteadds.remove(c);
+			}
+		}*/
 		
 		if (isReadOnly && !extType.contains("(" + Texts.readOnly + ")")) extType += " (" + Texts.readOnly + ")";
 		
@@ -5651,6 +5677,10 @@ public class CodeEditor extends IDEComponent {
 			
 		autocompleteadds.addAll(addautocompleteadds);
 		addautocompleteadds.clear();
+		
+		
+		autocompleteadds.removeAll(removeautocompleteadds);
+		removeautocompleteadds.clear();
 		
 		autocompletes.addAll(toAddAutoCompletes);
 		toAddAutoCompletes.clear();

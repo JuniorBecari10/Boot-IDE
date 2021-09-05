@@ -930,6 +930,12 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
  
     }
 	
+	public static void runCmd(boolean isWindowsCmd) {
+		if (isWindowsCmd) {
+			
+		}
+	}
+	
 	@Override
 	public void execute(String arg) {
 		switch (arg) {
