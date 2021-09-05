@@ -1395,7 +1395,7 @@ public class CodeEditor extends IDEComponent {
 		case ".jpeg" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		case ".gif" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		case ".bmp" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		case ".ico" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".ico" -> (Main.lang == Language.PORT ? "Arquivo de Ícone" : "Icon File");
 		case ".webp" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		
 		case ".mp4" -> (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
