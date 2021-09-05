@@ -2218,7 +2218,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			for (String s : extensions) { // colorir keywordss
+			/*for (String s : extensions) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
@@ -2226,7 +2226,7 @@ public class CodeEditor extends IDEComponent {
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 				}
-			}
+			}*/
 			
 			indxs = findWord(new String(chars), "/");
 			
@@ -2623,7 +2623,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			for (String s : extensions) { // colorir keywordss
+			/*for (String s : extensions) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
@@ -2631,7 +2631,7 @@ public class CodeEditor extends IDEComponent {
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 				}
-			}
+			}*/
 			
 			indxs = findWord(new String(chars), "/");
 			

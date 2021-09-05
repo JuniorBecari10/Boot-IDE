@@ -640,7 +640,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "gotocursor":
-				if (Main.editor.editing == null) break;
+				if (Main.editor.editing == null) break; // TODO - mudar o scrx também
 				if (Main.editor.isReadOnly) break;
 				
 				//Main.editor.scrY = (Main.editor.cursorY * (CodeEditor.FONT_SIZE + (CodeEditor.FONT_SIZE / 3)));

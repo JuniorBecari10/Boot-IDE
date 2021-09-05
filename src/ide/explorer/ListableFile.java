@@ -958,13 +958,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			break;
 			
 		case "run":
+			System.out.println("a");
 			try {
-				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", regent.getName());
-				File dir = regent.getParentFile();
+				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", regent.getAbsolutePath() + "/" + regent.getName());
+				
+				File dir = Explorer.scope != null ? Explorer.scope.regent : Main.baseFolder; // eu tava fazendo o equivalente a isso: null.regent != null
+				
 				pb.directory(dir);
 				
 				pb.start();
-				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -978,6 +980,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				
 				pb.start();
 				
+				//Runtime.getRuntime().exec("sh -c start \"\" " + regent.getName());
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -986,6 +990,20 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		case "cmd":
 			try {
 				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start");
+				
+				File dir = Explorer.scope != null ? Explorer.scope.regent : Main.baseFolder; // eu tava fazendo o equivalente a isso: null.regent != null
+				
+				pb.directory(dir);
+				
+				pb.start();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case "cmdbash":
+			try {
+				ProcessBuilder pb = new ProcessBuilder("sh", "-c", "start");
 				
 				File dir = Explorer.scope != null ? Explorer.scope.regent : Main.baseFolder; // eu tava fazendo o equivalente a isso: null.regent != null
 				
@@ -1078,8 +1096,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	
 	public static void addTab(ListableFile file, boolean isAutomatic) {
 		if (!CodeEditor.automaticallyOpenTabs && isAutomatic) return;
-		
-		System.out.println("aa");
 		
 		if (file.getRegent().isFile() && Main.editor.tabs != null) {
 			int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() : Tab.MIN_X;
@@ -1248,19 +1264,24 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			
 			int widthDraw = Main.lang == Language.PORT ? 540 : 520;
 			
+			final boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
+			
 			IDEComponent.addRightClickOption((x + width), y - 60, widthDraw, Texts.createFile, (s) -> execute(s), "newfile");
 			IDEComponent.addRightClickOption((x + width), y - 30, widthDraw, Texts.createFolder, (s) -> execute(s), "newfolder");
 			
 			IDEComponent.addRightClickOption((x + width), y, widthDraw, Texts.openInEditor, (s) -> execute(s), "openeditor");
 			IDEComponent.addRightClickOption((x + width), y + 30, widthDraw, Texts.delete, (s) -> execute(s), "del");
 			IDEComponent.addRightClickOption((x + width), y + 60, widthDraw, Texts.rename, (s) -> execute(s), "rename");
-			IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> execute(s), "cmd");
+			
+			if (isWindows)
+				IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> execute(s), "cmd");
+			else
+				IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> execute(s), "cmdbash");
+			
 			IDEComponent.addRightClickOption((x + width), y + 120, widthDraw, Texts.openTerminal, (s) -> execute(s), "term");
 			IDEComponent.addRightClickOption((x + width), y + 150, widthDraw, Texts.openExplorer, (s) -> execute(s), "sysexp");
 			IDEComponent.addRightClickOption((x + width), y + 180, widthDraw, Texts.setBaseFolder, (s) -> execute(s), "setbase");
 			IDEComponent.addRightClickOption((x + width), y + 210, widthDraw, Texts.openDefault, (s) -> execute(s), "opendef");
-			
-			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			if ((getFileExtension(regent).equals(".bat") || getFileExtension(regent).equals(".cmd") || getFileExtension(regent).equals(".com") || getFileExtension(regent).equals(".ps1")) && isWindows)
 				IDEComponent.addRightClickOption((x + width), y + 210, widthDraw, Texts.execute, (s) -> execute(s), "run");
