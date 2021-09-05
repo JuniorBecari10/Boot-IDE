@@ -1284,7 +1284,7 @@ public class CodeEditor extends IDEComponent {
 						else {
 							if (i - 1 > 0 && Character.isLetter(chars[i - 1])) continue;
 							
-							addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
+							//addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
 							fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
 						}
 					}
@@ -3271,15 +3271,15 @@ public class CodeEditor extends IDEComponent {
 								}
 							}
 							
-							String methodname = new String(sliceCharArray(c + 1, c + len, chars));
+							/*String methodname = new String(sliceCharArray(c + 1, c + len, chars));
 							
 							try {
 								if (methodname.contains(" "))
 									methodname = methodname.split(" ")[1];
-							} catch (Exception e) {}
+							} catch (Exception e) {}*/
 							
-							if (!autoCompletesEqual())
-								addautocompleteadds.add(new AutoComplete(methodname, AutoCompleteType.FUNCTION));
+							//if (!autoCompletesEqual())
+								//addautocompleteadds.add(new AutoComplete(methodname, AutoCompleteType.FUNCTION));
 							
 							fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
 						}
@@ -5303,12 +5303,18 @@ public class CodeEditor extends IDEComponent {
 			// Lembrando que isso aqui só ativa quando o que vc digitou está dentro dos conformes
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_SPACE && !isReadOnly && !alternateTabsMode) { // Ctrl + Space (Trigger Auto Complete)
 				String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent()) ? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent())) : getKeywordsSpecial(editing.getRegent().getRegent().getName());
+				Set<AutoComplete> autocc = autocompleteadds;
 				
 				autocomplete.clear();
+				autocompleteadds.clear();
 				
 				for (String s : autoc)
-					if (s.contains(wordSinceSpace)) // deixa as keywords quietas
+					if (s.contains(wordSinceSpace))
 						autocomplete.add(s);
+				
+				for (AutoComplete c : autocc)
+					if (c.text.contains(wordSinceSpace))
+						autocompleteadds.add(c);
 				
 				autocomplete = removeDuplicates(autocomplete);
 				//autocompleteadds = removeDuplicates(autocompleteadds);
