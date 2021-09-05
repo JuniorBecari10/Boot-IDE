@@ -787,8 +787,15 @@ public class CommandTerminal extends IDEComponent {
 					
 					break;
 					
+				case "vbmain":
+					String[] vbmstrs = { "Imports System ", "", "Module " + classname + " ", "    ", "    Sub Main()", "        ", "    End Sub", "    ", "End Module" };
+					
+					strs = vbmstrs;
+					
+					break;
+					
 				case "vb":
-					String[] vbstrs = { "Imports System ", "", "Module " + classname, "    ", "    Sub Main()", "        ", "    End Sub", "    ", "End Module" };
+					String[] vbstrs = { "Imports System ", "", "Module " + classname + " ", "    ", "End Module" };
 					
 					strs = vbstrs;
 					

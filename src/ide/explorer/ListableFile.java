@@ -2,6 +2,7 @@ package ide.explorer;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -958,11 +959,10 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			break;
 			
 		case "run":
-			System.out.println("a");
 			try {
 				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", regent.getAbsolutePath() + "/" + regent.getName());
-				
-				File dir = Explorer.scope != null ? Explorer.scope.regent : Main.baseFolder; // eu tava fazendo o equivalente a isso: null.regent != null
+				System.out.println("aa");
+				File dir = regent.getParentFile();
 				
 				pb.directory(dir);
 				
@@ -974,6 +974,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			
 		case "runbash":
 			try {
+				System.out.println("a");
 				ProcessBuilder pb = new ProcessBuilder("sh", "-c", "start", regent.getName());
 				File dir = regent.getParentFile();
 				pb.directory(dir);
@@ -1249,15 +1250,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			}
 		}
 		
-		/*if (KeyInput.isKeyPressed() && hovered()) {
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_F2) { // F2 - Renomear
+		if (KeyInput.isKeyPressed()) {
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_F2 && hovered()) { // F2 - Renomear
 				KeyInput.updateKeys();
 				
 				execute("rename");
 				
 				return;
 			}
-		}*/
+		}
 		
 		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered()))) {
 			MouseInput.updateMouse();
