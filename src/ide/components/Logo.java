@@ -57,7 +57,7 @@ public class Logo extends IDEComponent {
 		else {
 			g.setColor(Colors.explorer);
 			
-			g.fillRect(x - 145, y + 189, 11 * 20 - 2, 25);
+			g.fillRect(x - 145, y + 189, 14 * 20 - 2, 25);
 			g.fillRect(x - 145, y + 219, 8 * 20 - 5, 25);
 			g.fillRect(x - 145, y + 249, Main.lang == Language.PORT ? 12 * 20 + 5 : 10 * 20, 25);
 			
