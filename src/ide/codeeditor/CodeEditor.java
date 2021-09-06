@@ -5836,7 +5836,7 @@ public class CodeEditor extends IDEComponent {
 		if (!isReadOnly)
 			if (showCursor && !((cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY < MIN_Y - 40 || ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < x + (FONT_SIZE * 2))) && !WindowInput.isDeactivated()) {
 				g.setColor(Colors.cursor);
-				g.fillRect(drawcx, drawcy - 1, FONT_SIZE > 8 ? 2 : 1, FONT_SIZE + 1); // * 14
+				g.fillRect(drawcx, drawcy - 1, FONT_SIZE > 8 ? 2 : 1, FONT_SIZE + 1);
 			}
 		
 		for (RightClickOption r : autocompletes)

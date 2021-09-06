@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import ide.components.CloseTabButton;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.RightClickOption;
 import ide.explorer.Explorer;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
@@ -424,6 +425,7 @@ public class Tab extends IDEComponent implements Serializable {
 				Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
 			
 			Main.editor.wordSinceSpace = "";
+			RightClickOption.removeAllRightClickOptions();
 			
 			Main.editor.editing = this;
 			
