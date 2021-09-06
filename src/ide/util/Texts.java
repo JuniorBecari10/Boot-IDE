@@ -245,7 +245,7 @@ public final class Texts {
 			clickOnButton = "Clique no botão [Selecionar Pasta Base]";
 			loadOne = "para carregar uma.";
 			
-			ctrl_Win_Prompt = "[Ctrl + Windows] Prompt de Comando";
+			ctrl_Win_Prompt = "[Ctrl + Win/B] Prompt de Comando";
 			ctrl_T_terminal = "[Ctrl + T] Terminal de Comando";
 			rightClick_Options = "[Clique Direito] Mais Opções";
 			
@@ -395,7 +395,7 @@ public final class Texts {
 			clickOnButton = "Click on button [Select Base Folder]";
 			loadOne = "to load one.";
 			
-			ctrl_Win_Prompt = "[Ctrl + Windows] Command Prompt";
+			ctrl_Win_Prompt = "[Ctrl + Win/B] Command Prompt";
 			ctrl_T_terminal = "[Ctrl + T] Command Terminal";
 			rightClick_Options = "[Right Click] More Options";
 			
