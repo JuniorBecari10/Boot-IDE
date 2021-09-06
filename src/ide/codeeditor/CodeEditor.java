@@ -379,7 +379,7 @@ public class CodeEditor extends IDEComponent {
 			"TRUE", "FALSE", "NULL", "Inf", "NaN", "NA", "NA_integer", "NA_real", "NA_complex", "NA_character" };
 	
 	public static final String[] batCom = { "ver", "assoc", "cd", "cls", "copy", "del", "dir", "date",
-			"echo", "@echo", "exit", "md", "move", "path", "pause", "prompt", "rd",
+			"echo", "exit", "md", "move", "path", "pause", "prompt", "rd",
 			"rem", "start", "time", "type", "on", "vol", "attrib", "chkdsk", "choice", "cmd",
 			"comp", "convert", "driverquery", "expand", "find", "format", "help", "ipconfig",
 			"label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo",
@@ -388,7 +388,7 @@ public class CodeEditor extends IDEComponent {
 			"java", "javac", "javaw", "nodemon", "csc", "nasm", "qemu", "gcc", "g++", "python", "lua", "bin", "eject", "tsc",
 			"setlocal", "endlocal",
 			"VER", "ASSOC", "CD", "CLS",
-			"COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
+			"COPY", "DEL", "DIR", "DATE", "ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
 			"CMD", "COMP", "CONVERT", "ON", "DRIVERQUERY", "EXPAND", "FIND", "FORMAT", "HELP", "IPCONFIG",
 			"LABEL", "MORE", "NET", "PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO",

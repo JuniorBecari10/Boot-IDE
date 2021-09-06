@@ -144,7 +144,7 @@ public class Main implements Runnable, Tickable {
         closeTab = spritesheet.getSprite(16, 0, 5, 5);
         notSavedTab = spritesheet.getSprite(16, 5, 5, 5);
         
-        lock = spritesheet.getSprite(27, 0, 5, 5);
+        lock = spritesheet.getSprite(16, 10, 5, 5);
         
         ///////
         
