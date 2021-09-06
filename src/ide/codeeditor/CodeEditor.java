@@ -1430,6 +1430,7 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public static String getLowerBarFileNameWithoutExtension(String filename) {
+		
 		return switch (filename.toLowerCase()) {
 		case "makefile" -> "Makefile";
 		case "dockerfile" -> "Dockerfile";
@@ -3477,9 +3478,6 @@ public class CodeEditor extends IDEComponent {
 					
 					switch (st.toLowerCase()) {
 					case "dockerfile":
-						extType = "Dockerfile";	// talvez alterar depois para Docker File
-						foundExt = true;
-						
 						for (String s : dkKeys) { // colorir keywords
 							indxs = findWord(new String(chars), s);
 							
@@ -3490,9 +3488,6 @@ public class CodeEditor extends IDEComponent {
 						break;
 						
 					case "makefile":
-						extType = "Makefile";
-						foundExt = true;
-						
 						for (String s : makeKeys) { // colorir keywords
 							indxs = findWord(new String(chars), s);
 							
@@ -3522,27 +3517,6 @@ public class CodeEditor extends IDEComponent {
 							fs = color(c, c + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 						}
 						
-						break;
-						
-					case "license":
-						if (!foundExt) {
-							extType = Main.lang == Language.PORT ? "Arquivo de Licença" : "License File";
-							foundExt = true;
-						}
-						break;
-						
-					case "authors":
-						if (!foundExt) {
-							extType = Main.lang == Language.PORT ? "Nomes dos Autores" : "Authors' Names";
-							foundExt = true;
-						}
-						break;
-						
-					case "gitignore":
-						if (!foundExt) {
-							extType = "Git Ignore";
-							foundExt = true;
-						}
 						break;
 					}
 					
@@ -3582,7 +3556,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			if (extType.equalsIgnoreCase("") || extType == null) {
+			/*if (extType.equalsIgnoreCase("") || extType == null) {
 				String extn = "";
 				
 				try {
@@ -3593,7 +3567,7 @@ public class CodeEditor extends IDEComponent {
 				
 				extType = extn;
 				foundExt = true;
-			}
+			}*/
 		}
 		
 		return fs;
@@ -4091,7 +4065,7 @@ public class CodeEditor extends IDEComponent {
 		if (ListableFile.fileHasExtension(ext))
 			extType = getLowerBarFileName(ext);
 		else
-			extType = getLowerBarFileNameWithoutExtension(ext);
+			extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
 		
 		if (editing == null) return fs;
 		if ((isBinary(ext) || !isFormatSupported(ext)) && !(ext.equalsIgnoreCase(".ini"))) return fs;
