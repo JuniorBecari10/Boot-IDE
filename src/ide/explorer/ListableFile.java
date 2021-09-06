@@ -966,9 +966,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			break;
 			
 		case "run":
-			/*try {
-				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", regent.getAbsolutePath() + "/" + regent.getName());
-				System.out.println("aa");
+			try {
+				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", regent.getName());
 				File dir = regent.getParentFile();
 				
 				pb.directory(dir);
@@ -977,9 +976,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			break;*/
+			break;
 			
-		case "runbash": if (true) break;
+		case "runbash":
 			try {
 				ProcessBuilder pb = new ProcessBuilder("sh", "-c", "start", regent.getName());
 				File dir = regent.getParentFile();
@@ -1282,8 +1281,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			IDEComponent.addRightClickOption((x + width), y + 30, widthDraw, Texts.delete, (s) -> execute(s), "del");
 			IDEComponent.addRightClickOption((x + width), y + 60, widthDraw, Texts.rename, (s) -> execute(s), "rename");
 			
-			//if (isWindows)
-				//IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> execute(s), "cmd");
+			if (isWindows)
+				IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> execute(s), "cmd");
 			//else
 				//IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> execute(s), "cmdbash");
 			
@@ -1292,11 +1291,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			IDEComponent.addRightClickOption((x + width), y + 180, widthDraw, Texts.setBaseFolder, (s) -> execute(s), "setbase");
 			IDEComponent.addRightClickOption((x + width), y + 210, widthDraw, Texts.openDefault, (s) -> execute(s), "opendef");
 			
-			if ((getFileExtension(regent).equals(".bat") || getFileExtension(regent).equals(".cmd") || getFileExtension(regent).equals(".com") || getFileExtension(regent).equals(".ps1")) && isWindows)
-				IDEComponent.addRightClickOption((x + width), y + 210, widthDraw, Texts.execute, (s) -> execute(s), "run");
+			if ((getFileExtension(regent).equalsIgnoreCase(".bat") || getFileExtension(regent).equalsIgnoreCase(".cmd") || getFileExtension(regent).equalsIgnoreCase(".com") || getFileExtension(regent).equalsIgnoreCase(".ps1")) && isWindows)
+				IDEComponent.addRightClickOption((x + width), y + 240, widthDraw, Texts.execute, (s) -> execute(s), "run");
 			
-			//if (getFileExtension(regent).equals(".sh") && !isWindows)
-				//IDEComponent.addRightClickOption((x + width), y + 210, widthDraw, Texts.execute, (s) -> execute(s), "runbash");
+			//if (getFileExtension(regent).equalsIgnoreCase(".sh") && !isWindows)
+				//IDEComponent.addRightClickOption((x + width), y + 240, widthDraw, Texts.execute, (s) -> execute(s), "runbash");
 		}
 		
 		int index = Explorer.files.indexOf(this);
