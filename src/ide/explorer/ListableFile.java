@@ -1295,7 +1295,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			IDEComponent.addRightClickOption((x + width), y + 180, widthDraw, Texts.setBaseFolder, (s) -> execute(s), "setbase");
 			IDEComponent.addRightClickOption((x + width), y + 210, widthDraw, Texts.openDefault, (s) -> execute(s), "opendef");
 			
-			if ((getFileExtension(regent).equalsIgnoreCase(".bat") || getFileExtension(regent).equalsIgnoreCase(".cmd") || getFileExtension(regent).equalsIgnoreCase(".com") || getFileExtension(regent).equalsIgnoreCase(".ps1")) && isWindows)
+			if ((getFileExtension(regent).equalsIgnoreCase(".bat") || getFileExtension(regent).equalsIgnoreCase(".cmd") || getFileExtension(regent).equalsIgnoreCase(".com")) && isWindows)
 				IDEComponent.addRightClickOption((x + width), y + 240, widthDraw, Texts.execute, (s) -> execute(s), "run");
 			
 			//if (getFileExtension(regent).equalsIgnoreCase(".sh") && !isWindows)

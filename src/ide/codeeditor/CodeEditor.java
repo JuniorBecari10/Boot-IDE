@@ -386,7 +386,7 @@ public class CodeEditor extends IDEComponent {
 			"taskkill", "xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto",
 			"rmdir", "icacls", "takeown", "if", "for", "else", "git", "npm", "call", "exist", "end",
 			"java", "javac", "javaw", "nodemon", "csc", "nasm", "qemu", "gcc", "g++", "python", "lua", "bin", "eject", "tsc",
-			"setlocal", "endlocal",
+			"setlocal", "endlocal", "make",
 			"VER", "ASSOC", "CD", "CLS",
 			"COPY", "DEL", "DIR", "DATE", "ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE",
@@ -395,7 +395,7 @@ public class CodeEditor extends IDEComponent {
 			"TASKKILL", "XCOPY", "TREE", "FC", "TITLE", "SET", "BASH", "NODE", "OFF", "GOTO",
 			"RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM", "CALL", "EXIST", "END",
 			"JAVA", "JAVAC", "JAVAW", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON", "LUA", "BIN", "EJECT", "TSC",
-			"SETLOCAL", "ENDLOCAL" };
+			"SETLOCAL", "ENDLOCAL", "MAKE" };
 	
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
 	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".ipynb", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
@@ -598,13 +598,13 @@ public class CodeEditor extends IDEComponent {
 			"grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs", "kill", "ping",
 			"wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd", "userdel",
 			"clear", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc", "node", "nasm", "qemu", "gcc", "g++",
-			"python", "lua", "bin", "if", "then", "else", "fi", "date", "eject", "tsc", "setlocal", "endlocal",
+			"python", "lua", "bin", "if", "then", "else", "fi", "date", "eject", "tsc", "setlocal", "endlocal", "make",
 			"PWD", "CD", "LS", "CAT", "CP", "MV", "MKDIR", "RMDIR", "RM", "TOUCH", "LOCATE", "FIND",
 			"GREP", "SUDO", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR", "CHMOD", "CHOWN", "JOBS", "KILL", "PING",
 			"WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP", "HOSTNAME", "USERADD", "USERDEL",
 			"CLEAR", "GIT", "NPM", "CALL", "EXIST", "END", "EJECT", "SETLOCAL", "ENDLOCAL",
 			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA", "JAVAW", "BIN", "IF", "THEN", "ELSE", "FI", "DATE",
-			"TSC"};
+			"TSC", "MAKE" };
 	
 	public static final String[] tsKeys = { "type", "number", "protected", "else", "let", "catch", "if",
 			"case", "in", "byte", "double", "var", "module", "enum", "as", "transient", "document",
@@ -1430,7 +1430,6 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public static String getLowerBarFileNameWithoutExtension(String filename) {
-		
 		return switch (filename.toLowerCase()) {
 		case "makefile" -> "Makefile";
 		case "dockerfile" -> "Dockerfile";
@@ -2072,7 +2071,7 @@ public class CodeEditor extends IDEComponent {
 					len++;
 				}
 				
-				fs = color(c, c + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
 			indxs = findWord(new String(chars), "]");
@@ -2962,16 +2961,6 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 				
-				for (String s : units) { // colorir tags
-					indxs = findWord(new String(chars), s);
-					
-					for (Integer i : indxs) {
-						if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) continue;
-						
-						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
-					}
-				}
-				
 				indxs = findWord(new String(chars), ".");
 				
 				len = 0;
@@ -3037,6 +3026,17 @@ public class CodeEditor extends IDEComponent {
 					}
 					
 					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}
+				
+				for (String s : units) {
+					indxs = findWord(new String(chars), s);
+					
+					for (Integer i : indxs) {
+						//if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) continue;
+						if (!isNumber(chars[i - 1])) continue;
+						
+						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+					}
 				}
 			}
 			
@@ -3261,11 +3261,14 @@ public class CodeEditor extends IDEComponent {
 									chars[c] != '.' &&
 									chars[c] != ':' &&
 									chars[c] != '#' &&
+									chars[c] != '$' &&
 									chars[c] != '/' &&
 									chars[c] != '\\' &&
 									chars[c] != '!') {
 								c--;
 								len++;
+								
+								if (Character.isLetter(chars[c])) hasSpace = true;
 								
 								if (chars[c] == ' ') {
 									if (hasSpace) break;
