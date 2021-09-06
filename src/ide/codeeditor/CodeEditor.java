@@ -96,8 +96,10 @@ public class CodeEditor extends IDEComponent {
 	public int scrX = 0;
 	public int scrY = 0;
 	
+	public static int editorOffset = FONT_SIZE * 4;
+	
 	private int realcx, realcy; // c = cursor
-	public int drawcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, drawcy = MIN_Y + cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;
+	public int drawcx = ((x + editorOffset) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, drawcy = MIN_Y + cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;
 	
 	private PressedAccent prAcc;
 	private boolean pressedAccent = false;
@@ -714,10 +716,10 @@ public class CodeEditor extends IDEComponent {
 					lcmy = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
 					lcmx = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE));
 
-					while (((lcx + 40) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset < MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
+					while (((lcx + 40) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + editorOffset < MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
 						lcmx++;
 					
-					while (((lcx + 40) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset > MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
+					while (((lcx + 40) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + editorOffset > MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
 						lcmx--;
 					
 					while (MIN_Y + lcmy * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 < MouseInput.getMouseY()) // o mesmo para aqui, só que com o y
@@ -4829,6 +4831,8 @@ public class CodeEditor extends IDEComponent {
 		
 		if (tabs == null) tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
 		
+		editorOffset = FONT_SIZE * 4;
+		
 		verifyDuplicateTabs();
 		
 		if (!cursorThread.isAlive() || cursorThread.getState() == State.TERMINATED) {
@@ -4879,7 +4883,7 @@ public class CodeEditor extends IDEComponent {
 			setCursorWithinBounds();
 		}
 		
-		realcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
+		realcx = ((x + editorOffset) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
 		realcy = MIN_Y + cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;
 		
 		//int speed = 10;
@@ -5788,13 +5792,13 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i == line1 - 1) { // - 1 porque a line1 é base 1
 						if (i == line2 - 1) {
-							g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do index1 até o index2
+							g.fillRect(((x + editorOffset) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do index1 até o index2
 								(((line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY) - (FONT_SIZE > 14 ? 5 : 0)),
-								(((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - (((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
+								(((x + editorOffset) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - (((x + editorOffset) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 								FONT_SIZE + 4);
 						}
 						else {
-							g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o fim da linha
+							g.fillRect(((x + editorOffset) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o fim da linha
 								((line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY) - (FONT_SIZE > 14 ? 5 : 0),
 								Main.screen.getWidth() + scrX,
 								FONT_SIZE + 4);
@@ -5804,7 +5808,7 @@ public class CodeEditor extends IDEComponent {
 						if (i != line1 - 1) { // do 0 ao index2
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
 								((line2 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 15 ? 5 : 0)) - (FONT_SIZE == 15 ? 4 : 0),
-								((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
+								((x + editorOffset) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 								FONT_SIZE + 4);
 						}
 					}
@@ -5814,7 +5818,7 @@ public class CodeEditor extends IDEComponent {
 				
 				if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 				
-				Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 3), g);
+				Fonts.drawChars(cs, (x + editorOffset) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 3), g);
 				
 				String nums = String.valueOf(i + 1); // nums = num string
 				//int num = i + 1;
@@ -5833,9 +5837,9 @@ public class CodeEditor extends IDEComponent {
 		
 		// Desenhar cursor
 		if (!isReadOnly)
-			if (showCursor && !((cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY < MIN_Y - 40 || ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < x + (FONT_SIZE * 2))) && !WindowInput.isDeactivated()) {
+			if (showCursor && !((cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY < MIN_Y - 40 || ((x + editorOffset) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < x + (FONT_SIZE * 2))) && !WindowInput.isDeactivated()) {
 				g.setColor(Colors.cursor);
-				g.fillRect(drawcx, drawcy - 1, 2, FONT_SIZE + 1); // * 14
+				g.fillRect(drawcx, drawcy - 1, FONT_SIZE > 8 ? 2 : 1, FONT_SIZE + 1); // * 14
 			}
 		
 		for (RightClickOption r : autocompletes)
