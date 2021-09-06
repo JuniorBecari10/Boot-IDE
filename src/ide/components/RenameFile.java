@@ -109,7 +109,7 @@ public class RenameFile extends IDEComponent {
 			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
-				if (text.length() == 0) return;
+				if (text.length() == 0 || text.toString().endsWith(".")) return;
 				
 				File newf = new File(Explorer.getScopePath() + "/" + text.toString());
 				
@@ -169,5 +169,8 @@ public class RenameFile extends IDEComponent {
 		
 		if (text.isEmpty() && canShow)
 			Fonts.drawString(Texts.cannotBeEmpty, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
+		
+		if (text.toString().endsWith("."))
+			Fonts.drawString(Texts.cannotEndDot, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
 	}
 }

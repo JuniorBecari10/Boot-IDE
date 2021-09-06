@@ -165,6 +165,8 @@ public final class Texts {
 	
 	public static String openInEditor;
 	
+	public static String cannotEndDot;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -255,7 +257,7 @@ public final class Texts {
 			sureDelete = "Tem certeza de que deseja deletar o arquivo";
 			confirmDelete = "Confirmar Exclusão";
 			
-			delError = "Ocorreu um erro ao deletar. Lembre-se que pastas não podem ser excluídas se não estiverem vazias!";
+			delError = "Ocorreu um erro ao deletar. Lembre-se de que pastas não podem ser excluídas se não estiverem vazias!";
 			cantDelete = "Não foi possível deletar.";
 			
 			cantFindDefault = "O sistema não encontrou um programa padrão para abrir esse arquivo.";
@@ -314,6 +316,8 @@ public final class Texts {
 			lines = "linhas";
 			
 			openInEditor = "Abrir no Editor";
+			
+			cannotEndDot = "O nome do arquivo não pode terminar com um ponto!";
 			
 			break;
 		
@@ -464,6 +468,8 @@ public final class Texts {
 			lines = "lines";
 			
 			openInEditor = "Open in Editor";
+			
+			cannotEndDot = "The file name cannot end with a dot!"; // period
 			
 			break;
 		}

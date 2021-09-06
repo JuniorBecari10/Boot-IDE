@@ -1425,7 +1425,7 @@ public class CodeEditor extends IDEComponent {
 		case ".out" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
 		case ".obj" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
 		
-		default -> (Main.lang == Language.PORT ? "Sem Extensão" : "No Extension");
+		default -> (Main.lang == Language.PORT ? "Formato Não Reconhecido" : "Unrecognized Format");
 		};
 	}
 	

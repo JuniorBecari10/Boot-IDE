@@ -1271,8 +1271,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			}
 		}
 		
-		System.out.println(RightClickOption.numRightClickActive());
-		
 		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered()))) {
 			MouseInput.updateMouse();
 			
