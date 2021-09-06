@@ -983,7 +983,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 				ProcessBuilder pb = new ProcessBuilder("sh", "-c", "start", regent.getName());
 				File dir = regent.getParentFile();
 				pb.directory(dir);
-				System.out.println("a");
+				
 				pb.start();
 				
 				//Runtime.getRuntime().exec("sh -c start \"\" " + regent.getName());
@@ -1042,6 +1042,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			break;
 			
 		case "opendef":
+			/*String userdir = System.getProperty("user.dir");
+			System.setProperty("user.dir", regent.getParent());*/
+			
 			new Thread() {
 				public void run() {
 					try {
@@ -1053,6 +1056,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 					}
 				}
 			}.start();
+			
+			//System.setProperty("user.dir", userdir);
+			
 			break;
 			
 		case "rename":
