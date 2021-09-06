@@ -76,6 +76,16 @@ public class RightClickOption extends IDEComponent {
 		return false;
 	}
 	
+	public static int numRightClickActive() {
+		int count = 0;
+		
+		for (IDEComponent i : IDEComponent.components)
+			if (i instanceof RightClickOption)
+				count++;
+		
+		return count;
+	}
+	
 	public static boolean isAutoCompleteActive() {
 		for (RightClickOption r : Main.editor.autocompletes)
 			if (r.isAutoComplete) return true;

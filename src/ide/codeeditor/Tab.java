@@ -472,20 +472,20 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			int width = Main.lang == Language.PORT ? 305 : 260;
 			
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3, width, Texts.closeTab, (s) -> execute(s), "this");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 30, width, Texts.closeAllTabs, (s) -> execute(s), "all");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 60, width, Texts.closeOtherTabs, (s) -> execute(s), "closeother");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 90, width, Texts.save, (s) -> execute(s), "save");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 120, width, Texts.openBootExplorer, (s) -> execute(s), "showexp");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 150, width, Texts.orderTabs, (s) -> execute(s), "alternate");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2, width, Texts.closeTab, (s) -> execute(s), "this");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 30, width, Texts.closeAllTabs, (s) -> execute(s), "all");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 60, width, Texts.closeOtherTabs, (s) -> execute(s), "closeother");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 90, width, Texts.save, (s) -> execute(s), "save");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 120, width, Texts.openBootExplorer, (s) -> execute(s), "showexp");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 150, width, Texts.orderTabs, (s) -> execute(s), "alternate");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			if ((ListableFile.getFileExtension(regent.getRegent()).equals(".bat") || ListableFile.getFileExtension(regent.getRegent()).equals(".cmd") || ListableFile.getFileExtension(regent.getRegent()).equals(".com") || ListableFile.getFileExtension(regent.getRegent()).equals(".ps1")) && isWindows)
-				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 180, width, Texts.execute, (s) -> execute(s), "run");
+				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, Texts.execute, (s) -> execute(s), "run");
 			
 			if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && !isWindows)
-				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 3 + 180, width, Texts.execute, (s) -> execute(s), "runbash");
+				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, Texts.execute, (s) -> execute(s), "runbash");
 		}
 		
 		if (isSaved)

@@ -930,9 +930,10 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
  
     }
 	
-	public static void runCmd(boolean isWindowsCmd) {
+	public static void runCmd(boolean isWindowsCmd, File file) {
 		if (isWindowsCmd) {
-			
+			System.out.println("aa");
+			//Runtime.getRuntime().exec("cmd /c start " + file.getPath());
 		}
 	}
 	
@@ -965,7 +966,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			break;
 			
 		case "run":
-			try {
+			/*try {
 				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", regent.getAbsolutePath() + "/" + regent.getName());
 				System.out.println("aa");
 				File dir = regent.getParentFile();
@@ -976,15 +977,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			break;
+			break;*/
 			
-		case "runbash":
+		case "runbash": if (true) break;
 			try {
-				System.out.println("a");
 				ProcessBuilder pb = new ProcessBuilder("sh", "-c", "start", regent.getName());
 				File dir = regent.getParentFile();
 				pb.directory(dir);
-				
+				System.out.println("a");
 				pb.start();
 				
 				//Runtime.getRuntime().exec("sh -c start \"\" " + regent.getName());
@@ -1266,12 +1266,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			}
 		}
 		
+		System.out.println(RightClickOption.numRightClickActive());
+		
 		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered()))) {
 			MouseInput.updateMouse();
 			
 			int widthDraw = Main.lang == Language.PORT ? 540 : 520;
 			
-			final boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
+			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			IDEComponent.addRightClickOption((x + width), y - 60, widthDraw, Texts.createFile, (s) -> execute(s), "newfile");
 			IDEComponent.addRightClickOption((x + width), y - 30, widthDraw, Texts.createFolder, (s) -> execute(s), "newfolder");
@@ -1280,10 +1282,10 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			IDEComponent.addRightClickOption((x + width), y + 30, widthDraw, Texts.delete, (s) -> execute(s), "del");
 			IDEComponent.addRightClickOption((x + width), y + 60, widthDraw, Texts.rename, (s) -> execute(s), "rename");
 			
-			if (isWindows)
-				IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> execute(s), "cmd");
-			else
-				IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> execute(s), "cmdbash");
+			//if (isWindows)
+				//IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> execute(s), "cmd");
+			//else
+				//IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> execute(s), "cmdbash");
 			
 			IDEComponent.addRightClickOption((x + width), y + 120, widthDraw, Texts.openTerminal, (s) -> execute(s), "term");
 			IDEComponent.addRightClickOption((x + width), y + 150, widthDraw, Texts.openExplorer, (s) -> execute(s), "sysexp");
@@ -1293,8 +1295,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			if ((getFileExtension(regent).equals(".bat") || getFileExtension(regent).equals(".cmd") || getFileExtension(regent).equals(".com") || getFileExtension(regent).equals(".ps1")) && isWindows)
 				IDEComponent.addRightClickOption((x + width), y + 210, widthDraw, Texts.execute, (s) -> execute(s), "run");
 			
-			if (getFileExtension(regent).equals(".sh") && !isWindows)
-				IDEComponent.addRightClickOption((x + width), y + 210, widthDraw, Texts.execute, (s) -> execute(s), "runbash");
+			//if (getFileExtension(regent).equals(".sh") && !isWindows)
+				//IDEComponent.addRightClickOption((x + width), y + 210, widthDraw, Texts.execute, (s) -> execute(s), "runbash");
 		}
 		
 		int index = Explorer.files.indexOf(this);
