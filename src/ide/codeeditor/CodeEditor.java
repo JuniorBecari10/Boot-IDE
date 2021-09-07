@@ -4798,6 +4798,13 @@ public class CodeEditor extends IDEComponent {
 		
 		if (tabs == null) tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
 		
+		/*for (Tab i : tabs) {
+			for (Tab j : tabs) {
+				if (i.getRegent() == j.getRegent() && i != j)
+					toRemove.add(i);
+			}
+		}*/
+		
 		verifyDuplicateTabs();
 		
 		if (!cursorThread.isAlive() || cursorThread.getState() == State.TERMINATED) {

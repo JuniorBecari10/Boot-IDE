@@ -111,72 +111,6 @@ public class Tab extends IDEComponent implements Serializable {
 	 * Fecha essa Tab.
 	 */
 	public void close() {
-        		/*if (Main.editor.editing != null) { // não for nulo
-	    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
-	    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
-	    				
-	    				CodeEditor.setSystemLook();
-	    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-	    				
-	    				if (selectedOption == 0) save();
-	    				else if (selectedOption == 2) {
-	    					WindowInput.update();
-	    					
-	    					return;
-	    				}
-	    			}
-	    		}
-        
-        RightClickOption.removeAllRightClickOptions();
-		
-		Main.editor.isMultilineCommenting = false; // TODO closeother reseta o cursor
-		Main.editor.isAnotherIteration = false;
-		Main.editor.foundExt = false;
-		
-		Main.editor.toRemove.add(this);
-		Main.editor.lines.clear();
-		
-		Main.editor.selecting = false;
-		
-		if (Main.editor.tabs.size() == 1) {
-			Main.editor.editing = null;
-			
-			return;
-		}
-		
-		Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
-		
-		Tab next = Main.editor.tabs.indexOf(this) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1);
-		
-		//if (!Main.editor.toRemove.get(0).equals(this))
-		//	next = this;
-		
-		Main.editor.wordSinceSpace = "";
-		
-		Main.editor.editing = next;
-		
-		Main.editor.isMultilineCommenting = false;
-		Main.editor.isAnotherIteration = false;
-		Main.editor.foundExt = false;
-		
-		if (Main.editor.searchWindow != null) {
-			Main.editor.searchWindow.setVisible(false);
-			Main.editor.alreadyAddedFrame = false;
-			SearchReplaceWindow.active = false;
-		}
-		
-		try {
-			Main.editor.lines = Main.editor.readFile(next.regent.getRegent());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		Main.editor.cursorX = 0;
-		Main.editor.cursorY = 1;
-		
-		Main.editor.scrX = next.scrX;
-		Main.editor.scrY = next.scrY;*/
-		
 		if (Main.editor.editing != null) { // não for nulo
 			if (!Main.editor.editing.isSaved()) { // não estiver salvo
 				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
@@ -373,32 +307,6 @@ public class Tab extends IDEComponent implements Serializable {
 		if (!regent.getRegent().exists())
 			close();
 		
-		/*if (ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".png") ||
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".jpg") || // provavelmente fazer isso com excel e mais coisas do word
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".jpeg")||
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".png") ||
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".gif") ||
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".bmp") ||
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".wav") ||
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".mp3") ||
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".ogg") ||
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".mp4") ||
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".wmv") ||
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".avi") ||
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".exe") ||
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".pdf") ||
-				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(".webp")) {
-			close();
-			
-			try {
-				Main.desktop.open(regent.getRegent());
-			} catch (IOException e) {
-				CodeEditor.setSystemLook();
-				
-				JOptionPane.showMessageDialog(null, Texts.cantFindDefault, Texts.nothingFound, JOptionPane.OK_OPTION);
-			}
-		}*/
-		
 		MIN_X = CommandTerminal.expOff ? -WIDTH : 77;	// -WIDTH é um macete kkk
 		
 		int x = this.x + Main.editor.tabScr;
@@ -410,7 +318,7 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
 		
-		if (Main.editor.editing == this)
+		//if (Main.editor.editing == this)
 			button.tick();
 		
 		if (Main.editor.editing == this) {
@@ -519,16 +427,18 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		int limit = (x + WIDTH) - 15;
 		
-		if (Main.editor.editing == this && isReadOnly) limit = (x + WIDTH) - 30;
+		/*if (Main.editor.editing == this && isReadOnly) limit = (x + WIDTH) - 30;
 		else if (Main.editor.editing != this && isReadOnly) limit = (x + WIDTH) - 15;
-		else if (Main.editor.editing != this && !isReadOnly) limit = x + WIDTH;
+		else if (Main.editor.editing != this && !isReadOnly) limit = x + WIDTH;*/
+		
+		if (isReadOnly) limit = (x + WIDTH) - 30;
 		
 		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, limit, g);
 	
 		if (isReadOnly)
-			g.drawImage(Main.lock, Main.editor.editing == this ? (x + WIDTH) - 40 : (x + WIDTH) - 20, y + 7, 15, 15, null);
+			g.drawImage(Main.lock, /*Main.editor.editing == this ? */(x + WIDTH) - 40 /*: (x + WIDTH) - 20*/, y + 7, 15, 15, null);
 		
-		if (Main.editor.editing == this)
+		//if (Main.editor.editing == this)
 			button.render(g);
 		
 		for (FileType f : ListableFile.types) {

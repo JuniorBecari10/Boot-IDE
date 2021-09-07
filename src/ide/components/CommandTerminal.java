@@ -17,7 +17,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
-import ide.codeeditor.IDELine;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
