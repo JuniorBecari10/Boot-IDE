@@ -311,8 +311,6 @@ public class Tab extends IDEComponent implements Serializable {
 		if (!regent.getRegent().exists())
 			close();
 		
-		System.out.println(regent.getRegent().getAbsolutePath());
-		
 		MIN_X = CommandTerminal.expOff ? -WIDTH : 77;	// -WIDTH é um macete kkk
 		
 		int x = this.x + Main.editor.tabScr;
