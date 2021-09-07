@@ -1855,14 +1855,14 @@ public class CodeEditor extends IDEComponent {
 						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
 				
-				for (String s : props) { // colorir tags
+				for (String s : units) { // colorir tags
 					indxs = findWord(new String(chars), s);
 					
 					for (Integer i : indxs)
-						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+						fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 				}
 				
-				for (String s : units) { // colorir tags
+				for (String s : props) { // colorir tags
 					indxs = findWord(new String(chars), s);
 					
 					for (Integer i : indxs)
@@ -1982,7 +1982,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs)
-					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
 			for (String s : props) { // colorir tags
