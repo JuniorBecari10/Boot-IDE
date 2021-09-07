@@ -139,14 +139,14 @@ public class CodeEditor extends IDEComponent {
 	
 	public int autocompletescroll = 0;
 	
-	public List<String> autocomplete = new ArrayList<>();
+	//public List<String> autocomplete = new ArrayList<>();
 	public String wordSinceSpace = "";
 	
 	public int autocompleteindex = 0;
 	
-	public Set<AutoComplete> autocompleteadds = new LinkedHashSet<>();
-	public Set<AutoComplete> addautocompleteadds = new LinkedHashSet<>();
-	public Set<AutoComplete> removeautocompleteadds = new LinkedHashSet<>();
+	public Set<AutoComplete> autocomplete = new LinkedHashSet<>();
+	public Set<AutoComplete> addautocomplete = new LinkedHashSet<>();
+	public Set<AutoComplete> removeautocomplete = new LinkedHashSet<>();
 	
 	public List<RightClickOption> autocompletes = new ArrayList<>();
 	public List<RightClickOption> toAddAutoCompletes = new ArrayList<>();
@@ -890,8 +890,8 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public boolean autoCompletesEqual() {
-		for (AutoComplete c : autocompleteadds) {
-			for (AutoComplete d : autocompleteadds) {
+		for (AutoComplete c : autocomplete) {
+			for (AutoComplete d : autocomplete) {
 				if (c.text.equals(d.text)) return true;
 			}
 		}
@@ -1013,9 +1013,9 @@ public class CodeEditor extends IDEComponent {
 		};
 	}
 	
-	public void addAutoCompleteAdds(List<String> list, AutoCompleteType type) {
+	public void addautocomplete(List<String> list, AutoCompleteType type) {
 		for (String s : list)
-			addautocompleteadds.add(new AutoComplete(s, type));
+			addautocomplete.add(new AutoComplete(s, type));
 	}
 	
 	public static List<Integer> findWord(String textString, String word) { // Fonte: baeldung.com
@@ -1109,7 +1109,7 @@ public class CodeEditor extends IDEComponent {
 							}
 						}
 						
-						//addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(c, c + len, chars)), AutoCompleteType.VARIABLE));
+						//addautocomplete.add(new AutoComplete(new String(sliceCharArray(c, c + len, chars)), AutoCompleteType.VARIABLE));
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
 					
@@ -1150,7 +1150,7 @@ public class CodeEditor extends IDEComponent {
 							}
 						}
 						
-						//addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(c, c + len, chars)), AutoCompleteType.VARIABLE));
+						//addautocomplete.add(new AutoComplete(new String(sliceCharArray(c, c + len, chars)), AutoCompleteType.VARIABLE));
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
 				}
@@ -1285,7 +1285,7 @@ public class CodeEditor extends IDEComponent {
 						else {
 							if (i - 1 > 0 && Character.isLetter(chars[i - 1])) continue;
 							
-							//addautocompleteadds.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
+							//addautocomplete.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
 							fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
 						}
 					}
@@ -3275,7 +3275,7 @@ public class CodeEditor extends IDEComponent {
 							} catch (Exception e) {}*/
 							
 							//if (!autoCompletesEqual())
-								//addautocompleteadds.add(new AutoComplete(methodname, AutoCompleteType.FUNCTION));
+								//addautocomplete.add(new AutoComplete(methodname, AutoCompleteType.FUNCTION));
 							
 							fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
 						}
@@ -4077,9 +4077,9 @@ public class CodeEditor extends IDEComponent {
 		
 		/////////////////////////////////////////////////////
 		
-		/*for (AutoComplete c : autocompleteadds) {
-			for (AutoComplete d : autocompleteadds) {
-				if (c.text.equals(d.text)) autocompleteadds.remove(c);
+		/*for (AutoComplete c : autocomplete) {
+			for (AutoComplete d : autocomplete) {
+				if (c.text.equals(d.text)) autocomplete.remove(c);
 			}
 		}*/
 		
@@ -4762,11 +4762,11 @@ public class CodeEditor extends IDEComponent {
 	 * Hardcoded no cursor (de texto, não é do mouse não)
 	 */
 	public void addAutoCompleteOptions() {
-		if (autocomplete.isEmpty()) return;
+		//if (autocomplete.isEmpty()) return;
 		
 		if (!isAutoCompleteActive) {
+			//autocomplete.clear();
 			autocomplete.clear();
-			autocompleteadds.clear();
 			
 			return;
 		}
@@ -4775,13 +4775,7 @@ public class CodeEditor extends IDEComponent {
 		
 		int index = 0;
 		
-		for (String s : autocomplete) {
-			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 30, 330, 32, 16, s, keywords, (e) -> makeChanges(e), s));
-			
-			index++;
-		}
-		
-		for (AutoComplete a : autocompleteadds) {
+		for (AutoComplete a : autocomplete) {
 			if (a == null) continue;
 			
 			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 30, 330, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
@@ -4789,8 +4783,8 @@ public class CodeEditor extends IDEComponent {
 			index++;
 		}
 		
+		//autocomplete.clear();
 		autocomplete.clear();
-		autocompleteadds.clear();
 	}
 	
 	public void tick() {
@@ -5287,21 +5281,21 @@ public class CodeEditor extends IDEComponent {
 			// Lembrando que isso aqui só ativa quando o que vc digitou está dentro dos conformes
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_SPACE && !isReadOnly && !alternateTabsMode) { // Ctrl + Space (Trigger Auto Complete)
 				String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent()) ? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent())) : getKeywordsSpecial(editing.getRegent().getRegent().getName());
-				Set<AutoComplete> autocc = autocompleteadds;
+				//Set<AutoComplete> autocc = autocomplete;
 				
+				//autocomplete.clear();
 				autocomplete.clear();
-				autocompleteadds.clear();
 				
 				for (String s : autoc)
 					if (s.contains(wordSinceSpace))
-						autocomplete.add(s);
+						autocomplete.add(new AutoComplete(s, AutoCompleteType.KEYWORD));
 				
-				for (AutoComplete c : autocc)
+				/*for (AutoComplete c : autocc)
 					if (c.text.contains(wordSinceSpace))
-						autocompleteadds.add(c);
+						autocomplete.add(c);*/
 				
-				autocomplete = removeDuplicates(autocomplete);
-				//autocompleteadds = removeDuplicates(autocompleteadds);
+				//autocomplete = removeDuplicates(autocomplete);
+				//autocomplete = removeDuplicates(autocomplete);
 				
 				autocompleteindex = 0;
 				
@@ -5610,14 +5604,9 @@ public class CodeEditor extends IDEComponent {
 				String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent()) ? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent())) : getKeywordsSpecial(editing.getRegent().getRegent().getName());
 				
 				if (autoc != null) {
-					autocomplete.clear();
-				
 					for (String s : autoc)
 						if (s.contains(wordSinceSpace))
-							autocomplete.add(s);
-				
-					autocomplete = removeDuplicates(autocomplete);
-					//autocompleteadds = removeDuplicates(autocompleteadds);
+							autocomplete.add(new AutoComplete(s, AutoCompleteType.KEYWORD));
 				
 					autocompleteindex = 0;
 				
@@ -5665,12 +5654,12 @@ public class CodeEditor extends IDEComponent {
 		lines.removeAll(linesToRemove);
 		linesToRemove.clear();
 			
-		autocompleteadds.addAll(addautocompleteadds);
-		addautocompleteadds.clear();
+		autocomplete.addAll(addautocomplete);
+		addautocomplete.clear();
 		
 		
-		autocompleteadds.removeAll(removeautocompleteadds);
-		removeautocompleteadds.clear();
+		autocomplete.removeAll(removeautocomplete);
+		removeautocomplete.clear();
 		
 		autocompletes.addAll(toAddAutoCompletes);
 		toAddAutoCompletes.clear();
