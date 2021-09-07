@@ -179,6 +179,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	};
 	
 	private ListableFile parent;
+	
 	private File regent;
 	
 	public static List<ListableFile> files = new ArrayList<ListableFile>(Explorer.files);
@@ -196,6 +197,10 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	
 	public File getRegent() {
 		return regent;
+	}
+	
+	public void setRegent(File regent) {
+		this.regent = regent;
 	}
 	
 	public void setParent(ListableFile parent) {
@@ -266,7 +271,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		if (list == null) list = new String[0];
 		
 		for (String s : list) {
-			if (s.equalsIgnoreCase(name)) return true;
+			if (s.equals(name)) return true;
 		}
 		
 		return false;

@@ -123,7 +123,16 @@ public class RenameFile extends IDEComponent {
 				
 				Explorer.files = ListableFile.loadFolder(Explorer.scope);
 				
-				ListableFile.addTab(ListableFile.search(newf, newf.getParentFile()), true);
+				//if (!ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())))
+				
+				ListableFile searched = ListableFile.search(newf, newf.getParentFile());
+				/*Tab equivalent = Tab.searchTab(searched);
+				equivalent.close();*/
+				
+				if (!ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())))
+					ListableFile.addTab(searched, true);
+				
+				Main.editor.tabs.forEach((t) -> t.refreshRegent());
 				
 				return;
 			}
