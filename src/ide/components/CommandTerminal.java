@@ -787,6 +787,13 @@ public class CommandTerminal extends IDEComponent {
 					
 					break;
 					
+				case "csssimple":
+					String[] csssstrs = { "* {", "    margin: 0;", "    padding: 0;", "}"};
+					
+					strs = csssstrs;
+					
+					break;
+					
 				case "vbmain":
 					String[] vbmstrs = { "Imports System ", "", "Module " + classname + " ", "    ", "    Sub Main()", "        ", "    End Sub", "    ", "End Module" };
 					
@@ -823,7 +830,7 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "javamain":
-					String[] javamstrs = { "public class " + classname + " {", "", "    public static void main(String[] args) {", "        ", "    }", "}"};
+					String[] javamstrs = { "public class " + classname + " {", "    ", "    public static void main(String[] args) {", "        ", "    }", "}"};
 					
 					strs = javamstrs;
 					
@@ -895,16 +902,24 @@ public class CommandTerminal extends IDEComponent {
 				
 				if (strs.length == 0) return;
 				
-				for (int i = 0; i < strs.length; i++) {
-					if ((Main.editor.cursorY - 1) + i >= Main.editor.lines.size())
-						Main.editor.lines.add(new IDELine(new ArrayList<>(), new ArrayList<>()));
+				for (int i = 0; i < strs.length - 1; i++) {
+					StringBuilder spaces = new StringBuilder();
 					
-					b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get((Main.editor.cursorY - 1) + i).getChars())));
+					for (int j = 0; j < Main.editor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
+						spaces.append(' ');
 					
-					b.insert(Main.editor.cursorX, strs[i]);
-					
-					Main.editor.register(b, (Main.editor.cursorY - 1) + i);
+					Main.editor.addNewLine(Main.editor.cursorY - 1, spaces.toString());
 				}
+				
+				for (int i = 0; i < strs.length; i++) {
+					StringBuilder bb = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get((Main.editor.cursorY - 1) + i).getChars())));
+					
+					bb.append(strs[i]);
+					
+					Main.editor.register(bb, (Main.editor.cursorY - 1) + i);
+				}
+				
+				//Main.editor.cursorY += strs.length - 1;
 				
 				Main.editor.editing.setSaved(false);
 				

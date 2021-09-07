@@ -5086,6 +5086,14 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_R && !isReadOnly && !alternateTabsMode) { // Ctrl + R - Refresh Auto Complete
+				KeyInput.updateKeys();
+				
+				wordSinceSpace = "";
+					
+				return;
+			}
+			
 			if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_H) { // Ctrl + Shift + H - Toggle Read Only
 				KeyInput.updateKeys();
 				
