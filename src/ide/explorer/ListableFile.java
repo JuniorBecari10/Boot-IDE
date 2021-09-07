@@ -227,6 +227,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	    return name.substring(lastIndexOf);
 	}
 	
+	public static String getFileExtension(String name) { // Fonte: StackOverflow
+	    int lastIndexOf = name.lastIndexOf(".");
+	    
+	    if (lastIndexOf == -1) {
+	        return ""; // empty extension
+	    }
+	    return name.substring(lastIndexOf);
+	}
+	
 	public static boolean fileHasExtension(File file) {
 		return file.getName().contains(".");
 	}

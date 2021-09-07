@@ -448,7 +448,7 @@ public class CodeEditor extends IDEComponent {
 			"add", "addpd", "addps", "addressing", "addsd", "addss", "jz", "align", "and", "andnpd", "andnps", "andpd",
 			"andps", "arpl", "as", "commandline", "ELFobjectfile", "macroprocessing", "syntaxUNIXversusIntel", "ascii",
 			"assemblerSeeasB", "bcd", "binaryarithmeticinstructions", "bitinstructions", "bound", "bsf", "bsr",
-			"bss", "bswap", "bt", "btc", "btr", "bts", "byte", "byte", "byte", "byte", "byteinstructionsC", "call",
+			"bswap", "bt", "btc", "btr", "bts", "byte", "byte", "byte", "byte", "byteinstructionsC", "call",
 			"cbtw", "clc", "cld", "clflush", "cli", "cltd", "cltq", "clts", "cmc", "cmova", "cmova", "cmovae",
 			"cmovae", "cmovb", "cmovb", "cmovbe", "cmovbe", "cmovc", "cmovc", "cmove", "cmove", "cmovg", "cmovg",
 			"cmovge", "cmovge", "cmovl", "cmovl", "cmovle", "cmovle", "cmovna", "cmovna", "cmovnae", "cmovnae",
@@ -459,7 +459,7 @@ public class CodeEditor extends IDEComponent {
 			"cmpxchgb", "comisd", "comiss", "comm", "comment", "controltransferinstructions", "cpp", "cpuid",
 			"cqtd", "cqto", "cvtdqpd", "cvtdqps", "cvtpddq", "cvtpdpi", "cvtpdps", "cvtpipd", "cvtpips", "cvtpsdq",
 			"cvtpspd", "cvtpspi", "cvtsdsi", "cvtsdss", "cvtsisd", "cvtsiss", "cvtsssd", "cvtsssi", "cvttpddq",
-			"cvttpdpi", "cvttpsdq", "cvttpspi", "cvttsdsi", "cvttsssi", "cwtd", "cwtlD", "daa", "das", "data",
+			"cvttpdpi", "cvttpsdq", "cvttpspi", "cvttsdsi", "cvttsssi", "cwtd", "cwtlD", "daa", "das",
 			"datatransferinstructions", "dec", "decimalarithmeticinstructions", "directives", "div", "divpd", "divps",
 			"divsd", "divss", "doubleE", "ELFobjectfile", "emms", "enter", "even", "extF", "fxm", "fabs", "fadd",
 			"faddp", "fbe", "Seeas", "fbld", "fbstp", "fchs", "fclex", "fcmovb", "fcmovbe", "fcmove", "fcmovnb",
@@ -514,7 +514,7 @@ public class CodeEditor extends IDEComponent {
 			"packedsingle-precisionfloating-point", "shuffle", "SIMDintegerinstructions", "unpack", "statement",
 			"empty", "stc", "std", "sti", "stmxcsr", "stos", "stosb", "stosl", "stosw",
 			"stringinstructions", "sub", "subpd", "subps", "subsd", "subss", "symbolic", "sysenter", "sysexit", "tbss",
-			"tcomm", "tdata", "test", "text", "ucomisd", "ucomiss", "ud", "uleb", "unpckhpd", "unpckhps", "unpcklpd",
+			"tcomm", "tdata", "test", "ucomisd", "ucomiss", "ud", "uleb", "unpckhpd", "unpckhps", "unpcklpd",
 			"unpcklps", "value", "verr", "verw", "wait", "wbinvd", "weak", "whitespace", "wrmsr", "xadd", "xchg",
 			"xchgA", "xlat", "xlatb", "xor", "xorpd", "xorps", "zero" }; // não vai colorir "str", "string"
 	
@@ -4762,6 +4762,8 @@ public class CodeEditor extends IDEComponent {
 	 * Hardcoded no cursor (de texto, não é do mouse não)
 	 */
 	public void addAutoCompleteOptions() {
+		addSpecificAutoCompletes(editing.getRegent().getRegent().getName());
+		
 		//if (autocomplete.isEmpty()) return;
 		
 		if (!isAutoCompleteActive) {
@@ -4785,6 +4787,45 @@ public class CodeEditor extends IDEComponent {
 		
 		//autocomplete.clear();
 		autocomplete.clear();
+	}
+	
+	public void addSpecificAutoCompletes(String filename) {
+		filename = ListableFile.fileHasExtension(filename) ? ListableFile.getFileExtension(filename) : filename;
+		
+		// pode colocar tudo no mesmo switch, tipo .asm e makefile podem ser colocados juntos
+		
+		switch (filename.toLowerCase()) {
+		case ".s":
+		case ".asm":
+			Set<AutoComplete> asm = new LinkedHashSet<>();
+			
+			for (String s : asmRegs) {
+				if (s.contains(wordSinceSpace))
+					asm.add(new AutoComplete(s, AutoCompleteType.VARIABLE));
+			}
+			
+			for (String s : sections) {
+				if (s.contains(wordSinceSpace))
+					asm.add(new AutoComplete(s, AutoCompleteType.VARIABLE));
+			}
+			
+			autocomplete.addAll(asm);
+			
+			break;
+			
+		case ".scss":
+		case ".css":
+			Set<AutoComplete> css = new LinkedHashSet<>();
+			
+			for (String s : units) {
+				if (s.contains(wordSinceSpace))
+					css.add(new AutoComplete(s, AutoCompleteType.VARIABLE));
+			}
+			
+			autocomplete.addAll(css);
+			
+			break;
+		}
 	}
 	
 	public void tick() {
