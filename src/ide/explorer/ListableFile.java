@@ -298,7 +298,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		
 		int index = 0;
 		
-		for (File f : folder.listFiles()) {
+		File[] listFiles = folder.listFiles() == null ? new File[0] : folder.listFiles();
+		
+		for (File f : listFiles) {
 			fl.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, parent));
 			
 			index++;
@@ -1121,7 +1123,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	}
 	
 	public static void addTab(ListableFile file, boolean isAutomatic) {
-		if (!CodeEditor.automaticallyOpenTabs && isAutomatic) return;
+		if ((!CodeEditor.automaticallyOpenTabs && isAutomatic) || file == null) return;
 		
 		if (file.getRegent().isFile() && Main.editor.tabs != null) {
 			int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() : Tab.MIN_X;
@@ -1137,6 +1139,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			}.start();
 			
 			Tab toAdd = new Tab((lastX + Tab.WIDTH) + 3, file);
+			
+			if (Main.editor.tabs.size() == 0) Main.editor.tabScr = 0;
 			
 			Main.editor.cursorX = 0;
 			Main.editor.cursorY = 1;

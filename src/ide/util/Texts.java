@@ -167,6 +167,9 @@ public final class Texts {
 	
 	public static String cannotEndDot;
 	
+	public static String anErrorOccurred;
+	public static String errorCreatingFile;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -319,6 +322,9 @@ public final class Texts {
 			
 			cannotEndDot = "O nome do arquivo não pode terminar com um ponto!";
 			
+			anErrorOccurred = "Um erro ocorreu.";
+			errorCreatingFile = "Um erro ocorreu ao criar o arquivo.";
+			
 			break;
 		
 		case ENG:
@@ -470,6 +476,9 @@ public final class Texts {
 			openInEditor = "Open in Editor";
 			
 			cannotEndDot = "The file name cannot end with a dot!"; // period
+			
+			anErrorOccurred = "An error occurred.";
+			errorCreatingFile = "An error occurred while creating the file.";
 			
 			break;
 		}

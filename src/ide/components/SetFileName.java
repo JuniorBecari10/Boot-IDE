@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import ide.codeeditor.CodeEditor;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
@@ -124,6 +126,17 @@ public class SetFileName extends IDEComponent {
 					}
 				else
 					f.mkdir();
+				
+				if (!f.exists()) {
+					CodeEditor.setSystemLook();
+					
+					JOptionPane.showMessageDialog(null, Texts.anErrorOccurred, Texts.errorCreatingFile, JOptionPane.OK_OPTION);
+					
+					IDEComponent.toRemove.add(this);
+					added = false;
+					
+					return;
+				}
 				
 				IDEComponent.toRemove.add(this);
 				added = false;

@@ -308,8 +308,11 @@ public class Tab extends IDEComponent implements Serializable {
 	}
 	
 	public void tick() {
-		if (!regent.getRegent().exists())
+		if (regent == null || !regent.getRegent().exists()) {
 			close();
+			
+			return;
+		}
 		
 		MIN_X = CommandTerminal.expOff ? -WIDTH : 77;	// -WIDTH é um macete kkk
 		
@@ -409,6 +412,12 @@ public class Tab extends IDEComponent implements Serializable {
 	}
 	
 	public void render(Graphics g) {
+		if (regent == null || !regent.getRegent().exists()) {
+			close();
+			
+			return;
+		}
+		
 		Graphics2D g2 = (Graphics2D) g;
 		
 		int x = this.x + Main.editor.tabScr;
