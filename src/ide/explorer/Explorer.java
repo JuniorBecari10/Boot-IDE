@@ -59,11 +59,11 @@ public class Explorer extends IDEComponent {
     	
     	if (ListableFile.files.isEmpty() && files.isEmpty()) hoveringListableFile = false;
     	
-    	/*if (Main.baseFolder == null || !Main.baseFolder.exists()) {
+    	if (Main.baseFolder == null || !Main.baseFolder.exists()) {
     		CommandTerminal.runCommand("closebasefolder");
     		
     		return;
-    	}*/
+    	}
     	
     	if (scope != null) {
     		if (scope.getRegent().equals(Main.baseFolder))
