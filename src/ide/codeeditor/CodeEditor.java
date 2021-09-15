@@ -1852,21 +1852,21 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			if (isCssPart) {
-				for (String s : cssTags) { // colorir tags
+				for (String s : cssTags) { // colorir tags - tipo h1, h2
 					indxs = findWord(new String(chars), s);
 					
 					for (Integer i : indxs)
 						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
 				
-				for (String s : units) { // colorir tags
+				for (String s : units) { // colorir unidades de medida - tipo px, rem, em
 					indxs = findWord(new String(chars), s);
 					
 					for (Integer i : indxs)
 						fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 				}
 				
-				for (String s : props) { // colorir tags
+				for (String s : props) { // colorir propriedades - tipo margin, padding
 					indxs = findWord(new String(chars), s);
 					
 					for (Integer i : indxs)
@@ -2059,7 +2059,7 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
-			indxs = findWord(new String(chars), ";");
+			/*indxs = findWord(new String(chars), ";");
 			
 			for (Integer i : indxs) {
 				int c = i;
@@ -2072,6 +2072,28 @@ public class CodeEditor extends IDEComponent {
 						chars[c] != ']' &&
 						chars[c] != ':' &&
 						chars[c] != '{') {
+					c--;
+					len++;
+				}
+				
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}*/
+			
+			indxs = findWord(new String(chars), ";");
+			
+			for (Integer i : indxs) {
+				int c = i;
+				len = 0;
+				
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0 &&
+						chars[c] != '[' &&
+						chars[c] != ']' &&
+						chars[c] != '.' &&
+						chars[c] != '#' &&
+						chars[c] != ':' &&
+						!isNumber(chars[c - 1])) {
 					c--;
 					len++;
 				}
@@ -3310,7 +3332,7 @@ public class CodeEditor extends IDEComponent {
 					if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
 					
 					if (s.length() >= 1) {
-						if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) continue;
+						if ((i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) && !(ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))) continue;
 						//if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i + s.length()])) continue;
 						
 						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
