@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -116,14 +115,6 @@ public class RightClickOption extends IDEComponent {
 				Main.editor.toRemoveAutoCompletes.add(r);
 		
 		Main.editor.autocompletescroll = 0;
-	}
-	
-	public static int getRightClickIndex(List<RightClickOption> list, RightClickOption obj) {
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).equals(obj)) return i;
-		}
-		
-		return -1;
 	}
 	
 	public void tick() {
