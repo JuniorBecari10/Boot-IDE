@@ -1076,7 +1076,7 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".gitignore") || editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore")) return fs;
 		
 		if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) {
 			indxs = findWord(new String(chars), "<");
@@ -4102,7 +4102,7 @@ public class CodeEditor extends IDEComponent {
 			extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
 		
 		if (editing == null) return fs;
-		if ((isBinary(ext) || !isFormatSupported(ext)) && !(ext.equalsIgnoreCase(".ini"))) return fs;
+		if ((isBinary(ext) || !isFormatSupported(ext)) && !(ext.equalsIgnoreCase(".ini")) || ext.equalsIgnoreCase(".gitignore")) return fs;
 		
 		/////////////////////////////////////////////////////
 		
