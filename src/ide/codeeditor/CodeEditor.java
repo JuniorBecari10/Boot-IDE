@@ -401,9 +401,11 @@ public class CodeEditor extends IDEComponent {
 	
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
 	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".ipynb", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".tsx", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
-			".html", ".xhtml", ".htm", ".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp",
+			".html", ".xhtml", ".htm", ".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp", ".prefs", ".classpath",
+			".project",
 			".JAVA", ".C", ".CPP", ".CC", ".CS", ".PY", ".IPYNB", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HH", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".TSX", ".GO", ".R", ".PL", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
-			".HTML", ".XHTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP"};
+			".HTML", ".XHTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP", ".PREFS", ".CLASSPATH",
+			".PROJECT" };
 	
 	public static final String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
 			"false", "for", "function", "if", "in", "local", "nil",
@@ -952,9 +954,9 @@ public class CodeEditor extends IDEComponent {
 			case ".dart" -> dartKeys;
 			case ".zig" -> zigKeys;
 			
-			case ".html" -> cssTags;
-			case ".xhtml" -> cssTags;
-			case ".htm" -> cssTags;
+			case ".html" -> mergeStringArrays(cssTags, props);
+			case ".xhtml" -> mergeStringArrays(cssTags, props);
+			case ".htm" -> mergeStringArrays(cssTags, props);
 			case ".css" -> mergeStringArrays(cssTags, props);
 			case ".scss" -> mergeStringArrays(cssTags, props);
 			case ".json" -> jsonKeys;
@@ -1107,8 +1109,10 @@ public class CodeEditor extends IDEComponent {
 		case ".pdf" -> "Portable Document Format - PDF";
 		case ".jar" -> (Main.lang == Language.PORT ? "Arquivo Jar" : "Jar File");
 		case ".exe" -> (Main.lang == Language.PORT ? "Executável do Windows - EXE" : "Windows Executable - EXE");
+		case ".classpath" -> (Main.lang == Language.PORT ? "Caminho da Classe" : "Class Path");
+		case ".project" -> (Main.lang == Language.PORT ? "Arquivo de Projeto" : "Project File");
 		case ".svg" -> "Scalable Vector Graphics - SVG";
-		case "urna" -> (Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas" : "Saved Bollot Box from Criador de Urnas");
+		case ".urna" -> (Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas" : "Saved Bollot Box from Criador de Urnas");
 		case ".save" -> (Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2" : "Saved Game from World's Hardest Game Maker 2");
 		case ".conf" -> (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE" : "Boot IDE Configuration File");
 		case ".mk" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
@@ -1226,7 +1230,7 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".gitignore") || editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".gitignore") || editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore")) return fs;
 		
 		if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) {
 			indxs = findWord(new String(chars), "<");
@@ -1530,6 +1534,8 @@ public class CodeEditor extends IDEComponent {
 		case ".config":
 		case ".xml":
 		case ".svg":
+		case ".classpath":
+		case ".project":
 		case ".htm":
 		case ".xhtml":
 		case ".html":
@@ -1580,7 +1586,7 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 			}
 			
-			if (ext.equals(".xml") || ext.equals(".svg") || ext.equals(".config") || ext.equals(".cfg")) {
+			if (ext.equals(".xml") || ext.equals(".svg") || ext.equals(".config") || ext.equals(".cfg") || ext.equals(".classpath") || ext.equals(".project")) {
 				indxs = findWord(new String(chars), ">"); // colorir final de tags
 				
 				for (Integer i : indxs) {
@@ -3306,7 +3312,7 @@ public class CodeEditor extends IDEComponent {
 				// primeira vez usando labels!
 				methods:
 					if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
-						if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs")) {
+						if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs")) {
 							if (!(isCssPart || isJSPart || isPhpPart)) break methods;
 						}
 						
@@ -3371,7 +3377,7 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))) {
+		if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))) {
 			for (String s : nums) { // colorir números
 				indxs = findWord(new String(chars), s);
 				
@@ -4040,6 +4046,8 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".ejs":
 		case ".xml":
+		case ".classpath":
+		case ".project":
 		case ".htm":
 		case ".xhtml":
 		case ".html":
