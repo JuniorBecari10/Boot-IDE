@@ -1190,9 +1190,12 @@ public class CodeEditor extends IDEComponent {
 	
 	public static List<IDEFont> color(int s, int e, IDEFont color, List<IDEFont> fs) {
 		if (e < s) throw new IllegalArgumentException("o start não pode ser maior que o final!");
+		if (e > fs.size()) throw new IndexOutOfBoundsException("o final não pode ser maior que o final da fonte!");
 		
-		for (int i = s; i < e; i++)
+		for (int i = s; i < e; i++) {
+			if (i >= fs.size()) break;			
 			fs.set(i, color);
+		}
 		
 		return fs;
 	}
@@ -1234,6 +1237,47 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
+			if (ext.equalsIgnoreCase(".prefs")) {
+				indxs = findWord(new String(chars), "="); // antes de <palavra>
+				
+				for (Integer i : indxs) {
+					int c = i;
+					int len = 0;
+					
+					boolean hasSpace = false;
+						
+					while (c < chars.length && 
+							c + len < chars.length &&
+							c > 0) {
+						c--;
+						len++;
+						
+						if (chars[c] == ' ') {
+							if (hasSpace)
+								break;
+							
+							if (!hasSpace)
+								hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
+						}
+					}
+					
+					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}
+				
+				indxs = findWord(new String(chars), "="); // depois de <palavra>
+				
+				int len = 0;
+
+				for (Integer i : indxs) {
+					while (i + len < chars.length)
+						len++;
+					
+					fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
+				
+				return fs;
+			}
+			
 			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1"))) {
 				for (String s : syms) {
 					indxs = findWord(new String(chars), s); // antes de <palavra>
@@ -1263,15 +1307,17 @@ public class CodeEditor extends IDEComponent {
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
 					
-					indxs = findWord(new String(chars), s);
+					indxs = findWord(new String(chars), s); // depois de <palavra>
 					
 					int len = 0;
 
 					for (Integer i : indxs) {
+						len = 0;
+						
 						while (i + len < chars.length)
 							len++;
 
-						if (i + len < chars.length)
+						//if (i + len < chars.length)
 							fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
 				}
@@ -1429,7 +1475,7 @@ public class CodeEditor extends IDEComponent {
 							len++;
 					}
 
-					if (i + len < chars.length) {
+					//if (i + len < chars.length) {
 						if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))
 							fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 						else {
@@ -1438,7 +1484,7 @@ public class CodeEditor extends IDEComponent {
 							//addautocomplete.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
 							fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
 						}
-					}
+					//}
 				}
 			}
 			}
