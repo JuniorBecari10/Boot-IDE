@@ -4999,21 +4999,20 @@ public class CodeEditor extends IDEComponent {
 			if (MouseInput.isMouseRolling()) {
 				new Thread() {
 					public void run() {
-						if (!RightClickOption.isAutoCompleteActive()) {
-							if (KeyInput.isShiftDown()) {
-								if (MouseInput.wheelUp() && scrX > 0)
-									scrX -= FONT_SIZE * 3;
-								else if (MouseInput.wheelDown())
-									scrX += FONT_SIZE * 3;
-							}
-						}
-						else {
-							if (KeyInput.isShiftDown()) {
+						if (RightClickOption.isAutoCompleteActive()) {
+							if (KeyInput.isControlDown() && KeyInput.isShiftDown()) {
 								if (MouseInput.wheelUp() && autocompletes.get(0).getY() + 30 < (y + height) - 30) // TODO aaaaaaaaaa
 									autocompletescroll -= 30;
 								else if (MouseInput.wheelDown() && autocompletes.get(autocompletes.size() - 1).getY() > MIN_Y)
 									autocompletescroll += 30;
 							}
+						}
+						
+						if (KeyInput.isShiftDown() && !KeyInput.isControlDown()) {
+							if (MouseInput.wheelUp() && scrX > 0)
+								scrX -= FONT_SIZE * 3;
+							else if (MouseInput.wheelDown())
+								scrX += FONT_SIZE * 3;
 						}
 						
 						if (!KeyInput.isShiftDown()) {
