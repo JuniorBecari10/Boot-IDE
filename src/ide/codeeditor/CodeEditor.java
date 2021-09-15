@@ -1042,6 +1042,152 @@ public class CodeEditor extends IDEComponent {
         return indexes;
     }
 	
+	public static String getLowerBarFileName(String ext) {
+		return switch (ext.toLowerCase()) {
+		case ".java" -> "Java";
+		case ".class" -> (Main.lang == Language.PORT ? "Arquivo Bytecode do Java" : "Java Bytecode File");
+		case ".c" -> "C";
+		case ".cpp" -> "C++";
+		case ".cc" -> "C++";
+		case ".cxx" -> "C++";
+		case ".cs" -> "C#";
+		case ".py" -> "Python";
+		case ".pyd" -> "Python";
+		case ".js" -> "JavaScript";
+		case ".mjs" -> "JavaScript";
+		case ".bat" -> "Batch";
+		case ".com" -> (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
+		case ".cmd" -> (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
+		case ".h" -> "C/C++ Header";
+		case ".hh" -> "C++ Header";
+		case ".hxx" -> "C++ Header";
+		case ".hpp" -> "C++ Header";
+		case ".asm" -> "Assembly";
+		case ".s" -> "Assembly";
+		case ".lua" -> "Lua";
+		case ".sql" -> "Structured Query Language - SQL";
+		case ".swift" -> "Swift";
+		case ".rs" -> "Rust";
+		case ".php" -> "Hyper Text Preprocessor";
+		case ".kt" -> "Kotlin";
+		case ".vue" -> "Vue.js";
+		case ".rb" -> "Ruby";
+		case ".ino" -> "Arduino";
+		case ".ts" -> "TypeScript";
+		case ".tsx" -> "TypeScript React";
+		case ".go" -> "Go";
+		case ".r" -> "R";
+		case ".jl" -> "Julia";
+		case ".pl" -> "Perl";
+		case ".has" -> "Haskell";
+		case ".hs" -> "Haskell";
+		case ".fs" -> "F#";
+		case ".coffee" -> "CoffeeScript";
+		case ".m" -> "Objective-C";
+		case ".pas" -> "Pascal";
+		case ".pp" -> "Pascal";
+		case ".scala" -> "Scala";
+		case ".dart" -> "Dart";
+		case ".zig" -> "Zig";
+		case ".scss" -> "Sass Cascading Style Sheets - SCSS";
+		case ".ipynb" -> "Jupyter Notebook";
+		case ".vb" -> "Visual Basic";
+		
+		case ".html" -> "Hyper Text Markup Language - HTML";
+		case ".xhtml" -> "Hyper Text Markup Language - HTML";
+		case ".htm" -> "Hyper Text Markup Language - HTML";
+		case ".css" -> "Cascading Style Sheets - CSS";
+		case ".xml" -> "Extensible Markup Language - XML";
+		case ".json" -> "JavaScript Object Notation - JSON";
+		case ".jsonc" -> "JavaScript Object Notation with Comments - JSONC";
+		case ".md" -> "Markdown";
+		case ".markdown" -> "Markdown";
+		case ".txt" -> (Main.lang == Language.PORT ? "Arquivo de Texto" : "Text File");
+		case ".log" -> (Main.lang == Language.PORT ? "Arquivo de Log" : "Log File");
+		case ".pdf" -> "Portable Document Format - PDF";
+		case ".jar" -> (Main.lang == Language.PORT ? "Arquivo Jar" : "Jar File");
+		case ".exe" -> (Main.lang == Language.PORT ? "Executável do Windows - EXE" : "Windows Executable - EXE");
+		case ".svg" -> "Scalable Vector Graphics - SVG";
+		case "urna" -> (Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas" : "Saved Bollot Box from Criador de Urnas");
+		case ".save" -> (Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2" : "Saved Game from World's Hardest Game Maker 2");
+		case ".conf" -> (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE" : "Boot IDE Configuration File");
+		case ".mk" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
+		case ".make" -> "Makefile";
+		case ".sh" -> "Bourne-Again Shell - Bash";
+		case ".gitignore" -> "Git Ignore";
+		case ".dockerfile" -> "Dockerfile";
+		case ".jsx" -> "JavaScript React";
+		case ".config" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
+		case ".cfg" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
+		case ".ps1" -> (Main.lang == Language.PORT ? "Arquivo do PowerShell" : "PowerShell File");
+		case ".license" -> (Main.lang == Language.PORT ? "Arquivo de Licença" : "License File");
+		case ".docx" -> (Main.lang == Language.PORT ? "Documento do Microsoft Word" : "Microsoft Word Document");
+		case ".pptx" -> (Main.lang == Language.PORT ? "Apresentação do Microsoft PowerPoint" : "Microsoft PowerPoint Presentation");
+		case ".xlsx" -> (Main.lang == Language.PORT ? "Planilha do Microsoft Excel" : "Microsoft Excel Spreadsheet");
+		case ".one" -> (Main.lang == Language.PORT ? "Arquivo do Microsoft OneNote" : "Microsoft OneNote File");
+		case ".psd" -> (Main.lang == Language.PORT ? "Arquivo do Adobe Photoshop" : "Adobe Photoshop File");
+		case ".aed" -> (Main.lang == Language.PORT ? "Arquivo do Adobe After Effects" : "Adobe After Effects File");
+		case ".ai" -> (Main.lang == Language.PORT ? "Arquivo do Adobe Illustrator" : "Adobe Illustrator File");
+		case ".indd" -> (Main.lang == Language.PORT ? "Arquivo do Adobe InDesign" : "Adobe InDesign File");
+		case ".ejs" -> "Embedded JavaScript - EJS";
+		case ".ld" -> "LinkerScript";
+		case ".lock" -> "Lock";
+		case ".ini" -> (Main.lang == Language.PORT ? "Arquivo de Parâmetros de Configurações" : "Configuration Parameters File");
+		case ".dll" -> "Dynamic Link Library - DLL";
+		case ".makefile" -> "Makefile";
+		case ".url" -> "Uniform Resource Locator - URL";
+		case ".prefs" -> (Main.lang == Language.PORT ? "Arquivo de Preferências" : "Preferences File");
+		
+		case ".png" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".jpg" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".jpeg" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".gif" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".bmp" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".ico" -> (Main.lang == Language.PORT ? "Arquivo de Ícone" : "Icon File");
+		case ".webp" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		
+		case ".mp4" -> (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
+		case ".wmv" -> (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
+		case ".avi" -> (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
+		
+		case ".wav" -> (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
+		case ".mp3" -> (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
+		case ".ogg" -> (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
+		
+		case ".otf" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
+		case ".ttf" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
+		case ".woff" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
+		case ".woff2" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
+		
+		case ".zip" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
+		case ".gz" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
+		case ".rar" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
+		case ".7z" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
+		
+		case ".bin" -> (Main.lang == Language.PORT ? "Arquivo Binário" : "Binary File");
+		case ".img" -> (Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File");
+		case ".iso" -> (Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File");
+		case ".flp" -> (Main.lang == Language.PORT ? "Arquivo de Disquete" : "Floppy Disk File");
+		case ".o" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
+		case ".out" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
+		case ".obj" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
+		
+		default -> (Main.lang == Language.PORT ? "Formato Não Reconhecido" : "Unrecognized Format");
+		};
+	}
+	
+	public static String getLowerBarFileNameWithoutExtension(String filename) {
+		return switch (filename.toLowerCase()) {
+		case "makefile" -> "Makefile";
+		case "dockerfile" -> "Dockerfile";
+		case "license" -> (Main.lang == Language.PORT ? "Arquivo de Licença" : "License File");
+		case "authors" -> (Main.lang == Language.PORT ? "Nomes dos Autores" : "Authors' Names");
+		case "gitignore" -> "Git Ignore";
+		
+		default -> (Main.lang == Language.PORT ? "Sem Extensão" : "No Extension");
+		};
+	}
+	
 	public static List<IDEFont> color(int s, int e, IDEFont color, List<IDEFont> fs) {
 		if (e < s) throw new IllegalArgumentException("o start não pode ser maior que o final!");
 		
@@ -1299,151 +1445,6 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		return fs;
-	}
-	
-	public static String getLowerBarFileName(String ext) {
-		return switch (ext.toLowerCase()) {
-		case ".java" -> "Java";
-		case ".class" -> (Main.lang == Language.PORT ? "Arquivo Bytecode do Java" : "Java Bytecode File");
-		case ".c" -> "C";
-		case ".cpp" -> "C++";
-		case ".cc" -> "C++";
-		case ".cxx" -> "C++";
-		case ".cs" -> "C#";
-		case ".py" -> "Python";
-		case ".pyd" -> "Python";
-		case ".js" -> "JavaScript";
-		case ".mjs" -> "JavaScript";
-		case ".bat" -> "Batch";
-		case ".com" -> (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
-		case ".cmd" -> (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
-		case ".h" -> "C/C++ Header";
-		case ".hh" -> "C++ Header";
-		case ".hxx" -> "C++ Header";
-		case ".hpp" -> "C++ Header";
-		case ".asm" -> "Assembly";
-		case ".s" -> "Assembly";
-		case ".lua" -> "Lua";
-		case ".sql" -> "Structured Query Language - SQL";
-		case ".swift" -> "Swift";
-		case ".rs" -> "Rust";
-		case ".php" -> "Hyper Text Preprocessor";
-		case ".kt" -> "Kotlin";
-		case ".vue" -> "Vue.js";
-		case ".rb" -> "Ruby";
-		case ".ino" -> "Arduino";
-		case ".ts" -> "TypeScript";
-		case ".tsx" -> "TypeScript React";
-		case ".go" -> "Go";
-		case ".r" -> "R";
-		case ".jl" -> "Julia";
-		case ".pl" -> "Perl";
-		case ".has" -> "Haskell";
-		case ".hs" -> "Haskell";
-		case ".fs" -> "F#";
-		case ".coffee" -> "CoffeeScript";
-		case ".m" -> "Objective-C";
-		case ".pas" -> "Pascal";
-		case ".pp" -> "Pascal";
-		case ".scala" -> "Scala";
-		case ".dart" -> "Dart";
-		case ".zig" -> "Zig";
-		case ".scss" -> "Sass Cascading Style Sheets - SCSS";
-		case ".ipynb" -> "Jupyter Notebook";
-		case ".vb" -> "Visual Basic";
-		
-		case ".html" -> "Hyper Text Markup Language - HTML";
-		case ".xhtml" -> "Hyper Text Markup Language - HTML";
-		case ".htm" -> "Hyper Text Markup Language - HTML";
-		case ".css" -> "Cascading Style Sheets - CSS";
-		case ".xml" -> "Extensible Markup Language - XML";
-		case ".json" -> "JavaScript Object Notation - JSON";
-		case ".jsonc" -> "JavaScript Object Notation with Comments - JSONC";
-		case ".md" -> "Markdown";
-		case ".markdown" -> "Markdown";
-		case ".txt" -> (Main.lang == Language.PORT ? "Arquivo de Texto" : "Text File");
-		case ".log" -> (Main.lang == Language.PORT ? "Arquivo de Log" : "Log File");
-		case ".pdf" -> "Portable Document Format - PDF";
-		case ".jar" -> (Main.lang == Language.PORT ? "Arquivo Jar" : "Jar File");
-		case ".exe" -> (Main.lang == Language.PORT ? "Executável do Windows - EXE" : "Windows Executable - EXE");
-		case ".svg" -> "Scalable Vector Graphics - SVG";
-		case "urna" -> (Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas" : "Saved Bollot Box from Criador de Urnas");
-		case ".save" -> (Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2" : "Saved Game from World's Hardest Game Maker 2");
-		case ".conf" -> (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE" : "Boot IDE Configuration File");
-		case ".mk" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
-		case ".make" -> "Makefile";
-		case ".sh" -> "Bourne-Again Shell - Bash";
-		case ".gitignore" -> "Git Ignore";
-		case ".dockerfile" -> "Dockerfile";
-		case ".jsx" -> "JavaScript React";
-		case ".config" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
-		case ".cfg" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
-		case ".ps1" -> (Main.lang == Language.PORT ? "Arquivo do PowerShell" : "PowerShell File");
-		case ".license" -> (Main.lang == Language.PORT ? "Arquivo de Licença" : "License File");
-		case ".docx" -> (Main.lang == Language.PORT ? "Documento do Microsoft Word" : "Microsoft Word Document");
-		case ".pptx" -> (Main.lang == Language.PORT ? "Apresentação do Microsoft PowerPoint" : "Microsoft PowerPoint Presentation");
-		case ".xlsx" -> (Main.lang == Language.PORT ? "Planilha do Microsoft Excel" : "Microsoft Excel Spreadsheet");
-		case ".one" -> (Main.lang == Language.PORT ? "Arquivo do Microsoft OneNote" : "Microsoft OneNote File");
-		case ".psd" -> (Main.lang == Language.PORT ? "Arquivo do Adobe Photoshop" : "Adobe Photoshop File");
-		case ".aed" -> (Main.lang == Language.PORT ? "Arquivo do Adobe After Effects" : "Adobe After Effects File");
-		case ".ai" -> (Main.lang == Language.PORT ? "Arquivo do Adobe Illustrator" : "Adobe Illustrator File");
-		case ".indd" -> (Main.lang == Language.PORT ? "Arquivo do Adobe InDesign" : "Adobe InDesign File");
-		case ".ejs" -> "Embedded JavaScript - EJS";
-		case ".ld" -> "LinkerScript";
-		case ".lock" -> "Lock";
-		case ".ini" -> (Main.lang == Language.PORT ? "Arquivo de Parâmetros de Configurações" : "Configuration Parameters File");
-		case ".dll" -> "Dynamic Link Library - DLL";
-		case ".makefile" -> "Makefile";
-		case ".url" -> "Uniform Resource Locator - URL";
-		
-		case ".png" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		case ".jpg" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		case ".jpeg" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		case ".gif" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		case ".bmp" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		case ".ico" -> (Main.lang == Language.PORT ? "Arquivo de Ícone" : "Icon File");
-		case ".webp" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		
-		case ".mp4" -> (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
-		case ".wmv" -> (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
-		case ".avi" -> (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
-		
-		case ".wav" -> (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
-		case ".mp3" -> (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
-		case ".ogg" -> (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
-		
-		case ".otf" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
-		case ".ttf" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
-		case ".woff" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
-		case ".woff2" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
-		
-		case ".zip" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
-		case ".gz" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
-		case ".rar" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
-		case ".7z" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
-		
-		case ".bin" -> (Main.lang == Language.PORT ? "Arquivo Binário" : "Binary File");
-		case ".img" -> (Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File");
-		case ".iso" -> (Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File");
-		case ".flp" -> (Main.lang == Language.PORT ? "Arquivo de Disquete" : "Floppy Disk File");
-		case ".o" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
-		case ".out" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
-		case ".obj" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
-		
-		default -> (Main.lang == Language.PORT ? "Formato Não Reconhecido" : "Unrecognized Format");
-		};
-	}
-	
-	public static String getLowerBarFileNameWithoutExtension(String filename) {
-		return switch (filename.toLowerCase()) {
-		case "makefile" -> "Makefile";
-		case "dockerfile" -> "Dockerfile";
-		case "license" -> (Main.lang == Language.PORT ? "Arquivo de Licença" : "License File");
-		case "authors" -> (Main.lang == Language.PORT ? "Nomes dos Autores" : "Authors' Names");
-		case "gitignore" -> "Git Ignore";
-		
-		default -> (Main.lang == Language.PORT ? "Sem Extensão" : "No Extension");
-		};
 	}
 	
 	public List<IDEFont> colorKeywords(String ext, char[] chars, List<IDEFont> fs) {
