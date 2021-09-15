@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
@@ -171,7 +172,9 @@ public class Tab extends IDEComponent implements Serializable {
 		if (isReadOnly || Main.editor.lines.isEmpty() || Main.editor.lines == null) return;
 		
 		try {
-			BufferedWriter w = Files.newBufferedWriter(regent.getRegent().toPath(), StandardCharsets.UTF_8); // precisa escrever em utf-8 tbm!!
+			Charset ch = Main.editor.codeType.equals("UTF-8") ? StandardCharsets.UTF_8 : StandardCharsets.ISO_8859_1;
+			
+			BufferedWriter w = Files.newBufferedWriter(regent.getRegent().toPath(), ch); // precisa escrever em utf-8 tbm!!
 			
 			for (IDELine i : Main.editor.lines) {
 				if (i == null) continue;

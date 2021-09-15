@@ -2243,7 +2243,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}*/
 			
-			indxs = findWord(new String(chars), "/");
+			/*indxs = findWord(new String(chars), "/");
 			
 			len = 0;
 
@@ -2265,7 +2265,7 @@ public class CodeEditor extends IDEComponent {
 
 				if (i + len < chars.length)
 					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-			}
+			}*/
 			
 			indxs = findWord(new String(chars), "%");		// se quiser fazer entre %% tem que fazer uma variável boolean de controle, como o multilinecommenting.
 			
@@ -2648,7 +2648,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}*/
 			
-			indxs = findWord(new String(chars), "/");
+			/*indxs = findWord(new String(chars), "/");
 			
 			len = 0;
 
@@ -2671,6 +2671,7 @@ public class CodeEditor extends IDEComponent {
 				if (i + len < chars.length)
 					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
+			*/
 			
 			break; // Release v3.9.1 - 12/08/2021 - 08:03
 			
@@ -3250,6 +3251,7 @@ public class CodeEditor extends IDEComponent {
 									c > 0 &&
 									chars[c] != '[' &&
 									chars[c] != ']' &&
+									chars[c] != ')' &&
 									chars[c] != ',' &&
 									chars[c] != ';' &&
 									chars[c] != '.' &&
@@ -3305,10 +3307,12 @@ public class CodeEditor extends IDEComponent {
 				for (Integer i : indxs) {
 					if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
 					
-					if (s.length() > 1)
+					if (s.length() >= 1) {
 						if (i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) continue;
-					
-					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+						//if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i + s.length()])) continue;
+						
+						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+					}
 				}
 			}
 			
