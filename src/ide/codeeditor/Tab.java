@@ -459,13 +459,13 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		for (FileType f : ListableFile.types) {
 			if (f.getExtension().equalsIgnoreCase(extension)) {
-				g.drawImage(f.getIcon(), x + 3, Y + 1, HEIGHT - 3, HEIGHT - 3, null);
+				g.drawImage(f.getIcon(), x + 3, Y + 2, HEIGHT - 3, HEIGHT - 3, null);
 				
 				return;
 			}
 			
 			else if (f.getExtension().equalsIgnoreCase(regent.getRegent().getName())) {
-				g.drawImage(f.getIcon(), x + 3, Y + 1, HEIGHT - 3, HEIGHT - 3, null);
+				g.drawImage(f.getIcon(), x + 3, Y + 2, HEIGHT - 3, HEIGHT - 3, null);
 				
 				return;
 			}
