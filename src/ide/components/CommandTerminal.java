@@ -779,6 +779,13 @@ public class CommandTerminal extends IDEComponent {
 					
 					break;
 					
+				case "html5":
+					String[] htmlnewstrs = { "<!DOCTYPE html>", "<html>", "    <head>", "        <title></title>", "        ", "        <meta charset=\"UTF-8\">", "        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", "    </head>", "    <body>", "    </body>", "</html>" };
+					
+					strs = htmlnewstrs;
+					
+					break;
+					
 				case "css":
 					String[] cssstrs = { "* {", "    margin: 0;", "    padding: 0;", "    box-sizing: border-box;", "    font-family: sans-serif;", "}"};
 					
@@ -794,14 +801,14 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "vbmain":
-					String[] vbmstrs = { "Imports System ", "", "Module " + classname + " ", "    ", "    Sub Main()", "        ", "    End Sub", "    ", "End Module" };
+					String[] vbmstrs = { "Imports System", "", "Module " + classname, "    ", "    Sub Main()", "        ", "    End Sub", "    ", "End Module" };
 					
 					strs = vbmstrs;
 					
 					break;
 					
 				case "vb":
-					String[] vbstrs = { "Imports System ", "", "Module " + classname + " ", "    ", "End Module" };
+					String[] vbstrs = { "Imports System", "", "Module " + classname, "    ", "End Module" };
 					
 					strs = vbstrs;
 					
@@ -836,7 +843,7 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "cs":
-					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname + " ", "{", "    ", "    public class Program ", "    {", "        ", "    }", "}"};
+					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname, "{", "    ", "    public class Program", "    {", "        ", "    }", "}"};
 					
 					strs = csstrs;
 					
@@ -888,13 +895,6 @@ public class CommandTerminal extends IDEComponent {
 					String[] inostrs = { "void setup()", "{", "    ", "}", "", "void loop()", "{", "    ", "}"};
 					
 					strs = inostrs;
-					
-					break;
-					
-				case "html5":
-					String[] htmlnewstrs = { "<!DOCTYPE html>", "<html>", "    <head>", "        <title></title>", "        ", "        <meta charset=\"UTF-8\">", "        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", "    </head>", "    <body>", "    </body>", "</html>" };
-					
-					strs = htmlnewstrs;
 					
 					break;
 				}

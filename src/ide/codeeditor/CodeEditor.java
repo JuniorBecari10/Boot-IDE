@@ -402,10 +402,10 @@ public class CodeEditor extends IDEComponent {
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
 	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".ipynb", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".tsx", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
 			".html", ".xhtml", ".htm", ".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp", ".prefs", ".classpath",
-			".project",
+			".project", ".sln",
 			".JAVA", ".C", ".CPP", ".CC", ".CS", ".PY", ".IPYNB", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HH", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".TSX", ".GO", ".R", ".PL", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
 			".HTML", ".XHTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP", ".PREFS", ".CLASSPATH",
-			".PROJECT" };
+			".PROJECT", ".SLN" };
 	
 	public static final String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
 			"false", "for", "function", "if", "in", "local", "nil",
@@ -1100,6 +1100,7 @@ public class CodeEditor extends IDEComponent {
 		case ".htm" -> "Hyper Text Markup Language - HTML";
 		case ".css" -> "Cascading Style Sheets - CSS";
 		case ".xml" -> "Extensible Markup Language - XML";
+		case ".sln" -> (Main.lang == Language.PORT ? "Solução do Microsoft Visual Studio" : "Microsoft Visual Studio Solution");
 		case ".json" -> "JavaScript Object Notation - JSON";
 		case ".jsonc" -> "JavaScript Object Notation with Comments - JSONC";
 		case ".md" -> "Markdown";
@@ -1533,6 +1534,7 @@ public class CodeEditor extends IDEComponent {
 		case ".cfg":
 		case ".config":
 		case ".xml":
+		case ".sln":
 		case ".svg":
 		case ".classpath":
 		case ".project":
@@ -1586,7 +1588,7 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 			}
 			
-			if (ext.equals(".xml") || ext.equals(".svg") || ext.equals(".config") || ext.equals(".cfg") || ext.equals(".classpath") || ext.equals(".project")) {
+			if (ext.equals(".xml") || ext.equals(".svg") || ext.equals(".sln") || ext.equals(".config") || ext.equals(".cfg") || ext.equals(".classpath") || ext.equals(".project")) {
 				indxs = findWord(new String(chars), ">"); // colorir final de tags
 				
 				for (Integer i : indxs) {
@@ -3312,7 +3314,7 @@ public class CodeEditor extends IDEComponent {
 				// primeira vez usando labels!
 				methods:
 					if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
-						if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs")) {
+						if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs")) {
 							if (!(isCssPart || isJSPart || isPhpPart)) break methods;
 						}
 						
@@ -3377,7 +3379,7 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))) {
+		if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))) {
 			for (String s : nums) { // colorir números
 				indxs = findWord(new String(chars), s);
 				
@@ -4046,6 +4048,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".ejs":
 		case ".xml":
+		case ".sln":
 		case ".classpath":
 		case ".project":
 		case ".htm":
