@@ -933,6 +933,7 @@ public class CodeEditor extends IDEComponent {
 			case ".rb" -> rbKeys;
 			case ".ino" -> cppKeys;
 			case ".ts" -> tsKeys;
+			case ".tsx" -> tsKeys;
 			case ".go" -> goKeys;
 			case ".r" -> rKeys;
 			case ".jl" -> jlKeys;
@@ -1329,6 +1330,7 @@ public class CodeEditor extends IDEComponent {
 		case ".rb" -> "Ruby";
 		case ".ino" -> "Arduino";
 		case ".ts" -> "TypeScript";
+		case ".tsx" -> "TypeScript React";
 		case ".go" -> "Go";
 		case ".r" -> "R";
 		case ".jl" -> "Julia";
@@ -1370,7 +1372,7 @@ public class CodeEditor extends IDEComponent {
 		case ".sh" -> "Bourne-Again Shell - Bash";
 		case ".gitignore" -> "Git Ignore";
 		case ".dockerfile" -> "Dockerfile";
-		case ".jsx" -> "React";
+		case ".jsx" -> "JavaScript React";
 		case ".config" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
 		case ".cfg" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
 		case ".ps1" -> (Main.lang == Language.PORT ? "Arquivo do PowerShell" : "PowerShell File");
@@ -3035,6 +3037,7 @@ public class CodeEditor extends IDEComponent {
 			
 			break;
 			
+		case ".tsx":
 		case ".ts":
 			for (String s : tsKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
@@ -3594,6 +3597,7 @@ public class CodeEditor extends IDEComponent {
 		case ".kt":
 		case ".ino":
 		case ".ts":
+		case ".tsx":
 		case ".go":
 		case ".fs":
 		case ".m":
@@ -3744,6 +3748,7 @@ public class CodeEditor extends IDEComponent {
 		case ".jsx":
 		case ".ino":
 		case ".ts":
+		case ".tsx":
 		case ".go":
 		case ".m":
 		case ".ld":

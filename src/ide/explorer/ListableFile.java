@@ -72,7 +72,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType(".rb", Main.spritesheet.getSprite (256, 16, 16, 16)),
 			new FileType(".ino", Main.spritesheet.getSprite(272, 16, 16, 16)),
 			new FileType(".ts", Main.spritesheet.getSprite (288, 16, 16, 16)),
-			new FileType(".tsx", Main.spritesheet.getSprite(288, 16, 16, 16)),
+			new FileType(".tsx", Main.spritesheet.getSprite(544, 16, 16, 16)),
 			new FileType(".go", Main.spritesheet.getSprite (304, 16, 16, 16)),
 			new FileType(".r",  Main.spritesheet.getSprite (320, 16, 16, 16)),
 			new FileType(".jl", Main.spritesheet.getSprite (336, 16, 16, 16)),
