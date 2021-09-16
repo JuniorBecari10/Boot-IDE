@@ -1195,7 +1195,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public static List<IDEFont> color(int s, int e, IDEFont color, List<IDEFont> fs) {
 		if (e < s) throw new IllegalArgumentException("o start não pode ser maior que o final!");
-		if (e > fs.size()) throw new IndexOutOfBoundsException("o final não pode ser maior que o final da fonte!");
+		if (e > fs.size()) e = fs.size();//throw new IndexOutOfBoundsException("o final não pode ser maior que o final da fonte!");
 		
 		for (int i = s; i < e; i++) {
 			if (i >= fs.size()) break;			
@@ -5577,23 +5577,18 @@ public class CodeEditor extends IDEComponent {
 					CommandTerminal.runCommand("deselect");
 				}
 				// 100 - 840
-				System.out.println(scrX);
 			
 			KeyInput.updateKeys();
 			
-			int reali1 = ((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
+			/*int reali1 = ((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
 			int reali2 = MIN_Y + index2 * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;
 			
 			int reall1 = ((x + 50) + line1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
-			int reall2 = MIN_Y + line2 * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;
+			int reall2 = MIN_Y + line2 * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;*/
 			
 			if (!KeyInput.isShiftDown()) {
 				if (drawcx > Main.screen.getWidth() || drawcx < 0 ||
 					drawcy > Main.screen.getHeight() || drawcy < 0) CommandTerminal.runCommand("gotocursor");
-			}
-			
-			if (reall1 < 0 && KeyInput.isShiftDown()) {
-				scrY -= ((FONT_SIZE / 4) * 2);
 			}
 			
 			StringBuilder cY = new StringBuilder(new String(toCharArray( lines.get(cursorY - 1).getChars() )));
