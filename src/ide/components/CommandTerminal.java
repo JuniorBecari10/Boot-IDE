@@ -644,6 +644,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				//Main.editor.scrY = (Main.editor.cursorY * (CodeEditor.FONT_SIZE + (CodeEditor.FONT_SIZE / 3)));
 				
+				Main.editor.scrX = CodeEditor.ruleOf3(100, 840, Main.editor.cursorX);
 				Main.editor.scrY = CodeEditor.ruleOf3(1000, 16791, Main.editor.cursorY - 1); // se o cursor y for 1000, o scroll y é 16791, agora, se o cursor y for x, quantos será o scroll y? Esse método faz isso.
 				
 				if (Main.editor.cursorY <= 7) Main.editor.scrY = 0;
