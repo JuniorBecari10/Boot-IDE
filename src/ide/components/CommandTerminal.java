@@ -304,8 +304,18 @@ public class CommandTerminal extends IDEComponent {
 					Main.editor.editing.setSaved(false);
 				
 				} catch (Exception e) {
-					runCommand("deselect"); // TODO talvez não desselecionar, deletar com algum index no 0, né?
-				}
+					//runCommand("deselect"); // TODO talvez não desselecionar, deletar com algum index no 0, né?
+					
+					if (Main.editor.index1 >= Main.editor.lines.get(Main.editor.line1 - 1).getChars().size())
+						Main.editor.index1 = Main.editor.lines.get(Main.editor.line1 - 1).getChars().size();
+					
+					if (Main.editor.index2 >= Main.editor.lines.get(Main.editor.line2 - 1).getChars().size())
+						Main.editor.index2 = Main.editor.lines.get(Main.editor.line2 - 1).getChars().size();
+					
+					runCommand("del");
+				} // chamar o setcursorwithinbounds
+				
+				
 				break;
 				
 			case "cut":
