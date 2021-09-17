@@ -1229,7 +1229,7 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".gitignore") || editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".gitignore") || editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore")) return fs;
 		
 		if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) {
 			indxs = findWord(new String(chars), "<");
