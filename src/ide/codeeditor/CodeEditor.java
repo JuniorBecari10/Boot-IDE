@@ -27,6 +27,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.Stack;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -107,10 +108,8 @@ public class CodeEditor extends IDEComponent {
 	
 	public static boolean isAutoCompleteActive = true;
 	
-	/*public static Stack<List<IDELine>> undo = new Stack<>();
-	public static Stack<List<IDELine>> redo = new Stack<>();*/
-	
-	// Undo e Redo não estão disponíveis, talvez na v4.0
+	public static Stack<List<IDELine>> undo = new Stack<>();
+	public static Stack<List<IDELine>> redo = new Stack<>();
 	
 	public int tabScr = 0;
 	
@@ -4379,6 +4378,15 @@ public class CodeEditor extends IDEComponent {
 				
 				return ch;
 			}
+			
+			else if (keyCode == 168) { // ¨ Trema
+				prAcc = PressedAccent.UMLAUT;
+				pressedAccent = true;
+				
+				//System.out.println(prAcc);
+				
+				return ch;
+			}
 		}
 		
 		if (pressedAccent && !(keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_CONTROL)) {
@@ -4442,6 +4450,24 @@ public class CodeEditor extends IDEComponent {
 				if (ch == 'n') return 'ñ';
 				
 				if (keyCode == KeyEvent.VK_DEAD_TILDE) return '~';
+				break;
+				
+			case UMLAUT:
+				 if (ch == 'A' || (capsLock && ch == 'a')) return 'Ä';
+				 if (ch == 'E' || (capsLock && ch == 'e')) return 'Ë';
+				 if (ch == 'I' || (capsLock && ch == 'i')) return 'Ï';
+				 if (ch == 'O' || (capsLock && ch == 'o')) return 'Ö';
+				 if (ch == 'U' || (capsLock && ch == 'u')) return 'Ü';
+				 //if (ch == 'Y' || (capsLock && ch == 'y')) return '¨Y';
+				
+				 if (ch == 'a') return 'ä';
+				 if (ch == 'e') return 'ë';
+				 if (ch == 'i') return 'ï';
+				 if (ch == 'o') return 'ö';
+				 if (ch == 'u') return 'ü';
+				 if (ch == 'y') return 'ÿ';
+				
+				if (keyCode == 168) return '¨';
 				break;
 			}
 		}
@@ -5290,16 +5316,22 @@ public class CodeEditor extends IDEComponent {
 				
 			KeyInput.updateKeys();
 			
-			if (!KeyInput.isShiftDown()) {
+			if (!KeyInput.isShiftDown() && !lines.isEmpty()) {
 				if (drawcx > Main.screen.getWidth() || drawcx < 0 ||
 					drawcy > Main.screen.getHeight() || drawcy < 0) CommandTerminal.runCommand("gotocursor");
 			}
 			
-			StringBuilder cY = new StringBuilder(new String(toCharArray( lines.get(cursorY - 1).getChars() )));
+			StringBuilder cY = null;
+			
+			try {
+				cY = new StringBuilder(new String(toCharArray( lines.get(cursorY - 1).getChars() )));
+			} catch (Exception e) {
+				return;
+			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
 				KeyInput.updateKeys();
-				//undo.push(lines);
+				undo.push(lines);
 				
 				RightClickOption.removeAllRightClickOptions();
 				
@@ -5346,7 +5378,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				KeyInput.updateKeys();
-				//undo.push(lines);
+				undo.push(lines);
 				
 				if (cursorX < cY.length()) {
 					cY.deleteCharAt(cursorX);
@@ -5363,7 +5395,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 				KeyInput.updateKeys();
-				//undo.push(lines);
+				undo.push(lines);
 				
 				if (!RightClickOption.isAutoCompleteActive()) {
 					wordSinceSpace = "";
@@ -5383,7 +5415,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
-				//undo.push(lines);
+				undo.push(lines);
 				
 				if (RightClickOption.isAutoCompleteActive()) {
 					autocompletes.get(autocompleteindex).command.execute(autocompletes.get(autocompleteindex).clickArg);
@@ -5434,7 +5466,6 @@ public class CodeEditor extends IDEComponent {
 				char c = KeyInput.getCharPressed();
 				
 				c = addAccents(keyCode, c);
-				
 				cY = write(cY, c);
 				
 				if (codeHelpersOn)
@@ -5472,7 +5503,7 @@ public class CodeEditor extends IDEComponent {
 				
 				if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 				
-				//undo.push(lines);
+				undo.push(lines);
 				editing.setSaved(false);
 			}
 		} // <-
@@ -5731,14 +5762,25 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			/*if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
 				KeyInput.updateKeys();
 				
 				if (undo.isEmpty()) return;
 				
 				List<IDELine> peek = undo.peek();
 				
-				lines = peek;
+				int i = 0;
+				
+				for (IDELine l : peek) {
+					StringBuilder b = new StringBuilder(new String(toCharArray(l.getChars())));
+					
+					System.out.println(b);
+					
+					register(b, i);
+					
+					i++;
+				}
+				
 				redo.push(peek);
 				
 				if (!undo.isEmpty())
@@ -5754,14 +5796,24 @@ public class CodeEditor extends IDEComponent {
 				
 				List<IDELine> peek = redo.peek();
 				
-				lines = peek;
+				
+				int i = 0;
+				
+				for (IDELine l : peek) {
+					StringBuilder b = new StringBuilder(new String(toCharArray(l.getChars())));
+					
+					register(b, i);
+					
+					i++;
+				}
+				
 				undo.push(peek);
 					
 				if (!redo.isEmpty())
 					redo.pop();
 				
 				return;
-			}*/
+			}
 			
 //			if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !isReadOnly && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados, ou se alt gr está pressionado
 //				try {

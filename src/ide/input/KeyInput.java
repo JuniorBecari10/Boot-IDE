@@ -2,13 +2,11 @@ package ide.input;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public final class KeyInput extends KeyAdapter {
 	
-	public static Queue<Integer> keyCodes = new LinkedList<>();
-	public static Queue<Character> chars = new LinkedList<>();
+	/*public static Queue<Integer> keyCodes = new LinkedList<>();
+	public static Queue<Character> chars = new LinkedList<>();*/
     
     private static char charPressed;
     private static boolean keyPressed;

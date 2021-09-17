@@ -2,8 +2,9 @@ package ide.codeeditor;
 
 public enum PressedAccent {
 
-	CIRCUMFLEX,
-	ACUTE,
-	TILDE,
-	BACK_QUOTE;
+	CIRCUMFLEX, 	// Circunflexo ^
+	ACUTE, 			// Acento Agudo ´
+	TILDE, 			// Til ~
+	BACK_QUOTE, 	// Crase `
+	UMLAUT; 		// Trema ¨
 }
