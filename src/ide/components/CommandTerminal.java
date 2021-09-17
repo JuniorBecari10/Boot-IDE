@@ -313,9 +313,9 @@ public class CommandTerminal extends IDEComponent {
 						Main.editor.index2 = Main.editor.lines.get(Main.editor.line2 - 1).getChars().size();
 					
 					runCommand("del");
-				} // chamar o setcursorwithinbounds
+				}
 				
-				
+				Main.editor.setCursorWithinBounds();
 				break;
 				
 			case "cut":
