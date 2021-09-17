@@ -81,16 +81,17 @@ public class Main implements Runnable, Tickable {
     public static String iconsfile = "/autocomplete-icons.png";
     
     private static int tabindex = -1;
+    public static final int LOW_FRAME_RATE = 70;
     
     public static Desktop desktop;
-    
     public static String[] args;
     
     public static boolean hasConfigFile = false;
-    
     public static Language lang;
     
     public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings.conf"); // 08/05/2021 - 15:48
+    
+    public static boolean hasInput = false;
     
     // Sprites
     
@@ -468,6 +469,8 @@ public class Main implements Runnable, Tickable {
 
     @Override
     public void tick() {
+    	hasInput = false;
+    	
         for (IDEComponent c : IDEComponent.components)
             c.tick();
         
@@ -723,6 +726,8 @@ public class Main implements Runnable, Tickable {
     	double ns = 1E9 / targetFps;
     	double delta = 0;
     	
+    	//boolean reachedFps = false;
+    	
     	int frames = 0;
     	double timer = System.currentTimeMillis();
     	
@@ -733,9 +738,11 @@ public class Main implements Runnable, Tickable {
     		lastTime = now;
     		
     		if (delta >= 1) {
-	            tick();
-	           	render();
-            	
+    			if (hasInput) {
+		            tick();
+		           	render(); // o problema é o render
+    			}
+    			
             	closing:
     	        	if (WindowInput.isClosing()) {
     	        		writeFile(settingsFile);
@@ -764,6 +771,18 @@ public class Main implements Runnable, Tickable {
     		}
     		
     		if (System.currentTimeMillis() - timer >= 1000) {
+    			/*if (frames >= targetFps) reachedFps = true;
+        		
+        		if (frames < LOW_FRAME_RATE && reachedFps) {
+        			new Thread() {
+        				public void run() {
+        					System.gc();
+        				}
+        			}.start();
+        			
+        			System.out.println("Called Garbage Collector!");
+        		}*/
+    			
     			System.out.println("FPS: " + frames);
     			
     			frames = 0;

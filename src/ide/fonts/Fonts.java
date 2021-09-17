@@ -731,7 +731,7 @@ public class Fonts {
 	 * @param fonts - O array das fontes
 	 * @param g - O parâmetro {@code Graphics}.
 	 */
-	public static void drawChars(char[] c, int x, int y, IDEFont[] fonts, int minX, Graphics g) {
+	public static void drawChars(char[] c, int x, int y, IDEFont[] fonts, int minX, int maxX, Graphics g) {
 		if (c == null) throw new NullPointerException("O array de chars não pode ser nulo!");
 		
     	BufferedImage[] text = new BufferedImage[c.length];
@@ -974,6 +974,7 @@ public class Fonts {
     		char ch = c[i];
     		
     		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) < minX) continue; // TODO talvez aumentar ou diminuir o espaçamento entre letras por parte do usuário, ou não sla
+    		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) > maxX) break;
     		
     		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + (CodeEditor.FONT_SIZE < 14 ? 1 : 2) : y;
     		

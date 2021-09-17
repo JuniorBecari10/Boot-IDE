@@ -7,6 +7,8 @@ import java.awt.event.MouseWheelEvent;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
+import ide.main.Main;
+
 public final class MouseInput extends MouseInputAdapter {
     
     private static int mouseX, mouseY;
@@ -112,16 +114,22 @@ public final class MouseInput extends MouseInputAdapter {
 
         mouseX = e.getX();
         mouseY = e.getY();
+        
+        Main.hasInput = true;
     }
 	
 	@Override
 	public void mouseExited(MouseEvent e) {
 		mouseMoved = false;
+		
+		Main.hasInput = true;
 	}
 	
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		//mouseMoved = true;
+		
+		Main.hasInput = true;
 	}
 
     @Override
@@ -133,6 +141,8 @@ public final class MouseInput extends MouseInputAdapter {
         mouseClicked = false;
         
         mouseMoved = true;
+        
+        Main.hasInput = true;
     }
     
     @Override
@@ -155,6 +165,8 @@ public final class MouseInput extends MouseInputAdapter {
 
         mouseX = e.getX();
         mouseY = e.getY();
+        
+        Main.hasInput = true;
     }
 
     @Override
@@ -171,6 +183,8 @@ public final class MouseInput extends MouseInputAdapter {
     	
     	leftDragged = false;
     	rightDragged = false;
+    	
+    	Main.hasInput = true;
     }
     
     @Override
@@ -181,5 +195,7 @@ public final class MouseInput extends MouseInputAdapter {
     	
     	if (notches < 0) roll = MouseWheelRoll.UP;
     	else roll = MouseWheelRoll.DOWN;
+    	
+    	Main.hasInput = true;
     }
 }

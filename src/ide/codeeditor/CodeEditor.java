@@ -1484,7 +1484,7 @@ public class CodeEditor extends IDEComponent {
 					}
 
 					//if (i + len < chars.length) {
-						if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))
+						if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))
 							fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 						else {
 							if (i - 1 > 0 && Character.isLetter(chars[i - 1])) continue;
@@ -6276,7 +6276,7 @@ public class CodeEditor extends IDEComponent {
 				
 				if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 				
-				Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 3), g);
+				Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 3), Main.screen.getWidth(), g);
 				
 				String nums = String.valueOf(i + 1); // nums = num string
 				//int num = i + 1;
