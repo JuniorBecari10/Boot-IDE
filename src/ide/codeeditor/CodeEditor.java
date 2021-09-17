@@ -1235,8 +1235,13 @@ public class CodeEditor extends IDEComponent {
 			indxs = findWord(new String(chars), "<");
 			List<Integer> finals = findWord(new String(chars), ">");
 			
-			for (int i = 0; i < indxs.size(); i++)
-				fs = color(indxs.get(i), finals.get(i), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			for (int i = 0; i < indxs.size(); i++) {
+				try {
+					fs = color(indxs.get(i), finals.get(i), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				} catch (Exception e) {
+					continue;
+				}
+			}
 		}
 		
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
