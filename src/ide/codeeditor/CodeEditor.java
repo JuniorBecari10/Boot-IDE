@@ -773,11 +773,37 @@ public class CodeEditor extends IDEComponent {
 			}
 		}.start();
 		
-		/*try {
-			gradient = ImageIO.read(getClass().getResource("/gradient.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
+		cursorThread = new Thread() {
+			public void run() {
+				//int speed = 1;
+				
+				while (true) {
+					realcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
+					realcy = MIN_Y + cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;
+					
+					/*if (drawcx != realcx) {
+						if (drawcx < realcx) drawcx += speed;
+						if (drawcx > realcx) drawcx -= speed;
+					}
+					
+					if (drawcy != realcy) {
+						if (drawcy < realcy) drawcy += speed;
+						if (drawcy > realcy) drawcy -= speed;
+					}*/
+					
+					drawcx = realcx;
+					drawcy = realcy;
+					
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		
+		cursorThread.start();
 	}
 	
 	/**
@@ -1002,8 +1028,9 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public static boolean isFormatSupported(String format) {
-		for (FileType f : ListableFile.types)
+		for (FileType f : ListableFile.types) {
 			if (f.getExtension().equals(format)) return true;
+		}
 		
 		return false;
 	}
@@ -3610,6 +3637,7 @@ public class CodeEditor extends IDEComponent {
 					switch (st.toLowerCase()) {
 					case "dockerfile":
 					case "makefile":
+					case "gitignore":
 						indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
 						
 						if (indxs.size() != 0)
@@ -4160,8 +4188,10 @@ public class CodeEditor extends IDEComponent {
 		else
 			extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
 		
+		if (!ListableFile.fileHasExtension(ext)) ext = editing.getRegent().getRegent().getName();
+		
 		if (editing == null) return fs;
-		if ((isBinary(ext) || !isFormatSupported(ext)) && !(ext.equalsIgnoreCase(".ini")) || ext.equalsIgnoreCase(".gitignore")) return fs;
+		if ((isBinary(ext) || !isFormatSupported(ext)) && !(ext.equalsIgnoreCase(".ini"))) return fs;
 		
 		/////////////////////////////////////////////////////
 		
@@ -5017,9 +5047,6 @@ public class CodeEditor extends IDEComponent {
 			setCursorWithinBounds();
 		}
 		
-		realcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
-		realcy = MIN_Y + cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;
-		
 		//int speed = 10;
 		
 		/*if (drawcx < realcx) drawcx += speed; // talvez quando for adicionar animação tá aqui pronto
@@ -5030,9 +5057,6 @@ public class CodeEditor extends IDEComponent {
 		
 		if (MouseInput.isLeftPressed() || (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() != KeyEvent.VK_BACK_SPACE) && ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2)))
 			CommandTerminal.runCommand("deselect");
-		
-		drawcx = realcx;
-		drawcy = realcy;
 		
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;

@@ -3,6 +3,8 @@ package ide.input;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+import ide.main.Main;
+
 public class ComponentInput extends ComponentAdapter {
 	
 	private static boolean moved;
@@ -23,9 +25,13 @@ public class ComponentInput extends ComponentAdapter {
 
     public void componentMoved(ComponentEvent evt) {
       moved = true;
+      
+      Main.hasInput = true;
     }
 
     public void componentResized(ComponentEvent evt) {
       resized = true;
+      
+      Main.hasInput = true;
     }
 }

@@ -48,6 +48,8 @@ public class Tab extends IDEComponent implements Serializable {
 	public static transient final int WIDTH = 200;
 	public static transient final int HEIGHT = 30;
 	
+	private int drawW = WIDTH;
+	
 	public int scrX = 0, scrY = 0;
 	
 	private boolean isSaved = true;
@@ -72,6 +74,24 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			Main.editor.isReadOnly = true;
 		}
+		
+		new Thread() {
+			public void run() {
+				drawW = 0;
+				
+				while (drawW < WIDTH) {
+					drawW += 2;
+					
+					button.setX((x + drawW) - 20);
+					
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
 	}
 	
 	@Override
@@ -128,41 +148,97 @@ public class Tab extends IDEComponent implements Serializable {
 			}
 		}
 		
-		Main.editor.isMultilineCommenting = false; // TODO closeother reseta o cursor
-		Main.editor.isAnotherIteration = false;
-		Main.editor.foundExt = false;
+		Tab t = this;
 		
-		Main.editor.toRemove.add(this);
-		Main.editor.lines.clear();
+		new Thread() {
+			public void run() {
+				while (drawW > 0) {
+					drawW -= 2;
+					
+					button.setX((x + drawW) - 20);
+					
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				Main.editor.isMultilineCommenting = false; // TODO closeother reseta o cursor
+				Main.editor.isAnotherIteration = false;
+				Main.editor.foundExt = false;
+				
+				Main.editor.toRemove.add(t);
+				Main.editor.lines.clear();
+				
+				Main.editor.selecting = false;
+				
+				if (Main.editor.tabs.size() == 1) {
+					Main.editor.editing = null;
+					
+					return;
+				}
+				
+				if (!Main.editor.tabs.isEmpty()) {
+					Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() > 0 ? Main.editor.tabs.size() - 1 : 0).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
+				
+					Tab next = Main.editor.tabs.indexOf(t) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(t) - 1);
+					
+					if (!Main.editor.toRemove.get(0).equals(t))
+						next = t;
+					
+					Main.editor.editing = next;
+					
+					Main.editor.cursorX = 0;
+					Main.editor.cursorY = 1;
+					
+					Main.editor.scrX = next.scrX;
+					Main.editor.scrY = next.scrY;
+					
+				
+					try {
+						Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
 		
-		Main.editor.selecting = false;
-		
-		if (Main.editor.tabs.size() == 1) {
-			Main.editor.editing = null;
-			
-			return;
-		}
-		
-		Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
-		
-		Tab next = Main.editor.tabs.indexOf(this) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1);
-		
-		if (!Main.editor.toRemove.get(0).equals(this))
-			next = this;
-		
-		Main.editor.editing = next;
-		
-		Main.editor.cursorX = 0;
-		Main.editor.cursorY = 1;
-		
-		Main.editor.scrX = next.scrX;
-		Main.editor.scrY = next.scrY;
-		
-		try {
-			Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		Main.editor.isMultilineCommenting = false; // TODO closeother reseta o cursor
+//		Main.editor.isAnotherIteration = false;
+//		Main.editor.foundExt = false;
+//		
+//		Main.editor.lines.clear();
+//		
+//		Main.editor.selecting = false;
+//		
+//		if (Main.editor.tabs.size() == 1) {
+//			Main.editor.editing = null;
+//			
+//			return;
+//		}
+//		
+//		Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
+//		
+//		Tab next = Main.editor.tabs.indexOf(this) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1);
+//		
+//		if (!Main.editor.toRemove.get(0).equals(this))
+//			next = this;
+//		
+//		Main.editor.editing = next;
+//		
+//		Main.editor.cursorX = 0;
+//		Main.editor.cursorY = 1;
+//		
+//		Main.editor.scrX = next.scrX;
+//		Main.editor.scrY = next.scrY;
+//		
+//		try {
+//			Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	/**
@@ -432,27 +508,27 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		g.setColor(bg);
 		g2.setStroke(new BasicStroke(3f));
-		g2.fillRect(x, Y, WIDTH, HEIGHT);
+		g2.fillRect(x, Y, drawW, HEIGHT);
 		
 		g.setColor(c);
-		g.drawRect(x, Y, WIDTH, HEIGHT);
+		g.drawRect(x, Y, drawW, HEIGHT);
 		
 		String extension = ListableFile.getFileExtension(regent.getRegent());
 		
 		IDEFont font = new IDEFont(Fonts.lighterGrayNormal, 16);
 		
-		int limit = (x + WIDTH) - 15;
+		int limit = (x + drawW) - 15;
 		
-		/*if (Main.editor.editing == this && isReadOnly) limit = (x + WIDTH) - 30;
-		else if (Main.editor.editing != this && isReadOnly) limit = (x + WIDTH) - 15;
-		else if (Main.editor.editing != this && !isReadOnly) limit = x + WIDTH;*/
+		/*if (Main.editor.editing == this && isReadOnly) limit = (x + drawW) - 30;
+		else if (Main.editor.editing != this && isReadOnly) limit = (x + drawW) - 15;
+		else if (Main.editor.editing != this && !isReadOnly) limit = x + drawW;*/
 		
-		if (isReadOnly) limit = (x + WIDTH) - 30;
+		if (isReadOnly) limit = (x + drawW) - 30;
 		
 		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, limit, g);
 	
 		if (isReadOnly)
-			g.drawImage(Main.lock, /*Main.editor.editing == this ? */(x + WIDTH) - 40 /*: (x + WIDTH) - 20*/, y + 7, 15, 15, null);
+			g.drawImage(Main.lock, /*Main.editor.editing == this ? */(x + drawW) - 40 /*: (x + drawW) - 20*/, y + 7, 15, 15, null);
 		
 		//if (Main.editor.editing == this)
 			button.render(g);
@@ -473,15 +549,15 @@ public class Tab extends IDEComponent implements Serializable {
 		g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 3, Y + 1, HEIGHT, HEIGHT, null);
 		
 		/*if (Main.editor.alternateTabsMode && Main.editor.exchanging == this) {
-			int xdr = (MouseInput.getMouseX() - WIDTH) - 10;
+			int xdr = (MouseInput.getMouseX() - drawW) - 10;
 			int ydr = MouseInput.getMouseY();
 			
 			g.setColor(Colors.explorer);
-			g.fillRect(xdr, ydr, WIDTH, HEIGHT);
+			g.fillRect(xdr, ydr, drawW, HEIGHT);
 			
 			g.setColor(Colors.explorerLight);
 			g2.setStroke(new BasicStroke(3f));
-			g.drawRect(xdr, ydr, WIDTH, HEIGHT);
+			g.drawRect(xdr, ydr, drawW, HEIGHT);
 		}*/
 	}
 }
