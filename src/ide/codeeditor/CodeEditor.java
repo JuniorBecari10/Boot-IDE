@@ -1357,6 +1357,35 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 				
+				if (ext.equalsIgnoreCase(".py")) {
+					indxs = findWord(new String(chars), "in"); // antes de <palavra>
+					
+					for (Integer i : indxs) {
+						int c = i;
+						int len = 0;
+						
+						boolean hasSpace = false;
+							
+						while (c < chars.length && 
+								c + len < chars.length &&
+								c > 0) {
+							c--;
+							len++;
+							
+							if (chars[c] == ' ') {
+								if (hasSpace)
+									break;
+								
+								if (!hasSpace)
+									hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
+							}
+						}
+						
+						//addautocomplete.add(new AutoComplete(new String(sliceCharArray(c, c + len, chars)), AutoCompleteType.VARIABLE));
+						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+					}
+				}
+				
 				if (ext.equalsIgnoreCase(".vb")) {
 					indxs = findWord(new String(chars), "As"); // antes de <palavra>
 					
