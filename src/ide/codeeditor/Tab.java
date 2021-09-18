@@ -187,10 +187,13 @@ public class Tab extends IDEComponent implements Serializable {
 					if (!Main.editor.toRemove.get(0).equals(t))
 						next = t;
 					
+					if (Main.editor.editing == t) {
+						Main.editor.cursorX = 0;
+						Main.editor.cursorY = 1;
+					}
+					
 					Main.editor.editing = next;
 					
-					Main.editor.cursorX = 0;
-					Main.editor.cursorY = 1;
 					
 					Main.editor.scrX = next.scrX;
 					Main.editor.scrY = next.scrY;
