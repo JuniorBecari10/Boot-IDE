@@ -5360,7 +5360,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
 				KeyInput.updateKeys();
-				undo.push(lines);
+				//undo.push(lines);
 				
 				RightClickOption.removeAllRightClickOptions();
 				
@@ -5407,7 +5407,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				KeyInput.updateKeys();
-				undo.push(lines);
+				//undo.push(lines);
 				
 				if (cursorX < cY.length()) {
 					cY.deleteCharAt(cursorX);
@@ -5424,7 +5424,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 				KeyInput.updateKeys();
-				undo.push(lines);
+				//undo.push(lines);
 				
 				if (!RightClickOption.isAutoCompleteActive()) {
 					wordSinceSpace = "";
@@ -5444,7 +5444,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
-				undo.push(lines);
+				//undo.push(lines);
 				
 				if (RightClickOption.isAutoCompleteActive()) {
 					autocompletes.get(autocompleteindex).command.execute(autocompletes.get(autocompleteindex).clickArg);
@@ -5532,10 +5532,10 @@ public class CodeEditor extends IDEComponent {
 				
 				if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 				
-				undo.push(lines);
+				//undo.push(lines);
 				editing.setSaved(false);
 			}
-		} // <-
+		}
 			
 			// Detectar atalhos
 			
@@ -5794,7 +5794,9 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
 				KeyInput.updateKeys();
 				
-				if (undo.isEmpty()) return;
+				/*if (undo.isEmpty()) return;
+				
+				undo.pop();
 				
 				List<IDELine> peek = undo.peek();
 				
@@ -5813,7 +5815,7 @@ public class CodeEditor extends IDEComponent {
 				redo.push(peek);
 				
 				if (!undo.isEmpty())
-					undo.pop();
+					undo.pop();*/
 					
 				return;
 			}
@@ -5821,7 +5823,7 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Y (Refazer)
 				KeyInput.updateKeys();
 				
-				if (redo.isEmpty()) return;
+				/*if (redo.isEmpty()) return;
 				
 				List<IDELine> peek = redo.peek();
 				
@@ -5839,7 +5841,7 @@ public class CodeEditor extends IDEComponent {
 				undo.push(peek);
 					
 				if (!redo.isEmpty())
-					redo.pop();
+					redo.pop();*/
 				
 				return;
 			}

@@ -82,7 +82,7 @@ public class Tab extends IDEComponent implements Serializable {
 				while (drawW < WIDTH) {
 					drawW += 2;
 					
-					button.setX((x + drawW) - 20);
+					button.setX((x + Main.editor.tabScr + drawW) - 20);
 					
 					try {
 						Thread.sleep(1);
@@ -155,7 +155,7 @@ public class Tab extends IDEComponent implements Serializable {
 				while (drawW > 0) {
 					drawW -= 2;
 					
-					button.setX((x + drawW) - 20);
+					button.setX((x + Main.editor.tabScr + drawW) - 20);
 					
 					try {
 						Thread.sleep(1);
