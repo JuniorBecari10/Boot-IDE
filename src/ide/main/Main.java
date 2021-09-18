@@ -738,10 +738,8 @@ public class Main implements Runnable, Tickable {
     		lastTime = now;
     		
     		if (delta >= 1) {
-    			if (hasInput) {
-		            tick();
-		           	render(); // o problema é o render
-    			}
+		        tick();
+		        render(); // o problema é o render
     			
             	closing:
     	        	if (WindowInput.isClosing()) {
