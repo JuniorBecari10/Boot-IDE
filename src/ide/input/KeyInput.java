@@ -3,8 +3,6 @@ package ide.input;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import ide.main.Main;
-
 public final class KeyInput extends KeyAdapter {
 	
 	/*public static Queue<Integer> keyCodes = new LinkedList<>();
@@ -66,8 +64,6 @@ public final class KeyInput extends KeyAdapter {
         altDown = e.isAltDown();
         altGrDown = e.isAltGraphDown();
         
-        Main.hasInput = true;
-        
         /*if (Character.isLetterOrDigit(charPressed)) {
 	        keyCodes.add(keyCodePressed);
 	        chars.add(charPressed);
@@ -85,7 +81,5 @@ public final class KeyInput extends KeyAdapter {
         shiftDown = e.isShiftDown();
         altDown = e.isAltDown();
         altGrDown = e.isAltGraphDown();
-        
-        Main.hasInput = true;
     }
 }

@@ -81,7 +81,6 @@ public class Main implements Runnable, Tickable {
     public static String iconsfile = "/autocomplete-icons.png";
     
     private static int tabindex = -1;
-    public static final int LOW_FRAME_RATE = 70;
     
     public static Desktop desktop;
     public static String[] args;
@@ -90,8 +89,6 @@ public class Main implements Runnable, Tickable {
     public static Language lang;
     
     public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings.conf"); // 08/05/2021 - 15:48
-    
-    public static boolean hasInput = false;
     
     // Sprites
     
@@ -469,9 +466,7 @@ public class Main implements Runnable, Tickable {
 
     @Override
     public void tick() {
-    	hasInput = false;
-    	
-        for (IDEComponent c : IDEComponent.components)
+    	for (IDEComponent c : IDEComponent.components)
             c.tick();
         
         KeyInput.updateKeys();
