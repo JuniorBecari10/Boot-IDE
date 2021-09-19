@@ -6271,10 +6271,6 @@ public class CodeEditor extends IDEComponent {
 		
 		int yOffset = 0;
 		
-		if (FONT_SIZE >= 16) yOffset = 8;
-		if (FONT_SIZE == 15) yOffset = 2;
-		if (FONT_SIZE < 14) yOffset = -16;//-(14 - FONT_SIZE);
-		
 		try {
 			for (int i = 0; i < lines.size(); i++) {
 				if (selecting) {

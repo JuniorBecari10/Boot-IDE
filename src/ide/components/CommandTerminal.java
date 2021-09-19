@@ -912,6 +912,13 @@ public class CommandTerminal extends IDEComponent {
 					
 					break;
 					
+				case "cmainargs":
+					String[] cmastrs = { "#include <stdio.h>", "#include <stdlib.h>", "", "int main(int argc, char *argv[])", "{", "    return 0;", "}"};
+					
+					strs = cmastrs;
+					
+					break;
+					
 				case "ino":
 					String[] inostrs = { "void setup()", "{", "    ", "}", "", "void loop()", "{", "    ", "}"};
 					
