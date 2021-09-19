@@ -707,18 +707,28 @@ public class CommandTerminal extends IDEComponent {
 			case "setfontsize":
 				if (Main.editor.editing == null) break;
 				
+				int prevsize = CodeEditor.FONT_SIZE;
+				
 				if (args[0].equals("default"))
-					CodeEditor.FONT_SIZE = 16;
+					CodeEditor.FONT_SIZE = prevsize;
 				
 				try {
 					int a0 = Integer.parseInt(args[0]);
+					
+					if (a0 < 8) {
+						CodeEditor.setSystemLook();
 						
+						JOptionPane.showMessageDialog(null, Texts.fontBelowMinimum, Texts.belowMinimum, JOptionPane.OK_OPTION);
+						
+						return;
+					}
+					
 					CodeEditor.FONT_SIZE = a0;
 						
 					if (Main.editor.editing != null)
 						Main.editor.lines = Main.editor.readFile(Main.editor.editing.getRegent().getRegent());
 				} catch (NumberFormatException | IOException e) {
-					CodeEditor.FONT_SIZE = 16;
+					CodeEditor.FONT_SIZE = prevsize;
 				}
 				break;
 				

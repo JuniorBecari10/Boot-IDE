@@ -1357,7 +1357,7 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 				
-				if (ext.equalsIgnoreCase(".py")) {
+				if (ext.equalsIgnoreCase(".py")) { // TODO fazer para outras linguagens tbm
 					indxs = findWord(new String(chars), "in"); // antes de <palavra>
 					
 					for (Integer i : indxs) {
@@ -6269,6 +6269,12 @@ public class CodeEditor extends IDEComponent {
 			g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, 49, FONT_SIZE + (FONT_SIZE / 4) + 1);*/
 		}
 		
+		int yOffset = 0;
+		
+		if (FONT_SIZE >= 16) yOffset = 6;
+		if (FONT_SIZE == 15) yOffset = 2;
+		if (FONT_SIZE < 14) yOffset = -16;//-(14 - FONT_SIZE);
+		
 		try {
 			for (int i = 0; i < lines.size(); i++) {
 				if (selecting) {
@@ -6276,7 +6282,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i > line1 && i < line2) { // do meio
 						g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
-								(i + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 15 ? 6 : 0),
+								(i + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - yOffset,
 								//Main.screen.getWidth() + scrX,
 								((x + 50) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 								FONT_SIZE + 4);
@@ -6307,13 +6313,13 @@ public class CodeEditor extends IDEComponent {
 					if (i == line1 - 1) { // - 1 porque a line1 é base 1
 						if (i == line2 - 1) {
 							g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do index1 até o index2
-								(((line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY) - (FONT_SIZE > 15 ? 6 : 0)),
+								(((line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY) - yOffset),
 								(((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - (((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 								FONT_SIZE + 4);
 						}
 						else {
 							g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do index1 até o fim da linha
-								((line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY) - (FONT_SIZE > 15 ? 6 : 0),
+								((line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY) - yOffset,
 								((((x + 50) + (lines.get(line1 - 1).getChars().size() - index1) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX)),
 								FONT_SIZE + 4);
 						}
@@ -6321,7 +6327,7 @@ public class CodeEditor extends IDEComponent {
 					if (i == line2 - 1) {
 						if (i != line1 - 1) { // do 0 ao index2
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
-								((line2 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - (FONT_SIZE > 15 ? 6 : 0)),
+								((line2 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - yOffset),
 								((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 								FONT_SIZE + 4);
 						}
@@ -6342,6 +6348,8 @@ public class CodeEditor extends IDEComponent {
 				/*if (num < 10) nx = x + 1 + (2 * FONT_SIZE) + 3;
 				if (num >= 10 && num < 100) nx = x + 1 + FONT_SIZE + 3 + 3; // não será feito, pelo menos por enquanto
 				if (num >= 100 && num < 1000) nx = x + 1 + 6;*/
+				
+				Color c = i == cursorY - 1 ? Colors.explorer : Colors.explorerLight;
 				
 				Fonts.drawString(nums, nx, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, font, g);
 			}

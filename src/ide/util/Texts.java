@@ -170,6 +170,9 @@ public final class Texts {
 	public static String anErrorOccurred;
 	public static String errorCreatingFile;
 	
+	public static String fontBelowMinimum;
+	public static String belowMinimum;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -325,6 +328,9 @@ public final class Texts {
 			anErrorOccurred = "Um erro ocorreu.";
 			errorCreatingFile = "Um erro ocorreu ao criar o arquivo.";
 			
+			fontBelowMinimum = "O tamanho da fonte está abaixo do mínimo! (Mínimo: 8)";
+			belowMinimum = "Abaixo do mínimo!";
+			
 			break;
 		
 		case ENG:
@@ -479,6 +485,9 @@ public final class Texts {
 			
 			anErrorOccurred = "An error occurred.";
 			errorCreatingFile = "An error occurred while creating the file.";
+			
+			fontBelowMinimum = "The font size is below minimum! (Minimum: 8)";
+			belowMinimum = "Below minimum!";
 			
 			break;
 		}
