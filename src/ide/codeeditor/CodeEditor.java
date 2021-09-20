@@ -1136,6 +1136,7 @@ public class CodeEditor extends IDEComponent {
 		case ".jar" -> (Main.lang == Language.PORT ? "Arquivo Jar" : "Jar File");
 		case ".exe" -> (Main.lang == Language.PORT ? "Executável do Windows - EXE" : "Windows Executable - EXE");
 		case ".classpath" -> (Main.lang == Language.PORT ? "Caminho da Classe" : "Class Path");
+		case ".csproj" -> (Main.lang == Language.PORT ? "Projeto C# do Visual Studio" : "Visual Studio C# Project");
 		case ".project" -> (Main.lang == Language.PORT ? "Arquivo de Projeto" : "Project File");
 		case ".svg" -> "Scalable Vector Graphics - SVG";
 		case ".urna" -> (Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas" : "Saved Bollot Box from Criador de Urnas");
@@ -1256,9 +1257,9 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".gitignore") || editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".gitignore") || editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore")) return fs;
 		
-		if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) {
+		if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj") || ext.equalsIgnoreCase(".project")) {
 			indxs = findWord(new String(chars), "<");
 			List<Integer> finals = findWord(new String(chars), ">");
 			
@@ -1540,7 +1541,7 @@ public class CodeEditor extends IDEComponent {
 					}
 
 					//if (i + len < chars.length) {
-						if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".sql") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))
+						if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".sql") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))
 							fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 						else {
 							if (i - 1 > 0 && Character.isLetter(chars[i - 1])) continue;
@@ -1596,6 +1597,7 @@ public class CodeEditor extends IDEComponent {
 		case ".sln":
 		case ".svg":
 		case ".classpath":
+		case ".csproj":
 		case ".project":
 		case ".htm":
 		case ".xhtml":
@@ -1647,7 +1649,7 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 			}
 			
-			if (ext.equals(".xml") || ext.equals(".svg") || ext.equals(".sln") || ext.equals(".config") || ext.equals(".cfg") || ext.equals(".classpath") || ext.equals(".project")) {
+			if (ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj") || ext.equalsIgnoreCase(".project")) {
 				indxs = findWord(new String(chars), ">"); // colorir final de tags
 				
 				for (Integer i : indxs) {
