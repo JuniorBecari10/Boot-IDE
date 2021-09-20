@@ -417,6 +417,19 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		if (!regent.getRegent().exists()) close();
 		
+		if (leftClicked() && !(Main.editor.editing == this ? button.leftClicked() : false /*pq inverte*/) && Main.editor.alternateTabsMode) {
+			Main.editor.exchanged = this;
+			
+			CommandTerminal.runCommand("ordertab " + Main.editor.tabs.indexOf(Main.editor.exchanging) + " " + Main.editor.tabs.indexOf(Main.editor.exchanged));
+			
+			Main.editor.alternateTabsMode = false;
+			
+			Main.editor.exchanging = null;
+			Main.editor.exchanged = null;
+			
+			return;
+		}
+		
 		if (leftClicked() && !button.leftClicked() && !Main.editor.alternateTabsMode) {
 			if (Main.editor.editing != null)
 				Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
@@ -449,19 +462,6 @@ public class Tab extends IDEComponent implements Serializable {
 			Main.editor.scrY = scrY;
 			
 			save();
-		}
-		
-		if (leftClicked() && !(Main.editor.editing == this ? button.leftClicked() : false /*pq inverte*/) && Main.editor.alternateTabsMode) {
-			Main.editor.exchanged = this;
-			
-			CommandTerminal.runCommand("ordertab " + Main.editor.tabs.indexOf(Main.editor.exchanging) + " " + Main.editor.tabs.indexOf(Main.editor.exchanged));
-			
-			Main.editor.alternateTabsMode = false;
-			
-			Main.editor.exchanging = null;
-			Main.editor.exchanged = null;
-			
-			return;
 		}
 		
 		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered())) && !Main.editor.alternateTabsMode) {
