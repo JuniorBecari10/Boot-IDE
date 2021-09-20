@@ -278,7 +278,7 @@ public class Tab extends IDEComponent implements Serializable {
 		}
 	}
 	
-	private void execute(String arg) {
+	public void execute(String arg) {
 		switch (arg) {
 		case "this":
 			this.close();

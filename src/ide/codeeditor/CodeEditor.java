@@ -4983,10 +4983,12 @@ public class CodeEditor extends IDEComponent {
 		
 		int index = 0;
 		
+		int height = 30;ruleOf3(16, 30, FONT_SIZE);
+		
 		for (AutoComplete a : autocomplete) {
 			if (a == null) continue;
 			
-			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * 30, 330, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
+			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * height, 330, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
 			
 			index++;
 		}
@@ -5619,6 +5621,17 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 				
 				execute("searchrep");
+					
+				return;
+			}
+			
+			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_J && !isReadOnly && !alternateTabsMode) { // Ctrl + J - Executar
+				KeyInput.updateKeys();
+				
+				if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".bat") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".com") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".cmd"))
+					editing.execute("run");
+				else
+					editing.execute("runbash");
 					
 				return;
 			}
