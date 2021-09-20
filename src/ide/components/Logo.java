@@ -37,6 +37,9 @@ public class Logo extends IDEComponent {
 			x = (int) ((Main.screen.getWidth() / 2) - width / 2);
 			y = (int) (Main.screen.getHeight() / 2 - 120);
 		}
+		
+		if (x <= Main.explorer.getWidth() + 230) // 290
+			x = Main.explorer.getWidth() + 230;
 	}
 	
 	public void render(Graphics g) {

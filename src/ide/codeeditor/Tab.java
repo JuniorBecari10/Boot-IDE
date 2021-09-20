@@ -396,8 +396,9 @@ public class Tab extends IDEComponent implements Serializable {
 			return;
 		}
 		
-		MIN_X = CommandTerminal.expOff ? -WIDTH : 77;	// -WIDTH é um macete kkk
+		MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - 203;	// -WIDTH é um macete kkk - 77
 		
+		if (x < Main.editor.getX()) x = Main.editor.getX();
 		int x = this.x + Main.editor.tabScr;
 		
 		if (Main.editor.tabs.indexOf(this) - 1 > -1)
@@ -504,8 +505,6 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		int x = this.x + Main.editor.tabScr;
 		
-		if (x < Main.editor.getX()) return;
-		
 		Color c = Main.editor.editing == this ? Colors.textLight : Colors.explorerLight;
 		Color bg = hovered() ? Colors.explorerLight : Colors.explorer;
 		
@@ -549,6 +548,7 @@ public class Tab extends IDEComponent implements Serializable {
 				return;
 			}
 		}
+		
 		g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 3, Y + 1, HEIGHT, HEIGHT, null);
 		
 		/*if (Main.editor.alternateTabsMode && Main.editor.exchanging == this) {

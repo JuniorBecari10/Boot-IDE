@@ -1,6 +1,7 @@
 package ide.explorer;
 
 import java.awt.BasicStroke;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -36,6 +37,8 @@ public class Explorer extends IDEComponent {
 	public static boolean showBaseFolderCard = false;
 	public static boolean showFolderPathCard = false;
 	
+	public static boolean dragging = false;
+	
 	public static String baseFolderName;
 	
     public Explorer(int x, int y, int width, int height) {
@@ -51,6 +54,15 @@ public class Explorer extends IDEComponent {
     	return scope.getRegent().getAbsolutePath();
     }
     
+    
+    public int getWidth() {
+    	return width;
+    }
+    
+    public int getHeight() {
+    	return height;
+    }
+    
     public void tick() {
     	if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
     	if (CommandTerminal.expOff) return;
@@ -63,6 +75,24 @@ public class Explorer extends IDEComponent {
     		CommandTerminal.runCommand("closebasefolder");
     		
     		return;
+    	}
+    	
+    	// Drag
+    	
+    	if (MouseInput.hovered(x + width - 5, y, 10, height)) {
+			Main.screen.setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
+			
+			if (MouseInput.leftDragged()) {
+				dragging = true;
+			}
+		}
+    	
+    	if (!MouseInput.leftDragged()) dragging = false;
+    	
+    	if (dragging) {
+    		width = MouseInput.getMouseX();
+    		Main.editor.setX(width);
+    		Main.editor.setWidth(Main.screen.getWidth());
     	}
     	
     	if (scope != null) {

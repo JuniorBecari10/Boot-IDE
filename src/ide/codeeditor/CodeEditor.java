@@ -6404,7 +6404,7 @@ public class CodeEditor extends IDEComponent {
 		g.fillRect(x, 0, width, 35);
 		
 		for (Tab t : Main.editor.tabs) {
-			if (t.getX() + tabScr < x || t.getX() + tabScr > Main.screen.getWidth()) continue; // o render da Tab vai ter que ficar aqui mesmo
+			if (t.getX() + tabScr < x - 30 || t.getX() + tabScr > Main.screen.getWidth()) continue; // o render da Tab vai ter que ficar aqui mesmo
 			
 			t.render(g);
 		}

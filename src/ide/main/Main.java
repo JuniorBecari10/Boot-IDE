@@ -728,7 +728,7 @@ public class Main implements Runnable, Tickable {
     	int frames = 0;
     	double timer = System.currentTimeMillis();
     	
-    	int tickOverflow = 0;
+    	//int tickOverflow = 0;
     	
     	while (running) {
     		long now = System.nanoTime();
@@ -737,12 +737,12 @@ public class Main implements Runnable, Tickable {
     		lastTime = now;
     		
     		if (delta >= 1) {
-    			if (frames < targetFps) {
+    			if (frames < targetFps) { // ver isso aqui
 			        tick();
 			        render(); // o problema é o render
-    			} else {
+    			} /*else {
     				tickOverflow++;
-    			}
+    			}*/
     			
             	closing:
     	        	if (WindowInput.isClosing()) {
@@ -772,8 +772,8 @@ public class Main implements Runnable, Tickable {
     		}
     		
     		if (System.currentTimeMillis() - timer >= 1000) {
-    			if (tickOverflow > 0)
-    				System.out.println("Tick Overflow: Skipping " + tickOverflow + " ticks.");
+    			/*if (tickOverflow > 0)
+    				System.out.println("Tick Overflow: Skipping " + tickOverflow + " ticks.");*/
     			
     			System.out.println("FPS: " + frames);
     			
