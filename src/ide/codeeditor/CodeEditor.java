@@ -408,7 +408,7 @@ public class CodeEditor extends IDEComponent {
 	public static final String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
 			"false", "for", "function", "if", "in", "local", "nil",
 			"not", "or", "repeat", "return", "then", "true", "until", "while",
-			"os", "io", "math", "string", "require", "table", "debug", "self" };
+			"os", "io", "math", "string", "require", "table", "debug", "self", "const" };
 	
 	public static final String[] zigKeys = { "align", "allowzero", "and", "anyframe", "anytype", "asm", "async", "await",
 			"break", "catch", "comptime", "const", "continue", "defer", "else", "enum", "errdefer",
