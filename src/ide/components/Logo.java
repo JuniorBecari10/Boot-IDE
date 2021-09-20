@@ -27,7 +27,7 @@ public class Logo extends IDEComponent {
 		else
 			showMessage1 = true;
 		
-		show = Main.editor.editing == null;
+		show = Main.editor.editing == null && x + 350 < Main.screen.getWidth();
 		
 		if (!CommandTerminal.expOff) {
 			x = (int) (Main.screen.getWidth() / 2 + 80);
