@@ -898,7 +898,7 @@ public class CodeEditor extends IDEComponent {
 		
 		String ext = ListableFile.getFileExtension(file);
 		
-		if (isBinary(ext) || editing.isReadOnly) {
+		if (editing != null && (isBinary(ext) || editing.isReadOnly)) {
 			isReadOnly = true;
 		}
 			
@@ -6345,7 +6345,10 @@ public class CodeEditor extends IDEComponent {
 				if (num >= 10 && num < 100) nx = x + 1 + FONT_SIZE + 3 + 3; // não será feito, pelo menos por enquanto
 				if (num >= 100 && num < 1000) nx = x + 1 + 6;*/
 				
-				Color c = i == cursorY - 1 ? Colors.explorer : Colors.explorerLight;
+				Color c = i != cursorY - 1 ? Colors.explorer : Colors.explorerLight;
+				
+				g.setColor(c);
+				g.fillRect(nx, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, (FONT_SIZE * 3) + 5, FONT_SIZE + (FONT_SIZE / 4));
 				
 				Fonts.drawString(nums, nx, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, font, g);
 			}
