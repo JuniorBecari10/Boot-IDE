@@ -42,6 +42,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	private static final long serialVersionUID = 1L;
 
 	public static transient FileType[] types = {
+			new FileType("readme.md", Main.spritesheet.getSprite (752,32,16,16)),
+			
 			new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16)),	// adicionar suporte aos formatos .o e .out
 			new FileType(".class",Main.spritesheet.getSprite(272,32, 16, 16)),
 			new FileType(".c", Main.spritesheet.getSprite   (16, 16, 16, 16)),
@@ -181,8 +183,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType("license", Main.spritesheet.getSprite(336, 32, 16, 16)),
 			new FileType("authors", Main.spritesheet.getSprite(624, 32, 16, 16)),
 			new FileType("gitignore", Main.spritesheet.getSprite (240,32,16,16)),
-			
-			//new FileType("readme.md", Main.spritesheet.getSprite (752,32,16,16)),
 	};
 	
 	private ListableFile parent;
