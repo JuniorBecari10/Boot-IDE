@@ -4817,6 +4817,22 @@ public class CodeEditor extends IDEComponent {
 		return (b * c) / a;
 	}
 	
+	/**
+	 * Faz a conta de Regra de Três Inversa, com os números dados no argumento.
+	 * 
+	 * <br />
+	 * 
+	 * Pode-se pensar nessa conta da seguinte maneira: se o número em a equivale, na proporção inversa, ao número em b, se der um número em c, quantos será o número em d?
+	 * 
+	 * @param a - o número 1
+	 * @param b - o número 2
+	 * @param c - o número 3
+	 * @return O resultado, como se fosse a letra d dos argumentos
+	 */
+	public static int inverseRuleOf3(int a, int b, int c) {
+		return (a * b) / c;
+	}
+	
 	public static String arrayToStr(String[] array) {
 		StringBuilder result = new StringBuilder();
 		
@@ -6269,8 +6285,6 @@ public class CodeEditor extends IDEComponent {
 			g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, 49, FONT_SIZE + (FONT_SIZE / 4) + 1);*/
 		}
 		
-		int yOffset = 0;
-		
 		try {
 			for (int i = 0; i < lines.size(); i++) {
 				if (selecting) {
@@ -6278,7 +6292,8 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i > line1 && i < line2) { // do meio
 						g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
-								(i + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - yOffset,
+								//(i + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY,
+								MIN_Y + ((i - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1,
 								//Main.screen.getWidth() + scrX,
 								((x + 50) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 								FONT_SIZE + 4);
@@ -6309,13 +6324,13 @@ public class CodeEditor extends IDEComponent {
 					if (i == line1 - 1) { // - 1 porque a line1 é base 1
 						if (i == line2 - 1) {
 							g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do index1 até o index2
-								(((line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY) - yOffset),
+								MIN_Y + ((line1 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1,
 								(((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - (((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 								FONT_SIZE + 4);
 						}
 						else {
 							g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do index1 até o fim da linha
-								((line1 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY) - yOffset,
+								MIN_Y + ((line1 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1,
 								((((x + 50) + (lines.get(line1 - 1).getChars().size() - index1) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX)),
 								FONT_SIZE + 4);
 						}
@@ -6323,7 +6338,7 @@ public class CodeEditor extends IDEComponent {
 					if (i == line2 - 1) {
 						if (i != line1 - 1) { // do 0 ao index2
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
-								((line2 + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY - yOffset),
+								MIN_Y + ((line2 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1,
 								((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 								FONT_SIZE + 4);
 						}
@@ -6348,7 +6363,7 @@ public class CodeEditor extends IDEComponent {
 				Color c = i != cursorY - 1 ? Colors.explorer : Colors.explorerLight;
 				
 				g.setColor(c);
-				g.fillRect(nx, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, (FONT_SIZE * 3) + 5, FONT_SIZE + (FONT_SIZE / 4));
+				g.fillRect(x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, 50, FONT_SIZE + (FONT_SIZE / 4));
 				
 				Fonts.drawString(nums, nx, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, font, g);
 			}
