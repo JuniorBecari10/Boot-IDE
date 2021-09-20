@@ -76,7 +76,7 @@ public class CommandTerminal extends IDEComponent {
 	// O Emmet não está disponível ainda, talvez na v4.0 ele venha
 	
 	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "reloadconfigfile",
-			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline",
+			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "stdcout", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index",
@@ -88,7 +88,7 @@ public class CommandTerminal extends IDEComponent {
 			"gensetter str:lang str:variable_name str:variable_type" };
 	
 	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "reloadconfigfile",
-			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline",
+			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "stdcout", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab",
@@ -180,6 +180,12 @@ public class CommandTerminal extends IDEComponent {
 			case "reseteditorscroll":
 				Main.editor.scrX = 0;
 				Main.editor.scrY = 0;
+				break;
+				
+			case "version":
+				CodeEditor.setSystemLook();
+				
+				JOptionPane.showMessageDialog(null, "Boot IDE " + Texts.version + " " + Main.VERSION + " © Boot 2021, All Rights Reserved.", Texts.version, JOptionPane.INFORMATION_MESSAGE);
 				break;
 				
 			case "deselect":

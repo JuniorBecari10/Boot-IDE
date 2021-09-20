@@ -173,6 +173,8 @@ public final class Texts {
 	public static String fontBelowMinimum;
 	public static String belowMinimum;
 	
+	public static String version;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -331,6 +333,8 @@ public final class Texts {
 			fontBelowMinimum = "O tamanho da fonte está abaixo do mínimo! (Mínimo: 8)";
 			belowMinimum = "Abaixo do mínimo!";
 			
+			version = "Versão";
+			
 			break;
 		
 		case ENG:
@@ -488,6 +492,8 @@ public final class Texts {
 			
 			fontBelowMinimum = "The font size is below minimum! (Minimum: 8)";
 			belowMinimum = "Below minimum!";
+			
+			version = "Version";
 			
 			break;
 		}

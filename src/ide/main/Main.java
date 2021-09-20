@@ -90,6 +90,8 @@ public class Main implements Runnable, Tickable {
     
     public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings.conf"); // 08/05/2021 - 15:48
     
+    public static final String VERSION = "v4.1";
+    
     // Sprites
     
     public static BufferedImage baseFolderSpr;
@@ -726,6 +728,8 @@ public class Main implements Runnable, Tickable {
     	int frames = 0;
     	double timer = System.currentTimeMillis();
     	
+    	int tickOverflow = 0;
+    	
     	while (running) {
     		long now = System.nanoTime();
     		
@@ -733,8 +737,12 @@ public class Main implements Runnable, Tickable {
     		lastTime = now;
     		
     		if (delta >= 1) {
-		        tick();
-		        render(); // o problema é o render
+    			if (frames < targetFps) {
+			        tick();
+			        render(); // o problema é o render
+    			} else {
+    				tickOverflow++;
+    			}
     			
             	closing:
     	        	if (WindowInput.isClosing()) {
@@ -775,6 +783,10 @@ public class Main implements Runnable, Tickable {
         			
         			System.out.println("Called Garbage Collector!");
         		}*/
+    			
+    			if (tickOverflow > 0) {
+    				System.out.println("Tick Overflow: Skipping " + tickOverflow + " ticks.");
+    			}
     			
     			System.out.println("FPS: " + frames);
     			
