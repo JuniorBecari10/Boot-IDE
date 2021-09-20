@@ -59,6 +59,8 @@ public class CodeEditor extends IDEComponent {
 	
 	public static volatile int FONT_SIZE = 16; // 18, 16 (Padrão: 16)
 	
+	final int originalEditorX = 280;
+	
 	public Tab editing;
 	
 	public boolean isMultilineCommenting = false;
@@ -4990,7 +4992,7 @@ public class CodeEditor extends IDEComponent {
 		for (AutoComplete a : autocomplete) {
 			if (a == null) continue;
 			
-			toAddAutoCompletes.add(new RightClickOption(drawcx, (drawcy + FONT_SIZE) + index * height, 330, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
+			toAddAutoCompletes.add(new RightClickOption(drawcx + (Main.editor.getX() - originalEditorX), (drawcy + FONT_SIZE) + index * height, 330, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
 			
 			index++;
 		}
@@ -6396,7 +6398,7 @@ public class CodeEditor extends IDEComponent {
 		if (!isReadOnly)
 			if (showCursor && !WindowInput.isDeactivated()) {
 				g.setColor(Colors.cursor);
-				g.fillRect(drawcx, drawcy - 1, FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + 1);
+				g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - 1, FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + 1);
 			}
 		
 		for (RightClickOption r : autocompletes)
