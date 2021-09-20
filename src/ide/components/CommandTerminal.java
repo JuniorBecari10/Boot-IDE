@@ -625,7 +625,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				Main.screen.frame.setTitle("Boot IDE");
 				
-				IDEComponent.toRemove.add(Main.oneLevel);
+				IDEComponent.toRemove.add(Main.oneFolder);
 				IDEComponent.toRemove.add(Main.returnBase);
 				IDEComponent.toRemove.add(Main.newFile);
 				IDEComponent.toRemove.add(Main.newFolder);

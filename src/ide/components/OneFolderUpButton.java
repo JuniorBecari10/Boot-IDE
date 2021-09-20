@@ -15,16 +15,17 @@ import ide.util.Colors;
 import ide.util.Language;
 import ide.util.Texts;
 
-public class OneLevelAboveButton extends IDEComponent {
+public class OneFolderUpButton extends IDEComponent {
 
-	public OneLevelAboveButton(int x, int y, int width, int height, BufferedImage sprite) {
+	public OneFolderUpButton(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 	}
 	
 	public void tick() {
 		if (CommandTerminal.expOff) return;
-		
 		if (Main.baseFolder == null) toRemove.add(this);
+		
+		x = Main.explorer.getWidth() - 120;
 		
 		if (Explorer.scope == null) return;
 		

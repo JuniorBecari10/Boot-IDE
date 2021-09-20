@@ -21,8 +21,9 @@ public class NewFileButton extends IDEComponent {
 	
 	public void tick() {
 		if (CommandTerminal.expOff) return;
-		
 		if (Main.baseFolder == null) toRemove.add(this);
+		
+		x = Main.explorer.getWidth() - 200;
 		
 		if (leftClicked()) {
 			MouseInput.updateMouse();

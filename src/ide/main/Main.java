@@ -27,7 +27,7 @@ import ide.components.IDEComponent;
 import ide.components.Logo;
 import ide.components.NewFileButton;
 import ide.components.NewFolderButton;
-import ide.components.OneLevelAboveButton;
+import ide.components.OneFolderUpButton;
 import ide.components.OpenBaseFolderButton;
 import ide.components.ReloadButton;
 import ide.components.RenameFile;
@@ -66,7 +66,7 @@ public class Main implements Runnable, Tickable {
     
     public static OpenBaseFolderButton openBase;
     
-    public static OneLevelAboveButton oneLevel;
+    public static OneFolderUpButton oneFolder;
     public static ReturnToBaseFolderButton returnBase;
     public static NewFileButton newFile;
     public static NewFolderButton newFolder;
@@ -156,7 +156,7 @@ public class Main implements Runnable, Tickable {
         screen.setFrameIcon(spritesheet.getSprite(144, 0, 16, 16));
         
         openBase = new OpenBaseFolderButton(20, 70, 48, 48, baseFolderSpr);
-        oneLevel = new OneLevelAboveButton(160, 85, 32, 32, folderUp);
+        oneFolder = new OneFolderUpButton(160, 85, 32, 32, folderUp);
         returnBase = new ReturnToBaseFolderButton(200, 85, 32, 32, backBaseFolder);
         newFile = new NewFileButton(80, 85, 32, 32, newFileSpr);
         newFolder = new NewFolderButton(120, 85, 32, 32, newFolderSpr);
@@ -217,7 +217,7 @@ public class Main implements Runnable, Tickable {
         
         IDEComponent.toAdd.add(Main.newFile);
 		IDEComponent.toAdd.add(Main.newFolder);
-		IDEComponent.toAdd.add(Main.oneLevel);
+		IDEComponent.toAdd.add(Main.oneFolder);
 		IDEComponent.toAdd.add(Main.returnBase);
 		IDEComponent.toAdd.add(Main.reload);
     }
@@ -260,7 +260,7 @@ public class Main implements Runnable, Tickable {
 			if (Main.baseFolder == null) {
 				IDEComponent.toAdd.add(Main.newFile);
 				IDEComponent.toAdd.add(Main.newFolder);
-				IDEComponent.toAdd.add(Main.oneLevel);
+				IDEComponent.toAdd.add(Main.oneFolder);
 				IDEComponent.toAdd.add(Main.returnBase);
 				IDEComponent.toAdd.add(Main.reload);
 			}

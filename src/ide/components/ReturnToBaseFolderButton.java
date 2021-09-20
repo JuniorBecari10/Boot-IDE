@@ -23,6 +23,8 @@ public class ReturnToBaseFolderButton extends IDEComponent {
 	public void tick() {
 		if (CommandTerminal.expOff) return;
 		
+		x = Main.explorer.getWidth() - 80;
+		
 		if (Main.baseFolder == null) toRemove.add(this);
 		
 		if (leftClicked()) {

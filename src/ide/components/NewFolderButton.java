@@ -21,8 +21,9 @@ public class NewFolderButton extends IDEComponent {
 	
 	public void tick() {
 		if (CommandTerminal.expOff) return;
-		
 		if (Main.baseFolder == null) toRemove.add(this);
+		
+		x = Main.explorer.getWidth() - 160;
 		
 		if (leftClicked()) {
 			MouseInput.updateMouse();
