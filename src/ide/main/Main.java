@@ -772,21 +772,8 @@ public class Main implements Runnable, Tickable {
     		}
     		
     		if (System.currentTimeMillis() - timer >= 1000) {
-    			/*if (frames >= targetFps) reachedFps = true;
-        		
-        		if (frames < LOW_FRAME_RATE && reachedFps) {
-        			new Thread() {
-        				public void run() {
-        					System.gc();
-        				}
-        			}.start();
-        			
-        			System.out.println("Called Garbage Collector!");
-        		}*/
-    			
-    			if (tickOverflow > 0) {
+    			if (tickOverflow > 0)
     				System.out.println("Tick Overflow: Skipping " + tickOverflow + " ticks.");
-    			}
     			
     			System.out.println("FPS: " + frames);
     			
