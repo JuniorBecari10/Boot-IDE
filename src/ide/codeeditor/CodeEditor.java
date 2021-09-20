@@ -5139,7 +5139,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		
-		if (editing != null)
+		if (editing != null && editing.getRegent() != null)
 			Main.screen.frame.setTitle(Main.baseFolder.getName() + " • " + editing.getRegent().getRegent().getName() + " - Boot IDE");
 		else if (Main.baseFolder != null)
 			Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
@@ -6349,7 +6349,7 @@ public class CodeEditor extends IDEComponent {
 				
 				if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 				
-				Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 3), Main.screen.getWidth(), g);
+				Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + 50, Main.screen.getWidth(), g);
 				
 				String nums = String.valueOf(i + 1); // nums = num string
 				//int num = i + 1;
@@ -6373,9 +6373,9 @@ public class CodeEditor extends IDEComponent {
 		
 		// Desenhar cursor
 		if (!isReadOnly)
-			if (showCursor && !((cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY < MIN_Y - 40 || ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < x + (FONT_SIZE * 2))) && !WindowInput.isDeactivated()) {
+			if (showCursor && !WindowInput.isDeactivated()) {
 				g.setColor(Colors.cursor);
-				g.fillRect(drawcx, drawcy - 1, FONT_SIZE > 8 ? 2 : 1, FONT_SIZE + 1);
+				g.fillRect(drawcx, drawcy - 1, FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + 1);
 			}
 		
 		for (RightClickOption r : autocompletes)
