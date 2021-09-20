@@ -41,6 +41,8 @@ public class Explorer extends IDEComponent {
 	
 	public static String baseFolderName;
 	
+	public static int minDrag = 30;
+	
     public Explorer(int x, int y, int width, int height) {
         super(x, y, width, height, null);
         
@@ -91,6 +93,17 @@ public class Explorer extends IDEComponent {
     	
     	if (dragging) {
     		width = MouseInput.getMouseX();
+    		Main.editor.setX(width);
+    		Main.editor.setWidth(Main.screen.getWidth());
+    	}
+    	
+    	if (width < minDrag) {
+    		width = minDrag;
+    		Main.editor.setX(width);
+    		Main.editor.setWidth(Main.screen.getWidth());
+    	}
+    	if (width > Main.screen.getWidth() - 30) {
+    		width = Main.screen.getWidth() - 30;
     		Main.editor.setX(width);
     		Main.editor.setWidth(Main.screen.getWidth());
     	}

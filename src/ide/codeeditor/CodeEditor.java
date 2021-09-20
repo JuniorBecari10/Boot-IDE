@@ -709,15 +709,15 @@ public class CodeEditor extends IDEComponent {
 			public void run() { // 25 pra frente com o explorer desligado, isso é uma gambiarrinha viu
 				if (!isReadOnly && !alternateTabsMode) {
 				
-				int offset = CommandTerminal.expOff ? 280 : 0;
-				int lcx = !CommandTerminal.expOff ? 0 : 280;
+				int offset = CommandTerminal.expOff ? Main.editor.getX() : 0;
+				int lcx = !CommandTerminal.expOff ? 0 : Main.editor.getX();
 				
 				int lcmx = mx;
 				int lcmy = my;
 				
 				while (true) {
 					lcmy = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
-					lcmx = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE));
+					lcmx = (((MouseInput.getMouseX() - (Main.editor.getX() + 40)) / FONT_SIZE) + (scrX / FONT_SIZE));
 
 					while (((lcx + 40) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset < MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
 						lcmx++;
@@ -740,12 +740,12 @@ public class CodeEditor extends IDEComponent {
 					//////////////
 					
 					my = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1) + (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
-					mx = (((MouseInput.getMouseX() - (x + 40)) / FONT_SIZE) + (scrX / FONT_SIZE));
+					mx = (((MouseInput.getMouseX() - (Main.editor.getX() + 40)) / FONT_SIZE) + (scrX / FONT_SIZE));
 
-					while (((x + 40) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
+					while (((Main.editor.getX() + 40) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
 						mx++;
 					
-					while (((x + 40) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX > MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
+					while (((Main.editor.getX() + 40) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX > MouseInput.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
 						mx--;
 					
 					while (MIN_Y + my * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 < MouseInput.getMouseY()) // o mesmo para aqui, só que com o y
@@ -6408,7 +6408,7 @@ public class CodeEditor extends IDEComponent {
 		g.fillRect(x, 0, width, 35);
 		
 		for (Tab t : Main.editor.tabs) {
-			if (t.getX() + tabScr < x - 30 || t.getX() + tabScr > Main.screen.getWidth()) continue; // o render da Tab vai ter que ficar aqui mesmo
+			if (t.getX() + tabScr < x - 100 || t.getX() + tabScr > Main.screen.getWidth()) continue; // o render da Tab vai ter que ficar aqui mesmo
 			
 			t.render(g);
 		}
