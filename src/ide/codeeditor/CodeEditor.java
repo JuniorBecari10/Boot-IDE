@@ -5062,6 +5062,8 @@ public class CodeEditor extends IDEComponent {
 			cursorThread.start();
 		}
 		
+		if (Explorer.dragging) CommandTerminal.runCommand("deselect");
+		
 		int index = 0;
 		
 		for (RightClickOption r : autocompletes) {
