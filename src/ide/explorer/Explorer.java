@@ -266,13 +266,13 @@ public class Explorer extends IDEComponent {
         g.fillRect(x, y, width, height); 
         
         int xd = Main.lang == Language.PORT ? x + 40 : x + 60;
-        int x2d = Main.lang == Language.PORT ? x + 220 : x + 200;
+        int x2d = Main.lang == Language.PORT ? xd + 14 : xd + 16;
         
-        Fonts.drawString(Texts.explorerText, xd, y + 30, new IDEFont(Fonts.lightGrayNormal, 23), g);
+        Fonts.drawString(Texts.explorerText, width / 2 - xd, y + 30, new IDEFont(Fonts.lightGrayNormal, 23), g);
         g.setColor(Colors.textLight);
         
         g2.setStroke(new BasicStroke(2f));
-        g.drawLine(xd, y + 60, x2d, y + 60);
+        g.drawLine(width / 2 - xd, y + 60, width / 2 + x2d, y + 60);
         
         if (Main.baseFolder == null || baseFolderName == null) return;
         
