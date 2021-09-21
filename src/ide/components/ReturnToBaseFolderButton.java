@@ -25,6 +25,8 @@ public class ReturnToBaseFolderButton extends IDEComponent {
 		
 		x = Main.explorer.getWidth() - 80;
 		
+		if (x < (Main.oneFolder.getX() + Main.oneFolder.getWidth()) + 2) x = (Main.oneFolder.getX() + Main.oneFolder.getWidth()) + 2;
+		
 		if (Main.baseFolder == null) toRemove.add(this);
 		
 		if (leftClicked()) {

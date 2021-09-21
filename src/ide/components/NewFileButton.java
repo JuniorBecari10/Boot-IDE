@@ -14,7 +14,7 @@ import ide.util.Language;
 import ide.util.Texts;
 
 public class NewFileButton extends IDEComponent {
-
+	
 	public NewFileButton(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 	}
@@ -24,6 +24,8 @@ public class NewFileButton extends IDEComponent {
 		if (Main.baseFolder == null) toRemove.add(this);
 		
 		x = Main.explorer.getWidth() - 200;
+		
+		if (x < (Main.openBase.getX() + Main.openBase.getWidth()) + 2) x = (Main.openBase.getX() + Main.openBase.getWidth()) + 2;
 		
 		if (leftClicked()) {
 			MouseInput.updateMouse();

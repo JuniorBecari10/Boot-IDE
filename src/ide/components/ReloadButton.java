@@ -25,6 +25,8 @@ public class ReloadButton extends IDEComponent {
 		
 		x = Main.explorer.getWidth() - 40;
 		
+		if (x < (Main.returnBase.getX() + Main.returnBase.getWidth()) + 2) x = (Main.returnBase.getX() + Main.returnBase.getWidth()) + 2;
+		
 		if (leftClicked()) {
 			MouseInput.updateMouse();
 			

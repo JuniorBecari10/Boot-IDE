@@ -27,6 +27,8 @@ public class OneFolderUpButton extends IDEComponent {
 		
 		x = Main.explorer.getWidth() - 120;
 		
+		if (x < (Main.newFolder.getX() + Main.newFolder.getWidth()) + 2) x = (Main.newFolder.getX() + Main.newFolder.getWidth()) + 2;
+		
 		if (Explorer.scope == null) return;
 		
 		if (leftClicked()) {

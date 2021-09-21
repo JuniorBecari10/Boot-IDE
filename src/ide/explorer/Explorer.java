@@ -41,7 +41,11 @@ public class Explorer extends IDEComponent {
 	
 	public static String baseFolderName;
 	
-	public static int minDrag = 30;
+	public static int minDrag = 192;
+	
+	public int maxTitleWidth = width / 23;
+	public int maxFolderWidth = width / 15;
+	public int maxTextWidth = width / 16;
 	
     public Explorer(int x, int y, int width, int height) {
         super(x, y, width, height, null);
@@ -79,14 +83,17 @@ public class Explorer extends IDEComponent {
     		return;
     	}
     	
+    	maxTitleWidth =  (width / 23) + 2;
+    	maxFolderWidth = (width / 15) + 2;
+    	maxTextWidth =   (width / 16) + 2;
+    	
     	// Drag
     	
     	if (MouseInput.hovered(x + width - 5, y, 10, height)) {
 			Main.screen.setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
 			
-			if (MouseInput.leftDragged()) {
+			if (MouseInput.leftDragged())
 				dragging = true;
-			}
 		}
     	
     	if (!MouseInput.leftDragged()) dragging = false;
@@ -96,6 +103,8 @@ public class Explorer extends IDEComponent {
     		Main.editor.setX(width);
     		Main.editor.setWidth(Main.screen.getWidth());
     		
+    		files.forEach((l) -> l.setWidth(width));
+    		
     		Main.screen.setCursor(new Cursor(Cursor.E_RESIZE_CURSOR));
     	}
     	
@@ -104,11 +113,64 @@ public class Explorer extends IDEComponent {
     		Main.editor.setX(width);
     		Main.editor.setWidth(Main.screen.getWidth());
     	}
-    	if (width > Main.screen.getWidth() - 30) {
-    		width = Main.screen.getWidth() - 30;
+    	
+    	if (width > Main.screen.getWidth() - 60) {
+    		width = Main.screen.getWidth() - 60;
     		Main.editor.setX(width);
     		Main.editor.setWidth(Main.screen.getWidth());
     	}
+    	
+    	System.out.println(maxTitleWidth);
+    	
+    	// Media Queries
+    	
+    	if (width < 260) {
+    		Main.newFile.setWidth(24);
+    		Main.newFile.setHeight(24);
+    		
+    		Main.newFolder.setWidth(24);
+    		Main.newFolder.setHeight(24);
+    		
+    		Main.oneFolder.setWidth(24);
+    		Main.oneFolder.setHeight(24);
+    		
+    		Main.returnBase.setWidth(24);
+    		Main.returnBase.setHeight(24);
+    		
+    		Main.reload.setWidth(24);
+    		Main.reload.setHeight(24);
+    	}
+    	else if (width > 260) {
+    		Main.newFile.setWidth(32);
+    		Main.newFile.setHeight(32);
+    		
+    		Main.newFolder.setWidth(32);
+    		Main.newFolder.setHeight(32);
+    		
+    		Main.oneFolder.setWidth(32);
+    		Main.oneFolder.setHeight(32);
+    		
+    		Main.returnBase.setWidth(32);
+    		Main.returnBase.setHeight(32);
+    		
+    		Main.reload.setWidth(32);
+    		Main.reload.setHeight(32);
+    	}
+    	
+    	if (width < 200) {
+    		Main.openBase.setY(75);
+    		
+    		Main.openBase.setWidth(36);
+    		Main.openBase.setHeight(36);
+    	}
+    	if (width > 200) {
+    		Main.openBase.setY(70);
+    		
+    		Main.openBase.setWidth(48);
+    		Main.openBase.setHeight(48);
+    	}
+    	
+    	///
     	
     	if (scope != null) {
     		if (scope.getRegent().equals(Main.baseFolder))
@@ -184,9 +246,9 @@ public class Explorer extends IDEComponent {
         	showFolderPathCard = true;
     	}
     	
-    	baseFolderName = Main.baseFolder.getName().length() > 15 ? Main.baseFolder.getName().substring(0, 12) + "..." : Main.baseFolder.getName();
+    	baseFolderName = Main.baseFolder.getName().length() > maxTitleWidth ? Main.baseFolder.getName().substring(0, maxTitleWidth - 3) + "..." : Main.baseFolder.getName();
     	
-    	if (Main.baseFolder.getName().length() > 15)
+    	if (Main.baseFolder.getName().length() > maxTitleWidth)
     		showBaseFolderCard = true;
     	
     	// if (f.getY() < 200 || f.getY() > Main.screen.getHeight()) continue;
