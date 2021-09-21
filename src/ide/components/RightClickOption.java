@@ -121,8 +121,8 @@ public class RightClickOption extends IDEComponent {
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE || (MouseInput.isMousePressed() && !(leftClicked() || rightClicked()))) // obs: o bug não é aqui
 			IDEComponent.toRemove.add(this);
 		
-		if (isAutoComplete)
-			x = Main.editor.drawcx - Main.editor.scrX;
+		/*if (isAutoComplete)
+			x = Main.editor.drawcx - Main.editor.scrX;*/
 		
 		//if (rightClicked()) removeAllRightClickOptions();
 		

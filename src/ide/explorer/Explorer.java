@@ -103,9 +103,7 @@ public class Explorer extends IDEComponent {
     		Main.editor.setX(width);
     		Main.editor.setWidth(Main.screen.getWidth());
     		
-    		files.forEach((l) -> l.setWidth(width));
-    		
-    		Main.screen.setCursor(new Cursor(Cursor.E_RESIZE_CURSOR));
+    		Main.screen.setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
     	}
     	
     	if (width < minDrag) {
@@ -169,6 +167,8 @@ public class Explorer extends IDEComponent {
     		Main.openBase.setWidth(48);
     		Main.openBase.setHeight(48);
     	}
+    	
+    	files.forEach((l) -> l.setWidth(width));
     	
     	///
     	

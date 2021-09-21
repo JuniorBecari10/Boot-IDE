@@ -1202,7 +1202,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 	}*/
 	
 	public void tick() {
-		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
+		if (SetFileName.added || CommandTerminal.active || RenameFile.added || MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10, Main.explorer.getHeight())) return;
 		if (CommandTerminal.expOff) return;
 		
 		if (!regent.exists() && Main.editor.tabs != null) {
@@ -1224,8 +1224,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 		if (leftClicked() && !(y < 200 || y > Main.screen.getHeight()) && !RightClickOption.isRightClickActive()) {
 			MouseInput.updateMouse();
 			
-			if (Explorer.folderPath.length() > 22)
-				Explorer.folderPath = Explorer.folderPath.substring(0, 19) + "...";
+			if (Explorer.folderPath.length() > Main.explorer.maxTextWidth)
+				Explorer.folderPath = Explorer.folderPath.substring(0, Main.explorer.maxTextWidth) + "...";
 	    	
 			Explorer.baseFolderName = Main.baseFolder.getName().length() > 15 ? Main.baseFolder.getName().substring(0, 12) + "..." : Main.baseFolder.getName();
 			

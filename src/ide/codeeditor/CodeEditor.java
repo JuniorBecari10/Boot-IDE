@@ -5180,7 +5180,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (hovered() && editing != null) {
-			if (!Explorer.dragging) {
+			if (!Explorer.dragging && !MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10, Main.explorer.getHeight())) {
 				if (!isReadOnly && !alternateTabsMode && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive()) {
 					Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));	// se for pra descomentar o de baixo, mover a ultima condição (a depois do &&) desse if pra dentro do if, assim o else não verifica essa condição
 				}
