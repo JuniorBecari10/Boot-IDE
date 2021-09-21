@@ -4987,7 +4987,8 @@ public class CodeEditor extends IDEComponent {
 		
 		int index = 0;
 		
-		int height = 30;ruleOf3(16, 30, FONT_SIZE);
+		int height = 30;
+		//ruleOf3(16, 30, FONT_SIZE);
 		
 		for (AutoComplete a : autocomplete) {
 			if (a == null) continue;

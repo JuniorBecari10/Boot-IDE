@@ -118,8 +118,6 @@ public class Explorer extends IDEComponent {
     		Main.editor.setWidth(Main.screen.getWidth());
     	}
     	
-    	System.out.println(maxTitleWidth);
-    	
     	// Media Queries
     	
     	if (width < 260) {
@@ -241,8 +239,8 @@ public class Explorer extends IDEComponent {
     	
     	hoveringListableFile = false;
     	
-    	if (folderPath.length() > 22) {
-        	folderPath = folderPath.substring(0, 19) + "...";
+    	if (folderPath.length() > maxFolderWidth) {
+        	folderPath = folderPath.substring(0, maxFolderWidth) + "...";
         	showFolderPathCard = true;
     	}
     	
