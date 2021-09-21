@@ -5180,15 +5180,17 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (hovered() && editing != null) {
-			if (!isReadOnly && !alternateTabsMode && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive()) {
-				Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));	// se for pra descomentar o de baixo, mover a ultima condição (a depois do &&) desse if pra dentro do if, assim o else não verifica essa condição
-			}
-			else {
-				Main.screen.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-			
-			if (MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
-				Main.screen.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			if (!Explorer.dragging) {
+				if (!isReadOnly && !alternateTabsMode && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive()) {
+					Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));	// se for pra descomentar o de baixo, mover a ultima condição (a depois do &&) desse if pra dentro do if, assim o else não verifica essa condição
+				}
+				else {
+					Main.screen.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}
+				
+				if (MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
+					Main.screen.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}
 			}
 			
 			/*if (RightClickOption.isRightClickActive() && RightClickOption.anyRightClickOptionHovered()) {

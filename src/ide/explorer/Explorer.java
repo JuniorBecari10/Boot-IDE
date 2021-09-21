@@ -95,6 +95,8 @@ public class Explorer extends IDEComponent {
     		width = MouseInput.getMouseX();
     		Main.editor.setX(width);
     		Main.editor.setWidth(Main.screen.getWidth());
+    		
+    		Main.screen.setCursor(new Cursor(Cursor.E_RESIZE_CURSOR));
     	}
     	
     	if (width < minDrag) {
