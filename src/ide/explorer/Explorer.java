@@ -46,6 +46,7 @@ public class Explorer extends IDEComponent {
 	public int maxTitleWidth = width / 23;
 	public int maxFolderWidth = width / 15;
 	public int maxTextWidth = width / 16;
+	public int maxFileCreateWidth = width / 18;
 	
     public Explorer(int x, int y, int width, int height) {
         super(x, y, width, height, null);
@@ -90,8 +91,9 @@ public class Explorer extends IDEComponent {
     	}
     	
     	maxTitleWidth =  (width / 23) + 2;
-    	maxFolderWidth = (width / 15) + 2;
+    	maxFolderWidth = (width / 15);
     	maxTextWidth =   (width / 16) + 2;
+    	maxFileCreateWidth = width / 18 + 2;
     	
     	// Drag
     	

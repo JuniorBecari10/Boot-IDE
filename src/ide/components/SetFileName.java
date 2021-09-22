@@ -71,7 +71,7 @@ public class SetFileName extends IDEComponent {
 	public void tick() {
 		if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).y + 30;
 		
-		if (text.length() > 20) width = Main.screen.getWidth();
+		if (text.length() > Main.explorer.maxFileCreateWidth) width = Main.screen.getWidth();
 		else width = Main.explorer.width - 3;
 		
 		if (MouseInput.isLeftPressed() && !leftClicked()) {
