@@ -215,6 +215,9 @@ public class CommandTerminal extends IDEComponent {
 				if (Main.editor.line1 != Main.editor.line2) { // se não selecionou uma linha só (selecionou várias)
 					for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) {
 						if (i == Main.editor.line1 - 1) {
+							if (Main.editor.index1 > Main.editor.lines.get(i).getChars().size())
+								Main.editor.index1 = Main.editor.lines.get(i).getChars().size();
+							
 							lines.add(new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars().subList(Main.editor.index1, Main.editor.lines.get(i).getChars().size()))));
 							
 							continue;
