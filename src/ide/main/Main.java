@@ -423,6 +423,9 @@ public class Main implements Runnable, Tickable {
 						Main.editor.scrY = Integer.parseInt(s);
 					
 					else if (i == 5)
+						Main.editor.tabScr = Integer.parseInt(s);
+					
+					else if (i == 6)
 						Main.explorer.setDrag(Integer.parseInt(s));
 					
 					if (i > 6) {
