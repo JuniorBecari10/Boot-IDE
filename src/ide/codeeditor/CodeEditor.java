@@ -3455,7 +3455,7 @@ public class CodeEditor extends IDEComponent {
 				for (Integer i : indxs) {
 					if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
 					
-					if ((i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) && !(ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))) continue;
+					//if ((i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) && !(ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))) continue;
 					//if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i + s.length()])) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
@@ -5633,43 +5633,6 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_F && !isReadOnly && !alternateTabsMode) { // Ctrl + F - Abrir janela Localizar/Substituir
-				KeyInput.updateKeys();
-				
-				execute("searchrep");
-					
-				return;
-			}
-			
-			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_J && !isReadOnly && !alternateTabsMode) { // Ctrl + J - Executar
-				KeyInput.updateKeys();
-				
-				if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".bat") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".com") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".cmd"))
-					editing.execute("run");
-				else
-					editing.execute("runbash");
-					
-				return;
-			}
-			
-			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_R && !isReadOnly && !alternateTabsMode) { // Ctrl + R - Refresh Auto Complete
-				KeyInput.updateKeys();
-				
-				wordSinceSpace = "";
-					
-				return;
-			}
-			
-			else if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_H) { // Ctrl + Shift + H - Toggle Read Only
-				KeyInput.updateKeys();
-				
-				editing.save();
-				
-				CommandTerminal.runCommand("togglereadonly");
-					
-				return;
-			}
-			
 			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_END && !isReadOnly && !alternateTabsMode) { // Ctrl + End - Fim do Documento
 				KeyInput.updateKeys();
 				
@@ -5703,6 +5666,43 @@ public class CodeEditor extends IDEComponent {
 				cursorX = lines.get(cursorY - 1).getChars().size();
 				
 				setCursorWithinBounds();
+					
+				return;
+			}
+			
+			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_F && !alternateTabsMode) { // Ctrl + F - Abrir janela Localizar/Substituir
+				KeyInput.updateKeys();
+				
+				execute("searchrep");
+					
+				return;
+			}
+			
+			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_J && !isReadOnly && !alternateTabsMode) { // Ctrl + J - Executar
+				KeyInput.updateKeys();
+				
+				if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".bat") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".com") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".cmd"))
+					editing.execute("run");
+				else
+					editing.execute("runbash");
+					
+				return;
+			}
+			
+			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_R && !isReadOnly && !alternateTabsMode) { // Ctrl + R - Refresh Auto Complete
+				KeyInput.updateKeys();
+				
+				wordSinceSpace = "";
+					
+				return;
+			}
+			
+			else if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_H) { // Ctrl + Shift + H - Toggle Read Only
+				KeyInput.updateKeys();
+				
+				editing.save();
+				
+				CommandTerminal.runCommand("togglereadonly");
 					
 				return;
 			}

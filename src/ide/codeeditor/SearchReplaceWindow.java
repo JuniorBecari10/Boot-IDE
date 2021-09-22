@@ -150,6 +150,11 @@ public class SearchReplaceWindow extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		
+		if (Main.editor.isReadOnly) {
+			txbReplace.setEnabled(false);
+			btnReplaceAll.setEnabled(false);
+		}
+		
 		btnSearchNext.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
