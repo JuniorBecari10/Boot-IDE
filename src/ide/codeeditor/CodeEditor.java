@@ -707,7 +707,7 @@ public class CodeEditor extends IDEComponent {
 		
 		new Thread() {
 			public void run() { // 25 pra frente com o explorer desligado, isso é uma gambiarrinha viu
-				if (!isReadOnly && !alternateTabsMode) {
+				if (!alternateTabsMode) {
 				
 				int offset = CommandTerminal.expOff ? Main.editor.getX() : 0;
 				int lcx = !CommandTerminal.expOff ? 0 : Main.editor.getX();
@@ -893,6 +893,8 @@ public class CodeEditor extends IDEComponent {
 								automaticColor(
 										toCharArray(
 												l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
+						
+						if (editing.closing) break;
 					}
 				}
 			}.start();
@@ -3604,8 +3606,7 @@ public class CodeEditor extends IDEComponent {
 						len++;
 				}
 
-				if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), fs);
+				fs = color(i, i + len, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), fs);
 			}
 		}
 		
@@ -5125,7 +5126,7 @@ public class CodeEditor extends IDEComponent {
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;
 		
-		if (MouseInput.leftDragged() && !isReadOnly && !alternateTabsMode && hovered() && !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
+		if (MouseInput.leftDragged() && !alternateTabsMode && hovered() && !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
 			selecting = true;
 			
 			index1 = cursorX;
@@ -5188,7 +5189,7 @@ public class CodeEditor extends IDEComponent {
 		
 		if (hovered() && editing != null) {
 			if (!Explorer.dragging && !MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10, Main.explorer.getHeight())) {
-				if (!isReadOnly && !alternateTabsMode && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive()) {
+				if (!alternateTabsMode && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive()) {
 					Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));	// se for pra descomentar o de baixo, mover a ultima condição (a depois do &&) desse if pra dentro do if, assim o else não verifica essa condição
 				}
 				else {
@@ -5235,7 +5236,7 @@ public class CodeEditor extends IDEComponent {
 				}.start();
 			}
 			
-			if (leftClicked() && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive() && !isReadOnly && !alternateTabsMode && !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
+			if (leftClicked() && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive() && !alternateTabsMode && !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
 				cursorX = mx;
 				cursorY = my;
 				
@@ -5706,7 +5707,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D && !isReadOnly && !alternateTabsMode) { // Ctrl + D ou Esc (Desselecionar)
+			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D && !alternateTabsMode) { // Ctrl + D ou Esc (Desselecionar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("deselect");
@@ -6309,13 +6310,11 @@ public class CodeEditor extends IDEComponent {
 //			return; // pra n renderizar texto, aquele monte de coisa estranha
 //		}
 		
-		if (!isReadOnly) {
-			g.setColor(Colors.backgroundLight);
-			g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4) + 1);
+		g.setColor(Colors.backgroundLight);
+		g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4) + 1);
 			
 			/*g.setColor(Colors.backgroundLight);
 			g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, 49, FONT_SIZE + (FONT_SIZE / 4) + 1);*/
-		}
 		
 		try {
 			for (int i = 0; i < lines.size(); i++) {
@@ -6404,11 +6403,10 @@ public class CodeEditor extends IDEComponent {
 		if (keyTimeout) showCursor = true;
 		
 		// Desenhar cursor
-		if (!isReadOnly)
-			if (showCursor && !WindowInput.isDeactivated()) {
-				g.setColor(Colors.cursor);
-				g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - 1, FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + 1);
-			}
+		if (showCursor && !WindowInput.isDeactivated()) {
+			g.setColor(Colors.cursor);
+			g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - 1, FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + 1);
+		}
 		
 		for (RightClickOption r : autocompletes)
 			r.render(g);

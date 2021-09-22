@@ -52,6 +52,7 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	public int scrX = 0, scrY = 0;
 	
+	public boolean closing = false;
 	private boolean isSaved = true;
 	
 	public CloseTabButton button;
@@ -132,6 +133,8 @@ public class Tab extends IDEComponent implements Serializable {
 	 * Fecha essa Tab.
 	 */
 	public void close() {
+		closing = true;
+		
 		if (Main.editor.editing != null) { // não for nulo
 			if (!Main.editor.editing.isSaved()) { // não estiver salvo
 				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
@@ -142,6 +145,7 @@ public class Tab extends IDEComponent implements Serializable {
 				if (selectedOption == 0) save();
 				else if (selectedOption == 2) {
 					WindowInput.update();
+					closing = false;
 					
 					return;
 				}
@@ -169,7 +173,6 @@ public class Tab extends IDEComponent implements Serializable {
 				Main.editor.foundExt = false;
 				
 				Main.editor.toRemove.add(t);
-				Main.editor.lines.clear();
 				
 				Main.editor.selecting = false;
 				
@@ -198,6 +201,7 @@ public class Tab extends IDEComponent implements Serializable {
 					Main.editor.scrX = next.scrX;
 					Main.editor.scrY = next.scrY;
 					
+					Main.editor.lines.clear();
 				
 					try {
 						Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
@@ -242,6 +246,8 @@ public class Tab extends IDEComponent implements Serializable {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
+		
+		closing = false;
 	}
 	
 	/**
