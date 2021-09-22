@@ -69,6 +69,12 @@ public class Explorer extends IDEComponent {
     	return height;
     }
     
+    public void setDrag(int drag) {
+    	width = drag;
+		Main.editor.setX(width);
+		Main.editor.setWidth(Main.screen.getWidth());
+    }
+    
     public void tick() {
     	if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
     	if (CommandTerminal.expOff) return;

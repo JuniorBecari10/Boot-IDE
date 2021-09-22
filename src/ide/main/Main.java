@@ -342,6 +342,7 @@ public class Main implements Runnable, Tickable {
 			wr.write(Main.editor.scrX + "\n");
 			wr.write(Main.editor.scrY + "\n");
 			wr.write(Main.editor.tabScr + "\n");
+			wr.write(Main.explorer.getWidth() + "\n");
 			
 			if (Main.editor.tabs.size() > 0) {
 				for (int i = 0; i < Main.editor.tabs.size(); i++) {
@@ -422,9 +423,9 @@ public class Main implements Runnable, Tickable {
 						Main.editor.scrY = Integer.parseInt(s);
 					
 					else if (i == 5)
-						Main.editor.tabScr = Integer.parseInt(s);
+						Main.explorer.setDrag(Integer.parseInt(s));
 					
-					if (i > 5) {
+					if (i > 6) {
 						//if (!ListableFile.isPath(s)) continue;
 						
 						File reg = new File(s);

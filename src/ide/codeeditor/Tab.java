@@ -397,7 +397,7 @@ public class Tab extends IDEComponent implements Serializable {
 		}
 		
 		MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - 203;	// -WIDTH é um macete kkk - 77
-		System.out.println(MIN_X > Main.editor.getX());
+		
 		if (x < Main.editor.getX()) x = Main.editor.getX();
 		int x = this.x + Main.editor.tabScr;
 		
