@@ -3521,24 +3521,24 @@ public class CodeEditor extends IDEComponent {
 			for (int i = 0; i < indxs.size() - 1; i += 2)
 				fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 				
-				/*indxs = findWord(new String(chars), "\"");						// colorir comentários multi-linha - caracteres iguais
+			/*indxs = findWord(new String(chars), "\"");						// colorir comentários multi-linha - caracteres iguais
+			
+			if (indxs.size() > 0 && !isMultilineString) { // provavelmente esse é o abrimento
+				fs = color(indxs.get(0), indxs.size() > 1 ? indxs.get(1) : fs.size(), new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+				isMultilineString = true;
 				
-				if (indxs.size() > 0 && !isMultilineString) { // provavelmente esse é o abrimento
-					fs = color(indxs.get(0), indxs.size() > 1 ? indxs.get(1) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
-					isMultilineString = true;
-					
-					isAnotherIteration = false;
-				}
-				
-				if (indxs.size() > 0 && isMultilineString && isAnotherIteration) { // provavelmente esse é o fechamento
-					fs = color(0, indxs.get(0) + 2, new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
-					isMultilineString = false;
-				}
-				
-				isAnotherIteration = true;
-				
-				if (isMultilineString)
-					fs = color(0, fs.size(), new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);*/
+				isAnotherIterationString = false;
+			}
+			
+			if (indxs.size() > 0 && isMultilineString && isAnotherIterationString) { // provavelmente esse é o fechamento
+				fs = color(0, indxs.get(0) + 2, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+				isMultilineString = false;
+			}
+			
+			isAnotherIterationString = true;
+			
+			if (isMultilineString)
+				fs = color(0, fs.size(), new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);*/
 	
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -4213,7 +4213,10 @@ public class CodeEditor extends IDEComponent {
 		
 		isCssPart = false;
 		isJSPart = false;
-		isPhpPart = false;*/
+		isPhpPart = false;
+		
+		isMultilineString = false;
+		isAnotherIterationString = false;*/
 		
 		List<IDEFont> fs = new ArrayList<>();
 		
