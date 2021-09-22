@@ -6456,7 +6456,7 @@ public class CodeEditor extends IDEComponent {
 				xdr -= intersection.getWidth();
 			
 			g.setColor(Colors.explorerLight);
-			g.fillRect(xdr, MouseInput.getMouseY() - 35, wdr, hdr);
+			g.fillRect(xdr, MouseInput.getMouseY() - 35, wdr, hdr); // arrumar o home, o end e o replace
 			
 			g.setColor(Colors.textLighter);
 			g2.setStroke(new BasicStroke(2f));
