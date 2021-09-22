@@ -439,7 +439,7 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "toggleexplorer":
 				if (expOff)
-					Main.editor.setX(280);
+					Main.editor.setX(Main.explorer.getWidth());
 				else
 					Main.editor.setX(0);
 				

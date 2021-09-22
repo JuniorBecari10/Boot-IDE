@@ -5053,6 +5053,9 @@ public class CodeEditor extends IDEComponent {
 			}
 		}*/
 		
+		if (tabs.size() > 0)
+			if (tabs.get(0).getX() > x + 30) tabScr = 0; // ver o problema da tab
+		
 		verifyDuplicateTabs();
 		
 		if (!cursorThread.isAlive() || cursorThread.getState() == State.TERMINATED) {

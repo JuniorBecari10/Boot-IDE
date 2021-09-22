@@ -396,11 +396,10 @@ public class Tab extends IDEComponent implements Serializable {
 			return;
 		}
 		
-		MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - (203 * 2);	// -WIDTH é um macete kkk - 77
-		
+		MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - 203;	// -WIDTH é um macete kkk - 77
+		System.out.println(MIN_X > Main.editor.getX());
 		if (x < Main.editor.getX()) x = Main.editor.getX();
-		
-		x = this.x + Main.editor.tabScr;
+		int x = this.x + Main.editor.tabScr;
 		
 		if (Main.editor.tabs.indexOf(this) - 1 > -1)
 			x = Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1).getX() + WIDTH + 3;
@@ -491,6 +490,8 @@ public class Tab extends IDEComponent implements Serializable {
 			button.setSprite(Main.closeTab);
 		else
 			button.setSprite(Main.notSavedTab);
+		
+		this.x = x;
 	}
 	
 	public void render(Graphics g) {
