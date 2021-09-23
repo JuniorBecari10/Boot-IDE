@@ -666,6 +666,8 @@ public class CodeEditor extends IDEComponent {
 	public static final String[] specialHtmlVariables = { "html" };
 	
 	public static final String[] jsonKeys = { "true", "false", "null" };
+
+	public static final String[] bfKeys = { "+", "-", ">", "<", ".", ",", "[", "]" };
 	
 	///////
 	
@@ -1147,7 +1149,7 @@ public class CodeEditor extends IDEComponent {
 		case ".scss" -> "Sass Cascading Style Sheets - SCSS";
 		case ".ipynb" -> "Jupyter Notebook";
 		case ".vb" -> "Visual Basic";
-		case ".bf" -> "Brainf*ck";
+		case ".bf" -> "Brainfuck";
 		
 		case ".html" -> "Hyper Text Markup Language - HTML";
 		case ".xhtml" -> "Hyper Text Markup Language - HTML";
@@ -3519,7 +3521,7 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".bf") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log")) return fs;
 		
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
 			
@@ -3544,7 +3546,7 @@ public class CodeEditor extends IDEComponent {
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		if (!(ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bf") || ext.equalsIgnoreCase(".md"))) {
+		if (!(ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".md"))) {
 			indxs = findWord(new String(chars), Character.toString((char) 34)); // colorir strings
 			
 			for (int i = 0; i < indxs.size() - 1; i += 2)
@@ -3608,6 +3610,55 @@ public class CodeEditor extends IDEComponent {
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				
 				alreadyColoredJsonVariable = true;
+			}
+		}
+		if (ext.equalsIgnoreCase(".bf")) {
+			indxs = findWord(new String(chars), "[");
+			
+			for (Integer i : indxs) {
+				//if (i + 1 < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + 1]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + 1] == '_'))) continue;
+				
+				fs = color(i, i + 1, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "]");
+			
+			for (Integer i : indxs) {
+				//if (i + 1 < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + 1]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + 1] == '_'))) continue;
+				
+				fs = color(i, i + 1, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), ">");
+			
+			for (Integer i : indxs) {
+				//if (i + 1 < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + 1]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + 1] == '_'))) continue;
+				
+				fs = color(i, i + 1, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "<");
+			
+			for (Integer i : indxs) {
+				//if (i + 1 < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + 1]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + 1] == '_'))) continue;
+				
+				fs = color(i, i + 1, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), ".");
+			
+			for (Integer i : indxs) {
+				//if (i + 1 < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + 1]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + 1] == '_'))) continue;
+				
+				fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), ",");
+					
+			for (Integer i : indxs) {
+				//if (i + 1 < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + 1]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + 1] == '_'))) continue;
+				
+				fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
 			}
 		}
 		
