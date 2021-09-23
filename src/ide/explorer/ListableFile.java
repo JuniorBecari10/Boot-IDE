@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,16 +34,14 @@ import ide.util.Colors;
 import ide.util.Language;
 import ide.util.Texts;
 
-public class ListableFile extends IDEComponent implements ExecuteCommand, Serializable {
+public class ListableFile extends IDEComponent implements ExecuteCommand {
 	
 	public static boolean hasAltered = false;
-	
-	private static final long serialVersionUID = 1L;
 
-	public static transient FileType[] types = {
+	public static FileType[] types = {
 			new FileType("readme.md", Main.spritesheet.getSprite (752,32,16,16)),
 			
-			new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16)),	// adicionar suporte aos formatos .o e .out
+			new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16)),
 			new FileType(".class",Main.spritesheet.getSprite(272,32, 16, 16)),
 			new FileType(".c", Main.spritesheet.getSprite   (16, 16, 16, 16)),
 			new FileType(".cpp", Main.spritesheet.getSprite (32, 16, 16, 16)),

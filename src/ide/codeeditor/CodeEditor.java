@@ -3369,7 +3369,7 @@ public class CodeEditor extends IDEComponent {
 					len++;
 				}
 				
-				fs = color(c, c + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
 			break;
@@ -3476,7 +3476,7 @@ public class CodeEditor extends IDEComponent {
 		
 		if (!isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) return fs;
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".bf") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".lock")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bf") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".lock")) return fs;
 		
 		List<Integer> indxs = new ArrayList<>();
 		
@@ -3530,7 +3530,9 @@ public class CodeEditor extends IDEComponent {
 			
 			for (String s : syms) {
 				indxs = findWord(new String(chars), s);
-		
+				
+				if ((ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) && s != "[" && s != "]") continue;
+				
 				for (Integer i : indxs)
 					fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
 			}
@@ -3581,6 +3583,24 @@ public class CodeEditor extends IDEComponent {
 			for (int i = 0; i < indxs.size() - 1; i += 2)
 				fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 		}
+		else {
+			indxs = findWord(new String(chars), "[");						// colorir comentários multi-linha - caracteres diferentes
+			List<Integer> finals = findWord(new String(chars), "]");
+			
+			if (indxs.size() > 0) {
+				fs = color(indxs.get(0) + 1, finals.size() > 0 ? finals.get(0) : fs.size(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				isMultilineCommenting = true;
+			}
+			
+			if (finals.size() > 0) {
+				fs = color(indxs.size() > 0 ? indxs.get(indxs.size() - 1) + 1 : 0, finals.get(0), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				isMultilineCommenting = false;
+			}
+			
+			if (isMultilineCommenting)
+				fs = color(0, fs.size(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+		}
+		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		for (IDEFont i : fs) {
@@ -3745,7 +3765,7 @@ public class CodeEditor extends IDEComponent {
 								len++;
 							}
 							
-							fs = color(c, c + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 						}
 						
 						break;
