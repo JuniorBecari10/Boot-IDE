@@ -5395,6 +5395,11 @@ public class CodeEditor extends IDEComponent {
 								
 								cursorY--;
 								
+								if (selecting) {
+									cursorX = index1;
+									cursorY = line1;
+								}
+								
 								CommandTerminal.runCommand("deselect");
 								setCursorWithinBounds();
 								
@@ -5405,6 +5410,11 @@ public class CodeEditor extends IDEComponent {
 								KeyInput.updateKeys();
 								
 								cursorY++;
+								
+								if (selecting) {
+									cursorX = index2;
+									cursorY = line2;
+								}
 								
 								CommandTerminal.runCommand("deselect");
 								setCursorWithinBounds();

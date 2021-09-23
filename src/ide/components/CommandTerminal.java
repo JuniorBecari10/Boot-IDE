@@ -81,7 +81,7 @@ public class CommandTerminal extends IDEComponent {
 			"sysout", "syso", "cout", "stdcout", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
-			"gendiv str:class_name", "genbase str:type", //"emmet str:expression",
+			"gendiv str:class_name", "gensnippet str:type", //"emmet str:expression",
 			"lorem int:num_words", "ordertab int:tab_from int:tab_to",
 			"setcursorpos int:x int:y",
 			"gengetter str:lang str:variable_name str:variable_type",
@@ -93,7 +93,7 @@ public class CommandTerminal extends IDEComponent {
 			"sysout", "syso", "cout", "stdcout", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab", "setexplorerdrag",
 			"gotoline", "setfontsize", "insertchar",
-			"gendiv", "genbase", //"emmet",
+			"gendiv", "gensnippet", //"emmet",
 			"lorem", "ordertab",
 			"setcursorpos",
 			"gengetter",
@@ -806,7 +806,7 @@ public class CommandTerminal extends IDEComponent {
 				}
 				break;*/
 				
-			case "genbase":
+			case "gensnippet":
 				if (Main.editor.editing == null) break;
 				if (Main.editor.isReadOnly) break;
 				
