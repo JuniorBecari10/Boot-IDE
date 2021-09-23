@@ -331,7 +331,7 @@ public class CodeEditor extends IDEComponent {
 	public static final String[] pyKeys = { "and", "as", "assert", "break", "class",
 			"continue", "def", "del", "elif", "else", "except", "False",
 			"finally", "for", "from", "global", "if", "import", "in", "is", "match",
-			"lambda", "None", "nonlocal", "not", "or", "pass", "raise", "return", "super",
+			"lambda", "None", "nonlocal", "not", "or", "pass", "raise", "return", "super", "any",
 			"True", "try", "while", "with", "yield", "self", "async", "await", "of", "str", "int", "float", "complex", "list", "tuple", "dict", "set", "frozenset", "bool", "bytes", "bytearray", "memoryview" };
 	
 	public static final String[] dartKeys = { "abstract", "else", "import", "super", "as", "enum", "in",
