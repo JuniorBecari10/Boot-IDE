@@ -5366,6 +5366,11 @@ public class CodeEditor extends IDEComponent {
 								
 								cursorX--;
 								
+								if (selecting) {
+									cursorX = index1;
+									cursorY = line1;
+								}
+								
 								CommandTerminal.runCommand("deselect");
 								setCursorWithinBounds();
 								
@@ -5376,6 +5381,11 @@ public class CodeEditor extends IDEComponent {
 								KeyInput.updateKeys();
 								
 								cursorX++;
+								
+								if (selecting) {
+									cursorX = index2;
+									cursorY = line2;
+								}
 								
 								CommandTerminal.runCommand("deselect");
 								setCursorWithinBounds();
@@ -6453,7 +6463,7 @@ public class CodeEditor extends IDEComponent {
 			g.setColor(Colors.lowerBar);
 			g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
 			
-			Fonts.drawString(codeType + " - " + extType + " | " + "X: " + (cursorX + 1) + ", Y: " + cursorY + (selecting ? " | " + countIndexDistance(index1, index2, line1, line2) : ""), x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
+			Fonts.drawString(codeType + " - " + extType + " | " + "X: " + (cursorX + 1) + ", Y: " + cursorY + (selecting ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2) : ""), x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 			
 			//Fonts.drawString("X: " + (cursorX + 1) + ", Y: " + cursorY, Main.screen.getWidth() - 170, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 		}

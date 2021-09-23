@@ -175,6 +175,8 @@ public final class Texts {
 	
 	public static String version;
 	
+	public static String selecting;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -335,6 +337,8 @@ public final class Texts {
 			
 			version = "Versão";
 			
+			selecting = "Selecionando";
+			
 			break;
 		
 		case ENG:
@@ -494,6 +498,8 @@ public final class Texts {
 			belowMinimum = "Below minimum!";
 			
 			version = "Version";
+			
+			selecting = "Selecting";
 			
 			break;
 		}
