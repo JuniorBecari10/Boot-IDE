@@ -92,6 +92,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			new FileType(".scss",Main.spritesheet.getSprite(496, 16, 16, 16)),
 			new FileType(".ipynb",Main.spritesheet.getSprite(512,16, 16, 16)),
 			new FileType(".vb", Main.spritesheet.getSprite (528, 16, 16, 16)),
+			new FileType(".bf", Main.spritesheet.getSprite (560, 16, 16, 16)),
 			
 			new FileType(".html", Main.spritesheet.getSprite (0, 32, 16, 16)),
 			new FileType(".xhtml", Main.spritesheet.getSprite(0, 32, 16, 16)),
@@ -1353,7 +1354,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand, Serial
 			String name = regent.getName();
 			
 			if (name.length() > Main.explorer.maxTextWidth)
-				name = name.substring(0, Main.explorer.maxTextWidth - 3) + "...";
+				name = name.substring(0, Main.explorer.maxTextWidth - 3) + "..."; // arrumar isso aqui TODO
 			
 			Fonts.drawString(name, x + 40, y + 4, new IDEFont(Fonts.lightGrayNormal, 16), width, g);
 			

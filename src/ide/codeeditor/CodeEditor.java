@@ -1073,6 +1073,30 @@ public class CodeEditor extends IDEComponent {
         return indexes;
     }
 	
+	public int countIndexDistance(int i1, int i2, int l1, int l2) {
+		if (l1 == l2) return i2 - i1;
+		else {
+			int count = 0;
+			for (int i = l1 - 1; i < l2; i++) {
+				if (i == l1 - 1) {
+					count += lines.get(i).getChars().size() - i1;
+					continue; 
+				}
+				
+				else if (i == l2 - 1) {
+					count += i2;
+					continue;
+				}
+				else
+					count += lines.get(i).getChars().size();
+			}
+			
+			return count;
+		}
+		
+		//return -1;
+	}
+	
 	public static String getLowerBarFileName(String ext) {
 		return switch (ext.toLowerCase()) {
 		case ".java" -> "Java";
@@ -1123,6 +1147,7 @@ public class CodeEditor extends IDEComponent {
 		case ".scss" -> "Sass Cascading Style Sheets - SCSS";
 		case ".ipynb" -> "Jupyter Notebook";
 		case ".vb" -> "Visual Basic";
+		case ".bf" -> "Brainf*ck";
 		
 		case ".html" -> "Hyper Text Markup Language - HTML";
 		case ".xhtml" -> "Hyper Text Markup Language - HTML";
@@ -1261,7 +1286,7 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".gitignore") || editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".bf") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".gitignore") || editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore")) return fs;
 		
 		if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj") || ext.equalsIgnoreCase(".project")) {
 			indxs = findWord(new String(chars), "<");
@@ -1564,6 +1589,8 @@ public class CodeEditor extends IDEComponent {
 	
 	public List<IDEFont> colorKeywords(String ext, char[] chars, List<IDEFont> fs) {
 		if (editing == null) return fs;
+		
+		if (ext.equalsIgnoreCase(".bf")) return fs;
 		
 		List<Integer> indxs = new ArrayList<>();
 		
@@ -3370,7 +3397,7 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".bf") ||  ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf")) return fs;
 		
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
 			
@@ -3444,7 +3471,7 @@ public class CodeEditor extends IDEComponent {
 		
 		if (!isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) return fs;
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".lock")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".bf") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".lock")) return fs;
 		
 		List<Integer> indxs = new ArrayList<>();
 		
@@ -3517,7 +3544,7 @@ public class CodeEditor extends IDEComponent {
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		if (!(ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".md"))) {
+		if (!(ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bf") || ext.equalsIgnoreCase(".md"))) {
 			indxs = findWord(new String(chars), Character.toString((char) 34)); // colorir strings
 			
 			for (int i = 0; i < indxs.size() - 1; i += 2)
@@ -3619,7 +3646,7 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".bf") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
 		
 		if (!foundExt) {//(!foundExt && editing != null) || (extType.equalsIgnoreCase("") || extType == null)) { // TODO o culpado do gitignore estar assim é esse ARRUMAR DEPOIS 
 			for (FileType f : ListableFile.types) {
@@ -3729,7 +3756,7 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".bf") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".obj")) return fs;
 		
 		switch (ext.toLowerCase()) {
 		case ".java":
@@ -6426,7 +6453,7 @@ public class CodeEditor extends IDEComponent {
 			g.setColor(Colors.lowerBar);
 			g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
 			
-			Fonts.drawString(codeType + " - " + extType + " | " + "X: " + (cursorX + 1) + ", Y: " + cursorY, x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
+			Fonts.drawString(codeType + " - " + extType + " | " + "X: " + (cursorX + 1) + ", Y: " + cursorY + (selecting ? " | " + countIndexDistance(index1, index2, line1, line2) : ""), x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 			
 			//Fonts.drawString("X: " + (cursorX + 1) + ", Y: " + cursorY, Main.screen.getWidth() - 170, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 		}
