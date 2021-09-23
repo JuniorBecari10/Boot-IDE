@@ -1,6 +1,7 @@
 package ide.main;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -577,7 +578,7 @@ public class Main implements Runnable, Tickable {
 					else
 						Fonts.drawString(Texts.codeHelpersOff, (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				
-					if (Main.editor.editing.isReadOnly)
+					if (Main.editor.editing != null && Main.editor.editing.isReadOnly)
 						Fonts.drawString(Texts.fileAsReadOnly, (x - 10) + 20, (y - 10)+ 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				}
 	        }
@@ -630,6 +631,23 @@ public class Main implements Runnable, Tickable {
     			Fonts.drawString(Texts.actualFolder_, xdr + 10, ydr + 10, new IDEFont(Fonts.lighterGrayNormal, 16), g);
     			Fonts.drawString(scopeStr, xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
         	}
+        }
+        
+        if (Explorer.dragging) {
+        	int x = MouseInput.getMouseX() + 35;
+        	int y = MouseInput.getMouseY();
+        	int w = explorer.getWidth() < 1000 ? 83 : 97;
+        	int h = 28;
+        	
+        	Rectangle intr = new Rectangle(x, y, w, h).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
+        	
+        	if (!intr.isEmpty())
+        		x -= intr.getWidth();
+        	
+        	g.setColor(new Color(0, 0, 0, 0.3f));
+			g.fillRect(x, y, w, h);
+			
+			Fonts.drawString(explorer.getWidth() + "px", x + 5, y, new IDEFont(Fonts.lightGrayNormal, 20), g);
         }
         
         g.dispose();

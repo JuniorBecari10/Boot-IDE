@@ -79,7 +79,7 @@ public class CommandTerminal extends IDEComponent {
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "stdcout", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
-			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index",
+			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
 			"gendiv str:class_name", "genbase str:type", //"emmet str:expression",
 			"lorem int:num_words", "ordertab int:tab_from int:tab_to",
@@ -91,7 +91,7 @@ public class CommandTerminal extends IDEComponent {
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "stdcout", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
-			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab",
+			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab", "setexplorerdrag",
 			"gotoline", "setfontsize", "insertchar",
 			"gendiv", "genbase", //"emmet",
 			"lorem", "ordertab",
@@ -711,6 +711,16 @@ public class CommandTerminal extends IDEComponent {
 					Main.editor.cursorY = Integer.parseInt(args[0]);
 					
 					runCommand("gotocursor");
+				} catch (NumberFormatException e) {
+					break;
+				}
+				break;
+				
+			case "setexplorerdrag":
+				try {
+					int px = Integer.parseInt(args[0]);
+					
+					Main.explorer.setDrag(px);
 				} catch (NumberFormatException e) {
 					break;
 				}
