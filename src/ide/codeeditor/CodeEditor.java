@@ -3431,6 +3431,7 @@ public class CodeEditor extends IDEComponent {
 									chars[c] != ',' &&
 									chars[c] != ';' &&
 									chars[c] != '.' &&
+									chars[c] != '=' &&
 									chars[c] != ':' &&
 									chars[c] != '#' &&
 									chars[c] != '$' &&
@@ -5217,7 +5218,7 @@ public class CodeEditor extends IDEComponent {
 			line1 = cursorY;
 			
 			index2 = mx;
-			line2 = my;
+			line2 = my; // TODO definir o direction aqui
 			
 			if (index1 == index2 && line1 == line2)
 				selecting = false;
