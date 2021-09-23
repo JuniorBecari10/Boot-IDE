@@ -5597,10 +5597,11 @@ public class CodeEditor extends IDEComponent {
 				
 				if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46 && !KeyInput.isShiftDown()) RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.)
 				
-				if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
+				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
 				
-				//undo.push(lines);
-				editing.setSaved(false);
+					//undo.push(lines);
+					editing.setSaved(false);
+				}
 			}
 		}
 			
@@ -6456,7 +6457,7 @@ public class CodeEditor extends IDEComponent {
 				xdr -= intersection.getWidth();
 			
 			g.setColor(Colors.explorerLight);
-			g.fillRect(xdr, MouseInput.getMouseY() - 35, wdr, hdr); // arrumar o home, o end e o replace
+			g.fillRect(xdr, MouseInput.getMouseY() - 35, wdr, hdr);
 			
 			g.setColor(Colors.textLighter);
 			g2.setStroke(new BasicStroke(2f));
