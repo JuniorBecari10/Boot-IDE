@@ -99,6 +99,8 @@ public class CodeEditor extends IDEComponent {
 	public int scrX = 0;
 	public int scrY = 0;
 	
+	public Direction directionStarted = Direction.NONE;
+	
 	private int realcx, realcy; // c = cursor
 	public int drawcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, drawcy = MIN_Y + cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;
 	
@@ -4641,7 +4643,7 @@ public class CodeEditor extends IDEComponent {
 	public void paste() {		// terminar o paste com mais de uma linha
 		if (editing == null) return;
 		
-		CommandTerminal.runCommand("del");
+		CommandTerminal.runCommand("del"); // se colar deleta o que tá selecionado
 		
 		String[] sp = clipboard.split("\n");
 		
@@ -4661,7 +4663,7 @@ public class CodeEditor extends IDEComponent {
 				cursorX += s.length();
 			}
 		}
-		else {
+		else { // se não é só uma linha
 			for (String s : sp) {
 				if (s != sp[0])
 					lines.add((cursorY - 1) + index, new IDELine(new ArrayList<>(), new ArrayList<>()));
@@ -5123,6 +5125,10 @@ public class CodeEditor extends IDEComponent {
 		}
 	}
 	
+	public boolean noneSelected() {
+		return index1 == index2 && line1 == line2;
+	}
+	
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
 		
@@ -5367,6 +5373,9 @@ public class CodeEditor extends IDEComponent {
 			return;
 		}*/
 		
+		if (!selecting)
+			directionStarted = Direction.NONE;
+		
 		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active) { // TODO
 			setCursorWithinBounds();
 			
@@ -5455,10 +5464,16 @@ public class CodeEditor extends IDEComponent {
 							}
 						}
 						else {
-							if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) { // aperfeiçoar
+							if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 								KeyInput.updateKeys();
 								
-								line1--;
+								if (noneSelected())
+									directionStarted = Direction.UP;
+								
+								if (directionStarted != Direction.DOWN) // não verificar se foi up, verificar se não foi down, ou colocar um else e repetir a condição do if
+									line1--;
+								else// if (directionStarted == Direction.DOWN)
+									line2--;
 								
 								selecting = true;
 								
@@ -5470,7 +5485,13 @@ public class CodeEditor extends IDEComponent {
 							else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
 								KeyInput.updateKeys();
 								
-								line2++;
+								if (noneSelected())
+									directionStarted = Direction.DOWN;
+								
+								if (directionStarted != Direction.UP)
+									line2++;
+								else// if (directionStarted == Direction.UP)
+									line1++;
 								
 								selecting = true;
 								
@@ -5482,7 +5503,13 @@ public class CodeEditor extends IDEComponent {
 							if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
 								KeyInput.updateKeys();
 								
-								index1--;
+								if (noneSelected())
+									directionStarted = Direction.LEFT;
+								
+								if (directionStarted != Direction.RIGHT)
+									index1--;
+								else// if (directionStarted == Direction.RIGHT)
+									index2--;
 								
 								selecting = true;
 								
@@ -5494,7 +5521,13 @@ public class CodeEditor extends IDEComponent {
 							else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
 								KeyInput.updateKeys();
 								
-								index2++;
+								if (noneSelected())
+									directionStarted = Direction.RIGHT;
+								
+								if (directionStarted != Direction.LEFT)
+									index2++;
+								else// if (directionStarted == Direction.LEFT)
+									index1++;
 								
 								selecting = true;
 								
