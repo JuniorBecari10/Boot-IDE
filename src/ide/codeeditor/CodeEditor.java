@@ -4333,11 +4333,11 @@ public class CodeEditor extends IDEComponent {
 		if (!ListableFile.fileHasExtension(ext)) ext = editing.getRegent().getRegent().getName();
 		
 		if (editing == null) return fs;
-		if ((isBinary(ext) || !isFormatSupported(ext)) && !(ext.equalsIgnoreCase(".ini"))) return fs;
+		if ((isBinary(ext) || !isFormatSupported(ext)) && !(ext.equalsIgnoreCase(".ini") && ext.equalsIgnoreCase(".make") && ext.equalsIgnoreCase(".mk") && editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") && editing.getRegent().getRegent().getName().equalsIgnoreCase("dockerfile"))) return fs;
 		
 		/////////////////////////////////////////////////////
 		
-		fs = colorVariablesAndObjects(ext, chars, fs);
+		fs = colorVariablesAndObjects(ext, chars, fs); // resolver o problema de não colorir arquivos sem extensão
 		fs = colorMethods(ext, chars, fs);
 		fs = colorKeywords(ext, chars, fs);
 		fs = colorNumbers(ext, chars, fs);
@@ -5098,7 +5098,25 @@ public class CodeEditor extends IDEComponent {
 		for (AutoComplete a : autocomplete) {
 			if (a == null) continue;
 			
-			toAddAutoCompletes.add(new RightClickOption(drawcx + (Main.editor.getX() - originalEditorX), (drawcy + FONT_SIZE) + index * height, 330, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), a.text));
+			String change = a.text;
+			
+			if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".htm") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".ejs")) { // talvez verificar php
+				String tag = change;
+				
+				// remove <> - não feito, vc que lute
+				//StringBuilder bl = new StringBuilder(new String(toCharArray(lines.get(cursorY - 1).getChars())));
+				
+				/*if (bl.charAt(cursorX - 1) == '<') {
+					bl.deleteCharAt(cursorX - 1);
+					//bl.deleteCharAt(cursorX);
+					
+					register(bl, cursorY - 1);
+				}*/
+				
+				change = "<" + tag + "></" + tag + ">";
+			}
+			
+			toAddAutoCompletes.add(new RightClickOption(drawcx + (Main.editor.getX() - originalEditorX), (drawcy + FONT_SIZE) + index * height, 330, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), change));
 			
 			index++;
 		}
