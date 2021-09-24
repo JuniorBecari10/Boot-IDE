@@ -137,6 +137,8 @@ public class CodeEditor extends IDEComponent {
 	
 	private boolean alreadyColoredJsonVariable = false;
 	
+	public static boolean putChevronsOnTags = true;
+	
 	public int mx;
 	public int my;
 	
@@ -3532,6 +3534,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				if ((ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) && s != "[" && s != "]") continue;
+				if ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s != "<" && s != ">" && s != "/")) continue;
 				
 				for (Integer i : indxs)
 					fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
@@ -5100,10 +5103,10 @@ public class CodeEditor extends IDEComponent {
 			
 			String change = a.text;
 			
-			if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".htm") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".ejs")) { // talvez verificar php
+			if (putChevronsOnTags && (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".htm") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".ejs"))) { // talvez verificar php
 				String tag = change;
 				
-				// remove <> - não feito, vc que lute
+				// remove <> - não feito, vc que lute TODO arrumar isso
 				//StringBuilder bl = new StringBuilder(new String(toCharArray(lines.get(cursorY - 1).getChars())));
 				
 				/*if (bl.charAt(cursorX - 1) == '<') {

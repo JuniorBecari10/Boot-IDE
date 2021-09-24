@@ -447,6 +447,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("language: default\n");
 			w.write("autocomplete_active: default\n");
 			w.write("automatically_open_tabs: default");
+			w.write("put_chevrons_on_html_tags: default");
 			
 			w.close();
 			
@@ -867,6 +868,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					break;
 				}
 					
+				hasAltered = true;
+				
+				break;
+				
+			case "put_chevrons_on_html_tags:":
+				if (split[1].equals("default")) break;
+				
+				CodeEditor.putChevronsOnTags = Boolean.valueOf(split[1]);
+				
 				hasAltered = true;
 				
 				break;
