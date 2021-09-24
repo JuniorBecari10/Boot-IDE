@@ -1257,7 +1257,7 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public static List<IDEFont> color(int s, int e, IDEFont color, List<IDEFont> fs) {
-		if (e < s) throw new IllegalArgumentException("o start não pode ser maior que o final!");
+		if (e < s) e = s;//throw new IllegalArgumentException("o start não pode ser maior que o final!");
 		if (e > fs.size()) e = fs.size();//throw new IndexOutOfBoundsException("o final não pode ser maior que o final da fonte!");
 		
 		for (int i = s; i < e; i++) {
@@ -2731,8 +2731,11 @@ public class CodeEditor extends IDEComponent {
 		case ".md":
 			indxs = findWord(new String(chars), "#");
 			
-			for (Integer i : indxs)
+			for (Integer i : indxs) {
+				if (i != 0) continue;
+				
 				fs = color(i, fs.size(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
 			
 			for (String s : tags) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
@@ -5471,7 +5474,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}.start();
 			
-			if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !isReadOnly && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados, ou se alt gr está pressionado
+			if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados, ou se alt gr está pressionado
 				try {
 					if (!RightClickOption.isRightClickActive()) {
 						if (!KeyInput.isShiftDown()) {
@@ -5814,7 +5817,7 @@ public class CodeEditor extends IDEComponent {
 			
 			// Detectar atalhos
 			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && !isReadOnly && !alternateTabsMode) {
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && !alternateTabsMode) {
 				KeyInput.updateKeys();
 				
 				RightClickOption.removeAllRightClickOptions();
