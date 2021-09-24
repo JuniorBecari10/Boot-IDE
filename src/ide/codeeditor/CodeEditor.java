@@ -405,10 +405,10 @@ public class CodeEditor extends IDEComponent {
 	
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
 	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".ipynb", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".tsx", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
-			".html", ".xhtml", ".htm", ".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp", ".prefs", ".classpath",
+			".html", ".xhtml", ".htm", ".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".mak", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp", ".prefs", ".classpath",
 			".project", ".sln",
 			".JAVA", ".C", ".CPP", ".CC", ".CS", ".PY", ".IPYNB", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HH", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".TSX", ".GO", ".R", ".PL", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
-			".HTML", ".XHTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP", ".PREFS", ".CLASSPATH",
+			".HTML", ".XHTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP", ".PREFS", ".CLASSPATH",
 			".PROJECT", ".SLN" };
 	
 	public static final String[] luaKeys = { "and", "break", "do", "else", "elseif", "end",
@@ -997,6 +997,7 @@ public class CodeEditor extends IDEComponent {
 			case ".jsonc" -> jsonKeys;
 			case ".conf" -> ideConfKeys;
 			case ".mk" -> makeKeys;
+			case ".mak" -> makeKeys;
 			case ".make" -> makeKeys;
 			case ".makefile" -> makeKeys;
 			case ".dockerfile" -> dkKeys;
@@ -1178,6 +1179,7 @@ public class CodeEditor extends IDEComponent {
 		case ".save" -> (Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2" : "Saved Game from World's Hardest Game Maker 2");
 		case ".conf" -> (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE" : "Boot IDE Configuration File");
 		case ".mk" -> "Makefile";
+		case ".mak" -> "Makefile";
 		case ".make" -> "Makefile";
 		case ".sh" -> "Bourne-Again Shell - Bash";
 		case ".gitignore" -> "Git Ignore";
@@ -1576,7 +1578,7 @@ public class CodeEditor extends IDEComponent {
 					}
 
 					//if (i + len < chars.length) {
-						if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".sql") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))
+						if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".sql") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".mak") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))
 							fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 						else {
 							if (i - 1 > 0 && Character.isLetter(chars[i - 1])) continue;
@@ -3350,6 +3352,7 @@ public class CodeEditor extends IDEComponent {
 		
 		case ".makefile":
 		case ".mk":
+		case ".mak":
 		case ".make":
 			for (String s : makeKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
@@ -4345,7 +4348,7 @@ public class CodeEditor extends IDEComponent {
 		if (!ListableFile.fileHasExtension(ext)) ext = editing.getRegent().getRegent().getName();
 		
 		if (editing == null) return fs;
-		if ((isBinary(ext) || !isFormatSupported(ext)) && !(ext.equalsIgnoreCase(".ini") && ext.equalsIgnoreCase(".make") && ext.equalsIgnoreCase(".mk") && editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") && editing.getRegent().getRegent().getName().equalsIgnoreCase("dockerfile"))) return fs;
+		if ((isBinary(ext) || !isFormatSupported(ext)) && !(ext.equalsIgnoreCase(".ini") && ext.equalsIgnoreCase(".make") && ext.equalsIgnoreCase(".mk") && ext.equalsIgnoreCase(".mak") && editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") && editing.getRegent().getRegent().getName().equalsIgnoreCase("dockerfile"))) return fs;
 		
 		/////////////////////////////////////////////////////
 		
