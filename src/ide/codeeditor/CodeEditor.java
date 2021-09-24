@@ -2094,7 +2094,7 @@ public class CodeEditor extends IDEComponent {
 					indxs = findWord(new String(chars), s);
 					
 					for (Integer i : indxs) {
-						if (!isNumber(chars[i - 1])) continue;
+						if (i - 1 > 0 && !isNumber(chars[i - 1])) continue;
 						
 						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
 					}
@@ -2279,7 +2279,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (!isNumber(chars[i - 1])) continue;
+					if (i - 1 > 0 && !isNumber(chars[i - 1])) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -3224,7 +3224,7 @@ public class CodeEditor extends IDEComponent {
 					indxs = findWord(new String(chars), s);
 					
 					for (Integer i : indxs) {
-						if (!isNumber(chars[i - 1])) continue;
+						if (i - 1 > 0 && !isNumber(chars[i - 1])) continue;
 						
 						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
 					}
