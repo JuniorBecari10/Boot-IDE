@@ -3588,6 +3588,11 @@ public class CodeEditor extends IDEComponent {
 			
 			for (int i = 0; i < indxs.size() - 1; i += 2)
 				fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+			
+			indxs = findWord(new String(chars), "`"); // colorir strings
+			
+			for (int i = 0; i < indxs.size() - 1; i += 2)
+				fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 				
 			/*indxs = findWord(new String(chars), "\"");						// colorir comentários multi-linha - caracteres iguais
 			
