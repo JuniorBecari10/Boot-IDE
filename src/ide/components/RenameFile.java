@@ -103,7 +103,9 @@ public class RenameFile extends IDEComponent {
 				return;
 			}
 			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE && cursorIndex < text.length()) {
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
+				if (cursorIndex > text.length() - 1) return;
+				
 				text.deleteCharAt(cursorIndex);
 				return;
 			}
