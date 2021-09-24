@@ -2013,13 +2013,6 @@ public class CodeEditor extends IDEComponent {
 						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
 				
-				for (String s : units) { // colorir unidades de medida - tipo px, rem, em
-					indxs = findWord(new String(chars), s);
-					
-					for (Integer i : indxs)
-						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
-				}
-				
 				for (String s : props) { // colorir propriedades - tipo margin, padding
 					indxs = findWord(new String(chars), s);
 					
@@ -2094,6 +2087,16 @@ public class CodeEditor extends IDEComponent {
 					
 					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				}
+				
+				for (String s : units) { // colorir tags
+					indxs = findWord(new String(chars), s);
+					
+					for (Integer i : indxs) {
+						if (!isNumber(chars[i - 1])) continue;
+						
+						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
+					}
+				}
 			}
 			
 			fs = colorMethods(ext, chars, fs);
@@ -2134,13 +2137,6 @@ public class CodeEditor extends IDEComponent {
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
-			}
-			
-			for (String s : units) { // colorir tags
-				indxs = findWord(new String(chars), s);
-				
-				for (Integer i : indxs)
-					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
 			for (String s : props) { // colorir tags
@@ -2275,6 +2271,16 @@ public class CodeEditor extends IDEComponent {
 				}
 				
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
+			for (String s : units) { // colorir tags
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if (!isNumber(chars[i - 1])) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 			
 			// Eu sei que a linha de código abaixo infringe a lei do Boot de Código-Fonte bem escrito n° 547, e pode accaretar problemas :/
@@ -3137,13 +3143,6 @@ public class CodeEditor extends IDEComponent {
 						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
 				
-				for (String s : units) { // colorir tags
-					indxs = findWord(new String(chars), s);
-					
-					for (Integer i : indxs)
-						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
-				}
-				
 				indxs = findWord(new String(chars), ".");
 				
 				len = 0;
@@ -3209,6 +3208,16 @@ public class CodeEditor extends IDEComponent {
 					}
 					
 					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}
+				
+				for (String s : units) { // colorir tags
+					indxs = findWord(new String(chars), s);
+					
+					for (Integer i : indxs) {
+						if (!isNumber(chars[i - 1])) continue;
+						
+						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
+					}
 				}
 			}
 			
@@ -3533,7 +3542,7 @@ public class CodeEditor extends IDEComponent {
 			for (String s : syms) {
 				indxs = findWord(new String(chars), s);
 				if ((ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) && s != "[" && s != "]") continue;
-				if (!isCssPart && ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s != "<" && s != ">" && s != "/"))) continue;
+				if (!isCssPart && ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s != "<" && s != ">" && s != "/" && s != "="))) continue;
 				if (((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs"))) && isCssPart)) && (s == "*" || s == "-")) continue;
 				
 				for (Integer i : indxs)
