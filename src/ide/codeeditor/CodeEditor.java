@@ -2017,7 +2017,7 @@ public class CodeEditor extends IDEComponent {
 					indxs = findWord(new String(chars), s);
 					
 					for (Integer i : indxs)
-						fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
+						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
 				}
 				
 				for (String s : props) { // colorir propriedades - tipo margin, padding
@@ -2140,7 +2140,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs)
-					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
+					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
 			for (String s : props) { // colorir tags
@@ -3532,9 +3532,9 @@ public class CodeEditor extends IDEComponent {
 			
 			for (String s : syms) {
 				indxs = findWord(new String(chars), s);
-				
 				if ((ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) && s != "[" && s != "]") continue;
-				if ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s != "<" && s != ">" && s != "/")) continue;
+				if (!isCssPart && ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s != "<" && s != ">" && s != "/"))) continue;
+				if (((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs"))) && isCssPart)) && (s == "*" || s == "-")) continue;
 				
 				for (Integer i : indxs)
 					fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
@@ -5101,9 +5101,9 @@ public class CodeEditor extends IDEComponent {
 		for (AutoComplete a : autocomplete) {
 			if (a == null) continue;
 			
-			String change = a.text;
+			String change = a.text; // o cara vai ter problemas no css viu TODO
 			
-			if (putChevronsOnTags && (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".htm") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".ejs"))) { // talvez verificar php
+			if (putChevronsOnTags && !isCssPart && !isJSPart && (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".htm") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".ejs"))) { // talvez verificar php
 				String tag = change;
 				
 				// remove <> - não feito, vc que lute TODO arrumar isso
