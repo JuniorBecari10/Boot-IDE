@@ -624,7 +624,7 @@ public class CodeEditor extends IDEComponent {
 			"import", "string", "for", "interface", "delete", "switch", "public", "of", "await", "class",
 			"console", "false", "volatile", "any", "int", "instanceof", "super", "with", "async", "declare", "namespace",
 			"boolean", "short", "arguments", "window", "as", "from", "navigator", "constructor", "debug",
-			"number", "string", "boolean", "array", "object", "any", "void", "mutation" };
+			"string", "boolean", "array", "object", "any", "void", "mutation" };
 	
 	public static final String[] ktKeys = { "as", "as?", "break", "class", "continue", "do", "else", "false", "for", "fun",
 			"if", "in", "!in", "interface", "is", "!is", "null", "object", "package", "return", "super",
@@ -3902,6 +3902,14 @@ public class CodeEditor extends IDEComponent {
 		case ".pas":
 		case ".scala":
 			indxs = findWord(new String(chars), "//"); // colorir comentários de uma linha
+			
+			/*for (Integer i : indxs) {
+				if (fs.get(i).getFont().equals(Fonts.stringsNormal)) {
+					
+					System.out.println("a");
+					return fs;
+				}
+			}*/
 			
 			if (fs.size() == 0) break;
 				
