@@ -447,8 +447,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("font_size: default\n");
 			w.write("language: default\n");
 			w.write("autocomplete_active: default\n");
-			w.write("automatically_open_tabs: default");
-			w.write("put_chevrons_on_html_tags: default");
+			w.write("automatically_open_tabs: default\n");
+			w.write("put_chevrons_on_html_tags: default\n");
 			
 			w.close();
 			

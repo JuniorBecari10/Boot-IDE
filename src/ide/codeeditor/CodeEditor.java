@@ -624,7 +624,7 @@ public class CodeEditor extends IDEComponent {
 			"import", "string", "for", "interface", "delete", "switch", "public", "of", "await", "class",
 			"console", "false", "volatile", "any", "int", "instanceof", "super", "with", "async", "declare", "namespace",
 			"boolean", "short", "arguments", "window", "as", "from", "navigator", "constructor", "debug",
-			"string", "boolean", "array", "object", "any", "void", "mutation" };
+			"array", "object", "any", "mutation" };
 	
 	public static final String[] ktKeys = { "as", "as?", "break", "class", "continue", "do", "else", "false", "for", "fun",
 			"if", "in", "!in", "interface", "is", "!is", "null", "object", "package", "return", "super",
@@ -1079,6 +1079,40 @@ public class CodeEditor extends IDEComponent {
         }
         return indexes;
     }
+	
+	public boolean isInside(int index, char ch, String s) {
+		List<Integer> indxs = findWord(s, Character.toString(ch));
+		
+		boolean foundt = false; // tras
+		boolean foundf = false; // frente
+		
+		for (Integer i : indxs) {
+			int ct = i;
+			int cf = i;
+			
+			while (ct > 0) {
+				ct--;
+				
+				if (s.charAt(ct) == ch) {
+					foundt = true;
+					
+					break;
+				}
+			}
+			
+			while (cf < s.length()) {
+				cf++;
+				
+				if (cf < s.length() && s.charAt(cf) == ch) {
+					foundf = true;
+					
+					break;
+				}
+			}
+		}
+		
+		return foundt && foundf;
+	}
 	
 	public int countIndexDistance(int i1, int i2, int l1, int l2) {
 		if (l1 == l2) return i2 - i1;
@@ -3911,6 +3945,20 @@ public class CodeEditor extends IDEComponent {
 				}
 			}*/
 			
+			/*boolean hasOutside = false;
+			int indexOutside = -1;
+			
+			for (int j = 0; j < indxs.size(); j++) {
+				Integer i = indxs.get(j);
+				
+				if (!isInside(i, '"', new String(chars))) { // verificar se não há comentários dentro de strings
+					hasOutside = true;
+					indexOutside = i;
+				}
+			}
+			
+			if (!hasOutside) return fs;*/
+			
 			if (fs.size() == 0) break;
 				
 			if (indxs.size() != 0)
@@ -6614,7 +6662,7 @@ public class CodeEditor extends IDEComponent {
 				Color c = i != cursorY - 1 ? Colors.explorer : Colors.explorerLight;
 				
 				g.setColor(c);
-				g.fillRect(x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, 50, FONT_SIZE + (FONT_SIZE / 4));
+				g.fillRect(x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, 50, FONT_SIZE + (FONT_SIZE / 4)); // linha do num da linha
 				
 				Fonts.drawString(nums, nx, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, font, g);
 			}
