@@ -383,7 +383,7 @@ public class CodeEditor extends IDEComponent {
 			"TRUE", "FALSE", "NULL", "Inf", "NaN", "NA", "NA_integer", "NA_real", "NA_complex", "NA_character" };
 	
 	public static final String[] batCom = { "ver", "assoc", "cd", "cls", "copy", "del", "dir", "date",
-			"echo", "exit", "md", "move", "path", "pause", "prompt", "rd",
+			"echo", "@echo", "exit", "md", "move", "path", "pause", "prompt", "rd",
 			"rem", "start", "time", "type", "on", "vol", "attrib", "chkdsk", "choice", "cmd",
 			"comp", "convert", "driverquery", "expand", "find", "format", "help", "ipconfig",
 			"label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo",
@@ -895,7 +895,11 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 			}.start();
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			System.err.println("Deu um problema na Thread. " + e.getLocalizedMessage());
+			
+			return ls;
+		}
 		
 		String ext = ListableFile.getFileExtension(file);
 		
@@ -3592,7 +3596,7 @@ public class CodeEditor extends IDEComponent {
 				if ((ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) && s != "[" && s != "]") continue;
 				if (!isCssPart && ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s != "<" && s != ">" && s != "/" && s != "="))) continue;
 				if (((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs"))) && isCssPart)) && (s == "*" || s == "-")) continue;
-				if ((ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd")) && s == "+") continue;
+				if ((ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd")) && (s == "+" || s == "@")) continue;
 				
 				for (Integer i : indxs)
 					fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
