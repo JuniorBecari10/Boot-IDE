@@ -124,7 +124,7 @@ public class Main implements Runnable, Tickable {
         
         lang = Language.ENG; // default
         
-        Fonts.initFonts(fntnr, fntbl);
+        //Fonts.initFonts(fntnr, fntbl);
         
         spritesheet = new Spritesheet(sprsh);
         icons = new Spritesheet(iconsfile);
@@ -184,7 +184,7 @@ public class Main implements Runnable, Tickable {
         	System.err.println("[PORT] Não há argumentos suficientes! \n [ENG] No enough arguments!");
         }*/
         
-        ListableFile.readConfigFile(conffile);
+        /*ListableFile.readConfigFile(conffile);
         Texts.setTexts(lang);
         
         ////////
@@ -214,7 +214,9 @@ public class Main implements Runnable, Tickable {
         
         ////////
         
-        Fonts.initFonts(fntnr, fntbl);
+        Fonts.initFonts(fntnr, fntbl);*/
+        
+        load();
         
         IDEComponent.toAdd.add(Main.newFile);
 		IDEComponent.toAdd.add(Main.newFolder);
@@ -226,6 +228,7 @@ public class Main implements Runnable, Tickable {
     public static synchronized void load() {
 		ListableFile.readConfigFile(conffile);
         Texts.setTexts(lang);
+        Fonts.initFonts(fntnr, fntbl);
         
         ////////
         
@@ -246,8 +249,6 @@ public class Main implements Runnable, Tickable {
         lock = Colors.swapColor(lock, Colors.textLightDefault, Colors.textLight);
         
         ////////
-        
-        Fonts.initFonts(fntnr, fntbl);
         
         hasConfigFile = true;
     }
@@ -370,6 +371,7 @@ public class Main implements Runnable, Tickable {
 		}
     }
     
+    // o settings file tá
     public static void readFile(File setFile) {
     	try {
 	    	Path p = setFile.toPath();

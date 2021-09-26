@@ -675,17 +675,8 @@ public class CodeEditor extends IDEComponent {
 	
 	///////
 	
-	private static boolean hasPressed = false;
-	private static Robot robot;
-	
 	public CodeEditor(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
-		
-		try {
-			robot = new Robot();
-		} catch (AWTException e1) {
-			e1.printStackTrace();
-		}
 		
 		tabs = new ArrayList<>();
 		toAdd = new ArrayList<>();
@@ -5946,6 +5937,15 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
+			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_L && !alternateTabsMode) { // Ctrl + L - Deletar Linha
+				KeyInput.updateKeys();
+				
+				CommandTerminal.runCommand("selectline");
+				CommandTerminal.runCommand("del");
+					
+				return;
+			}
+			
 			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_J && !isReadOnly && !alternateTabsMode) { // Ctrl + J - Executar
 				KeyInput.updateKeys();
 				
@@ -6484,14 +6484,6 @@ public class CodeEditor extends IDEComponent {
 //			
 //		} // <-
 		} // não ligue pra isso :)
-		
-		robot.keyRelease(KeyEvent.VK_F1);
-		
-		if (!hasPressed) {
-			robot.keyPress(KeyEvent.VK_F1);
-			
-			hasPressed = true;
-		}
 		
 		if (tabs != null) {
 			for (Tab t : tabs) {
