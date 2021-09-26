@@ -604,11 +604,11 @@ public class CodeEditor extends IDEComponent {
 			"grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs", "kill", "ping",
 			"wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd", "userdel",
 			"clear", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc", "node", "nasm", "qemu", "gcc", "g++",
-			"python", "lua", "if", "then", "else", "fi", "date", "eject", "tsc", "setlocal", "endlocal", "make", "yarn", "color",
+			"python", "lua", "if", "then", "else", "fi", "date", "eject", "tsc", "setlocal", "endlocal", "make", "yarn", "color", "for",
 			"PWD", "CD", "LS", "CAT", "CP", "MV", "MKDIR", "RMDIR", "RM", "TOUCH", "LOCATE", "FIND",
 			"GREP", "SUDO", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR", "CHMOD", "CHOWN", "JOBS", "KILL", "PING",
 			"WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP", "HOSTNAME", "USERADD", "USERDEL",
-			"CLEAR", "GIT", "NPM", "CALL", "EXIST", "END", "EJECT", "SETLOCAL", "ENDLOCAL",
+			"CLEAR", "GIT", "NPM", "CALL", "EXIST", "END", "EJECT", "SETLOCAL", "ENDLOCAL", "FOR",
 			"JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA", "JAVAW", "IF", "THEN", "ELSE", "FI",
 			"DATE", "YARN", "COLOR",
 			"TSC", "MAKE" };
@@ -5263,9 +5263,7 @@ public class CodeEditor extends IDEComponent {
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
 		if (tabs == null) tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
-		
-		System.out.println(tabs);
-		
+				
 		/*for (Tab i : tabs) {
 			for (Tab j : tabs) {
 				if (i.getRegent() == j.getRegent() && i != j)
@@ -6643,7 +6641,7 @@ public class CodeEditor extends IDEComponent {
 				
 				IDEFont font = i == cursorY - 1 ? new IDEFont(Fonts.selectedLineNumberNormal, FONT_SIZE) : new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 				
-				if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
+				//if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 				
 				Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + 50, Main.screen.getWidth(), g);
 				

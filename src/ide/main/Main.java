@@ -590,8 +590,12 @@ public class Main implements Runnable, Tickable {
         		int xdr = MouseInput.getMouseX() + 10;
     			int ydr = MouseInput.getMouseY() - 10;
     			
-    			final int wdr = 15 + Main.baseFolder.getName().length() * 12;
+    			int wdr = 15 + Main.baseFolder.getName().length() * 12;
     			final int hdr = 70;
+    			
+    			System.out.println(wdr);
+    			
+    			if (wdr < 165) wdr = 165;
     			
     			Rectangle intersection = new Rectangle(xdr, ydr, wdr, hdr).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
     			
