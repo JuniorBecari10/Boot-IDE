@@ -1,6 +1,5 @@
 package ide.codeeditor;
 
-import java.awt.AWTException;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -9,7 +8,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.HeadlessException;
 import java.awt.Rectangle;
-import java.awt.Robot;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
@@ -886,12 +884,14 @@ public class CodeEditor extends IDEComponent {
 				public void run() {
 					if (editing != null && editing.getRegent() != null && editing.getRegent().getRegent() != null)
 					for (IDELine l : lines) {
+						if (editing != null && editing.closing) break;
+						
 						l.setFonts(
 								automaticColor(
 										toCharArray(
 												l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
 						
-						if (editing.closing) break;
+						if (editing != null && editing.closing) break;
 					}
 				}
 			}.start();
@@ -5258,8 +5258,9 @@ public class CodeEditor extends IDEComponent {
 	
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
-		
 		if (tabs == null) tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
+		
+		System.out.println(tabs);
 		
 		/*for (Tab i : tabs) {
 			for (Tab j : tabs) {
