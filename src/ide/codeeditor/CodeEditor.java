@@ -281,7 +281,7 @@ public class CodeEditor extends IDEComponent {
 			"section", "select", "small", "source", "span", "strike", "strong", "style", "sup", "svg", "table",
 			"tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt",
 			"u", "ul", "var", "video", "wbr", "applet", "important", "screen", "and", "or", "moz", "webkit", "ms", "mixin", "webview",
-			"user", "select", "drag", "deg", "rad" /* TODO colocar mais desses ultimos */
+			"user", "select", "drag", "deg", "rad", "src" /* TODO colocar mais desses ultimos */
 	};
 	
 	public static final String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
@@ -296,22 +296,22 @@ public class CodeEditor extends IDEComponent {
 			"border-right-style", "border-right-width", "border-spacing", "border-style", "border-top",
 			"border-top-color", "border-top-left-radius", "border-top-right-radius", "border-top-style",
 			"border-top-width", "border-width", "bottom", "box-decoration-break", "box-shadow", "box-sizing",
-			"break-after", "break-before", "break-inside", "caption-side", "caret-color", "charset", "clear",
+			"break-after", "break-before", "break-inside", "caption-side", "caret-color", "@charset", "clear",
 			"clip", "color", "column-count", "column-fill", "column-gap", "column-rule", "column-rule-color",
 			"column-rule-style", "column-rule-width", "column-span", "column-width", "columns", "content",
 			"counter-increment", "counter-reset", "cursor", "direction", "display", "empty-cells", "filter",
 			"flex", "flex-basis", "flex-direction", "flex-flow", "flex-grow", "flex-shrink", "flex-wrap",
-			"float", "font", "font-face", "font-family", "font-feature-settings", "font-feature-values",
+			"float", "font", "@font-face", "font-family", "font-feature-settings", "font-feature-values",
 			"font-kerning", "font-language-override", "font-size", "font-size-adjust", "font-stretch",
 			"font-style", "font-synthesis", "font-variant", "font-variant-alternates", "font-variant-caps",
 			"font-variant-east-asian", "font-variant-ligatures", "font-variant-numeric", "font-variant-position",
 			"font-weight", "gap", "grid", "grid-area", "grid-auto-columns", "grid-auto-flow", "grid-auto-rows",
 			"grid-column", "grid-column-end", "grid-column-gap", "grid-column-start", "grid-template",
 			"grid-template-areas", "grid-template-columns", "grid-template-rows", "hanging-ponctuation",
-			"height", "hyphens", "image-rendering", "import", "isolation", "justify-content", "keyframes",
+			"height", "hyphens", "image-rendering", "@import", "isolation", "justify-content", "@keyframes",
 			"left", "letter-spacing", "line-break", "line-height", "list-style", "list-style-image",
 			"list-style-position", "list-style-type", "margin", "margin-bottom", "margin-left",
-			"margin-right", "margin-top", "mask", "mask-type", "max-height", "max-width", "media",
+			"margin-right", "margin-top", "mask", "mask-type", "max-height", "max-width", "@media",
 			"min-height", "min-width", "mix-blend-mode", "object-fit", "object-position", "opacity",
 			"order", "orphans", "outline", "outline-color", "outline-offset", "outline-style",
 			"outline-width", "overflow", "overflow-wrap", "overflow-x", "overflow-y", "padding",
@@ -326,7 +326,7 @@ public class CodeEditor extends IDEComponent {
 			"visibility", "white-space", "widows", "width", "word-break", "word-spacing", "word-wrap",
 			"writing-mode", "z-index" };
 	
-	public static final String[] units = { "px", "em", "rem", "cm", "mm", "in", "pt", "pc", "ex", "ch", "vw", "vh", "vmin", "vmax" };
+	public static final String[] units = { "px", "em", "rem", "cm", "mm", "in", "pt", "pc", "ex", "ch", "vw", "vh", "vmin", "vmax", "s" };
 	
 	public static final String[] pyKeys = { "and", "as", "assert", "break", "class",
 			"continue", "def", "del", "elif", "else", "except", "False",
@@ -3597,6 +3597,7 @@ public class CodeEditor extends IDEComponent {
 				if (!isCssPart && ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s != "<" && s != ">" && s != "/" && s != "="))) continue;
 				if (((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs"))) && isCssPart)) && (s == "*" || s == "-")) continue;
 				if ((ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd")) && (s == "+" || s == "@")) continue;
+				if ((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && s == "@") continue;
 				
 				for (Integer i : indxs)
 					fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
