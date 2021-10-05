@@ -135,7 +135,7 @@ public class CodeEditor extends IDEComponent {
 	
 	private boolean alreadyColoredJsonVariable = false;
 	
-	public static boolean putChevronsOnTags = true;
+	//public static boolean putChevronsOnTags = true;
 	
 	public int mx;
 	public int my;
@@ -2161,16 +2161,6 @@ public class CodeEditor extends IDEComponent {
 				
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
-
-			for (String s : cssTags) { // colorir tags
-				indxs = findWord(new String(chars), s);
-				
-				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
-					
-					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
-				}
-			}
 			
 			for (String s : props) { // colorir tags
 				indxs = findWord(new String(chars), s);
@@ -3777,6 +3767,17 @@ public class CodeEditor extends IDEComponent {
 				fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
 			}
 		}
+		if (ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss")) {
+			for (String s : cssTags) { // colorir tags
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+		}
 		
 		if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyx") || ext.equalsIgnoreCase(".ipynb") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".zig")) {
 			indxs = findWord(new String(chars), "@");
@@ -5218,21 +5219,22 @@ public class CodeEditor extends IDEComponent {
 			
 			String change = a.text; // o cara vai ter problemas no css viu TODO
 			
-			if (putChevronsOnTags && !isCssPart && !isJSPart && (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".htm") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".ejs"))) { // talvez verificar php
+			/*if (putChevronsOnTags && !isCssPart && !isJSPart && (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".htm") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".ejs"))) { // talvez verificar php
 				String tag = change;
 				
 				// remove <> - não feito, vc que lute TODO arrumar isso
 				//StringBuilder bl = new StringBuilder(new String(toCharArray(lines.get(cursorY - 1).getChars())));
 				
-				/*if (bl.charAt(cursorX - 1) == '<') {
+				/ *
+				if (bl.charAt(cursorX - 1) == '<') {
 					bl.deleteCharAt(cursorX - 1);
 					//bl.deleteCharAt(cursorX);
 					
 					register(bl, cursorY - 1);
-				}*/
+				}* /
 				
 				change = "<" + tag + "></" + tag + ">";
-			}
+			}*/
 			
 			toAddAutoCompletes.add(new RightClickOption(drawcx + (Main.editor.getX() - originalEditorX), (drawcy + FONT_SIZE) + index * height, 330, 32, 16, a.text, getAutoCompleteIcon(a.type), (e) -> makeChanges(e), change));
 			
