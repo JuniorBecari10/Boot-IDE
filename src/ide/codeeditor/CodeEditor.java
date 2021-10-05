@@ -4458,8 +4458,8 @@ public class CodeEditor extends IDEComponent {
 		
 		fs = colorVariablesAndObjects(ext, chars, fs); // resolver o problema de não colorir arquivos sem extensão
 		fs = colorMethods(ext, chars, fs);
-		fs = colorNumbers(ext, chars, fs);
 		fs = colorKeywords(ext, chars, fs);
+		fs = colorNumbers(ext, chars, fs);
 		fs = colorSymbols(ext, chars, fs);
 		fs = colorExtras(ext, chars, fs);
 		fs = colorComments(ext, chars, fs);
