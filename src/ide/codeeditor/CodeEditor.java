@@ -2503,14 +2503,6 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			for (String s : tags) { // colorir tags
-				indxs = findWord(new String(chars), s);
-				
-				for (Integer i : indxs) {
-					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
-				}
-			}
-			
 			break;
 			
 		case ".lua":
@@ -3272,14 +3264,6 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			for (String s : tags) { // colorir tags
-				indxs = findWord(new String(chars), s);
-				
-				for (Integer i : indxs) {
-					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
-				}
-			}
-			
 			break;
 		
 		case ".jsonc":
@@ -3769,6 +3753,18 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		if (ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss")) {
+			for (String s : cssTags) { // colorir tags
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+		}
+		
+		if (ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".mjs") || ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".tsx")) {
 			for (String s : cssTags) { // colorir tags
 				indxs = findWord(new String(chars), s);
 				
