@@ -492,10 +492,18 @@ public class Tab extends IDEComponent implements Serializable {
 				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, Texts.execute, (s) -> execute(s), "runbash");
 		}
 		
-		if (isSaved)
-			button.setSprite(Main.closeTab);
-		else
-			button.setSprite(Main.notSavedTab);
+		if (isSaved) {
+			if (Main.editor.editing == this)
+				button.setSprite(Main.closeTab);
+			else
+				button.setSprite(Main.notSelectedCloseTab);
+		}
+		else {
+			if (Main.editor.editing == this)
+				button.setSprite(Main.notSavedTab);
+			else
+				button.setSprite(Main.notSelectedNotSavedTab);
+		}
 		
 		this.x = x;
 	}

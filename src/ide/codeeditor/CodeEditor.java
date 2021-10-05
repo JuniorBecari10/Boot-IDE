@@ -402,10 +402,10 @@ public class CodeEditor extends IDEComponent {
 			"SETLOCAL", "ENDLOCAL", "MAKE", "YARN", "COLOR" };
 	
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
-	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".ipynb", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".tsx", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
+	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".pyx", ".ipynb", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".tsx", ".go", ".r", ".pl", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
 			".html", ".xhtml", ".htm", ".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".mak", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp", ".prefs", ".classpath",
 			".project", ".sln",
-			".JAVA", ".C", ".CPP", ".CC", ".CS", ".PY", ".IPYNB", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HH", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".TSX", ".GO", ".R", ".PL", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
+			".JAVA", ".C", ".CPP", ".CC", ".CS", ".PY", ".PYX", ".IPYNB", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HH", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".TSX", ".GO", ".R", ".PL", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
 			".HTML", ".XHTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP", ".PREFS", ".CLASSPATH",
 			".PROJECT", ".SLN" };
 	
@@ -949,6 +949,7 @@ public class CodeEditor extends IDEComponent {
 			case ".cs" -> csKeys;
 			case ".ipynb" -> pyKeys;
 			case ".py" -> pyKeys;
+			case ".pyx" -> pyKeys;
 			case ".pyd" -> pyKeys;
 			case ".js" -> jsKeys;
 			case ".mjs" -> jsKeys;
@@ -1143,6 +1144,7 @@ public class CodeEditor extends IDEComponent {
 		case ".cxx" -> "C++";
 		case ".cs" -> "C#";
 		case ".py" -> "Python";
+		case ".pyx" -> "Python";
 		case ".pyd" -> "Python";
 		case ".js" -> "JavaScript";
 		case ".mjs" -> "JavaScript";
@@ -1424,7 +1426,7 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 				
-				if (ext.equalsIgnoreCase(".py")) { // TODO fazer para outras linguagens tbm
+				if (ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyx") || ext.equalsIgnoreCase(".pyd")) { // TODO fazer para outras linguagens tbm
 					indxs = findWord(new String(chars), "in"); // antes de <palavra>
 					
 					for (Integer i : indxs) {
@@ -2322,6 +2324,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".ipynb":
 		case ".py":
+		case ".pyx":
 		case ".pyd":
 			for (String s : pyKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
@@ -3574,8 +3577,27 @@ public class CodeEditor extends IDEComponent {
 						chars[i + len] != ':')
 						len++;
 
-				if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+				fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "#");
+			
+			len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length &&
+						chars[i + len] != ' ' &&
+						chars[i + len] != '[' &&
+						chars[i + len] != ']' &&
+						chars[i + len] != '(' &&
+						chars[i + len] != ')' &&
+						chars[i + len] != ',' &&
+						chars[i + len] != ';' &&
+						chars[i + len] != '.' &&
+						chars[i + len] != ':')
+						len++;
+
+				fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 			}
 		}
 	
@@ -3597,7 +3619,7 @@ public class CodeEditor extends IDEComponent {
 				if (!isCssPart && ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s != "<" && s != ">" && s != "/" && s != "="))) continue;
 				if (((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs"))) && isCssPart)) && (s == "*" || s == "-")) continue;
 				if ((ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd")) && (s == "+" || s == "@")) continue;
-				if ((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && s == "@") continue;
+				if ((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s == "@" || s == "#")) continue;
 				
 				for (Integer i : indxs)
 					fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
@@ -3756,7 +3778,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		
-		if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".ipynb") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".zig")) {
+		if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyx") || ext.equalsIgnoreCase(".ipynb") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".zig")) {
 			indxs = findWord(new String(chars), "@");
 			
 			int len = 0;
@@ -4020,6 +4042,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".py":
+		case ".pyx":
 		case ".ipynb":
 		case ".pyd":
 		case ".rb":
@@ -4284,6 +4307,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".py":
+		case ".pyx":
 		case ".ipynb":
 		case ".pyd":
 			indxs = findWord(new String(chars), "\'\'\'");						// colorir comentários multi-linha - caracteres iguais
@@ -6574,8 +6598,8 @@ public class CodeEditor extends IDEComponent {
 //			return; // pra n renderizar texto, aquele monte de coisa estranha
 //		}
 		
-		g.setColor(Colors.backgroundLight);
-		g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4) + 1);
+		g.setColor(Colors.backgroundLight); // TODO é essa aqui
+		g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4) + 1);
 			
 			/*g.setColor(Colors.backgroundLight);
 			g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, 49, FONT_SIZE + (FONT_SIZE / 4) + 1);*/

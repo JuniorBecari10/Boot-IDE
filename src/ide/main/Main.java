@@ -107,7 +107,10 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage star;
     
     public static BufferedImage closeTab;
+    public static BufferedImage notSelectedCloseTab;
+    
     public static BufferedImage notSavedTab;
+    public static BufferedImage notSelectedNotSavedTab;
     
     public static BufferedImage lock;
     
@@ -143,7 +146,10 @@ public class Main implements Runnable, Tickable {
         star = spritesheet.getSprite(32, 0, 16, 16);
         
         closeTab = spritesheet.getSprite(16, 0, 5, 5);
+        notSelectedCloseTab = spritesheet.getSprite(16, 0, 5, 5);
+        
         notSavedTab = spritesheet.getSprite(16, 5, 5, 5);
+        notSelectedNotSavedTab = spritesheet.getSprite(16, 5, 5, 5);
         
         lock = spritesheet.getSprite(16, 10, 5, 5);
         
@@ -247,6 +253,25 @@ public class Main implements Runnable, Tickable {
         notSavedTab = Colors.swapColor(notSavedTab, Colors.textLightDefault, Colors.textLight);
         
         lock = Colors.swapColor(lock, Colors.textLightDefault, Colors.textLight);
+        
+        /// Change some colors ///
+        
+        final int sub = 30; // subtract
+        
+        int r = Colors.textLight.getRed();
+        int g = Colors.textLight.getGreen();
+        int b = Colors.textLight.getBlue();
+        
+        r -= sub;
+        g -= sub;
+        b -= sub;
+        
+        Color esc = new Color(r, g, b);
+        
+        notSelectedCloseTab = Colors.swapColor(notSelectedCloseTab, Colors.textLightDefault, esc);
+        notSelectedNotSavedTab = Colors.swapColor(notSelectedNotSavedTab, Colors.textLightDefault, esc);
+        
+        ///
         
         ////////
         

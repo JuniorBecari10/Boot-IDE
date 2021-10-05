@@ -50,6 +50,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".cs", Main.spritesheet.getSprite  (48, 16, 16, 16)),
 			new FileType(".py", Main.spritesheet.getSprite  (64, 16, 16, 16)),
 			new FileType(".pyd", Main.spritesheet.getSprite (64, 16, 16, 16)),
+			new FileType(".pyx", Main.spritesheet.getSprite (64, 16, 16, 16)),
 			new FileType(".js", Main.spritesheet.getSprite  (80, 16, 16, 16)),
 			new FileType(".mjs", Main.spritesheet.getSprite (80, 16, 16, 16)),
 			new FileType(".bat", Main.spritesheet.getSprite (96, 16, 16, 16)),
