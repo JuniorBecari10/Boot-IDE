@@ -181,6 +181,8 @@ public class Main implements Runnable, Tickable {
         if (settingsFile.exists())
     		readFile(settingsFile);
         
+        load();
+        
         /*try {
         	String arg = args[0].toLowerCase().contains("boot") || args[0].toLowerCase().contains("ide") ? args[1] : args[0];
         	
@@ -221,8 +223,6 @@ public class Main implements Runnable, Tickable {
         ////////
         
         Fonts.initFonts(fntnr, fntbl);*/
-        
-        load();
         
         IDEComponent.toAdd.add(Main.newFile);
 		IDEComponent.toAdd.add(Main.newFolder);

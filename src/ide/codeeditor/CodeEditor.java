@@ -4449,6 +4449,8 @@ public class CodeEditor extends IDEComponent {
 		
 		if (!ListableFile.fileHasExtension(ext)) ext = editing.getRegent().getRegent().getName();
 		
+		fs = colorNoExtensions(ext, chars, fs);
+		
 		if (editing == null) return fs;
 		if ((isBinary(ext) || !isFormatSupported(ext)) && !(ext.equalsIgnoreCase(".ini") && ext.equalsIgnoreCase(".make") && ext.equalsIgnoreCase(".mk") && ext.equalsIgnoreCase(".mak") && editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") && editing.getRegent().getRegent().getName().equalsIgnoreCase("dockerfile"))) return fs;
 		
@@ -4456,11 +4458,10 @@ public class CodeEditor extends IDEComponent {
 		
 		fs = colorVariablesAndObjects(ext, chars, fs); // resolver o problema de não colorir arquivos sem extensão
 		fs = colorMethods(ext, chars, fs);
-		fs = colorKeywords(ext, chars, fs);
 		fs = colorNumbers(ext, chars, fs);
+		fs = colorKeywords(ext, chars, fs);
 		fs = colorSymbols(ext, chars, fs);
 		fs = colorExtras(ext, chars, fs);
-		fs = colorNoExtensions(ext, chars, fs);
 		fs = colorComments(ext, chars, fs);
 		
 		/////////////////////////////////////////////////////
