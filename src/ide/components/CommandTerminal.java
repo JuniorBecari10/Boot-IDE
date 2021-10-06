@@ -85,7 +85,9 @@ public class CommandTerminal extends IDEComponent {
 			"lorem int:num_words", "ordertab int:tab_from int:tab_to",
 			"setcursorpos int:x int:y",
 			"gengetter str:lang str:variable_name str:variable_type",
-			"gensetter str:lang str:variable_name str:variable_type" };
+			"gensetter str:lang str:variable_name str:variable_type",
+			"gensnippet cs/csmain str:class_name str:namespace"
+			};
 	
 	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "reloadconfigfile",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag",
@@ -97,7 +99,9 @@ public class CommandTerminal extends IDEComponent {
 			"lorem", "ordertab",
 			"setcursorpos",
 			"gengetter",
-			"gensetter" };
+			"gensetter",
+			"gensnippet"
+			};
 	
 	public static List<String> commandHints = new ArrayList<>();
 	
@@ -885,7 +889,7 @@ public class CommandTerminal extends IDEComponent {
 					
 					break;
 					
-				case "cs":
+				/*case "cs":
 					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname, "{", "    ", "    public class Program", "    {", "        ", "    }", "}"};
 					
 					strs = csstrs;
@@ -897,7 +901,7 @@ public class CommandTerminal extends IDEComponent {
 					
 					strs = csmstrs;
 					
-					break;
+					break;*/
 					
 				case "cpp":
 					String[] cppstrs = { "#include <iostream>", "", "using namespace std;" };
@@ -1271,6 +1275,57 @@ public class CommandTerminal extends IDEComponent {
 				}
 				
 				//Main.editor.cursorY += strss.length - 1;
+				
+				Main.editor.editing.setSaved(false);
+				
+				break;
+				
+			case "gensnippet":
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
+				
+				String[] strs1 = { };
+				
+				String classname = args[1];
+				String namespace = args[2];
+				
+				switch (args[0].toLowerCase()) {
+				
+				case "cs":
+					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + namespace, "{", "    ", "    public class " + classname, "    {", "        ", "    }", "}"};
+					
+					strs1 = csstrs;
+					
+					break;
+					
+				case "csmain":
+					String[] csmstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + namespace, "{", "    ", "    public class " + classname, "    {", "        ", "        static void Main(string[] args)", "        {", "            ", "        }", "    }", "}"};
+					
+					strs1 = csmstrs;
+					
+					break;
+				}
+				
+				if (strs1.length == 0) return;
+				
+				for (int i = 0; i < strs1.length - 1; i++) {
+					StringBuilder spaces = new StringBuilder();
+					
+					for (int j = 0; j < Main.editor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
+						spaces.append(' ');
+					
+					Main.editor.addNewLine(Main.editor.cursorY - 1, spaces.toString());
+				}
+				
+				for (int i = 0; i < strs1.length; i++) {
+					StringBuilder bb = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get((Main.editor.cursorY - 1) + i).getChars())));
+					
+					bb.append(strs1[i]);
+					
+					Main.editor.register(bb, (Main.editor.cursorY - 1) + i);
+				}
+				
+				//Main.editor.cursorY += strs.length - 1;
 				
 				Main.editor.editing.setSaved(false);
 				
