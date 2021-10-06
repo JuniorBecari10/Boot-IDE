@@ -1695,7 +1695,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);			// !(lines.get(getLineIndex(chars)).getFonts().get(i + s.length()).getFont().equals(Fonts.methodsNormal))
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}	
@@ -1708,7 +1708,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);			// !(lines.get(getLineIndex(chars)).getFonts().get(i + s.length()).getFont().equals(Fonts.methodsNormal))
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}	
@@ -1732,7 +1732,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -1880,7 +1880,7 @@ public class CodeEditor extends IDEComponent {
 					indxs = findWord(new String(chars), s);
 					
 					for (Integer i : indxs) {
-						if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+						if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 						
 						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 					}
@@ -1892,7 +1892,7 @@ public class CodeEditor extends IDEComponent {
 					indxs = findWord(new String(chars), s);
 					
 					for (Integer i : indxs) {
-						if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+						if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 						
 						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 					}
@@ -2222,7 +2222,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2376,7 +2376,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2389,7 +2389,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2402,7 +2402,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s); // descobrir pq algumas coisas não colorem
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2416,7 +2416,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s); // descobrir pq algumas coisas não colorem
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2429,7 +2429,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2449,7 +2449,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2462,7 +2462,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2475,7 +2475,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2491,7 +2491,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2501,7 +2501,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2553,7 +2553,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);				// TODO - tomar cuidado em colorir tags em HTML mesmo dentro da JSPart ou CssPart viu
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2566,7 +2566,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2578,7 +2578,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2590,7 +2590,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2610,7 +2610,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2620,7 +2620,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2735,7 +2735,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2748,7 +2748,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 					
@@ -2763,7 +2763,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset	
 				}
@@ -2776,7 +2776,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2789,7 +2789,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2811,7 +2811,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2873,7 +2873,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset	
 				}
@@ -2886,7 +2886,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 				}
@@ -2899,7 +2899,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 				}
@@ -2909,7 +2909,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -2947,7 +2947,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 				}
@@ -3314,7 +3314,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -3328,7 +3328,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -3341,7 +3341,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 				}
@@ -3353,7 +3353,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -3366,7 +3366,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -3379,7 +3379,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -3392,7 +3392,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -3440,7 +3440,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -3480,7 +3480,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 				}
@@ -3813,7 +3813,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -3825,7 +3825,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if (i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1])) || (chars[i - 1] == '_' || chars[i + s.length()] == '_')))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
