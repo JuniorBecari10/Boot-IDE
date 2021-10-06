@@ -2176,16 +2176,6 @@ public class CodeEditor extends IDEComponent {
 					
 					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				}
-				
-				for (String s : units) { // colorir tags
-					indxs = findWord(new String(chars), s);
-					
-					for (Integer i : indxs) {
-						if (i - 1 > 0 && !isNumber(chars[i - 1])) continue;
-						
-						fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
-					}
-				}
 			}
 			
 			fs = colorMethods(ext, chars, fs);
@@ -3583,6 +3573,7 @@ public class CodeEditor extends IDEComponent {
 				for (Integer i : indxs) {
 					if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
 					
+					if (i > 0 && Character.isLetter(chars[i - 1])) continue;
 					//if ((i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) && !(ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))) continue;
 					//if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i + s.length()])) continue;
 					
@@ -3816,6 +3807,16 @@ public class CodeEditor extends IDEComponent {
 					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+			
+			for (String s : units) { // colorir tags
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if (i - 1 > 0 && !isNumber(chars[i - 1])) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
 				}
 			}
 		}
