@@ -85,7 +85,6 @@ public class Fonts {
          normal = Fonts.initFont(font1);
          bold = Fonts.initFont(font2);
          
-         System.out.println(Colors.keywords);
          keywordsNormal = Fonts.initFont(normal, Color.white, Colors.keywords); // original: (204, 108, 29)
          keywordsBold = Fonts.initFont(bold, Color.white, Colors.keywords);
         

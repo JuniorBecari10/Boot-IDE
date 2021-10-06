@@ -618,8 +618,6 @@ public class Main implements Runnable, Tickable {
     			int wdr = 15 + Main.baseFolder.getName().length() * 12;
     			final int hdr = 70;
     			
-    			System.out.println(wdr);
-    			
     			if (wdr < 165) wdr = 165;
     			
     			Rectangle intersection = new Rectangle(xdr, ydr, wdr, hdr).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
