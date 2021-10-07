@@ -3644,8 +3644,8 @@ public class CodeEditor extends IDEComponent {
 				if ((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s == "@" || s == "#")) continue;
 				if ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".xhtml")) && (s == "-")) continue;
 				
-				// Remover #, mas não da lista
-				if (s == "#") continue;
+				// Remover # e \, mas não da lista
+				if (s == "#" || s == "\\") continue;
 				
 				for (Integer i : indxs)
 					fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
@@ -3668,10 +3668,32 @@ public class CodeEditor extends IDEComponent {
 		if (!(ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".md"))) {
 			indxs = findWord(new String(chars), Character.toString((char) 34)); // colorir strings
 			
+			List<Integer> removeIndxs = new ArrayList<>();
+			
+			for (Integer i : indxs) {
+				if (i <= 0) continue;
+				
+				if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
+			}
+			
+			indxs.removeAll(removeIndxs);
+			
 			for (int i = 0; i < indxs.size() - 1; i += 2)
 				fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 			
+			///
+			
 			indxs = findWord(new String(chars), "`"); // colorir strings
+			
+			removeIndxs = new ArrayList<>();
+			
+			for (Integer i : indxs) {
+				if (i <= 0) continue;
+				
+				if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
+			}
+			
+			indxs.removeAll(removeIndxs);
 			
 			for (int i = 0; i < indxs.size() - 1; i += 2)
 				fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
@@ -3698,7 +3720,15 @@ public class CodeEditor extends IDEComponent {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 			indxs = findWord(new String(chars), Character.toString((char) 39)); // colorir chars
-	
+			
+			removeIndxs = new ArrayList<>();
+			
+			for (Integer i : indxs) {
+				if (i <= 0) continue;
+				
+				if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
+			}
+			
 			for (int i = 0; i < indxs.size() - 1; i += 2)
 				fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 		}
@@ -3826,7 +3856,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".mjs") || ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".tsx")) {
-			for (String s : cssTags) { // colorir tags
+			for (String s : tags) { // colorir tags
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
@@ -3835,6 +3865,8 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
 			}
+			
+			fs = colorSymbols(ext, chars, fs); // eu sei que n pode
 		}
 		
 		if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyx") || ext.equalsIgnoreCase(".ipynb") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".zig")) {
