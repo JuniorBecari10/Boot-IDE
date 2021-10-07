@@ -3644,8 +3644,8 @@ public class CodeEditor extends IDEComponent {
 				if ((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s == "@" || s == "#")) continue;
 				if ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".xhtml")) && (s == "-")) continue;
 				
-				// Remover # e \, mas não da lista
-				if (s == "#" || s == "\\") continue;
+				// Remover #, mas não da lista
+				if (s == "#") continue;			// talvez remover \
 				
 				for (Integer i : indxs)
 					fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
@@ -3866,7 +3866,27 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			fs = colorSymbols(ext, chars, fs); // eu sei que n pode
+			// colorir manualmente <>
+			
+			String s = "<";
+			
+			indxs = findWord(new String(chars), s);
+			
+			for (Integer i : indxs) {
+				if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
+				
+				fs = color(i, i + s.length(), new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+			
+			s = ">";
+			
+			indxs = findWord(new String(chars), s);
+			
+			for (Integer i : indxs) {
+				if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
+				
+				fs = color(i, i + s.length(), new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
 		}
 		
 		if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyx") || ext.equalsIgnoreCase(".ipynb") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".zig")) {
