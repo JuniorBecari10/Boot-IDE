@@ -770,7 +770,7 @@ public class Main implements Runnable, Tickable {
     	screen.requestFocus();
     	
     	long lastTime = System.nanoTime(); // Release v3.9.1 - 14/08/2021 - 14:51
-    	double targetFps = 60.0;
+    	double targetFps = 120.0; // 60
     	double ns = 1E9 / targetFps;
     	double delta = 0;
     	
