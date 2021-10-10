@@ -1850,30 +1850,15 @@ public class CodeEditor extends IDEComponent {
 			if (indxs.size() > 0)
 				isCssPart = true;
 			
-			indxs = findWord(new String(chars), "</style");
-			
-			if (indxs.size() > 0)
-				isCssPart = false;
-			
 			indxs = findWord(new String(chars), "<script");
 			
 			if (indxs.size() > 0)
 				isJSPart = true;
 			
-			indxs = findWord(new String(chars), "</script");
-			
-			if (indxs.size() > 0)
-				isJSPart = false;
-			
 			indxs = findWord(new String(chars), "<?php");
 			
 			if (indxs.size() > 0)
 				isPhpPart = true;
-			
-			indxs = findWord(new String(chars), "?>");
-			
-			if (indxs.size() > 0)
-				isPhpPart = false;
 			
 			if (isPhpPart) {
 				for (String s : phpKeys) { // colorir keywordss
@@ -2179,6 +2164,21 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			fs = colorMethods(ext, chars, fs);
+			
+			indxs = findWord(new String(chars), "</style");
+			
+			if (indxs.size() > 0)
+				isCssPart = false;
+			
+			indxs = findWord(new String(chars), "</script");
+			
+			if (indxs.size() > 0)
+				isJSPart = false;
+			
+			indxs = findWord(new String(chars), "?>");
+			
+			if (indxs.size() > 0)
+				isPhpPart = false;
 			
 			break;
 			
