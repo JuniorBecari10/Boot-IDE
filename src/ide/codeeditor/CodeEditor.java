@@ -6713,8 +6713,8 @@ public class CodeEditor extends IDEComponent {
 //			return; // pra n renderizar texto, aquele monte de coisa estranha
 //		}
 		
-		g.setColor(Colors.backgroundLight); // TODO é essa aqui
-		g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4) + 1);
+		g.setColor(Colors.backgroundLight); // TODO é essa aqui a linha que atravessa a tela
+		g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4));
 			
 			/*g.setColor(Colors.backgroundLight);
 			g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, 49, FONT_SIZE + (FONT_SIZE / 4) + 1);*/
@@ -6808,7 +6808,7 @@ public class CodeEditor extends IDEComponent {
 		// Desenhar cursor
 		if (showCursor && !WindowInput.isDeactivated()) {
 			g.setColor(Colors.cursor);
-			g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - 1, FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + 1);
+			g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy, FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + 1);
 		}
 		
 		for (RightClickOption r : autocompletes)
