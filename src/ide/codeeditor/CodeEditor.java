@@ -281,7 +281,7 @@ public class CodeEditor extends IDEComponent {
 			"section", "select", "small", "source", "span", "strike", "strong", "style", "sup", "svg", "table",
 			"tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt",
 			"u", "ul", "var", "video", "wbr", "applet", "important", "screen", "and", "or", "moz", "webkit", "ms", "mixin", "webview",
-			"user", "select", "drag", "deg", "rad", "src" /* TODO colocar mais desses ultimos */
+			"user", "select", "drag", "deg", "rad", "src" /* TODO colocar mais desses ultimos */ // TODO talvez se der erro, colorir center de novo
 	};
 	
 	public static final String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
@@ -1481,8 +1481,6 @@ public class CodeEditor extends IDEComponent {
 								c > 0) {
 							c--;
 							len++;
-							
-							System.out.println(foundLetter);
 							
 							if (Character.isLetter(chars[c])) foundLetter = true;
 							
