@@ -59,6 +59,8 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	private ListableFile regent;
 	
+	private final int animSpeed = 2;
+	
 	public boolean isReadOnly;
 	
 	public Tab(int x, ListableFile regent) {
@@ -81,7 +83,7 @@ public class Tab extends IDEComponent implements Serializable {
 				drawW = 0;
 				
 				while (drawW < WIDTH) {
-					drawW += 2;
+					drawW += animSpeed;;
 					
 					button.setX((x + Main.editor.tabScr + drawW) - 20);
 					
@@ -157,7 +159,7 @@ public class Tab extends IDEComponent implements Serializable {
 		new Thread() {
 			public void run() {
 				while (drawW > 0) {
-					drawW -= 2;
+					drawW -= animSpeed;;
 					
 					button.setX((x + Main.editor.tabScr + drawW) - 20);
 					

@@ -1482,6 +1482,8 @@ public class CodeEditor extends IDEComponent {
 							c--;
 							len++;
 							
+							System.out.println(foundLetter);
+							
 							if (Character.isLetter(chars[c])) foundLetter = true;
 							
 							if (chars[c] == ' ' && !foundLetter) {
@@ -3688,7 +3690,7 @@ public class CodeEditor extends IDEComponent {
 			for (String s : syms) {
 				indxs = findWord(new String(chars), s);
 				if ((ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) && s != "[" && s != "]") continue;
-				if (!isCssPart && ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".ejs")) && (s != "<" && s != ">" && s != "/" && s != "="))) continue;
+				//if (!isCssPart && ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".ejs")) && !isJSPart && (s != "<" && s != ">" && s != "/" && s != "="))) continue;
 				if (((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs"))) && isCssPart)) && (s == "*" || s == "-")) continue;
 				if ((ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd")) && (s == "+" || s == "@")) continue;
 				if ((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s == "@" || s == "#")) continue;
