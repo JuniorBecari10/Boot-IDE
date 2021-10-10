@@ -1436,6 +1436,33 @@ public class CodeEditor extends IDEComponent {
 					//addautocomplete.add(new AutoComplete(new String(sliceCharArray(c, c + len, chars)), AutoCompleteType.VARIABLE));
 					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				}
+				
+				indxs = findWord(new String(chars), "f`"); // antes de <palavra>
+				
+				for (Integer i : indxs) {
+					int c = i;
+					int len = 0;
+					
+					boolean hasSpace = false;
+						
+					while (c < chars.length && 
+							c + len < chars.length &&
+							c > 0) {
+						c--;
+						len++;
+						
+						if (chars[c] == ' ') {
+							if (hasSpace)
+								break;
+							
+							if (!hasSpace)
+								hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
+						}
+					}
+					
+					//addautocomplete.add(new AutoComplete(new String(sliceCharArray(c, c + len, chars)), AutoCompleteType.VARIABLE));
+					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}
 			}
 			
 			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1"))) {
@@ -1446,15 +1473,18 @@ public class CodeEditor extends IDEComponent {
 						int c = i;
 						int len = 0;
 						
+						boolean foundLetter = false;
 						boolean hasSpace = false;
 							
-						while (c < chars.length && 
+						while (c < chars.length &&
 								c + len < chars.length &&
 								c > 0) {
 							c--;
 							len++;
 							
-							if (chars[c] == ' ') {
+							if (Character.isLetter(chars[c])) foundLetter = true;
+							
+							if (chars[c] == ' ' && !foundLetter) {
 								if (hasSpace)
 									break;
 								
