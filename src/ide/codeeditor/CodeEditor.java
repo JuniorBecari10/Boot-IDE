@@ -2550,6 +2550,16 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
+			String str = "exports"; // gambiarra pura
+			
+			indxs = findWord(new String(chars), str);				// TODO - tomar cuidado em colorir tags em HTML mesmo dentro da JSPart ou CssPart viu
+			
+			for (Integer i : indxs) {
+				if ((i + str.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + str.length()]) || (chars[i - 1] == '_' || chars[i + str.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
+				
+				fs = color(i, i + str.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+			
 			break;
 			
 		case ".lua":
@@ -3309,6 +3319,16 @@ public class CodeEditor extends IDEComponent {
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
+			}
+			
+			str = "exports";
+			
+			indxs = findWord(new String(chars), str);				// TODO - tomar cuidado em colorir tags em HTML mesmo dentro da JSPart ou CssPart viu
+			
+			for (Integer i : indxs) {
+				if ((i + str.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + str.length()]) || (chars[i - 1] == '_' || chars[i + str.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
+				
+				fs = color(i, i + str.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
 			break;
