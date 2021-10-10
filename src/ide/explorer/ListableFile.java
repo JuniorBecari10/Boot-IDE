@@ -40,6 +40,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 	public static FileType[] types = {
 			new FileType("readme.md", Main.spritesheet.getSprite (752,32,16,16)),
+			new FileType("package.json",Main.spritesheet.getSprite(576,16,16,16)),
 			
 			new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16)),
 			new FileType(".class",Main.spritesheet.getSprite(272,32, 16, 16)),
