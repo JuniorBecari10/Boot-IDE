@@ -181,8 +181,6 @@ public class Main implements Runnable, Tickable {
         if (settingsFile.exists())
     		readFile(settingsFile);
         
-        load();
-        
         /*try {
         	String arg = args[0].toLowerCase().contains("boot") || args[0].toLowerCase().contains("ide") ? args[1] : args[0];
         	
@@ -453,8 +451,11 @@ public class Main implements Runnable, Tickable {
 					else if (i == 5)
 						Main.editor.tabScr = Integer.parseInt(s);
 					
-					else if (i == 6)
+					else if (i == 6) {
 						Main.explorer.setDrag(Integer.parseInt(s));
+						
+						load();
+					}
 					
 					if (i > 6) {
 						//if (!ListableFile.isPath(s)) continue;
