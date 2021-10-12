@@ -402,10 +402,10 @@ public class CodeEditor extends IDEComponent {
 			"SETLOCAL", "ENDLOCAL", "MAKE", "YARN", "COLOR" };
 	
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
-	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".pyx", ".ipynb", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".tsx", ".go", ".r", ".pl", ".t", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".pas", ".pp", ".scala", ".dart", ".zig",
+	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".pyx", ".ipynb", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".tsx", ".go", ".r", ".pl", ".t", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".mm", ".pas", ".pp", ".scala", ".dart", ".zig",
 			".html", ".xhtml", ".htm", ".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".mak", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp", ".prefs", ".classpath",
 			".project", ".sln",
-			".JAVA", ".C", ".CPP", ".CC", ".CS", ".PY", ".PYX", ".IPYNB", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HH", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".TSX", ".GO", ".R", ".PL", ".T", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
+			".JAVA", ".C", ".CPP", ".CC", ".CS", ".PY", ".PYX", ".IPYNB", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HH", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".TSX", ".GO", ".R", ".PL", ".T", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".MM", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
 			".HTML", ".XHTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP", ".PREFS", ".CLASSPATH",
 			".PROJECT", ".SLN" };
 	
@@ -979,6 +979,7 @@ public class CodeEditor extends IDEComponent {
 			case ".fs" -> fsKeys;
 			case ".coffee" -> cfKeys;
 			case ".m" -> objKeys;
+			case ".mm" -> objKeys;
 			case ".pas" -> pasKeys;
 			case ".pp" -> pasKeys;
 			case ".scala" -> scaKeys;
@@ -1179,6 +1180,7 @@ public class CodeEditor extends IDEComponent {
 		case ".fs" -> "F#";
 		case ".coffee" -> "CoffeeScript";
 		case ".m" -> "Objective-C";
+		case ".mm" -> "Objective-C++";
 		case ".pas" -> "Pascal";
 		case ".pp" -> "Pascal";
 		case ".scala" -> "Scala";
@@ -3072,6 +3074,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".m":
+		case ".mm":
 			for (String s : objKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
@@ -3754,6 +3757,7 @@ public class CodeEditor extends IDEComponent {
 		case ".json":
 		case ".fs":
 		case ".m":
+		case ".mm":
 		case ".pp":
 		case ".pas":
 		case ".scala":
@@ -3928,6 +3932,7 @@ public class CodeEditor extends IDEComponent {
 		case ".tsx":
 		case ".go":
 		case ".m":
+		case ".mm":
 		case ".ld":
 		case ".scala":
 		case ".scss":
