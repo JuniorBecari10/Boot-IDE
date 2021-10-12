@@ -1758,24 +1758,6 @@ public class CodeEditor extends IDEComponent {
 		case ".htm":
 		case ".xhtml":
 		case ".html":
-			for (String s : specialHtmlVariables) { // colorir tags
-				indxs = findWord(new String(chars), s);
-				
-				for (Integer i : indxs) {
-					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
-					
-					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
-				}
-			}		 
-			
-			for (String s : tags) { // colorir tags
-				indxs = findWord(new String(chars), s);
-				
-				for (Integer i : indxs) {
-					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
-				}
-			}
-			
 			if (isCssPart || isJSPart || isPhpPart)
 				for (String s : nums) { // colorir números
 					indxs = findWord(new String(chars), s);
@@ -2209,6 +2191,24 @@ public class CodeEditor extends IDEComponent {
 			
 			if (indxs.size() > 0)
 				isPhpPart = false;
+			
+			for (String s : specialHtmlVariables) { // colorir tags
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}		 
+			
+			for (String s : tags) { // colorir tags
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
 			
 			break;
 			
@@ -3272,60 +3272,60 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (!(ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))) {
-			for (String s : nums) { // colorir números
-				indxs = findWord(new String(chars), s); // TODO
+		if ((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log")) && !(isCssPart || isJSPart || isPhpPart)) return fs;
+		
+		for (String s : nums) { // colorir números
+			indxs = findWord(new String(chars), s); // TODO
+			
+			for (Integer i : indxs) {
+				if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
 				
-				for (Integer i : indxs) {
-					if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
-					
-					//if (i > 0 && (Character.isLetter(chars[i - 1]) && !fs.get(i - 1).getColor().equals(Colors.numbers))) continue;
-					//if ((i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) && !(ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))) continue;
-					//if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i + s.length()])) continue;
-					
-					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-				}
+				//if (i > 0 && (Character.isLetter(chars[i - 1]) && !fs.get(i - 1).getColor().equals(Colors.numbers))) continue;
+				//if ((i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) && !(ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))) continue;
+				//if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i + s.length()])) continue;
+				
+				fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 			}
+		}
 			
-			indxs = findWord(new String(chars), "0x");
+		indxs = findWord(new String(chars), "0x");
 			
-			int len = 0;
+		int len = 0;
 
-			for (Integer i : indxs) {
-				while (i + len < chars.length &&
-						chars[i + len] != ' ' &&
-						chars[i + len] != '[' &&
-						chars[i + len] != ']' &&
-						chars[i + len] != '(' &&
-						chars[i + len] != ')' &&
-						chars[i + len] != ',' &&
-						chars[i + len] != ';' &&
-						chars[i + len] != '.' &&
-						chars[i + len] != ':')
-						len++;
+		for (Integer i : indxs) {
+			while (i + len < chars.length &&
+					chars[i + len] != ' ' &&
+					chars[i + len] != '[' &&
+					chars[i + len] != ']' &&
+					chars[i + len] != '(' &&
+					chars[i + len] != ')' &&
+					chars[i + len] != ',' &&
+					chars[i + len] != ';' &&
+					chars[i + len] != '.' &&
+					chars[i + len] != ':')
+					len++;
 
-				fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-			}
-			
-			indxs = findWord(new String(chars), "#");
-			
-			len = 0;
+			fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+		}
+		
+		indxs = findWord(new String(chars), "#");
+		
+		len = 0;
 
-			for (Integer i : indxs) {
-				while (i + len < chars.length &&
-						chars[i + len] != ' ' &&
-						chars[i + len] != '[' &&
-						chars[i + len] != ']' &&
-						chars[i + len] != '(' &&
-						chars[i + len] != ')' &&
-						chars[i + len] != ',' &&
-						chars[i + len] != ';' &&
-						chars[i + len] != '.' &&
-						chars[i + len] != ':')
-						len++;
+		for (Integer i : indxs) {
+			while (i + len < chars.length &&
+					chars[i + len] != ' ' &&
+					chars[i + len] != '[' &&
+					chars[i + len] != ']' &&
+					chars[i + len] != '(' &&
+					chars[i + len] != ')' &&
+					chars[i + len] != ',' &&
+					chars[i + len] != ';' &&
+					chars[i + len] != '.' &&
+					chars[i + len] != ':')
+					len++;
 
-				fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-			}
+			fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 		}
 	
 		return fs;
@@ -3339,11 +3339,11 @@ public class CodeEditor extends IDEComponent {
 		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".bf") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log")) return fs;
 		
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
-			
+			System.out.println(isJSPart);
 			for (String s : syms) {
 				indxs = findWord(new String(chars), s);
 				if ((ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) && s != "[" && s != "]") continue;
-				//if (!isCssPart && ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".ejs")) && !isJSPart && (s != "<" && s != ">" && s != "/" && s != "="))) continue;
+				if (!(isCssPart || isJSPart || isPhpPart) && ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".ejs")) && !isJSPart && (s != "<" && s != ">" && s != "/" && s != "="))) continue;
 				if (((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs"))) && isCssPart)) && (s == "*" || s == "-")) continue;
 				if ((ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd")) && (s == "+" || s == "@")) continue;
 				if ((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s == "@" || s == "#")) continue;
@@ -5106,7 +5106,9 @@ public class CodeEditor extends IDEComponent {
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
 		if (tabs == null) tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
-				
+		
+		width = Main.screen.getWidth() - x;
+		
 		/*for (Tab i : tabs) {
 			for (Tab j : tabs) {
 				if (i.getRegent() == j.getRegent() && i != j)
