@@ -5333,7 +5333,6 @@ public class CodeEditor extends IDEComponent {
 						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, width, Texts.copy, (s) -> CommandTerminal.runCommand(s), "copy");
 						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 180, width, Texts.cut, (s) -> CommandTerminal.runCommand(s), "cut");
 						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 210, width, Texts.delete, (s) -> CommandTerminal.runCommand(s), "del");
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 330, width, Texts.deselect, (s) -> CommandTerminal.runCommand(s), "deselect");
 					}
 					
 					if (Main.baseFolder != null && editing != null) {
@@ -5342,6 +5341,9 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 			}
+			
+			if (selecting)
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), isReadOnly ? MouseInput.getMouseY() + 120 : MouseInput.getMouseY() + 330, width, Texts.deselect, (s) -> CommandTerminal.runCommand(s), "deselect");
 		}
 		
 		/*if (KeyInput.isAltGrDown() && !SetFileName.added && !CommandTerminal.active) {
