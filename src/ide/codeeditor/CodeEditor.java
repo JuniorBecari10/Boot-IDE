@@ -6002,7 +6002,7 @@ public class CodeEditor extends IDEComponent {
 				
 				// Add AutoComplete
 				
-				if ((Character.isLetter(c) || isNumber(c) || KeyInput.getCharPressed() == 46) && !isReadOnly && !alternateTabsMode) { // adicionar esse código no backspace, e se tiver espaços na frente, a keyword vai no lugar errado
+				if ((Character.isLetter(c) || isNumber(c) || KeyInput.getCharPressed() == 46) && !isReadOnly && !alternateTabsMode && editing != null) { // adicionar esse código no backspace, e se tiver espaços na frente, a keyword vai no lugar errado
 					String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent()) ? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent())) : getKeywordsSpecial(editing.getRegent().getRegent().getName());
 					
 					if (autoc != null) {
