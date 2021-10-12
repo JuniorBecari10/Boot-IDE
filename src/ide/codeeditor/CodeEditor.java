@@ -4058,8 +4058,8 @@ public class CodeEditor extends IDEComponent {
 			
 			if (!hasOutside) return fs;*/
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (fs.size() == 0) break;
 				
@@ -4084,8 +4084,8 @@ public class CodeEditor extends IDEComponent {
 			
 			indxs = findWord(new String(chars), "//"); // colorir comentários de uma linha
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (fs.size() == 0) break;
 				
@@ -4100,8 +4100,8 @@ public class CodeEditor extends IDEComponent {
 		case ".cmd":
 			indxs = findWord(new String(chars), "REM"); // colorir comentários de uma linha
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
@@ -4113,8 +4113,8 @@ public class CodeEditor extends IDEComponent {
 		case ".asm":
 			indxs = findWord(new String(chars), ";"); // colorir comentários de uma linha
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
@@ -4128,8 +4128,8 @@ public class CodeEditor extends IDEComponent {
 		case ".hs":
 			indxs = findWord(new String(chars), "--"); // colorir comentários de uma linha
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
@@ -4157,8 +4157,8 @@ public class CodeEditor extends IDEComponent {
 		case ".lock":
 			indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
@@ -4169,9 +4169,9 @@ public class CodeEditor extends IDEComponent {
 		case ".php":
 			indxs = findWord(new String(chars), "//"); // colorir comentários de uma linha
 			
-			for (Integer i : indxs)
+			/*for (Integer i : indxs)
 				if (isBetween(new String(chars), i, '"', '"')) return fs;
-			
+			*/
 			if (fs.size() == 0) break;
 				
 			if (indxs.size() != 0)
@@ -4179,8 +4179,8 @@ public class CodeEditor extends IDEComponent {
 			
 			indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
@@ -4191,8 +4191,8 @@ public class CodeEditor extends IDEComponent {
 		case ".md":
 			indxs = findWord(new String(chars), "[//]: #"); // colorir comentários de uma linha
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
@@ -4200,8 +4200,8 @@ public class CodeEditor extends IDEComponent {
 			
 			indxs = findWord(new String(chars), "[]: #"); // colorir comentários de uma linha
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (fs.size() == 0 || indxs.size() == 0) break;
 			
@@ -4245,8 +4245,8 @@ public class CodeEditor extends IDEComponent {
 			indxs = findWord(new String(chars), "/*");						// colorir comentários multi-linha - caracteres diferentes
 			List<Integer> finals = findWord(new String(chars), "*/");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (indxs.size() > 0) {
 				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
@@ -4266,8 +4266,8 @@ public class CodeEditor extends IDEComponent {
 			
 			indxs = findWord(new String(chars), "*/");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			for (Integer i : indxs) {
 				if (i + "*/".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "*/".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "*/".length()] == '_'))) continue;
@@ -4281,8 +4281,8 @@ public class CodeEditor extends IDEComponent {
 			indxs = findWord(new String(chars), "--[[");						// colorir comentários multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "--]]");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (indxs.size() > 0) {
 				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
@@ -4302,8 +4302,8 @@ public class CodeEditor extends IDEComponent {
 			
 			indxs = findWord(new String(chars), "--]]");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			for (Integer i : indxs) {
 				if (i + "--]]".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "--]]".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "--]]".length()] == '_'))) continue;
@@ -4316,8 +4316,8 @@ public class CodeEditor extends IDEComponent {
 			indxs = findWord(new String(chars), "=begin");						// colorir comentários multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "=end");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (indxs.size() > 0) {
 				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
@@ -4337,8 +4337,8 @@ public class CodeEditor extends IDEComponent {
 			
 			indxs = findWord(new String(chars), "=end");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			for (Integer i : indxs) {
 				if (i + "=end".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "=end".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "=end".length()] == '_'))) continue;
@@ -4372,8 +4372,8 @@ public class CodeEditor extends IDEComponent {
 			
 			indxs = findWord(new String(chars), "=#");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			for (Integer i : indxs) {
 				if (i + "=#".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "=#".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "=#".length()] == '_'))) continue;
@@ -4387,8 +4387,8 @@ public class CodeEditor extends IDEComponent {
 			indxs = findWord(new String(chars), "{-");						// colorir comentários multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "-}");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (indxs.size() > 0) {
 				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
@@ -4408,8 +4408,8 @@ public class CodeEditor extends IDEComponent {
 			
 			indxs = findWord(new String(chars), "-}");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			for (Integer i : indxs) {
 				if (i + "-}".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "-}".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "-}".length()] == '_'))) continue;
@@ -4424,8 +4424,8 @@ public class CodeEditor extends IDEComponent {
 			indxs = findWord(new String(chars), "(*");						// colorir comentários multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "*)");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (indxs.size() > 0) {
 				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
@@ -4445,8 +4445,8 @@ public class CodeEditor extends IDEComponent {
 			
 			indxs = findWord(new String(chars), "*)");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			for (Integer i : indxs) {
 				if (i + "*)".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "*)".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "*)".length()] == '_'))) continue;
@@ -4461,9 +4461,9 @@ public class CodeEditor extends IDEComponent {
 		case ".pyd":
 			indxs = findWord(new String(chars), "\'\'\'");						// colorir comentários multi-linha - caracteres iguais
 			
-			for (Integer i : indxs)
+			/*for (Integer i : indxs)
 				if (isBetween(new String(chars), i, '"', '"')) return fs;
-			
+			*/
 			if (indxs.size() > 0 && !isMultilineCommenting) { // provavelmente esse é o abrimento
 				fs = color(indxs.get(0), indxs.size() > 1 ? indxs.get(1) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 				isMultilineCommenting = true;
@@ -4495,8 +4495,8 @@ public class CodeEditor extends IDEComponent {
 			indxs = findWord(new String(chars), "<!--");						// colorir comentários multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "-->");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (indxs.size() > 0) {
 				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
@@ -4533,8 +4533,8 @@ public class CodeEditor extends IDEComponent {
 				
 				indxs = findWord(new String(chars), "*/");
 				
-				for (Integer i : indxs)
-					if (isBetween(new String(chars), i, '"', '"')) return fs;
+				/*for (Integer i : indxs)
+					if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 				
 				for (Integer i : indxs) {
 					if (i + "*/".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "*/".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "*/".length()] == '_'))) continue;
@@ -4560,8 +4560,8 @@ public class CodeEditor extends IDEComponent {
 			indxs = findWord(new String(chars), "<!--");						// colorir comentários multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "-->");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			if (indxs.size() > 0) {
 				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
@@ -4578,8 +4578,8 @@ public class CodeEditor extends IDEComponent {
 			
 			indxs = findWord(new String(chars), "-->");
 			
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"')) return fs;
+			/*for (Integer i : indxs)
+				if (isBetween(new String(chars), i, '"', '"')) return fs;*/
 			
 			for (Integer i : indxs) {
 				if (i + "-->".length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + "-->".length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + "-->".length()] == '_'))) continue;
