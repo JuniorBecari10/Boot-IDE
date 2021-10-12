@@ -2227,6 +2227,16 @@ public class CodeEditor extends IDEComponent {
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
+			for (String s : cssTags) { // colorir tags
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+			
 			for (String s : props) { // colorir tags
 				indxs = findWord(new String(chars), s);
 				
@@ -2359,16 +2369,6 @@ public class CodeEditor extends IDEComponent {
 				}
 				
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-			}
-			
-			for (String s : units) { // colorir tags
-				indxs = findWord(new String(chars), s);
-				
-				for (Integer i : indxs) {
-					if (i - 1 > 0 && !isNumber(chars[i - 1])) continue;
-					
-					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
-				}
 			}
 			
 			// Eu sei que a linha de código abaixo infringe a lei do Boot de Código-Fonte bem escrito n° 547, e pode accaretar problemas :/
@@ -3335,7 +3335,7 @@ public class CodeEditor extends IDEComponent {
 				if ((ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) && s != "[" && s != "]") continue;
 				if (((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log")) && !(isCssPart || isJSPart || isPhpPart)) && (s != "<" && s != ">" && s != "/" && s != "=")) continue;
 				//if (!(isCssPart || isJSPart || isPhpPart) && ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".ejs")) && !isJSPart && (s != "<" && s != ">" && s != "/" && s != "="))) continue;
-				if (((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs"))) && isCssPart)) && (s == "*" || s == "-")) continue;
+				if (((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs"))) && isCssPart)) && (s == "*")) continue;
 				if ((ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd")) && (s == "+" || s == "@")) continue;
 				if ((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s == "@" || s == "#")) continue;
 				if ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".xhtml")) && (s == "-")) continue;
@@ -3527,27 +3527,6 @@ public class CodeEditor extends IDEComponent {
 				//if (i + 1 < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + 1]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + 1] == '_'))) continue;
 				
 				fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
-			}
-		}
-		if (ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss")) {
-			for (String s : cssTags) { // colorir tags
-				indxs = findWord(new String(chars), s);
-				
-				for (Integer i : indxs) {
-					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
-					
-					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
-				}
-			}
-			
-			for (String s : units) { // colorir tags
-				indxs = findWord(new String(chars), s);
-				
-				for (Integer i : indxs) {
-					if (i - 1 > 0 && !isNumber(chars[i - 1])) continue;
-					
-					fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs); // tem q dar offset
-				}
 			}
 		}
 		
