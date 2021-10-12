@@ -2177,21 +2177,6 @@ public class CodeEditor extends IDEComponent {
 			
 			fs = colorMethods(ext, chars, fs);
 			
-			indxs = findWord(new String(chars), "</style");
-			
-			if (indxs.size() > 0)
-				isCssPart = false;
-			
-			indxs = findWord(new String(chars), "</script");
-			
-			if (indxs.size() > 0)
-				isJSPart = false;
-			
-			indxs = findWord(new String(chars), "?>");
-			
-			if (indxs.size() > 0)
-				isPhpPart = false;
-			
 			for (String s : specialHtmlVariables) { // colorir tags
 				indxs = findWord(new String(chars), s);
 				
@@ -3339,11 +3324,11 @@ public class CodeEditor extends IDEComponent {
 		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".bf") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log")) return fs;
 		
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
-			System.out.println(isJSPart);
 			for (String s : syms) {
 				indxs = findWord(new String(chars), s);
 				if ((ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) && s != "[" && s != "]") continue;
-				if (!(isCssPart || isJSPart || isPhpPart) && ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".ejs")) && !isJSPart && (s != "<" && s != ">" && s != "/" && s != "="))) continue;
+				if (((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log")) && !(isCssPart || isJSPart || isPhpPart)) && (s != "<" && s != ">" && s != "/" && s != "=")) continue;
+				//if (!(isCssPart || isJSPart || isPhpPart) && ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".ejs")) && !isJSPart && (s != "<" && s != ">" && s != "/" && s != "="))) continue;
 				if (((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs"))) && isCssPart)) && (s == "*" || s == "-")) continue;
 				if ((ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd")) && (s == "+" || s == "@")) continue;
 				if ((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (s == "@" || s == "#")) continue;
@@ -4238,6 +4223,25 @@ public class CodeEditor extends IDEComponent {
 		return fs;
 	}
 	
+	public void resetHTML(char[] chars) {
+		List<Integer> indxs = new ArrayList<>();
+		
+		indxs = findWord(new String(chars), "</style");
+		
+		if (indxs.size() > 0)
+			isCssPart = false;
+		
+		indxs = findWord(new String(chars), "</script");
+		
+		if (indxs.size() > 0)
+			isJSPart = false;
+		
+		indxs = findWord(new String(chars), "?>");
+		
+		if (indxs.size() > 0)
+			isPhpPart = false;
+	}
+	
 	public List<IDEFont> automaticColor(char[] chars, String ext) {
 		extType = "";
 		foundExt = false;
@@ -4281,6 +4285,8 @@ public class CodeEditor extends IDEComponent {
 		fs = colorComments(ext, chars, fs);
 		
 		/////////////////////////////////////////////////////
+		
+		resetHTML(chars);
 		
 		/*for (AutoComplete c : autocomplete) {
 			for (AutoComplete d : autocomplete) {
