@@ -86,6 +86,8 @@ public class Main implements Runnable, Tickable {
     public static Desktop desktop;
     public static String[] args;
     
+    public static boolean alreadyLoaded = false;
+    
     public static boolean hasConfigFile = false;
     public static Language lang;
     
@@ -181,6 +183,7 @@ public class Main implements Runnable, Tickable {
         if (settingsFile.exists())
     		readFile(settingsFile);
         
+        if (!alreadyLoaded)
         	load();
         
         /*try {
@@ -232,6 +235,8 @@ public class Main implements Runnable, Tickable {
     }
     
     public static synchronized void load() {
+    	alreadyLoaded = true;
+    	
     	if (hasConfigFile)
 			ListableFile.readConfigFile(conffile);
     	
@@ -269,8 +274,6 @@ public class Main implements Runnable, Tickable {
         b -= sub;
         
         Color esc = new Color(r, g, b);
-        
-        System.out.println(esc.equals(Colors.textLight));
         
         notSelectedCloseTab = Colors.swapColor(notSelectedCloseTab, Colors.textLightDefault, esc);
         notSelectedNotSavedTab = Colors.swapColor(notSelectedNotSavedTab, Colors.textLightDefault, esc);
