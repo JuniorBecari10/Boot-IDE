@@ -5122,6 +5122,11 @@ public class CodeEditor extends IDEComponent {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
 		if (tabs == null) tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
 		
+		if (tabs.size() > 0)
+			if (tabs.get(0).getX() > x + 10) CommandTerminal.runCommand("resettabscroll");
+		
+		if (tabs.size() == 0) CommandTerminal.runCommand("resettabscroll");
+		
 		width = Main.screen.getWidth() - x;
 		
 		/*for (Tab i : tabs) {
