@@ -237,8 +237,7 @@ public class Main implements Runnable, Tickable {
     public static synchronized void load() {
     	alreadyLoaded = true;
     	
-    	if (hasConfigFile)
-			ListableFile.readConfigFile(conffile);
+    	ListableFile.readConfigFile(conffile);
     	
         Texts.setTexts(lang);
         Fonts.initFonts(fntnr, fntbl);
