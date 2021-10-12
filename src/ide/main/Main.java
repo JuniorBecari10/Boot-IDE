@@ -181,6 +181,8 @@ public class Main implements Runnable, Tickable {
         if (settingsFile.exists())
     		readFile(settingsFile);
         
+        	load();
+        
         /*try {
         	String arg = args[0].toLowerCase().contains("boot") || args[0].toLowerCase().contains("ide") ? args[1] : args[0];
         	
@@ -230,7 +232,9 @@ public class Main implements Runnable, Tickable {
     }
     
     public static synchronized void load() {
-		ListableFile.readConfigFile(conffile);
+    	if (hasConfigFile)
+			ListableFile.readConfigFile(conffile);
+    	
         Texts.setTexts(lang);
         Fonts.initFonts(fntnr, fntbl);
         
@@ -265,6 +269,8 @@ public class Main implements Runnable, Tickable {
         b -= sub;
         
         Color esc = new Color(r, g, b);
+        
+        System.out.println(esc.equals(Colors.textLight));
         
         notSelectedCloseTab = Colors.swapColor(notSelectedCloseTab, Colors.textLightDefault, esc);
         notSelectedNotSavedTab = Colors.swapColor(notSelectedNotSavedTab, Colors.textLightDefault, esc);
