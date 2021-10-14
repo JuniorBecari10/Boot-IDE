@@ -84,6 +84,8 @@ public class CommandTerminal extends IDEComponent {
 			"gendiv str:class_name", "gensnippet str:type", //"emmet str:expression",
 			"lorem int:num_words", "ordertab int:tab_from int:tab_to",
 			"setcursorpos int:x int:y",
+			"getproperty str:property",
+			"setproperty str:property str:new_value",
 			"gengetter str:lang str:variable_name str:variable_type",
 			"gensetter str:lang str:variable_name str:variable_type",
 			"gensnippet cs/csmain str:class_name str:namespace"
@@ -98,6 +100,8 @@ public class CommandTerminal extends IDEComponent {
 			"gendiv", "gensnippet", //"emmet",
 			"lorem", "ordertab",
 			"setcursorpos",
+			"getproperty",
+			"setproperty",
 			"gengetter",
 			"gensetter",
 			"gensnippet"
@@ -977,6 +981,29 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
+			case "getproperty":
+				try {
+					String s = System.getProperty(args[0]);
+					
+					if (s == null || s == "null") {
+						CodeEditor.setSystemLook();
+						
+						JOptionPane.showMessageDialog(null, Texts.propertyDoesntExist, Texts.getProperty, JOptionPane.ERROR_MESSAGE);
+						
+						break;
+					}
+					
+					CodeEditor.setSystemLook();
+					
+					JOptionPane.showMessageDialog(null, Texts.valueOfTheProperty + " " + args[0] + " " + Texts.is + " " + s, Texts.getProperty, JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception e) {
+					CodeEditor.setSystemLook();
+					
+					JOptionPane.showMessageDialog(null, Texts.propertyDoesntExist, Texts.getProperty, JOptionPane.ERROR_MESSAGE);
+				}
+				
+				break;
+				
 			/*case "search":									// Deprecated. Use Search/Replace.
 				List<Integer> linesfound = new ArrayList<>();
 				
@@ -1067,6 +1094,31 @@ public class CommandTerminal extends IDEComponent {
 					Main.editor.setCursorWithinBounds();
 				} catch (NumberFormatException e) {
 					break;
+				}
+				
+				break;
+				
+			case "setproperty":
+				try {
+					System.setProperty(args[0], args[1]);
+					
+					String s = System.getProperty(args[0]);
+					
+					if (s == null || s == "null") {
+						CodeEditor.setSystemLook();
+						
+						JOptionPane.showMessageDialog(null, Texts.propertyDoesntExist, Texts.setProperty, JOptionPane.ERROR_MESSAGE);
+						
+						break;
+					}
+					
+					CodeEditor.setSystemLook();
+					
+					JOptionPane.showMessageDialog(null, Texts.newValueOfTheProperty + " " + args[0] + " " + Texts.is + " " + s + ".", Texts.setProperty, JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception e) {
+					CodeEditor.setSystemLook();
+					
+					JOptionPane.showMessageDialog(null, Texts.propertyDoesntExist, Texts.setProperty, JOptionPane.ERROR_MESSAGE);
 				}
 				
 				break;

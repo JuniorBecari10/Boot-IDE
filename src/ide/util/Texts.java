@@ -177,6 +177,16 @@ public final class Texts {
 	
 	public static String selecting;
 	
+	public static String getProperty;
+	public static String setProperty;
+	
+	public static String valueOfTheProperty;
+	public static String newValueOfTheProperty;
+	
+	public static String is;
+	
+	public static String propertyDoesntExist;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -339,6 +349,16 @@ public final class Texts {
 			
 			selecting = "Selecionando";
 			
+			getProperty = "Pegar Propriedade";
+			setProperty = "Definir Propriedade";
+			
+			valueOfTheProperty = "O valor da propriedade";
+			newValueOfTheProperty = "O novo valor da propriedade";
+			
+			is = "é";
+			
+			propertyDoesntExist = "Essa propriedade não existe, ou um erro ocorreu.";
+			
 			break;
 		
 		case ENG:
@@ -500,6 +520,16 @@ public final class Texts {
 			version = "Version";
 			
 			selecting = "Selecting";
+			
+			getProperty = "Get Property";
+			setProperty = "Set Property";
+			
+			valueOfTheProperty = "The value of the property";
+			newValueOfTheProperty = "The new value of the property";
+			
+			is = "is";
+			
+			propertyDoesntExist = "This property doesn't exist, or an error occurred.";
 			
 			break;
 		}
