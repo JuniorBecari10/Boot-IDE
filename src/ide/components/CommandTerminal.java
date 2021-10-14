@@ -210,7 +210,7 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "copy":
 				if (Main.editor.editing == null) break;
-				if (!Main.editor.selecting || Main.editor.isReadOnly) break;
+				if (!Main.editor.selecting) break;
 				
 				List<String> lines = new ArrayList<>();
 				String str = "";

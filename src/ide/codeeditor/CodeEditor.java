@@ -3282,7 +3282,9 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
-					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
+					//if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
+					if ((i + s.length() < chars.length && i - 1 > 0))
+						if (((chars[i - 1] == '_' || chars[i + s.length()] == '_') || (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i + s.length()])))) continue;
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
@@ -5776,7 +5778,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}.start();
 			
-			if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados, ou se alt gr está pressionado
+			if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !isReadOnly && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados, ou se alt gr está pressionado
 				try {
 					if (!RightClickOption.isRightClickActive()) {
 						if (!KeyInput.isShiftDown()) {
@@ -6132,7 +6134,7 @@ public class CodeEditor extends IDEComponent {
 				alternateTabsMode = false;
 				exchanging = null;
 			}
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME && !isReadOnly && !alternateTabsMode) { // Ctrl + Home - Começo do Documento
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME && !alternateTabsMode) { // Ctrl + Home - Começo do Documento
 				KeyInput.updateKeys();
 				
 				scrX = 0;
@@ -6146,7 +6148,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_END && !isReadOnly && !alternateTabsMode) { // Ctrl + End - Fim do Documento
+			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_END && !alternateTabsMode) { // Ctrl + End - Fim do Documento
 				KeyInput.updateKeys();
 				
 				//scrX = (lines.get(lines.size() - 1).getChars().size() * FONT_SIZE) - FONT_SIZE * 10; // esse - FONT_SIZE * 5 é pra dar um offset para trás e ficar no meio da tela.
@@ -6161,7 +6163,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME && !isReadOnly && !alternateTabsMode) { // Home - Começo da Linha
+			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME && !alternateTabsMode) { // Home - Começo da Linha
 				KeyInput.updateKeys();
 				
 				scrX = 0;
@@ -6172,7 +6174,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END && !isReadOnly && !alternateTabsMode) { // End - Fim da Linha
+			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END && !alternateTabsMode) { // End - Fim da Linha
 				KeyInput.updateKeys();
 				
 				//scrX = (lines.get(cursorY - 1).getChars().size() * FONT_SIZE) - FONT_SIZE * 10;
@@ -6333,7 +6335,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 				
-			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && !isReadOnly && !alternateTabsMode) { // Ctrl + C (Copiar)
+			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && !alternateTabsMode) { // Ctrl + C (Copiar)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("copy");
