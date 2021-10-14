@@ -2120,6 +2120,16 @@ public class CodeEditor extends IDEComponent {
 					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				}
 				
+				String ss = "*";
+				
+				indxs = findWord(new String(chars), ss);
+				
+				for (Integer i : indxs) {
+					if ((i + ss.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + ss.length()]) || (chars[i - 1] == '_' || chars[i + ss.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
+					
+					fs = color(i, i + ss.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+				
 				for (String s : units) { // colorir tags
 					indxs = findWord(new String(chars), s);
 					
@@ -6961,9 +6971,9 @@ public class CodeEditor extends IDEComponent {
 			Fonts.drawString(Texts.leftClickTab, xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 		}
 		
-		if (isReadOnly && hovered() && !(CommandTerminal.active || SetFileName.added || RenameFile.added || alternateTabsMode) && !RightClickOption.isRightClickActive()) {
-			int xdr = MouseInput.getMouseX() + 10;
-			int ydr = MouseInput.getMouseY() - 30;
+		/*if (isReadOnly && !(CommandTerminal.active || SetFileName.added || RenameFile.added || alternateTabsMode) && !RightClickOption.isRightClickActive()) {
+			int xdr = x + 20; // MouseInput.getMouseX() + 10;
+			int ydr = (y + height) - 80; //MouseInput.getMouseY() - 30;
 			
 			final int wdr = 810;
 			final int hdr = 80;
@@ -6974,16 +6984,16 @@ public class CodeEditor extends IDEComponent {
 				xdr -= intersection.getWidth();
 			
 			g.setColor(Colors.explorerLight);
-			g.fillRect(xdr, MouseInput.getMouseY() - 35, wdr, hdr);
+			g.fillRect(xdr, ydr - 5, wdr, hdr);
 			
 			g.setColor(Colors.textLighter);
 			g2.setStroke(new BasicStroke(2f));
-			g2.drawRect(xdr, MouseInput.getMouseY() - 35, wdr, hdr);
+			g2.drawRect(xdr, ydr - 5, wdr, hdr);
 			
 			Fonts.drawString(Texts.fileAsReadOnly, xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 			
 			Fonts.drawString(Texts.readOnlyText1, xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 			Fonts.drawString(Texts.readOnlyText2, xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);
-		}
+		}*/
 	}
 }
