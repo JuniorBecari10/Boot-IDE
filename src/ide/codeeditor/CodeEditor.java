@@ -5835,7 +5835,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}.start();
 			
-			if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !isReadOnly && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados, ou se alt gr está pressionado
+			if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados, ou se alt gr está pressionado
 				try {
 					if (!RightClickOption.isRightClickActive()) {
 						if (!KeyInput.isShiftDown()) {
@@ -5980,7 +5980,8 @@ public class CodeEditor extends IDEComponent {
 				} catch (Exception e) {
 					CommandTerminal.runCommand("deselect");
 				}
-				
+			
+				if (!isReadOnly) {
 			KeyInput.updateKeys();
 			
 			if (!KeyInput.isShiftDown() && !lines.isEmpty()) {
@@ -6174,6 +6175,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 		}
+			}
 			
 			// Detectar atalhos
 			
@@ -6249,7 +6251,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_L && !alternateTabsMode) { // Ctrl + L - Deletar Linha
+			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_L && !isReadOnly && !alternateTabsMode) { // Ctrl + L - Deletar Linha
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("selectline");
@@ -6258,12 +6260,12 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_J && !isReadOnly && !alternateTabsMode) { // Ctrl + J - Executar
+			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_J && !alternateTabsMode) { // Ctrl + J - Executar
 				KeyInput.updateKeys();
 				
 				if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".bat") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".com") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".cmd"))
 					editing.execute("run");
-				else
+				else if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".sh"))
 					editing.execute("runbash");
 					
 				return;
@@ -6295,7 +6297,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_M && !isReadOnly && !alternateTabsMode) { // Ctrl + M (Go To Cursor)
+			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_M && !alternateTabsMode) { // Ctrl + M (Go To Cursor)
 				KeyInput.updateKeys();
 				
 				CommandTerminal.runCommand("gotocursor");
@@ -6370,7 +6372,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			else if (KeyInput.isControlDown() &&  KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A && !isReadOnly && !alternateTabsMode) { // Ctrl + Shift + A (Selecionar Tudo)
+			else if (KeyInput.isControlDown() &&  KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A && !alternateTabsMode) { // Ctrl + Shift + A (Selecionar Tudo)
 				KeyInput.updateKeys();
 					
 				cursorX = 0;
@@ -6380,7 +6382,7 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}
 			
-			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A && !isReadOnly && !alternateTabsMode) { // Ctrl + A (Selecionar Linha)
+			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A && !alternateTabsMode) { // Ctrl + A (Selecionar Linha)
 				KeyInput.updateKeys();
 				
 				cursorX = 0;
