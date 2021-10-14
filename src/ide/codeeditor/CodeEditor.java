@@ -3462,11 +3462,6 @@ public class CodeEditor extends IDEComponent {
 			break;
 
 		case ".dockerfile":
-			if (!foundExt) {
-				extType = "Dockerfile";
-				foundExt = true;
-			}
-			
 			for (String s : dkKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
@@ -3475,6 +3470,32 @@ public class CodeEditor extends IDEComponent {
 					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 				}
+			}
+			
+			indxs = findWord(new String(chars), "="); // antes de <palavra>
+			
+			for (Integer i : indxs) {
+				int c = i;
+				len = 0;
+				
+				boolean hasSpace = false;
+					
+				while (c < chars.length && 
+						c + len < chars.length &&
+						c > 0) {
+					c--;
+					len++;
+					
+					if (chars[c] == ' ') {
+						if (hasSpace)
+							break;
+						
+						if (!hasSpace)
+							hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
+					}
+				}
+				
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 			
 			break;
@@ -3921,6 +3942,32 @@ public class CodeEditor extends IDEComponent {
 								fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 						}
 						
+						indxs = findWord(new String(chars), "="); // antes de <palavra>
+						
+						for (Integer i : indxs) {
+							int c = i;
+							int len = 0;
+							
+							boolean hasSpace = false;
+								
+							while (c < chars.length && 
+									c + len < chars.length &&
+									c > 0) {
+								c--;
+								len++;
+								
+								if (chars[c] == ' ') {
+									if (hasSpace)
+										break;
+									
+									if (!hasSpace)
+										hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
+								}
+							}
+							
+							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+						}
+						
 						break;
 						
 					case "makefile":
@@ -3955,6 +4002,62 @@ public class CodeEditor extends IDEComponent {
 						
 						break;
 					}
+					
+					indxs = findWord(new String(chars), Character.toString((char) 34)); // colorir strings
+					
+					List<Integer> removeIndxs = new ArrayList<>();
+					
+					for (Integer i : indxs) {
+						if (i <= 0) continue;
+						
+						if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
+					}
+					
+					indxs.removeAll(removeIndxs);
+					
+					for (int i = 0; i < indxs.size() - 1; i += 2)
+						fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+					
+					///
+					
+					indxs = findWord(new String(chars), "`"); // colorir strings
+					
+					removeIndxs = new ArrayList<>();
+					
+					for (Integer i : indxs) {
+						if (i <= 0) continue;
+						
+						if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
+					}
+					
+					indxs.removeAll(removeIndxs);
+					
+					for (int i = 0; i < indxs.size() - 1; i += 2)
+						fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+					
+					removeIndxs = new ArrayList<>();
+					
+					for (Integer i : indxs) {
+						if (i <= 0) continue;
+						
+						if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
+					}
+					
+					for (int i = 0; i < indxs.size() - 1; i += 2)
+						fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+					
+					indxs = findWord(new String(chars), Character.toString((char) 39)); // colorir chars
+					
+					removeIndxs = new ArrayList<>();
+					
+					for (Integer i : indxs) {
+						if (i <= 0) continue;
+						
+						if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
+					}
+					
+					for (int i = 0; i < indxs.size() - 1; i += 2)
+						fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 					
 					// Comentários de uma linha
 					
