@@ -1641,82 +1641,91 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 				
-				if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock"))) {
-				
-				String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
-						"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+				fs = colorObjects(ext, chars, fs);
+		}
+		
+		return fs;
+	}
+	
+	public List<IDEFont> colorObjects(String ext, char[] chars, List<IDEFont> fs) {
+		List<Integer> indxs = new ArrayList<>();
+		
+		if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock"))) {
+			
+			String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+					"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
-				for (String s : cll) {
-					indxs = findWord(new String(chars), s);
-				
-				int len = 0;
+			for (String s : cll) {
+				indxs = findWord(new String(chars), s);
+			
+			int len = 0;
 
-				String str = new String(chars);
+			String str = new String(chars);
+			
+			for (Integer i : indxs) {
+				if (isNumber(chars[i - 1])) continue;
 				
-				for (Integer i : indxs) {
-					
-					if (i - 1 > 0 &&
-						(str.charAt(i - 1) == 'a' ||
-						 str.charAt(i - 1) == 'b' ||
-						 str.charAt(i - 1) == 'c' ||
-						 str.charAt(i - 1) == 'd' ||
-						 str.charAt(i - 1) == 'e' ||
-						 str.charAt(i - 1) == 'f' ||
-						 str.charAt(i - 1) == 'g' ||
-						 str.charAt(i - 1) == 'h' ||
-						 str.charAt(i - 1) == 'i' ||
-						 str.charAt(i - 1) == 'j' ||
-						 str.charAt(i - 1) == 'k' ||
-						 str.charAt(i - 1) == 'l' ||
-						 str.charAt(i - 1) == 'm' ||
-						 str.charAt(i - 1) == 'n' ||
-						 str.charAt(i - 1) == 'o' ||
-						 str.charAt(i - 1) == 'p' ||
-						 str.charAt(i - 1) == 'q' ||
-						 str.charAt(i - 1) == 'r' ||
-						 str.charAt(i - 1) == 's' ||
-						 str.charAt(i - 1) == 't' ||
-						 str.charAt(i - 1) == 'u' ||
-						 str.charAt(i - 1) == 'v' ||
-						 str.charAt(i - 1) == 'w' ||
-						 str.charAt(i - 1) == 'x' ||
-						 str.charAt(i - 1) == 'y' ||
-						 str.charAt(i - 1) == 'z'))
-						continue;
-					
-					while (i + len < chars.length && 
-							!isCharsEqual(chars[i + len], ' ') &&
-							!isCharsEqual(chars[i + len], '[') &&
-							!isCharsEqual(chars[i + len], ']') &&
-							!isCharsEqual(chars[i + len], '(') &&
-							!isCharsEqual(chars[i + len], ')') &&
-							!isCharsEqual(chars[i + len], '{') &&
-							!isCharsEqual(chars[i + len], '}') &&
-							!isCharsEqual(chars[i + len], '<') &&
-							!isCharsEqual(chars[i + len], '>') &&
-							!isCharsEqual(chars[i + len], ',') &&
-							!isCharsEqual(chars[i + len], ';') &&
-							!isCharsEqual(chars[i + len], '.') &&
-							!isCharsEqual(chars[i + len], ':') &&
-							!isCharsEqual(chars[i + len], '=') &&
-							!isCharsEqual(chars[i + len], '\"') &&
-							!isCharsEqual(chars[i + len], '\'')) {
-							len++;
-					}
-
-					//if (i + len < chars.length) {
-						if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".sql") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".mak") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))
-							fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-						else {
-							if (i - 1 > 0 && Character.isLetter(chars[i - 1])) continue;
-							
-							//addautocomplete.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
-							fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
-						}
-					//}
+				if (i - 1 > 0 &&
+					(str.charAt(i - 1) == 'a' ||
+					 str.charAt(i - 1) == 'b' ||
+					 str.charAt(i - 1) == 'c' ||
+					 str.charAt(i - 1) == 'd' ||
+					 str.charAt(i - 1) == 'e' ||
+					 str.charAt(i - 1) == 'f' ||
+					 str.charAt(i - 1) == 'g' ||
+					 str.charAt(i - 1) == 'h' ||
+					 str.charAt(i - 1) == 'i' ||
+					 str.charAt(i - 1) == 'j' ||
+					 str.charAt(i - 1) == 'k' ||
+					 str.charAt(i - 1) == 'l' ||
+					 str.charAt(i - 1) == 'm' ||
+					 str.charAt(i - 1) == 'n' ||
+					 str.charAt(i - 1) == 'o' ||
+					 str.charAt(i - 1) == 'p' ||
+					 str.charAt(i - 1) == 'q' ||
+					 str.charAt(i - 1) == 'r' ||
+					 str.charAt(i - 1) == 's' ||
+					 str.charAt(i - 1) == 't' ||
+					 str.charAt(i - 1) == 'u' ||
+					 str.charAt(i - 1) == 'v' ||
+					 str.charAt(i - 1) == 'w' ||
+					 str.charAt(i - 1) == 'x' ||
+					 str.charAt(i - 1) == 'y' ||
+					 str.charAt(i - 1) == 'z'))
+					continue;
+				
+				while (i + len < chars.length && 
+						!isCharsEqual(chars[i + len], ' ') &&
+						!isCharsEqual(chars[i + len], '[') &&
+						!isCharsEqual(chars[i + len], ']') &&
+						!isCharsEqual(chars[i + len], '(') &&
+						!isCharsEqual(chars[i + len], ')') &&
+						!isCharsEqual(chars[i + len], '{') &&
+						!isCharsEqual(chars[i + len], '}') &&
+						!isCharsEqual(chars[i + len], '<') &&
+						!isCharsEqual(chars[i + len], '>') &&
+						!isCharsEqual(chars[i + len], ',') &&
+						!isCharsEqual(chars[i + len], ';') &&
+						!isCharsEqual(chars[i + len], '.') &&
+						!isCharsEqual(chars[i + len], ':') &&
+						!isCharsEqual(chars[i + len], '=') &&
+						!isCharsEqual(chars[i + len], '\"') &&
+						!isCharsEqual(chars[i + len], '\'')) {
+						len++;
 				}
+
+				//if (i + len < chars.length) {
+					if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".sql") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".mak") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))
+						fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+					else {
+						if (i - 1 > 0 && Character.isLetter(chars[i - 1])) continue;
+						
+						//addautocomplete.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
+						fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
+					}
+				//}
 			}
-			}
+		}
 		}
 		
 		return fs;
@@ -3431,6 +3440,8 @@ public class CodeEditor extends IDEComponent {
 		
 		if ((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log")) && !(isCssPart || isJSPart || isPhpPart)) return fs;
 		
+		//boolean toContinue = false;
+		
 		for (String s : nums) { // colorir números
 			indxs = findWord(new String(chars), s); // TODO
 			
@@ -3438,6 +3449,22 @@ public class CodeEditor extends IDEComponent {
 				if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
 				
 				if ((((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".ejs") && isCssPart)) || (ext.equalsIgnoreCase(".css") | ext.equalsIgnoreCase(".scss"))) && hasAfter(new String(chars), i, '{')) continue;
+				
+				/*if (Character.isLetter(chars[i - 1]))
+					for (int j = i; i > 1; i--) {
+						if (chars[j - 1] == ' ') {
+							if (!isNumber(chars[j])) {
+								toContinue = true;
+								break;
+							}
+						}
+					}
+				
+				if (toContinue) {
+					toContinue = false;
+				
+					continue;
+				}*/
 				
 				//if ((i > 0 && (Character.isLetter(chars[i - 1]) && !fs.get(i - 1).getColor().equals(Colors.numbers))) && (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml")) continue;
 				//if ((i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) && !(ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))) continue;
@@ -3486,6 +3513,8 @@ public class CodeEditor extends IDEComponent {
 
 			fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 		}
+		
+		fs = colorObjects(ext, chars, fs);
 	
 		return fs;
 	}
