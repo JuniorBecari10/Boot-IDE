@@ -1437,6 +1437,8 @@ public class CommandTerminal extends IDEComponent {
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				builder = new StringBuilder();
 				cursorIndex = 0;
+				
+				commandHints.clear();
 			}
 			
 			if (KeyInput.isControlDown() || KeyInput.isAltDown() || KeyInput.isAltGrDown()) return;

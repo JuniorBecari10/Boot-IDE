@@ -358,7 +358,7 @@ public class CodeEditor extends IDEComponent {
 			"continue", "default", "do", "double", "else", "enum", "extern",
 			"float", "for", "goto", "if", "int", "long", "register", "return",
 			"short", "signed", "sizeof", "static", "struct", "switch", "typedef",
-			"union", "unsigned", "void", "volatile", "while", "true", "false", "null", "include",
+			"union", "unsigned", "void", "volatile", "while", "true", "false", "null", "include", "restrict",
 			"bool", "duint", "uint16_t", "size_t" };
 	
 	public static final String[] cppKeys = { "auto", "break", "case", "char", "const",
