@@ -6955,10 +6955,10 @@ public class CodeEditor extends IDEComponent {
 					if (i > line1 && i < line2) { // do meio
 						g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
 								//(i + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY,
-								MIN_Y + ((i - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1,
+								MIN_Y + ((i - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
 								//Main.screen.getWidth() + scrX,
 								((x + 50) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
-								FONT_SIZE + 4);
+								 FONT_SIZE + (FONT_SIZE / 4));
 					}
 				}
 			}
@@ -6986,23 +6986,23 @@ public class CodeEditor extends IDEComponent {
 					if (i == line1 - 1) { // - 1 porque a line1 é base 1
 						if (i == line2 - 1) {
 							g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do index1 até o index2
-								MIN_Y + ((line1 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1,
+								MIN_Y + ((line1 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
 								(((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - (((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
-								FONT_SIZE + 4);
+								 FONT_SIZE + (FONT_SIZE / 4));
 						}
 						else {
 							g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do index1 até o fim da linha
-								MIN_Y + ((line1 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1,
+								MIN_Y + ((line1 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
 								((((x + 50) + (lines.get(line1 - 1).getChars().size() - index1) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX)),
-								FONT_SIZE + 4);
+								 FONT_SIZE + (FONT_SIZE / 4));
 						}
 					}
 					if (i == line2 - 1) {
 						if (i != line1 - 1) { // do 0 ao index2
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
-								MIN_Y + ((line2 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1,
+									MIN_Y + ((line2 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
 								((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
-								FONT_SIZE + 4);
+								 FONT_SIZE + (FONT_SIZE / 4));
 						}
 					}
 				}
