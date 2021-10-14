@@ -1663,7 +1663,7 @@ public class CodeEditor extends IDEComponent {
 			String str = new String(chars);
 			
 			for (Integer i : indxs) {
-				if (isNumber(chars[i - 1])) continue;
+				if (i > 0 && isNumber(chars[i - 1])) continue;
 				
 				if (i - 1 > 0 &&
 					(str.charAt(i - 1) == 'a' ||
@@ -3873,131 +3873,133 @@ public class CodeEditor extends IDEComponent {
 						break;
 					}
 					
-					for (String s : nums) { // colorir números
-						indxs = findWord(new String(chars), s); // TODO
+					if (editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") || editing.getRegent().getRegent().getName().equalsIgnoreCase("dockerfile")) {
+						for (String s : nums) { // colorir números
+							indxs = findWord(new String(chars), s); // TODO
+							
+							for (Integer i : indxs) {
+								if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
+								
+								if ((((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".ejs") && isCssPart)) || (ext.equalsIgnoreCase(".css") | ext.equalsIgnoreCase(".scss"))) && hasAfter(new String(chars), i, '{')) continue;
+								
+								//if ((i > 0 && (Character.isLetter(chars[i - 1]) && !fs.get(i - 1).getColor().equals(Colors.numbers))) && (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml")) continue;
+								//if ((i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) && !(ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))) continue;
+								//if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i + s.length()])) continue;
+								
+								fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+							}
+						}
+							
+						indxs = findWord(new String(chars), "0x");
+							
+						int len = 0;
+	
+						for (Integer i : indxs) {
+							while (i + len < chars.length &&
+									chars[i + len] != ' ' &&
+									chars[i + len] != '[' &&
+									chars[i + len] != ']' &&
+									chars[i + len] != '(' &&
+									chars[i + len] != ')' &&
+									chars[i + len] != ',' &&
+									chars[i + len] != ';' &&
+									chars[i + len] != '.' &&
+									chars[i + len] != ':')
+									len++;
+	
+							fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+						}
+						
+						indxs = findWord(new String(chars), "#");
+						
+						len = 0;
+	
+						for (Integer i : indxs) {
+							while (i + len < chars.length &&
+									chars[i + len] != ' ' &&
+									chars[i + len] != '[' &&
+									chars[i + len] != ']' &&
+									chars[i + len] != '(' &&
+									chars[i + len] != ')' &&
+									chars[i + len] != ',' &&
+									chars[i + len] != ';' &&
+									chars[i + len] != '.' &&
+									chars[i + len] != ':')
+									len++;
+	
+							fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+						}
+						
+						////
+						
+						for (String s : syms) {
+							indxs = findWord(new String(chars), s);
+							
+							/*// Remover #, mas não da lista
+							if (s == "#") continue;			// talvez remover \*/
+							
+							for (Integer i : indxs)
+								fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
+						}
+						
+						//
+						
+						indxs = findWord(new String(chars), Character.toString((char) 34)); // colorir strings
+						
+						List<Integer> removeIndxs = new ArrayList<>();
 						
 						for (Integer i : indxs) {
-							if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
+							if (i <= 0) continue;
 							
-							if ((((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".ejs") && isCssPart)) || (ext.equalsIgnoreCase(".css") | ext.equalsIgnoreCase(".scss"))) && hasAfter(new String(chars), i, '{')) continue;
-							
-							//if ((i > 0 && (Character.isLetter(chars[i - 1]) && !fs.get(i - 1).getColor().equals(Colors.numbers))) && (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml")) continue;
-							//if ((i + s.length() < chars.length && i - 1 > 0 && (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i - 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) && !(ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))) continue;
-							//if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i + s.length()])) continue;
-							
-							fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+							if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
 						}
-					}
 						
-					indxs = findWord(new String(chars), "0x");
+						indxs.removeAll(removeIndxs);
 						
-					int len = 0;
-
-					for (Integer i : indxs) {
-						while (i + len < chars.length &&
-								chars[i + len] != ' ' &&
-								chars[i + len] != '[' &&
-								chars[i + len] != ']' &&
-								chars[i + len] != '(' &&
-								chars[i + len] != ')' &&
-								chars[i + len] != ',' &&
-								chars[i + len] != ';' &&
-								chars[i + len] != '.' &&
-								chars[i + len] != ':')
-								len++;
-
-						fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-					}
-					
-					indxs = findWord(new String(chars), "#");
-					
-					len = 0;
-
-					for (Integer i : indxs) {
-						while (i + len < chars.length &&
-								chars[i + len] != ' ' &&
-								chars[i + len] != '[' &&
-								chars[i + len] != ']' &&
-								chars[i + len] != '(' &&
-								chars[i + len] != ')' &&
-								chars[i + len] != ',' &&
-								chars[i + len] != ';' &&
-								chars[i + len] != '.' &&
-								chars[i + len] != ':')
-								len++;
-
-						fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
-					}
-					
-					////
-					
-					for (String s : syms) {
-						indxs = findWord(new String(chars), s);
+						for (int i = 0; i < indxs.size() - 1; i += 2)
+							fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 						
-						/*// Remover #, mas não da lista
-						if (s == "#") continue;			// talvez remover \*/
+						///
 						
-						for (Integer i : indxs)
-							fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
-					}
-					
-					//
-					
-					indxs = findWord(new String(chars), Character.toString((char) 34)); // colorir strings
-					
-					List<Integer> removeIndxs = new ArrayList<>();
-					
-					for (Integer i : indxs) {
-						if (i <= 0) continue;
+						indxs = findWord(new String(chars), "`"); // colorir strings
 						
-						if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
-					}
-					
-					indxs.removeAll(removeIndxs);
-					
-					for (int i = 0; i < indxs.size() - 1; i += 2)
-						fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
-					
-					///
-					
-					indxs = findWord(new String(chars), "`"); // colorir strings
-					
-					removeIndxs = new ArrayList<>();
-					
-					for (Integer i : indxs) {
-						if (i <= 0) continue;
+						removeIndxs = new ArrayList<>();
 						
-						if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
-					}
-					
-					indxs.removeAll(removeIndxs);
-					
-					for (int i = 0; i < indxs.size() - 1; i += 2)
-						fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
-					
-					removeIndxs = new ArrayList<>();
-					
-					for (Integer i : indxs) {
-						if (i <= 0) continue;
+						for (Integer i : indxs) {
+							if (i <= 0) continue;
+							
+							if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
+						}
 						
-						if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
-					}
-					
-					for (int i = 0; i < indxs.size() - 1; i += 2)
-						fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
-					
-					indxs = findWord(new String(chars), Character.toString((char) 39)); // colorir chars
-					
-					removeIndxs = new ArrayList<>();
-					
-					for (Integer i : indxs) {
-						if (i <= 0) continue;
+						indxs.removeAll(removeIndxs);
 						
-						if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
-					}
-					
-					for (int i = 0; i < indxs.size() - 1; i += 2)
-						fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+						for (int i = 0; i < indxs.size() - 1; i += 2)
+							fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+						
+						removeIndxs = new ArrayList<>();
+						
+						for (Integer i : indxs) {
+							if (i <= 0) continue;
+							
+							if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
+						}
+						
+						for (int i = 0; i < indxs.size() - 1; i += 2)
+							fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+						
+						indxs = findWord(new String(chars), Character.toString((char) 39)); // colorir chars
+						
+						removeIndxs = new ArrayList<>();
+						
+						for (Integer i : indxs) {
+							if (i <= 0) continue;
+							
+							if (new String(chars).charAt(i - 1) == '\\') removeIndxs.add(i);
+						}
+						
+						for (int i = 0; i < indxs.size() - 1; i += 2)
+							fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+				}
 					
 					// Comentários de uma linha
 					
