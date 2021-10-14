@@ -5799,7 +5799,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			if (selecting)
+			if (selecting && editing != null)
 				IDEComponent.addRightClickOption(MouseInput.getMouseX(), isReadOnly ? MouseInput.getMouseY() + 120 : MouseInput.getMouseY() + 330, width, Texts.deselect, (s) -> CommandTerminal.runCommand(s), "deselect");
 		}
 		
