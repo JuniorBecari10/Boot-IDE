@@ -5885,8 +5885,7 @@ public class CodeEditor extends IDEComponent {
 			KeyInput.updateKeys();
 			
 			if (!KeyInput.isShiftDown() && !lines.isEmpty()) {
-				if (drawcx > Main.screen.getWidth() || drawcx < 0 ||
-					drawcy > Main.screen.getHeight() || drawcy < 0) CommandTerminal.runCommand("gotocursor");
+				if (drawcy > Main.screen.getHeight() || drawcy < 0) CommandTerminal.runCommand("gotocursor");
 			}
 			
 			StringBuilder cY = null;
