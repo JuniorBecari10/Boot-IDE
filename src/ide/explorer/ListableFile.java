@@ -87,6 +87,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".m", Main.spritesheet.getSprite  (416, 16, 16, 16)),
 			new FileType(".mm", Main.spritesheet.getSprite (592, 16, 16, 16)),
 			new FileType(".pas", Main.spritesheet.getSprite(432, 16, 16, 16)),
+			new FileType(".lpr", Main.spritesheet.getSprite(432, 16, 16, 16)),
 			new FileType(".pp", Main.spritesheet.getSprite (432, 16, 16, 16)),
 			new FileType(".scala",Main.spritesheet.getSprite(448,16, 16, 16)),
 			new FileType(".dart",Main.spritesheet.getSprite(464, 16, 16, 16)),

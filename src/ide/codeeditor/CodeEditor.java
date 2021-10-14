@@ -402,10 +402,10 @@ public class CodeEditor extends IDEComponent {
 			"SETLOCAL", "ENDLOCAL", "MAKE", "YARN", "COLOR" };
 	
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
-	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".pyx", ".ipynb", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".tsx", ".go", ".r", ".pl", ".t", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".mm", ".pas", ".pp", ".scala", ".dart", ".zig",
+	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".pyx", ".ipynb", ".js", ".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift", ".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".tsx", ".go", ".r", ".pl", ".t", ".jl", ".has", ".hs", ".fs", ".coffee", ".m", ".mm", ".pas", ".lpr", ".pp", ".scala", ".dart", ".zig",
 			".html", ".xhtml", ".htm", ".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg", ".urna", ".save", ".conf", ".makefile", ".mk", ".mak", ".make", ".sh", ".gitignore", ".dockerfile", ".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll", ".url", ".authors", ".img", ".flp", ".prefs", ".classpath",
 			".project", ".sln",
-			".JAVA", ".C", ".CPP", ".CC", ".CS", ".PY", ".PYX", ".IPYNB", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HH", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".TSX", ".GO", ".R", ".PL", ".T", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".MM", ".PAS", ".PP", ".SCALA", ".DART", ".ZIG",
+			".JAVA", ".C", ".CPP", ".CC", ".CS", ".PY", ".PYX", ".IPYNB", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HH", ".HPP", ".HXX", ".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".TSX", ".GO", ".R", ".PL", ".T", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".MM", ".PAS", ".LPR", ".PP", ".SCALA", ".DART", ".ZIG",
 			".HTML", ".XHTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT", ".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAK", ".MAKE", ".SH", ".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD", ".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP", ".PREFS", ".CLASSPATH",
 			".PROJECT", ".SLN" };
 	
@@ -660,7 +660,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public static final String[] ideConfKeys = { "Arquivo de Configurações da Boot IDE", "Boot IDE Configuration File", "port", "eng", "PORT", "ENG", "Colors", "Files", "Settings", "default", "true", "false" };
 	
-	public static final String[] makeKeys = { "if", "else", "make", "echo", "elif", "then", "fi", "exit", "export" };
+	public static final String[] makeKeys = { "if", "else", "export" };
 	
 	public static final String[] dkKeys = { "FROM", "RUN", "VOLUME", "WORKDIR", "ADD", "CMD", "ENTRYPOINT", "ENV", "EXPOSE", "MAINTAINER", "USER",
 			"from", "run", "volume", "workdir", "add", "cmd", "entrypoint", "env", "expose", "maintainer", "user" };
@@ -981,6 +981,7 @@ public class CodeEditor extends IDEComponent {
 			case ".m" -> objKeys;
 			case ".mm" -> objKeys;
 			case ".pas" -> pasKeys;
+			case ".lpr" -> pasKeys;
 			case ".pp" -> pasKeys;
 			case ".scala" -> scaKeys;
 			case ".dart" -> dartKeys;
@@ -994,10 +995,10 @@ public class CodeEditor extends IDEComponent {
 			case ".json" -> jsonKeys;
 			case ".jsonc" -> jsonKeys;
 			case ".conf" -> ideConfKeys;
-			case ".mk" -> makeKeys;
-			case ".mak" -> makeKeys;
-			case ".make" -> makeKeys;
-			case ".makefile" -> makeKeys;
+			case ".mk" -> mergeStringArrays(makeKeys, shKeys);
+			case ".mak" -> mergeStringArrays(makeKeys, shKeys);
+			case ".make" -> mergeStringArrays(makeKeys, shKeys);
+			case ".makefile" -> mergeStringArrays(makeKeys, shKeys);
 			case ".dockerfile" -> dkKeys;
 			case ".jsx" -> jsKeys;
 			case ".ps1" -> batCom;
@@ -1011,7 +1012,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public static String[] getKeywordsSpecial(String filename) {
 		return switch (filename.toLowerCase()) {
-			case "makefile" -> makeKeys;
+			case "makefile" -> mergeStringArrays(makeKeys, shKeys);
 			case "dockerfile" -> dkKeys;
 			
 			default -> null;
@@ -1182,6 +1183,7 @@ public class CodeEditor extends IDEComponent {
 		case ".m" -> "Objective-C";
 		case ".mm" -> "Objective-C++";
 		case ".pas" -> "Pascal";
+		case ".lpr" -> "Pascal";
 		case ".pp" -> "Pascal";
 		case ".scala" -> "Scala";
 		case ".dart" -> "Dart";
@@ -2723,6 +2725,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".pp":
 		case ".pas":
+		case ".lpr":
 			for (String s : pasKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s); // descobrir pq algumas coisas não colorem
 				
@@ -3427,7 +3430,7 @@ public class CodeEditor extends IDEComponent {
 		case ".mk":
 		case ".mak":
 		case ".make":
-			for (String s : makeKeys) { // colorir keywords
+			for (String s : mergeStringArrays(makeKeys, shKeys)) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
@@ -3971,7 +3974,7 @@ public class CodeEditor extends IDEComponent {
 						break;
 						
 					case "makefile":
-						for (String s : makeKeys) { // colorir keywords
+						for (String s : mergeStringArrays(makeKeys, shKeys)) { // colorir keywords
 							indxs = findWord(new String(chars), s);
 							
 							for (Integer i : indxs)
@@ -4148,6 +4151,7 @@ public class CodeEditor extends IDEComponent {
 		case ".mm":
 		case ".pp":
 		case ".pas":
+		case ".lpr":
 		case ".scala":
 			indxs = findWord(new String(chars), "//"); // colorir comentários de uma linha
 			
@@ -4535,6 +4539,7 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".fs": // F#
 		case ".pas":
+		case ".lpr":
 		case ".pp":
 			indxs = findWord(new String(chars), "(*");						// colorir comentários multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "*)");
