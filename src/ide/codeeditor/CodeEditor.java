@@ -776,7 +776,7 @@ public class CodeEditor extends IDEComponent {
 				
 				while (true) {
 					realcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
-					realcy = MIN_Y + cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;
+					realcy = MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY;
 					
 					/*if (drawcx != realcx) {
 						if (drawcx < realcx) drawcx += speed;
@@ -5622,7 +5622,7 @@ public class CodeEditor extends IDEComponent {
 		if (tabs == null) tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
 		
 		if (tabs.size() > 0)
-			if (tabs.get(0).getX() > x + 10) CommandTerminal.runCommand("resettabscroll");
+			if (tabs.get(0).getX() + tabScr > x + 10) CommandTerminal.runCommand("resettabscroll");
 		
 		if (tabs.size() == 0) CommandTerminal.runCommand("resettabscroll");
 		
@@ -7036,7 +7036,7 @@ public class CodeEditor extends IDEComponent {
 		// Desenhar cursor
 		if (showCursor && !WindowInput.isDeactivated()) {
 			g.setColor(Colors.cursor);
-			g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - (FONT_SIZE >= 16 ? 1 : 0), FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + 1);
+			g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - (FONT_SIZE >= 16 ? 1 : 0), FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + (FONT_SIZE / 4));
 		}
 		
 		for (RightClickOption r : autocompletes)
