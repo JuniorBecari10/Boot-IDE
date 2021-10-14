@@ -280,8 +280,12 @@ public class CodeEditor extends IDEComponent {
 			"output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script",
 			"section", "select", "small", "source", "span", "strike", "strong", "style", "sup", "svg", "table",
 			"tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt",
-			"u", "ul", "var", "video", "wbr", "applet", "important", "screen", "and", "or", "moz", "webkit", "ms", "mixin", "webview",
+			"u", "ul", "var", "video", "wbr", "applet", "moz", "webkit", "ms", "mixin", "webview",
 			"user", "select", "drag", "src" /* TODO colocar mais desses ultimos */ // TODO talvez se der erro, colorir center de novo
+	};
+	
+	public static final String[] cssAdds = {
+			"important", "screen", "and", "or"
 	};
 	
 	public static final String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
@@ -2289,41 +2293,8 @@ public class CodeEditor extends IDEComponent {
 				// Eu sei que a linha de código abaixo infringe a lei do Boot de Código-Fonte bem escrito n° 547, e pode accaretar problemas :/
 				
 				fs = colorMethods(ext, chars, fs);
-				indxs = findWord(new String(chars), ":");
 				
-				for (Integer i : indxs) {
-					int c = i;
-					len = 0;
-					
-					while (c < chars.length && 
-							c + len < chars.length &&
-							c > 0 &&
-							chars[c] != ' ' &&
-							chars[c] != '[' &&
-							chars[c] != ']' &&
-							chars[c] != ',' &&
-							chars[c] != ';' &&
-							chars[c] != '.' &&
-							chars[c] != '#' &&
-							chars[c] != '!') {
-						c--;
-						len++;
-					}
-					
-					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-				}
-				
-				for (String s : units) { // colorir tags
-					indxs = findWord(new String(chars), s);
-					
-					for (Integer i : indxs) {
-						if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
-						
-						fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
-					}
-				}
-				
-				for (String s : cssTags) { // colorir tags
+				for (String s : cssAdds) { // colorir tags
 					indxs = findWord(new String(chars), s);
 					
 					for (Integer i : indxs) {
@@ -2332,148 +2303,7 @@ public class CodeEditor extends IDEComponent {
 						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 					}
 				}
-				
-				for (String s : props) { // colorir tags
-					indxs = findWord(new String(chars), s);
-					
-					for (Integer i : indxs) {
-						if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
-						
-						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
-					}
-				}
-				
-				indxs = findWord(new String(chars), ".");
-				
-				len = 0;
-
-				for (Integer i : indxs) {
-					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '{') 
-						len++;
-
-					if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-				}
-				
-				indxs = findWord(new String(chars), "#"); // ids
-				
-				len = 0;
-
-				for (Integer i : indxs) {
-					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '{')
-						len++;
-
-					if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-				}
-				
-				indxs = findWord(new String(chars), "&"); // scss selectors
-				
-				len = 0;
-
-				for (Integer i : indxs) {
-					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '{')
-						len++;
-
-					if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-				}
-				
-				indxs = findWord(new String(chars), "$"); // scss selectors
-				
-				len = 0;
-
-				for (Integer i : indxs) {
-					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '{')
-						len++;
-
-					if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-				}
-				
-				indxs = findWord(new String(chars), ":"); // atributos de tags
-				
-				len = 0;
-
-				for (Integer i : indxs) {
-					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '{')
-						len++;
-
-					if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-				}
-				
-				/*indxs = findWord(new String(chars), ";");
-				
-				for (Integer i : indxs) {
-					int c = i;
-					len = 0;
-					
-					while (c < chars.length && 
-							c + len < chars.length &&
-							c > 0 &&
-							chars[c] != '[' &&
-							chars[c] != ']' &&
-							chars[c] != ':' &&
-							chars[c] != '{') {
-						c--;
-						len++;
-					}
-					
-					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-				}*/
-				
-				indxs = findWord(new String(chars), ";");
-				
-				for (Integer i : indxs) {
-					int c = i;
-					len = 0;
-					
-					while (c < chars.length && 
-							c + len < chars.length &&
-							c > 0 &&
-							chars[c] != '[' &&
-							chars[c] != ']' &&
-							chars[c] != '.' &&
-							chars[c] != '#' &&
-							chars[c] != ':' &&
-							!isNumber(chars[c - 1])) {
-						c--;
-						len++;
-					}
-					
-					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-				}
-				
-				indxs = findWord(new String(chars), "]");
-				
-				for (Integer i : indxs) {
-					int c = i;
-					len = 0;
-					
-					while (c < chars.length && 
-							c + len < chars.length &&
-							c > 0 &&
-							chars[c] != ' ' &&
-							chars[c] != '[' &&
-							chars[c] != ',' &&
-							chars[c] != ';' &&
-							chars[c] != '.' &&
-							chars[c] != ':') {
-						c--;
-						len++;
-					}
-					
-					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-				}
-				
-				// Eu sei que a linha de código abaixo infringe a lei do Boot de Código-Fonte bem escrito n° 547, e pode accaretar problemas :/
-				
-				fs = colorMethods(ext, chars, fs);
-				
 			}
-			
-			fs = colorMethods(ext, chars, fs);
 			
 			for (String s : specialHtmlVariables) { // colorir tags
 				indxs = findWord(new String(chars), s);
@@ -2678,6 +2508,16 @@ public class CodeEditor extends IDEComponent {
 			// Eu sei que a linha de código abaixo infringe a lei do Boot de Código-Fonte bem escrito n° 547, e pode accaretar problemas :/
 			
 			fs = colorMethods(ext, chars, fs);
+			
+			for (String s : cssAdds) { // colorir tags
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if ((i + s.length() < chars.length && i - 1 > 0 && (((Character.isLetter(chars[i + s.length()]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))))) || (i > 0 && Character.isLetter(chars[i - 1]))) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
 			
 			break;
 			
