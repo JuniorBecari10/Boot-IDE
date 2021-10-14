@@ -281,7 +281,7 @@ public class CodeEditor extends IDEComponent {
 			"section", "select", "small", "source", "span", "strike", "strong", "style", "sup", "svg", "table",
 			"tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt",
 			"u", "ul", "var", "video", "wbr", "applet", "important", "screen", "and", "or", "moz", "webkit", "ms", "mixin", "webview",
-			"user", "select", "drag", "deg", "rad", "src" /* TODO colocar mais desses ultimos */ // TODO talvez se der erro, colorir center de novo
+			"user", "select", "drag", "src" /* TODO colocar mais desses ultimos */ // TODO talvez se der erro, colorir center de novo
 	};
 	
 	public static final String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
@@ -326,7 +326,7 @@ public class CodeEditor extends IDEComponent {
 			"visibility", "white-space", "widows", "width", "word-break", "word-spacing", "word-wrap",
 			"writing-mode", "z-index" };
 	
-	public static final String[] units = { "px", "em", "rem", "cm", "mm", "in", "pt", "pc", "ex", "ch", "vw", "vh", "vmin", "vmax", "s" };
+	public static final String[] units = { "px", "em", "rem", "cm", "mm", "in", "pt", "pc", "ex", "ch", "vw", "vh", "vmin", "vmax", "s", "deg", "rad" };
 	
 	public static final String[] pyKeys = { "and", "as", "assert", "break", "class",
 			"continue", "def", "del", "elif", "else", "except", "False",
@@ -508,7 +508,7 @@ public class CodeEditor extends IDEComponent {
 			"psubusw", "psubw", "punpckhbw", "punpckhdq", "punpckhqdq", "punpckhwd", "punpcklbw", "punpckldq",
 			"punpcklqdq", "punpcklwd", "push", "pusha", "pushal", "pushaw", "pushf", "pushfw", "pushsection",
 			"pxor", "quad", "rcl", "rcpps", "rcpss", "rcr", "rdmsr", "rdpmc", "rdtsc", "rel", "rep", "repnz", "repz",
-			"ret", "rol", "ror", "rotateinstructions", "rsm", "rsqrtps", "rsqrtss", "sahf", "sal", "sar", "sbb",
+			"ret", "retn", "rol", "ror", "rotateinstructions", "rsm", "rsqrtps", "rsqrtss", "sahf", "sal", "sar", "sbb",
 			"scas", "scasb", "scasl", "scasw", "section", "segmentregisterinstructions", "set", "seta", "setae",
 			"setb", "setbe", "setc", "sete", "setg", "setge", "setl", "setle", "setna", "setnae", "setnb", "setnbe",
 			"setnc", "setne", "setng", "setnge", "setnl", "setnle", "setno", "setnp", "setns", "setnz", "seto", "setp",
