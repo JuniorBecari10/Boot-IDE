@@ -3359,7 +3359,7 @@ public class CodeEditor extends IDEComponent {
 		
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".bf") ||  ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf")) return fs;
+		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".bf") ||  ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log")) return fs;
 		
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
 			
@@ -3514,7 +3514,7 @@ public class CodeEditor extends IDEComponent {
 			fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 		}
 		
-		fs = colorObjects(ext, chars, fs);
+		//fs = colorObjects(ext, chars, fs); // infelizmente esse bug ainda existe
 	
 		return fs;
 	}
