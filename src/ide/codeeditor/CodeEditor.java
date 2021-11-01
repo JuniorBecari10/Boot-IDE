@@ -675,6 +675,12 @@ public class CodeEditor extends IDEComponent {
 
 	public static final String[] bfKeys = { "+", "-", ">", "<", ".", ",", "[", "]" };
 	
+	public static final String[] gdKeys = { "if", "elif", "else", "for", "while", "match", "break", "continue", "pass", "return", "class",
+			"class_name", "extends", "is", "as", "self", "tool", "signal", "func", "static", "const", "enum", "var", "onready", "export",
+			"setget", "breakpoint", "preload", "yield", "assert", "remote", "master", "puppet", "remotesync", "mastersync", "puppetsync",
+			"PI", "TAU", "INF", "NAN",
+			"bool", "int" ,"float", "String", "void" };
+	
 	///////
 	
 	public CodeEditor(int x, int y, int width, int height) {
@@ -990,6 +996,7 @@ public class CodeEditor extends IDEComponent {
 			case ".scala" -> scaKeys;
 			case ".dart" -> dartKeys;
 			case ".zig" -> zigKeys;
+			case ".gd" -> gdKeys;
 			
 			case ".html" -> mergeStringArrays(cssTags, props);
 			case ".xhtml" -> mergeStringArrays(cssTags, props);
@@ -1196,6 +1203,7 @@ public class CodeEditor extends IDEComponent {
 		case ".ipynb" -> "Jupyter Notebook";
 		case ".vb" -> "Visual Basic";
 		case ".bf" -> "Brainfuck";
+		case ".gd" -> "GDScript";
 		
 		case ".html" -> "Hyper Text Markup Language - HTML";
 		case ".xhtml" -> "Hyper Text Markup Language - HTML";
@@ -2737,6 +2745,18 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".lua":
 			for (String s : luaKeys) { // colorir keywordss
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1]))) || ((i + s.length() < chars.length) && (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()])))) continue;
+					
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+			break;
+			
+		case ".gd":
+			for (String s : gdKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
