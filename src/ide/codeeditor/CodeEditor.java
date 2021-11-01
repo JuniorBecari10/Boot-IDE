@@ -2662,6 +2662,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 				
 				for (Integer i : indxs) {
+					
 					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1]))) || ((i + s.length() < chars.length) && (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()])))) continue;
 					//if (i > 0 && (chars[i - 1] != ' ' || chars[i - 1] != '\t')) continue;
 					
