@@ -74,6 +74,18 @@ public class Explorer extends IDEComponent {
     	width = drag;
 		Main.editor.setX(width);
 		Main.editor.setWidth(Main.screen.getWidth());
+		
+		if (width < minDrag) {
+    		width = minDrag;
+    		Main.editor.setX(width);
+    		Main.editor.setWidth(Main.screen.getWidth());
+    	}
+    	
+    	if (width > Main.screen.getWidth() - 60) {
+    		width = Main.screen.getWidth() - 60;
+    		Main.editor.setX(width);
+    		Main.editor.setWidth(Main.screen.getWidth());
+    	}
     }
     
     public void tick() {
