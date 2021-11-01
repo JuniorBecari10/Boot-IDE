@@ -1019,7 +1019,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			
 		case "runbash":
 			try {
-				ProcessBuilder pb = new ProcessBuilder("sh", "-c", "start", regent.getName());
+				ProcessBuilder pb = new ProcessBuilder("bash", "-c", "start", regent.getName());
 				File dir = regent.getParentFile();
 				pb.directory(dir);
 				
@@ -1048,7 +1048,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			
 		case "cmdbash":
 			try {
-				ProcessBuilder pb = new ProcessBuilder("sh", "-c", "start");
+				ProcessBuilder pb = new ProcessBuilder("bash", "-c", "start");
 				
 				File dir = Explorer.scope != null ? Explorer.scope.regent : Main.baseFolder; // eu tava fazendo o equivalente a isso: null.regent != null
 				

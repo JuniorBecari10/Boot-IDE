@@ -4858,6 +4858,8 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case '<':
+			if (cursorX > 0 && !Character.isLetter(new String(toCharArray(lines.get(cursorY - 1).getChars())).charAt(cursorX - 1))) return pre;
+			
 			if (pre.length() == 0 || cursorX == pre.length()) pre.append('>');
 			else pre.insert(cursorX + 1, '>');
 			break;
