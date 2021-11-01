@@ -134,7 +134,7 @@ public class DragListener implements DropTargetListener {
 							}
 						}.start();
 		        	  	
-						Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
+						Main.screen.frame.setTitle(Main.baseFolder.getName() + " - " + Main.PROGRAM_NAME);
 				}
 				
 		          dtde.dropComplete(true);

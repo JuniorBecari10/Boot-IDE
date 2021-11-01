@@ -71,7 +71,7 @@ public class OpenBaseFolderButton extends IDEComponent {
 					index++;
 				}
 				
-				Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
+				Main.screen.frame.setTitle(Main.baseFolder.getName() + " - " + Main.PROGRAM_NAME);
 				
 				if (!alreadyHasBaseFolder) {
 					IDEComponent.toAdd.add(Main.oneFolder);

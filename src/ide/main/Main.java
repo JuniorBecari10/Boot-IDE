@@ -93,6 +93,7 @@ public class Main implements Runnable, Tickable {
     
     public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings.conf"); // 08/05/2021 - 15:48
     
+    public static final String PROGRAM_NAME = "Boot IDE";
     public static final String VERSION = "v4.1.1";
     
     // Sprites
@@ -125,7 +126,7 @@ public class Main implements Runnable, Tickable {
     		args = new String[1];
     	
         toolkit = Toolkit.getDefaultToolkit();
-        screen = new Screen("Boot IDE");
+        screen = new Screen(PROGRAM_NAME);
         
         lang = Language.ENG; // default
         

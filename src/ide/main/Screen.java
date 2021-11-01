@@ -41,8 +41,8 @@ public class Screen extends Canvas {
     private ComponentInput componentInput;
     
     public Screen(String title) {
-        initWindow(title, new Dimension(MIN_W, MIN_H));
-
+    	initWindow(title, new Dimension(MIN_W, MIN_H));
+        
         layer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
         mouseInput = new MouseInput();

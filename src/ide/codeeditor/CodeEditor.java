@@ -5704,9 +5704,9 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (editing != null && editing.getRegent() != null)
-			Main.screen.frame.setTitle(Main.baseFolder.getName() + " • " + editing.getRegent().getRegent().getName() + " - Boot IDE");
+			Main.screen.frame.setTitle(Main.baseFolder.getName() + " • " + editing.getRegent().getRegent().getName() + " - " + Main.PROGRAM_NAME);
 		else if (Main.baseFolder != null)
-			Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
+			Main.screen.frame.setTitle(Main.baseFolder.getName() + " - " + Main.PROGRAM_NAME);
 		
 		try {
 			clipboard = (String) Main.toolkit.getSystemClipboard().getData(DataFlavor.stringFlavor);
