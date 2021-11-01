@@ -692,6 +692,8 @@ public class CommandTerminal extends IDEComponent {
 				Main.lang = Language.ENG;
 				Texts.setTexts(Main.lang);
 				
+				//Main.load();
+				
 				break;
 				
 			case "togglecodehelpers":

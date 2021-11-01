@@ -252,6 +252,11 @@ public class Main implements Runnable, Tickable {
         backBaseFolder = Colors.swapColor(backBaseFolder, Colors.textLightDefault, Colors.textLight);
         reloadSpr = Colors.swapColor(reloadSpr, Colors.textLightDefault, Colors.textLight);
         
+        CodeEditor.functions = Colors.swapColor(CodeEditor.functions, Colors.textLightDefault, Colors.textLight);
+        CodeEditor.objects = Colors.swapColor(CodeEditor.objects, Colors.textLightDefault, Colors.textLight);
+        CodeEditor.keywords = Colors.swapColor(CodeEditor.keywords, Colors.textLightDefault, Colors.textLight);
+        CodeEditor. variables = Colors.swapColor(CodeEditor.variables, Colors.textLightDefault, Colors.textLight);
+        
         star = Colors.swapColor(star, Colors.textLightDefault, Colors.textLight);
         folder = Colors.swapColor(folder, Colors.textLightDefault, Colors.textLight);
         

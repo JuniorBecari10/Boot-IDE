@@ -689,7 +689,7 @@ public class CodeEditor extends IDEComponent {
 		tabs = new ArrayList<>();
 		toAdd = new ArrayList<>();
 		toRemove = new ArrayList<>();
-		
+        
 		cursor = new Animation(2, true) {
 			private boolean flip = false;
 			
