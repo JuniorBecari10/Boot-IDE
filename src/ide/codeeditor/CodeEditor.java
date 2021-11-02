@@ -6189,7 +6189,8 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 				
-				if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46 && !KeyInput.isShiftDown()) RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.)
+				//if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46 && !KeyInput.isShiftDown()) RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.)
+				//if (KeyInput.getKeyCodePressed() == KeyEvent.)
 				
 				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
 				
