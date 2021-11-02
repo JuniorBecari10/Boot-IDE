@@ -4234,6 +4234,7 @@ public class CodeEditor extends IDEComponent {
 		case ".cfg":
 		case ".ini":
 		case ".lock":
+		case ".gd":
 			indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
 			
 			/*for (Integer i : indxs)
@@ -6027,6 +6028,8 @@ public class CodeEditor extends IDEComponent {
 				
 				if (wordSinceSpace.length() > 0)
 					wordSinceSpace = wordSinceSpace.substring(0, wordSinceSpace.length() - 1);
+				else
+					wordSinceSpace = "";
 				
 				if (selecting) {
 					CommandTerminal.runCommand("del");
@@ -6088,6 +6091,7 @@ public class CodeEditor extends IDEComponent {
 				//undo.push(lines);
 				
 				if (!RightClickOption.isAutoCompleteActive()) {
+					System.out.println("a");
 					wordSinceSpace = "";
 					RightClickOption.removeAllRightClickOptions();
 				
@@ -6189,7 +6193,7 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 				
-				//if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46 && !KeyInput.isShiftDown()) RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.)
+				if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46 && !KeyInput.isShiftDown()) RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.)
 				//if (KeyInput.getKeyCodePressed() == KeyEvent.)
 				
 				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
