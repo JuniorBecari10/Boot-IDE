@@ -1359,7 +1359,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
-			if (ext.equalsIgnoreCase(".prefs")) {
+			if (ext.equalsIgnoreCase(".prefs")) { // || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1") // talvez colocar
 				indxs = findWord(new String(chars), "="); // antes de <palavra>
 				
 				for (Integer i : indxs) {
