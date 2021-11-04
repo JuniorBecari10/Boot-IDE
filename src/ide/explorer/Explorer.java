@@ -284,7 +284,7 @@ public class Explorer extends IDEComponent {
         g.fillRect(x, y, width, height); 
         
         int xd = Main.lang == Language.PORT ? x + 40 : x + 60;
-        int x2d = Main.lang == Language.PORT ? xd + 14 : xd + 16;
+        int x2d = Main.lang == Language.PORT ? xd + 14 : xd + 16; // dar uma arrumada
         
         Fonts.drawString(Texts.explorerText, (width / 2 - xd) - (Main.lang == Language.PORT ? 40 : 0), y + 30, new IDEFont(Fonts.lightGrayNormal, 23), g);
         g.setColor(Colors.textLight);
