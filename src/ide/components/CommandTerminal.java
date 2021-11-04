@@ -23,6 +23,7 @@ import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
+import ide.input.WindowInput;
 import ide.main.Main;
 import ide.main.Screen;
 import ide.util.Animation;
@@ -75,7 +76,7 @@ public class CommandTerminal extends IDEComponent {
 	
 	// O Emmet não está disponível ainda, talvez na v4.0 ele venha
 	
-	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "reloadconfigfile",
+	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "restart",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
@@ -91,7 +92,7 @@ public class CommandTerminal extends IDEComponent {
 			"gensnippet cs/csmain str:class_name str:namespace"
 			};
 	
-	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "reloadconfigfile",
+	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "restart",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
@@ -470,8 +471,28 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "reloadconfigfile":
-				Main.load();
+			case "restart":
+				try {
+					Main.restartApplication(() -> {
+						Main.writeFile(Main.settingsFile);
+    	        		
+    		    		if (Main.editor.editing != null) { // não for nulo
+    		    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
+    		    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
+    		    				
+    		    				CodeEditor.setSystemLook();
+    		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+    		    				
+    		    				if (selectedOption == 0) Main.editor.editing.save();
+    		    				else if (selectedOption == 2) {
+    		    					WindowInput.update();
+    		    				}
+    		    			}
+    		    		}
+					});
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				break;
 				
 			case "loadconfigfile":
@@ -700,6 +721,8 @@ public class CommandTerminal extends IDEComponent {
 				
 				Main.lang = Language.ENG;
 				Texts.setTexts(Main.lang);
+				
+				runCommand("restart");
 				
 				//Main.load();
 				
