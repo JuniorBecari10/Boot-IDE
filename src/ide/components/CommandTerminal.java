@@ -534,7 +534,7 @@ public class CommandTerminal extends IDEComponent {
 				Main.hasConfigFile = false;
 				
 				if (typedFlag)
-					runCommand("restart");
+					runCommand("restart"); // fazer isso aqui rodar TODO
 				
 				break;
 			

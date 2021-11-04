@@ -59,6 +59,8 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	private ListableFile regent;
 	
+	private boolean save = true;
+	
 	private final int animSpeed = 2;
 	
 	public boolean isReadOnly;
@@ -137,7 +139,7 @@ public class Tab extends IDEComponent implements Serializable {
 	public void close() {
 		closing = true;
 		
-		if (Main.editor.editing != null) { // não for nulo
+		if (Main.editor.editing != null && save) { // não for nulo
 			if (!Main.editor.editing.isSaved()) { // não estiver salvo
 				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
 				
@@ -282,6 +284,7 @@ public class Tab extends IDEComponent implements Serializable {
 			w.close();
 			
 			setSaved(true);
+			save = true;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -301,6 +304,11 @@ public class Tab extends IDEComponent implements Serializable {
 			
 		case "save":
 			save();
+			break;
+			
+		case "nosave":
+			save = false;
+			this.close();
 			break;
 			
 		case "run":
@@ -480,14 +488,15 @@ public class Tab extends IDEComponent implements Serializable {
 		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered())) && !Main.editor.alternateTabsMode) {
 			MouseInput.updateMouse();
 			
-			int width = Main.lang == Language.PORT ? 305 : 260;
+			int width = Main.lang == Language.PORT ? 315 : 290;
 			
 			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2, width, Texts.closeTab, (s) -> execute(s), "this");
 			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 30, width, Texts.closeAllTabs, (s) -> execute(s), "all");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 60, width, Texts.closeOtherTabs, (s) -> execute(s), "closeother");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 90, width, Texts.save, (s) -> execute(s), "save");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 120, width, Texts.openBootExplorer, (s) -> execute(s), "showexp");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 150, width, Texts.orderTabs, (s) -> execute(s), "alternate");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 60, width, Texts.closeWithoutSave, (s) -> execute(s), "nosave");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 90, width, Texts.closeOtherTabs, (s) -> execute(s), "closeother");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 120, width, Texts.save, (s) -> execute(s), "save");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 150, width, Texts.openBootExplorer, (s) -> execute(s), "showexp");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, Texts.orderTabs, (s) -> execute(s), "alternate");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			

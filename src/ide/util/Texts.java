@@ -81,7 +81,7 @@ public final class Texts {
 	
 	public static String closeTab;
 	public static String closeAllTabs;
-	
+	public static String closeWithoutSave;
 	public static String closeOtherTabs;
 	
 	public static String openBootExplorer;
@@ -255,6 +255,7 @@ public final class Texts {
 			
 			closeTab = "Fechar aba";
 			closeAllTabs = "Fechar todas as abas";
+			closeWithoutSave = "Fechar sem salvar";
 			closeOtherTabs = "Fechar outras abas";
 			
 			openBootExplorer = "Abrir no Explorador";
@@ -428,6 +429,7 @@ public final class Texts {
 			
 			closeTab = "Close tab";
 			closeAllTabs = "Close all tabs";
+			closeWithoutSave = "Close without save";
 			closeOtherTabs = "Close other tabs";
 			
 			openBootExplorer = "Open in Explorer";
