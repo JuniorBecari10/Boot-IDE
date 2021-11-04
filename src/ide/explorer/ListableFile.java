@@ -1366,18 +1366,18 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			g.fillRect(0, y, Main.explorer.getWidth(), height);
 		}
 		
+		String name = regent.getName();
+		
+		if (name.length() > Main.explorer.maxTextWidth)
+			name = name.substring(0, Main.explorer.maxTextWidth - 3) + "...";
+		
 		if (regent.isDirectory()) {
-			String name = regent.getName();
-			
-			if (name.length() > Main.explorer.maxTextWidth)
-				name = name.substring(0, Main.explorer.maxTextWidth - 3) + "..."; // arrumar isso aqui TODO
-			
 			Fonts.drawString(name, x + 40, y + 4, new IDEFont(Fonts.lightGrayNormal, 16), width, g);
 			
 			g.drawImage(Main.folder, x + 6, y, height - 5, height - 5, null);
 		}
 		else if (regent.isFile()) {
-			Fonts.drawString(regent.getName(), x + 40, y + 4, new IDEFont(Fonts.lightGrayNormal, 16), width, g);
+			Fonts.drawString(name, x + 40, y + 4, new IDEFont(Fonts.lightGrayNormal, 16), width, g);
 			
 			String extension = getFileExtension(regent);
 			
