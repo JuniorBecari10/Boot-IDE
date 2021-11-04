@@ -162,6 +162,7 @@ public final class Texts {
 	public static String wantOpenFile;
 	public static String openFolder;
 	public static String wouldEdit;
+//	public static String openInDefaultEditor;
 	
 	public static String openInEditor;
 	
@@ -330,6 +331,7 @@ public final class Texts {
 			
 			wantOpenFile = "Você deseja abrir o arquivo para editá-lo?";
 			openFolder = "Abrir Pasta";
+//			openInDefaultEditor = "Abrir no Editor Padrão";
 			wouldEdit = "Gostaria de editar o arquivo?";
 			
 			in = "em";
@@ -502,6 +504,7 @@ public final class Texts {
 			
 			wantOpenFile = "Do you want to open the file to edit it?";
 			openFolder = "Open Folder";
+//			openInDefaultEditor = "Open In Default Editor";
 			wouldEdit = "Would like to edit the file?";
 			
 			in = "in";

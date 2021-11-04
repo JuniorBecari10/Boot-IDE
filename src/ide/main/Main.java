@@ -49,9 +49,15 @@ import ide.util.Texts;
 import ide.util.Tickable;
 
 public class Main implements Runnable, Tickable {
+	
+	public static final String CONFIG_FILE_EXTENSION = ".conf";
+    public static final String SETTINGS_FILE_EXTENSION = ".setconf";
 
+    public static final String PROGRAM_NAME = "Boot IDE";
+    public static final String VERSION = "v4.1.1";
+	
     private boolean running = false;
-
+    
     public static Screen screen;
     public static Toolkit toolkit;
 
@@ -91,10 +97,7 @@ public class Main implements Runnable, Tickable {
     public static boolean hasConfigFile = false;
     public static Language lang;
     
-    public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings.setconf"); // 08/05/2021 - 15:48
-    
-    public static final String PROGRAM_NAME = "Boot IDE";
-    public static final String VERSION = "v4.1.1";
+    public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings" + SETTINGS_FILE_EXTENSION); // 08/05/2021 - 15:48
     
     // Sprites
     

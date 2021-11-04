@@ -448,6 +448,15 @@ public class CommandTerminal extends IDEComponent {
 							e.printStackTrace();
 						}
     				}
+    				/*else if (selectedOption == 1) {
+    					try {
+    						File file = new File(fl.getName().contains(Main.CONFIG_FILE_EXTENSION) ? fl.getName() : fl.getName() + Main.CONFIG_FILE_EXTENSION);
+    						
+							Main.desktop.open(file);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+    				}*/
 				}
 				break;
 				

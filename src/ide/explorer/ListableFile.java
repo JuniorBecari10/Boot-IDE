@@ -115,7 +115,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".svg", Main.spritesheet.getSprite(144, 32, 16, 16)),
 			new FileType(".urna",Main.spritesheet.getSprite(160, 32, 16, 16)),		// easter egg! (Criador de Urnas)
 			new FileType(".save",Main.spritesheet.getSprite(176, 32, 16, 16)),		// easter egg! (World's Hardest Game Maker 2)
-			new FileType(".conf",Main.spritesheet.getSprite(192, 32, 16, 16)),
+			new FileType(Main.CONFIG_FILE_EXTENSION, Main.spritesheet.getSprite(192, 32, 16, 16)),
 			new FileType(".mk", Main.spritesheet.getSprite (208, 32, 16, 16)),
 			new FileType(".mak", Main.spritesheet.getSprite (208, 32, 16, 16)),
 			new FileType(".make",Main.spritesheet.getSprite(208, 32, 16, 16)),
@@ -386,7 +386,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	 
 	public static void generateConfigFile(File file) {
 		String pathStr = file.getAbsolutePath();
-		String s = pathStr.contains(".conf") ? pathStr + "" : pathStr + ".conf";
+		String s = pathStr.contains(Main.CONFIG_FILE_EXTENSION) ? pathStr + "" : pathStr + Main.CONFIG_FILE_EXTENSION;
 		
 		//Path path = Paths.get(s);
 		
