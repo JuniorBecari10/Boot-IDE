@@ -110,6 +110,8 @@ public class CommandTerminal extends IDEComponent {
 	
 	public static List<String> commandHints = new ArrayList<>();
 	
+	private static boolean typedFlag = false;
+	
 	public CommandTerminal(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
 		
@@ -516,6 +518,9 @@ public class CommandTerminal extends IDEComponent {
 						
 						runCommand("revertconfigfile");
 					}
+					
+					if (typedFlag)
+						runCommand("restart");
 				}
 				
 				break;
@@ -527,6 +532,9 @@ public class CommandTerminal extends IDEComponent {
 				runCommand("revertconfigfile");
 				
 				Main.hasConfigFile = false;
+				
+				if (typedFlag)
+					runCommand("restart");
 				
 				break;
 			
@@ -721,8 +729,6 @@ public class CommandTerminal extends IDEComponent {
 				
 				Main.lang = Language.ENG;
 				Texts.setTexts(Main.lang);
-				
-				runCommand("restart");
 				
 				//Main.load();
 				
@@ -1452,6 +1458,8 @@ public class CommandTerminal extends IDEComponent {
 		
 		//Main.writeFile(Main.settingsFile);
 		Main.editor.setCursorWithinBounds();
+		
+		typedFlag = false;
 	}
 	
 	public void tick() {
@@ -1528,6 +1536,7 @@ public class CommandTerminal extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				lastCommand = builder.toString(); // tem que ser o último que você digitou, não o último que executou (pq o sistema executa)
+				typedFlag = true;
 				
 				runCommand(builder.toString());
 				
