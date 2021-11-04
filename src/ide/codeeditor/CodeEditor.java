@@ -1227,6 +1227,7 @@ public class CodeEditor extends IDEComponent {
 		case ".urna" -> (Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas" : "Saved Bollot Box from Criador de Urnas");
 		case ".save" -> (Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2" : "Saved Game from World's Hardest Game Maker 2");
 		case ".conf" -> (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE" : "Boot IDE Configuration File");
+		case ".setconf" -> (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE" : "Boot IDE Configuration File");
 		case ".mk" -> "Makefile";
 		case ".mak" -> "Makefile";
 		case ".make" -> "Makefile";
