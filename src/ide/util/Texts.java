@@ -1,5 +1,7 @@
 package ide.util;
 
+import ide.main.Main;
+
 /**
  * Uma classe que lista todos os textos e palavras que estão na Boot IDE. Somente não listam os nomes das linguagens que aparecem embaixo da tela. Temos em português e inglês aqui.
  * 
@@ -188,6 +190,9 @@ public final class Texts {
 	
 	public static String propertyDoesntExist;
 	
+	public static String restartRequired;
+	public static String pleaseRestart;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -362,6 +367,9 @@ public final class Texts {
 			
 			propertyDoesntExist = "Essa propriedade não existe, ou um erro ocorreu.";
 			
+			restartRequired = "Reinicialização Necessária!";
+			pleaseRestart = "Por favor reinicie a " + Main.PROGRAM_NAME + " para que todas as mudanças sejam aplicadas.";
+			
 			break;
 		
 		case ENG:
@@ -535,6 +543,9 @@ public final class Texts {
 			is = "is";
 			
 			propertyDoesntExist = "This property doesn't exist, or an error occurred.";
+			
+			restartRequired = "Restart Required!";
+			pleaseRestart = "Please restart " + Main.PROGRAM_NAME + " for all the changes to be applied.";
 			
 			break;
 		}

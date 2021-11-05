@@ -109,7 +109,6 @@ public class CommandTerminal extends IDEComponent {
 	
 	public static List<String> commandHints = new ArrayList<>();
 	
-	@SuppressWarnings("unused")
 	private static boolean typedFlag = false;
 	
 	public CommandTerminal(int x, int y, int width, int height) {
@@ -521,6 +520,13 @@ public class CommandTerminal extends IDEComponent {
 					
 					/*if (typedFlag)
 						runCommand("restart");*/
+					
+					if (typedFlag) {
+						String[] options = {"  Ok  " };
+						
+						CodeEditor.setSystemLook();
+						JOptionPane.showOptionDialog(null, Texts.pleaseRestart, Texts.restartRequired, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+					}
 				}
 				
 				break;
@@ -535,6 +541,13 @@ public class CommandTerminal extends IDEComponent {
 				
 				/*if (typedFlag)
 					runCommand("restart"); // fazer isso aqui rodar TODO*/
+				
+				if (typedFlag) {
+					String[] options = {"  Ok  " };
+					
+					CodeEditor.setSystemLook();
+					JOptionPane.showOptionDialog(null, Texts.pleaseRestart, Texts.restartRequired, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+				}
 				
 				break;
 			
