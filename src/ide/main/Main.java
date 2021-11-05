@@ -55,7 +55,7 @@ public class Main implements Runnable, Tickable {
     public static final String SETTINGS_FILE_EXTENSION = ".setconf";
 
     public static final String PROGRAM_NAME = "Boot IDE";
-    public static final String VERSION = "v4.1.1";
+    public static final String VERSION = "Beta v4.2";
     
     public static final String SUN_JAVA_COMMAND = "sun.java.command";
 	

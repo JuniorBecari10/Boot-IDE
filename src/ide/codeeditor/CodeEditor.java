@@ -1662,9 +1662,7 @@ public class CodeEditor extends IDEComponent {
 	public List<IDEFont> colorObjects(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (isJSPart || isPhpPart)) &&
-			!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock"))) {
-			
+		if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock"))) {
 			for (String s : cll) {
 				indxs = findWord(new String(chars), s);
 			
@@ -3389,8 +3387,7 @@ public class CodeEditor extends IDEComponent {
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
 				// primeira vez usando labels!
 				methods:
-						if (((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (isJSPart || isPhpPart)) && 
-							  !(ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
+						if(!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
 							
 							if (!(isCssPart || isJSPart || isPhpPart)) break methods;
 						

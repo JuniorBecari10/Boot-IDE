@@ -110,6 +110,7 @@ public class CommandTerminal extends IDEComponent {
 	
 	public static List<String> commandHints = new ArrayList<>();
 	
+	@SuppressWarnings("unused")
 	private static boolean typedFlag = false;
 	
 	public CommandTerminal(int x, int y, int width, int height) {
@@ -519,8 +520,8 @@ public class CommandTerminal extends IDEComponent {
 						runCommand("revertconfigfile");
 					}
 					
-					if (typedFlag)
-						runCommand("restart");
+					/*if (typedFlag)
+						runCommand("restart");*/
 				}
 				
 				break;
@@ -533,8 +534,8 @@ public class CommandTerminal extends IDEComponent {
 				
 				Main.hasConfigFile = false;
 				
-				if (typedFlag)
-					runCommand("restart"); // fazer isso aqui rodar TODO
+				/*if (typedFlag)
+					runCommand("restart"); // fazer isso aqui rodar TODO*/
 				
 				break;
 			
