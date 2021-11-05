@@ -5594,9 +5594,7 @@ public class CodeEditor extends IDEComponent {
 			if (tabs.get(0).getX() + tabScr > x + 10) CommandTerminal.runCommand("resettabscroll");
 		
 		if (tabs.size() == 0) CommandTerminal.runCommand("resettabscroll");
-		
-		System.out.println(wordSinceSpace);
-		
+				
 		width = Main.screen.getWidth() - x;
 		
 		/*for (Tab i : tabs) {
