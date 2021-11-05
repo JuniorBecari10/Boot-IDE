@@ -1914,7 +1914,7 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			if (isJSPart) {
-indxs = findWord(new String(chars), ")");
+				indxs = findWord(new String(chars), ")");
 				
 				for (Integer i : indxs) {
 					int c = i;
@@ -4860,7 +4860,8 @@ indxs = findWord(new String(chars), ")");
 			break;
 			
 		case '<':
-			if (cursorX > 0 && !Character.isLetter(new String(toCharArray(lines.get(cursorY - 1).getChars())).charAt(cursorX - 1))) return pre;
+			if (!(ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".ejs") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".cfg") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".config") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".xml") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".sln") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".svg") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".classpath") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".csproj") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".project") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".htm") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".xhtml")))
+				if (cursorX > 0 && !Character.isLetter(new String(toCharArray(lines.get(cursorY - 1).getChars())).charAt(cursorX - 1))) return pre;
 			
 			if (pre.length() == 0 || cursorX == pre.length()) pre.append('>');
 			else pre.insert(cursorX + 1, '>');
@@ -5594,6 +5595,8 @@ indxs = findWord(new String(chars), ")");
 		
 		if (tabs.size() == 0) CommandTerminal.runCommand("resettabscroll");
 		
+		System.out.println(wordSinceSpace);
+		
 		width = Main.screen.getWidth() - x;
 		
 		/*for (Tab i : tabs) {
@@ -6161,16 +6164,16 @@ indxs = findWord(new String(chars), ")");
 				c = addAccents(keyCode, c);
 				cY = write(cY, c);
 				
-				if (codeHelpersOn)
-					cY = addCodeHelps(cY);
-				
-				register(cY, cursorY - 1);
-				
-				if (Character.isLetter(c) || isNumber(c)) wordSinceSpace += c;
+				if (!(c < 32 || c > 1000)) wordSinceSpace += c;
 				if (keyCode == KeyEvent.VK_SPACE) {
 					wordSinceSpace = "";
 					RightClickOption.removeAllRightClickOptions();
 				}
+				
+				if (codeHelpersOn)
+					cY = addCodeHelps(cY);
+				
+				register(cY, cursorY - 1);
 				
 				cursorX++;
 				
