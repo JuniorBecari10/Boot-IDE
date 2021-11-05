@@ -528,6 +528,9 @@ public class CodeEditor extends IDEComponent {
 			"unpcklps", "value", "verr", "verw", "wait", "wbinvd", "weak", "whitespace", "wrmsr", "xadd", "xchg",
 			"xchgA", "xlat", "xlatb", "xor", "xorpd", "xorps", "zero" }; // não vai colorir "str", "string"
 	
+	public static final String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+			"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+	
 	public static final String[] sections = { "data", "text", "bss", "DATA", "TEXT", "BSS" };
 	
 	public static final String[] jlKeys = { "baremodule", "begin", "break", "catch", "const", "continue", "do", "else",
@@ -998,9 +1001,9 @@ public class CodeEditor extends IDEComponent {
 			case ".zig" -> zigKeys;
 			case ".gd" -> gdKeys;
 			
-			case ".html" -> mergeStringArrays(cssTags, props);
-			case ".xhtml" -> mergeStringArrays(cssTags, props);
-			case ".htm" -> mergeStringArrays(cssTags, props);
+			case ".html" -> mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
+			case ".xhtml" -> mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
+			case ".htm" -> mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
 			case ".css" -> mergeStringArrays(cssTags, props);
 			case ".scss" -> mergeStringArrays(cssTags, props);
 			case ".json" -> jsonKeys;
@@ -1659,11 +1662,9 @@ public class CodeEditor extends IDEComponent {
 	public List<IDEFont> colorObjects(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
-		if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock"))) {
+		if (((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (isJSPart || isPhpPart)) &&
+			!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock"))) {
 			
-			String[] cll = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
-					"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-
 			for (String s : cll) {
 				indxs = findWord(new String(chars), s);
 			
@@ -1722,9 +1723,9 @@ public class CodeEditor extends IDEComponent {
 						!isCharsEqual(chars[i + len], '\'')) {
 						len++;
 				}
-
+				
 				//if (i + len < chars.length) {
-					if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".sql") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".mak") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))
+					if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".ld") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".sql") || ext.equalsIgnoreCase(".makefile") || ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".mak") || ext.equalsIgnoreCase(".make") || editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))
 						fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					else {
 						if (i - 1 > 0 && Character.isLetter(chars[i - 1])) continue;
@@ -1815,7 +1816,7 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 			}
 			
-			if (ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj") || ext.equalsIgnoreCase(".project")) {
+			/*if (ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg") || ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj") || ext.equalsIgnoreCase(".project"))*/ {
 				indxs = findWord(new String(chars), ">"); // colorir final de tags
 				
 				for (Integer i : indxs) {
@@ -1913,17 +1914,7 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			if (isJSPart) {
-				for (String s : jsKeys) { // colorir keywordss
-					indxs = findWord(new String(chars), s);
-					
-					for (Integer i : indxs) {
-						if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1]))) || ((i + s.length() < chars.length) && (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()])))) continue;
-						
-						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
-					}
-				}
-				
-				indxs = findWord(new String(chars), ")");
+indxs = findWord(new String(chars), ")");
 				
 				for (Integer i : indxs) {
 					int c = i;
@@ -2117,6 +2108,18 @@ public class CodeEditor extends IDEComponent {
 							
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
+					
+					fs = colorMethods(ext, chars, fs);
+				
+				for (String s : jsKeys) { // colorir keywordss
+					indxs = findWord(new String(chars), s);
+					
+					for (Integer i : indxs) {
+						if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1]))) || ((i + s.length() < chars.length) && (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()])))) continue;
+						
+						fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+					}
+				}
 			}
 			
 			if (isCssPart) {
@@ -3384,15 +3387,12 @@ public class CodeEditor extends IDEComponent {
 		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".bf") ||  ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log")) return fs;
 		
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
-			
-			if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
-				
 				// primeira vez usando labels!
 				methods:
-					if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
-						if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs")) {
+						if (((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs")) && (isJSPart || isPhpPart)) && 
+							  !(ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln") | ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
+							
 							if (!(isCssPart || isJSPart || isPhpPart)) break methods;
-						}
 						
 						indxs = findWord(new String(chars), "(");
 						
@@ -3444,7 +3444,6 @@ public class CodeEditor extends IDEComponent {
 							
 							fs = color(c, c + len, new IDEFont(Fonts.methodsNormal, FONT_SIZE), fs);
 						}
-					}
 				}
 			}
 		
@@ -6092,11 +6091,10 @@ public class CodeEditor extends IDEComponent {
 				//undo.push(lines);
 				
 				if (!RightClickOption.isAutoCompleteActive()) {
-					System.out.println("a");
 					wordSinceSpace = "";
 					RightClickOption.removeAllRightClickOptions();
 				
-					cY.insert(cursorX, "    ");
+					cY.insert(cursorX, "    "); // TODO fazer maleavel o tamanho da tab
 					
 					cursorX += 4;
 					editing.setSaved(false);
