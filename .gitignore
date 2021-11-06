@@ -1,4 +1,5 @@
 *.conf
+*.setconf
 /bin/
 commit.bat
 status.bat
