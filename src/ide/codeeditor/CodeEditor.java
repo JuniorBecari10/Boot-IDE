@@ -130,8 +130,8 @@ public class CodeEditor extends IDEComponent {
 	
 	private boolean showCursor;
 	
-	private Thread cursorThread;
-	private Animation cursor;
+	public Thread cursorThread;
+	public Animation cursor;
 	
 	private boolean alreadyColoredJsonVariable = false;
 	

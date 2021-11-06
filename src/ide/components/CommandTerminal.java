@@ -9,6 +9,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.lang.Thread.State;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -76,7 +77,7 @@ public class CommandTerminal extends IDEComponent {
 	// O Emmet não está disponível ainda, talvez na v4.0 ele venha
 	
 	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", /*"restart",*/
-			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag",
+			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
@@ -92,7 +93,7 @@ public class CommandTerminal extends IDEComponent {
 			};
 	
 	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll", /*"restart",*/
-			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag",
+			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab", "setexplorerdrag",
@@ -212,6 +213,22 @@ public class CommandTerminal extends IDEComponent {
 				Main.editor.index2 = 0;
 				
 				Main.editor.selecting = false;
+				break;
+				
+			case "revivecursor":
+				if (Main.editor.cursorThread.isAlive() || Main.editor.cursorThread.getState() != State.TERMINATED) {
+					try {
+						Main.editor.cursorThread.interrupt();
+					} catch (Exception e) {} // usar somente quando necessário
+				}
+				
+				Main.editor.cursorThread = new Thread() {
+					public void run() {
+						Main.editor.cursor.play();
+					}
+				};
+				
+				Main.editor.cursorThread.start();
 				break;
 				
 			case "copy":
