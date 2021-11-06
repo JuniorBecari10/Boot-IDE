@@ -5922,46 +5922,72 @@ public class CodeEditor extends IDEComponent {
 
 	private StringBuilder addExtraCode(StringBuilder cY) {
 		char[] chars = cY.toString().toCharArray();
-
-		List<Integer> indxs = findWord(new String(chars), "<"); // antes de <palavra>
-
-		for (Integer i : indxs) {
-			int c = i;
-			int len = 0;
-
-			while (c < chars.length && c + len < chars.length && c > 0) {
-				c--;
-				len++;
-			}
-
-			// c, c + len
-
-			len = 0;
-
-			while (c + len < chars.length - 1)
-				len++;
-
-			if (chars[c + len] == ' ' || chars[c + len] == '>') {
-				char[] tagArray = Arrays.copyOfRange(chars, c, c + len);
-
-				String tagStr = new String(tagArray);
-				tagStr = tagStr.replaceAll(" ", "");
-				tagStr = tagStr.substring(1);
-
-				tagStr = "></" + tagStr + ">"; // o fechamento da outra
-
-				tagArray = tagStr.toCharArray();
-
-				for (char ch : tagArray) {
-					cY = write(cY, ch);
-
-					cursorX++;
-				}
-
+		
+		if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html")
+				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+						.equalsIgnoreCase(".xhtml")
+				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+						.equalsIgnoreCase(".htm")
+				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+						.equalsIgnoreCase(".ejs")
+				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+						.equalsIgnoreCase(".xml")
+				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+						.equalsIgnoreCase(".svg")
+				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+						.equalsIgnoreCase(".sln")
+				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+						.equalsIgnoreCase(".config")
+				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+						.equalsIgnoreCase(".cfg")
+				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+						.equalsIgnoreCase(".classpath")
+				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+						.equalsIgnoreCase(".csproj")
+				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+						.equalsIgnoreCase(".project")) {
+			if (chars[cursorX] == '>') {
+				List<Integer> indxs = findWord(new String(chars), "<"); // antes de <palavra>
 				cursorX++;
+				
+				for (Integer i : indxs) {
+					int c = i;
+					int len = 0;
+		
+					while (c < chars.length && c + len < chars.length && c > 0) {
+						c--;
+						len++;
+					}
+		
+					// c, c + len
+		
+					len = 0;
+		
+					while (c + len < chars.length - 1)
+						len++;
+		
+					if (chars[c + len] == ' ' || chars[c + len] == '>') {
+						char[] tagArray = Arrays.copyOfRange(chars, c, c + len);
+		
+						String tagStr = new String(tagArray);
+						tagStr = tagStr.replaceAll(" ", "");
+						tagStr = tagStr.substring(1);
+		
+						tagStr = "</" + tagStr + ">"; // o fechamento da outra
+		
+						tagArray = tagStr.toCharArray();
+		
+						for (char ch : tagArray) {
+							cY = write(cY, ch);
+		
+							cursorX++;
+						}
+		
+						cursorX++;
+					}
+				}
 			}
 		}
-
 		return cY;
 	}
 
@@ -6594,7 +6620,17 @@ public class CodeEditor extends IDEComponent {
 					if (KeyInput.getKeyCodePressed() != KeyEvent.VK_SHIFT) {
 						int keyCode = KeyInput.getKeyCodePressed();
 						char c = KeyInput.getCharPressed();
-
+						
+						c = addAccents(keyCode, c);
+						cY = write(cY, c);
+						
+						if (!(c < 32 || c > 1000))
+							wordSinceSpace += c;
+						if (keyCode == KeyEvent.VK_SPACE) {
+							wordSinceSpace = "";
+							RightClickOption.removeAllRightClickOptions();
+						}
+						
 						if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html")
 								|| ListableFile.getFileExtension(editing.getRegent().getRegent())
 										.equalsIgnoreCase(".xhtml")
@@ -6618,23 +6654,18 @@ public class CodeEditor extends IDEComponent {
 										.equalsIgnoreCase(".csproj")
 								|| ListableFile.getFileExtension(editing.getRegent().getRegent())
 										.equalsIgnoreCase(".project")) {
-							if (c == '>')
-								cY = addExtraCode(cY);
-						}
-
-						c = addAccents(keyCode, c);
-						cY = write(cY, c);
-
-						if (!(c < 32 || c > 1000))
-							wordSinceSpace += c;
-						if (keyCode == KeyEvent.VK_SPACE) {
-							wordSinceSpace = "";
-							RightClickOption.removeAllRightClickOptions();
-						}
+								if (c == '<') {
+									wordSinceSpace = "";
+									RightClickOption.removeAllRightClickOptions();
+								}
+							}
 
 						if (codeHelpersOn)
 							cY = addCodeHelps(cY);
-
+						
+						register(cY, cursorY - 1);
+						
+						cY = addExtraCode(cY);
 						register(cY, cursorY - 1);
 
 						cursorX++;
