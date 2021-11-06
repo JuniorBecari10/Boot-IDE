@@ -13,7 +13,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -57,7 +56,7 @@ public class Main implements Runnable, Tickable {
     public static final String PROGRAM_NAME = "Boot IDE";
     public static final String VERSION = "Beta v4.2";
     
-    public static final String SUN_JAVA_COMMAND = "sun.java.command";
+    //public static final String SUN_JAVA_COMMAND = "sun.java.command";
 	
     private boolean running = false;
     
@@ -305,7 +304,7 @@ public class Main implements Runnable, Tickable {
      * 
      * @param runBeforeRestart some custom code to be run before restarting
      * @throws IOException
-     */
+     *
     public static void restartApplication(Runnable runBeforeRestart) throws IOException {
     try {
 	    // java binary
@@ -361,7 +360,7 @@ public class Main implements Runnable, Tickable {
 	    // something went wrong
 	    throw new IOException("Error while trying to restart the application", e);
 	    }
-    }
+    }*/
     
    /*private void openWith(String locale) {
     	if (locale == null) return;
