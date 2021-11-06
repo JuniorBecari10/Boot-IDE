@@ -297,9 +297,9 @@ public class Tab extends IDEComponent implements Serializable {
 			break;
 			
 		case "all":
-			Main.editor.tabs.forEach((e) -> e.close());
-			
 			Main.editor.editing = null;
+			
+			Main.editor.tabs.forEach((e) -> e.close());
 			break;
 			
 		case "save":
