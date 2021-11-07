@@ -52,7 +52,12 @@ public class Main implements Runnable, Tickable {
 	
 	public static final String CONFIG_FILE_EXTENSION = ".conf";
     public static final String SETTINGS_FILE_EXTENSION = ".setconf";
-
+    
+    public static final String RESOURCE_FOLDER_NAME = "Resources";
+    public static final String FONT_FILE_NAME = "Resources/font.png";
+    public static final String BOLD_FILE_NAME = "Resources/bold.png";
+    public static final String SPRITESHEET_FILE_NAME = "Resources/spritesheet.png";
+    
     public static final String PROGRAM_NAME = "Boot IDE";
     public static final String VERSION = "Beta v4.2";
     
@@ -96,10 +101,18 @@ public class Main implements Runnable, Tickable {
     
     public static boolean alreadyLoaded = false;
     
+    public static boolean absoluteReadSpritesheet = false;
+    
     public static boolean hasConfigFile = false;
     public static Language lang;
     
     public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings" + SETTINGS_FILE_EXTENSION); // 08/05/2021 - 15:48
+    
+    public static final File resourcesFolder = new File(System.getProperty("user.dir") + "\\" + RESOURCE_FOLDER_NAME);
+    
+    public static final File fontFile = new File(System.getProperty("user.dir") + "\\" + FONT_FILE_NAME);
+    public static final File boldFile = new File(System.getProperty("user.dir") + "\\" + BOLD_FILE_NAME);
+    public static final File spritesheetFile = new File(System.getProperty("user.dir") + "\\" + SPRITESHEET_FILE_NAME);
     
     // Sprites
     
@@ -130,6 +143,16 @@ public class Main implements Runnable, Tickable {
     	if (args == null)
     		args = new String[1];
     	
+    	//
+    	
+    	if (resourcesFolder.exists()) {
+    		if (spritesheetFile.exists()) {
+    			absoluteReadSpritesheet = true;
+    		}
+    	}
+    	
+    	//
+    	
         toolkit = Toolkit.getDefaultToolkit();
         screen = new Screen(PROGRAM_NAME);
         
@@ -137,7 +160,8 @@ public class Main implements Runnable, Tickable {
         
         //Fonts.initFonts(fntnr, fntbl);
         
-        spritesheet = new Spritesheet(sprsh);
+        spritesheet = absoluteReadSpritesheet ? new Spritesheet(spritesheetFile) : new Spritesheet(sprsh);
+        
         icons = new Spritesheet(iconsfile);
         
         ///////

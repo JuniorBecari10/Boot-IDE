@@ -116,6 +116,8 @@ public class CodeEditor extends IDEComponent {
 	public static Stack<List<IDELine>> redo = new Stack<>();
 
 	public int tabScr = 0;
+	
+	public static boolean autoCompleteHtmlTags = true;
 
 	public List<Tab> tabs;
 	public List<Tab> toAdd;
@@ -5923,7 +5925,7 @@ public class CodeEditor extends IDEComponent {
 	private StringBuilder addExtraCode(StringBuilder cY) {
 		char[] chars = cY.toString().toCharArray();
 		
-		if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html")
+		if ((ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html")
 				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
 						.equalsIgnoreCase(".xhtml")
 				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
@@ -5945,7 +5947,7 @@ public class CodeEditor extends IDEComponent {
 				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
 						.equalsIgnoreCase(".csproj")
 				|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-						.equalsIgnoreCase(".project")) {
+						.equalsIgnoreCase(".project")) && autoCompleteHtmlTags) {
 			if (chars[cursorX] == '>') {
 				List<Integer> indxs = findWord(new String(chars), "<"); // antes de <palavra>
 				cursorX++;
