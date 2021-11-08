@@ -4926,10 +4926,13 @@ public class CodeEditor extends IDEComponent {
 			extType = getLowerBarFileName(ext);
 		else
 			extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
-
+		
+		if ((isReadOnly || editing.isReadOnly) && !extType.contains("(" + Texts.readOnly + ")"))
+			extType += " (" + Texts.readOnly + ")";
+		
 		if (!ListableFile.fileHasExtension(ext))
 			ext = editing.getRegent().getRegent().getName();
-
+		
 		fs = colorNoExtensions(ext, chars, fs);
 
 		if (editing == null)
@@ -4957,10 +4960,7 @@ public class CodeEditor extends IDEComponent {
 		/*
 		 * for (AutoComplete c : autocomplete) { for (AutoComplete d : autocomplete) {
 		 * if (c.text.equals(d.text)) autocomplete.remove(c); } }
-		 */
-
-		if (isReadOnly && !extType.contains("(" + Texts.readOnly + ")"))
-			extType += " (" + Texts.readOnly + ")";
+		*/
 
 		return fs;
 	}
@@ -6004,7 +6004,9 @@ public class CodeEditor extends IDEComponent {
 			return;
 		if (tabs == null)
 			tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
-
+		
+		isReadOnly = editing.isReadOnly;
+		
 		if (tabs.size() > 0)
 			if (tabs.get(0).getX() + tabScr > x + 10)
 				CommandTerminal.runCommand("resettabscroll");
