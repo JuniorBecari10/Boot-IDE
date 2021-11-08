@@ -145,8 +145,6 @@ public class Main implements Runnable, Tickable {
     	
     	//
     	
-    	//System.out.println(ListableFile.types == null);
-    	
     	if (resourcesFolder.exists()) {
     		if (spritesheetFile.exists()) {
     			absoluteReadSpritesheet = true;
@@ -155,17 +153,15 @@ public class Main implements Runnable, Tickable {
     	
     	//
     	
+    	spritesheet = absoluteReadSpritesheet ? new Spritesheet(spritesheetFile) : new Spritesheet(sprsh);
+        icons = new Spritesheet(iconsfile);
+    	
         toolkit = Toolkit.getDefaultToolkit();
         screen = new Screen(PROGRAM_NAME);
         
         lang = Language.ENG; // default
         
         //Fonts.initFonts(fntnr, fntbl);
-        
-        spritesheet = absoluteReadSpritesheet ? new Spritesheet(spritesheetFile) : new Spritesheet(sprsh);
-        icons = new Spritesheet(iconsfile);
-        
-        //ListableFile.initTypes();
         
         ///////
         
@@ -793,6 +789,8 @@ public class Main implements Runnable, Tickable {
 			Fonts.drawString(explorer.getWidth() + "px", x + 5, y, new IDEFont(Fonts.lightGrayNormal, 20), g);
         }
         
+        g.drawImage(ListableFile.types[6].getIcon(), 10, 10, null);
+        
         g.dispose();
         g = bs.getDrawGraphics();
 
@@ -883,7 +881,7 @@ public class Main implements Runnable, Tickable {
     public void run() {
     	screen.requestFocus();
     	
-    	long lastTime = System.nanoTime();
+    	long lastTime = System.nanoTime(); // Release v3.9.1 - 14/08/2021 - 14:51
     	double targetFps = 120.0; // 60
     	double ns = 1E9 / targetFps;
     	double delta = 0;

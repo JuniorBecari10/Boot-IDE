@@ -38,7 +38,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	
 	public static boolean hasAltered = false;
 
-	public static FileType[] types = {
+	public static FileType[] types = new FileType[] {
 			new FileType("readme.md",Main.spritesheet.getSprite(752,32,16,16)),
 			new FileType("package.json",Main.spritesheet.getSprite(576,16,16,16)),
 			new FileType("package-lock.json",Main.spritesheet.getSprite(576,16,16,16)),
@@ -203,6 +203,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		
 		this.regent = regent;
 		this.parent = parent;
+		
+		//initTypes();
 	}
 	
 	public static void initTypes() {
@@ -1155,7 +1157,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			String[] options = { Texts.yes, Texts.no };
 			
 			CodeEditor.setSystemLook();
-			int selectedOption = JOptionPane.showOptionDialog(null, Texts.sureDelete + " " + regent.getName() + "?", Texts.confirmDelete, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+			int selectedOption = JOptionPane.showOptionDialog(null, Texts.sureDelete + " " + regent.getName() + "? " + Texts.canBeFoundOnSystemsRecycleBin, Texts.confirmDelete, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 			
 			if (selectedOption != 0) break;
 			
