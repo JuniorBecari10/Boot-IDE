@@ -146,9 +146,8 @@ public class Main implements Runnable, Tickable {
     	//
     	
     	if (resourcesFolder.exists()) {
-    		if (spritesheetFile.exists()) {
+    		if (spritesheetFile.exists())
     			absoluteReadSpritesheet = true;
-    		}
     	}
     	
     	//
@@ -789,7 +788,7 @@ public class Main implements Runnable, Tickable {
 			Fonts.drawString(explorer.getWidth() + "px", x + 5, y, new IDEFont(Fonts.lightGrayNormal, 20), g);
         }
         
-        g.drawImage(ListableFile.types[6].getIcon(), 10, 10, null);
+        //g.drawImage(ListableFile.types[6].getIcon(), 10, 10, null);
         
         g.dispose();
         g = bs.getDrawGraphics();

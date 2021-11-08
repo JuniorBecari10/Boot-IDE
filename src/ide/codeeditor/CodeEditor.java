@@ -6005,7 +6005,8 @@ public class CodeEditor extends IDEComponent {
 		if (tabs == null)
 			tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
 		
-		isReadOnly = editing.isReadOnly;
+		if (editing != null)
+			isReadOnly = editing.isReadOnly;
 		
 		if (tabs.size() > 0)
 			if (tabs.get(0).getX() + tabScr > x + 10)
