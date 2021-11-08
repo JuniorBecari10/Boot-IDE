@@ -1312,7 +1312,7 @@ public class CodeEditor extends IDEComponent {
 		case ".iso" -> (Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File");
 		case ".flp" -> (Main.lang == Language.PORT ? "Arquivo de Disquete" : "Floppy Disk File");
 		case ".o" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
-		case ".out" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
+		case ".out" -> (Main.lang == Language.PORT ? "Arquivo de Saída" : "Output File");
 		case ".obj" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
 
 		default -> capitalizeFirstLetter(

@@ -1159,7 +1159,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			
 			if (selectedOption != 0) break;
 			
-			if (!regent.delete()) {
+			if (!Main.desktop.moveToTrash(regent)) {
 				CodeEditor.setSystemLook();
 				
 				JOptionPane.showMessageDialog(null, Texts.delError, Texts.cantDelete, JOptionPane.OK_OPTION);
