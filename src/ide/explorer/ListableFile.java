@@ -39,7 +39,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	public static boolean hasAltered = false;
 
 	public static FileType[] types = {
-			new FileType("readme.md", Main.spritesheet.getSprite (752,32,16,16)),
+			new FileType("readme.md",Main.spritesheet.getSprite(752,32,16,16)),
 			new FileType("package.json",Main.spritesheet.getSprite(576,16,16,16)),
 			new FileType("package-lock.json",Main.spritesheet.getSprite(576,16,16,16)),
 			
@@ -190,7 +190,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType("license", Main.spritesheet.getSprite(336, 32, 16, 16)),
 			new FileType("authors", Main.spritesheet.getSprite(624, 32, 16, 16)),
 			new FileType("gitignore", Main.spritesheet.getSprite (240,32,16,16)),
-	};
+		};
 	
 	private ListableFile parent;
 	
@@ -203,6 +203,167 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		
 		this.regent = regent;
 		this.parent = parent;
+	}
+	
+	public static void initTypes() {
+		types = initArray(new FileType[] {
+				new FileType("readme.md",Main.spritesheet.getSprite(752,32,16,16)),
+				new FileType("package.json",Main.spritesheet.getSprite(576,16,16,16)),
+				new FileType("package-lock.json",Main.spritesheet.getSprite(576,16,16,16)),
+				
+				new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16)),
+				new FileType(".class",Main.spritesheet.getSprite(272,32, 16, 16)),
+				new FileType(".c", Main.spritesheet.getSprite   (16, 16, 16, 16)),
+				new FileType(".cpp", Main.spritesheet.getSprite (32, 16, 16, 16)),
+				new FileType(".cc", Main.spritesheet.getSprite  (32, 16, 16, 16)),
+				new FileType(".cxx", Main.spritesheet.getSprite (32, 16, 16, 16)),
+				new FileType(".cs", Main.spritesheet.getSprite  (48, 16, 16, 16)),
+				new FileType(".py", Main.spritesheet.getSprite  (64, 16, 16, 16)),
+				new FileType(".pyd", Main.spritesheet.getSprite (64, 16, 16, 16)),
+				new FileType(".pyx", Main.spritesheet.getSprite (64, 16, 16, 16)),
+				new FileType(".js", Main.spritesheet.getSprite  (80, 16, 16, 16)),
+				new FileType(".mjs", Main.spritesheet.getSprite (80, 16, 16, 16)),
+				new FileType(".bat", Main.spritesheet.getSprite (96, 16, 16, 16)),
+				new FileType(".com", Main.spritesheet.getSprite(592, 32, 16, 16)),
+				new FileType(".cmd", Main.spritesheet.getSprite(592, 32, 16, 16)),
+				new FileType(".h", Main.spritesheet.getSprite  (112, 16, 16, 16)),
+				new FileType(".hh", Main.spritesheet.getSprite (112, 16, 16, 16)),
+				new FileType(".hxx", Main.spritesheet.getSprite(112, 16, 16, 16)),
+				new FileType(".hpp", Main.spritesheet.getSprite(112, 16, 16, 16)),
+				new FileType(".asm", Main.spritesheet.getSprite(128, 16, 16, 16)),
+				new FileType(".s", Main.spritesheet.getSprite  (128, 16, 16, 16)),
+				new FileType(".lua", Main.spritesheet.getSprite(144, 16, 16, 16)),
+				new FileType(".sql", Main.spritesheet.getSprite(160, 16, 16, 16)),
+				new FileType(".swift",Main.spritesheet.getSprite(176,16, 16, 16)),
+				new FileType(".rs", Main.spritesheet.getSprite (192, 16, 16, 16)),
+				new FileType(".php", Main.spritesheet.getSprite(208, 16, 16, 16)),
+				new FileType(".kt", Main.spritesheet.getSprite (224, 16, 16, 16)),
+				new FileType(".vue", Main.spritesheet.getSprite(240, 16, 16, 16)),
+				new FileType(".rb", Main.spritesheet.getSprite (256, 16, 16, 16)),
+				new FileType(".ino", Main.spritesheet.getSprite(272, 16, 16, 16)),
+				new FileType(".ts", Main.spritesheet.getSprite (288, 16, 16, 16)),
+				new FileType(".tsx", Main.spritesheet.getSprite(544, 16, 16, 16)),
+				new FileType(".go", Main.spritesheet.getSprite (304, 16, 16, 16)),
+				new FileType(".r",  Main.spritesheet.getSprite (320, 16, 16, 16)),
+				new FileType(".jl", Main.spritesheet.getSprite (336, 16, 16, 16)),
+				new FileType(".pl", Main.spritesheet.getSprite (352, 16, 16, 16)),
+				new FileType(".t", Main.spritesheet.getSprite (352, 16, 16, 16)),
+				new FileType(".has", Main.spritesheet.getSprite(368, 16, 16, 16)),
+				new FileType(".hs", Main.spritesheet.getSprite (368, 16, 16, 16)),
+				new FileType(".fs", Main.spritesheet.getSprite (384, 16, 16, 16)),
+				new FileType(".coffee",Main.spritesheet.getSprite(400,16,16, 16)),
+				new FileType(".m", Main.spritesheet.getSprite  (416, 16, 16, 16)),
+				new FileType(".mm", Main.spritesheet.getSprite (592, 16, 16, 16)),
+				new FileType(".pas", Main.spritesheet.getSprite(432, 16, 16, 16)),
+				new FileType(".lpr", Main.spritesheet.getSprite(432, 16, 16, 16)),
+				new FileType(".pp", Main.spritesheet.getSprite (432, 16, 16, 16)),
+				new FileType(".scala",Main.spritesheet.getSprite(448,16, 16, 16)),
+				new FileType(".dart",Main.spritesheet.getSprite(464, 16, 16, 16)),
+				new FileType(".zig", Main.spritesheet.getSprite(480, 16, 16, 16)),
+				new FileType(".scss",Main.spritesheet.getSprite(496, 16, 16, 16)),
+				new FileType(".ipynb",Main.spritesheet.getSprite(512,16, 16, 16)),
+				new FileType(".vb", Main.spritesheet.getSprite (528, 16, 16, 16)),
+				new FileType(".bf", Main.spritesheet.getSprite (560, 16, 16, 16)),
+				new FileType(".gd", Main.spritesheet.getSprite (608, 16, 16, 16)),
+				
+				new FileType(".html", Main.spritesheet.getSprite (0, 32, 16, 16)),
+				new FileType(".xhtml", Main.spritesheet.getSprite(0, 32, 16, 16)),
+				new FileType(".htm", Main.spritesheet.getSprite  (0, 32, 16, 16)),
+				new FileType(".css", Main.spritesheet.getSprite (16, 32, 16, 16)),
+				new FileType(".xml", Main.spritesheet.getSprite (32, 32, 16, 16)),
+				new FileType(".json", Main.spritesheet.getSprite(48, 32, 16, 16)),
+				new FileType(".jsonc",Main.spritesheet.getSprite(48, 32, 16, 16)),
+				new FileType(".md", Main.spritesheet.getSprite  (64, 32, 16, 16)),
+				new FileType(".markdown",Main.spritesheet.getSprite(64,32,16,16)),
+				new FileType(".txt", Main.spritesheet.getSprite (80, 32, 16, 16)),
+				new FileType(".log", Main.spritesheet.getSprite (80, 32, 16, 16)),
+				new FileType(".pdf", Main.spritesheet.getSprite (96, 32, 16, 16)),
+				new FileType(".jar", Main.spritesheet.getSprite(112, 32, 16, 16)),
+				new FileType(".exe", Main.spritesheet.getSprite(128, 32, 16, 16)),
+				new FileType(".svg", Main.spritesheet.getSprite(144, 32, 16, 16)),
+				new FileType(".urna",Main.spritesheet.getSprite(160, 32, 16, 16)),		// easter egg! (Criador de Urnas)
+				new FileType(".save",Main.spritesheet.getSprite(176, 32, 16, 16)),		// easter egg! (World's Hardest Game Maker 2)
+				new FileType(Main.CONFIG_FILE_EXTENSION, Main.spritesheet.getSprite(192, 32, 16, 16)),
+				new FileType(".mk", Main.spritesheet.getSprite (208, 32, 16, 16)),
+				new FileType(".mak", Main.spritesheet.getSprite (208, 32, 16, 16)),
+				new FileType(".make",Main.spritesheet.getSprite(208, 32, 16, 16)),
+				new FileType(".sh", Main.spritesheet.getSprite (224, 32, 16, 16)),
+				new FileType(".gitignore",Main.spritesheet.getSprite(240,32,16,16)),
+				new FileType(".dockerfile",Main.spritesheet.getSprite(256,32,16,16)),
+				new FileType(".jsx", Main.spritesheet.getSprite(368, 32, 16, 16)),
+				new FileType(".config",Main.spritesheet.getSprite(352,32,16, 16)),
+				new FileType(".cfg", Main.spritesheet.getSprite (352, 32,16, 16)),
+				new FileType(".ps1", Main.spritesheet.getSprite(320, 32, 16, 16)),
+				new FileType(".license",Main.spritesheet.getSprite(336,32,16,16)),
+				new FileType(".docx",Main.spritesheet.getSprite(384, 32, 16, 16)),
+				new FileType(".xlsx",Main.spritesheet.getSprite(400, 32, 16, 16)),
+				new FileType(".docx",Main.spritesheet.getSprite(384, 32, 16, 16)),
+				new FileType(".pptx",Main.spritesheet.getSprite(416, 32, 16, 16)),
+				new FileType(".one", Main.spritesheet.getSprite(432, 32, 16, 16)),
+				new FileType(".psd",Main.spritesheet.getSprite (448, 32, 16, 16)),
+				new FileType(".aed",Main.spritesheet.getSprite (464, 32, 16, 16)),
+				new FileType(".ai", Main.spritesheet.getSprite (480, 32, 16, 16)),
+				new FileType(".indd",Main.spritesheet.getSprite(496, 32, 16, 16)),
+				new FileType(".ejs", Main.spritesheet.getSprite(512, 32, 16, 16)),
+				new FileType(".ld", Main.spritesheet.getSprite (528, 32, 16, 16)),
+				new FileType(".lock",Main.spritesheet.getSprite(544, 32, 16, 16)),
+				new FileType(".ini", Main.spritesheet.getSprite(560, 32, 16, 16)),
+				new FileType(".dll", Main.spritesheet.getSprite(576, 32, 16, 16)),
+				new FileType(".makefile",Main.spritesheet.getSprite(208,32,16,16)),
+				new FileType(".url", Main.spritesheet.getSprite(608, 32, 16, 16)),
+				new FileType(".prefs",Main.spritesheet.getSprite(688,32, 16, 16)),
+				new FileType(".classpath",Main.spritesheet.getSprite(704,32,16,16)),
+				new FileType(".project",Main.spritesheet.getSprite(720,32,16,16)),
+				new FileType(".csproj",Main.spritesheet.getSprite(768,32,16,16)),
+				new FileType(".setconf",Main.spritesheet.getSprite(192,32,16,16)),
+				
+				new FileType(".png", Main.spritesheet.getSprite  (0, 48, 16, 16)),
+				new FileType(".jpg", Main.spritesheet.getSprite  (0, 48, 16, 16)),
+				new FileType(".jpeg", Main.spritesheet.getSprite (0, 48, 16, 16)),
+				new FileType(".gif", Main.spritesheet.getSprite  (0, 48, 16, 16)),
+				new FileType(".bmp", Main.spritesheet.getSprite  (0, 48, 16, 16)),
+				new FileType(".ico", Main.spritesheet.getSprite (64, 48, 16, 16)),
+				new FileType(".webp", Main.spritesheet.getSprite (0, 48, 16, 16)),
+				
+				new FileType(".mp4", Main.spritesheet.getSprite (16, 48, 16, 16)),
+				new FileType(".wmv", Main.spritesheet.getSprite (16, 48, 16, 16)),
+				new FileType(".avi", Main.spritesheet.getSprite (16, 48, 16, 16)),
+				
+				new FileType(".wav", Main.spritesheet.getSprite (32, 48, 16, 16)),
+				new FileType(".mp3", Main.spritesheet.getSprite (32, 48, 16, 16)),
+				new FileType(".ogg", Main.spritesheet.getSprite (32, 48, 16, 16)),
+				
+				new FileType(".otf", Main.spritesheet.getSprite (48, 48, 16, 16)),
+				new FileType(".ttf", Main.spritesheet.getSprite (48, 48, 16, 16)),
+				new FileType(".woff",Main.spritesheet.getSprite (48, 48, 16, 16)),
+				new FileType(".woff2",Main.spritesheet.getSprite(48, 48, 16, 16)),
+				
+				new FileType(".zip", Main.spritesheet.getSprite(288, 32, 16, 16)),
+				new FileType(".gz",  Main.spritesheet.getSprite(288, 32, 16, 16)),
+				new FileType(".rar", Main.spritesheet.getSprite(288, 32, 16, 16)),
+				new FileType(".7z", Main.spritesheet.getSprite (288, 32, 16, 16)),
+				
+				new FileType(".bin", Main.spritesheet.getSprite(304, 32, 16, 16)),
+				new FileType(".img", Main.spritesheet.getSprite(640, 32, 16, 16)),
+				new FileType(".iso", Main.spritesheet.getSprite(640, 32, 16, 16)),
+				new FileType(".flp", Main.spritesheet.getSprite(656, 32, 16, 16)),
+				new FileType(".o",  Main.spritesheet.getSprite (672, 32, 16, 16)),
+				new FileType(".out", Main.spritesheet.getSprite(672, 32, 16, 16)),
+				new FileType(".obj", Main.spritesheet.getSprite(672, 32, 16, 16)),
+				
+				// Specials
+				
+				new FileType("makefile",Main.spritesheet.getSprite(208, 32, 16, 16)),
+				new FileType("dockerfile",Main.spritesheet.getSprite(256,32,16, 16)),
+				new FileType("license", Main.spritesheet.getSprite(336, 32, 16, 16)),
+				new FileType("authors", Main.spritesheet.getSprite(624, 32, 16, 16)),
+				new FileType("gitignore", Main.spritesheet.getSprite (240,32,16,16)),
+			}
+		);
+	}
+	
+	public static <T> T[] initArray(T[] arr) {
+		return arr;
 	}
 	
 	public ListableFile getParent() {

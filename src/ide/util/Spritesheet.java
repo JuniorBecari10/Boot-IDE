@@ -26,9 +26,9 @@ public class Spritesheet {
 		}
     }
     
-    public Spritesheet(BufferedImage spr) {
+    /*public Spritesheet(BufferedImage spr) {
     	this.spr = spr;
-    }
+    }*/
 
     /**
      * Recorta a Spritesheet e retorna a parte recortada.

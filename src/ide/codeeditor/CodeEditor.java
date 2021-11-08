@@ -678,7 +678,7 @@ public class CodeEditor extends IDEComponent {
 			"return", "class", "class_name", "extends", "is", "as", "self", "tool", "signal", "func", "static", "const",
 			"enum", "var", "onready", "export", "setget", "breakpoint", "preload", "yield", "assert", "remote",
 			"master", "puppet", "remotesync", "mastersync", "puppetsync", "PI", "TAU", "INF", "NAN", "bool", "int",
-			"float", "String", "void" };
+			"float", "String", "void", "true", "false" };
 
 	///////
 
@@ -1316,7 +1316,7 @@ public class CodeEditor extends IDEComponent {
 		case ".obj" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
 
 		default -> capitalizeFirstLetter(
-				ListableFile.getFileExtension(Main.editor.editing.getRegent().getRegent().getName()).substring(1));
+				ListableFile.getFileExtension(Main.editor.editing.getRegent().getRegent().getName()).substring(1).toLowerCase());
 		};
 	}
 
