@@ -27,6 +27,4 @@ public class FileType {
 	public void setIcon(BufferedImage icon) {
 		this.icon = icon;
 	}
-	
-	
 }
