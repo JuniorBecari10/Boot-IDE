@@ -7476,7 +7476,7 @@ public class CodeEditor extends IDEComponent {
 			return;
 
 		if (editing != null) {
-			g.setColor(Colors.explorer);
+			g.setColor(Colors.codeEditor);
 			g.fillRect(x, MIN_Y, Main.screen.getWidth(), height);
 		}
 

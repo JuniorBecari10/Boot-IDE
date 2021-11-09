@@ -549,6 +549,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("background2: default\n");
 			w.write("backgroundLight: default\n");
 			w.write("explorer: default\n");
+			w.write("codeEditor: default\n");
 			w.write("explorerLight: default\n");
 			w.write("explorerLighter: default\n");
 			w.write("textLight: default\n");
@@ -690,6 +691,22 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				try {
 					Colors.explorer = Color.decode(split[1]);
+				} catch (NumberFormatException e) {
+					break;
+				}
+
+				break;
+				
+			case "codeEditor:":
+				if (split[1].equals("default"))
+					break;
+
+				if (!split[1].startsWith("#"))
+					split[1] = "#" + split[1];
+				hasAltered = true;
+
+				try {
+					Colors.codeEditor = Color.decode(split[1]);
 				} catch (NumberFormatException e) {
 					break;
 				}

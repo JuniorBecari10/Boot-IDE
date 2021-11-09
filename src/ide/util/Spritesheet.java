@@ -11,11 +11,6 @@ public class Spritesheet {
     private BufferedImage spr;
 
     public Spritesheet(String path) {
-    	StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        StackTraceElement element = stackTrace[2];
-        System.out.println("I was called by a method named: " + element.getMethodName());
-        System.out.println("That method is in class: " + element.getClassName());
-    	
     	try {
             spr = ImageIO.read(getClass().getResource(path));
         } catch (IOException e) {
