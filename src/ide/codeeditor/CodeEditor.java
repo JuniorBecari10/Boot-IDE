@@ -5922,7 +5922,7 @@ public class CodeEditor extends IDEComponent {
 		}
 	}
 
-	private StringBuilder addExtraCode(StringBuilder cY) {
+	private StringBuilder addExtraCode(StringBuilder cY, char digit) {
 		char[] chars = cY.toString().toCharArray();
 		
 		if (editing != null)
@@ -5949,7 +5949,7 @@ public class CodeEditor extends IDEComponent {
 							.equalsIgnoreCase(".csproj")
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent())
 							.equalsIgnoreCase(".project")) && autoCompleteHtmlTags) {
-				if (chars[cursorX] == '>') {
+				if (chars[cursorX] == '>' && digit == '>') { // isso tem um bug mt chato que quando apaga a tag de fechar e tenta por de novo estraga td
 					List<Integer> indxs = findWord(new String(chars), "<"); // antes de <palavra>
 					cursorX++;
 					
@@ -6673,7 +6673,7 @@ public class CodeEditor extends IDEComponent {
 						
 						register(cY, cursorY - 1);
 						
-						cY = addExtraCode(cY);
+						cY = addExtraCode(cY, c);
 						register(cY, cursorY - 1);
 
 						cursorX++;

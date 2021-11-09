@@ -94,14 +94,19 @@ public class Main implements Runnable, Tickable {
     public static String conffile = "none";
     public static String iconsfile = "/autocomplete-icons.png";
     
+    public static Spritesheet originalSpritesheet;
+    
+    public static Spritesheet modifiedSpritesheet;
+    public static Spritesheet modifiedFontNormal;
+    public static Spritesheet modifiedFontBold;
+    public static Spritesheet modifiedIcons;
+    
     private static int tabindex = -1;
     
     public static Desktop desktop;
     public static String[] args;
     
     public static boolean alreadyLoaded = false;
-    
-    public static boolean absoluteReadSpritesheet = false;
     
     public static boolean hasConfigFile = false;
     public static Language lang;
@@ -143,18 +148,13 @@ public class Main implements Runnable, Tickable {
     	if (args == null)
     		args = new String[1];
     	
-    	//
-    	
-    	if (resourcesFolder.exists()) {
-    		if (spritesheetFile.exists())
-    			absoluteReadSpritesheet = true;
-    	}
-    	
-    	//
-    	
-    	spritesheet = absoluteReadSpritesheet ? new Spritesheet(spritesheetFile) : new Spritesheet(sprsh);
+    	originalSpritesheet = new Spritesheet(sprsh);
         icons = new Spritesheet(iconsfile);
     	
+        modifiedSpritesheet = new Spritesheet(spritesheetFile);
+        
+        spritesheet = spritesheetFile.exists() ? modifiedSpritesheet : originalSpritesheet;
+        
         toolkit = Toolkit.getDefaultToolkit();
         screen = new Screen(PROGRAM_NAME);
         
@@ -214,46 +214,7 @@ public class Main implements Runnable, Tickable {
         if (!alreadyLoaded)
         	load();
         
-        /*try {
-        	String arg = args[0].toLowerCase().contains("boot") || args[0].toLowerCase().contains("ide") ? args[1] : args[0];
-        	
-        	openWith(arg);
-        } catch (NullPointerException | IndexOutOfBoundsException e) {
-        	e.printStackTrace();
-        	System.err.println("[PORT] Não há argumentos suficientes! \n [ENG] No enough arguments!");
-        }*/
-        
-        /*ListableFile.readConfigFile(conffile);
-        Texts.setTexts(lang);
-        
-        ////////
-        
-        baseFolderSpr = Colors.swapColor(baseFolderSpr, Colors.textLightDefault, Colors.textLight);
-        
-        newFileSpr = Colors.swapColor(newFileSpr, Colors.textLightDefault, Colors.textLight);
-        newFolderSpr = Colors.swapColor(newFolderSpr, Colors.textLightDefault, Colors.textLight);
-        folderUp = Colors.swapColor(folderUp, Colors.textLightDefault, Colors.textLight);
-        backBaseFolder = Colors.swapColor(backBaseFolder, Colors.textLightDefault, Colors.textLight);
-        reloadSpr = Colors.swapColor(reloadSpr, Colors.textLightDefault, Colors.textLight);
-        
-        star = Colors.swapColor(star, Colors.textLightDefault, Colors.textLight);
-        folder = Colors.swapColor(folder, Colors.textLightDefault, Colors.textLight);
-        
-        closeTab = Colors.swapColor(closeTab, Colors.textLightDefault, Colors.textLight);
-        notSavedTab = Colors.swapColor(notSavedTab, Colors.textLightDefault, Colors.textLight);
-        
-        lock = Colors.swapColor(lock, Colors.textLightDefault, Colors.textLight);
-        
-        ///
-        
-        CodeEditor.functions = Colors.swapColor(CodeEditor.functions, Colors.textLightDefault, Colors.textLight);
-        CodeEditor.objects = Colors.swapColor(CodeEditor.objects, Colors.textLightDefault, Colors.textLight);
-        CodeEditor.keywords = Colors.swapColor(CodeEditor.keywords, Colors.textLightDefault, Colors.textLight);
-        CodeEditor.variables = Colors.swapColor(CodeEditor.variables, Colors.textLightDefault, Colors.textLight);
-        
-        ////////
-        
-        Fonts.initFonts(fntnr, fntbl);*/
+        ListableFile.updateTypes();
         
         IDEComponent.toAdd.add(Main.newFile);
 		IDEComponent.toAdd.add(Main.newFolder);
@@ -787,8 +748,6 @@ public class Main implements Runnable, Tickable {
 			
 			Fonts.drawString(explorer.getWidth() + "px", x + 5, y, new IDEFont(Fonts.lightGrayNormal, 20), g);
         }
-        
-        //g.drawImage(ListableFile.types[6].getIcon(), 10, 10, null);
         
         g.dispose();
         g = bs.getDrawGraphics();
