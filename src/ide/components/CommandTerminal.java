@@ -79,7 +79,7 @@ public class CommandTerminal extends IDEComponent {
 	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", /*"restart",*/
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
-			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
+			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
 			"gendiv str:class_name", "gensnippet str:type", //"emmet str:expression",
@@ -95,7 +95,7 @@ public class CommandTerminal extends IDEComponent {
 	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll", /*"restart",*/
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
-			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "gendiv", "closebasefolder",
+			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab", "setexplorerdrag",
 			"gotoline", "setfontsize", "insertchar",
 			"gendiv", "gensnippet", //"emmet",
@@ -710,6 +710,22 @@ public class CommandTerminal extends IDEComponent {
 				Main.editor.editing.setSaved(false);
 				
 				Main.editor.cursorX += 12;
+				
+				break;
+				
+			case "cerr":
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
+				
+				b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())));
+				
+				b.insert(Main.editor.cursorX, "console.error();");
+				
+				Main.editor.register(b, Main.editor.cursorY - 1);
+				
+				Main.editor.editing.setSaved(false);
+				
+				Main.editor.cursorX += 14;
 				
 				break;
 				

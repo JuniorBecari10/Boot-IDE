@@ -5949,7 +5949,7 @@ public class CodeEditor extends IDEComponent {
 							.equalsIgnoreCase(".csproj")
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent())
 							.equalsIgnoreCase(".project")) && autoCompleteHtmlTags) {
-				if (chars[cursorX] == '>' && digit == '>') { // isso tem um bug mt chato que quando apaga a tag de fechar e tenta por de novo estraga td
+				if (cursorX > 0 && chars[cursorX] == '>' && digit == '>') { // isso tem um bug mt chato que quando apaga a tag de fechar e tenta por de novo estraga td, talvez adicionar um keystroke que se apertado ele n detecta
 					List<Integer> indxs = findWord(new String(chars), "<"); // antes de <palavra>
 					cursorX++;
 					

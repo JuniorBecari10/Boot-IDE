@@ -252,7 +252,7 @@ public class Tab extends IDEComponent implements Serializable {
 //			e.printStackTrace();
 //		}
 		
-		closing = false;
+		closing = false; // TODO talvez fazer uma variavel boolean e quando apertar o botão fechar, ativa ela, e se não fechar, verifica se ela é true e fecha, removendo da lista
 	}
 	
 	/**
