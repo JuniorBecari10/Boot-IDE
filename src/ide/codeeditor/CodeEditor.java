@@ -480,7 +480,7 @@ public class CodeEditor extends IDEComponent {
 			"lodsl", "lodsw", "logicalinstructions", "long", "loop", "loope", "loopne", "loopnz", "loopz", "lret",
 			"lsl", "lss", "ltr", "maskmovdqu", "maskmovq", "maxpd", "maxps", "maxsd", "maxss", "mfence", "minpd",
 			"minps", "minsd", "minss", "miscellaneousinstructions", "MMXinstructions", "comparison", "conversion",
-			"datatransfer", "logical", "packedarithmetic", "rotate", "shift", "statemanagement", "mov", "movabs",
+			"datatransfer", "logical", "packedarithmetic", "rotate", "shift", "statemanagement", "mov", "movl", "movabs",
 			"movabsA", "movapd", "movaps", "movd", "movdqq", "movdqa", "movdqu", "movhlps", "movhpd", "movhps",
 			"movlhps", "movlpd", "movlps", "movmskpd", "movmskps", "movntdq", "movnti", "movntpd", "movntps", "movntq",
 			"movq", "movqdq", "movs", "movsb", "movsd", "movsl", "movss", "movsw", "movupd", "movups", "movzb", "movzw",
