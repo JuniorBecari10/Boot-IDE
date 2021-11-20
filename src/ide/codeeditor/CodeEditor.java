@@ -679,7 +679,9 @@ public class CodeEditor extends IDEComponent {
 			"enum", "var", "onready", "export", "setget", "breakpoint", "preload", "yield", "assert", "remote",
 			"master", "puppet", "remotesync", "mastersync", "puppetsync", "PI", "TAU", "INF", "NAN", "bool", "int",
 			"float", "String", "void", "true", "false" };
-
+	
+	public static final String[] mcKeys = { "minecraft", "?", "ability", "advancement", "alwaysday", "attribute", "ban", "ban-ip", "banlist", "bossbar", "camerashake", "changesetting", "clear", "clearspawnpoint", "clone", "connect", "data", "datapack", "daylock", "debug", "dedicatedwsserver", "defaultgamemode", "deop", "dialogue", "difficulty", "effect", "enchant", "event", "execute", "experience", "fill", "fog", "forceload", "function", "gamemode", "gamerule", "gametest", "give", "help", "immutableworld", "item", "jfr", "kick", "fill", "list", "locate", "locatebiome", "loot", "me", "mobevent", "msg", "music", "op", "ops", "pardon", "pardon-ip", "particle", "perf", "permission", "playanimation", "playsound", "publish", "recipe", "reload", "remove", "replaceitem", "ride", "save", "save-all", "save-off", "save-on", "say", "schedule", "scoreboard", "seed", "setblock", "setidletimeout", "setmaxplayers", "setworldspawn", "spawnpoint", "spectate", "spreadplayers", "stop", "stopsound", "structure", "summon", "tag", "team", "teammsg", "tell", "tellraw", "testfor", "testforblock", "testforblocks", "tickingarea", "time", "title", "titleraw", "tm", "toggledownfall", "tp", "trigger", "w", "wb", "weather", "whitelist", "worldborder", "worldbuilder", "wsserver", "xp" };
+	
 	///////
 
 	public CodeEditor(int x, int y, int width, int height) {
@@ -1014,6 +1016,7 @@ public class CodeEditor extends IDEComponent {
 		case ".dart" -> dartKeys;
 		case ".zig" -> zigKeys;
 		case ".gd" -> gdKeys;
+		case ".mcfunction" -> mcKeys;
 
 		case ".html" -> mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
 		case ".xhtml" -> mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
@@ -1222,6 +1225,7 @@ public class CodeEditor extends IDEComponent {
 		case ".vb" -> "Visual Basic";
 		case ".bf" -> "Brainfuck";
 		case ".gd" -> "GDScript";
+		case ".mcfunction" -> "Minecraft Function";
 
 		case ".html" -> "Hyper Text Markup Language - HTML";
 		case ".xhtml" -> "Hyper Text Markup Language - HTML";
@@ -2821,6 +2825,21 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			break;
+			
+		case ".mcfunction":
+			for (String s : mcKeys) { // colorir keywordss
+				indxs = findWord(new String(chars), s);
+
+				for (Integer i : indxs) {
+					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
+							|| ((i + s.length() < chars.length)
+									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
+						continue;
+
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+			break;
 
 		case ".zig":
 			for (String s : zigKeys) { // colorir keywordss
@@ -3664,6 +3683,10 @@ public class CodeEditor extends IDEComponent {
 						|| ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm")
 						|| ext.equalsIgnoreCase(".ejs")) && (s == "@" || s == "#"))
 					continue;
+				
+				if ((ext.equalsIgnoreCase(".mcfunction")) && (s == "@"))
+					continue;
+				
 				// if ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".htm") ||
 				// ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") ||
 				// ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") ||
