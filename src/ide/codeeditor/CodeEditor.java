@@ -4225,7 +4225,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i > indxs.size()) i = indxs.size() - 1;
 					
-					if (howManyBefore(new String(chars), indxs.get(i), '\"') % 2 != 0) { // se colocar 2 // na mesma linha o anterior é desfeito
+					if (howManyBefore(new String(chars), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chars), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chars), indxs.get(i), '`') % 2 != 0) { // se colocar 2 // na mesma linha o anterior é desfeito
 						br = true;
 						
 						break;
@@ -4259,16 +4259,18 @@ public class CodeEditor extends IDEComponent {
 
 			indxs = findWord(new String(chars), "//"); // colorir comentários de uma linha
 			
+			List<Integer> indxs2 = findWord(new String(chars), "</script>");
+			
 			if (fs.size() == 0)
 				break;
 
 			for (Integer i : indxs) {
-				if (!indxs.isEmpty()) {
+				if (!indxs.isEmpty()) { // se colocar assim: <script>//</script> o </script> é colorido como comentário
 					boolean br = false;
 					
 					if (i > indxs.size()) i = indxs.size() - 1;
 					
-					if (howManyBefore(new String(chars), indxs.get(i), '\"') % 2 != 0) {
+					if (howManyBefore(new String(chars), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chars), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chars), indxs.get(i), '`') % 2 != 0) {
 						br = true;
 						
 						break;
@@ -4277,8 +4279,10 @@ public class CodeEditor extends IDEComponent {
 					if (br) break;
 				}
 				
+				int finalIndex = indxs2.isEmpty() ? fs.size() : indxs2.get(0);
+				
 				if (indxs.size() != 0)
-					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+					fs = color(indxs.get(i), finalIndex, new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			}
 
 			break;
@@ -4370,16 +4374,28 @@ public class CodeEditor extends IDEComponent {
 
 		case ".php":
 			indxs = findWord(new String(chars), "//"); // colorir comentários de uma linha
-
-			/*
-			 * for (Integer i : indxs) if (isBetween(new String(chars), i, '"', '"')) return
-			 * fs;
-			 */
+			
 			if (fs.size() == 0)
 				break;
 
-			if (indxs.size() != 0)
-				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			for (Integer i : indxs) {
+				if (!indxs.isEmpty()) {
+					boolean br = false;
+					
+					if (i > indxs.size()) i = indxs.size() - 1;
+					
+					if (howManyBefore(new String(chars), indxs.get(i), '\"') % 2 != 0) {
+						br = true;
+						
+						break;
+					}
+					
+					if (br) break;
+				}
+				
+				if (indxs.size() != 0)
+					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			}
 
 			indxs = findWord(new String(chars), "#"); // colorir comentários de uma linha
 
