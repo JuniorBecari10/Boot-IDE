@@ -439,7 +439,7 @@ public class CodeEditor extends IDEComponent {
 			"es" };
 
 	// não vai colorir keys de uma só letra
-	public static final String[] asmKeys = { "global", "define", "db", "dw", "equ", "extern", "include", "times", "org",
+	public static final String[] asmKeys = { "global", "define", "db", "dw", "equ", "extern", "include", "times", "org", // ta faltando hein, "movzx", "mova"
 			"bits", "syscall", "aaa", "aad", "aam", "aas", "adc", "add", "addpd", "addps", "addressing", "addsd",
 			"addss", "jz", "align", "and", "andnpd", "andnps", "andpd", "andps", "arpl", "as", "commandline",
 			"ELFobjectfile", "macroprocessing", "syntaxUNIXversusIntel", "ascii", "assemblerSeeasB", "bcd",
@@ -1019,7 +1019,7 @@ public class CodeEditor extends IDEComponent {
 		case ".mcfunction" -> mcKeys;
 
 		case ".html" -> mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
-		case ".xhtml" -> mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
+		case ".xhtml" -> mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys))); // será que tira o phpkeys? TODO
 		case ".htm" -> mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
 		case ".css" -> mergeStringArrays(cssTags, props);
 		case ".scss" -> mergeStringArrays(cssTags, props);
@@ -6458,7 +6458,9 @@ public class CodeEditor extends IDEComponent {
 						if (!KeyInput.isShiftDown()) {
 							if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 								KeyInput.updateKeys();
-
+								
+								if (cursorY == 1) cursorX = 0;
+								
 								cursorY--;
 
 								if (selecting) {
@@ -6474,7 +6476,9 @@ public class CodeEditor extends IDEComponent {
 
 							else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
 								KeyInput.updateKeys();
-
+								
+								if (cursorY == lines.size()) cursorX = lines.get(cursorY - 1).getChars().size();
+								
 								cursorY++;
 
 								if (selecting) {
