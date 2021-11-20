@@ -4215,35 +4215,29 @@ public class CodeEditor extends IDEComponent {
 		case ".lpr":
 		case ".scala":
 			indxs = findWord(new String(chars), "//"); // colorir comentários de uma linha
-
-			/*
-			 * for (Integer i : indxs) { if
-			 * (fs.get(i).getFont().equals(Fonts.stringsNormal)) {
-			 * 
-			 * System.out.println("a"); return fs; } }
-			 */
-
-			/*
-			 * boolean hasOutside = false; int indexOutside = -1;
-			 * 
-			 * for (int j = 0; j < indxs.size(); j++) { Integer i = indxs.get(j);
-			 * 
-			 * if (!isInside(i, '"', new String(chars))) { // verificar se não há
-			 * comentários dentro de strings hasOutside = true; indexOutside = i; } }
-			 * 
-			 * if (!hasOutside) return fs;
-			 */
-
-			/*
-			 * for (Integer i : indxs) if (isBetween(new String(chars), i, '"', '"')) return
-			 * fs;
-			 */
-
+			
 			if (fs.size() == 0)
 				break;
 
-			if (indxs.size() != 0)
-				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			for (Integer i : indxs) {
+				if (!indxs.isEmpty()) {
+					boolean br = false;
+					
+					if (i > indxs.size()) i = indxs.size() - 1;
+					
+					if (howManyBefore(new String(chars), indxs.get(i), '\"') % 2 != 0) { // se colocar 2 // na mesma linha o anterior é desfeito
+						br = true;
+						
+						break;
+					}
+					
+					if (br) break;
+				}
+				
+				if (indxs.size() != 0)
+					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			}
+			
 			break;
 
 		case ".vb":
@@ -4264,17 +4258,28 @@ public class CodeEditor extends IDEComponent {
 				break;
 
 			indxs = findWord(new String(chars), "//"); // colorir comentários de uma linha
-
-			/*
-			 * for (Integer i : indxs) if (isBetween(new String(chars), i, '"', '"')) return
-			 * fs;
-			 */
-
+			
 			if (fs.size() == 0)
 				break;
 
-			if (indxs.size() != 0)
-				fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			for (Integer i : indxs) {
+				if (!indxs.isEmpty()) {
+					boolean br = false;
+					
+					if (i > indxs.size()) i = indxs.size() - 1;
+					
+					if (howManyBefore(new String(chars), indxs.get(i), '\"') % 2 != 0) {
+						br = true;
+						
+						break;
+					}
+					
+					if (br) break;
+				}
+				
+				if (indxs.size() != 0)
+					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			}
 
 			break;
 
@@ -4992,6 +4997,32 @@ public class CodeEditor extends IDEComponent {
 		}
 
 		return false;
+	}
+	
+	public int howManyBefore(String s, int initialIndex, char target) {
+		int count = 0;
+		
+		for (int i = initialIndex; i > 0; i--) {
+			char c = s.charAt(i);
+
+			if (c == target)
+				count++;
+		}
+
+		return count;
+	}
+	
+	public int howManyAfter(String s, int initialIndex, char target) {
+		int count = 0;
+		
+		for (int i = initialIndex; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			if (c == target)
+				count++;
+		}
+
+		return count;
 	}
 
 	public boolean isBetween(String s, int index, char charBefore, char charAfter) {
