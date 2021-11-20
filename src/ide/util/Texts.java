@@ -119,6 +119,8 @@ public final class Texts {
 	public static String theFile;
 	public static String isNotSaved;
 	
+	public static String fileNameIllegal;
+	
 	public static String confirmSave;
 	
 	public static String configFileNotChanged;
@@ -297,6 +299,8 @@ public final class Texts {
 			theFile = "O arquivo";
 			isNotSaved = "não está salvo. Deseja salvá-lo antes de fechar?";
 			
+			fileNameIllegal = "O nome do arquivo contém caracteres não permitidos.";
+			
 			confirmSave = "Confirmar Salvamento do Arquivo";
 			
 			configFileNotChanged = "O Arquivo de Configurações foi carregado, mas nada foi alterado. Deseja que ele continue carregado?";
@@ -474,6 +478,8 @@ public final class Texts {
 			
 			theFile = "The file";
 			isNotSaved = "is not saved. Do you want to save it before you close?";
+			
+			fileNameIllegal = "The file name contains non-permitted characters.";
 			
 			confirmSave = "Confirm File Save";
 			

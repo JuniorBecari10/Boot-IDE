@@ -63,6 +63,10 @@ public class RenameFile extends IDEComponent {
 		cursorIndex = text.length();
 	}
 	
+	private boolean hasIllegalChars(String s) {
+		return s.contains("\\") || s.contains("/") || s.contains(":") || s.contains("*") || s.contains("?") || s.contains("<") || s.contains(">") || s.contains("|");
+	}
+	
 	public void tick() {
 		//if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).y + 30;
 		
@@ -112,6 +116,7 @@ public class RenameFile extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				if (text.length() == 0 || text.toString().endsWith(".")) return;
+				if (hasIllegalChars(text.toString())) return;
 				
 				File newf = new File(Explorer.getScopePath() + "/" + text.toString());
 				
@@ -183,5 +188,8 @@ public class RenameFile extends IDEComponent {
 		
 		if (text.toString().endsWith("."))
 			Fonts.drawString(Texts.cannotEndDot, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
+		
+		if (hasIllegalChars(text.toString()))
+			Fonts.drawString(Texts.fileNameIllegal, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
 	}
 }
