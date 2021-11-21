@@ -1371,7 +1371,7 @@ public class CodeEditor extends IDEComponent {
 	public static char[] sliceCharArray(int s, int e, char[] array) {
 		if (e < s)
 			throw new RuntimeException("O index final não pode ser menor que o inicial!");
-
+		
 		return Arrays.copyOfRange(array, s, e);
 	}
 
@@ -4550,7 +4550,16 @@ public class CodeEditor extends IDEComponent {
 		case ".jsonc":
 			indxs = findWord(new String(chars), "/*"); // colorir comentários multi-linha - caracteres diferentes
 			List<Integer> finals = findWord(new String(chars), "*/");
-
+			
+			List<Integer> rm = new ArrayList<>();
+			
+			for (Integer i : indxs) {
+				if (howManyBefore(new String(chars), i, '\"') % 2 != 0 || howManyBefore(new String(chars), i, '\'') % 2 != 0 || howManyBefore(new String(chars), i, '`') % 2 != 0)
+					rm.add(i);
+			}
+			
+			indxs.removeAll(rm);
+			
 			/*
 			 * for (Integer i : indxs) if (isBetween(new String(chars), i, '"', '"')) return
 			 * fs;
@@ -4574,7 +4583,7 @@ public class CodeEditor extends IDEComponent {
 			// if (indxs.size() == 0 && finals.size() == 0)
 			// isMultilineCommenting = false;
 
-			indxs = findWord(new String(chars), "*/");
+			indxs = finals;
 
 			/*
 			 * for (Integer i : indxs) if (isBetween(new String(chars), i, '"', '"')) return
@@ -7768,7 +7777,7 @@ public class CodeEditor extends IDEComponent {
 			g.setColor(Colors.lowerBar);
 			g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
 
-			Fonts.drawString(codeType + " - " + extType + " | " + "X: " + (cursorX + 1) + ", Y: " + cursorY
+			Fonts.drawString(codeType + " - " + extType + " | " + (cursorX + 1) + ":" + cursorY
 					+ (selecting ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2)
 							: ""),
 					x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
