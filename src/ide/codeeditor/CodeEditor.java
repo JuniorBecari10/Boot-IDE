@@ -41,6 +41,7 @@ import ide.explorer.FileType;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.input.ComponentInput;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
@@ -77,6 +78,8 @@ public class CodeEditor extends IDEComponent {
 	public boolean isCssPart;
 	public boolean isJSPart;
 	public boolean isPhpPart;
+	
+	public static boolean minMode;
 
 	private boolean keyTimeout;
 
@@ -1193,16 +1196,16 @@ public class CodeEditor extends IDEComponent {
 		case ".asm" -> "Assembly";
 		case ".s" -> "Assembly";
 		case ".lua" -> "Lua";
-		case ".sql" -> "Structured Query Language - SQL";
+		case ".sql" -> minMode ? "SQL" : "Structured Query Language - SQL";
 		case ".swift" -> "Swift";
 		case ".rs" -> "Rust";
-		case ".php" -> "Hyper Text Preprocessor";
+		case ".php" -> minMode ? "PHP" : "Hyper Text Preprocessor - PHP";
 		case ".kt" -> "Kotlin";
 		case ".vue" -> "Vue.js";
 		case ".rb" -> "Ruby";
 		case ".ino" -> "Arduino";
 		case ".ts" -> "TypeScript";
-		case ".tsx" -> "TypeScript React";
+		case ".tsx" -> minMode ? "TSX" : "TypeScript React";
 		case ".go" -> "Go";
 		case ".r" -> "R";
 		case ".jl" -> "Julia";
@@ -1220,36 +1223,36 @@ public class CodeEditor extends IDEComponent {
 		case ".scala" -> "Scala";
 		case ".dart" -> "Dart";
 		case ".zig" -> "Zig";
-		case ".scss" -> "Sass Cascading Style Sheets - SCSS";
+		case ".scss" -> minMode ? "SCSS" : "Sass Cascading Style Sheets - SCSS";
 		case ".ipynb" -> "Jupyter Notebook";
 		case ".vb" -> "Visual Basic";
 		case ".bf" -> "Brainfuck";
 		case ".gd" -> "GDScript";
-		case ".mcfunction" -> "Minecraft Function";
+		case ".mcfunction" -> minMode ? "MC Function" : "Minecraft Function";
 
-		case ".html" -> "Hyper Text Markup Language - HTML";
-		case ".xhtml" -> "Hyper Text Markup Language - HTML";
-		case ".htm" -> "Hyper Text Markup Language - HTML";
-		case ".css" -> "Cascading Style Sheets - CSS";
-		case ".xml" -> "Extensible Markup Language - XML";
+		case ".html" -> minMode ? "HTML" : "Hyper Text Markup Language - HTML";
+		case ".xhtml" -> minMode ? "HTML" : "Hyper Text Markup Language - HTML";
+		case ".htm" -> minMode ? "HTML" : "Hyper Text Markup Language - HTML";
+		case ".css" -> minMode ? "CSS" : "Cascading Style Sheets - CSS";
+		case ".xml" -> minMode ? "XML" : "Extensible Markup Language - XML";
 		case ".sln" -> (Main.lang == Language.PORT ? "Solução do Microsoft Visual Studio"
 				: "Microsoft Visual Studio Solution");
-		case ".json" -> "JavaScript Object Notation - JSON";
-		case ".jsonc" -> "JavaScript Object Notation with Comments - JSONC";
+		case ".json" -> minMode ? "JSON" : "JavaScript Object Notation - JSON";
+		case ".jsonc" -> minMode ? "JSONC" : "JavaScript Object Notation with Comments - JSONC";
 		case ".md" -> "Markdown";
 		case ".markdown" -> "Markdown";
-		case ".txt" -> (Main.lang == Language.PORT ? "Arquivo de Texto" : "Text File");
-		case ".log" -> (Main.lang == Language.PORT ? "Arquivo de Log" : "Log File");
-		case ".pdf" -> "Portable Document Format - PDF";
-		case ".jar" -> (Main.lang == Language.PORT ? "Arquivo Jar" : "Jar File");
-		case ".exe" -> (Main.lang == Language.PORT ? "Executável do Windows - EXE" : "Windows Executable - EXE");
+		case ".txt" -> minMode ? (Main.lang == Language.PORT ? "Texto" : "Text") : (Main.lang == Language.PORT ? "Arquivo de Texto" : "Text File");
+		case ".log" -> minMode ? "Log" : (Main.lang == Language.PORT ? "Arquivo de Log" : "Log File");
+		case ".pdf" -> minMode ? "PDF" : "Portable Document Format - PDF";
+		case ".jar" -> minMode ? "Jar" : (Main.lang == Language.PORT ? "Arquivo Jar" : "Jar File");
+		case ".exe" -> minMode ? "EXE" : (Main.lang == Language.PORT ? "Executável do Windows - EXE" : "Windows Executable - EXE");
 		case ".classpath" -> (Main.lang == Language.PORT ? "Caminho da Classe" : "Class Path");
 		case ".csproj" -> (Main.lang == Language.PORT ? "Projeto C# do Visual Studio" : "Visual Studio C# Project");
 		case ".project" -> (Main.lang == Language.PORT ? "Arquivo de Projeto" : "Project File");
-		case ".svg" -> "Scalable Vector Graphics - SVG";
+		case ".svg" -> minMode ? "SVG" : "Scalable Vector Graphics - SVG";
 		case ".urna" -> (Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas"
 				: "Saved Bollot Box from Criador de Urnas");
-		case ".save" -> (Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2"
+		case ".save" -> (Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2" // fazer desses tbm
 				: "Saved Game from World's Hardest Game Maker 2");
 		case ".conf" -> (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
 				: "Boot IDE Configuration File");
@@ -1258,10 +1261,10 @@ public class CodeEditor extends IDEComponent {
 		case ".mk" -> "Makefile";
 		case ".mak" -> "Makefile";
 		case ".make" -> "Makefile";
-		case ".sh" -> "Bourne-Again Shell - Bash";
+		case ".sh" -> minMode ? "Bash" : "Bourne-Again Shell - Bash";
 		case ".gitignore" -> "Git Ignore";
 		case ".dockerfile" -> "Dockerfile";
-		case ".jsx" -> "JavaScript React";
+		case ".jsx" -> minMode ? "JSX" : "JavaScript React";
 		case ".config" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
 		case ".cfg" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
 		case ".ps1" -> (Main.lang == Language.PORT ? "Arquivo do PowerShell" : "PowerShell File");
@@ -1280,9 +1283,9 @@ public class CodeEditor extends IDEComponent {
 		case ".lock" -> "Lock";
 		case ".ini" -> (Main.lang == Language.PORT ? "Arquivo de Parâmetros de Configurações"
 				: "Configuration Parameters File");
-		case ".dll" -> "Dynamic Link Library - DLL";
+		case ".dll" -> minMode ? "DLL" : "Dynamic Link Library - DLL";
 		case ".makefile" -> "Makefile";
-		case ".url" -> "Uniform Resource Locator - URL";
+		case ".url" -> minMode ? "URL" : "Uniform Resource Locator - URL";
 		case ".prefs" -> (Main.lang == Language.PORT ? "Arquivo de Preferências" : "Preferences File");
 
 		case ".png" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
@@ -4297,10 +4300,10 @@ public class CodeEditor extends IDEComponent {
 				break;
 
 			for (Integer i : indxs) {
-				if (!indxs.isEmpty()) {
+				if (!indxs.isEmpty()) { // fazer no paint o desenho do projeto disso aqui
 					boolean br = false;
 					
-					if (i > indxs.size()) i = indxs.size() - 1;
+					if (i >= indxs.size()) i = indxs.size() - 1;
 					
 					if (howManyBefore(new String(chars), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chars), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chars), indxs.get(i), '`') % 2 != 0) { // se colocar 2 // na mesma linha o anterior é desfeito
 						br = true;
@@ -4345,7 +4348,7 @@ public class CodeEditor extends IDEComponent {
 				if (!indxs.isEmpty()) {
 					boolean br = false;
 					
-					if (i > indxs.size()) i = indxs.size() - 1;
+					if (i >= indxs.size()) i = indxs.size() - 1;
 					
 					if (howManyBefore(new String(chars), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chars), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chars), indxs.get(i), '`') % 2 != 0) {
 						br = true;
@@ -4369,17 +4372,53 @@ public class CodeEditor extends IDEComponent {
 		case ".bat":
 		case ".cmd":
 			indxs = findWord(new String(chars), "REM"); // colorir comentários de uma linha
-
-			/*
-			 * for (Integer i : indxs) if (isBetween(new String(chars), i, '"', '"')) return
-			 * fs;
-			 */
-
-			if (fs.size() == 0 || indxs.size() == 0)
+			
+			if (fs.size() == 0)
 				break;
 
-			fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			for (Integer i : indxs) {
+				if (!indxs.isEmpty()) {
+					boolean br = false;
+					
+					if (i >= indxs.size()) i = indxs.size() - 1;
+					
+					if (howManyBefore(new String(chars), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chars), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chars), indxs.get(i), '`') % 2 != 0) { // se colocar 2 // na mesma linha o anterior é desfeito
+						br = true;
+						
+						break;
+					}
+					
+					if (br) break;
+				}
+				
+				if (indxs.size() != 0)
+					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "rem"); // colorir comentários de uma linha
+			
+			if (fs.size() == 0)
+				break;
 
+			for (Integer i : indxs) {
+				if (!indxs.isEmpty()) {
+					boolean br = false;
+					
+					if (i > indxs.size()) i = indxs.size() - 1;
+					
+					if (howManyBefore(new String(chars), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chars), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chars), indxs.get(i), '`') % 2 != 0) { // se colocar 2 // na mesma linha o anterior é desfeito
+						br = true;
+						
+						break;
+					}
+					
+					if (br) break;
+				}
+				
+				if (indxs.size() != 0)
+					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			}
+			
 			break;
 
 		case ".s":
@@ -6147,7 +6186,17 @@ public class CodeEditor extends IDEComponent {
 
 		if (tabs.size() == 0)
 			CommandTerminal.runCommand("resettabscroll");
-
+		
+		// colocar isso numa variavel constante
+		minMode = width < (selecting ? 800 : 600); // 850 - original
+				
+		if (ComponentInput.windowResized() && editing != null) {
+			if (ListableFile.fileHasExtension(ListableFile.getFileExtension(editing.getRegent().getRegent())))
+				extType = getLowerBarFileName(ListableFile.getFileExtension(editing.getRegent().getRegent()));
+			else
+				extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
+		}
+				
 		width = Main.screen.getWidth() - x;
 
 		/*
@@ -7778,8 +7827,8 @@ public class CodeEditor extends IDEComponent {
 			g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
 
 			Fonts.drawString(codeType + " - " + extType + " | " + (cursorX + 1) + ":" + cursorY
-					+ (selecting ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2)
-							: ""),
+					+ (minMode ? selecting ? (" | " + countIndexDistance(index1, index2, line1, line2)) : "" : (selecting ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2)
+							: "")),
 					x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 
 			// Fonts.drawString("X: " + (cursorX + 1) + ", Y: " + cursorY,
