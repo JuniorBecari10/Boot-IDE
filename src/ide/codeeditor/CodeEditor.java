@@ -7992,7 +7992,7 @@ public class CodeEditor extends IDEComponent {
 			showCursor = true;
 
 		// Desenhar cursor
-		if (showCursor && !WindowInput.isDeactivated()) {
+		if (showCursor && !WindowInput.isDeactivated() && drawcx > x + 50) {
 			g.setColor(Colors.cursor);
 			g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - (FONT_SIZE >= 16 ? 1 : 0),
 					FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + (FONT_SIZE / 4));
@@ -8039,36 +8039,7 @@ public class CodeEditor extends IDEComponent {
 																												// 20
 
 			Fonts.drawString(Texts.esc_Cancel, xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
-			Fonts.drawString(Texts.leftClickTab, xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16),
-					g);
+			Fonts.drawString(Texts.leftClickTab, xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);
 		}
-
-		/*
-		 * if (isReadOnly && !(CommandTerminal.active || SetFileName.added ||
-		 * RenameFile.added || alternateTabsMode) &&
-		 * !RightClickOption.isRightClickActive()) { int xdr = x + 20; //
-		 * MouseInput.getMouseX() + 10; int ydr = (y + height) - 80;
-		 * //MouseInput.getMouseY() - 30;
-		 * 
-		 * final int wdr = 810; final int hdr = 80;
-		 * 
-		 * Rectangle intersection = new Rectangle(xdr, ydr, wdr, hdr).intersection(new
-		 * Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
-		 * 
-		 * if (!intersection.isEmpty()) xdr -= intersection.getWidth();
-		 * 
-		 * g.setColor(Colors.explorerLight); g.fillRect(xdr, ydr - 5, wdr, hdr);
-		 * 
-		 * g.setColor(Colors.textLighter); g2.setStroke(new BasicStroke(2f));
-		 * g2.drawRect(xdr, ydr - 5, wdr, hdr);
-		 * 
-		 * Fonts.drawString(Texts.fileAsReadOnly, xdr + 10, ydr, new
-		 * IDEFont(Fonts.lighterGrayNormal, 16), g);
-		 * 
-		 * Fonts.drawString(Texts.readOnlyText1, xdr + 10, ydr + 30, new
-		 * IDEFont(Fonts.lighterGrayNormal, 16), g);
-		 * Fonts.drawString(Texts.readOnlyText2, xdr + 10, (ydr + 30) + 18, new
-		 * IDEFont(Fonts.lighterGrayNormal, 16), g); }
-		 */
 	}
 }
