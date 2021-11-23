@@ -7997,7 +7997,7 @@ public class CodeEditor extends IDEComponent {
 			showCursor = true;
 
 		// Desenhar cursor
-		if (showCursor && !WindowInput.isDeactivated() && drawcx > x + 50) {
+		if (showCursor && !WindowInput.isDeactivated() && drawcx > x + 45) {
 			g.setColor(Colors.cursor);
 			g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - (FONT_SIZE >= 16 ? 1 : 0),
 					FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + (FONT_SIZE / 4));
