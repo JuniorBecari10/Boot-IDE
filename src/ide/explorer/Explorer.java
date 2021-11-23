@@ -260,7 +260,7 @@ public class Explorer extends IDEComponent {
     	hoveringListableFile = false;
     	
     	if (folderPath.length() > maxFolderWidth) {
-        	folderPath = folderPath.substring(0, maxFolderWidth) + "...";
+        	folderPath = folderPath.substring(0, maxFolderWidth - 3) + "...";
         	showFolderPathCard = true;
     	}
     	

@@ -149,7 +149,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			new FileType(".classpath", Main.spritesheet.getSprite(704, 32, 16, 16)),
 			new FileType(".project", Main.spritesheet.getSprite(720, 32, 16, 16)),
 			new FileType(".csproj", Main.spritesheet.getSprite(768, 32, 16, 16)),
-			new FileType(".setconf", Main.spritesheet.getSprite(192, 32, 16, 16)),
+			new FileType(Main.SETTINGS_FILE_EXTENSION, Main.spritesheet.getSprite(192, 32, 16, 16)),
 
 			new FileType(".png", Main.spritesheet.getSprite(0, 48, 16, 16)),
 			new FileType(".jpg", Main.spritesheet.getSprite(0, 48, 16, 16)),
