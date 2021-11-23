@@ -944,7 +944,7 @@ public class CodeEditor extends IDEComponent {
 				|| c == '0';
 	}
 	
-	public static <T> T[] removeDuplicates(T[] arr) {
+	public static <T> T[] removeDuplicates(T[] arr) { // talvez remover duplicadas de qqr array
 		Set<T> set = new LinkedHashSet<>();
 		
 		for (T t : arr)
@@ -6310,6 +6310,8 @@ public class CodeEditor extends IDEComponent {
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent())
 							.equalsIgnoreCase(".project")) && autoCompleteHtmlTags) {
 				if (cursorX > 0 && chars[cursorX] == '>' && digit == '>') { // isso tem um bug mt chato que quando apaga a tag de fechar e tenta por de novo estraga td, talvez adicionar um keystroke que se apertado ele n detecta
+					if (cursorX > 0 && lines.get(cursorY - 1).getChars().get(cursorX - 1) == '>') return cY;
+					
 					List<Integer> indxs = findWord(new String(chars), "<"); // antes de <palavra>
 					cursorX++;
 					
