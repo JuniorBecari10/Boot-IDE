@@ -943,6 +943,22 @@ public class CodeEditor extends IDEComponent {
 		return c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9'
 				|| c == '0';
 	}
+	
+	public static <T> T[] removeDuplicates(T[] arr) {
+		Set<T> set = new LinkedHashSet<>();
+		
+		for (T t : arr)
+			set.add(t);
+		
+		List<T> list = new ArrayList<>();
+		list.addAll(set);
+		
+		int i = 0;
+		for (T t : list)
+			arr[i++] = t;
+		
+		return arr;
+	}
 
 	public static String[] mergeStringArrays(String[] arr1, String[] arr2) {
 		String[] res = new String[arr1.length + arr2.length];
@@ -950,7 +966,7 @@ public class CodeEditor extends IDEComponent {
 		System.arraycopy(arr1, 0, res, 0, arr1.length);
 		System.arraycopy(arr2, 0, res, arr1.length, arr2.length);
 
-		return res;
+		return removeDuplicates(res);
 	}
 
 	public boolean autoCompletesEqual() {
