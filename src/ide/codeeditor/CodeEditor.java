@@ -1426,6 +1426,17 @@ public class CodeEditor extends IDEComponent {
 		}
 
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
+			if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) {
+				indxs = findWord(new String(chars), ">");
+
+				for (Integer i : indxs) {
+					if (i != 0)
+						continue; // ver isso aqui
+
+					fs = color(i, fs.size(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+			
 			if (ext.equalsIgnoreCase(".prefs")) { // || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") ||
 													// ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") ||
 													// ext.equalsIgnoreCase(".ps1") // talvez colocar
