@@ -1084,7 +1084,7 @@ public class CodeEditor extends IDEComponent {
 				|| ext.equalsIgnoreCase(".ogg") || ext.equalsIgnoreCase(".otf") || ext.equalsIgnoreCase(".ttf")
 				|| ext.equalsIgnoreCase(".woff") || ext.equalsIgnoreCase(".woff2") || ext.equalsIgnoreCase(".zip")
 				|| ext.equalsIgnoreCase(".rar") || ext.equalsIgnoreCase(".7z") || ext.equalsIgnoreCase(".bin")
-				|| ext.equalsIgnoreCase(".gz");
+				|| ext.equalsIgnoreCase(".gz") || ext.equalsIgnoreCase(".rtf");
 	}
 
 	public static boolean isFormatSupported(String format) {
@@ -1274,6 +1274,7 @@ public class CodeEditor extends IDEComponent {
 				: "Boot IDE Configuration File");
 		case Main.SETTINGS_FILE_EXTENSION -> (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
 				: "Boot IDE Configuration File");
+		case ".rtf" -> "Rich Text Format";
 		case ".mk" -> "Makefile";
 		case ".mak" -> "Makefile";
 		case ".make" -> "Makefile";
@@ -6707,6 +6708,8 @@ public class CodeEditor extends IDEComponent {
 							if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 								KeyInput.updateKeys();
 								
+								wordSinceSpace = "";
+								
 								if (cursorY == 1) cursorX = 0;
 								
 								cursorY--;
@@ -6724,6 +6727,8 @@ public class CodeEditor extends IDEComponent {
 
 							else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
 								KeyInput.updateKeys();
+								
+								wordSinceSpace = "";
 								
 								if (cursorY == lines.size()) cursorX = lines.get(cursorY - 1).getChars().size();
 								
