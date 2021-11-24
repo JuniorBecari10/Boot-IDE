@@ -1163,6 +1163,8 @@ public class CodeEditor extends IDEComponent {
 
 		return foundt && foundf;
 	}
+	
+	
 
 	public int countIndexDistance(int i1, int i2, int l1, int l2) {
 		if (l1 == l2)
@@ -1435,12 +1437,12 @@ public class CodeEditor extends IDEComponent {
 				fs = color(i, fs.size(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
-			indxs = findWord(new String(chars), "**"); // colorir strings
+			indxs = findWord(new String(chars), "**");
 
 			for (int i = 0; i < indxs.size() - 1; i += 2)
 				fs = color(indxs.get(i), indxs.get(i + 1) + 2, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 			
-			indxs = findWord(new String(chars), "__"); // colorir strings
+			indxs = findWord(new String(chars), "__");
 
 			for (int i = 0; i < indxs.size() - 1; i += 2)
 				fs = color(indxs.get(i), indxs.get(i + 1) + 2, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
@@ -4816,20 +4818,20 @@ public class CodeEditor extends IDEComponent {
 			/*
 			 * for (Integer i : indxs) if (isBetween(new String(chars), i, '"', '"')) return
 			 * fs;
-			 */
-
+			*/
+			
 			if (indxs.size() > 0) {
 				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(),
 						new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 				isMultilineCommenting = true;
 			}
-
+			
 			if (finals.size() > 0) {
 				fs = color(indxs.size() > 0 ? indxs.get(indxs.size() - 1) : 0, finals.get(0),
 						new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 				isMultilineCommenting = false;
 			}
-
+			
 			if (isMultilineCommenting)
 				fs = color(0, fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 
