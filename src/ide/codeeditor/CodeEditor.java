@@ -1403,7 +1403,7 @@ public class CodeEditor extends IDEComponent {
 
 		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".txt")
 				|| ext.equalsIgnoreCase(".log") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".bf")
-				|| ext.equalsIgnoreCase(".conf") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")
+				|| ext.equalsIgnoreCase(".conf")
 				|| ext.equalsIgnoreCase(".gitignore")
 				|| editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore"))
 			return fs;
@@ -1424,19 +1424,38 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 		}
+		
+		if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) {
+			indxs = findWord(new String(chars), ">");
+			
+			for (Integer i : indxs) {
+				if (i != 0)
+					continue;
 
-		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
-			if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) {
-				indxs = findWord(new String(chars), ">");
-
-				for (Integer i : indxs) {
-					if (i != 0)
-						continue; // ver isso aqui
-
-					fs = color(i, fs.size(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
-				}
+				fs = color(i, fs.size(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
+			indxs = findWord(new String(chars), "**"); // colorir strings
+
+			/*List<Integer> removeIndxs = new ArrayList<>();
+
+			for (Integer i : indxs) {
+				if (i <= 0)
+					continue;
+
+				if (new String(chars).charAt(i - 1) == '\\')
+					removeIndxs.add(i);
+			}
+
+			indxs.removeAll(removeIndxs);*/
+
+			for (int i = 0; i < indxs.size() - 1; i += 2)
+				fs = color(indxs.get(i), indxs.get(i + 1) + 2, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+		}
+		
+		if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) return fs;
+		
+		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
 			if (ext.equalsIgnoreCase(".prefs")) { // || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") ||
 													// ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") ||
 													// ext.equalsIgnoreCase(".ps1") // talvez colocar
