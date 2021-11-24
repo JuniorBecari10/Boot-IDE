@@ -1437,17 +1437,10 @@ public class CodeEditor extends IDEComponent {
 			
 			indxs = findWord(new String(chars), "**"); // colorir strings
 
-			/*List<Integer> removeIndxs = new ArrayList<>();
-
-			for (Integer i : indxs) {
-				if (i <= 0)
-					continue;
-
-				if (new String(chars).charAt(i - 1) == '\\')
-					removeIndxs.add(i);
-			}
-
-			indxs.removeAll(removeIndxs);*/
+			for (int i = 0; i < indxs.size() - 1; i += 2)
+				fs = color(indxs.get(i), indxs.get(i + 1) + 2, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+			
+			indxs = findWord(new String(chars), "__"); // colorir strings
 
 			for (int i = 0; i < indxs.size() - 1; i += 2)
 				fs = color(indxs.get(i), indxs.get(i + 1) + 2, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
