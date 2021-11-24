@@ -5,4 +5,5 @@
 commit.bat
 status.bat
 /Resources/
-/Respurces/*
+/Resources/*
+*.txt

@@ -4766,6 +4766,8 @@ public class CodeEditor extends IDEComponent {
 			
 			break;
 		}
+		
+		////////////////////////////////////////////////////////////////////////
 
 		switch (ext.toLowerCase()) {
 		case ".java":
@@ -4849,6 +4851,49 @@ public class CodeEditor extends IDEComponent {
 
 				fs = color(i, i + "*/".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
 			}
+			
+//			String withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+//			char[] chs = withSpace.toCharArray();
+//			
+//			indxs = findWord(new String(chs), "/*"); // colorir comentários multilinha - caracteres diferentes
+//			List<Integer> finals = findWord(new String(chs), "*/");
+//			
+//			if (fs.size() == 0)
+//				break;
+//			
+//			int count = 0;
+//			for (Integer i : indxs) {
+//				if (!indxs.isEmpty()) {
+//					boolean br = false;
+//					
+//					if (i >= indxs.size()) i = indxs.size() - 1;
+//					
+//					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior é desfeito
+//						br = true;
+//						
+//						break;
+//					}
+//					
+//					if (br) break;
+//				}
+//				
+//				for (int j = 0; j < indxs.size(); j++)
+//					indxs.set(j, indxs.get(j) - 1);
+//				
+//				int finalIndex = finals.isEmpty() ? fs.size() : finals.get(count++);
+//				
+//				if (indxs.size() != 0) {
+//					fs = color(indxs.get(i), finalIndex + 1, new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+//					
+//					continue;
+//				}
+//				
+//				isMultilineCommenting = finals.isEmpty();
+//				
+//				if (indxs.isEmpty() && finals.isEmpty()) {
+//					fs = color(0, fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+//				}
+//			}
 
 			break;
 
