@@ -83,7 +83,7 @@ public class CommandTerminal extends IDEComponent {
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
 			"gendiv str:class_name", "gensnippet str:type", //"emmet str:expression",
-			"lorem int:num_words", "ordertab int:tab_from int:tab_to",
+			"lorem int:num_words", "ordertab int:tab_from int:tab_to", //"openfile str:file",
 			"setcursorpos int:x int:y",
 			"getproperty str:property",
 			"setproperty str:property str:new_value",
@@ -99,7 +99,7 @@ public class CommandTerminal extends IDEComponent {
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab", "setexplorerdrag",
 			"gotoline", "setfontsize", "insertchar",
 			"gendiv", "gensnippet", //"emmet",
-			"lorem", "ordertab",
+			"lorem", "ordertab", //"openfile",
 			"setcursorpos",
 			"getproperty",
 			"setproperty",
@@ -827,6 +827,14 @@ public class CommandTerminal extends IDEComponent {
 				} catch (NumberFormatException e) {
 					break;
 				}
+				
+			/*case "openfile":
+				File f = new File(args[0]);
+				
+				if (!f.exists()) return;
+				
+				ListableFile.addTab(ListableFile.search(f, new File(Explorer.getScopePath())), true);
+				break;*/
 				
 			case "gotoline":
 				if (Main.editor.editing == null) break;

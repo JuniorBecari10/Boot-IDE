@@ -1193,7 +1193,7 @@ public class CodeEditor extends IDEComponent {
 	public static String getLowerBarFileName(String ext) {
 		return switch (ext.toLowerCase()) {
 		case ".java" -> "Java";
-		case ".class" -> (Main.lang == Language.PORT ? "Arquivo Bytecode do Java" : "Java Bytecode File");
+		case ".class" -> minMode ? "Class" :  (Main.lang == Language.PORT ? "Arquivo Bytecode do Java" : "Java Bytecode File");
 		case ".c" -> "C";
 		case ".cpp" -> "C++";
 		case ".cc" -> "C++";
@@ -1205,8 +1205,8 @@ public class CodeEditor extends IDEComponent {
 		case ".js" -> "JavaScript";
 		case ".mjs" -> "JavaScript";
 		case ".bat" -> "Batch";
-		case ".com" -> (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
-		case ".cmd" -> (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
+		case ".com" -> minMode ? "Com" : (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
+		case ".cmd" -> minMode ? "Cmd" : (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
 		case ".h" -> "C/C++ Header";
 		case ".hh" -> "C++ Header";
 		case ".hxx" -> "C++ Header";
@@ -6929,10 +6929,9 @@ public class CodeEditor extends IDEComponent {
 				if (!isReadOnly) {
 					KeyInput.updateKeys();
 
-					if (!KeyInput.isShiftDown() && !lines.isEmpty()) {
+					if (!KeyInput.isShiftDown() && !lines.isEmpty())
 						if (drawcy > Main.screen.getHeight() || drawcy < 0)
 							CommandTerminal.runCommand("gotocursor");
-					}
 
 					StringBuilder cY = null;
 
@@ -8090,10 +8089,14 @@ public class CodeEditor extends IDEComponent {
 		if (editing != null) {
 			g.setColor(Colors.lowerBar);
 			g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
-
+			
+			String selectingText = selecting ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2) : "";
+			
+			if (minMode)
+				selectingText = selecting ? (" | " + countIndexDistance(index1, index2, line1, line2)) : "";
+			
 			Fonts.drawString(codeType + " - " + extType + " | " + (cursorX + 1) + ":" + cursorY
-					+ (minMode ? selecting ? (" | " + countIndexDistance(index1, index2, line1, line2)) : "" : (selecting ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2)
-							: "")),
+					+ selectingText,
 					x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 
 			// Fonts.drawString("X: " + (cursorX + 1) + ", Y: " + cursorY,
