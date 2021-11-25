@@ -357,7 +357,7 @@ public class CodeEditor extends IDEComponent {
 			"volatile", "while", "asm", "dynamic_cast", "namespace", "reinterpret_cast", "bool", "explicit", "new",
 			"static_cast", "false", "catch", "operator", "template", "friend", "private", "class", "this", "inline",
 			"public", "throw", "const_cast", "delete", "mutable", "protected", "true", "try", "typeid", "typename",
-			"using", "virtual", "wchar_t", "include", "define", "string", "ifdef", "ifndef", "error", "pragma", "endif",
+			"using", "virtual", "wchar_t", "#include", "#define", "string", "#ifdef", "#ifndef", "#error", "#pragma", "#endif",
 			"override", "std", "size_t", "duint", "uint16_t", "comment", "lib" };
 
 	public static final String[] csKeys = { "abstract", "async", "const", "event", "extern", "new", "override",
