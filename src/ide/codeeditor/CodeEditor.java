@@ -4009,7 +4009,7 @@ public class CodeEditor extends IDEComponent {
 						len++;
 					}
 
-					fs = color(i, i + len, new IDEFont(Fonts.lightGrayNormal, FONT_SIZE), fs);
+					fs = color(i, i + len, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
 				}
 			}
 
