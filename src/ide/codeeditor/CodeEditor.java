@@ -6666,6 +6666,8 @@ public class CodeEditor extends IDEComponent {
 					&& !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
 				cursorX = mx;
 				cursorY = my;
+				
+				wordSinceSpace = ""; // se n funcionar corre aqui e nas setas e deleta ta
 
 				setCursorWithinBounds();
 			}
@@ -6817,7 +6819,9 @@ public class CodeEditor extends IDEComponent {
 
 							if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
 								KeyInput.updateKeys();
-
+								
+								wordSinceSpace = "";
+								
 								cursorX--;
 
 								if (selecting) {
@@ -6833,7 +6837,9 @@ public class CodeEditor extends IDEComponent {
 
 							else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
 								KeyInput.updateKeys();
-
+								
+								wordSinceSpace = "";
+								
 								cursorX++;
 
 								if (selecting) {
@@ -6849,7 +6855,9 @@ public class CodeEditor extends IDEComponent {
 						} else {
 							if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 								KeyInput.updateKeys();
-
+								
+								wordSinceSpace = "";
+								
 								if (noneSelected())
 									directionStarted = Direction.UP;
 
@@ -6869,7 +6877,9 @@ public class CodeEditor extends IDEComponent {
 
 							else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
 								KeyInput.updateKeys();
-
+								
+								wordSinceSpace = "";
+								
 								if (noneSelected())
 									directionStarted = Direction.DOWN;
 
@@ -6887,7 +6897,9 @@ public class CodeEditor extends IDEComponent {
 
 							if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
 								KeyInput.updateKeys();
-
+								
+								wordSinceSpace = "";
+								
 								if (noneSelected())
 									directionStarted = Direction.LEFT;
 
@@ -6905,7 +6917,9 @@ public class CodeEditor extends IDEComponent {
 
 							else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
 								KeyInput.updateKeys();
-
+								
+								wordSinceSpace = "";
+								
 								if (noneSelected())
 									directionStarted = Direction.RIGHT;
 
@@ -7161,7 +7175,8 @@ public class CodeEditor extends IDEComponent {
 								|| KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
 
 							// undo.push(lines);
-							editing.setSaved(false);
+							if (editing != null)
+								editing.setSaved(false);
 						}
 					}
 				}
