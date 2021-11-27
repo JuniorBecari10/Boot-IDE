@@ -862,6 +862,7 @@ public class CommandTerminal extends IDEComponent {
 			case "setfontsize":
 				if (Main.editor.editing == null) break;
 				
+				Main.editor.editing.save();				
 				int prevsize = CodeEditor.FONT_SIZE;
 				
 				if (args[0].equals("default"))
