@@ -1463,6 +1463,20 @@ public class CodeEditor extends IDEComponent {
 
 			for (int i = 0; i < indxs.size() - 1; i += 2)
 				fs = color(indxs.get(i), indxs.get(i + 1) + 2, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+			
+			/*String s = "/>";
+			
+			indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
+			// s.length()).getFont().equals(Fonts.methodsNormal))
+
+			for (Integer i : indxs) {
+				if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
+						|| ((i + s.length() < chars.length)
+								&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()])))) // ta como keyword, mas se for coloca símbolo
+					continue;
+
+				fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+			}*/
 		}
 		
 		if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) return fs;
@@ -3719,10 +3733,15 @@ public class CodeEditor extends IDEComponent {
 			return fs;
 
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
+			
+			int index = 0;
 			for (String s : syms) {
 				indxs = findWord(new String(chars), s);
-				if ((ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) && s != "[" && s != "]")
+				if (((ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) && (s != "<" && s != "/" && s != "="))) // resolver isso aqui
 					continue;
+				
+				if (s == ">" && index == 0 && ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
+				
 				if (((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm")
 						| ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln")
 						| ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project")
@@ -3760,6 +3779,8 @@ public class CodeEditor extends IDEComponent {
 
 				for (Integer i : indxs)
 					fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
+				
+				index++;
 			}
 		}
 
@@ -3779,7 +3800,7 @@ public class CodeEditor extends IDEComponent {
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			if (!(ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".md"))) {
+			{
 				indxs = findWord(new String(chars), Character.toString((char) 34)); // colorir strings
 
 				List<Integer> removeIndxs = new ArrayList<>();
@@ -3853,24 +3874,6 @@ public class CodeEditor extends IDEComponent {
 
 				for (int i = 0; i < indxs.size() - 1; i += 2)
 					fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
-			} else {
-				indxs = findWord(new String(chars), "["); // colorir comentários multi-linha - caracteres diferentes
-				List<Integer> finals = findWord(new String(chars), "]");
-
-				if (indxs.size() > 0) {
-					fs = color(indxs.get(0) + 1, finals.size() > 0 ? finals.get(0) : fs.size(),
-							new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-					isMultilineCommenting = true;
-				}
-
-				if (finals.size() > 0) {
-					fs = color(indxs.size() > 0 ? indxs.get(indxs.size() - 1) + 1 : 0, finals.get(0),
-							new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-					isMultilineCommenting = false;
-				}
-
-				if (isMultilineCommenting)
-					fs = color(0, fs.size(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4917,6 +4920,27 @@ public class CodeEditor extends IDEComponent {
 //			}
 
 			break;
+			
+		/*case ".md":
+		case ".markdown":
+			indxs = findWord(new String(chars), "["); // colorir comentários multi-linha - caracteres diferentes
+			finals = findWord(new String(chars), "]");
+
+			if (indxs.size() > 0) {
+				fs = color(indxs.get(0) + 1, finals.size() > 0 ? finals.get(0) : fs.size(),
+						new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				isMultilineCommenting = true;
+			}
+
+			if (finals.size() > 0) {
+				fs = color(indxs.size() > 0 ? indxs.get(indxs.size() - 1) + 1 : 0, finals.get(0),
+						new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				isMultilineCommenting = false;
+			}
+
+			if (isMultilineCommenting)
+				fs = color(0, fs.size(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			break;*/
 
 		case ".lua": // Lua
 			indxs = findWord(new String(chars), "--[["); // colorir comentários multi-linha - caracteres diferentes
