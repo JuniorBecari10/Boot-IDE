@@ -1365,6 +1365,9 @@ public class CodeEditor extends IDEComponent {
 		if (e > fs.size())
 			e = fs.size();// throw new IndexOutOfBoundsException("o final não pode ser maior que o final
 							// da fonte!");
+		
+		if (s < 0) s = 0;
+		if (e < 0) e = 0;
 
 		for (int i = s; i < e; i++) {
 			if (i >= fs.size())
@@ -4361,6 +4364,8 @@ public class CodeEditor extends IDEComponent {
 				
 				for (int j = 0; j < indxs.size(); j++)
 					indxs.set(j, indxs.get(j) - 1);
+				
+				if (i < 0) i = 0;
 				
 				if (indxs.size() != 0)
 					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
