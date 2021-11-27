@@ -1430,6 +1430,20 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		
+		if (ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh")
+					|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1")) {
+			indxs = findWord(new String(chars), ":"); // depois de <palavra>
+
+			int len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length)
+					len++;
+
+				fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+		}
+		
 		if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) {
 			indxs = findWord(new String(chars), ">");
 			
