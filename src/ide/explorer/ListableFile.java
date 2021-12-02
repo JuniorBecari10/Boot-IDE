@@ -1,6 +1,7 @@
 package ide.explorer;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
@@ -1431,6 +1432,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			Main.editor.editing = toAdd;
 		}
 	}
+	
+	public static boolean isListableFileHovered() {
+		for (ListableFile l : Explorer.files)
+			if (l.hovered()) return true;
+		
+		return false;
+	}
 
 	/**
 	 * 
@@ -1460,9 +1468,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				|| MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10,
 						Main.explorer.getHeight()))
 			return;
+		
 		if (CommandTerminal.expOff)
 			return;
-
+		
+		if (hovered())
+			Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		
 		if (!regent.exists() && Main.editor.tabs != null) {
 			Explorer.toRemove.add(this);
 

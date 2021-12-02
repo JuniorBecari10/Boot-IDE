@@ -1167,27 +1167,27 @@ public class CodeEditor extends IDEComponent {
 	
 
 	public int countIndexDistance(int i1, int i2, int l1, int l2) {
-		if (l1 == l2)
-			return i2 - i1;
-		else {
-			int count = 0;
-			for (int i = l1 - 1; i < l2; i++) {
-				if (i == l1 - 1) {
-					count += lines.get(i).getChars().size() - i1;
-					continue;
+		try {
+			if (l1 == l2)
+				return i2 - i1;
+			else {
+				int count = 0;
+				for (int i = l1 - 1; i < l2; i++) {
+					if (i == l1 - 1) {
+						count += lines.get(i).getChars().size() - i1;
+						continue;
+					}
+	
+					else if (i == l2 - 1) {
+						count += i2;
+						continue;
+					} else
+						count += lines.get(i).getChars().size();
 				}
-
-				else if (i == l2 - 1) {
-					count += i2;
-					continue;
-				} else
-					count += lines.get(i).getChars().size();
+	
+				return count;
 			}
-
-			return count;
-		}
-
-		// return -1;
+		} catch (ArrayIndexOutOfBoundsException e) { return 0; }
 	}
 
 	public static String getLowerBarFileName(String ext) {
@@ -6646,29 +6646,15 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 
-		if (hovered() && editing != null) {
-			if (!Explorer.dragging && !MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5,
-					Main.explorer.getY(), 10, Main.explorer.getHeight())) {
-				if (!alternateTabsMode && !RightClickOption.isRightClickActive()
-						&& !RightClickOption.isAutoCompleteActive()) {
-					Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR)); // se for pra descomentar o de baixo, mover a
-																			// ultima condição (a depois do &&) desse if
-																			// pra dentro do if, assim o else não
-																			// verifica essa condição
-				} else {
-					Main.screen.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				}
-
-				if (MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
-					Main.screen.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				}
-			}
-
-			/*
-			 * if (RightClickOption.isRightClickActive() &&
-			 * RightClickOption.anyRightClickOptionHovered()) { Main.screen.setCursor(new
-			 * Cursor(Cursor.HAND_CURSOR)); }
-			 */
+		if (editing != null) {
+			if (MouseInput.hovered(x, y + 30, width, height - 20) && !MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10, Main.explorer.getHeight()) && !RightClickOption.isAutoCompleteActive() && !RightClickOption.isRightClickActive() && !Explorer.dragging)
+				Main.screen.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+			
+			if (((MouseInput.hovered(x, height - 20, width, 20) || MouseInput.hovered(x, 0, width, 30)) || !Explorer.dragging && RightClickOption.isAutoCompleteActive() && !RightClickOption.isRightClickActive() && !RightClickOption.anyRightClickOptionHovered()) && !Tab.isTabHovered() && !MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10, Main.explorer.getHeight()))
+				Main.screen.setCursor(Cursor.getDefaultCursor());
+			
+			if (RightClickOption.anyRightClickOptionHovered() && !MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10, Main.explorer.getHeight()))
+				Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 			if (MouseInput.isMouseRolling()) {
 				new Thread() {

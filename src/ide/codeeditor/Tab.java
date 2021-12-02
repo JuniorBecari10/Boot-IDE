@@ -2,6 +2,7 @@ package ide.codeeditor;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -406,6 +407,13 @@ public class Tab extends IDEComponent implements Serializable {
 		regent = ListableFile.search(regent.getRegent());
 	}
 	
+	public static boolean isTabHovered() {
+		for (Tab t : Main.editor.tabs)
+			if (t.hovered()) return true;
+		
+		return false;
+	}
+	
 	public void tick() {
 		if (regent == null || !regent.getRegent().exists()) {
 			close();
@@ -424,6 +432,9 @@ public class Tab extends IDEComponent implements Serializable {
 			x = Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1).getX() + WIDTH + 3;
 		else
 			x = Tab.MIN_X + WIDTH + 3;
+		
+		if (hovered())
+			Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
 		

@@ -102,6 +102,9 @@ public class Explorer extends IDEComponent {
     		return;
     	}
     	
+    	if (hovered() && !ListableFile.isListableFileHovered() && !MouseInput.hovered(x + width - 5, y, 10, height))
+    		Main.screen.setCursor(Cursor.getDefaultCursor());
+    	
     	maxTitleWidth =  (width / 23) + 2;
     	maxFolderWidth = (width / 15);
     	maxTextWidth =   (width / 16) + 2;
@@ -109,7 +112,7 @@ public class Explorer extends IDEComponent {
     	
     	// Drag
     	
-    	if (MouseInput.hovered(x + width - 5, y, 10, height)) {
+    	if (MouseInput.hovered(x + width - 5, y, 10, height) && !Main.editor.selecting) {
 			Main.screen.setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
 			
 			if (MouseInput.leftDragged() && (!Main.editor.selecting || Main.editor.editing == null))
