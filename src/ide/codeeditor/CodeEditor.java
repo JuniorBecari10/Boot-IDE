@@ -8135,7 +8135,7 @@ public class CodeEditor extends IDEComponent {
 			g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
 			
 			String selectingText = selecting ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2) : "";
-			
+						
 			if (minMode)
 				selectingText = selecting ? (" | " + countIndexDistance(index1, index2, line1, line2)) : "";
 			
