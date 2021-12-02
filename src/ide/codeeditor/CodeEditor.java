@@ -6670,7 +6670,7 @@ public class CodeEditor extends IDEComponent {
 							}
 						}
 
-						if (KeyInput.isShiftDown() && !KeyInput.isControlDown()) {
+						if (KeyInput.isShiftDown() && !KeyInput.isControlDown()) { // isso não pode acontecer com o x por causa dos autocompletes
 							if (MouseInput.wheelUp() && scrX > 0)
 								scrX -= FONT_SIZE * 3;
 							else if (MouseInput.wheelDown())
@@ -6678,11 +6678,20 @@ public class CodeEditor extends IDEComponent {
 						}
 
 						if (!KeyInput.isShiftDown()) {
-							if (MouseInput.wheelUp() && scrY > 0)
-								scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 3;
-							else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size()
-									* (FONT_SIZE + (FONT_SIZE / 4)))
-								scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+							if (!KeyInput.isControlDown()) {
+								if (MouseInput.wheelUp() && scrY > 0)
+									scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+								else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size()
+										* (FONT_SIZE + (FONT_SIZE / 4)))
+									scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+							}
+							else {
+								if (MouseInput.wheelUp() && scrY > 0)
+									scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 6;
+								else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size()
+										* (FONT_SIZE + (FONT_SIZE / 4)))
+									scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 6;
+							}
 						}
 
 						return;
