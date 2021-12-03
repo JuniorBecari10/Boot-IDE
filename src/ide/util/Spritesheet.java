@@ -22,7 +22,9 @@ public class Spritesheet {
     	try {
 			spr = ImageIO.read(file);
 		} catch (IOException e) {
-			e.printStackTrace();
+			// não tem
+			
+			return;
 		}
     }
     

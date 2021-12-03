@@ -9,4 +9,6 @@ status.bat
 commitold.bat
 /Resources/
 /Resources/*
+/Resourcess/
+/Resourcesss/*
 *.txt

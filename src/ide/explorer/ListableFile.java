@@ -39,161 +39,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 	public static boolean hasAltered = false;
 
-	public static FileType[] types = new FileType[] {
-			new FileType("readme.md", Main.spritesheet.getSprite(752, 32, 16, 16)),
-			new FileType("package.json", Main.spritesheet.getSprite(576, 16, 16, 16)),
-			new FileType("package-lock.json", Main.spritesheet.getSprite(576, 16, 16, 16)),
-
-			new FileType(".java", Main.spritesheet.getSprite(0, 16, 16, 16)),
-			new FileType(".class", Main.spritesheet.getSprite(272, 32, 16, 16)),
-			new FileType(".c", Main.spritesheet.getSprite(16, 16, 16, 16)),
-			new FileType(".cpp", Main.spritesheet.getSprite(32, 16, 16, 16)),
-			new FileType(".cc", Main.spritesheet.getSprite(32, 16, 16, 16)),
-			new FileType(".cxx", Main.spritesheet.getSprite(32, 16, 16, 16)),
-			new FileType(".cs", Main.spritesheet.getSprite(48, 16, 16, 16)),
-			new FileType(".py", Main.spritesheet.getSprite(64, 16, 16, 16)),
-			new FileType(".pyd", Main.spritesheet.getSprite(64, 16, 16, 16)),
-			new FileType(".pyx", Main.spritesheet.getSprite(64, 16, 16, 16)),
-			new FileType(".js", Main.spritesheet.getSprite(80, 16, 16, 16)),
-			new FileType(".mjs", Main.spritesheet.getSprite(80, 16, 16, 16)),
-			new FileType(".bat", Main.spritesheet.getSprite(96, 16, 16, 16)),
-			new FileType(".com", Main.spritesheet.getSprite(592, 32, 16, 16)),
-			new FileType(".cmd", Main.spritesheet.getSprite(592, 32, 16, 16)),
-			new FileType(".h", Main.spritesheet.getSprite(112, 16, 16, 16)),
-			new FileType(".hh", Main.spritesheet.getSprite(112, 16, 16, 16)),
-			new FileType(".hxx", Main.spritesheet.getSprite(112, 16, 16, 16)),
-			new FileType(".hpp", Main.spritesheet.getSprite(112, 16, 16, 16)),
-			new FileType(".asm", Main.spritesheet.getSprite(128, 16, 16, 16)),
-			new FileType(".s", Main.spritesheet.getSprite(128, 16, 16, 16)),
-			new FileType(".lua", Main.spritesheet.getSprite(144, 16, 16, 16)),
-			new FileType(".sql", Main.spritesheet.getSprite(160, 16, 16, 16)),
-			new FileType(".swift", Main.spritesheet.getSprite(176, 16, 16, 16)),
-			new FileType(".rs", Main.spritesheet.getSprite(192, 16, 16, 16)),
-			new FileType(".php", Main.spritesheet.getSprite(208, 16, 16, 16)),
-			new FileType(".kt", Main.spritesheet.getSprite(224, 16, 16, 16)),
-			new FileType(".vue", Main.spritesheet.getSprite(240, 16, 16, 16)),
-			new FileType(".rb", Main.spritesheet.getSprite(256, 16, 16, 16)),
-			new FileType(".ino", Main.spritesheet.getSprite(272, 16, 16, 16)),
-			new FileType(".ts", Main.spritesheet.getSprite(288, 16, 16, 16)),
-			new FileType(".tsx", Main.spritesheet.getSprite(544, 16, 16, 16)),
-			new FileType(".go", Main.spritesheet.getSprite(304, 16, 16, 16)),
-			new FileType(".r", Main.spritesheet.getSprite(320, 16, 16, 16)),
-			new FileType(".jl", Main.spritesheet.getSprite(336, 16, 16, 16)),
-			new FileType(".pl", Main.spritesheet.getSprite(352, 16, 16, 16)),
-			new FileType(".t", Main.spritesheet.getSprite(352, 16, 16, 16)),
-			new FileType(".has", Main.spritesheet.getSprite(368, 16, 16, 16)),
-			new FileType(".hs", Main.spritesheet.getSprite(368, 16, 16, 16)),
-			new FileType(".fs", Main.spritesheet.getSprite(384, 16, 16, 16)),
-			new FileType(".coffee", Main.spritesheet.getSprite(400, 16, 16, 16)),
-			new FileType(".m", Main.spritesheet.getSprite(416, 16, 16, 16)),
-			new FileType(".mm", Main.spritesheet.getSprite(592, 16, 16, 16)),
-			new FileType(".pas", Main.spritesheet.getSprite(432, 16, 16, 16)),
-			new FileType(".lpr", Main.spritesheet.getSprite(432, 16, 16, 16)),
-			new FileType(".pp", Main.spritesheet.getSprite(432, 16, 16, 16)),
-			new FileType(".scala", Main.spritesheet.getSprite(448, 16, 16, 16)),
-			new FileType(".dart", Main.spritesheet.getSprite(464, 16, 16, 16)),
-			new FileType(".zig", Main.spritesheet.getSprite(480, 16, 16, 16)),
-			new FileType(".scss", Main.spritesheet.getSprite(496, 16, 16, 16)),
-			new FileType(".ipynb", Main.spritesheet.getSprite(512, 16, 16, 16)),
-			new FileType(".vb", Main.spritesheet.getSprite(528, 16, 16, 16)),
-			new FileType(".bf", Main.spritesheet.getSprite(560, 16, 16, 16)),
-			new FileType(".gd", Main.spritesheet.getSprite(608, 16, 16, 16)),
-			new FileType(".mcfunction", Main.spritesheet.getSprite(624, 16, 16, 16)),
-			
-			new FileType(".html", Main.spritesheet.getSprite(0, 32, 16, 16)),
-			new FileType(".xhtml", Main.spritesheet.getSprite(0, 32, 16, 16)),
-			new FileType(".htm", Main.spritesheet.getSprite(0, 32, 16, 16)),
-			new FileType(".css", Main.spritesheet.getSprite(16, 32, 16, 16)),
-			new FileType(".xml", Main.spritesheet.getSprite(32, 32, 16, 16)),
-			new FileType(".json", Main.spritesheet.getSprite(48, 32, 16, 16)),
-			new FileType(".jsonc", Main.spritesheet.getSprite(48, 32, 16, 16)),
-			new FileType(".md", Main.spritesheet.getSprite(64, 32, 16, 16)),
-			new FileType(".markdown", Main.spritesheet.getSprite(64, 32, 16, 16)),
-			new FileType(".txt", Main.spritesheet.getSprite(80, 32, 16, 16)),
-			new FileType(".log", Main.spritesheet.getSprite(80, 32, 16, 16)),
-			new FileType(".pdf", Main.spritesheet.getSprite(96, 32, 16, 16)),
-			new FileType(".jar", Main.spritesheet.getSprite(112, 32, 16, 16)),
-			new FileType(".exe", Main.spritesheet.getSprite(128, 32, 16, 16)),
-			new FileType(".svg", Main.spritesheet.getSprite(144, 32, 16, 16)),
-			new FileType(".urna", Main.spritesheet.getSprite(160, 32, 16, 16)), // easter egg! (Criador de Urnas)
-			new FileType(".save", Main.spritesheet.getSprite(176, 32, 16, 16)), // easter egg! (World's Hardest Game
-																				// Maker 2)
-			new FileType(Main.CONFIG_FILE_EXTENSION, Main.spritesheet.getSprite(192, 32, 16, 16)),
-			new FileType(".mk", Main.spritesheet.getSprite(208, 32, 16, 16)),
-			new FileType(".mak", Main.spritesheet.getSprite(208, 32, 16, 16)),
-			new FileType(".make", Main.spritesheet.getSprite(208, 32, 16, 16)),
-			new FileType(".sh", Main.spritesheet.getSprite(224, 32, 16, 16)),
-			new FileType(".gitignore", Main.spritesheet.getSprite(240, 32, 16, 16)),
-			new FileType(".dockerfile", Main.spritesheet.getSprite(256, 32, 16, 16)),
-			new FileType(".jsx", Main.spritesheet.getSprite(368, 32, 16, 16)),
-			new FileType(".config", Main.spritesheet.getSprite(352, 32, 16, 16)),
-			new FileType(".cfg", Main.spritesheet.getSprite(352, 32, 16, 16)),
-			new FileType(".ps1", Main.spritesheet.getSprite(320, 32, 16, 16)),
-			new FileType(".license", Main.spritesheet.getSprite(336, 32, 16, 16)),
-			new FileType(".docx", Main.spritesheet.getSprite(384, 32, 16, 16)),
-			new FileType(".xlsx", Main.spritesheet.getSprite(400, 32, 16, 16)),
-			new FileType(".docx", Main.spritesheet.getSprite(384, 32, 16, 16)),
-			new FileType(".pptx", Main.spritesheet.getSprite(416, 32, 16, 16)),
-			new FileType(".one", Main.spritesheet.getSprite(432, 32, 16, 16)),
-			new FileType(".psd", Main.spritesheet.getSprite(448, 32, 16, 16)),
-			new FileType(".aed", Main.spritesheet.getSprite(464, 32, 16, 16)),
-			new FileType(".ai", Main.spritesheet.getSprite(480, 32, 16, 16)),
-			new FileType(".indd", Main.spritesheet.getSprite(496, 32, 16, 16)),
-			new FileType(".ejs", Main.spritesheet.getSprite(512, 32, 16, 16)),
-			new FileType(".ld", Main.spritesheet.getSprite(528, 32, 16, 16)),
-			new FileType(".lock", Main.spritesheet.getSprite(544, 32, 16, 16)),
-			new FileType(".ini", Main.spritesheet.getSprite(560, 32, 16, 16)),
-			new FileType(".dll", Main.spritesheet.getSprite(576, 32, 16, 16)),
-			new FileType(".makefile", Main.spritesheet.getSprite(208, 32, 16, 16)),
-			new FileType(".url", Main.spritesheet.getSprite(608, 32, 16, 16)),
-			new FileType(".prefs", Main.spritesheet.getSprite(688, 32, 16, 16)),
-			new FileType(".classpath", Main.spritesheet.getSprite(704, 32, 16, 16)),
-			new FileType(".project", Main.spritesheet.getSprite(720, 32, 16, 16)),
-			new FileType(".csproj", Main.spritesheet.getSprite(768, 32, 16, 16)),
-			new FileType(Main.SETTINGS_FILE_EXTENSION, Main.spritesheet.getSprite(192, 32, 16, 16)),
-			new FileType(".rtf", Main.spritesheet.getSprite(784, 32, 16, 16)),
-
-			new FileType(".png", Main.spritesheet.getSprite(0, 48, 16, 16)),
-			new FileType(".jpg", Main.spritesheet.getSprite(0, 48, 16, 16)),
-			new FileType(".jpeg", Main.spritesheet.getSprite(0, 48, 16, 16)),
-			new FileType(".gif", Main.spritesheet.getSprite(0, 48, 16, 16)),
-			new FileType(".bmp", Main.spritesheet.getSprite(0, 48, 16, 16)),
-			new FileType(".ico", Main.spritesheet.getSprite(64, 48, 16, 16)),
-			new FileType(".webp", Main.spritesheet.getSprite(0, 48, 16, 16)),
-
-			new FileType(".mp4", Main.spritesheet.getSprite(16, 48, 16, 16)),
-			new FileType(".wmv", Main.spritesheet.getSprite(16, 48, 16, 16)),
-			new FileType(".avi", Main.spritesheet.getSprite(16, 48, 16, 16)),
-
-			new FileType(".wav", Main.spritesheet.getSprite(32, 48, 16, 16)),
-			new FileType(".mp3", Main.spritesheet.getSprite(32, 48, 16, 16)),
-			new FileType(".ogg", Main.spritesheet.getSprite(32, 48, 16, 16)),
-
-			new FileType(".otf", Main.spritesheet.getSprite(48, 48, 16, 16)),
-			new FileType(".ttf", Main.spritesheet.getSprite(48, 48, 16, 16)),
-			new FileType(".woff", Main.spritesheet.getSprite(48, 48, 16, 16)),
-			new FileType(".woff2", Main.spritesheet.getSprite(48, 48, 16, 16)),
-
-			new FileType(".zip", Main.spritesheet.getSprite(288, 32, 16, 16)),
-			new FileType(".gz", Main.spritesheet.getSprite(288, 32, 16, 16)),
-			new FileType(".rar", Main.spritesheet.getSprite(288, 32, 16, 16)),
-			new FileType(".7z", Main.spritesheet.getSprite(288, 32, 16, 16)),
-
-			new FileType(".bin", Main.spritesheet.getSprite(304, 32, 16, 16)),
-			new FileType(".img", Main.spritesheet.getSprite(640, 32, 16, 16)),
-			new FileType(".iso", Main.spritesheet.getSprite(640, 32, 16, 16)),
-			new FileType(".flp", Main.spritesheet.getSprite(656, 32, 16, 16)),
-			new FileType(".o", Main.spritesheet.getSprite(672, 32, 16, 16)),
-			new FileType(".out", Main.spritesheet.getSprite(672, 32, 16, 16)),
-			new FileType(".obj", Main.spritesheet.getSprite(672, 32, 16, 16)),
-
-			// Specials
-
-			new FileType("makefile", Main.spritesheet.getSprite(208, 32, 16, 16)),
-			new FileType("dockerfile", Main.spritesheet.getSprite(256, 32, 16, 16)),
-			new FileType("license", Main.spritesheet.getSprite(336, 32, 16, 16)),
-			new FileType("authors", Main.spritesheet.getSprite(624, 32, 16, 16)),
-			new FileType("gitignore", Main.spritesheet.getSprite(240, 32, 16, 16)), };
+	public static FileType[] types = new FileType[] {};
 
 	private ListableFile parent;
 
@@ -210,160 +56,164 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		// initTypes();
 	}
 
-	public static void updateTypes() { // talvez colocar uma arraylist porque né :/
-			types[0] = new FileType("readme.md",Main.spritesheet.getSprite(752,32,16,16));
-			types[1] = new FileType("package.json",Main.spritesheet.getSprite(576,16,16,16));
-			types[2] = new FileType("package-lock.json",Main.spritesheet.getSprite(576,16,16,16));
+	public static void updateTypes() {
+			List<FileType> t = new ArrayList<>();
 			
-			types[3] = new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16));
-			types[4] = new FileType(".class",Main.spritesheet.getSprite(272,32, 16, 16));
-			types[5] = new FileType(".c", Main.spritesheet.getSprite   (16, 16, 16, 16));
-			types[6] = new FileType(".cpp", Main.spritesheet.getSprite (32, 16, 16, 16));
-			types[7] = new FileType(".cc", Main.spritesheet.getSprite  (32, 16, 16, 16));
-			types[8] = new FileType(".cxx", Main.spritesheet.getSprite (32, 16, 16, 16));
-			types[9] = new FileType(".cs", Main.spritesheet.getSprite  (48, 16, 16, 16));
-			types[10] = new FileType(".py", Main.spritesheet.getSprite  (64, 16, 16, 16));
-			types[11] = new FileType(".pyd", Main.spritesheet.getSprite (64, 16, 16, 16));
-			types[12] = new FileType(".pyx", Main.spritesheet.getSprite (64, 16, 16, 16));
-			types[13] = new FileType(".js", Main.spritesheet.getSprite  (80, 16, 16, 16));
-			types[14] = new FileType(".mjs", Main.spritesheet.getSprite (80, 16, 16, 16));
-			types[15] = new FileType(".bat", Main.spritesheet.getSprite (96, 16, 16, 16));
-			types[16] = new FileType(".com", Main.spritesheet.getSprite(592, 32, 16, 16));
-			types[17] = new FileType(".cmd", Main.spritesheet.getSprite(592, 32, 16, 16));
-			types[18] = new FileType(".h", Main.spritesheet.getSprite  (112, 16, 16, 16));
-			types[19] = new FileType(".hh", Main.spritesheet.getSprite (112, 16, 16, 16));
-			types[20] = new FileType(".hxx", Main.spritesheet.getSprite(112, 16, 16, 16));
-			types[21] = new FileType(".hpp", Main.spritesheet.getSprite(112, 16, 16, 16));
-			types[22] = new FileType(".asm", Main.spritesheet.getSprite(128, 16, 16, 16));
-			types[23] = new FileType(".s", Main.spritesheet.getSprite  (128, 16, 16, 16));
-			types[24] = new FileType(".lua", Main.spritesheet.getSprite(144, 16, 16, 16));
-			types[25] = new FileType(".sql", Main.spritesheet.getSprite(160, 16, 16, 16));
-			types[26] = new FileType(".swift",Main.spritesheet.getSprite(176,16, 16, 16));
-			types[27] = new FileType(".rs", Main.spritesheet.getSprite (192, 16, 16, 16));
-			types[28] = new FileType(".php", Main.spritesheet.getSprite(208, 16, 16, 16));
-			types[29] = new FileType(".kt", Main.spritesheet.getSprite (224, 16, 16, 16));
-			types[30] = new FileType(".vue", Main.spritesheet.getSprite(240, 16, 16, 16));
-			types[31] = new FileType(".rb", Main.spritesheet.getSprite (256, 16, 16, 16));
-			types[32] = new FileType(".ino", Main.spritesheet.getSprite(272, 16, 16, 16));
-			types[33] = new FileType(".ts", Main.spritesheet.getSprite (288, 16, 16, 16));
-			types[34] = new FileType(".tsx", Main.spritesheet.getSprite(544, 16, 16, 16));
-			types[35] = new FileType(".go", Main.spritesheet.getSprite (304, 16, 16, 16));
-			types[36] = new FileType(".r",  Main.spritesheet.getSprite (320, 16, 16, 16));
-			types[37] = new FileType(".jl", Main.spritesheet.getSprite (336, 16, 16, 16));
-			types[38] = new FileType(".pl", Main.spritesheet.getSprite (352, 16, 16, 16));
-			types[39] = new FileType(".t", Main.spritesheet.getSprite (352, 16, 16, 16));
-			types[40] = new FileType(".has", Main.spritesheet.getSprite(368, 16, 16, 16));
-			types[41] = new FileType(".hs", Main.spritesheet.getSprite (368, 16, 16, 16));
-			types[42] = new FileType(".fs", Main.spritesheet.getSprite (384, 16, 16, 16));
-			types[43] = new FileType(".coffee",Main.spritesheet.getSprite(400,16,16, 16));
-			types[44] = new FileType(".m", Main.spritesheet.getSprite  (416, 16, 16, 16));
-			types[45] = new FileType(".mm", Main.spritesheet.getSprite (592, 16, 16, 16));
-			types[46] = new FileType(".pas", Main.spritesheet.getSprite(432, 16, 16, 16));
-			types[47] = new FileType(".lpr", Main.spritesheet.getSprite(432, 16, 16, 16));
-			types[48] = new FileType(".pp", Main.spritesheet.getSprite (432, 16, 16, 16));
-			types[49] = new FileType(".scala",Main.spritesheet.getSprite(448,16, 16, 16));
-			types[50] = new FileType(".dart",Main.spritesheet.getSprite(464, 16, 16, 16));
-			types[51] = new FileType(".zig", Main.spritesheet.getSprite(480, 16, 16, 16));
-			types[52] = new FileType(".scss",Main.spritesheet.getSprite(496, 16, 16, 16));
-			types[53] = new FileType(".ipynb",Main.spritesheet.getSprite(512,16, 16, 16));
-			types[54] = new FileType(".vb", Main.spritesheet.getSprite (528, 16, 16, 16));
-			types[55] = new FileType(".bf", Main.spritesheet.getSprite (560, 16, 16, 16));
-			types[56] = new FileType(".gd", Main.spritesheet.getSprite (608, 16, 16, 16));
-			types[57] = new FileType(".mcfunction", Main.spritesheet.getSprite(624, 16, 16, 16));
+			t.add(new FileType("readme.md",Main.spritesheet.getSprite(752,32,16,16)));
+			t.add(new FileType("package.json",Main.spritesheet.getSprite(576,16,16,16)));
+			t.add(new FileType("package-lock.json",Main.spritesheet.getSprite(576,16,16,16)));
 			
-			types[58] = new FileType(".html", Main.spritesheet.getSprite (0, 32, 16, 16));
-			types[59] = new FileType(".xhtml", Main.spritesheet.getSprite(0, 32, 16, 16));
-			types[60] = new FileType(".htm", Main.spritesheet.getSprite  (0, 32, 16, 16));
-			types[61] = new FileType(".css", Main.spritesheet.getSprite (16, 32, 16, 16));
-			types[62] = new FileType(".xml", Main.spritesheet.getSprite (32, 32, 16, 16));
-			types[63] = new FileType(".json", Main.spritesheet.getSprite(48, 32, 16, 16));
-			types[64] = new FileType(".jsonc",Main.spritesheet.getSprite(48, 32, 16, 16));
-			types[65] = new FileType(".md", Main.spritesheet.getSprite  (64, 32, 16, 16));
-			types[66] = new FileType(".markdown",Main.spritesheet.getSprite(64,32,16,16));
-			types[67] = new FileType(".txt", Main.spritesheet.getSprite (80, 32, 16, 16));
-			types[68] = new FileType(".log", Main.spritesheet.getSprite (80, 32, 16, 16));
-			types[69] = new FileType(".pdf", Main.spritesheet.getSprite (96, 32, 16, 16));
-			types[70] = new FileType(".jar", Main.spritesheet.getSprite(112, 32, 16, 16));
-			types[71] = new FileType(".exe", Main.spritesheet.getSprite(128, 32, 16, 16));
-			types[72] = new FileType(".svg", Main.spritesheet.getSprite(144, 32, 16, 16));
-			types[73] = new FileType(".urna",Main.spritesheet.getSprite(160, 32, 16, 16));		// easter egg! (Criador de Urnas)
-			types[74] = new FileType(".save",Main.spritesheet.getSprite(176, 32, 16, 16));		// easter egg! (World's Hardest Game Maker 2)
-			types[75] = new FileType(Main.CONFIG_FILE_EXTENSION, Main.spritesheet.getSprite(192, 32, 16, 16));
-			types[76] = new FileType(".mk", Main.spritesheet.getSprite (208, 32, 16, 16));
-			types[77] = new FileType(".mak", Main.spritesheet.getSprite (208, 32, 16, 16));
-			types[78] = new FileType(".make",Main.spritesheet.getSprite(208, 32, 16, 16));
-			types[79] = new FileType(".sh", Main.spritesheet.getSprite (224, 32, 16, 16));
-			types[80] = new FileType(".gitignore",Main.spritesheet.getSprite(240,32,16,16));
-			types[81] = new FileType(".dockerfile",Main.spritesheet.getSprite(256,32,16,16));
-			types[82] = new FileType(".jsx", Main.spritesheet.getSprite(368, 32, 16, 16));
-			types[83] = new FileType(".config",Main.spritesheet.getSprite(352,32,16, 16));
-			types[84] = new FileType(".cfg", Main.spritesheet.getSprite (352, 32,16, 16));
-			types[85] = new FileType(".ps1", Main.spritesheet.getSprite(320, 32, 16, 16));
-			types[86] = new FileType(".license",Main.spritesheet.getSprite(336,32,16,16));
-			types[87] = new FileType(".docx",Main.spritesheet.getSprite(384, 32, 16, 16));
-			types[88] = new FileType(".xlsx",Main.spritesheet.getSprite(400, 32, 16, 16));
-			types[89] = new FileType(".docx",Main.spritesheet.getSprite(384, 32, 16, 16));
-			types[90] = new FileType(".pptx",Main.spritesheet.getSprite(416, 32, 16, 16));
-			types[91] = new FileType(".one", Main.spritesheet.getSprite(432, 32, 16, 16));
-			types[92] = new FileType(".psd",Main.spritesheet.getSprite (448, 32, 16, 16));
-			types[93] = new FileType(".aed",Main.spritesheet.getSprite (464, 32, 16, 16));
-			types[94] = new FileType(".ai", Main.spritesheet.getSprite (480, 32, 16, 16));
-			types[95] = new FileType(".indd",Main.spritesheet.getSprite(496, 32, 16, 16));
-			types[96] = new FileType(".ejs", Main.spritesheet.getSprite(512, 32, 16, 16));
-			types[97] = new FileType(".ld", Main.spritesheet.getSprite (528, 32, 16, 16));
-			types[98] = new FileType(".lock",Main.spritesheet.getSprite(544, 32, 16, 16));
-			types[99] = new FileType(".ini", Main.spritesheet.getSprite(560, 32, 16, 16));
-			types[100] = new FileType(".dll", Main.spritesheet.getSprite(576, 32, 16, 16));
-			types[101] = new FileType(".makefile",Main.spritesheet.getSprite(208,32,16,16));
-			types[102] = new FileType(".url", Main.spritesheet.getSprite(608, 32, 16, 16));
-			types[103] = new FileType(".prefs",Main.spritesheet.getSprite(688,32, 16, 16));
-			types[104] = new FileType(".classpath",Main.spritesheet.getSprite(704,32,16,16));
-			types[105] = new FileType(".project",Main.spritesheet.getSprite(720,32,16,16));
-			types[106] = new FileType(".csproj",Main.spritesheet.getSprite(768,32,16,16));
-			types[107] = new FileType(Main.SETTINGS_FILE_EXTENSION, Main.spritesheet.getSprite(192,32,16,16));
-			types[108] = new FileType(".rtf", Main.spritesheet.getSprite(784, 32, 16, 16));
+			t.add(new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16)));
+			t.add(new FileType(".class",Main.spritesheet.getSprite(272,32, 16, 16)));
+			t.add(new FileType(".c", Main.spritesheet.getSprite   (16, 16, 16, 16)));
+			t.add(new FileType(".cpp", Main.spritesheet.getSprite (32, 16, 16, 16)));
+			t.add(new FileType(".cc", Main.spritesheet.getSprite  (32, 16, 16, 16)));
+			t.add(new FileType(".cxx", Main.spritesheet.getSprite (32, 16, 16, 16)));
+			t.add(new FileType(".cs", Main.spritesheet.getSprite  (48, 16, 16, 16)));
+			t.add(new FileType(".py", Main.spritesheet.getSprite  (64, 16, 16, 16)));
+			t.add(new FileType(".pyd", Main.spritesheet.getSprite (64, 16, 16, 16)));
+			t.add(new FileType(".pyx", Main.spritesheet.getSprite (64, 16, 16, 16)));
+			t.add( new FileType(".js", Main.spritesheet.getSprite  (80, 16, 16, 16)));
+			t.add( new FileType(".mjs", Main.spritesheet.getSprite (80, 16, 16, 16)));
+			t.add(new FileType(".bat", Main.spritesheet.getSprite (96, 16, 16, 16)));
+			t.add(new FileType(".com", Main.spritesheet.getSprite(592, 32, 16, 16)));
+			t.add(new FileType(".cmd", Main.spritesheet.getSprite(592, 32, 16, 16)));
+			t.add(new FileType(".h", Main.spritesheet.getSprite  (112, 16, 16, 16)));
+			t.add(new FileType(".hh", Main.spritesheet.getSprite (112, 16, 16, 16)));
+			t.add(new FileType(".hxx", Main.spritesheet.getSprite(112, 16, 16, 16)));
+			t.add(new FileType(".hpp", Main.spritesheet.getSprite(112, 16, 16, 16)));
+			t.add(new FileType(".asm", Main.spritesheet.getSprite(128, 16, 16, 16)));
+			t.add(new FileType(".s", Main.spritesheet.getSprite  (128, 16, 16, 16)));
+			t.add(new FileType(".lua", Main.spritesheet.getSprite(144, 16, 16, 16)));
+			t.add(new FileType(".sql", Main.spritesheet.getSprite(160, 16, 16, 16)));
+			t.add(new FileType(".swift",Main.spritesheet.getSprite(176,16, 16, 16)));
+			t.add(new FileType(".rs", Main.spritesheet.getSprite (192, 16, 16, 16)));
+			t.add(new FileType(".php", Main.spritesheet.getSprite(208, 16, 16, 16)));
+			t.add(new FileType(".kt", Main.spritesheet.getSprite (224, 16, 16, 16)));
+			t.add(new FileType(".vue", Main.spritesheet.getSprite(240, 16, 16, 16)));
+			t.add(new FileType(".rb", Main.spritesheet.getSprite (256, 16, 16, 16)));
+			t.add(new FileType(".ino", Main.spritesheet.getSprite(272, 16, 16, 16)));
+			t.add(new FileType(".ts", Main.spritesheet.getSprite (288, 16, 16, 16)));
+			t.add(new FileType(".tsx", Main.spritesheet.getSprite(544, 16, 16, 16)));
+			t.add(new FileType(".go", Main.spritesheet.getSprite (304, 16, 16, 16)));
+			t.add(new FileType(".r",  Main.spritesheet.getSprite (320, 16, 16, 16)));
+			t.add(new FileType(".jl", Main.spritesheet.getSprite (336, 16, 16, 16)));
+			t.add(new FileType(".pl", Main.spritesheet.getSprite (352, 16, 16, 16)));
+			t.add(new FileType(".t", Main.spritesheet.getSprite (352, 16, 16, 16)));
+			t.add(new FileType(".has", Main.spritesheet.getSprite(368, 16, 16, 16)));
+			t.add(new FileType(".hs", Main.spritesheet.getSprite (368, 16, 16, 16)));
+			t.add(new FileType(".fs", Main.spritesheet.getSprite (384, 16, 16, 16)));
+			t.add(new FileType(".coffee",Main.spritesheet.getSprite(400,16,16, 16)));
+			t.add(new FileType(".m", Main.spritesheet.getSprite  (416, 16, 16, 16)));
+			t.add(new FileType(".mm", Main.spritesheet.getSprite (592, 16, 16, 16)));
+			t.add(new FileType(".pas", Main.spritesheet.getSprite(432, 16, 16, 16)));
+			t.add(new FileType(".lpr", Main.spritesheet.getSprite(432, 16, 16, 16)));
+			t.add(new FileType(".pp", Main.spritesheet.getSprite (432, 16, 16, 16)));
+			t.add(new FileType(".scala",Main.spritesheet.getSprite(448,16, 16, 16)));
+			t.add(new FileType(".dart",Main.spritesheet.getSprite(464, 16, 16, 16)));
+			t.add(new FileType(".zig", Main.spritesheet.getSprite(480, 16, 16, 16)));
+			t.add(new FileType(".scss",Main.spritesheet.getSprite(496, 16, 16, 16)));
+			t.add(new FileType(".ipynb",Main.spritesheet.getSprite(512,16, 16, 16)));
+			t.add(new FileType(".vb", Main.spritesheet.getSprite (528, 16, 16, 16)));
+			t.add(new FileType(".bf", Main.spritesheet.getSprite (560, 16, 16, 16)));
+			t.add(new FileType(".gd", Main.spritesheet.getSprite (608, 16, 16, 16)));
+			t.add(new FileType(".mcfunction", Main.spritesheet.getSprite(624, 16, 16, 16)));
 			
-			types[109] = new FileType(".png", Main.spritesheet.getSprite  (0, 48, 16, 16));
-			types[110] = new FileType(".jpg", Main.spritesheet.getSprite  (0, 48, 16, 16));
-			types[111] = new FileType(".jpeg", Main.spritesheet.getSprite (0, 48, 16, 16));
-			types[112] = new FileType(".gif", Main.spritesheet.getSprite  (0, 48, 16, 16));
-			types[113] = new FileType(".bmp", Main.spritesheet.getSprite  (0, 48, 16, 16));
-			types[114] = new FileType(".ico", Main.spritesheet.getSprite (64, 48, 16, 16));
-			types[115] = new FileType(".webp", Main.spritesheet.getSprite (0, 48, 16, 16));
+			t.add(new FileType(".html", Main.spritesheet.getSprite (0, 32, 16, 16)));
+			t.add(new FileType(".xhtml", Main.spritesheet.getSprite(0, 32, 16, 16)));
+			t.add(new FileType(".htm", Main.spritesheet.getSprite  (0, 32, 16, 16)));
+			t.add(new FileType(".css", Main.spritesheet.getSprite (16, 32, 16, 16)));
+			t.add(new FileType(".xml", Main.spritesheet.getSprite (32, 32, 16, 16)));
+			t.add(new FileType(".json", Main.spritesheet.getSprite(48, 32, 16, 16)));
+			t.add(new FileType(".jsonc",Main.spritesheet.getSprite(48, 32, 16, 16)));
+			t.add(new FileType(".md", Main.spritesheet.getSprite  (64, 32, 16, 16)));
+			t.add(new FileType(".markdown",Main.spritesheet.getSprite(64,32,16,16)));
+			t.add(new FileType(".txt", Main.spritesheet.getSprite (80, 32, 16, 16)));
+			t.add(new FileType(".log", Main.spritesheet.getSprite (80, 32, 16, 16)));
+			t.add(new FileType(".pdf", Main.spritesheet.getSprite (96, 32, 16, 16)));
+			t.add(new FileType(".jar", Main.spritesheet.getSprite(112, 32, 16, 16)));
+			t.add(new FileType(".exe", Main.spritesheet.getSprite(128, 32, 16, 16)));
+			t.add(new FileType(".svg", Main.spritesheet.getSprite(144, 32, 16, 16)));
+			t.add(new FileType(".urna",Main.spritesheet.getSprite(160, 32, 16, 16)));		// easter egg! (Criador de Urnas)
+			t.add(new FileType(".save",Main.spritesheet.getSprite(176, 32, 16, 16)));		// easter egg! (World's Hardest Game Maker 2)
+			t.add(new FileType(Main.CONFIG_FILE_EXTENSION, Main.spritesheet.getSprite(192, 32, 16, 16)));
+			t.add(new FileType(".mk", Main.spritesheet.getSprite (208, 32, 16, 16)));
+			t.add(new FileType(".mak", Main.spritesheet.getSprite (208, 32, 16, 16)));
+			t.add(new FileType(".make",Main.spritesheet.getSprite(208, 32, 16, 16)));
+			t.add(new FileType(".sh", Main.spritesheet.getSprite (224, 32, 16, 16)));
+			t.add(new FileType(".gitignore",Main.spritesheet.getSprite(240,32,16,16)));
+			t.add(new FileType(".dockerfile",Main.spritesheet.getSprite(256,32,16,16)));
+			t.add(new FileType(".jsx", Main.spritesheet.getSprite(368, 32, 16, 16)));
+			t.add(new FileType(".config",Main.spritesheet.getSprite(352,32,16, 16)));
+			t.add(new FileType(".cfg", Main.spritesheet.getSprite (352, 32,16, 16)));
+			t.add(new FileType(".ps1", Main.spritesheet.getSprite(320, 32, 16, 16)));
+			t.add(new FileType(".license",Main.spritesheet.getSprite(336,32,16,16)));
+			t.add(new FileType(".docx",Main.spritesheet.getSprite(384, 32, 16, 16)));
+			t.add(new FileType(".xlsx",Main.spritesheet.getSprite(400, 32, 16, 16)));
+			t.add(new FileType(".docx",Main.spritesheet.getSprite(384, 32, 16, 16)));
+			t.add(new FileType(".pptx",Main.spritesheet.getSprite(416, 32, 16, 16)));
+			t.add(new FileType(".one", Main.spritesheet.getSprite(432, 32, 16, 16)));
+			t.add(new FileType(".psd",Main.spritesheet.getSprite (448, 32, 16, 16)));
+			t.add(new FileType(".aed",Main.spritesheet.getSprite (464, 32, 16, 16)));
+			t.add(new FileType(".ai", Main.spritesheet.getSprite (480, 32, 16, 16)));
+			t.add(new FileType(".indd",Main.spritesheet.getSprite(496, 32, 16, 16)));
+			t.add(new FileType(".ejs", Main.spritesheet.getSprite(512, 32, 16, 16)));
+			t.add(new FileType(".ld", Main.spritesheet.getSprite (528, 32, 16, 16)));
+			t.add(new FileType(".lock",Main.spritesheet.getSprite(544, 32, 16, 16)));
+			t.add(new FileType(".ini", Main.spritesheet.getSprite(560, 32, 16, 16)));
+			t.add(new FileType(".dll", Main.spritesheet.getSprite(576, 32, 16, 16)));
+			t.add(new FileType(".makefile",Main.spritesheet.getSprite(208,32,16,16)));
+			t.add(new FileType(".url", Main.spritesheet.getSprite(608, 32, 16, 16)));
+			t.add(new FileType(".prefs",Main.spritesheet.getSprite(688,32, 16, 16)));
+			t.add(new FileType(".classpath",Main.spritesheet.getSprite(704,32,16,16)));
+			t.add(new FileType(".project",Main.spritesheet.getSprite(720,32,16,16)));
+			t.add(new FileType(".csproj",Main.spritesheet.getSprite(768,32,16,16)));
+			t.add(new FileType(Main.SETTINGS_FILE_EXTENSION, Main.spritesheet.getSprite(192,32,16,16)));
+			t.add(new FileType(".rtf", Main.spritesheet.getSprite(784, 32, 16, 16)));
 			
-			types[116] = new FileType(".mp4", Main.spritesheet.getSprite (16, 48, 16, 16));
-			types[117] = new FileType(".wmv", Main.spritesheet.getSprite (16, 48, 16, 16));
-			types[118] = new FileType(".avi", Main.spritesheet.getSprite (16, 48, 16, 16));
+			t.add(new FileType(".png", Main.spritesheet.getSprite  (0, 48, 16, 16)));
+			t.add(new FileType(".jpg", Main.spritesheet.getSprite  (0, 48, 16, 16)));
+			t.add(new FileType(".jpeg", Main.spritesheet.getSprite (0, 48, 16, 16)));
+			t.add(new FileType(".gif", Main.spritesheet.getSprite  (0, 48, 16, 16)));
+			t.add(new FileType(".bmp", Main.spritesheet.getSprite  (0, 48, 16, 16)));
+			t.add(new FileType(".ico", Main.spritesheet.getSprite (64, 48, 16, 16)));
+			t.add(new FileType(".webp", Main.spritesheet.getSprite (0, 48, 16, 16)));
 			
-			types[119] = new FileType(".wav", Main.spritesheet.getSprite (32, 48, 16, 16));
-			types[120] = new FileType(".mp3", Main.spritesheet.getSprite (32, 48, 16, 16));
-			types[121] = new FileType(".ogg", Main.spritesheet.getSprite (32, 48, 16, 16));
+			t.add(new FileType(".mp4", Main.spritesheet.getSprite (16, 48, 16, 16)));
+			t.add(new FileType(".wmv", Main.spritesheet.getSprite (16, 48, 16, 16)));
+			t.add(new FileType(".avi", Main.spritesheet.getSprite (16, 48, 16, 16)));
 			
-			types[122] = new FileType(".otf", Main.spritesheet.getSprite (48, 48, 16, 16));
-			types[123] = new FileType(".ttf", Main.spritesheet.getSprite (48, 48, 16, 16));
-			types[124] = new FileType(".woff",Main.spritesheet.getSprite (48, 48, 16, 16));
-			types[125] = new FileType(".woff2",Main.spritesheet.getSprite(48, 48, 16, 16));
+			t.add(new FileType(".wav", Main.spritesheet.getSprite (32, 48, 16, 16)));
+			t.add(new FileType(".mp3", Main.spritesheet.getSprite (32, 48, 16, 16)));
+			t.add(new FileType(".ogg", Main.spritesheet.getSprite (32, 48, 16, 16)));
 			
-			types[126] = new FileType(".zip", Main.spritesheet.getSprite(288, 32, 16, 16));
-			types[127] = new FileType(".gz",  Main.spritesheet.getSprite(288, 32, 16, 16));
-			types[128] = new FileType(".rar", Main.spritesheet.getSprite(288, 32, 16, 16));
-			types[129] = new FileType(".7z", Main.spritesheet.getSprite (288, 32, 16, 16));
+			t.add(new FileType(".otf", Main.spritesheet.getSprite (48, 48, 16, 16)));
+			t.add(new FileType(".ttf", Main.spritesheet.getSprite (48, 48, 16, 16)));
+			t.add(new FileType(".woff",Main.spritesheet.getSprite (48, 48, 16, 16)));
+			t.add(new FileType(".woff2",Main.spritesheet.getSprite(48, 48, 16, 16)));
+			
+			t.add(new FileType(".zip", Main.spritesheet.getSprite(288, 32, 16, 16)));
+			t.add(new FileType(".gz",  Main.spritesheet.getSprite(288, 32, 16, 16)));
+			t.add(new FileType(".rar", Main.spritesheet.getSprite(288, 32, 16, 16)));
+			t.add(new FileType(".7z", Main.spritesheet.getSprite (288, 32, 16, 16)));
 		
-			types[130] = new FileType(".bin", Main.spritesheet.getSprite(304, 32, 16, 16));
-			types[131] = new FileType(".img", Main.spritesheet.getSprite(640, 32, 16, 16));
-			types[132] = new FileType(".iso", Main.spritesheet.getSprite(640, 32, 16, 16));
-			types[133] = new FileType(".flp", Main.spritesheet.getSprite(656, 32, 16, 16));
-			types[134] = new FileType(".o",  Main.spritesheet.getSprite (672, 32, 16, 16));
-			types[135] = new FileType(".out", Main.spritesheet.getSprite(672, 32, 16, 16));
-			types[136] = new FileType(".obj", Main.spritesheet.getSprite(672, 32, 16, 16));
+			t.add(new FileType(".bin", Main.spritesheet.getSprite(304, 32, 16, 16)));
+			t.add(new FileType(".img", Main.spritesheet.getSprite(640, 32, 16, 16)));
+			t.add(new FileType(".iso", Main.spritesheet.getSprite(640, 32, 16, 16)));
+			t.add(new FileType(".flp", Main.spritesheet.getSprite(656, 32, 16, 16)));
+			t.add(new FileType(".o",  Main.spritesheet.getSprite (672, 32, 16, 16)));
+			t.add(new FileType(".out", Main.spritesheet.getSprite(672, 32, 16, 16)));
+			t.add(new FileType(".obj", Main.spritesheet.getSprite(672, 32, 16, 16)));
 			
 			// Specials
 			
-			types[137] = new FileType("makefile",Main.spritesheet.getSprite(208, 32, 16, 16));
-			types[138] = new FileType("dockerfile",Main.spritesheet.getSprite(256,32,16, 16));
-			types[139] = new FileType("license", Main.spritesheet.getSprite(336, 32, 16, 16));
-			types[140] = new FileType("authors", Main.spritesheet.getSprite(624, 32, 16, 16));
-			types[141] = new FileType("gitignore", Main.spritesheet.getSprite (240,32,16,16));
+			t.add(new FileType("makefile",Main.spritesheet.getSprite(208, 32, 16, 16)));
+			t.add(new FileType("dockerfile",Main.spritesheet.getSprite(256,32,16, 16)));
+			t.add(new FileType("license", Main.spritesheet.getSprite(336, 32, 16, 16)));
+			t.add(new FileType("authors", Main.spritesheet.getSprite(624, 32, 16, 16)));
+			t.add(new FileType("gitignore", Main.spritesheet.getSprite (240,32,16,16)));
+			
+			types = t.toArray(new FileType[t.size()]);
 	}
 
 	public static <T> T[] initArray(T[] arr) {
@@ -1439,30 +1289,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		
 		return false;
 	}
-
-	/**
-	 * 
-	 * @param format - O formato
-	 * @return true se não é suportado, false se é suportado.
-	 * 
-	 *         deprecated Use o isBinary(String) do CodeEditor. Acesse-o por
-	 *         CodeEditor.isBinary(string).
-	 *
-	 *         Deprecated public static boolean formatNotSupported(String format) {
-	 *         return format.equalsIgnoreCase(".png") ||
-	 *         format.equalsIgnoreCase(".jpg") || // provavelmente fazer isso com
-	 *         excel e mais coisas do word format.equalsIgnoreCase(".jpeg")||
-	 *         format.equalsIgnoreCase(".png") || format.equalsIgnoreCase(".ico") ||
-	 *         format.equalsIgnoreCase(".gif") || format.equalsIgnoreCase(".bmp") ||
-	 *         format.equalsIgnoreCase(".wav") || format.equalsIgnoreCase(".mp3") ||
-	 *         format.equalsIgnoreCase(".ogg") || format.equalsIgnoreCase(".mp4") ||
-	 *         format.equalsIgnoreCase(".wmv") || format.equalsIgnoreCase(".avi") ||
-	 *         format.equalsIgnoreCase(".exe") || format.equalsIgnoreCase(".pdf") ||
-	 *         format.equalsIgnoreCase(".ttf") || format.equalsIgnoreCase(".pdf") ||
-	 *         format.equalsIgnoreCase(".pdf") || format.equalsIgnoreCase(".pdf") ||
-	 *         format.equalsIgnoreCase(".webp"); }
-	 */
-
+	
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added
 				|| MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10,
