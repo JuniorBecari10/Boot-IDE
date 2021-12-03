@@ -75,7 +75,7 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		String ext = ListableFile.getFileExtension(regent.getRegent());
 		
-		if (CodeEditor.isBinary(ext)) {
+		if (CodeEditor.isBinary(ext) || Main.editor.readMode != FileReadMode.NORMAL) {
 			isReadOnly = true;
 			
 			Main.editor.isReadOnly = true;
@@ -86,7 +86,7 @@ public class Tab extends IDEComponent implements Serializable {
 				drawW = 0;
 				
 				while (drawW < WIDTH) {
-					drawW += animSpeed;;
+					drawW += animSpeed;
 					
 					button.setX((x + Main.editor.tabScr + drawW) - 20);
 					

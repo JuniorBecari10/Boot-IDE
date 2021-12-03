@@ -18,6 +18,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
+import ide.codeeditor.FileReadMode;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
@@ -81,7 +82,7 @@ public class CommandTerminal extends IDEComponent {
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
-			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code",
+			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode",
 			"gendiv str:class_name", "gensnippet str:type", //"emmet str:expression",
 			"lorem int:num_words", "ordertab int:tab_from int:tab_to", //"openfile str:file",
 			"setcursorpos int:x int:y",
@@ -97,7 +98,7 @@ public class CommandTerminal extends IDEComponent {
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab", "setexplorerdrag",
-			"gotoline", "setfontsize", "insertchar",
+			"gotoline", "setfontsize", "insertchar", "setreadmode",
 			"gendiv", "gensnippet", //"emmet",
 			"lorem", "ordertab", //"openfile",
 			"setcursorpos",
@@ -835,6 +836,19 @@ public class CommandTerminal extends IDEComponent {
 				
 				ListableFile.addTab(ListableFile.search(f, new File(Explorer.getScopePath())), true);
 				break;*/
+			
+			case "setreadmode":
+				try {
+					FileReadMode old = Main.editor.readMode;
+					
+					Main.editor.readMode = FileReadMode.valueOf(args[0].toUpperCase());
+					
+					Main.editor.lines = Main.editor.readFile(Main.editor.editing.getRegent().getRegent());
+					
+					if (Main.editor.readMode == FileReadMode.NORMAL && Main.editor.isReadOnly && !CodeEditor.isBinary(ListableFile.getFileExtension(Main.editor.editing.getRegent().getRegent()))) runCommand("togglereadonly");
+					if (Main.editor.readMode != FileReadMode.NORMAL && !Main.editor.isReadOnly) runCommand("togglereadonly");
+				} catch (Exception e) {} // argumento errado
+				break;
 				
 			case "gotoline":
 				if (Main.editor.editing == null) break;
