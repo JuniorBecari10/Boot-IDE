@@ -393,14 +393,14 @@ public class CodeEditor extends IDEComponent {
 			".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".tsx", ".go", ".r", ".pl", ".t", ".jl", ".has", ".hs",
 			".fs", ".coffee", ".m", ".mm", ".pas", ".lpr", ".pp", ".scala", ".dart", ".zig", ".html", ".xhtml", ".htm",
 			".css", ".scss", ".xml", ".json", ".jsonc", ".md", ".markdown", ".txt", ".log", ".pdf", ".jar", ".svg",
-			".urna", ".save", ".conf", ".makefile", ".mk", ".mak", ".make", ".sh", ".gitignore", ".dockerfile",
+			".urna", ".save", ".conf", ".makefile", ".mk", ".mak", ".make", ".sh", ".bash_profile", ".bashrc", ".gitignore", ".dockerfile",
 			".class", ".zip", ".bin", ".license", ".cfg", ".config", ".jsx", ".ejs", ".ld", ".lock", ".ini", ".dll",
 			".url", ".authors", ".img", ".flp", ".prefs", ".classpath", ".project", ".sln", ".JAVA", ".C", ".CPP",
 			".CC", ".CS", ".PY", ".PYX", ".IPYNB", ".JS", ".BAT", ".CMD", ".COM", ".PS1", ".H", ".HH", ".HPP", ".HXX",
 			".ASM", ".S", ".LUA", ".SQL", ".SWIFT", ".RS", ".PHP", ".KT", ".VUE", ".RB", ".INO", ".TS", ".TSX", ".GO",
 			".R", ".PL", ".T", ".JL", ".HAS", ".HS", ".FS", ".COFFEE", ".M", ".MM", ".PAS", ".LPR", ".PP", ".SCALA",
 			".DART", ".ZIG", ".HTML", ".XHTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT",
-			".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAK", ".MAKE", ".SH",
+			".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAK", ".MAKE", ".SH", ".BASH_PROFILE", ".BASHRC",
 			".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD",
 			".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP", ".PREFS", ".CLASSPATH", ".PROJECT", ".SLN" };
 
@@ -593,7 +593,7 @@ public class CodeEditor extends IDEComponent {
 			"while", "async", "await", "dyn", "abstract", "become", "box", "do", "final", "macro", "override", "priv",
 			"typeof", "unsized", "virtual", "yield", "try", "union", "'static", "dyn" };
 
-	public static final String[] shKeys = { "pwd", "cd", "ls", "cat", "cp", "mv", "mkdir", "rmdir", "rm", "touch",
+	public static final String[] shKeys = { "pwd", "cd", "ls", "cat", "cp", "mv", "mkdir", "rmdir", "rm", "touch", "case",
 			"locate", "find", "grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs",
 			"kill", "ping", "wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd",
 			"userdel", "clear", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc",
@@ -1055,7 +1055,9 @@ public class CodeEditor extends IDEComponent {
 		case ".sh" -> shKeys;
 		case ".ejs" -> cssTags;
 		case ".ld" -> ldKeys;
-
+		case ".bashrc" -> shKeys;
+		case ".bash_profile" -> shKeys;
+		
 		default -> null;
 		};
 	}
@@ -1306,6 +1308,8 @@ public class CodeEditor extends IDEComponent {
 		case ".makefile" -> "Makefile";
 		case ".url" -> minMode ? "URL" : "Uniform Resource Locator - URL";
 		case ".prefs" -> (Main.lang == Language.PORT ? "Arquivo de Preferências" : "Preferences File");
+		case ".bashrc" -> minMode ? "Bashrc" : (Main.lang == Language.PORT ? "Arquivo de Configurações Bash" : "Bash Configuration File");
+		case ".bash_profile" -> (Main.lang == Language.PORT ? "Perfil Bash" : "Bash Profile");
 
 		case ".png" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		case ".jpg" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
@@ -1430,7 +1434,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		
-		if (ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh")
+		if (ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc")
 					|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1")) {
 			indxs = findWord(new String(chars), ":"); // depois de <palavra>
 
@@ -1605,7 +1609,7 @@ public class CodeEditor extends IDEComponent {
 			}
 
 			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm")
-					|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh")
+					|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc")
 					|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1"))) {
 				for (String s : syms) {
 					indxs = findWord(new String(chars), s); // antes de <palavra>
@@ -1715,7 +1719,7 @@ public class CodeEditor extends IDEComponent {
 				}
 
 				if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd")
-						|| ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
+						|| ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc"))) {
 					indxs = findWord(new String(chars), ")");
 
 					for (Integer i : indxs) {
@@ -1746,7 +1750,7 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 
-				if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com")
+				if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
 						|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1"))) {
 					indxs = findWord(new String(chars), "->");
 
@@ -1776,7 +1780,7 @@ public class CodeEditor extends IDEComponent {
 
 		if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm")
 				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")
-				|| ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com")
+				|| ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
 				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock"))) {
 			for (String s : cll) {
 				indxs = findWord(new String(chars), s);
@@ -1821,7 +1825,7 @@ public class CodeEditor extends IDEComponent {
 							|| editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile")
 							|| ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com")
 							|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1")
-							|| ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".project")
+							|| ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".project")
 							|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
 							|| ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml")
 							|| ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))
@@ -2048,7 +2052,7 @@ public class CodeEditor extends IDEComponent {
 								|| editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile")
 								|| ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com")
 								|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1")
-								|| ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".project")
+								|| ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".project")
 								|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
 								|| ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml")
 								|| ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))
@@ -3253,6 +3257,8 @@ public class CodeEditor extends IDEComponent {
 			break;
 
 		case ".sh":
+		case ".bashrc":
+		case ".bash_profile":
 			for (String s : shKeys) { // colorir keywordss
 				indxs = findWord(new String(chars), s);
 
@@ -3573,7 +3579,7 @@ public class CodeEditor extends IDEComponent {
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
 
 			if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd")
-					|| ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh"))) {
+					|| ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc"))) {
 
 				// primeira vez usando labels!
 				methods: if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
@@ -3757,7 +3763,7 @@ public class CodeEditor extends IDEComponent {
 								|| ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs"))) && isCssPart))
 						&& (s == "*"))
 					continue;
-				if ((ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".com")
+				if ((ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
 						|| ext.equalsIgnoreCase(".cmd")) && (s == "+" || s == "@"))
 					continue;
 				if ((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".html")
@@ -4618,6 +4624,8 @@ public class CodeEditor extends IDEComponent {
 		case ".coffee":
 		case ".make":
 		case ".sh":
+		case ".bash_profile":
+		case ".bashrc":
 		case ".gitignore":
 		case ".dockerfile":
 		case ".config":
@@ -7331,7 +7339,7 @@ public class CodeEditor extends IDEComponent {
 						|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".com")
 						|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".cmd"))
 					editing.execute("run");
-				else if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".sh"))
+				else if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".sh") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".bash_profile") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".bashrc"))
 					editing.execute("runbash");
 
 				return;
