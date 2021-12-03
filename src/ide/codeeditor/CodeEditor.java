@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.Thread.State;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -102,6 +103,7 @@ public class CodeEditor extends IDEComponent {
 	public int scrY = 0;
 
 	public Direction directionStarted = Direction.NONE;
+	public FileReadMode readMode = FileReadMode.NORMAL;
 
 	private int realcx, realcy; // c = cursor
 	public int drawcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX,
@@ -860,6 +862,24 @@ public class CodeEditor extends IDEComponent {
 
 		return -1;
 	}
+	
+	public static String[] splitByNCharacters(String s, int n) {
+		List<String> strings = new ArrayList<String>();
+		int index = 0;
+		
+		while (index < s.length()) {
+		    strings.add(s.substring(index, Math.min(index + n, s.length())));
+		    index += n;
+		}
+		
+		String[] arr = new String[strings.size()];
+		
+		int i = 0;
+		for (String str : strings)
+			arr[i++] = str;
+		
+		return arr;
+	}
 
 	public static <T> List<T> removeDuplicates(List<T> list) {
 		return new ArrayList<>(new LinkedHashSet<>(list));
@@ -890,6 +910,47 @@ public class CodeEditor extends IDEComponent {
 
 		if (l.isEmpty())
 			l.add("");
+		
+		switch (readMode) {
+			case ASSEMBLY: // ainda não
+				break;
+				
+			case BINARY:
+				l.clear();
+				codeType = "Binary";
+				
+				String raw = convertFileToBinary(file.toPath());
+				String[] lines = splitByNCharacters(raw, 30);
+				
+				for (String s : lines)
+					l.add(s);
+				
+				break;
+				
+			case HEX:
+				l.clear();
+				codeType = "Hex";
+				
+				raw = convertFileToHex(file.toPath());
+				lines = raw.split("\n");
+				
+				for (String s : lines) {
+					StringBuilder b = new StringBuilder(s);
+					b.delete(45, 59);
+					
+					s = b.toString();
+					
+					l.add(s);
+				}
+				
+				break;
+			case NORMAL:
+				break;
+				
+			default:
+				break;
+				
+		}
 
 		List<IDELine> ls = new ArrayList<>();
 
@@ -938,6 +999,68 @@ public class CodeEditor extends IDEComponent {
 
 		return ls;
 	}
+	
+	public static String convertFileToBinary(Path path) {
+		StringBuilder bl = new StringBuilder();
+		
+		try (InputStream str = Files.newInputStream(path)) {
+			int c;
+			
+			while ((c = str.read()) != -1)
+				bl.append(Integer.toBinaryString(c));
+			
+		} catch (IOException e) {}
+		
+		return bl.toString();
+	}
+	
+	public static String convertFileToHex(Path path) throws IOException { // Fonte: mkyong.com
+        if (Files.notExists(path)) {
+            throw new IllegalArgumentException("File not found! " + path);
+        }
+
+        StringBuilder result = new StringBuilder();
+        StringBuilder hex = new StringBuilder();
+        StringBuilder input = new StringBuilder();
+
+        int count = 0;
+        int value;
+
+        // path to inputstream....
+        try (InputStream inputStream = Files.newInputStream(path)) {
+
+            while ((value = inputStream.read()) != -1) {
+
+                hex.append(String.format("%02X ", value));
+
+                //If the character is unable to convert, just prints a dot "."
+                if (!Character.isISOControl(value)) {
+                    input.append((char) value);
+                } else {
+                    input.append("."); // unknown
+                }
+
+                // After 15 bytes, reset everything for formatting purpose
+                if (count == 14) {
+                    result.append(String.format("%-60s | %s%n", hex, input));
+                    hex.setLength(0);
+                    input.setLength(0);
+                    count = 0;
+                } else {
+                    count++;
+                }
+
+            }
+
+            // if the count>0, meaning there is remaining content
+            if (count > 0) {
+                result.append(String.format("%-60s | %s%n", hex, input));
+            }
+
+        }
+
+        return result.toString();
+    }
 
 	public static boolean isNumber(char c) {
 		return c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9'
