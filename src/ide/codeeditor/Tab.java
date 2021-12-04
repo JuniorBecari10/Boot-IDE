@@ -260,7 +260,7 @@ public class Tab extends IDEComponent implements Serializable {
 	 * Salvar Arquivo
 	 */
 	public void save() {
-		if (isReadOnly || Main.editor.lines.isEmpty() || Main.editor.lines == null) return;
+		if (isReadOnly || Main.editor.lines.isEmpty() || Main.editor.lines == null || Main.editor.readMode != FileReadMode.NORMAL) return;
 		
 		try {
 			Charset ch = Main.editor.codeType.equals("UTF-8") ? StandardCharsets.UTF_8 : StandardCharsets.ISO_8859_1;

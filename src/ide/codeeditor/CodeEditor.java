@@ -719,7 +719,6 @@ public class CodeEditor extends IDEComponent {
 		new Thread() {
 			public void run() { // 25 pra frente com o explorer desligado, isso é uma gambiarrinha viu
 				if (!alternateTabsMode) {
-
 					int offset = CommandTerminal.expOff ? Main.editor.getX() : 0;
 					int lcx = !CommandTerminal.expOff ? 0 : Main.editor.getX();
 
@@ -727,6 +726,8 @@ public class CodeEditor extends IDEComponent {
 					int lcmy = my;
 
 					while (true) {
+						if (Main.editor == null) continue;
+						
 						lcmy = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1)
 								+ (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
 						lcmx = (((MouseInput.getMouseX() - (Main.editor.getX() + 40)) / FONT_SIZE)
@@ -832,17 +833,6 @@ public class CodeEditor extends IDEComponent {
 		cursorThread.start();
 	}
 
-	/**
-	 * Retorna true ou false se o char c é um dos permitidos para colorir keywords.
-	 * 
-	 * @param c - o char
-	 * @return true se sim, false se não.
-	 */
-	/*
-	 * public static boolean isSpecialPermitted(char c) { return c == '_' || c ==
-	 * '[' || c == ']'; }
-	 */
-
 	public boolean hovered() {
 		Rectangle mouse = new Rectangle(MouseInput.getMouseX(), MouseInput.getMouseY(), 1, 1);
 		Rectangle comp = new Rectangle(x, MIN_Y, width, height);
@@ -912,8 +902,8 @@ public class CodeEditor extends IDEComponent {
 			l.add("");
 		
 		switch (readMode) {
-			case ASSEMBLY: // ainda não
-				break;
+			/*case ASSEMBLY: // ainda não
+				break;*/
 				
 			case BINARY:
 				l.clear();
@@ -5462,6 +5452,35 @@ public class CodeEditor extends IDEComponent {
 
 		return fs;
 	}
+	
+	public List<IDEFont> colorOtherModes(String ext, char[] chars, List<IDEFont> fs) {
+		List<Integer> indxs = new ArrayList<>();
+		
+		switch (readMode) {
+		/*case ASSEMBLY:
+			break;*/
+		
+		case BINARY:
+			fs = color(0, fs.size(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+			break;
+			
+		case HEX:
+			indxs = findWord(new String(chars), "|");
+			
+			fs = color(0, indxs.get(0) - 1, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+			fs = color(indxs.get(0), indxs.get(0) + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
+			break;
+			
+		case NORMAL: // não deve cair aqui
+			break;
+			
+		default:
+			break; // nem aqui
+		
+		}
+		
+		return fs;
+	}
 
 	public void resetHTML(char[] chars) {
 		List<Integer> indxs = new ArrayList<>();
@@ -5500,7 +5519,7 @@ public class CodeEditor extends IDEComponent {
 
 		for (int i = 0; i < chars.length; i++)
 			fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
-
+		
 		if (ListableFile.fileHasExtension(ext))
 			extType = getLowerBarFileName(ext);
 		else
@@ -5511,6 +5530,12 @@ public class CodeEditor extends IDEComponent {
 		
 		if (!ListableFile.fileHasExtension(ext))
 			ext = editing.getRegent().getRegent().getName();
+		
+		if (readMode != FileReadMode.NORMAL) {
+			fs = colorOtherModes(ext, chars, fs);
+			
+			return fs;
+		}
 		
 		fs = colorNoExtensions(ext, chars, fs);
 

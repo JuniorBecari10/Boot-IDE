@@ -802,6 +802,8 @@ public class CommandTerminal extends IDEComponent {
 			case "togglereadonly":
 				if (Main.editor.editing == null) break;
 				
+				if (Main.editor.isReadOnly && (Main.editor.readMode != FileReadMode.NORMAL && typedFlag)) break;
+				
 				runCommand("deselect");
 				
 				Main.editor.isReadOnly ^= true;
@@ -839,8 +841,6 @@ public class CommandTerminal extends IDEComponent {
 			
 			case "setreadmode":
 				try {
-					FileReadMode old = Main.editor.readMode;
-					
 					Main.editor.readMode = FileReadMode.valueOf(args[0].toUpperCase());
 					
 					Main.editor.lines = Main.editor.readFile(Main.editor.editing.getRegent().getRegent());
