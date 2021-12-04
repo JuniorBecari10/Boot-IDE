@@ -6665,34 +6665,36 @@ public class CodeEditor extends IDEComponent {
 		
 		// Set Lower Bar values
 		
-		switch (readMode) {
-		case BINARY:
-			codeType = minMode ? "Bin" : (Main.lang == Language.PORT ? "Binário" : "Binary");
-			break;
+		if (editing != null || editing.getRegent() != null) {
+			switch (readMode) {
+			case BINARY:
+				codeType = minMode ? "Bin" : (Main.lang == Language.PORT ? "Binário" : "Binary");
+				break;
+				
+			case HEX:
+				codeType = "Hex";
+				break;
+			/*case NORMAL:
+				break;*/
+			default:
+				break;
+			}
 			
-		case HEX:
-			codeType = "Hex";
-			break;
-		/*case NORMAL:
-			break;*/
-		default:
-			break;
-		}
-		
-		if (ListableFile.fileHasExtension(ListableFile.getFileExtension(editing.getRegent().getRegent())))
-			extType = getLowerBarFileName(ListableFile.getFileExtension(editing.getRegent().getRegent()));
-		else
-			extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
-		
-		if ((isReadOnly || editing.isReadOnly) && !extType.contains("(" + Texts.readOnly + ")"))
-			extType += " (" + Texts.readOnly + ")";
-		
-		if (ComponentInput.windowResized() && editing != null) {
 			if (ListableFile.fileHasExtension(ListableFile.getFileExtension(editing.getRegent().getRegent())))
 				extType = getLowerBarFileName(ListableFile.getFileExtension(editing.getRegent().getRegent()));
 			else
 				extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
-		}
+			
+			if ((isReadOnly || editing.isReadOnly) && !extType.contains("(" + Texts.readOnly + ")"))
+				extType += " (" + Texts.readOnly + ")";
+			
+			if (ComponentInput.windowResized() && editing != null) {
+				if (ListableFile.fileHasExtension(ListableFile.getFileExtension(editing.getRegent().getRegent())))
+					extType = getLowerBarFileName(ListableFile.getFileExtension(editing.getRegent().getRegent()));
+				else
+					extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
+			}
+	}
 				
 		width = Main.screen.getWidth() - x;
 
@@ -6770,8 +6772,10 @@ public class CodeEditor extends IDEComponent {
 
 		if (MouseInput.isLeftPressed()
 				|| (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() != KeyEvent.VK_BACK_SPACE)
-						&& ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2)))
+						&& ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2) && !RightClickOption.anyRightClickOptionHovered())) {
+			System.out.println("a");
 			CommandTerminal.runCommand("deselect");
+		}
 
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;
@@ -6852,42 +6856,44 @@ public class CodeEditor extends IDEComponent {
 			if (MouseInput.isMouseRolling()) {
 				new Thread() {
 					public void run() {
-						if (RightClickOption.isAutoCompleteActive()) {
-							if (KeyInput.isControlDown() && KeyInput.isShiftDown()) {
-								if (MouseInput.wheelUp() && autocompletes.get(0).getY() + 30 < (y + height) - 30) // TODO
-																													// aaaaaaaaaa
-									autocompletescroll -= 30;
-								else if (MouseInput.wheelDown()
-										&& autocompletes.get(autocompletes.size() - 1).getY() > MIN_Y)
-									autocompletescroll += 30;
+						if (Main.editor.hovered()) {
+							if (RightClickOption.isAutoCompleteActive()) {
+								if (KeyInput.isControlDown() && KeyInput.isShiftDown()) {
+									if (MouseInput.wheelUp() && autocompletes.get(0).getY() + 30 < (y + height) - 30) // TODO
+																														// aaaaaaaaaa
+										autocompletescroll -= 30;
+									else if (MouseInput.wheelDown()
+											&& autocompletes.get(autocompletes.size() - 1).getY() > MIN_Y)
+										autocompletescroll += 30;
+								}
 							}
-						}
-
-						if (KeyInput.isShiftDown() && !KeyInput.isControlDown()) { // isso não pode acontecer com o x por causa dos autocompletes
-							if (MouseInput.wheelUp() && scrX > 0)
-								scrX -= FONT_SIZE * 3;
-							else if (MouseInput.wheelDown())
-								scrX += FONT_SIZE * 3;
-						}
-
-						if (!KeyInput.isShiftDown()) {
-							if (!KeyInput.isControlDown()) {
-								if (MouseInput.wheelUp() && scrY > 0)
-									scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 3;
-								else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size()
-										* (FONT_SIZE + (FONT_SIZE / 4)))
-									scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+	
+							if (KeyInput.isShiftDown() && !KeyInput.isControlDown()) { // isso não pode acontecer com o x por causa dos autocompletes
+								if (MouseInput.wheelUp() && scrX > 0)
+									scrX -= FONT_SIZE * 3;
+								else if (MouseInput.wheelDown())
+									scrX += FONT_SIZE * 3;
 							}
-							else {
-								if (MouseInput.wheelUp() && scrY > 0)
-									scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 6;
-								else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size()
-										* (FONT_SIZE + (FONT_SIZE / 4)))
-									scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 6;
+	
+							if (!KeyInput.isShiftDown()) {
+								if (!KeyInput.isControlDown()) {
+									if (MouseInput.wheelUp() && scrY > 0)
+										scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+									else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size()
+											* (FONT_SIZE + (FONT_SIZE / 4)))
+										scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+								}
+								else {
+									if (MouseInput.wheelUp() && scrY > 0)
+										scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 6;
+									else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size()
+											* (FONT_SIZE + (FONT_SIZE / 4)))
+										scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 6;
+								}
 							}
+	
+							return;
 						}
-
-						return;
 					}
 				}.start();
 			}
@@ -6907,18 +6913,49 @@ public class CodeEditor extends IDEComponent {
 
 		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered())) && !alternateTabsMode) {
 			int width = Main.lang == Language.PORT ? 550 : 510;
-
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), width, Texts.openCmd,
-					(s) -> execute(s), "cmd");
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, width,
-					Texts.openTerminal, (s) -> execute(s), "term");
+			List<RightClickOption> list = new ArrayList<>();
+			
+			list.add(new RightClickOption(0, 0, width, Texts.openCmd, (s) -> execute(s), "cmd"));
+			list.add(new RightClickOption(0, 0, width, Texts.openTerminal, (s) -> execute(s), "term"));
+			
+			if (Main.baseFolder != null) {
+				list.add(new RightClickOption(0, 0, width, Texts.openExplorer, (s) -> execute(s), "sysexp"));
+				list.add(new RightClickOption(0, 0, width, Texts.setBaseFolder, (s) -> execute(s), "setbase"));
+				
+				if (editing != null) {
+					list.add(new RightClickOption(0, 0, width, Texts.openDefault, (s) -> execute(s), "opendef"));
+					
+					list.add(new RightClickOption(0, 0, width, Texts.open + " " + Texts.searchReplace, (s) -> execute(s), "searchrep"));
+					list.add(new RightClickOption(0, 0, width, Texts.selectLine, (s) -> CommandTerminal.runCommand(s), "selectline"));
+					list.add(new RightClickOption(0, 0, width, Texts.selectAll, (s) -> CommandTerminal.runCommand(s), "selectall"));
+					
+					if (!isReadOnly)
+						list.add(new RightClickOption(0, 0, width, Texts.save, (s) -> execute(s), "save"));
+					
+					if (selecting) {
+						list.add(new RightClickOption(0, 0, width, Texts.deselect, (s) -> CommandTerminal.runCommand(s), "deselect"));
+						list.add(new RightClickOption(0, 0, width, Texts.copy, (s) -> CommandTerminal.runCommand(s), "copy"));
+					}
+					
+					if (!isReadOnly) {
+						list.add(new RightClickOption(0, 0, width, Texts.paste, (s) -> CommandTerminal.runCommand(s), "paste"));
+						
+						if (selecting) {
+							list.add(new RightClickOption(0, 0, width, Texts.cut, (s) -> CommandTerminal.runCommand(s), "cut"));
+							list.add(new RightClickOption(0, 0, width, Texts.delete, (s) -> CommandTerminal.runCommand(s), "del"));
+						}
+					}
+				}
+			}
+			
+			IDEComponent.addRightClickOptions(MouseInput.getMouseX(), MouseInput.getMouseY(), list.toArray(new RightClickOption[list.size()]));
+			
+			/*IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), width, Texts.openCmd, (s) -> execute(s), "cmd");
+			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, width, Texts.openTerminal, (s) -> execute(s), "term");
 
 			if (Main.baseFolder != null) {
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, width,
-						Texts.openExplorer, (s) -> execute(s), "sysexp");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(),
-						MouseInput.getMouseY() + (isReadOnly ? 90 : (editing != null ? (selecting ? 360 : 240) : 90)),
-						width, Texts.setBaseFolder, (s) -> execute(s), "setbase");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, width, Texts.openExplorer, (s) -> execute(s), "sysexp");
+				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (isReadOnly ? 90 : (editing != null ? (selecting ? 360 : 240) : 90)), width, Texts.setBaseFolder, (s) -> execute(s), "setbase");
 			}
 
 			if (!isReadOnly) {
@@ -6955,10 +6992,14 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 
-			if (selecting && editing != null)
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(),
-						isReadOnly ? MouseInput.getMouseY() + 120 : MouseInput.getMouseY() + 330, width, Texts.deselect,
-						(s) -> CommandTerminal.runCommand(s), "deselect");
+			if (editing != null) {
+				if (selecting) {
+					IDEComponent.addRightClickOption(MouseInput.getMouseX(),
+							isReadOnly ? MouseInput.getMouseY() + 120 : MouseInput.getMouseY() + 330, width, Texts.deselect,
+									(s) -> CommandTerminal.runCommand(s), "deselect");
+				}
+			}
+		}*/
 		}
 
 		/*

@@ -79,6 +79,17 @@ public abstract class IDEComponent implements Tickable, Renderable, Clickable { 
     @Override
     public void tick() {}
     
+    protected static final void addRightClickOptions(int initialX, int initialY, RightClickOption... options) {
+    	if (RightClickOption.isRightClickActive()) return;
+    	
+    	for (int i = 0; i < options.length; i++) {
+    		options[i].setX(initialX);
+    		options[i].setY(initialY + i * RightClickOption.HEIGHT);
+    		
+    		toAdd.add(options[i]);
+    	}
+    }
+    
     protected static final void addRightClickOption(int x, int y, int width, String text, ExecuteCommand command, String clickArg) {
     	if (RightClickOption.isRightClickActive()) return;
     	

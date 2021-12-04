@@ -24,7 +24,7 @@ public class RightClickOption extends IDEComponent {
 	
 	public boolean isAutoComplete;
 	
-	private static final int HEIGHT = 30;
+	public static final int HEIGHT = 30;
 
 	public RightClickOption(int x, int y, int width, String text, ExecuteCommand command, String clickArg) {
 		super(x, y, width, HEIGHT, null);

@@ -377,7 +377,6 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "selectline":
 				if (Main.editor.editing == null) break;
-				if (Main.editor.isReadOnly) break;
 				
 				int y = Main.editor.cursorY - 1;
 				
@@ -391,8 +390,6 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "selectall":
-				if (Main.editor.isReadOnly) break;
-				
 				Main.editor.index1 = 0;
 				Main.editor.index2 = Main.editor.lines.get(Main.editor.lines.size() - 1).getChars().size();
 				
