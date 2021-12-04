@@ -907,10 +907,24 @@ public class CodeEditor extends IDEComponent {
 				
 			case BINARY:
 				l.clear();
-				codeType = "Binary";
 				
 				String raw = convertFileToBinary(file.toPath());
-				String[] lines = splitByNCharacters(raw, 30);
+				String[] lines = splitByNCharacters(raw, 32);
+				
+				/*for (int i = 0; i < lines.length; i++) {
+					StringBuilder bl = new StringBuilder(lines[i]);
+					
+					int index = 1;
+					
+					while (index < raw.length()) {
+						if (index % 8 == 0) bl.insert(index, ' ');
+						
+						index++;
+					}
+					
+					lines[i] = bl.toString();
+					
+				}*/
 				
 				for (String s : lines)
 					l.add(s);
@@ -919,7 +933,6 @@ public class CodeEditor extends IDEComponent {
 				
 			case HEX:
 				l.clear();
-				codeType = "Hex";
 				
 				raw = convertFileToHex(file.toPath());
 				lines = raw.split("\n");
@@ -5457,7 +5470,7 @@ public class CodeEditor extends IDEComponent {
 		List<Integer> indxs = new ArrayList<>();
 		
 		switch (readMode) {
-		/*case ASSEMBLY:
+		/*case ASSEMBLY: // muito menos aqui
 			break;*/
 		
 		case BINARY:
@@ -6649,7 +6662,31 @@ public class CodeEditor extends IDEComponent {
 		
 		// colocar isso numa variavel constante
 		minMode = width < (selecting ? 800 : 600); // 850 - original
-				
+		
+		// Set Lower Bar values
+		
+		switch (readMode) {
+		case BINARY:
+			codeType = minMode ? "Bin" : (Main.lang == Language.PORT ? "Binário" : "Binary");
+			break;
+			
+		case HEX:
+			codeType = "Hex";
+			break;
+		/*case NORMAL:
+			break;*/
+		default:
+			break;
+		}
+		
+		if (ListableFile.fileHasExtension(ListableFile.getFileExtension(editing.getRegent().getRegent())))
+			extType = getLowerBarFileName(ListableFile.getFileExtension(editing.getRegent().getRegent()));
+		else
+			extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
+		
+		if ((isReadOnly || editing.isReadOnly) && !extType.contains("(" + Texts.readOnly + ")"))
+			extType += " (" + Texts.readOnly + ")";
+		
 		if (ComponentInput.windowResized() && editing != null) {
 			if (ListableFile.fileHasExtension(ListableFile.getFileExtension(editing.getRegent().getRegent())))
 				extType = getLowerBarFileName(ListableFile.getFileExtension(editing.getRegent().getRegent()));

@@ -801,8 +801,7 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "togglereadonly":
 				if (Main.editor.editing == null) break;
-				
-				if (Main.editor.isReadOnly && (Main.editor.readMode != FileReadMode.NORMAL && typedFlag)) break;
+				if (Main.editor.isReadOnly && (Main.editor.readMode != FileReadMode.NORMAL)) break;
 				
 				runCommand("deselect");
 				
