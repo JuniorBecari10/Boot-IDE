@@ -142,8 +142,6 @@ public class CodeEditor extends IDEComponent {
 	public Thread cursorThread;
 	public Animation cursor;
 
-	private boolean alreadyColoredJsonVariable = false;
-
 	// public static boolean putChevronsOnTags = true;
 
 	public int mx;
@@ -1258,8 +1256,8 @@ public class CodeEditor extends IDEComponent {
 		return indexes;
 	}
 
-	public boolean isInside(int index, char ch, String s) {
-		List<Integer> indxs = findWord(s, Character.toString(ch));
+	public boolean isInside(int index, char charLeft, char charRight, String s) {
+		/*List<Integer> indxs = findWord(s, Character.toString(ch));
 
 		boolean foundt = false; // tras
 		boolean foundf = false; // frente
@@ -1289,7 +1287,9 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 
-		return foundt && foundf;
+		return foundt && foundf;*/
+		
+		return howManyBefore(s, index, charLeft) % 2 != 0 && howManyAfter(s, index, charRight) % 2 != 0;
 	}
 	
 	
@@ -4018,23 +4018,31 @@ public class CodeEditor extends IDEComponent {
 
 			if (ext.equalsIgnoreCase(".json") || ext.equalsIgnoreCase(".jsonc")) {
 				indxs = findWord(new String(chars), ":");
-
+				
 				for (Integer i : indxs) {
-					if (alreadyColoredJsonVariable)
-						break;
-
+					if (isInside(i, '\"', '\"', new String(chars))) continue;
+					
 					int c = i;
 					int len = 0;
+					
+					boolean isSymbol = false;
 
-					while (c < chars.length && c + len < chars.length && c > 0 && chars[c] != ' ' && chars[c] != '['
-							&& chars[c] != ']' && chars[c] != ',' && chars[c] != ';') {
+					while (c < chars.length &&
+						   c + len < chars.length &&
+						   c > 0 && chars[c] != ' ' &&
+						   chars[c] != '[' &&
+						   chars[c] != ']' &&
+						   chars[c] != '{' &&
+						   chars[c] != '}' &&
+						   chars[c] != ',' &&
+						   chars[c] != ';') {
 						c--;
 						len++;
+						
+						isSymbol = true;
 					}
 
-					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-
-					alreadyColoredJsonVariable = true;
+					fs = color(isSymbol ? c + 1 : c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				}
 			}
 			if (ext.equalsIgnoreCase(".bf")) {
@@ -5518,8 +5526,6 @@ public class CodeEditor extends IDEComponent {
 		extType = "";
 		foundExt = false;
 
-		alreadyColoredJsonVariable = false;
-
 		/*
 		 * isMultilineCommenting = false;
 		 * 
@@ -6644,7 +6650,7 @@ public class CodeEditor extends IDEComponent {
 		
 		// Set Lower Bar values
 		
-		if (editing != null || editing.getRegent() != null) {
+		if (editing != null && editing.getRegent() != null) {
 			switch (readMode) {
 			case BINARY:
 				codeType = minMode ? "Bin" : (Main.lang == Language.PORT ? "Binário" : "Binary");
@@ -6752,7 +6758,7 @@ public class CodeEditor extends IDEComponent {
 		if (MouseInput.isLeftPressed()
 				|| (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() != KeyEvent.VK_BACK_SPACE)
 						&& ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2) && !RightClickOption.anyRightClickOptionHovered()))
-			CommandTerminal.runCommand("deselect"); // terminar
+			CommandTerminal.runCommand("deselect"); // terminar TODO
 
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;
