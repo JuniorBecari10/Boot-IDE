@@ -4020,7 +4020,7 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), ":");
 				
 				for (Integer i : indxs) {
-					if (isInside(i, '\"', '\"', new String(chars))) continue;
+					if (isInside(i, '\"', '\"', new String(chars)) || isInside(i, '\'', '\'', new String(chars)) || isInside(i, '`', '`', new String(chars))) continue;
 					
 					int c = i;
 					int len = 0;
