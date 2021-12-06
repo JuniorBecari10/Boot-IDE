@@ -6491,29 +6491,8 @@ public class CodeEditor extends IDEComponent {
 			if (a == null)
 				continue;
 
-			String change = a.text; // o cara vai ter problemas no css viu TODO
-
-			/*
-			 * if (putChevronsOnTags && !isCssPart && !isJSPart &&
-			 * (ListableFile.getFileExtension(editing.getRegent().getRegent()).
-			 * equalsIgnoreCase(".html") ||
-			 * ListableFile.getFileExtension(editing.getRegent().getRegent()).
-			 * equalsIgnoreCase(".htm") ||
-			 * ListableFile.getFileExtension(editing.getRegent().getRegent()).
-			 * equalsIgnoreCase(".ejs"))) { // talvez verificar php String tag = change;
-			 * 
-			 * // remove <> - não feito, vc que lute TODO arrumar isso //StringBuilder bl =
-			 * new StringBuilder(new String(toCharArray(lines.get(cursorY -
-			 * 1).getChars())));
-			 * 
-			 * / * if (bl.charAt(cursorX - 1) == '<') { bl.deleteCharAt(cursorX - 1);
-			 * //bl.deleteCharAt(cursorX);
-			 * 
-			 * register(bl, cursorY - 1); }* /
-			 * 
-			 * change = "<" + tag + "></" + tag + ">"; }
-			 */
-
+			String change = a.text;
+			
 			toAddAutoCompletes.add(new RightClickOption(drawcx + (Main.editor.getX() - originalEditorX),
 					(drawcy + FONT_SIZE) + index * height, 330, 32, 16, a.text, getAutoCompleteIcon(a.type),
 					(e) -> makeChanges(e), change));
@@ -6772,10 +6751,8 @@ public class CodeEditor extends IDEComponent {
 
 		if (MouseInput.isLeftPressed()
 				|| (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() != KeyEvent.VK_BACK_SPACE)
-						&& ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2) && !RightClickOption.anyRightClickOptionHovered())) {
-			System.out.println("a");
-			CommandTerminal.runCommand("deselect");
-		}
+						&& ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2) && !RightClickOption.anyRightClickOptionHovered()))
+			CommandTerminal.runCommand("deselect"); // terminar
 
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;
