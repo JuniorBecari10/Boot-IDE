@@ -666,8 +666,6 @@ public class Main implements Runnable, Tickable {
 					
 					Fonts.drawString(t.getRegent().getRegent().getPath().substring(index), (x - 10) + 20, (y - 10) + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					
-					System.out.println(hasConfigFile);
-					
 					if (!hasConfigFile)
 						Fonts.drawString(Texts.noConfigFileLoaded, (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					else

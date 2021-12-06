@@ -92,25 +92,9 @@ public class Explorer extends IDEComponent {
     	if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
     	if (CommandTerminal.expOff) return;
     	
-    	if (Main.baseFolder == null) return;
-    	
-    	if (ListableFile.files.isEmpty() && files.isEmpty()) hoveringListableFile = false;
-    	
-    	if (Main.baseFolder == null || !Main.baseFolder.exists()) {
-    		CommandTerminal.runCommand("closebasefolder");
-    		
-    		return;
-    	}
-    	
-    	if (hovered() && !ListableFile.isListableFileHovered() && !MouseInput.hovered(x + width - 5, y, 10, height))
-    		Main.screen.setCursor(Cursor.getDefaultCursor());
-    	
-    	maxTitleWidth =  (width / 23) + 2;
-    	maxFolderWidth = (width / 15);
-    	maxTextWidth =   (width / 16) + 2;
-    	maxFileCreateWidth = width / 18 + 2;
-    	
     	// Drag
+    	
+    	System.out.println(Main.editor.selecting);
     	
     	if (MouseInput.hovered(x + width - 5, y, 10, height) && !Main.editor.selecting) {
 			Main.screen.setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
@@ -140,6 +124,22 @@ public class Explorer extends IDEComponent {
     		Main.editor.setX(width);
     		Main.editor.setWidth(Main.screen.getWidth());
     	}
+    	
+    	if (ListableFile.files.isEmpty() && files.isEmpty()) hoveringListableFile = false;
+    	
+    	if (Main.baseFolder == null || !Main.baseFolder.exists()) {
+    		CommandTerminal.runCommand("closebasefolder");
+    		
+    		return;
+    	}
+    	
+    	if (hovered() && !ListableFile.isListableFileHovered() && !MouseInput.hovered(x + width - 5, y, 10, height))
+    		Main.screen.setCursor(Cursor.getDefaultCursor());
+    	
+    	maxTitleWidth =  (width / 23) + 2;
+    	maxFolderWidth = (width / 15);
+    	maxTextWidth =   (width / 16) + 2;
+    	maxFileCreateWidth = width / 18 + 2;
     	
     	// Media Queries
     	
@@ -295,6 +295,10 @@ public class Explorer extends IDEComponent {
         g2.setStroke(new BasicStroke(2f));
         g.drawLine(width / 2 - xd, y + 60, width / 2 + x2d, y + 60);
         
+        g.setColor(Colors.explorerLight);
+        g2.setStroke(new BasicStroke(3f));
+        g2.drawLine(width - 1, 0, width - 1, height);
+        
         if (Main.baseFolder == null || baseFolderName == null) return;
         
         Fonts.drawString(baseFolderName, x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 23), g);
@@ -304,10 +308,6 @@ public class Explorer extends IDEComponent {
         g2.drawLine(0, 199, width - 1, 199);
         
         Fonts.drawString(folderPath, x + 10, 170, new IDEFont(Fonts.lighterGrayNormal, 15), g);
-        
-        g.setColor(Colors.explorerLight);
-        g2.setStroke(new BasicStroke(3f));
-        g2.drawLine(width - 1, 0, width - 1, height);
         
         for (ListableFile f : Explorer.files) {
         	if (f.getY() < 200 || f.getY() > Main.screen.getHeight()) continue;

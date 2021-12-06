@@ -4541,10 +4541,10 @@ public class CodeEditor extends IDEComponent {
 					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior é desfeito
 						br = true;
 						
-						break;
+						//continue;
 					}
 					
-					if (br) break;
+					if (br) continue;
 				}
 				
 				for (int j = 0; j < indxs.size(); j++)
@@ -7912,6 +7912,7 @@ public class CodeEditor extends IDEComponent {
 		if (tabs.size() == 0)
 			editing = null;
 
+		if (editing == null) selecting = false;
 	}
 
 	public void render(Graphics g) {
@@ -8081,6 +8082,7 @@ public class CodeEditor extends IDEComponent {
 		for (RightClickOption r : autocompletes)
 			r.render(g);
 
+		// Desenhar background
 		g.setColor(Colors.background);
 		g.fillRect(x, 0, width, 35);
 
