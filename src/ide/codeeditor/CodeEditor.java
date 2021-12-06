@@ -1732,6 +1732,34 @@ public class CodeEditor extends IDEComponent {
 					// chars)), AutoCompleteType.VARIABLE));
 					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				}
+				
+				indxs = findWord(new String(chars), "import"); // depois de <palavra>
+
+				int len = 0;
+
+				for (Integer i : indxs) {
+					len = 0;
+
+					while (i + len < chars.length)
+						len++;
+
+					// if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}
+				
+				indxs = findWord(new String(chars), "from"); // depois de <palavra>
+
+				len = 0;
+
+				for (Integer i : indxs) {
+					len = 0;
+
+					while (i + len < chars.length)
+						len++;
+
+					// if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}
 			}
 
 			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm")
