@@ -272,8 +272,10 @@ public class Explorer extends IDEComponent {
     	
     	// if (f.getY() < 200 || f.getY() > Main.screen.getHeight()) continue;
     	
-    	for (ListableFile f : Explorer.files)
-        	f.tick();
+    	try {
+	    	for (ListableFile f : Explorer.files)
+	        	f.tick();
+    	} catch (Exception e) { return; }
     }
 
     public void render(Graphics g) {
@@ -307,10 +309,12 @@ public class Explorer extends IDEComponent {
         
         Fonts.drawString(folderPath, x + 10, 170, new IDEFont(Fonts.lighterGrayNormal, 15), g);
         
-        for (ListableFile f : Explorer.files) {
-        	if (f.getY() < 200 || f.getY() > Main.screen.getHeight()) continue;
-        	
-        	f.render(g);
-        }
+        try {
+	        for (ListableFile f : Explorer.files) {
+	        	if (f.getY() < 200 || f.getY() > Main.screen.getHeight()) continue;
+	        	
+	        	f.render(g);
+	        }
+        } catch (Exception e) { return; }
     }
 }

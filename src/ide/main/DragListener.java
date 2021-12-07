@@ -73,10 +73,10 @@ public class DragListener implements DropTargetListener {
 						IDEComponent.toAdd.add(Main.reload);
 					}
 		          
-		          ListableFile.files.clear();
-				  Explorer.files.clear();
-		          
 		          		if (files.get(0).isDirectory()) {
+		          			ListableFile.files.clear();
+		  				    Explorer.files.clear();
+		          			
 		          			Main.baseFolder = files.get(0);
 							
 							Explorer.scope = null;
@@ -95,7 +95,7 @@ public class DragListener implements DropTargetListener {
 		          		
 		          		//File oldbase = Main.baseFolder;
 		          
-		        	  	Main.baseFolder = files.get(0).getParentFile();
+		        	  	/*Main.baseFolder = files.get(0).getParentFile();
 		        	  	
 		        	  	Explorer.files.clear();
 						ListableFile.files.clear();
@@ -108,12 +108,12 @@ public class DragListener implements DropTargetListener {
 							ListableFile.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
 							
 							index++;
-						}
+						}*/
 		          
 				int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() : Tab.MIN_X;
 	        	
 				if (!(files.get(0).getName().equalsIgnoreCase(".pdf") || files.get(0).getName().equalsIgnoreCase(".jar") || files.get(0).getName().equalsIgnoreCase(".iso") || files.get(0).getName().equalsIgnoreCase(".img") || files.get(0).getName().equalsIgnoreCase(".flp") || files.get(0).getName().equalsIgnoreCase(".class") || files.get(0).getName().equalsIgnoreCase(".exe") || files.get(0).getName().equalsIgnoreCase(".urna") || files.get(0).getName().equalsIgnoreCase(".save") || files.get(0).getName().equalsIgnoreCase(".docx") || files.get(0).getName().equalsIgnoreCase(".pptx") || files.get(0).getName().equalsIgnoreCase(".one") || files.get(0).getName().equalsIgnoreCase(".psd") || files.get(0).getName().equalsIgnoreCase(".aed") || files.get(0).getName().equalsIgnoreCase(".ai") || files.get(0).getName().equalsIgnoreCase(".indd") || files.get(0).getName().equalsIgnoreCase(".ini") || files.get(0).getName().equalsIgnoreCase(".dll") || files.get(0).getName().equalsIgnoreCase(".png") || files.get(0).getName().equalsIgnoreCase(".jpg") || files.get(0).getName().equalsIgnoreCase(".jpeg") || files.get(0).getName().equalsIgnoreCase(".gif") || files.get(0).getName().equalsIgnoreCase(".bmp") || files.get(0).getName().equalsIgnoreCase(".ico") || files.get(0).getName().equalsIgnoreCase(".webp") || files.get(0).getName().equalsIgnoreCase(".mp4") || files.get(0).getName().equalsIgnoreCase(".wmv") || files.get(0).getName().equalsIgnoreCase(".avi") || files.get(0).getName().equalsIgnoreCase(".wav") || files.get(0).getName().equalsIgnoreCase(".mp3") || files.get(0).getName().equalsIgnoreCase(".ogg") || files.get(0).getName().equalsIgnoreCase(".otf") || files.get(0).getName().equalsIgnoreCase(".ttf") || files.get(0).getName().equalsIgnoreCase(".woff") || files.get(0).getName().equalsIgnoreCase(".woff2") || files.get(0).getName().equalsIgnoreCase(".zip") || files.get(0).getName().equalsIgnoreCase(".rar") || files.get(0).getName().equalsIgnoreCase(".7z") || files.get(0).getName().equalsIgnoreCase(".bin"))) {
-		        	Tab toAdd = new Tab(Main.editor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : Tab.MIN_X - Tab.WIDTH, ListableFile.searchListableFiles(files.get(0)));
+		        	Tab toAdd = new Tab(Main.editor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : Tab.MIN_X - Tab.WIDTH, new ListableFile(0, 0, 0, 0, files.get(0), null));
 		        	
 	  				Main.editor.cursorX = 0;
 	  				Main.editor.cursorY = 1;
