@@ -94,8 +94,6 @@ public class Explorer extends IDEComponent {
     	
     	// Drag
     	
-    	System.out.println(Main.editor.selecting);
-    	
     	if (MouseInput.hovered(x + width - 5, y, 10, height) && !Main.editor.selecting) {
 			Main.screen.setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
 			

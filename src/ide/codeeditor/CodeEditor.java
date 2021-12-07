@@ -72,6 +72,8 @@ public class CodeEditor extends IDEComponent {
 								// números
 
 	public boolean alternateTabsMode = false;
+	
+	public boolean shouldColor = true;
 
 	public Tab exchanging;
 	public Tab exchanged;
@@ -1982,7 +1984,8 @@ public class CodeEditor extends IDEComponent {
 							|| ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".project")
 							|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
 							|| ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml")
-							|| ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))
+							|| ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".json")
+							|| ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".mcfunction"))
 						fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					else {
 						if (i - 1 > 0 && Character.isLetter(chars[i - 1]))
@@ -5596,7 +5599,7 @@ public class CodeEditor extends IDEComponent {
 
 		/////////////////////////////////////////////////////
 
-		fs = colorVariablesAndObjects(ext, chars, fs); // resolver o problema de não colorir arquivos sem extensão
+		fs = colorVariablesAndObjects(ext, chars, fs);
 		fs = colorMethods(ext, chars, fs);
 		fs = colorKeywords(ext, chars, fs);
 		fs = colorNumbers(ext, chars, fs);
