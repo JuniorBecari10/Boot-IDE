@@ -911,23 +911,31 @@ public class CodeEditor extends IDEComponent {
 				String raw = convertFileToBinary(file.toPath());
 				String[] lines = splitByNCharacters(raw, 32);
 				
-				/*for (int i = 0; i < lines.length; i++) {
-					StringBuilder bl = new StringBuilder(lines[i]);
+				for (int i = 0; i < lines.length; i++) {
+					String[] line = new String[32];
+					int index = 0;
 					
-					int index = 1;
-					
-					while (index < raw.length()) {
-						if (index % 8 == 0) bl.insert(index, ' ');
+					for (int j = 0; j < lines[i].length(); j++) {
+						char c = lines[i].charAt(j);
 						
-						index++;
+						line[index] += c;
+						
+						if (j % 8 == 0 && j != 0) index++;
 					}
 					
-					lines[i] = bl.toString();
+					StringBuilder bl = new StringBuilder();
 					
-				}*/
+					for (String s : line)
+						bl.append(s + " ");
+					
+					lines[i] = bl.toString();
+				}
 				
-				for (String s : lines)
+				for (String s : lines) {
+					s = s.replace("null", "");
+					
 					l.add(s);
+				}
 				
 				break;
 				
@@ -1332,27 +1340,27 @@ public class CodeEditor extends IDEComponent {
 		case ".py" -> "Python";
 		case ".pyx" -> "Python";
 		case ".pyd" -> "Python";
-		case ".js" -> "JavaScript";
-		case ".mjs" -> "JavaScript";
-		case ".bat" -> "Batch";
+		case ".js" -> minMode ? "JS" : "JavaScript";
+		case ".mjs" -> minMode ? "JS" : "JavaScript";
+		case ".bat" -> minMode ? "Bat" : "Batch";
 		case ".com" -> minMode ? "Com" : (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
 		case ".cmd" -> minMode ? "Cmd" : (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
-		case ".h" -> "C/C++ Header";
-		case ".hh" -> "C++ Header";
-		case ".hxx" -> "C++ Header";
-		case ".hpp" -> "C++ Header";
-		case ".asm" -> "Assembly";
-		case ".s" -> "Assembly";
+		case ".h" -> minMode ? "H" : "C/C++ Header";
+		case ".hh" -> minMode ? "HH" : "C++ Header";
+		case ".hxx" -> minMode ? "Hxx" : "C++ Header";
+		case ".hpp" -> minMode ? "Hpp" : "C++ Header";
+		case ".asm" -> minMode ? "Asm" : "Assembly";
+		case ".s" -> minMode ? "Asm" : "Assembly";
 		case ".lua" -> "Lua";
 		case ".sql" -> minMode ? "SQL" : "Structured Query Language - SQL";
 		case ".swift" -> "Swift";
 		case ".rs" -> "Rust";
 		case ".php" -> minMode ? "PHP" : "Hyper Text Preprocessor - PHP";
-		case ".kt" -> "Kotlin";
-		case ".vue" -> "Vue.js";
+		case ".kt" -> minMode ? "Kt" : "Kotlin";
+		case ".vue" -> minMode ? "Vue" : "Vue.js";
 		case ".rb" -> "Ruby";
 		case ".ino" -> "Arduino";
-		case ".ts" -> "TypeScript";
+		case ".ts" -> minMode ? "TS" : "TypeScript";
 		case ".tsx" -> minMode ? "TSX" : "TypeScript React";
 		case ".go" -> "Go";
 		case ".r" -> "R";
@@ -1363,8 +1371,8 @@ public class CodeEditor extends IDEComponent {
 		case ".hs" -> "Haskell";
 		case ".fs" -> "F#";
 		case ".coffee" -> "CoffeeScript";
-		case ".m" -> "Objective-C";
-		case ".mm" -> "Objective-C++";
+		case ".m" -> minMode ? "Obj-C" : "Objective-C";
+		case ".mm" -> minMode ? "Obj-C++" : "Objective-C++";
 		case ".pas" -> "Pascal";
 		case ".lpr" -> "Pascal";
 		case ".pp" -> "Pascal";
@@ -1383,7 +1391,7 @@ public class CodeEditor extends IDEComponent {
 		case ".htm" -> minMode ? "HTML" : "Hyper Text Markup Language - HTML";
 		case ".css" -> minMode ? "CSS" : "Cascading Style Sheets - CSS";
 		case ".xml" -> minMode ? "XML" : "Extensible Markup Language - XML";
-		case ".sln" -> (Main.lang == Language.PORT ? "Solução do Microsoft Visual Studio"
+		case ".sln" -> minMode ? (Main.lang == Language.PORT ? "Solução do VS" : "VS Solution") : (Main.lang == Language.PORT ? "Solução do Microsoft Visual Studio"
 				: "Microsoft Visual Studio Solution");
 		case ".json" -> minMode ? "JSON" : "JavaScript Object Notation - JSON";
 		case ".jsonc" -> minMode ? "JSONC" : "JavaScript Object Notation with Comments - JSONC";
