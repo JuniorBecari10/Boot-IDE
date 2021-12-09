@@ -1302,8 +1302,6 @@ public class CodeEditor extends IDEComponent {
 		return howManyBefore(s, index, charLeft) % 2 != 0 && howManyAfter(s, index, charRight) % 2 != 0;
 	}
 	
-	
-
 	public int countIndexDistance(int i1, int i2, int l1, int l2) {
 		try {
 			if (l1 == l2)
@@ -8066,7 +8064,7 @@ public class CodeEditor extends IDEComponent {
 				 * (num >= 100 && num < 1000) nx = x + 1 + 6;
 				 */
 
-				Color c = i != cursorY - 1 ? Colors.explorer : Colors.explorerLight;
+				Color c = i != cursorY - 1 ? Colors.codeEditor : Colors.explorerLight;
 
 				g.setColor(c);
 				g.fillRect(x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, 50, FONT_SIZE + (FONT_SIZE / 4)); // linha
