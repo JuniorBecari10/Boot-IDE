@@ -122,6 +122,7 @@ public class SetFileName extends IDEComponent {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				if (text.length() == 0 || text.toString().endsWith(".")) return;
 				if (hasIllegalChars(text.toString())) return;
+				if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath()))) return;
 				
 				File f = new File(Explorer.getScopePath() + "/" + text.toString());
 				

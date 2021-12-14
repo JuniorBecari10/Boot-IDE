@@ -84,7 +84,7 @@ public class CommandTerminal extends IDEComponent {
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode",
 			"gendiv str:class_name", "gensnippet str:type", //"emmet str:expression",
-			"lorem int:num_words", "ordertab int:tab_from int:tab_to", //"openfile str:file",
+			"lorem int:num_words", "ordertab int:tab_from int:tab_to", "openfile str:file",
 			"setcursorpos int:x int:y",
 			"getproperty str:property",
 			"setproperty str:property str:new_value",
@@ -100,7 +100,7 @@ public class CommandTerminal extends IDEComponent {
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab", "setexplorerdrag",
 			"gotoline", "setfontsize", "insertchar", "setreadmode",
 			"gendiv", "gensnippet", //"emmet",
-			"lorem", "ordertab", //"openfile",
+			"lorem", "ordertab", "openfile",
 			"setcursorpos",
 			"getproperty",
 			"setproperty",
@@ -832,6 +832,15 @@ public class CommandTerminal extends IDEComponent {
 				} catch (NumberFormatException e) {
 					break;
 				}
+			
+			case "openfile":
+				File f = new File(Explorer.getScopePath() + "/" + args[0]);
+				if (!f.exists()) break;
+				
+				if (!CodeEditor.isBinary(ListableFile.getFileExtension(f)))
+					ListableFile.addTab(ListableFile.search(f, f.getParentFile()), true);
+				
+				break;
 				
 			/*case "openfile":
 				File f = new File(args[0]);
