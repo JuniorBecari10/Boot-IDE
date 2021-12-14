@@ -59,7 +59,7 @@ public class Main implements Runnable, Tickable {
     public static final String SPRITESHEET_FILE_NAME = "Resources/spritesheet.png";
     
     public static final String PROGRAM_NAME = "Boot IDE";
-    public static final String VERSION = "Beta 5.1 v4.2";
+    public static final String VERSION = "Release v4.2";
     
     //public static final String SUN_JAVA_COMMAND = "sun.java.command";
 	

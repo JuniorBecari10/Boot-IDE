@@ -2155,6 +2155,11 @@ public class CodeEditor extends IDEComponent {
 
 			if (indxs.size() > 0)
 				isPhpPart = true;
+			
+			indxs = findWord(new String(chars), "{%");
+
+			if (indxs.size() > 0)
+				isPhpPart = true;
 
 			if (isPhpPart) {
 				for (String s : phpKeys) { // colorir keywordss
@@ -5557,6 +5562,11 @@ public class CodeEditor extends IDEComponent {
 
 		if (indxs.size() > 0)
 			isPhpPart = false;
+		
+		indxs = findWord(new String(chars), "%}");
+
+		if (indxs.size() > 0)
+			isPhpPart = false;
 	}
 
 	public List<IDEFont> automaticColor(char[] chars, String ext) {
@@ -7231,8 +7241,8 @@ public class CodeEditor extends IDEComponent {
 				} catch (Exception e) {
 					CommandTerminal.runCommand("deselect");
 				}
-
-				if (!isReadOnly) {
+				
+				if (!isReadOnly) { // init
 					KeyInput.updateKeys();
 
 					if (!KeyInput.isShiftDown() && !lines.isEmpty())
@@ -7471,7 +7481,7 @@ public class CodeEditor extends IDEComponent {
 								editing.setSaved(false);
 						}
 					}
-				}
+				} // esse
 			}
 
 			// Detectar atalhos
