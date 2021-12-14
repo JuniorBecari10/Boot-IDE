@@ -79,7 +79,7 @@ public class CommandTerminal extends IDEComponent {
 	
 	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", /*"restart",*/
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
-			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
+			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile", "resetreadmode",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode",
@@ -95,7 +95,7 @@ public class CommandTerminal extends IDEComponent {
 	
 	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll", /*"restart",*/
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
-			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile",
+			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile", "resetreadmode",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab", "setexplorerdrag",
 			"gotoline", "setfontsize", "insertchar", "setreadmode",
@@ -192,6 +192,10 @@ public class CommandTerminal extends IDEComponent {
 			case "reseteditorscroll":
 				Main.editor.scrX = 0;
 				Main.editor.scrY = 0;
+				break;
+				
+			case "resetreadmode":
+				runCommand("setreadmode normal");
 				break;
 				
 			case "version":

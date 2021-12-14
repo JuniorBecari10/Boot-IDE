@@ -6717,7 +6717,7 @@ public class CodeEditor extends IDEComponent {
 			else
 				extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
 			
-			if ((isReadOnly || editing.isReadOnly) && !extType.contains("(" + Texts.readOnly + ")"))
+			if (editing != null && (isReadOnly || editing.isReadOnly) && !extType.contains("(" + Texts.readOnly + ")"))
 				extType += " (" + Texts.readOnly + ")";
 			
 			if (ComponentInput.windowResized() && editing != null) {
@@ -6726,8 +6726,8 @@ public class CodeEditor extends IDEComponent {
 				else
 					extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
 			}
-	}
-				
+		}
+		
 		width = Main.screen.getWidth() - x;
 
 		/*
