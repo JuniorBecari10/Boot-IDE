@@ -106,7 +106,6 @@ public final class Texts {
 	
 	public static String sureDelete;
 	public static String confirmDelete;
-	public static String canBeFoundOnSystemsRecycleBin;
 	
 	public static String delError;
 	public static String cantDelete;
@@ -286,7 +285,6 @@ public final class Texts {
 			
 			sureDelete = "Tem certeza de que deseja deletar o arquivo";
 			confirmDelete = "Confirmar Exclusão";
-			canBeFoundOnSystemsRecycleBin = "Ele pode ser encontrado na Lixeira do sistema.";
 			
 			delError = "Ocorreu um erro ao deletar. Lembre-se de que pastas não podem ser excluídas se não estiverem vazias!";
 			cantDelete = "Não foi possível deletar.";
@@ -466,7 +464,6 @@ public final class Texts {
 			
 			sureDelete = "Are you sure you want to delete the file";
 			confirmDelete = "Confirm Deletion";
-			canBeFoundOnSystemsRecycleBin = "It can be found on system's Recycle Bin.";
 			
 			delError = "An error has occurred while deleting. Remember that folders cannot be deleted if they are not empty!";
 			cantDelete = "Could not delete.";

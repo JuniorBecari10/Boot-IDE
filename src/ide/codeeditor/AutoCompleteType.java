@@ -1,8 +1,8 @@
 package ide.codeeditor;
 
 public enum AutoCompleteType {
-	FUNCTION,
-	OBJECT,
+	//FUNCTION,
+	//OBJECT,
 	KEYWORD,
 	VARIABLE;
 }

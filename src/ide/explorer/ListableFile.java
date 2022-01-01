@@ -1063,14 +1063,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			CodeEditor.setSystemLook();
 			int selectedOption = JOptionPane.showOptionDialog(null,
-					Texts.sureDelete + " " + regent.getName() + "? " + Texts.canBeFoundOnSystemsRecycleBin,
+					Texts.sureDelete + " " + regent.getName() + "?",
 					Texts.confirmDelete, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options,
 					options[0]);
 
 			if (selectedOption != 0)
 				break;
 
-			if (!Main.desktop.moveToTrash(regent)) {
+			if (!regent.delete()) {
 				CodeEditor.setSystemLook();
 
 				JOptionPane.showMessageDialog(null, Texts.delError, Texts.cantDelete, JOptionPane.OK_OPTION);

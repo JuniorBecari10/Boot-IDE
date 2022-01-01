@@ -184,7 +184,7 @@ public class RenameFile extends IDEComponent {
 		if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())) && canShow)
 			Fonts.drawString(Texts.fileExists, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
 		
-		if (text.isEmpty() && canShow)
+		if (text.toString().equals("") && canShow)
 			Fonts.drawString(Texts.cannotBeEmpty, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
 		
 		if (text.toString().endsWith("."))

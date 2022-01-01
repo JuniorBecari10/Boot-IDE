@@ -157,9 +157,9 @@ public class CodeEditor extends IDEComponent {
 	public String wordSinceSpace = "";
 	public int autocompleteindex = 0;
 
-	public Set<AutoComplete> autocomplete = new LinkedHashSet<>();
-	public Set<AutoComplete> addautocomplete = new LinkedHashSet<>();
-	public Set<AutoComplete> removeautocomplete = new LinkedHashSet<>();
+	public List<AutoComplete> autocomplete = new ArrayList<>();
+	public List<AutoComplete> addautocomplete = new ArrayList<>();
+	public List<AutoComplete> removeautocomplete = new ArrayList<>();
 
 	public List<RightClickOption> autocompletes = new ArrayList<>();
 	public List<RightClickOption> toAddAutoCompletes = new ArrayList<>();
@@ -1117,92 +1117,92 @@ public class CodeEditor extends IDEComponent {
 	// Se for usar em arquivos que não têm extensão, use o método debaixo desse, o
 	// getKeywordsSpecial().
 	public static String[] getKeywords(String ext) {
-		return switch (ext.toLowerCase()) {
-		case ".java" -> javaKeys;
-		case ".c" -> cKeys;
-		case ".cpp" -> cppKeys;
-		case ".cc" -> cppKeys;
-		case ".hpp" -> cppKeys;
-		case ".cxx" -> cppKeys;
-		case ".hxx" -> cppKeys;
-		case ".h" -> cppKeys;
-		case ".hh" -> cppKeys;
-		case ".vb" -> vbKeys;
-		case ".cs" -> csKeys;
-		case ".ipynb" -> pyKeys;
-		case ".py" -> pyKeys;
-		case ".pyx" -> pyKeys;
-		case ".pyd" -> pyKeys;
-		case ".js" -> jsKeys;
-		case ".mjs" -> jsKeys;
-		case ".bat" -> batCom;
-		case ".cmd" -> batCom;
-		case ".com" -> batCom;
-		case ".asm" -> asmKeys;
-		case ".s" -> asmKeys;
-		case ".lua" -> luaKeys;
-		case ".sql" -> sqlKeys;
-		case ".swift" -> swKeys;
-		case ".rs" -> rsKeys;
-		case ".php" -> mergeStringArrays(phpKeys, cssTags);
-		case ".kt" -> ktKeys;
-		case ".vue" -> jsKeys;
-		case ".rb" -> rbKeys;
-		case ".ino" -> cppKeys;
-		case ".ts" -> tsKeys;
-		case ".tsx" -> tsKeys;
-		case ".go" -> goKeys;
-		case ".r" -> rKeys;
-		case ".jl" -> jlKeys;
-		case ".pl" -> plKeys;
-		case ".t" -> plKeys;
-		case ".has" -> hasKeys;
-		case ".hs" -> hasKeys;
-		case ".fs" -> fsKeys;
-		case ".coffee" -> cfKeys;
-		case ".m" -> objKeys;
-		case ".mm" -> objKeys;
-		case ".pas" -> pasKeys;
-		case ".lpr" -> pasKeys;
-		case ".pp" -> pasKeys;
-		case ".scala" -> scaKeys;
-		case ".dart" -> dartKeys;
-		case ".zig" -> zigKeys;
-		case ".gd" -> gdKeys;
-		case ".mcfunction" -> mcKeys;
+		switch (ext.toLowerCase()) {
+		case ".java": return javaKeys;
+		case ".c": return cKeys;
+		case ".cpp": return cppKeys;
+		case ".cc": return cppKeys;
+		case ".hpp": return cppKeys;
+		case ".cxx": return cppKeys;
+		case ".hxx": return cppKeys;
+		case ".h": return cppKeys;
+		case ".hh": return cppKeys;
+		case ".vb": return vbKeys;
+		case ".cs": return csKeys;
+		case ".ipynb": return pyKeys;
+		case ".py": return pyKeys;
+		case ".pyx": return pyKeys;
+		case ".pyd": return pyKeys;
+		case ".js": return jsKeys;
+		case ".mjs": return jsKeys;
+		case ".bat": return batCom;
+		case ".cmd": return batCom;
+		case ".com": return batCom;
+		case ".asm": return asmKeys;
+		case ".s": return asmKeys;
+		case ".lua": return luaKeys;
+		case ".sql": return sqlKeys;
+		case ".swift": return swKeys;
+		case ".rs": return rsKeys;
+		case ".php": return mergeStringArrays(phpKeys, cssTags);
+		case ".kt": return ktKeys;
+		case ".vue": return jsKeys;
+		case ".rb": return rbKeys;
+		case ".ino": return cppKeys;
+		case ".ts": return tsKeys;
+		case ".tsx": return tsKeys;
+		case ".go": return goKeys;
+		case ".r": return rKeys;
+		case ".jl": return jlKeys;
+		case ".pl": return plKeys;
+		case ".t": return plKeys;
+		case ".has": return hasKeys;
+		case ".hs": return hasKeys;
+		case ".fs": return fsKeys;
+		case ".coffee": return cfKeys;
+		case ".m": return objKeys;
+		case ".mm": return objKeys;
+		case ".pas": return pasKeys;
+		case ".lpr": return pasKeys;
+		case ".pp": return pasKeys;
+		case ".scala": return scaKeys;
+		case ".dart": return dartKeys;
+		case ".zig": return zigKeys;
+		case ".gd": return gdKeys;
+		case ".mcfunction": return mcKeys;
 
-		case ".html" -> mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
-		case ".xhtml" -> mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys))); // será que tira o phpkeys? TODO
-		case ".htm" -> mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
-		case ".css" -> mergeStringArrays(cssTags, props);
-		case ".scss" -> mergeStringArrays(cssTags, props);
-		case ".json" -> jsonKeys;
-		case ".jsonc" -> jsonKeys;
-		case ".conf" -> ideConfKeys;
-		case ".mk" -> mergeStringArrays(makeKeys, shKeys);
-		case ".mak" -> mergeStringArrays(makeKeys, shKeys);
-		case ".make" -> mergeStringArrays(makeKeys, shKeys);
-		case ".makefile" -> mergeStringArrays(makeKeys, shKeys);
-		case ".dockerfile" -> dkKeys;
-		case ".jsx" -> jsKeys;
-		case ".ps1" -> batCom;
-		case ".sh" -> shKeys;
-		case ".ejs" -> cssTags;
-		case ".ld" -> ldKeys;
-		case ".bashrc" -> shKeys;
-		case ".bash_profile" -> shKeys;
+		case ".html": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
+		case ".xhtml": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys))); // será que tira o phpkeys? TODO
+		case ".htm": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
+		case ".css": return mergeStringArrays(cssTags, props);
+		case ".scss": return mergeStringArrays(cssTags, props);
+		case ".json": return jsonKeys;
+		case ".jsonc": return jsonKeys;
+		case ".conf": return ideConfKeys;
+		case ".mk": return mergeStringArrays(makeKeys, shKeys);
+		case ".mak": return mergeStringArrays(makeKeys, shKeys);
+		case ".make": return mergeStringArrays(makeKeys, shKeys);
+		case ".makefile": return mergeStringArrays(makeKeys, shKeys);
+		case ".dockerfile": return dkKeys;
+		case ".jsx": return jsKeys;
+		case ".ps1": return batCom;
+		case ".sh": return shKeys;
+		case ".ejs": return cssTags;
+		case ".ld": return ldKeys;
+		case ".bashrc": return shKeys;
+		case ".bash_profile": return shKeys;
 		
-		default -> null;
-		};
+		default: return null;
+		}
 	}
 
 	public static String[] getKeywordsSpecial(String filename) {
-		return switch (filename.toLowerCase()) {
-		case "makefile" -> mergeStringArrays(makeKeys, shKeys);
-		case "dockerfile" -> dkKeys;
+		switch (filename.toLowerCase()) {
+		case "makefile": return mergeStringArrays(makeKeys, shKeys);
+		case "dockerfile": return dkKeys;
 
-		default -> null;
-		};
+		default: return null;
+		}
 	}
 
 	public static boolean isBinary(String ext) {
@@ -1233,12 +1233,14 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public static BufferedImage getAutoCompleteIcon(AutoCompleteType type) {
-		return switch (type) {
-		case FUNCTION -> functions;
-		case OBJECT -> objects;
-		case KEYWORD -> keywords;
-		case VARIABLE -> variables;
-		};
+		switch (type) {
+		//case FUNCTION: return functions;
+		//case OBJECT: return objects;
+		case KEYWORD: return keywords;
+		//case VARIABLE: return variables;
+		
+		default: return keywords;
+		}
 	}
 
 	public void addautocomplete(List<String> list, AutoCompleteType type) {
@@ -1327,173 +1329,173 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public static String getLowerBarFileName(String ext) {
-		return switch (ext.toLowerCase()) {
-		case ".java" -> "Java";
-		case ".class" -> minMode ? "Class" :  (Main.lang == Language.PORT ? "Arquivo Bytecode do Java" : "Java Bytecode File");
-		case ".c" -> "C";
-		case ".cpp" -> "C++";
-		case ".cc" -> "C++";
-		case ".cxx" -> "C++";
-		case ".cs" -> "C#";
-		case ".py" -> "Python";
-		case ".pyx" -> "Python";
-		case ".pyd" -> "Python";
-		case ".js" -> minMode ? "JS" : "JavaScript";
-		case ".mjs" -> minMode ? "JS" : "JavaScript";
-		case ".bat" -> minMode ? "Bat" : "Batch";
-		case ".com" -> minMode ? "Com" : (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
-		case ".cmd" -> minMode ? "Cmd" : (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
-		case ".h" -> minMode ? "H" : "C/C++ Header";
-		case ".hh" -> minMode ? "HH" : "C++ Header";
-		case ".hxx" -> minMode ? "Hxx" : "C++ Header";
-		case ".hpp" -> minMode ? "Hpp" : "C++ Header";
-		case ".asm" -> minMode ? "Asm" : "Assembly";
-		case ".s" -> minMode ? "Asm" : "Assembly";
-		case ".lua" -> "Lua";
-		case ".sql" -> minMode ? "SQL" : "Structured Query Language - SQL";
-		case ".swift" -> "Swift";
-		case ".rs" -> "Rust";
-		case ".php" -> minMode ? "PHP" : "Hyper Text Preprocessor - PHP";
-		case ".kt" -> minMode ? "Kt" : "Kotlin";
-		case ".vue" -> minMode ? "Vue" : "Vue.js";
-		case ".rb" -> "Ruby";
-		case ".ino" -> "Arduino";
-		case ".ts" -> minMode ? "TS" : "TypeScript";
-		case ".tsx" -> minMode ? "TSX" : "TypeScript React";
-		case ".go" -> "Go";
-		case ".r" -> "R";
-		case ".jl" -> "Julia";
-		case ".pl" -> "Perl";
-		case ".t" -> "Perl";
-		case ".has" -> "Haskell";
-		case ".hs" -> "Haskell";
-		case ".fs" -> "F#";
-		case ".coffee" -> "CoffeeScript";
-		case ".m" -> minMode ? "Obj-C" : "Objective-C";
-		case ".mm" -> minMode ? "Obj-C++" : "Objective-C++";
-		case ".pas" -> "Pascal";
-		case ".lpr" -> "Pascal";
-		case ".pp" -> "Pascal";
-		case ".scala" -> "Scala";
-		case ".dart" -> "Dart";
-		case ".zig" -> "Zig";
-		case ".scss" -> minMode ? "SCSS" : "Sass Cascading Style Sheets - SCSS";
-		case ".ipynb" -> "Jupyter Notebook";
-		case ".vb" -> "Visual Basic";
-		case ".bf" -> "Brainfuck";
-		case ".gd" -> "GDScript";
-		case ".mcfunction" -> minMode ? "MC Function" : "Minecraft Function";
+		switch (ext.toLowerCase()) {
+		case ".java": return "Java";
+		case ".class": return minMode ? "Class" :  (Main.lang == Language.PORT ? "Arquivo Bytecode do Java" : "Java Bytecode File");
+		case ".c": return "C";
+		case ".cpp": return "C++";
+		case ".cc": return "C++";
+		case ".cxx": return "C++";
+		case ".cs": return "C#";
+		case ".py": return "Python";
+		case ".pyx": return "Python";
+		case ".pyd": return "Python";
+		case ".js": return minMode ? "JS" : "JavaScript";
+		case ".mjs": return minMode ? "JS" : "JavaScript";
+		case ".bat": return minMode ? "Bat" : "Batch";
+		case ".com": return minMode ? "Com" : (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
+		case ".cmd": return minMode ? "Cmd" : (Main.lang == Language.PORT ? "Arquivo do Prompt de Comando" : "Command Prompt File");
+		case ".h": return minMode ? "H" : "C/C++ Header";
+		case ".hh": return minMode ? "HH" : "C++ Header";
+		case ".hxx": return minMode ? "Hxx" : "C++ Header";
+		case ".hpp": return minMode ? "Hpp" : "C++ Header";
+		case ".asm": return minMode ? "Asm" : "Assembly";
+		case ".s": return minMode ? "Asm" : "Assembly";
+		case ".lua": return "Lua";
+		case ".sql": return minMode ? "SQL" : "Structured Query Language - SQL";
+		case ".swift": return "Swift";
+		case ".rs": return "Rust";
+		case ".php": return minMode ? "PHP" : "Hyper Text Preprocessor - PHP";
+		case ".kt": return minMode ? "Kt" : "Kotlin";
+		case ".vue": return minMode ? "Vue" : "Vue.js";
+		case ".rb": return "Ruby";
+		case ".ino": return "Arduino";
+		case ".ts": return minMode ? "TS" : "TypeScript";
+		case ".tsx": return minMode ? "TSX" : "TypeScript React";
+		case ".go": return "Go";
+		case ".r": return "R";
+		case ".jl": return "Julia";
+		case ".pl": return "Perl";
+		case ".t": return "Perl";
+		case ".has": return "Haskell";
+		case ".hs": return "Haskell";
+		case ".fs": return "F#";
+		case ".coffee": return "CoffeeScript";
+		case ".m": return minMode ? "Obj-C" : "Objective-C";
+		case ".mm": return minMode ? "Obj-C++" : "Objective-C++";
+		case ".pas": return "Pascal";
+		case ".lpr": return "Pascal";
+		case ".pp": return "Pascal";
+		case ".scala": return "Scala";
+		case ".dart": return "Dart";
+		case ".zig": return "Zig";
+		case ".scss": return minMode ? "SCSS" : "Sass Cascading Style Sheets - SCSS";
+		case ".ipynb": return "Jupyter Notebook";
+		case ".vb": return "Visual Basic";
+		case ".bf": return "Brainfuck";
+		case ".gd": return "GDScript";
+		case ".mcfunction": return minMode ? "MC Function" : "Minecraft Function";
 
-		case ".html" -> minMode ? "HTML" : "Hyper Text Markup Language - HTML";
-		case ".xhtml" -> minMode ? "HTML" : "Hyper Text Markup Language - HTML";
-		case ".htm" -> minMode ? "HTML" : "Hyper Text Markup Language - HTML";
-		case ".css" -> minMode ? "CSS" : "Cascading Style Sheets - CSS";
-		case ".xml" -> minMode ? "XML" : "Extensible Markup Language - XML";
-		case ".sln" -> minMode ? (Main.lang == Language.PORT ? "Solução do VS" : "VS Solution") : (Main.lang == Language.PORT ? "Solução do Microsoft Visual Studio"
+		case ".html": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
+		case ".xhtml": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
+		case ".htm": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
+		case ".css": return minMode ? "CSS" : "Cascading Style Sheets - CSS";
+		case ".xml": return minMode ? "XML" : "Extensible Markup Language - XML";
+		case ".sln": return minMode ? (Main.lang == Language.PORT ? "Solução do VS" : "VS Solution") : (Main.lang == Language.PORT ? "Solução do Microsoft Visual Studio"
 				: "Microsoft Visual Studio Solution");
-		case ".json" -> minMode ? "JSON" : "JavaScript Object Notation - JSON";
-		case ".jsonc" -> minMode ? "JSONC" : "JavaScript Object Notation with Comments - JSONC";
-		case ".md" -> "Markdown";
-		case ".markdown" -> "Markdown";
-		case ".txt" -> minMode ? (Main.lang == Language.PORT ? "Texto" : "Text") : (Main.lang == Language.PORT ? "Arquivo de Texto" : "Text File");
-		case ".log" -> minMode ? "Log" : (Main.lang == Language.PORT ? "Arquivo de Log" : "Log File");
-		case ".pdf" -> minMode ? "PDF" : "Portable Document Format - PDF";
-		case ".jar" -> minMode ? "Jar" : (Main.lang == Language.PORT ? "Arquivo Jar" : "Jar File");
-		case ".exe" -> minMode ? "EXE" : (Main.lang == Language.PORT ? "Executável do Windows - EXE" : "Windows Executable - EXE");
-		case ".classpath" -> (Main.lang == Language.PORT ? "Caminho da Classe" : "Class Path");
-		case ".csproj" -> (Main.lang == Language.PORT ? "Projeto C# do Visual Studio" : "Visual Studio C# Project");
-		case ".project" -> (Main.lang == Language.PORT ? "Arquivo de Projeto" : "Project File");
-		case ".svg" -> minMode ? "SVG" : "Scalable Vector Graphics - SVG";
-		case ".urna" -> (Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas"
+		case ".json": return minMode ? "JSON" : "JavaScript Object Notation - JSON";
+		case ".jsonc": return minMode ? "JSONC" : "JavaScript Object Notation with Comments - JSONC";
+		case ".md": return "Markdown";
+		case ".markdown": return "Markdown";
+		case ".txt": return minMode ? (Main.lang == Language.PORT ? "Texto" : "Text") : (Main.lang == Language.PORT ? "Arquivo de Texto" : "Text File");
+		case ".log": return minMode ? "Log" : (Main.lang == Language.PORT ? "Arquivo de Log" : "Log File");
+		case ".pdf": return minMode ? "PDF" : "Portable Document Format - PDF";
+		case ".jar": return minMode ? "Jar" : (Main.lang == Language.PORT ? "Arquivo Jar" : "Jar File");
+		case ".exe": return minMode ? "EXE" : (Main.lang == Language.PORT ? "Executável do Windows - EXE" : "Windows Executable - EXE");
+		case ".classpath": return (Main.lang == Language.PORT ? "Caminho da Classe" : "Class Path");
+		case ".csproj": return (Main.lang == Language.PORT ? "Projeto C# do Visual Studio" : "Visual Studio C# Project");
+		case ".project": return (Main.lang == Language.PORT ? "Arquivo de Projeto" : "Project File");
+		case ".svg": return minMode ? "SVG" : "Scalable Vector Graphics - SVG";
+		case ".urna": return (Main.lang == Language.PORT ? "Urna Salva do Criador de Urnas"
 				: "Saved Bollot Box from Criador de Urnas");
-		case ".save" -> (Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2" // fazer desses tbm
+		case ".save": return (Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2" // fazer desses tbm
 				: "Saved Game from World's Hardest Game Maker 2");
-		case ".conf" -> (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
+		case ".conf": return (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
 				: "Boot IDE Configuration File");
-		case Main.SETTINGS_FILE_EXTENSION -> (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
+		case Main.SETTINGS_FILE_EXTENSION: return (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
 				: "Boot IDE Configuration File");
-		case ".rtf" -> "Rich Text Format";
-		case ".mk" -> "Makefile";
-		case ".mak" -> "Makefile";
-		case ".make" -> "Makefile";
-		case ".sh" -> minMode ? "Bash" : "Bourne-Again Shell - Bash";
-		case ".gitignore" -> "Git Ignore";
-		case ".dockerfile" -> "Dockerfile";
-		case ".jsx" -> minMode ? "JSX" : "JavaScript React";
-		case ".config" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
-		case ".cfg" -> (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
-		case ".ps1" -> (Main.lang == Language.PORT ? "Arquivo do PowerShell" : "PowerShell File");
-		case ".license" -> (Main.lang == Language.PORT ? "Arquivo de Licença" : "License File");
-		case ".docx" -> (Main.lang == Language.PORT ? "Documento do Microsoft Word" : "Microsoft Word Document");
-		case ".pptx" -> (Main.lang == Language.PORT ? "Apresentação do Microsoft PowerPoint"
+		case ".rtf": return "Rich Text Format";
+		case ".mk": return "Makefile";
+		case ".mak": return "Makefile";
+		case ".make": return "Makefile";
+		case ".sh": return minMode ? "Bash" : "Bourne-Again Shell - Bash";
+		case ".gitignore": return "Git Ignore";
+		case ".dockerfile": return "Dockerfile";
+		case ".jsx": return minMode ? "JSX" : "JavaScript React";
+		case ".config": return (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
+		case ".cfg": return (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
+		case ".ps1": return (Main.lang == Language.PORT ? "Arquivo do PowerShell" : "PowerShell File");
+		case ".license": return (Main.lang == Language.PORT ? "Arquivo de Licença" : "License File");
+		case ".docx": return (Main.lang == Language.PORT ? "Documento do Microsoft Word" : "Microsoft Word Document");
+		case ".pptx": return (Main.lang == Language.PORT ? "Apresentação do Microsoft PowerPoint"
 				: "Microsoft PowerPoint Presentation");
-		case ".xlsx" -> (Main.lang == Language.PORT ? "Planilha do Microsoft Excel" : "Microsoft Excel Spreadsheet");
-		case ".one" -> (Main.lang == Language.PORT ? "Arquivo do Microsoft OneNote" : "Microsoft OneNote File");
-		case ".psd" -> (Main.lang == Language.PORT ? "Arquivo do Adobe Photoshop" : "Adobe Photoshop File");
-		case ".aed" -> (Main.lang == Language.PORT ? "Arquivo do Adobe After Effects" : "Adobe After Effects File");
-		case ".ai" -> (Main.lang == Language.PORT ? "Arquivo do Adobe Illustrator" : "Adobe Illustrator File");
-		case ".indd" -> (Main.lang == Language.PORT ? "Arquivo do Adobe InDesign" : "Adobe InDesign File");
-		case ".ejs" -> "Embedded JavaScript - EJS";
-		case ".ld" -> "LinkerScript";
-		case ".lock" -> "Lock";
-		case ".ini" -> (Main.lang == Language.PORT ? "Arquivo de Parâmetros de Configurações"
+		case ".xlsx": return (Main.lang == Language.PORT ? "Planilha do Microsoft Excel" : "Microsoft Excel Spreadsheet");
+		case ".one": return (Main.lang == Language.PORT ? "Arquivo do Microsoft OneNote" : "Microsoft OneNote File");
+		case ".psd": return (Main.lang == Language.PORT ? "Arquivo do Adobe Photoshop" : "Adobe Photoshop File");
+		case ".aed": return (Main.lang == Language.PORT ? "Arquivo do Adobe After Effects" : "Adobe After Effects File");
+		case ".ai": return (Main.lang == Language.PORT ? "Arquivo do Adobe Illustrator" : "Adobe Illustrator File");
+		case ".indd": return (Main.lang == Language.PORT ? "Arquivo do Adobe InDesign" : "Adobe InDesign File");
+		case ".ejs": return "Embedded JavaScript - EJS";
+		case ".ld": return "LinkerScript";
+		case ".lock": return "Lock";
+		case ".ini": return (Main.lang == Language.PORT ? "Arquivo de Parâmetros de Configurações"
 				: "Configuration Parameters File");
-		case ".dll" -> minMode ? "DLL" : "Dynamic Link Library - DLL";
-		case ".makefile" -> "Makefile";
-		case ".url" -> minMode ? "URL" : "Uniform Resource Locator - URL";
-		case ".prefs" -> (Main.lang == Language.PORT ? "Arquivo de Preferências" : "Preferences File");
-		case ".bashrc" -> minMode ? "Bashrc" : (Main.lang == Language.PORT ? "Arquivo de Configurações Bash" : "Bash Configuration File");
-		case ".bash_profile" -> (Main.lang == Language.PORT ? "Perfil Bash" : "Bash Profile");
+		case ".dll": return minMode ? "DLL" : "Dynamic Link Library - DLL";
+		case ".makefile": return "Makefile";
+		case ".url": return minMode ? "URL" : "Uniform Resource Locator - URL";
+		case ".prefs": return (Main.lang == Language.PORT ? "Arquivo de Preferências" : "Preferences File");
+		case ".bashrc": return minMode ? "Bashrc" : (Main.lang == Language.PORT ? "Arquivo de Configurações Bash" : "Bash Configuration File");
+		case ".bash_profile": return (Main.lang == Language.PORT ? "Perfil Bash" : "Bash Profile");
 
-		case ".png" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		case ".jpg" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		case ".jpeg" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		case ".gif" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		case ".bmp" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		case ".ico" -> (Main.lang == Language.PORT ? "Arquivo de Ícone" : "Icon File");
-		case ".webp" -> (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".png": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".jpg": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".jpeg": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".gif": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".bmp": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
+		case ".ico": return (Main.lang == Language.PORT ? "Arquivo de Ícone" : "Icon File");
+		case ".webp": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 
-		case ".mp4" -> (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
-		case ".wmv" -> (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
-		case ".avi" -> (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
+		case ".mp4": return (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
+		case ".wmv": return (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
+		case ".avi": return (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
 
-		case ".wav" -> (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
-		case ".mp3" -> (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
-		case ".ogg" -> (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
+		case ".wav": return (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
+		case ".mp3": return (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
+		case ".ogg": return (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
 
-		case ".otf" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
-		case ".ttf" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
-		case ".woff" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
-		case ".woff2" -> (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
+		case ".otf": return (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
+		case ".ttf": return (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
+		case ".woff": return (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
+		case ".woff2": return (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
 
-		case ".zip" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
-		case ".gz" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
-		case ".rar" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
-		case ".7z" -> (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
+		case ".zip": return (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
+		case ".gz": return (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
+		case ".rar": return (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
+		case ".7z": return (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
 
-		case ".bin" -> (Main.lang == Language.PORT ? "Arquivo Binário" : "Binary File");
-		case ".img" -> (Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File");
-		case ".iso" -> (Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File");
-		case ".flp" -> (Main.lang == Language.PORT ? "Arquivo de Disquete" : "Floppy Disk File");
-		case ".o" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
-		case ".out" -> (Main.lang == Language.PORT ? "Arquivo de Saída" : "Output File");
-		case ".obj" -> (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
+		case ".bin": return (Main.lang == Language.PORT ? "Arquivo Binário" : "Binary File");
+		case ".img": return (Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File");
+		case ".iso": return (Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File");
+		case ".flp": return (Main.lang == Language.PORT ? "Arquivo de Disquete" : "Floppy Disk File");
+		case ".o": return (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
+		case ".out": return (Main.lang == Language.PORT ? "Arquivo de Saída" : "Output File");
+		case ".obj": return (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
 
-		default -> capitalizeFirstLetter(
+		default: return capitalizeFirstLetter(
 				ListableFile.getFileExtension(Main.editor.editing.getRegent().getRegent().getName()).substring(1).toLowerCase());
-		};
+		}
 	}
 
 	public static String getLowerBarFileNameWithoutExtension(String filename) {
-		return switch (filename.toLowerCase()) {
-		case "makefile" -> "Makefile";
-		case "dockerfile" -> "Dockerfile";
-		case "license" -> (Main.lang == Language.PORT ? "Arquivo de Licença" : "License File");
-		case "authors" -> (Main.lang == Language.PORT ? "Nomes dos Autores" : "Authors' Names");
-		case "gitignore" -> "Git Ignore";
+		switch (filename.toLowerCase()) {
+		case "makefile": return  "Makefile";
+		case "dockerfile": return  "Dockerfile";
+		case "license": return  (Main.lang == Language.PORT ? "Arquivo de Licença" : "License File");
+		case "authors": return  (Main.lang == Language.PORT ? "Nomes dos Autores" : "Authors' Names");
+		case "gitignore": return  "Git Ignore";
 
-		default -> (Main.lang == Language.PORT ? "Sem Extensão" : "No Extension");
-		};
+		default: return  (Main.lang == Language.PORT ? "Sem Extensão" : "No Extension");
+		}
 	}
 
 	public static List<IDEFont> color(int s, int e, IDEFont color, List<IDEFont> fs) {
@@ -1997,6 +1999,7 @@ public class CodeEditor extends IDEComponent {
 						if (i - 1 > 0 && Character.isLetter(chars[i - 1]))
 							continue;
 						
+						//addautocomplete.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
 						fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
 					}
 				}
@@ -6539,6 +6542,8 @@ public class CodeEditor extends IDEComponent {
 
 		int height = 30;
 		// ruleOf3(16, 30, FONT_SIZE);
+		
+		autocomplete = removeDuplicates(autocomplete);
 
 		for (AutoComplete a : autocomplete) {
 			if (a == null)
@@ -7455,14 +7460,22 @@ public class CodeEditor extends IDEComponent {
 							String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent())
 									? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent()))
 									: getKeywordsSpecial(editing.getRegent().getRegent().getName());
+							
+							try {
+								for (AutoComplete a : addautocomplete) {
+									if (a.text.contains(wordSinceSpace)) {
+										autocomplete.add(a);
+									}
+								}
+							} catch (ConcurrentModificationException e) {} // remover duplicatas de textos
 
 							if (autoc != null) {
 								for (String s : autoc)
 									if (s.contains(wordSinceSpace))
 										autocomplete.add(new AutoComplete(s, AutoCompleteType.KEYWORD));
-
+								
 								autocompleteindex = 0;
-
+								
 								addAutoCompleteOptions();
 							}
 						}
@@ -7901,8 +7914,8 @@ public class CodeEditor extends IDEComponent {
 		lines.removeAll(linesToRemove);
 		linesToRemove.clear();
 
-		autocomplete.addAll(addautocomplete);
-		addautocomplete.clear();
+		/*autocomplete.addAll(addautocomplete);
+		addautocomplete.clear();*/
 
 		autocomplete.removeAll(removeautocomplete);
 		removeautocomplete.clear();
