@@ -687,6 +687,8 @@ public class CodeEditor extends IDEComponent {
 	
 	public static final String[] mcKeys = { "true", "false", "minecraft", "?", "ability", "advancement", "alwaysday", "attribute", "ban", "ban-ip", "banlist", "bossbar", "camerashake", "changesetting", "clear", "clearspawnpoint", "clone", "connect", "data", "datapack", "daylock", "debug", "dedicatedwsserver", "defaultgamemode", "deop", "dialogue", "difficulty", "effect", "enchant", "event", "execute", "experience", "fill", "fog", "forceload", "function", "gamemode", "gamerule", "gametest", "give", "help", "immutableworld", "item", "jfr", "kick", "fill", "list", "locate", "locatebiome", "loot", "me", "mobevent", "msg", "music", "op", "ops", "pardon", "pardon-ip", "particle", "perf", "permission", "playanimation", "playsound", "publish", "recipe", "reload", "remove", "replaceitem", "ride", "save", "save-all", "save-off", "save-on", "say", "schedule", "scoreboard", "seed", "setblock", "setidletimeout", "setmaxplayers", "setworldspawn", "spawnpoint", "spectate", "spreadplayers", "stop", "stopsound", "structure", "summon", "tag", "team", "teammsg", "tell", "tellraw", "testfor", "testforblock", "testforblocks", "tickingarea", "time", "title", "titleraw", "tm", "toggledownfall", "tp", "trigger", "w", "wb", "weather", "whitelist", "worldborder", "worldbuilder", "wsserver", "xp" };
 	
+	//public Thread typeThread;
+	
 	///////
 
 	public CodeEditor(int x, int y, int width, int height) {
@@ -715,6 +717,17 @@ public class CodeEditor extends IDEComponent {
 		};
 
 		cursorThread.start();
+		
+		new Thread() {
+			public void run() {
+				while (true) {
+					if ((KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !Main.editor.alternateTabsMode) {
+			    		Main.editor.type();
+			    		Main.editor.detectArrows();
+					}
+				}
+			}
+		}.start();
 
 		new Thread() {
 			public void run() { // 25 pra frente com o explorer desligado, isso é uma gambiarrinha viu
@@ -831,6 +844,18 @@ public class CodeEditor extends IDEComponent {
 		};
 
 		cursorThread.start();
+		
+		/*typeThread = new Thread() {
+			public void run() {
+				while (true)
+					try {
+						Main.editor.type();
+					} catch (Exception e) {
+						System.err.println(e.getMessage());
+						continue;
+					}
+			}
+		};*/
 	}
 
 	public boolean hovered() {
@@ -6676,6 +6701,431 @@ public class CodeEditor extends IDEComponent {
 		
 		return cY;
 	}
+	
+	public void type() {
+		if (!isReadOnly) {
+			KeyInput.updateKeys();
+
+			if (!KeyInput.isShiftDown() && !lines.isEmpty())
+				if (drawcy > Main.screen.getHeight() || drawcy < 0)
+					CommandTerminal.runCommand("gotocursor");
+
+			StringBuilder cY = null;
+
+			try {
+				cY = new StringBuilder(new String(toCharArray(lines.get(cursorY - 1).getChars())));
+			} catch (Exception e) {
+				return;
+			}
+
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
+				KeyInput.updateKeys();
+				// undo.push(lines);
+
+				RightClickOption.removeAllRightClickOptions();
+
+				if (wordSinceSpace.length() > 0)
+					wordSinceSpace = wordSinceSpace.substring(0, wordSinceSpace.length() - 1);
+				else
+					wordSinceSpace = "";
+
+				if (selecting) {
+					CommandTerminal.runCommand("del");
+
+					return;
+				} else {
+					if (cursorX > 0) {
+						cY.deleteCharAt(cursorX - 1);
+
+						cursorX--;
+
+						setCursorWithinBounds();
+
+						editing.setSaved(false);
+
+						register(cY, cursorY - 1);
+					} else if (cursorY > 1) {
+						String s = cY.toString();
+
+						cursorX = lines.get(cursorY - 2).getChars().size();
+
+						lines.remove(cursorY - 1);
+						cursorY--;
+
+						cY = new StringBuilder(new String(toCharArray(lines.get(cursorY - 1).getChars())));
+
+						cY.append(s);
+
+						editing.setSaved(false);
+
+						register(cY, cursorY - 1);
+					}
+
+					return;
+				}
+			}
+
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
+				KeyInput.updateKeys();
+				// undo.push(lines);
+
+				if (cursorX < cY.length()) {
+					cY.deleteCharAt(cursorX);
+
+					setCursorWithinBounds();
+
+					editing.setSaved(false);
+
+					register(cY, cursorY - 1);
+				}
+
+				return;
+			}
+
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
+				KeyInput.updateKeys();
+				// undo.push(lines);
+
+				if (!RightClickOption.isAutoCompleteActive()) {
+					wordSinceSpace = "";
+					RightClickOption.removeAllRightClickOptions();
+
+					cY.insert(cursorX, "    "); // TODO fazer maleavel o tamanho da tab
+
+					cursorX += 4;
+					editing.setSaved(false);
+				} else {
+					autocompleteindex++;
+
+					if (autocompleteindex == autocompletes.size())
+						autocompleteindex = 0;
+				}
+			}
+
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+				KeyInput.updateKeys();
+				// undo.push(lines);
+
+				if (RightClickOption.isAutoCompleteActive()) {
+					autocompletes.get(autocompleteindex).command
+							.execute(autocompletes.get(autocompleteindex).clickArg);
+
+					RightClickOption.removeAllRightClickOptions();
+
+					return;
+				}
+
+				wordSinceSpace = "";
+				RightClickOption.removeAllRightClickOptions();
+
+				StringBuilder spaces = new StringBuilder();
+				String s = cY.substring(cursorX);
+
+				for (int i = 0; i < countChar(cY.toString(), ' '); i++)
+					spaces.append(' ');
+
+				for (int i = 0; i < countChar(cY.toString(), (char) 9); i++) // char 9 é o tab
+					spaces.append(' ');
+
+				int nSpaces = spaces.length();
+
+				spaces.append(s);
+				s = spaces.toString();
+
+				cY.delete(cursorX, cY.length());
+
+				List<IDEFont> fs = new ArrayList<>();
+
+				for (int i = 0; i < s.length(); i++)
+					fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
+
+				lines.add(cursorY, new IDELine(toCharList(s.toCharArray()), fs));
+
+				register(cY, cursorY - 1);
+
+				editing.setSaved(false);
+
+				cursorX = nSpaces;
+				cursorY++;
+
+				return;
+			}
+
+			if (KeyInput.getKeyCodePressed() != KeyEvent.VK_SHIFT) {
+				KeyInput.updateKeys();
+				
+				int keyCode = KeyInput.getKeyCodePressed();
+				char c = KeyInput.getCharPressed();
+				
+				c = addAccents(keyCode, c);
+				cY = write(cY, c);
+				
+				if (!(c < 32 || c > 1000))
+					wordSinceSpace += c;
+				if (keyCode == KeyEvent.VK_SPACE) {
+					wordSinceSpace = "";
+					RightClickOption.removeAllRightClickOptions();
+				}
+				
+				if (editing != null)
+					if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+									.equalsIgnoreCase(".xhtml")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+									.equalsIgnoreCase(".htm")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+									.equalsIgnoreCase(".ejs")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+									.equalsIgnoreCase(".xml")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+									.equalsIgnoreCase(".svg")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+									.equalsIgnoreCase(".sln")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+									.equalsIgnoreCase(".config")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+									.equalsIgnoreCase(".cfg")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+									.equalsIgnoreCase(".classpath")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+									.equalsIgnoreCase(".csproj")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+									.equalsIgnoreCase(".project")) {
+							if (c == '<') {
+								wordSinceSpace = "";
+								RightClickOption.removeAllRightClickOptions();
+							}
+						}
+
+				if (codeHelpersOn)
+					cY = addCodeHelps(cY);
+				
+				register(cY, cursorY - 1);
+				
+				cY = addExtraCode(cY, c);
+				register(cY, cursorY - 1);
+
+				cursorX++;
+
+				setCursorWithinBounds();
+
+				// Add AutoComplete
+
+				if ((Character.isLetter(c) || isNumber(c) || KeyInput.getCharPressed() == 46) && !isReadOnly
+						&& !alternateTabsMode && editing != null) { // adicionar esse código no backspace, e se
+																	// tiver espaços na frente, a keyword vai no
+																	// lugar errado
+					String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent())
+							? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent()))
+							: getKeywordsSpecial(editing.getRegent().getRegent().getName());
+					
+					try {
+						for (AutoComplete a : addautocomplete) {
+							if (a.text.contains(wordSinceSpace)) {
+								autocomplete.add(a);
+							}
+						}
+					} catch (ConcurrentModificationException e) {} // remover duplicatas de textos
+
+					if (autoc != null) {
+						for (String s : autoc)
+							if (s.contains(wordSinceSpace))
+								autocomplete.add(new AutoComplete(s, AutoCompleteType.KEYWORD));
+						
+						autocompleteindex = 0;
+						
+						addAutoCompleteOptions();
+					}
+				}
+
+				if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB
+						&& KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46
+						&& !KeyInput.isShiftDown())
+					RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.)
+				// if (KeyInput.getKeyCodePressed() == KeyEvent.)
+
+				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256
+						|| KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
+
+					// undo.push(lines);
+					if (editing != null)
+						editing.setSaved(false);
+				}
+			} // chama o automaticcolor aqui
+		}
+	}
+	
+	public void detectArrows() {
+		if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados, ou se alt gr está pressionado
+			try {
+				if (!RightClickOption.isRightClickActive()) {
+					if (!KeyInput.isShiftDown()) {
+						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
+							KeyInput.updateKeys();
+							
+							wordSinceSpace = "";
+							
+							if (cursorY == 1) cursorX = 0;
+							
+							cursorY--;
+
+							if (selecting) {
+								cursorX = index1;
+								cursorY = line1;
+							}
+
+							CommandTerminal.runCommand("deselect");
+							setCursorWithinBounds();
+
+							return;
+						}
+
+						else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
+							KeyInput.updateKeys();
+							
+							wordSinceSpace = "";
+							
+							if (cursorY == lines.size()) cursorX = lines.get(cursorY - 1).getChars().size();
+							
+							cursorY++;
+
+							if (selecting) {
+								cursorX = index2;
+								cursorY = line2;
+							}
+
+							CommandTerminal.runCommand("deselect");
+							setCursorWithinBounds();
+
+							return;
+						}
+
+						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
+							KeyInput.updateKeys();
+							
+							wordSinceSpace = "";
+							
+							cursorX--;
+
+							if (selecting) {
+								cursorX = index1;
+								cursorY = line1;
+							}
+
+							CommandTerminal.runCommand("deselect");
+							setCursorWithinBounds();
+
+							return;
+						}
+
+						else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
+							KeyInput.updateKeys();
+							
+							wordSinceSpace = "";
+							
+							cursorX++;
+
+							if (selecting) {
+								cursorX = index2;
+								cursorY = line2;
+							}
+
+							CommandTerminal.runCommand("deselect");
+							setCursorWithinBounds();
+
+							return;
+						}
+					} else {
+						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
+							KeyInput.updateKeys();
+							
+							wordSinceSpace = "";
+							
+							if (noneSelected())
+								directionStarted = Direction.UP;
+
+							if (directionStarted != Direction.DOWN) // não verificar se foi up, verificar se não foi
+																	// down, ou colocar um else e repetir a condição
+																	// do if
+								line1--;
+							else// if (directionStarted == Direction.DOWN)
+								line2--;
+
+							selecting = true;
+
+							line1 = setWithinBounds(index1, line1, false);
+
+							return;
+						}
+
+						else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
+							KeyInput.updateKeys();
+							
+							wordSinceSpace = "";
+							
+							if (noneSelected())
+								directionStarted = Direction.DOWN;
+
+							if (directionStarted != Direction.UP)
+								line2++;
+							else// if (directionStarted == Direction.UP)
+								line1++;
+
+							selecting = true;
+
+							line2 = setWithinBounds(index2, line2, false);
+
+							return;
+						}
+
+						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
+							KeyInput.updateKeys();
+							
+							wordSinceSpace = "";
+							
+							if (noneSelected())
+								directionStarted = Direction.LEFT;
+
+							if (directionStarted != Direction.RIGHT)
+								index1--;
+							else// if (directionStarted == Direction.RIGHT)
+								index2--;
+
+							selecting = true;
+
+							index1 = setWithinBounds(index1, line1, true);
+
+							return;
+						}
+
+						else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
+							KeyInput.updateKeys();
+							
+							wordSinceSpace = "";
+							
+							if (noneSelected())
+								directionStarted = Direction.RIGHT;
+
+							if (directionStarted != Direction.LEFT)
+								index2++;
+							else// if (directionStarted == Direction.LEFT)
+								index1++;
+
+							selecting = true;
+
+							index2 = setWithinBounds(index2, line2, true);
+
+							return;
+						}
+					}
+				}
+			} catch (Exception e) {
+				CommandTerminal.runCommand("deselect");
+			}
+			
+			//type();
+		}
+	}
 
 	public boolean noneSelected() {
 		return index1 == index2 && line1 == line2;
@@ -6696,6 +7146,13 @@ public class CodeEditor extends IDEComponent {
 
 		if (tabs.size() == 0)
 			CommandTerminal.runCommand("resettabscroll");
+		
+		callAutomaticColor();
+		
+		//type();
+		
+		/*if (!typeThread.isAlive())
+			typeThread.start();*/
 		
 		// colocar isso numa variavel constante
 		minMode = width < (selecting ? 800 : 600); // 850 - original
@@ -6984,73 +7441,12 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			IDEComponent.addRightClickOptions(MouseInput.getMouseX(), MouseInput.getMouseY(), list.toArray(new RightClickOption[list.size()]));
-			
-			/*IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), width, Texts.openCmd, (s) -> execute(s), "cmd");
-			IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, width, Texts.openTerminal, (s) -> execute(s), "term");
-
-			if (Main.baseFolder != null) {
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, width, Texts.openExplorer, (s) -> execute(s), "sysexp");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + (isReadOnly ? 90 : (editing != null ? (selecting ? 360 : 240) : 90)), width, Texts.setBaseFolder, (s) -> execute(s), "setbase");
-			}
-
-			if (!isReadOnly) {
-				if (editing != null) {
-					IDEComponent.addRightClickOption(MouseInput.getMouseX(),
-							MouseInput.getMouseY() + (selecting ? 240 : 150), width,
-							Texts.open + " " + Texts.searchReplace, (s) -> execute(s), "searchrep");
-					IDEComponent.addRightClickOption(MouseInput.getMouseX(),
-							MouseInput.getMouseY() + (selecting ? 270 : 180), width, Texts.selectLine,
-							(s) -> CommandTerminal.runCommand(s), "selectline");
-					IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, width,
-							Texts.save, (s) -> execute(s), "save");
-					IDEComponent.addRightClickOption(MouseInput.getMouseX(),
-							MouseInput.getMouseY() + (selecting ? 150 : 120), width, Texts.paste, (s) -> execute(s),
-							"paste");
-
-					if (selecting) {
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, width,
-								Texts.copy, (s) -> CommandTerminal.runCommand(s), "copy");
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 180, width,
-								Texts.cut, (s) -> CommandTerminal.runCommand(s), "cut");
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 210, width,
-								Texts.delete, (s) -> CommandTerminal.runCommand(s), "del");
-					}
-
-					if (Main.baseFolder != null && editing != null) {
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(),
-								MouseInput.getMouseY() + (selecting ? 300 : 210), width, Texts.selectAll,
-								(s) -> CommandTerminal.runCommand(s), "selectall");
-						IDEComponent.addRightClickOption(MouseInput.getMouseX(),
-								MouseInput.getMouseY() + (selecting ? 390 : 270), width, Texts.openDefault,
-								(s) -> execute(s), "opendef");
-					}
-				}
-			}
-
-			if (editing != null) {
-				if (selecting) {
-					IDEComponent.addRightClickOption(MouseInput.getMouseX(),
-							isReadOnly ? MouseInput.getMouseY() + 120 : MouseInput.getMouseY() + 330, width, Texts.deselect,
-									(s) -> CommandTerminal.runCommand(s), "deselect");
-				}
-			}
-		}*/
 		}
-
-		/*
-		 * if (KeyInput.isAltGrDown() && !SetFileName.added && !CommandTerminal.active)
-		 * { char c = KeyInput.getCharPressed(); StringBuilder bl = new
-		 * StringBuilder(new String(toCharArray(lines.get(cursorY - 1).getChars())));
-		 * 
-		 * bl.insert(cursorX, c); register(bl, cursorY - 1);
-		 * 
-		 * return; }
-		 */
-
+		
 		if (!selecting)
 			directionStarted = Direction.NONE;
 
-		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active) { // TODO
+		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active) { // TODO -- essa
 			setCursorWithinBounds();
 
 			new Thread() {
@@ -7068,435 +7464,7 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 			}.start();
-
-			if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !alternateTabsMode) { // se
-																															// ctrl,
-																															// alt
-																															// NÃO
-																															// estão
-																															// pressionados,
-																															// ou
-																															// se
-																															// alt
-																															// gr
-																															// está
-																															// pressionado
-				try {
-					if (!RightClickOption.isRightClickActive()) {
-						if (!KeyInput.isShiftDown()) {
-							if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
-								KeyInput.updateKeys();
-								
-								wordSinceSpace = "";
-								
-								if (cursorY == 1) cursorX = 0;
-								
-								cursorY--;
-
-								if (selecting) {
-									cursorX = index1;
-									cursorY = line1;
-								}
-
-								CommandTerminal.runCommand("deselect");
-								setCursorWithinBounds();
-
-								return;
-							}
-
-							else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
-								KeyInput.updateKeys();
-								
-								wordSinceSpace = "";
-								
-								if (cursorY == lines.size()) cursorX = lines.get(cursorY - 1).getChars().size();
-								
-								cursorY++;
-
-								if (selecting) {
-									cursorX = index2;
-									cursorY = line2;
-								}
-
-								CommandTerminal.runCommand("deselect");
-								setCursorWithinBounds();
-
-								return;
-							}
-
-							if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
-								KeyInput.updateKeys();
-								
-								wordSinceSpace = "";
-								
-								cursorX--;
-
-								if (selecting) {
-									cursorX = index1;
-									cursorY = line1;
-								}
-
-								CommandTerminal.runCommand("deselect");
-								setCursorWithinBounds();
-
-								return;
-							}
-
-							else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
-								KeyInput.updateKeys();
-								
-								wordSinceSpace = "";
-								
-								cursorX++;
-
-								if (selecting) {
-									cursorX = index2;
-									cursorY = line2;
-								}
-
-								CommandTerminal.runCommand("deselect");
-								setCursorWithinBounds();
-
-								return;
-							}
-						} else {
-							if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
-								KeyInput.updateKeys();
-								
-								wordSinceSpace = "";
-								
-								if (noneSelected())
-									directionStarted = Direction.UP;
-
-								if (directionStarted != Direction.DOWN) // não verificar se foi up, verificar se não foi
-																		// down, ou colocar um else e repetir a condição
-																		// do if
-									line1--;
-								else// if (directionStarted == Direction.DOWN)
-									line2--;
-
-								selecting = true;
-
-								line1 = setWithinBounds(index1, line1, false);
-
-								return;
-							}
-
-							else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
-								KeyInput.updateKeys();
-								
-								wordSinceSpace = "";
-								
-								if (noneSelected())
-									directionStarted = Direction.DOWN;
-
-								if (directionStarted != Direction.UP)
-									line2++;
-								else// if (directionStarted == Direction.UP)
-									line1++;
-
-								selecting = true;
-
-								line2 = setWithinBounds(index2, line2, false);
-
-								return;
-							}
-
-							if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
-								KeyInput.updateKeys();
-								
-								wordSinceSpace = "";
-								
-								if (noneSelected())
-									directionStarted = Direction.LEFT;
-
-								if (directionStarted != Direction.RIGHT)
-									index1--;
-								else// if (directionStarted == Direction.RIGHT)
-									index2--;
-
-								selecting = true;
-
-								index1 = setWithinBounds(index1, line1, true);
-
-								return;
-							}
-
-							else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
-								KeyInput.updateKeys();
-								
-								wordSinceSpace = "";
-								
-								if (noneSelected())
-									directionStarted = Direction.RIGHT;
-
-								if (directionStarted != Direction.LEFT)
-									index2++;
-								else// if (directionStarted == Direction.LEFT)
-									index1++;
-
-								selecting = true;
-
-								index2 = setWithinBounds(index2, line2, true);
-
-								return;
-							}
-						}
-					}
-				} catch (Exception e) {
-					CommandTerminal.runCommand("deselect");
-				}
-				
-				if (!isReadOnly) { // init
-					KeyInput.updateKeys();
-
-					if (!KeyInput.isShiftDown() && !lines.isEmpty())
-						if (drawcy > Main.screen.getHeight() || drawcy < 0)
-							CommandTerminal.runCommand("gotocursor");
-
-					StringBuilder cY = null;
-
-					try {
-						cY = new StringBuilder(new String(toCharArray(lines.get(cursorY - 1).getChars())));
-					} catch (Exception e) {
-						return;
-					}
-
-					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
-						KeyInput.updateKeys();
-						// undo.push(lines);
-
-						RightClickOption.removeAllRightClickOptions();
-
-						if (wordSinceSpace.length() > 0)
-							wordSinceSpace = wordSinceSpace.substring(0, wordSinceSpace.length() - 1);
-						else
-							wordSinceSpace = "";
-
-						if (selecting) {
-							CommandTerminal.runCommand("del");
-
-							return;
-						} else {
-							if (cursorX > 0) {
-								cY.deleteCharAt(cursorX - 1);
-
-								cursorX--;
-
-								setCursorWithinBounds();
-
-								editing.setSaved(false);
-
-								register(cY, cursorY - 1);
-							} else if (cursorY > 1) {
-								String s = cY.toString();
-
-								cursorX = lines.get(cursorY - 2).getChars().size();
-
-								lines.remove(cursorY - 1);
-								cursorY--;
-
-								cY = new StringBuilder(new String(toCharArray(lines.get(cursorY - 1).getChars())));
-
-								cY.append(s);
-
-								editing.setSaved(false);
-
-								register(cY, cursorY - 1);
-							}
-
-							return;
-						}
-					}
-
-					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
-						KeyInput.updateKeys();
-						// undo.push(lines);
-
-						if (cursorX < cY.length()) {
-							cY.deleteCharAt(cursorX);
-
-							setCursorWithinBounds();
-
-							editing.setSaved(false);
-
-							register(cY, cursorY - 1);
-						}
-
-						return;
-					}
-
-					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
-						KeyInput.updateKeys();
-						// undo.push(lines);
-
-						if (!RightClickOption.isAutoCompleteActive()) {
-							wordSinceSpace = "";
-							RightClickOption.removeAllRightClickOptions();
-
-							cY.insert(cursorX, "    "); // TODO fazer maleavel o tamanho da tab
-
-							cursorX += 4;
-							editing.setSaved(false);
-						} else {
-							autocompleteindex++;
-
-							if (autocompleteindex == autocompletes.size())
-								autocompleteindex = 0;
-						}
-					}
-
-					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
-						KeyInput.updateKeys();
-						// undo.push(lines);
-
-						if (RightClickOption.isAutoCompleteActive()) {
-							autocompletes.get(autocompleteindex).command
-									.execute(autocompletes.get(autocompleteindex).clickArg);
-
-							RightClickOption.removeAllRightClickOptions();
-
-							return;
-						}
-
-						wordSinceSpace = "";
-						RightClickOption.removeAllRightClickOptions();
-
-						StringBuilder spaces = new StringBuilder();
-						String s = cY.substring(cursorX);
-
-						for (int i = 0; i < countChar(cY.toString(), ' '); i++)
-							spaces.append(' ');
-
-						for (int i = 0; i < countChar(cY.toString(), (char) 9); i++) // char 9 é o tab
-							spaces.append(' ');
-
-						int nSpaces = spaces.length();
-
-						spaces.append(s);
-						s = spaces.toString();
-
-						cY.delete(cursorX, cY.length());
-
-						List<IDEFont> fs = new ArrayList<>();
-
-						for (int i = 0; i < s.length(); i++)
-							fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
-
-						lines.add(cursorY, new IDELine(toCharList(s.toCharArray()), fs));
-
-						register(cY, cursorY - 1);
-
-						editing.setSaved(false);
-
-						cursorX = nSpaces;
-						cursorY++;
-
-						return;
-					}
-
-					if (KeyInput.getKeyCodePressed() != KeyEvent.VK_SHIFT) {
-						int keyCode = KeyInput.getKeyCodePressed();
-						char c = KeyInput.getCharPressed();
-						
-						c = addAccents(keyCode, c);
-						cY = write(cY, c);
-						
-						if (!(c < 32 || c > 1000))
-							wordSinceSpace += c;
-						if (keyCode == KeyEvent.VK_SPACE) {
-							wordSinceSpace = "";
-							RightClickOption.removeAllRightClickOptions();
-						}
-						
-						if (editing != null)
-							if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html")
-									|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-											.equalsIgnoreCase(".xhtml")
-									|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-											.equalsIgnoreCase(".htm")
-									|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-											.equalsIgnoreCase(".ejs")
-									|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-											.equalsIgnoreCase(".xml")
-									|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-											.equalsIgnoreCase(".svg")
-									|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-											.equalsIgnoreCase(".sln")
-									|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-											.equalsIgnoreCase(".config")
-									|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-											.equalsIgnoreCase(".cfg")
-									|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-											.equalsIgnoreCase(".classpath")
-									|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-											.equalsIgnoreCase(".csproj")
-									|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-											.equalsIgnoreCase(".project")) {
-									if (c == '<') {
-										wordSinceSpace = "";
-										RightClickOption.removeAllRightClickOptions();
-									}
-								}
-
-						if (codeHelpersOn)
-							cY = addCodeHelps(cY);
-						
-						register(cY, cursorY - 1);
-						
-						cY = addExtraCode(cY, c);
-						register(cY, cursorY - 1);
-
-						cursorX++;
-
-						setCursorWithinBounds();
-
-						// Add AutoComplete
-
-						if ((Character.isLetter(c) || isNumber(c) || KeyInput.getCharPressed() == 46) && !isReadOnly
-								&& !alternateTabsMode && editing != null) { // adicionar esse código no backspace, e se
-																			// tiver espaços na frente, a keyword vai no
-																			// lugar errado
-							String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent())
-									? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent()))
-									: getKeywordsSpecial(editing.getRegent().getRegent().getName());
-							
-							try {
-								for (AutoComplete a : addautocomplete) {
-									if (a.text.contains(wordSinceSpace)) {
-										autocomplete.add(a);
-									}
-								}
-							} catch (ConcurrentModificationException e) {} // remover duplicatas de textos
-
-							if (autoc != null) {
-								for (String s : autoc)
-									if (s.contains(wordSinceSpace))
-										autocomplete.add(new AutoComplete(s, AutoCompleteType.KEYWORD));
-								
-								autocompleteindex = 0;
-								
-								addAutoCompleteOptions();
-							}
-						}
-
-						if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB
-								&& KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46
-								&& !KeyInput.isShiftDown())
-							RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.)
-						// if (KeyInput.getKeyCodePressed() == KeyEvent.)
-
-						if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256
-								|| KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
-
-							// undo.push(lines);
-							if (editing != null)
-								editing.setSaved(false);
-						}
-					}
-				} // esse
-			}
-
+			
 			// Detectar atalhos
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && !alternateTabsMode) {
@@ -7696,7 +7664,7 @@ public class CodeEditor extends IDEComponent {
 
 				return;
 			}
-
+			
 			/*
 			 * else if (KeyInput.isControlDown() && KeyInput.isShiftDown() &&
 			 * KeyInput.getKeyCodePressed() == KeyEvent.VK_R) { // Ctrl + Shift + R (Close

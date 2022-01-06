@@ -757,91 +757,13 @@ public class Main implements Runnable, Tickable {
 
         bs.show();
     }
-
-   /* @Override
-    public void run() {
-        while (running) {   	
-        	if (hasUserInteraction()) {
-        		tick();
-        		render();
-        	}
-        	
-        	closing:
-	        	if (WindowInput.isClosing()) {
-	        		writeFile(settingsFile);
-	        		
-		    		if (Main.editor.editing != null) { // não for nulo
-		    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
-		    				String[] options = { Texts.yes, Texts.no, Texts.cancel };
-		    				
-		    				Main.editor.setSystemLook();
-		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-		    				
-		    				if (selectedOption == 0) Main.editor.editing.save();
-		    				else if (selectedOption == 2) {
-		    					WindowInput.update();
-		    					
-		    					break closing;
-		    				}
-		    			}
-		    		}
-		    		
-		    		System.exit(0);
-		    	}
-        	
-            try {
-				Thread.sleep(1000/260);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-        }
-    }*/
-    
-    /*@Override
-    public void run() {
-    	while (running) {
-    		if (WindowInput.isActivated() && ((MouseInput.mouseMoved() || KeyInput.isKeyPressed()) || (ComponentInput.windowMoved() || ComponentInput.windowResized()))) {
-            	tick();
-            	render();
-        	
-        	closing:
-	        	if (WindowInput.isClosing()) {
-	        		writeFile(settingsFile);
-	        		
-		    		if (Main.editor.editing != null) { // não for nulo
-		    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
-		    				String[] options = { Texts.yes, Texts.no, Texts.cancel };
-		    				
-		    				Main.editor.setSystemLook();
-		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-		    				
-		    				if (selectedOption == 0) Main.editor.editing.save();
-		    				else if (selectedOption == 2) {
-		    					WindowInput.update();
-		    					
-		    					break closing;
-		    				}
-		    			}
-		    		}
-		    		
-		    		System.exit(0);
-		    	}
-			}
-    		
-    		try {
-    			Thread.sleep(1000/100);
-    		} catch (InterruptedException e) {
-    			e.printStackTrace();
-    		}
-    	}
-    }*/
     
     @Override
     public void run() {
     	screen.requestFocus();
     	
     	long lastTime = System.nanoTime(); // Release v3.9.1 - 14/08/2021 - 14:51
-    	double targetFps = 120.0; // 60
+    	double targetFps = 60.0; // 120
     	double ns = 1E9 / targetFps;
     	double delta = 0;
     	

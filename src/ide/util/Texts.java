@@ -405,7 +405,7 @@ public final class Texts {
 			
 			renameFile = "Rename File";
 			
-			fileExists = "There is already a file in that folder with that name.";
+			fileExists = "There is already a file in this folder with this name.";
 			
 			readOnly = "Read-Only";
 			
