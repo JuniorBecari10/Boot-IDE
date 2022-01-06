@@ -6964,6 +6964,8 @@ public class CodeEditor extends IDEComponent {
 		if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !alternateTabsMode) { // se ctrl, alt NÃO estão pressionados, ou se alt gr está pressionado
 			try {
 				if (!RightClickOption.isRightClickActive()) {
+					showCursor = true;
+					
 					if (!KeyInput.isShiftDown()) {
 						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 							KeyInput.updateKeys();
