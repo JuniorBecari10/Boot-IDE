@@ -3,6 +3,7 @@ package ide.components;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import ide.codeeditor.CodeEditor;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.main.Main;
@@ -13,10 +14,16 @@ import ide.util.Texts;
 public class Logo extends IDEComponent {
 	
 	private boolean showMessage1 = true;
+	private boolean showTexts = true;
 	private boolean show = true;
+	
+	private int initialWidth, initialHeight;
 
 	public Logo(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
+		
+		initialWidth = width;
+		initialHeight = height;
 	}
 	
 	public void tick() {
@@ -27,7 +34,8 @@ public class Logo extends IDEComponent {
 		else
 			showMessage1 = true;
 		
-		show = Main.editor.editing == null && x + 350 < Main.screen.getWidth();
+		show = Main.editor.editing == null;
+		showTexts = x + 350 < Main.screen.getWidth();
 		
 		if (!CommandTerminal.expOff) {
 			x = (int) (Main.screen.getWidth() / 2 + 80);
@@ -40,13 +48,28 @@ public class Logo extends IDEComponent {
 		
 		if (x <= Main.explorer.getWidth() + 230) // 290
 			x = Main.explorer.getWidth() + 230;
+		
+		if (Main.screen.getWidth() < 690) {
+			x = ((Main.screen.getWidth() / 2) - (width / 2)) + (Main.explorer.getWidth() / 2) + 5;
+			
+			int size = CodeEditor.ruleOf3(100, 50, ((Main.screen.getWidth() / 2) - (width / 2)));
+			
+			width = size;
+			height = size;
+		}
+		else {
+			width = initialWidth;
+			height = initialHeight;
+		}
 	}
 	
 	public void render(Graphics g) {
-		if (Main.screen.getWidth() < 690) return;
 		if (!show) return;
 		
 		super.render(g);
+		
+		if (Main.screen.getWidth() < 690) return;
+		if (!showTexts) return;
 		
 		if (showMessage1) {
 			g.setColor(Colors.explorer);
