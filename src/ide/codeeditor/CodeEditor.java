@@ -1692,6 +1692,24 @@ public class CodeEditor extends IDEComponent {
 
 				return fs;
 			}
+			
+			if (ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".mjs")
+				|| ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".tsx")) {
+				
+				indxs = findWord(new String(chars), "return"); // depois de <palavra>
+
+				int len = 0;
+
+				for (Integer i : indxs) {
+					len = 0;
+
+					while (i + len < chars.length)
+						len++;
+
+					// if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}
+			}
 
 			if (ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".pyx")
 					|| ext.equalsIgnoreCase(".ipynb")) {
@@ -1776,6 +1794,34 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), "import"); // depois de <palavra>
 
 				int len = 0;
+
+				for (Integer i : indxs) {
+					len = 0;
+
+					while (i + len < chars.length)
+						len++;
+
+					// if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}
+				
+				indxs = findWord(new String(chars), "return"); // depois de <palavra>
+
+				len = 0;
+
+				for (Integer i : indxs) {
+					len = 0;
+
+					while (i + len < chars.length)
+						len++;
+
+					// if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}
+				
+				indxs = findWord(new String(chars), "global"); // depois de <palavra>
+
+				len = 0;
 
 				for (Integer i : indxs) {
 					len = 0;
