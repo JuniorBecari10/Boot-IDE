@@ -2326,6 +2326,20 @@ public class CodeEditor extends IDEComponent {
 
 					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				}
+				
+				indxs = findWord(new String(chars), "return"); // depois de <palavra>
+
+				len = 0;
+
+				for (Integer i : indxs) {
+					len = 0;
+
+					while (i + len < chars.length)
+						len++;
+
+					// if (i + len < chars.length)
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}
 
 				indxs = findWord(new String(chars), "]");
 
