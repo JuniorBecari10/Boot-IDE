@@ -118,6 +118,7 @@ public final class Texts {
 	public static String theFile;
 	public static String isNotSaved;
 	
+	public static String cannotBeOnlySpaces;
 	public static String fileNameIllegal;
 	
 	public static String confirmSave;
@@ -298,6 +299,7 @@ public final class Texts {
 			isNotSaved = "não está salvo. Deseja salvá-lo antes de fechar?";
 			
 			fileNameIllegal = "O nome do arquivo contém caracteres não permitidos.";
+			cannotBeOnlySpaces = "O nome do arquivo não pode ser somente espaços!";
 			
 			confirmSave = "Confirmar Salvamento do Arquivo";
 			
@@ -477,6 +479,7 @@ public final class Texts {
 			isNotSaved = "is not saved. Do you want to save it before you close?";
 			
 			fileNameIllegal = "The file name contains non-permitted characters.";
+			cannotBeOnlySpaces = "The file name cannot be only spaces!";
 			
 			confirmSave = "Confirm File Save";
 			

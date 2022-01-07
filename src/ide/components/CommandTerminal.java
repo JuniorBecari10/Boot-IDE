@@ -201,7 +201,7 @@ public class CommandTerminal extends IDEComponent {
 			case "version":
 				CodeEditor.setSystemLook();
 				
-				JOptionPane.showMessageDialog(null, Main.PROGRAM_NAME + " " + Texts.version + " " + Main.VERSION + " © Boot 2021, All Rights Reserved.", Texts.version, JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, Main.PROGRAM_NAME + " " + Texts.version + " " + Main.VERSION + " © Boot 2022, All Rights Reserved.", Texts.version, JOptionPane.INFORMATION_MESSAGE);
 				break;
 				
 			case "resetexplorerdrag":

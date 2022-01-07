@@ -118,6 +118,7 @@ public class RenameFile extends IDEComponent {
 				if (text.length() == 0 || text.toString().endsWith(".")) return;
 				if (hasIllegalChars(text.toString())) return;
 				if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath()))) return;
+				if (text.toString().trim().equals("")) return;
 				
 				File newf = new File(Explorer.getScopePath() + "/" + text.toString());
 				
@@ -192,5 +193,8 @@ public class RenameFile extends IDEComponent {
 		
 		if (hasIllegalChars(text.toString()))
 			Fonts.drawString(Texts.fileNameIllegal, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
+		
+		if (text.toString().trim().equals(""))
+			Fonts.drawString(Texts.cannotBeOnlySpaces, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
 	}
 }

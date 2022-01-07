@@ -721,6 +721,8 @@ public class CodeEditor extends IDEComponent {
 		typeThread = new Thread() {
 			public void run() {
 				while (true) {
+					if (SetFileName.added || CommandTerminal.active || RenameFile.added) continue;
+					
 					if (KeyInput.isKeyPressed()) {
 						if ((!SetFileName.added && !CommandTerminal.active) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !Main.editor.alternateTabsMode) {
 			    			Main.editor.type();
