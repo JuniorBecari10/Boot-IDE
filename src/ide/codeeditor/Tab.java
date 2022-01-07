@@ -138,6 +138,11 @@ public class Tab extends IDEComponent implements Serializable {
 	 * Fecha essa Tab.
 	 */
 	public void close() {
+		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        StackTraceElement element = stackTrace[2];
+        System.out.println("I was called by a method named: " + element.getMethodName());
+        System.out.println("That method is in class: " + element.getClassName());
+		
 		closing = true;
 		
 		if (Main.editor.editing != null && save) { // não for nulo

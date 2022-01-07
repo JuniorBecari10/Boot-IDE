@@ -379,7 +379,8 @@ public class CodeEditor extends IDEComponent {
 			"attrib", "chkdsk", "choice", "cmd", "comp", "convert", "driverquery", "expand", "find", "format", "help",
 			"ipconfig", "label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo", "taskkill",
 			"xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto", "rmdir", "icacls", "takeown", "if",
-			"for", "else", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc", "nasm",
+			"for", "else", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc", "nasm", "pip",
+			"pip3", "pipwin",
 			"qemu", "gcc", "g++", "python", "lua", "eject", "tsc", "setlocal", "endlocal", "make", "yarn", "color",
 			"VER", "ASSOC", "CD", "CLS", "COPY", "DEL", "DIR", "DATE", "ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE", "CMD", "COMP",
@@ -387,6 +388,7 @@ public class CodeEditor extends IDEComponent {
 			"PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO", "TASKKILL", "XCOPY", "TREE", "FC", "TITLE",
 			"SET", "BASH", "NODE", "OFF", "GOTO", "RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM",
 			"CALL", "EXIST", "END", "JAVA", "JAVAC", "JAVAW", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON",
+			"PIP", "PIP3", "PIPWIN",
 			"LUA", "EJECT", "TSC", "SETLOCAL", "ENDLOCAL", "MAKE", "YARN", "COLOR" };
 
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
@@ -600,11 +602,13 @@ public class CodeEditor extends IDEComponent {
 			"kill", "ping", "wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd",
 			"userdel", "clear", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc",
 			"node", "nasm", "qemu", "gcc", "g++", "python", "lua", "if", "then", "else", "fi", "date", "eject", "tsc",
+			"pip", "pip3", "pipwin",
 			"setlocal", "endlocal", "make", "yarn", "color", "for", "PWD", "CD", "LS", "CAT", "CP", "MV", "MKDIR",
 			"RMDIR", "RM", "TOUCH", "LOCATE", "FIND", "GREP", "SUDO", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR",
 			"CHMOD", "CHOWN", "JOBS", "KILL", "PING", "WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP",
 			"HOSTNAME", "USERADD", "USERDEL", "CLEAR", "GIT", "NPM", "CALL", "EXIST", "END", "EJECT", "SETLOCAL",
 			"ENDLOCAL", "FOR", "JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA",
+			"PIP", "PIP3", "PIPWIN",
 			"JAVAW", "IF", "THEN", "ELSE", "FI", "DATE", "YARN", "COLOR", "TSC", "MAKE" };
 
 	public static final String[] tsKeys = { "type", "number", "protected", "else", "let", "catch", "if", "case", "in",
