@@ -350,7 +350,7 @@ public class CodeEditor extends IDEComponent {
 	public static final String[] cKeys = { "auto", "break", "case", "char", "const", "continue", "default", "do",
 			"double", "else", "enum", "extern", "float", "for", "goto", "if", "int", "long", "register", "return",
 			"short", "signed", "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", "void",
-			"volatile", "while", "true", "false", "null", "include", "restrict", "bool", "duint", "uint16_t",
+			"volatile", "while", "true", "false", "null", "#include", "restrict", "bool", "duint", "uint8_t", "uint16_t",
 			"size_t" };
 
 	public static final String[] cppKeys = { "auto", "break", "case", "char", "const", "continue", "default", "do",
@@ -360,7 +360,7 @@ public class CodeEditor extends IDEComponent {
 			"static_cast", "false", "catch", "operator", "template", "friend", "private", "class", "this", "inline",
 			"public", "throw", "const_cast", "delete", "mutable", "protected", "true", "try", "typeid", "typename",
 			"using", "virtual", "wchar_t", "#include", "#define", "string", "#ifdef", "#ifndef", "#error", "#pragma", "#endif",
-			"override", "std", "size_t", "duint", "uint16_t", "comment", "lib" };
+			"override", "std", "size_t", "duint", "uint8_t", "uint16_t", "comment", "lib" };
 
 	public static final String[] csKeys = { "abstract", "async", "const", "event", "extern", "new", "override",
 			"partial", "readonly", "sealed", "static", "unsafe", "virtual", "volatile", "public", "private", "internal",
