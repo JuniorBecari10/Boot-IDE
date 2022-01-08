@@ -692,6 +692,7 @@ public class CodeEditor extends IDEComponent {
 	public static final String[] mcKeys = { "true", "false", "minecraft", "?", "ability", "advancement", "alwaysday", "attribute", "ban", "ban-ip", "banlist", "bossbar", "camerashake", "changesetting", "clear", "clearspawnpoint", "clone", "connect", "data", "datapack", "daylock", "debug", "dedicatedwsserver", "defaultgamemode", "deop", "dialogue", "difficulty", "effect", "enchant", "event", "execute", "experience", "fill", "fog", "forceload", "function", "gamemode", "gamerule", "gametest", "give", "help", "immutableworld", "item", "jfr", "kick", "fill", "list", "locate", "locatebiome", "loot", "me", "mobevent", "msg", "music", "op", "ops", "pardon", "pardon-ip", "particle", "perf", "permission", "playanimation", "playsound", "publish", "recipe", "reload", "remove", "replaceitem", "ride", "save", "save-all", "save-off", "save-on", "say", "schedule", "scoreboard", "seed", "setblock", "setidletimeout", "setmaxplayers", "setworldspawn", "spawnpoint", "spectate", "spreadplayers", "stop", "stopsound", "structure", "summon", "tag", "team", "teammsg", "tell", "tellraw", "testfor", "testforblock", "testforblocks", "tickingarea", "time", "title", "titleraw", "tm", "toggledownfall", "tp", "trigger", "w", "wb", "weather", "whitelist", "worldborder", "worldbuilder", "wsserver", "xp" };
 	
 	public Thread typeThread;
+	public Thread killAllTabs;
 	
 	///////
 
@@ -711,6 +712,18 @@ public class CodeEditor extends IDEComponent {
 				flip = !flip;
 
 				super.play();
+			}
+		};
+		
+		killAllTabs = new Thread() {
+			public void run() {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) { // Esperar a animação acabar
+					e.printStackTrace();
+				}
+				
+				tabs.clear();
 			}
 		};
 
