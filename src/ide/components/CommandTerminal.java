@@ -77,13 +77,13 @@ public class CommandTerminal extends IDEComponent {
 	
 	// O Emmet não está disponível ainda, talvez na v4.0 ele venha
 	
-	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", /*"restart",*/
+	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile", "resetreadmode",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode",
-			"gendiv str:class_name", "gensnippet str:type", //"emmet str:expression",
+			"gendiv str:class_name", "gensnippet str:type",
 			"lorem int:num_words", "ordertab int:tab_from int:tab_to", "openfile str:file",
 			"setcursorpos int:x int:y",
 			"getproperty str:property",
@@ -93,13 +93,13 @@ public class CommandTerminal extends IDEComponent {
 			"gensnippet cs/csmain str:class_name str:namespace"
 			};
 	
-	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll", /*"restart",*/
+	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile", "resetreadmode",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab", "setexplorerdrag",
 			"gotoline", "setfontsize", "insertchar", "setreadmode",
-			"gendiv", "gensnippet", //"emmet",
+			"gendiv", "gensnippet",
 			"lorem", "ordertab", "openfile",
 			"setcursorpos",
 			"getproperty",
@@ -329,11 +329,6 @@ public class CommandTerminal extends IDEComponent {
 							
 							Main.editor.editing.setSaved(false);
 					
-					/*Main.editor.cursorX = Main.editor.mx;		// tomar cuidado quando o comando é chamado pelo sistema e vc ver seu cursor andando adoidado por ai viu TODO
-					Main.editor.cursorY = Main.editor.my;			// melhor desabilitar isso
-					
-					Main.editor.setCursorWithinBounds();*/
-					
 						break;
 					}
 					else {
@@ -426,48 +421,6 @@ public class CommandTerminal extends IDEComponent {
     				CodeEditor.setSystemLook();
     				int selectedOption = JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
     				
-    				/*if (selectedOption == 0) {
-    					Main.baseFolder = fl.getParentFile();
-		        	  	
-		        	  	Explorer.files.clear();
-						ListableFile.files.clear();
-						
-						Explorer.scope = null;
-		        	  	
-		        	  	int index = 0;
-						
-						for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
-							ListableFile.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
-							
-							index++;
-						}
-		          
-				int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() : Tab.MIN_X;
-	        	
-				if (!(fl.getName().equalsIgnoreCase(".pdf") || fl.getName().equalsIgnoreCase(".jar") || fl.getName().equalsIgnoreCase(".iso") || fl.getName().equalsIgnoreCase(".img") || fl.getName().equalsIgnoreCase(".flp") || fl.getName().equalsIgnoreCase(".class") || fl.getName().equalsIgnoreCase(".exe") || fl.getName().equalsIgnoreCase(".urna") || fl.getName().equalsIgnoreCase(".save") || fl.getName().equalsIgnoreCase(".docx") || fl.getName().equalsIgnoreCase(".pptx") || fl.getName().equalsIgnoreCase(".one") || fl.getName().equalsIgnoreCase(".psd") || fl.getName().equalsIgnoreCase(".aed") || fl.getName().equalsIgnoreCase(".ai") || fl.getName().equalsIgnoreCase(".indd") || fl.getName().equalsIgnoreCase(".ini") || fl.getName().equalsIgnoreCase(".dll") || fl.getName().equalsIgnoreCase(".png") || fl.getName().equalsIgnoreCase(".jpg") || fl.getName().equalsIgnoreCase(".jpeg") || fl.getName().equalsIgnoreCase(".gif") || fl.getName().equalsIgnoreCase(".bmp") || fl.getName().equalsIgnoreCase(".ico") || fl.getName().equalsIgnoreCase(".webp") || fl.getName().equalsIgnoreCase(".mp4") || fl.getName().equalsIgnoreCase(".wmv") || fl.getName().equalsIgnoreCase(".avi") || fl.getName().equalsIgnoreCase(".wav") || fl.getName().equalsIgnoreCase(".mp3") || fl.getName().equalsIgnoreCase(".ogg") || fl.getName().equalsIgnoreCase(".otf") || fl.getName().equalsIgnoreCase(".ttf") || fl.getName().equalsIgnoreCase(".woff") || fl.getName().equalsIgnoreCase(".woff2") || fl.getName().equalsIgnoreCase(".zip") || fl.getName().equalsIgnoreCase(".rar") || fl.getName().equalsIgnoreCase(".7z") || fl.getName().equalsIgnoreCase(".bin"))) {
-		        	Tab toAdd = new Tab(Main.editor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : Tab.MIN_X - Tab.WIDTH, ListableFile.searchListableFiles(fl));
-		        	
-	  				Main.editor.cursorX = 0;
-	  				Main.editor.cursorY = 1;
-	  				
-	  				Main.editor.scrX = 0;
-	  				Main.editor.scrY = 0;
-	  				
-		        	  	Main.editor.editing = toAdd;
-		        	  	Main.editor.tabs.add(toAdd);
-						
-		        	  	new Thread() {
-							public void run() {
-								try {
-									Main.editor.lines = Main.editor.readFile(fl);
-								} catch (IOException e) { // não suportado, se caiu aqui
-									return;
-								}
-							}
-						}.start();
-		        	  	
-						Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
-    				}*/
     				if (selectedOption == 0) {
     					try {
 							Main.desktop.open(fl.getParentFile());
@@ -475,15 +428,6 @@ public class CommandTerminal extends IDEComponent {
 							e.printStackTrace();
 						}
     				}
-    				/*else if (selectedOption == 1) {
-    					try {
-    						File file = new File(fl.getName().contains(Main.CONFIG_FILE_EXTENSION) ? fl.getName() : fl.getName() + Main.CONFIG_FILE_EXTENSION);
-    						
-							Main.desktop.open(file);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-    				}*/
 				}
 				break;
 				
@@ -496,30 +440,6 @@ public class CommandTerminal extends IDEComponent {
 				expOff ^= true;	// uma forma de togglar boolean (^ é xor gate)
 				
 				break;
-				
-			/*case "restart":
-				try {
-					Main.restartApplication(() -> {
-						Main.writeFile(Main.settingsFile);
-    	        		
-    		    		if (Main.editor.editing != null) { // não for nulo
-    		    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
-    		    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
-    		    				
-    		    				CodeEditor.setSystemLook();
-    		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-    		    				
-    		    				if (selectedOption == 0) Main.editor.editing.save();
-    		    				else if (selectedOption == 2) {
-    		    					WindowInput.update();
-    		    				}
-    		    			}
-    		    		}
-					});
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				break;*/
 				
 			case "loadconfigfile":
 				option = chooser.showOpenDialog(Main.screen.frame);
@@ -543,9 +463,6 @@ public class CommandTerminal extends IDEComponent {
 						runCommand("revertconfigfile");
 					}
 					
-					/*if (typedFlag)
-						runCommand("restart");*/
-					
 					if (typedFlag) {
 						String[] options = {"  Ok  " };
 						
@@ -563,9 +480,6 @@ public class CommandTerminal extends IDEComponent {
 				runCommand("revertconfigfile");
 				
 				Main.hasConfigFile = false;
-				
-				/*if (typedFlag)
-					runCommand("restart"); // fazer isso aqui rodar TODO*/
 				
 				if (typedFlag) {
 					String[] options = {"  Ok  " };
@@ -845,14 +759,6 @@ public class CommandTerminal extends IDEComponent {
 					ListableFile.addTab(ListableFile.search(f, f.getParentFile()), true);
 				
 				break;
-				
-			/*case "openfile":
-				File f = new File(args[0]);
-				
-				if (!f.exists()) return;
-				
-				ListableFile.addTab(ListableFile.search(f, new File(Explorer.getScopePath())), true);
-				break;*/
 			
 			case "setreadmode":
 				try {
@@ -956,19 +862,6 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			/*case "rename":
-				int option = chooser.showOpenDialog(Main.screen.frame);
-				
-				if (option == JFileChooser.APPROVE_OPTION) {
-					File toRename = chooser.getSelectedFile();
-					
-					String newPath = toRename.getParent() + "\\" + args[0];
-					File newFile = new File(newPath);
-					
-					toRename.renameTo(newFile);
-				}
-				break;*/
-				
 			case "gensnippet":
 				if (Main.editor.editing == null) break;
 				if (Main.editor.isReadOnly) break;
@@ -1047,20 +940,6 @@ public class CommandTerminal extends IDEComponent {
 					strs = javamstrs;
 					
 					break;
-					
-				/*case "cs":
-					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname, "{", "    ", "    public class Program", "    {", "        ", "    }", "}"};
-					
-					strs = csstrs;
-					
-					break;
-					
-				case "csmain":
-					String[] csmstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + classname + " ", "{", "    ", "    public class Program ", "    {", "        ", "        static void Main(string[] args)", "        {", "            ", "        }", "    }", "}"};
-					
-					strs = csmstrs;
-					
-					break;*/
 					
 				case "cpp":
 					String[] cppstrs = { "#include <iostream>", "", "using namespace std;" };
@@ -1160,48 +1039,6 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			/*case "search":									// Deprecated. Use Search/Replace.
-				List<Integer> linesfound = new ArrayList<>();
-				
-				//args[0] = Main.editor.arrayToStr(args); // -- n da certo pq esse comando n vai ser executado pq o numero de args é maior
-				
-				for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
-					IDELine l = Main.editor.lines.get(i);
-					String s = new String(Main.editor.toCharArray(l.getChars())).toLowerCase();
-					
-					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
-				}
-				
-				if (linesfound.size() == 0) return;
-				
-				// como é automaticamente occur 0, pegamos automaticamente ela.
-				
-				Main.editor.scrY = (linesfound.get(0) + 1) * (Main.editor.FONT_SIZE);// + 4);
-				Main.editor.cursorY = (linesfound.get(0) - 1) + 2;
-				
-				break;
-				
-			case "searchsel":
-				if (!Main.editor.selecting) break;
-				
-				linesfound = new ArrayList<>();
-				
-				for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
-					IDELine l = Main.editor.lines.get(i);
-					String s = new String(Main.editor.toCharArray(l.getChars())).toLowerCase();
-					
-					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
-				}
-				
-				if (linesfound.size() == 0) return;
-				
-				// como é automaticamente occur 0, pegamos automaticamente ela.
-				
-				Main.editor.scrY = (linesfound.get(0) - 1) * (Main.editor.FONT_SIZE);// + 4);
-				Main.editor.cursorY = (linesfound.get(0) - 1) + 2;
-				
-				break;*/
-				
 			case "lorem":
 				if (Main.editor.editing == null) break;
 				if (Main.editor.isReadOnly) break;
@@ -1278,124 +1115,6 @@ public class CommandTerminal extends IDEComponent {
 				}
 				
 				break;
-				
-			/*case "search":
-				List<Integer> linesfound = new ArrayList<>();
-				
-				for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
-					IDELine l = Main.editor.lines.get(i);
-					String s = new String(Main.editor.toCharArray(l.getChars()));
-					
-					if (s.contains(args[0])) linesfound.add(i);
-				}
-				
-				if (linesfound.size() == 0) return;
-				
-				int occurnum = Integer.parseInt(args[1]); // base 1 viu
-				
-				if (occurnum == 0) {
-					runCommand("search " + args[0]);
-					break;
-				}
-				
-				if (occurnum > linesfound.size())
-					occurnum = linesfound.size();
-				
-				Main.editor.scrY = (linesfound.get(occurnum - 1) - 1) * (Main.editor.FONT_SIZE);// + 4);
-				Main.editor.cursorY = (linesfound.get(occurnum - 1) - 1) + 2;
-				
-				break;
-				
-			case "searchsel":
-				if (Main.editor.isReadOnly) break;
-				
-				if (!Main.editor.selecting) break;
-				
-				linesfound = new ArrayList<>();
-				
-				for (int i = Main.editor.line1; i < Main.editor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
-					IDELine l = Main.editor.lines.get(i);
-					String s = new String(Main.editor.toCharArray(l.getChars())).toLowerCase();
-					
-					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
-				}
-				
-				if (linesfound.size() == 0) return;
-				
-				occurnum = Integer.parseInt(args[1]); // base 1 viu
-				
-				if (occurnum > linesfound.size())
-					occurnum = linesfound.size();
-				
-				Main.editor.scrY = (linesfound.get(occurnum - 1) - 1) * (Main.editor.FONT_SIZE);// + 4);
-				Main.editor.cursorY = (linesfound.get(occurnum - 1) - 1) + 2;
-				
-				break;*/
-				
-			/*case "replace":						// Deprecated. Use Search/Replace.
-				if (Main.editor.isReadOnly) break;
-				
-				linesfound = new ArrayList<>();
-				
-				for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
-					IDELine l = Main.editor.lines.get(i);
-					String s = new String(Main.editor.toCharArray(l.getChars())).toLowerCase();
-					
-					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
-				}
-				
-				if (linesfound.size() == 0) return;
-				
-				for (Integer i : linesfound) {
-					String s = new String(Main.editor.toCharArray(Main.editor.lines.get(i).getChars()));
-					
-					s = s.replaceAll(args[0], args[1]);
-					
-					Main.editor.register(new StringBuilder(s), i);
-				}
-				
-				Main.editor.editing.setSaved(false);
-				
-				break;
-				
-			case "replacesel":
-				if (Main.editor.isReadOnly) break;
-				
-				if (!Main.editor.selecting) break;
-				
-				linesfound = new ArrayList<>();
-				
-				for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
-					IDELine l = Main.editor.lines.get(i);
-					String s = new String(Main.editor.toCharArray(l.getChars())).toLowerCase();
-					
-					if (s.contains(args[0].toLowerCase())) linesfound.add(i); // viu pq precisa do numero?
-				}
-				
-				if (linesfound.size() == 0) return;
-				
-				for (Integer i : linesfound) {
-					String s = new String(Main.editor.toCharArray(Main.editor.lines.get(i).getChars()));
-					
-					s = s.replaceAll(args[0], args[1]);
-					
-					Main.editor.register(new StringBuilder(s), i);
-				}
-				
-				Main.editor.editing.setSaved(false);
-				
-				break;*/
-				
-			/*case "select":
-				line1 = Integer.parseInt(args[0]);
-				line2 = Integer.parseInt(args[1]);
-				
-				index1 = 0;
-				index2 = Main.editor.lines.get(line2 - 1).getChars().size(); // é -1 porque no array é base 0, aqui é base 1
-				
-				selecting = true;
-				
-				break;*/
 			}
 		}
 		else if (args.length == 3) {
