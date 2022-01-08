@@ -6590,7 +6590,8 @@ public class CodeEditor extends IDEComponent {
 								ListableFile.getFileExtension(editing.getRegent().getRegent())));
 
 					}
-				} catch (ConcurrentModificationException e) {
+				} catch (Exception e) {
+					return;
 				}
 			}
 		}.start();

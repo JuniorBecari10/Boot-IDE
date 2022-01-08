@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
+import ide.codeeditor.Tab;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
@@ -121,7 +122,6 @@ public class RenameFile extends IDEComponent {
 				//if (text.toString().trim().equals("")) return;
 				
 				File newf = new File(Explorer.getScopePath() + "/" + text.toString());
-				
 				old.renameTo(newf);
 				
 				IDEComponent.toRemove.add(this);
@@ -132,16 +132,22 @@ public class RenameFile extends IDEComponent {
 				
 				Explorer.files = ListableFile.loadFolder(Explorer.scope);
 				
+				for (Tab t : Main.editor.tabs) {
+					if (t.regent.getRegent().equals(old)) {
+						t.regent = ListableFile.newListableFile(newf);
+					}
+				}
+				
 				//if (!ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())))
 				
-				ListableFile searched = ListableFile.search(newf, newf.getParentFile());
+				//ListableFile searched = ListableFile.search(newf, newf.getParentFile());
 				/*Tab equivalent = Tab.searchTab(searched);
 				equivalent.close();*/
 				
-				if (!ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())))
+				/*if (!ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())))
 					ListableFile.addTab(searched, true);
 				
-				Main.editor.tabs.forEach((t) -> t.refreshRegent());
+				Main.editor.tabs.forEach((t) -> t.refreshRegent());*/
 				
 				return;
 			}

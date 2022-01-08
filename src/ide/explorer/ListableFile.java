@@ -1240,6 +1240,10 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			break;
 		}
 	}
+	
+	public static ListableFile newListableFile(File regent) {
+		return new ListableFile(0,0,0,0, regent, null);
+	}
 
 	public static void addTab(ListableFile file, boolean isAutomatic) {
 		if ((!CodeEditor.automaticallyOpenTabs && isAutomatic) || file == null)
