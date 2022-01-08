@@ -158,7 +158,7 @@ public class Main implements Runnable, Tickable {
         toolkit = Toolkit.getDefaultToolkit();
         screen = new Screen(PROGRAM_NAME);
         
-        lang = Language.ENG; // default
+        lang = Language.PORT; // default
         
         //Fonts.initFonts(fntnr, fntbl);
         

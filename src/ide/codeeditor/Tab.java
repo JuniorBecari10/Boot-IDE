@@ -162,7 +162,7 @@ public class Tab extends IDEComponent implements Serializable {
 		new Thread() {
 			public void run() {
 				while (drawW > 0) {
-					drawW -= animSpeed;;
+					drawW -= animSpeed;
 					
 					button.setX((x + Main.editor.tabScr + drawW) - 20);
 					
@@ -340,6 +340,14 @@ public class Tab extends IDEComponent implements Serializable {
 			}
 			break;
 			
+		case "sysexp":
+			try {
+				Main.desktop.open(regent.getRegent().getParentFile());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
 		case "showexp":
 			Explorer.files.clear();
 			ListableFile.files.clear();
@@ -499,7 +507,7 @@ public class Tab extends IDEComponent implements Serializable {
 		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered())) && !Main.editor.alternateTabsMode) {
 			MouseInput.updateMouse();
 			
-			int width = Main.lang == Language.PORT ? 315 : 290;
+			int width = Main.lang == Language.PORT ? 485 : 330;
 			
 			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2, width, Texts.closeTab, (s) -> execute(s), "this");
 			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 30, width, Texts.closeAllTabs, (s) -> execute(s), "all");
@@ -507,15 +515,16 @@ public class Tab extends IDEComponent implements Serializable {
 			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 90, width, Texts.closeOtherTabs, (s) -> execute(s), "closeother");
 			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 120, width, Texts.save, (s) -> execute(s), "save");
 			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 150, width, Texts.openBootExplorer, (s) -> execute(s), "showexp");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, Texts.orderTabs, (s) -> execute(s), "alternate");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, Texts.openExplorer, (s) -> execute(s), "sysexp");
+			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.orderTabs, (s) -> execute(s), "alternate");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			if ((ListableFile.getFileExtension(regent.getRegent()).equals(".bat") || ListableFile.getFileExtension(regent.getRegent()).equals(".cmd") || ListableFile.getFileExtension(regent.getRegent()).equals(".com") || ListableFile.getFileExtension(regent.getRegent()).equals(".ps1")) && isWindows)
-				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.execute, (s) -> execute(s), "run");
+				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 230, width, Texts.execute, (s) -> execute(s), "run");
 			
 			if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && !isWindows)
-				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.execute, (s) -> execute(s), "runbash");
+				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 230, width, Texts.execute, (s) -> execute(s), "runbash");
 		}
 		
 		if (isSaved) {
