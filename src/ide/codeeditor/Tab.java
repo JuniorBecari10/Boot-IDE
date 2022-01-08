@@ -302,7 +302,9 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			Main.editor.tabs.forEach((e) -> e.close());
 			
-			CommandTerminal.runCommand("killalltabs");
+			try {
+				Main.editor.killAllTabs.start();
+			} catch (Exception e) { return; }
 			break;
 			
 		case "save":
