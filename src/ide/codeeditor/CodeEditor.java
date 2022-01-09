@@ -738,6 +738,7 @@ public class CodeEditor extends IDEComponent {
 		typeThread = new Thread() {
 			public void run() {
 				while (true) {
+					System.out.print(""); // tem que fazer isso
 					if (SetFileName.added || CommandTerminal.active || RenameFile.added) continue;
 					
 					if (KeyInput.isKeyPressed()) {
@@ -7696,6 +7697,10 @@ public class CodeEditor extends IDEComponent {
 
 			cursorThread.start();
 		}
+  
+  if (!typeThread.isAlive() || typeThread.getState() == State.TERMINATED) {
+      typeThread.start();
+  }
 
 		if (Explorer.dragging)
 			CommandTerminal.runCommand("deselect");
