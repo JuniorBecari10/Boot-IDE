@@ -7698,9 +7698,9 @@ public class CodeEditor extends IDEComponent {
 			cursorThread.start();
 		}
   
-  if (!typeThread.isAlive() || typeThread.getState() == State.TERMINATED) {
-      typeThread.start();
-  }
+		if (!typeThread.isAlive() || typeThread.getState() == State.TERMINATED) {
+			typeThread.start();
+		}
 
 		if (Explorer.dragging)
 			CommandTerminal.runCommand("deselect");
