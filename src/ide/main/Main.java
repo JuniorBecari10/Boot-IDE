@@ -601,7 +601,7 @@ public class Main implements Runnable, Tickable {
             return;
         }
 
-        Graphics g = screen.layer.getGraphics();
+        Graphics g = bs.getDrawGraphics();
         
         Graphics2D g2 = (Graphics2D) g;
 
@@ -752,11 +752,6 @@ public class Main implements Runnable, Tickable {
 			Fonts.drawString(explorer.getWidth() + "px", x + 5, y, new IDEFont(Fonts.lightGrayNormal, 20), g);
         }
         
-        g.dispose();
-        g = bs.getDrawGraphics();
-
-        g.drawImage(screen.layer, 0, 0, Screen.WIDTH, Screen.HEIGHT, null);
-
         bs.show();
     }
     
