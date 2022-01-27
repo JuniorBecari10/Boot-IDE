@@ -4,7 +4,6 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.dnd.DropTarget;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
