@@ -996,7 +996,7 @@ public class CommandTerminal extends IDEComponent {
 				for (int i = 0; i < strs.length - 1; i++) {
 					StringBuilder spaces = new StringBuilder();
 					
-					for (int j = 0; j < Main.editor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
+					for (int j = 0; j < CodeEditor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
 						spaces.append(' ');
 					
 					Main.editor.addNewLine(Main.editor.cursorY - 1, spaces.toString());
@@ -1146,7 +1146,7 @@ public class CommandTerminal extends IDEComponent {
 				for (int i = 0; i < strs.length - 1; i++) {
 					StringBuilder spaces = new StringBuilder();
 					
-					for (int j = 0; j < Main.editor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
+					for (int j = 0; j < CodeEditor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
 						spaces.append(' ');
 					
 					Main.editor.addNewLine(Main.editor.cursorY - 1, spaces.toString());
@@ -1186,7 +1186,7 @@ public class CommandTerminal extends IDEComponent {
 				for (int i = 0; i < strss.length - 1; i++) {
 					StringBuilder spaces = new StringBuilder();
 					
-					for (int j = 0; j < Main.editor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
+					for (int j = 0; j < CodeEditor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
 						spaces.append(' ');
 					
 					Main.editor.addNewLine(Main.editor.cursorY - 1, spaces.toString());
@@ -1237,7 +1237,7 @@ public class CommandTerminal extends IDEComponent {
 				for (int i = 0; i < strs1.length - 1; i++) {
 					StringBuilder spaces = new StringBuilder();
 					
-					for (int j = 0; j < Main.editor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
+					for (int j = 0; j < CodeEditor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
 						spaces.append(' ');
 					
 					Main.editor.addNewLine(Main.editor.cursorY - 1, spaces.toString());

@@ -707,14 +707,16 @@ public class Main implements Runnable, Tickable {
     			Fonts.drawString(Main.baseFolder.getName(), xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
         	}
         	
-        	if (MouseInput.hovered(explorer.getX() + 10, 170, explorer.getWidth() - 10, 23) && Explorer.showFolderPathCard && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
+        	if (MouseInput.hovered(explorer.getX() + 10, 170, explorer.getWidth() - 10, 23) && CodeEditor.countAbsoluteChar(Explorer.folderPathFull, '/') == 1 && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
         		String scopeStr = Explorer.getScopePath().contains(baseFolder.getName()) ? Explorer.getScopePath().substring(Explorer.getScopePath().indexOf(baseFolder.getName())) : Explorer.getScopePath();
         		
         		int xdr = MouseInput.getMouseX() + 10;
     			int ydr = MouseInput.getMouseY() - 10;
     			
-    			final int wdr = 15 + scopeStr.length() * 12;
+    			int wdr = 15 + scopeStr.length() * 12;
     			final int hdr = 70;
+    			
+    			if (wdr < 193) wdr = 193;
     			
     			Rectangle intersection = new Rectangle(xdr, ydr, wdr, hdr).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
     			
@@ -762,7 +764,7 @@ public class Main implements Runnable, Tickable {
     public void run() {
     	screen.requestFocus();
     	
-    	long lastTime = System.nanoTime(); // Release v3.9.1 - 14/08/2021 - 14:51
+    	long lastTime = System.nanoTime();
     	double targetFps = 60.0; // 120
     	double ns = 1E9 / targetFps;
     	double delta = 0;

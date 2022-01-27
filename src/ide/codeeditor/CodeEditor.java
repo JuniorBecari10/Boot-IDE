@@ -741,6 +741,8 @@ public class CodeEditor extends IDEComponent {
 					System.out.print(""); // tem que fazer isso
 					if (SetFileName.added || CommandTerminal.active || RenameFile.added) continue;
 					
+					Main.editor.scroll();
+					
 					if (KeyInput.isKeyPressed()) {
 						if ((!SetFileName.added && !CommandTerminal.active) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !Main.editor.alternateTabsMode) {
 			    			Main.editor.type();
@@ -5820,13 +5822,24 @@ public class CodeEditor extends IDEComponent {
 	 * @return O número de vezes que o caractere {@code c} aparece na String
 	 *         {@code str}.
 	 */
-	public int countChar(String str, char c) { // Fonte: StackOverflow, de novo :/
+	public static int countChar(String str, char c) { // Fonte: StackOverflow, de novo :/
 		int count = 0;
 
 		for (int i = 0; i < str.length(); i++) {
 			if (str.charAt(i) != c)
 				break;
 
+			if (str.charAt(i) == c)
+				count++;
+		}
+
+		return count;
+	}
+	
+	public static int countAbsoluteChar(String str, char c) { // Fonte: StackOverflow, de novo :/
+		int count = 0;
+
+		for (int i = 0; i < str.length(); i++) {
 			if (str.charAt(i) == c)
 				count++;
 		}
@@ -7610,7 +7623,77 @@ public class CodeEditor extends IDEComponent {
 
 						return;
 					}
-				}	
+				}
+	
+	public void scroll() {
+		if (MouseInput.isMouseRolling()) { // resolver isso aqui
+			new Thread() {
+				public void run() {
+					if (Main.editor.hovered()) {
+						if (RightClickOption.isAutoCompleteActive()) {
+							if (KeyInput.isControlDown() && KeyInput.isShiftDown()) {
+								if (MouseInput.wheelUp() && autocompletes.get(0).getY() + 30 < (y + height) - 30) { // TODO aaaaaaaaaa
+									MouseInput.updateMouseRoll();
+									
+									autocompletescroll -= 30;
+								}
+								else if (MouseInput.wheelDown()
+										&& autocompletes.get(autocompletes.size() - 1).getY() > MIN_Y) {
+									MouseInput.updateMouseRoll();
+									
+									autocompletescroll += 30;
+								}
+							}
+						}
+
+						if (KeyInput.isShiftDown() && !KeyInput.isControlDown()) { // isso não pode acontecer com o x por causa dos autocompletes
+							if (MouseInput.wheelUp() && scrX > 0) {
+								MouseInput.updateMouseRoll();
+								
+								scrX -= FONT_SIZE * 3;
+							}
+							else if (MouseInput.wheelDown()) {
+								MouseInput.updateMouseRoll();
+								
+								scrX += FONT_SIZE * 3;
+							}
+						}
+
+						if (!KeyInput.isShiftDown()) {
+							if (!KeyInput.isControlDown()) {
+								if (MouseInput.wheelUp() && scrY > 0) {
+									MouseInput.updateMouseRoll();
+									
+									scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+								}
+								else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size()
+										* (FONT_SIZE + (FONT_SIZE / 4))) {
+									MouseInput.updateMouseRoll();
+									
+									scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+								}
+							}
+							else {
+								if (MouseInput.wheelUp() && scrY > 0) {
+									MouseInput.updateMouseRoll();
+									
+									scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 6;
+								}
+								else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size() 
+										* (FONT_SIZE + (FONT_SIZE / 4))) {
+									MouseInput.updateMouseRoll();
+									
+									scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 6;
+							}
+							}
+						}
+
+						return;
+					}
+				}
+			}.start();
+		}
+	}
 
 	public boolean noneSelected() {
 		return index1 == index2 && line1 == line2;
@@ -7833,51 +7916,6 @@ public class CodeEditor extends IDEComponent {
 			
 			if (RightClickOption.anyRightClickOptionHovered() && !MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10, Main.explorer.getHeight()))
 				Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-			if (MouseInput.isMouseRolling()) {
-				new Thread() {
-					public void run() {
-						if (Main.editor.hovered()) {
-							if (RightClickOption.isAutoCompleteActive()) {
-								if (KeyInput.isControlDown() && KeyInput.isShiftDown()) {
-									if (MouseInput.wheelUp() && autocompletes.get(0).getY() + 30 < (y + height) - 30) // TODO
-																														// aaaaaaaaaa
-										autocompletescroll -= 30;
-									else if (MouseInput.wheelDown()
-											&& autocompletes.get(autocompletes.size() - 1).getY() > MIN_Y)
-										autocompletescroll += 30;
-								}
-							}
-	
-							if (KeyInput.isShiftDown() && !KeyInput.isControlDown()) { // isso não pode acontecer com o x por causa dos autocompletes
-								if (MouseInput.wheelUp() && scrX > 0)
-									scrX -= FONT_SIZE * 3;
-								else if (MouseInput.wheelDown())
-									scrX += FONT_SIZE * 3;
-							}
-	
-							if (!KeyInput.isShiftDown()) {
-								if (!KeyInput.isControlDown()) {
-									if (MouseInput.wheelUp() && scrY > 0)
-										scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 3;
-									else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size()
-											* (FONT_SIZE + (FONT_SIZE / 4)))
-										scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 3;
-								}
-								else {
-									if (MouseInput.wheelUp() && scrY > 0)
-										scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 6;
-									else if (MouseInput.wheelDown() && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size()
-											* (FONT_SIZE + (FONT_SIZE / 4)))
-										scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 6;
-								}
-							}
-	
-							return;
-						}
-					}
-				}.start();
-			}
 
 			if (leftClicked() && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive()
 					&& !alternateTabsMode
