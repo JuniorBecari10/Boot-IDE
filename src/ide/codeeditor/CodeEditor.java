@@ -8052,216 +8052,218 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public void render(Graphics g) {
-		// if (editing == null) return;
-
-		Graphics2D g2 = (Graphics2D) g;
-
-		g.setColor(Colors.explorerLight);
-		g2.setStroke(new BasicStroke(8f));
-
-		// g2.drawLine(x, y, x, height);
-		g2.drawLine(x, 30, width, 30);
-
-		g.setColor(Colors.background);
-		g.fillRect(x, y, width, height);
-
-		if (tabs == null || tabs.size() == 0)
-			return;
-
-		if (editing != null) {
-			g.setColor(Colors.codeEditor);
-			g.fillRect(x, MIN_Y, Main.screen.getWidth(), height);
-		}
-
-//		if (editing != null &&																	// não vamos mostrar imagens aqui, vai abrir o aplicativo do sistema
-//			(ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".png") || // se for uma imagem
-//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".jpg") ||
-//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".jpeg")||
-//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".gif") ||
-//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".bmp"))) {
-//			try {
-//				BufferedImage get = ImageIO.read(getClass().getResource(editing.getRegent().getRegent().getAbsolutePath())); // esse get tá null
-//				
-//				g.drawImage(get, (x + (width / 2)) - get.getWidth(), (y + (height / 2)) - get.getHeight(), get.getWidth() * 2, get.getHeight() * 2, null);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//			
-//			return; // pra n renderizar texto, aquele monte de coisa estranha
-//		}
-
-		g.setColor(Colors.backgroundLight); // TODO é essa aqui a linha que atravessa a tela
-		g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, Main.screen.getWidth(),
-				FONT_SIZE + (FONT_SIZE / 4));
-
-		/*
-		 * g.setColor(Colors.backgroundLight); g.fillRect(x, MIN_Y + ((cursorY - 1) *
-		 * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, 49, FONT_SIZE + (FONT_SIZE / 4) +
-		 * 1);
-		 */
-
 		try {
-			for (int i = 0; i < lines.size(); i++) {
-				if (selecting) {
-					g.setColor(Colors.selection);
-
-					if (i > line1 && i < line2) { // do meio
-						g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
-								// (i + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY,
-								MIN_Y + ((i - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
-								// Main.screen.getWidth() + scrX,
-								((x + 50) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX
-										- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
-								FONT_SIZE + (FONT_SIZE / 4));
-					}
-				}
+			// if (editing == null) return;
+	
+			Graphics2D g2 = (Graphics2D) g;
+	
+			g.setColor(Colors.explorerLight);
+			g2.setStroke(new BasicStroke(8f));
+	
+			// g2.drawLine(x, y, x, height);
+			g2.drawLine(x, 30, width, 30);
+	
+			g.setColor(Colors.background);
+			g.fillRect(x, y, width, height);
+	
+			if (tabs == null || tabs.size() == 0)
+				return;
+	
+			if (editing != null) {
+				g.setColor(Colors.codeEditor);
+				g.fillRect(x, MIN_Y, Main.screen.getWidth(), height);
 			}
-
-			for (int i = 0; i < lines.size(); i++) {
-				int yr = MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY;
-
-				if (yr < 0 || yr > Screen.HEIGHT)
-					continue;
-
-				char[] cs = toCharArray(lines.get(i).getChars());
-				IDEFont[] fs = toArray(lines.get(i).getFonts());
-
-				if (lines.get(i) == null)
-					break;
-
-				if (MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY < MIN_Y - 15)
-					continue;
-
-				/*
-				 * if (i == cursorY - 1 && !isReadOnly) { g.setColor(Colors.backgroundLight);
-				 * g.fillRect(x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1,
-				 * Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4) + 1); }
-				 */
-
-				if (selecting) {
-					g.setColor(Colors.selection);
-
-					if (i == line1 - 1) { // - 1 porque a line1 é base 1
-						if (i == line2 - 1) {
-							g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
-																									// index1 até o
-																									// index2
-									MIN_Y + ((line1 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
-									(((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX)
-											- (((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
-									FONT_SIZE + (FONT_SIZE / 4));
-						} else {
-							g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
-																									// index1 até o fim
-																									// da linha
-									MIN_Y + ((line1 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
-									((((x + 50) + (lines.get(line1 - 1).getChars().size() - index1)
-											* (FONT_SIZE - (FONT_SIZE / 4))) - scrX)
-											- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX)),
-									FONT_SIZE + (FONT_SIZE / 4));
-						}
-					}
-					if (i == line2 - 1) {
-						if (i != line1 - 1) { // do 0 ao index2
+	
+	//		if (editing != null &&																	// não vamos mostrar imagens aqui, vai abrir o aplicativo do sistema
+	//			(ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".png") || // se for uma imagem
+	//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".jpg") ||
+	//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".jpeg")||
+	//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".gif") ||
+	//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".bmp"))) {
+	//			try {
+	//				BufferedImage get = ImageIO.read(getClass().getResource(editing.getRegent().getRegent().getAbsolutePath())); // esse get tá null
+	//				
+	//				g.drawImage(get, (x + (width / 2)) - get.getWidth(), (y + (height / 2)) - get.getHeight(), get.getWidth() * 2, get.getHeight() * 2, null);
+	//			} catch (Exception e) {
+	//				e.printStackTrace();
+	//			}
+	//			
+	//			return; // pra n renderizar texto, aquele monte de coisa estranha
+	//		}
+	
+			g.setColor(Colors.backgroundLight); // TODO é essa aqui a linha que atravessa a tela
+			g.fillRect(x, MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, Main.screen.getWidth(),
+					FONT_SIZE + (FONT_SIZE / 4));
+	
+			/*
+			 * g.setColor(Colors.backgroundLight); g.fillRect(x, MIN_Y + ((cursorY - 1) *
+			 * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1, 49, FONT_SIZE + (FONT_SIZE / 4) +
+			 * 1);
+			 */
+	
+			try {
+				for (int i = 0; i < lines.size(); i++) {
+					if (selecting) {
+						g.setColor(Colors.selection);
+	
+						if (i > line1 && i < line2) { // do meio
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
-									MIN_Y + ((line2 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
-									((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX
+									// (i + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY,
+									MIN_Y + ((i - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
+									// Main.screen.getWidth() + scrX,
+									((x + 50) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX
 											- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 									FONT_SIZE + (FONT_SIZE / 4));
 						}
 					}
 				}
-
-				IDEFont font = i == cursorY - 1 ? new IDEFont(Fonts.selectedLineNumberNormal, FONT_SIZE)
-						: new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
-
-				// if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
-
-				Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + 50,
-						Main.screen.getWidth(), g);
-
-				String nums = String.valueOf(i + 1); // nums = num string
-				// int num = i + 1;
-
-				int nx = x + 1;
-
-				/*
-				 * if (num < 10) nx = x + 1 + (2 * FONT_SIZE) + 3; if (num >= 10 && num < 100)
-				 * nx = x + 1 + FONT_SIZE + 3 + 3; // não será feito, pelo menos por enquanto if
-				 * (num >= 100 && num < 1000) nx = x + 1 + 6;
-				 */
-
-				Color c = i != cursorY - 1 ? Colors.codeEditor : Colors.explorerLight;
-
-				g.setColor(c);
-				g.fillRect(x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, 50, FONT_SIZE + (FONT_SIZE / 4)); // linha
-																													// do
-																													// num
-																													// da
-																													// linha
-
-				Fonts.drawString(nums, nx, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, font, g);
+	
+				for (int i = 0; i < lines.size(); i++) {
+					int yr = MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY;
+	
+					if (yr < 0 || yr > Screen.HEIGHT)
+						continue;
+	
+					char[] cs = toCharArray(lines.get(i).getChars());
+					IDEFont[] fs = toArray(lines.get(i).getFonts());
+	
+					if (lines.get(i) == null)
+						break;
+	
+					if (MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY < MIN_Y - 15)
+						continue;
+	
+					/*
+					 * if (i == cursorY - 1 && !isReadOnly) { g.setColor(Colors.backgroundLight);
+					 * g.fillRect(x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY - 1,
+					 * Main.screen.getWidth(), FONT_SIZE + (FONT_SIZE / 4) + 1); }
+					 */
+	
+					if (selecting) {
+						g.setColor(Colors.selection);
+	
+						if (i == line1 - 1) { // - 1 porque a line1 é base 1
+							if (i == line2 - 1) {
+								g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
+																										// index1 até o
+																										// index2
+										MIN_Y + ((line1 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
+										(((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX)
+												- (((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
+										FONT_SIZE + (FONT_SIZE / 4));
+							} else {
+								g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
+																										// index1 até o fim
+																										// da linha
+										MIN_Y + ((line1 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
+										((((x + 50) + (lines.get(line1 - 1).getChars().size() - index1)
+												* (FONT_SIZE - (FONT_SIZE / 4))) - scrX)
+												- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX)),
+										FONT_SIZE + (FONT_SIZE / 4));
+							}
+						}
+						if (i == line2 - 1) {
+							if (i != line1 - 1) { // do 0 ao index2
+								g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
+										MIN_Y + ((line2 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
+										((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX
+												- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
+										FONT_SIZE + (FONT_SIZE / 4));
+							}
+						}
+					}
+	
+					IDEFont font = i == cursorY - 1 ? new IDEFont(Fonts.selectedLineNumberNormal, FONT_SIZE)
+							: new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
+	
+					// if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
+	
+					Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + 50,
+							Main.screen.getWidth(), g);
+	
+					String nums = String.valueOf(i + 1); // nums = num string
+					// int num = i + 1;
+	
+					int nx = x + 1;
+	
+					/*
+					 * if (num < 10) nx = x + 1 + (2 * FONT_SIZE) + 3; if (num >= 10 && num < 100)
+					 * nx = x + 1 + FONT_SIZE + 3 + 3; // não será feito, pelo menos por enquanto if
+					 * (num >= 100 && num < 1000) nx = x + 1 + 6;
+					 */
+	
+					Color c = i != cursorY - 1 ? Colors.codeEditor : Colors.explorerLight;
+	
+					g.setColor(c);
+					g.fillRect(x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, 50, FONT_SIZE + (FONT_SIZE / 4)); // linha
+																														// do
+																														// num
+																														// da
+																														// linha
+	
+					Fonts.drawString(nums, nx, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, font, g);
+				}
+			} catch (Exception e) {
 			}
-		} catch (Exception e) {
-		}
-
-		if (keyTimeout)
-			showCursor = true;
-
-		// Desenhar cursor
-		if (showCursor && !WindowInput.isDeactivated() && drawcx > x + 45) {
-			g.setColor(Colors.cursor);
-			g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - (FONT_SIZE >= 16 ? 1 : 0),
-					FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + (FONT_SIZE / 4));
-		}
-
-		for (RightClickOption r : autocompletes)
-			r.render(g);
-
-		// Desenhar background
-		g.setColor(Colors.background);
-		g.fillRect(x, 0, width, 35);
-
-		for (Tab t : Main.editor.tabs) {
-			if (t.getX() + tabScr < x - 100 || t.getX() + tabScr > Main.screen.getWidth())
-				continue; // o render da Tab vai ter que ficar aqui mesmo
-
-			t.render(g);
-		}
-
-		// desenhar barra inferior
-		if (editing != null) {
-			g.setColor(Colors.lowerBar);
-			g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
-			
-			String selectingText = selecting ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2) : "";
-						
-			if (minMode)
-				selectingText = selecting ? (" | " + countIndexDistance(index1, index2, line1, line2)) : "";
-			
-			Fonts.drawString(codeType + " - " + extType + " | " + (cursorX + 1) + ":" + cursorY
-					+ selectingText,
-					x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
-
-			// Fonts.drawString("X: " + (cursorX + 1) + ", Y: " + cursorY,
-			// Main.screen.getWidth() - 170, Main.screen.getHeight() - 20, new
-			// IDEFont(Fonts.otherNormal, 16), g);
-		}
-
-		if (alternateTabsMode) {
-			g.setColor(new Color(0, 0, 0, 0.3f));
-			g.fillRect(x, y + 35, width, height);
-
-			int xdr = MouseInput.getMouseX() + 10;
-			int ydr = MouseInput.getMouseY() - 30; // TODO alterar texto "trocar aba" por algo melhor
-
-			Fonts.drawString(Texts.selectTabOrder, xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g); // TODO
-																												// colocar
-																												// pra
-																												// 20
-
-			Fonts.drawString(Texts.esc_Cancel, xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
-			Fonts.drawString(Texts.leftClickTab, xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);
-		}
+	
+			if (keyTimeout)
+				showCursor = true;
+	
+			// Desenhar cursor
+			if (showCursor && !WindowInput.isDeactivated() && drawcx > x + 45) {
+				g.setColor(Colors.cursor);
+				g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - (FONT_SIZE >= 16 ? 1 : 0),
+						FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + (FONT_SIZE / 4));
+			}
+	
+			for (RightClickOption r : autocompletes)
+				r.render(g);
+	
+			// Desenhar background
+			g.setColor(Colors.background);
+			g.fillRect(x, 0, width, 35);
+	
+			for (Tab t : Main.editor.tabs) {
+				if (t.getX() + tabScr < x - 100 || t.getX() + tabScr > Main.screen.getWidth())
+					continue; // o render da Tab vai ter que ficar aqui mesmo
+	
+				t.render(g);
+			}
+	
+			// desenhar barra inferior
+			if (editing != null) {
+				g.setColor(Colors.lowerBar);
+				g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
+				
+				String selectingText = selecting ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2) : "";
+							
+				if (minMode)
+					selectingText = selecting ? (" | " + countIndexDistance(index1, index2, line1, line2)) : "";
+				
+				Fonts.drawString(codeType + " - " + extType + " | " + (cursorX + 1) + ":" + cursorY
+						+ selectingText,
+						x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
+	
+				// Fonts.drawString("X: " + (cursorX + 1) + ", Y: " + cursorY,
+				// Main.screen.getWidth() - 170, Main.screen.getHeight() - 20, new
+				// IDEFont(Fonts.otherNormal, 16), g);
+			}
+	
+			if (alternateTabsMode) {
+				g.setColor(new Color(0, 0, 0, 0.3f));
+				g.fillRect(x, y + 35, width, height);
+	
+				int xdr = MouseInput.getMouseX() + 10;
+				int ydr = MouseInput.getMouseY() - 30; // TODO alterar texto "trocar aba" por algo melhor
+	
+				Fonts.drawString(Texts.selectTabOrder, xdr + 10, ydr, new IDEFont(Fonts.lighterGrayNormal, 16), g); // TODO
+																													// colocar
+																													// pra
+																													// 20
+	
+				Fonts.drawString(Texts.esc_Cancel, xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+				Fonts.drawString(Texts.leftClickTab, xdr + 10, (ydr + 30) + 18, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+			}
+		} catch (Exception e) {}
 	}
 }
