@@ -742,6 +742,7 @@ public class CodeEditor extends IDEComponent {
 					if (SetFileName.added || CommandTerminal.active || RenameFile.added) continue;
 					
 					Main.editor.scroll();
+					Main.editor.scrollTabs();
 					
 					if (KeyInput.isKeyPressed()) {
 						if ((!SetFileName.added && !CommandTerminal.active) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown()) && !Main.editor.alternateTabsMode) {
@@ -7624,6 +7625,29 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 	
+	public void scrollTabs() {
+		if (MouseInput.hovered(x, 0, Main.screen.getWidth(), Tab.HEIGHT) && tabs != null && tabs.size() > 0) {
+			if (MouseInput.isMouseRolling()) {
+				if (MouseInput.wheelUp() && tabScr < 0) {
+					MouseInput.updateMouseRoll();
+					
+					tabScr += 203; // 3 é a compensação para as tab n se distanciar
+				}
+				else if (MouseInput.wheelDown()
+						&& (tabs.get(tabs.size() - 1).getX() + tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280)) { // 280
+					MouseInput.updateMouseRoll();
+					
+					tabScr -= 203;
+				}
+
+				for (IDEComponent i : components) {
+					if (i instanceof RightClickOption)
+						IDEComponent.toRemove.add(i);
+				}
+			}
+		}
+	}
+	
 	public void scroll() {
 		if (MouseInput.isMouseRolling()) { // resolver isso aqui
 			new Thread() {
@@ -7893,21 +7917,7 @@ public class CodeEditor extends IDEComponent {
 			clipboard = "";
 		}
 
-		if (MouseInput.hovered(x, 0, Main.screen.getWidth(), Tab.HEIGHT) && tabs != null && tabs.size() > 0) {
-			if (MouseInput.isMouseRolling()) {
-				if (MouseInput.wheelUp() && tabScr < 0)
-					tabScr += 203; // 3 é a compensação para as tab n se distanciar
-				else if (MouseInput.wheelDown()
-						&& (tabs.get(tabs.size() - 1).getX() + tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280)) { // 280
-					tabScr -= 203;
-				}
-
-				for (IDEComponent i : components) {
-					if (i instanceof RightClickOption)
-						IDEComponent.toRemove.add(i);
-				}
-			}
-		}
+		// Aqui ficava o scroll das tabs
 
 		if (editing != null) {
 			if (MouseInput.hovered(x, y + 30, width, height - 20) && !MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10, Main.explorer.getHeight()) && !RightClickOption.isAutoCompleteActive() && !RightClickOption.isRightClickActive() && !Explorer.dragging)
