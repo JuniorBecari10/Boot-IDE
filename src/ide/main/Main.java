@@ -707,7 +707,7 @@ public class Main implements Runnable, Tickable {
     			Fonts.drawString(Main.baseFolder.getName(), xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
         	}
         	
-        	if (MouseInput.hovered(explorer.getX() + 10, 170, explorer.getWidth() - 10, 23) && CodeEditor.countAbsoluteChar(Explorer.folderPathFull, '/') > 0 && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
+        	if (MouseInput.hovered(explorer.getX() + 10, 170, explorer.getWidth() - 10, 23) && !Explorer.folderPathFull.isEmpty() && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
         		String scopeStr = Explorer.getScopePath().contains(baseFolder.getName()) ? Explorer.getScopePath().substring(Explorer.getScopePath().indexOf(baseFolder.getName())) : Explorer.getScopePath();
         		
         		int xdr = MouseInput.getMouseX() + 10;
