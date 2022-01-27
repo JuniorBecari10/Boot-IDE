@@ -47,6 +47,11 @@ public class DragListener implements DropTargetListener {
 	@Override
 	public void drop(DropTargetDropEvent dtde) {
 		try {
+			/*if (Main.baseFolder == null) {
+				System.out.println("At this moment, it's not possible to Drag and Drop in ");
+				return;
+			}*/
+			
 		      Transferable tr = dtde.getTransferable();
 		      DataFlavor[] flavors = tr.getTransferDataFlavors();
 		      
@@ -65,7 +70,7 @@ public class DragListener implements DropTargetListener {
 		        	  if (o instanceof File)
 		        		  files.add((File) o);
 		          
-		          if (Main.baseFolder == null) {
+		          if (Main.baseFolder == null && files.get(0).isDirectory()) {
 		        	    IDEComponent.toAdd.add(Main.newFile);
 						IDEComponent.toAdd.add(Main.newFolder);
 						IDEComponent.toAdd.add(Main.oneFolder);
@@ -134,7 +139,10 @@ public class DragListener implements DropTargetListener {
 							}
 						}.start();
 		        	  	
-						Main.screen.frame.setTitle(Main.baseFolder.getName() + " - " + Main.PROGRAM_NAME);
+						if (Main.baseFolder != null)
+							Main.screen.frame.setTitle(Main.baseFolder.getName() + " - " + Main.PROGRAM_NAME);
+						else
+							Main.screen.frame.setTitle(Main.editor.editing.getRegent().getRegent().getName() + " - " + Main.PROGRAM_NAME);
 				}
 				
 		          dtde.dropComplete(true);

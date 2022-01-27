@@ -817,12 +817,8 @@ public class Main implements Runnable, Tickable {
     		
     		if (delta >= 1) {
     			if (frames < targetFps) { // ver isso aqui
-    				try {
-			        	tick();
-			        	render(); // o problema é o render
-    				} catch (Exception e) {
-    					System.err.println("Exception: " + e.getLocalizedMessage());
-    				}
+			        tick();
+			        render(); // o problema é o render
     			} /*else {
     				tickOverflow++;
     			}*/

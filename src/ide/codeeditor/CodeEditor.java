@@ -7877,9 +7877,12 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 
-		if (editing != null && editing.getRegent() != null)
-			Main.screen.frame.setTitle(Main.baseFolder.getName() + " • " + editing.getRegent().getRegent().getName()
-					+ " - " + Main.PROGRAM_NAME);
+		if (editing != null && editing.getRegent() != null) {
+			if (Main.baseFolder != null)
+				Main.screen.frame.setTitle(Main.baseFolder.getName() + " • " + editing.getRegent().getRegent().getName() + " - " + Main.PROGRAM_NAME);
+			else
+				Main.screen.frame.setTitle(editing.getRegent().getRegent().getName() + " - " + Main.PROGRAM_NAME);
+		}
 		else if (Main.baseFolder != null)
 			Main.screen.frame.setTitle(Main.baseFolder.getName() + " - " + Main.PROGRAM_NAME);
 
