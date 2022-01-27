@@ -59,7 +59,7 @@ public class Main implements Runnable, Tickable {
     public static final String SPRITESHEET_FILE_NAME = "Resources/spritesheet.png";
     
     public static final String PROGRAM_NAME = "Boot IDE";
-    public static final String VERSION = "Release v4.2";
+    public static final String VERSION = "Alpha 1 v4.3";
     
     //public static final String SUN_JAVA_COMMAND = "sun.java.command";
 	
@@ -119,8 +119,6 @@ public class Main implements Runnable, Tickable {
     public static final File boldFile = new File(System.getProperty("user.dir") + "\\" + BOLD_FILE_NAME);
     public static final File spritesheetFile = new File(System.getProperty("user.dir") + "\\" + SPRITESHEET_FILE_NAME);
     
-    public static Thread close;
-    
     // Sprites
     
     public static BufferedImage baseFolderSpr;
@@ -163,37 +161,6 @@ public class Main implements Runnable, Tickable {
         lang = Language.ENG; // default
         
         //Fonts.initFonts(fntnr, fntbl);
-        
-        close = new Thread() {
-        	public void run() {
-        		while (true) {
-        			closing:
-        	        	if (WindowInput.isClosing()) {
-        	        		writeFile(settingsFile);
-        	        		
-        		    		if (Main.editor.editing != null) { // não for nulo
-        		    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
-        		    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
-        		    				
-        		    				CodeEditor.setSystemLook();
-        		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-        		    				
-        		    				if (selectedOption == 0) Main.editor.editing.save();
-        		    				else if (selectedOption == 2) {
-        		    					WindowInput.update();
-        		    					
-        		    					break closing;
-        		    				}
-        		    			}
-        		    		}
-        		    		
-        		    		System.exit(0);
-        		    	}
-        		}
-        	}
-        };
-        
-        close.start();
         
         ///////
         
@@ -822,6 +789,29 @@ public class Main implements Runnable, Tickable {
     			} /*else {
     				tickOverflow++;
     			}*/
+    			
+    			closing:
+    	        	if (WindowInput.isClosing()) {
+    	        		writeFile(settingsFile);
+    	        		
+    		    		if (Main.editor.editing != null) { // não for nulo
+    		    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
+    		    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
+    		    				
+    		    				CodeEditor.setSystemLook();
+    		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+    		    				
+    		    				if (selectedOption == 0) Main.editor.editing.save();
+    		    				else if (selectedOption == 2) {
+    		    					WindowInput.update();
+    		    					
+    		    					break closing;
+    		    				}
+    		    			}
+    		    		}
+    		    		
+    		    		System.exit(0);
+    		    	}
     			
     			delta--;
     			frames++;

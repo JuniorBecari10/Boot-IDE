@@ -6325,7 +6325,7 @@ public class CodeEditor extends IDEComponent {
 				if (isWindows)
 					pb = new ProcessBuilder("cmd", "/c", "start");
 				else
-					pb = new ProcessBuilder("sh", "-c", "start");
+					pb = new ProcessBuilder("/usr/bin/xterm");
 
 				File dir = Explorer.scope != null ? Explorer.scope.getRegent() : Main.baseFolder; // eu tava fazendo o
 																									// equivalente a
@@ -6333,7 +6333,6 @@ public class CodeEditor extends IDEComponent {
 																									// != null
 
 				pb.directory(dir);
-
 				pb.start();
 			} catch (IOException e) {
 				e.printStackTrace();

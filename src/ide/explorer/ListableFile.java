@@ -1116,7 +1116,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			}
 			break;
 
-		case "cmd":
+		/*case "cmd":
 			try {
 				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start");
 
@@ -1146,7 +1146,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			break;
+			break;*/
 
 		case "sysexp":
 			try {
@@ -1420,8 +1420,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			IDEComponent.addRightClickOption((x + width), y + 30, widthDraw, Texts.delete, (s) -> execute(s), "del");
 			IDEComponent.addRightClickOption((x + width), y + 60, widthDraw, Texts.rename, (s) -> execute(s), "rename");
 
-			if (isWindows)
-				IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> execute(s),
+			//if (isWindows)
+			IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> Main.editor.execute(s),
 						"cmd");
 			// else
 			// IDEComponent.addRightClickOption((x + width), y + 90, widthDraw,
