@@ -59,7 +59,7 @@ public class Main implements Runnable, Tickable {
     public static final String SPRITESHEET_FILE_NAME = "Resources/spritesheet.png";
     
     public static final String PROGRAM_NAME = "Boot IDE";
-    public static final String VERSION = "Alpha 1 v4.3";
+    public static final String VERSION = "Alpha 2 v4.3";
     
     //public static final String SUN_JAVA_COMMAND = "sun.java.command";
 	
@@ -755,8 +755,49 @@ public class Main implements Runnable, Tickable {
         bs.show();
     }
     
+    private void close() {
+    	closing:
+        	if (WindowInput.isClosing()) {
+        		writeFile(settingsFile);
+        		
+	    		if (Main.editor.editing != null) { // não for nulo
+	    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
+	    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
+	    				
+	    				CodeEditor.setSystemLook();
+	    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+	    				
+	    				if (selectedOption == 0) Main.editor.editing.save();
+	    				else if (selectedOption == 2) {
+	    					WindowInput.update();
+	    					
+	    					break closing;
+	    				}
+	    			}
+	    		}
+	    		
+	    		System.exit(0);
+	    	}
+    }
+    
     @Override
     public void run() {
+    	while (running) {
+    		tick();
+    		render();
+    		
+    		close();
+    		
+    		try {
+				Thread.sleep(1000 / 60);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+    	}
+    }
+    
+    //@Override
+    public void runsd() {
     	screen.requestFocus();
     	
     	long lastTime = System.nanoTime();
@@ -779,34 +820,13 @@ public class Main implements Runnable, Tickable {
     		
     		if (delta >= 1) {
     			if (frames < targetFps) { // ver isso aqui
-			        tick();
-			        render(); // o problema é o render
+    				tick();
+				    render();
     			} /*else {
     				tickOverflow++;
     			}*/
     			
-    			closing:
-    	        	if (WindowInput.isClosing()) {
-    	        		writeFile(settingsFile);
-    	        		
-    		    		if (Main.editor.editing != null) { // não for nulo
-    		    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
-    		    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
-    		    				
-    		    				CodeEditor.setSystemLook();
-    		    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-    		    				
-    		    				if (selectedOption == 0) Main.editor.editing.save();
-    		    				else if (selectedOption == 2) {
-    		    					WindowInput.update();
-    		    					
-    		    					break closing;
-    		    				}
-    		    			}
-    		    		}
-    		    		
-    		    		System.exit(0);
-    		    	}
+    			close();
     			
     			delta--;
     			frames++;
