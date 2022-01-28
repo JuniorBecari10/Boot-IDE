@@ -2,6 +2,7 @@ package ide.components;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -23,6 +24,7 @@ public class RightClickOption extends IDEComponent {
 	private int textSize;
 	
 	public boolean isAutoComplete;
+	public boolean isActive;
 	
 	public static final int HEIGHT = 30;
 
@@ -36,6 +38,20 @@ public class RightClickOption extends IDEComponent {
 		this.textSize = 20;
 		
 		isAutoComplete = false;
+		isActive = true;
+	}
+	
+	public RightClickOption(int x, int y, int width, boolean isActive, String text, ExecuteCommand command, String clickArg) {
+		super(x, y, width, HEIGHT, null);
+
+		this.text = text;
+		this.command = command;
+		this.clickArg = clickArg;
+		
+		this.textSize = 20;
+		
+		isAutoComplete = false;
+		this.isActive = isActive;
 	}
 	
 	public RightClickOption(int x, int y, int width, int height, int textSize, String text, ExecuteCommand command, String clickArg) {
@@ -48,6 +64,7 @@ public class RightClickOption extends IDEComponent {
 		this.textSize = textSize;
 		
 		isAutoComplete = true;
+		isActive = true;
 	}
 	
 	public RightClickOption(int x, int y, int width, int height, int textSize, String text, BufferedImage icon, ExecuteCommand command, String clickArg) {
@@ -60,6 +77,7 @@ public class RightClickOption extends IDEComponent {
 		this.textSize = textSize;
 		
 		isAutoComplete = true;
+		isActive = true;
 	}
 	
 	/**
@@ -105,6 +123,19 @@ public class RightClickOption extends IDEComponent {
 		return false;
 	}
 	
+	public static RightClickOption getRightClickOptionHovered() {
+		for (IDEComponent i : IDEComponent.components)
+			if (i instanceof RightClickOption)
+				if (i.hovered()) { System.out.println("a"); return (RightClickOption) i; }
+		
+		
+		for (RightClickOption r : Main.editor.autocompletes)
+			if (r.isAutoComplete)
+				if (r.hovered()) return (RightClickOption) r;
+		
+		return null;
+	}
+	
 	public static synchronized void removeAllRightClickOptions() {
 		for (IDEComponent i : IDEComponent.components)
 			if (i instanceof RightClickOption)
@@ -118,7 +149,12 @@ public class RightClickOption extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE || (MouseInput.isMousePressed() && !(leftClicked() || rightClicked()))) // obs: o bug não é aqui
+		if (RightClickOption.anyRightClickOptionHovered()) {
+			if (RightClickOption.getRightClickOptionHovered() != null && !RightClickOption.getRightClickOptionHovered().isActive)
+				Main.screen.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+		}
+		
+		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE || (MouseInput.isMousePressed() && !(leftClicked() || rightClicked()) && (RightClickOption.anyRightClickOptionHovered() ? (RightClickOption.getRightClickOptionHovered() != null && RightClickOption.getRightClickOptionHovered().isActive) : true))) // obs: o bug não é aqui
 			IDEComponent.toRemove.add(this);
 		
 		/*if (isAutoComplete)
@@ -126,7 +162,7 @@ public class RightClickOption extends IDEComponent {
 		
 		//if (rightClicked()) removeAllRightClickOptions();
 		
-		if (leftClicked() || rightClicked()) {
+		if ((leftClicked() || rightClicked()) && isActive) {
 			MouseInput.updateMouse(); // resolver o bug de clicar com o botão direito e abrir e fechar as options
 			
 			command.execute(clickArg);
@@ -166,10 +202,12 @@ public class RightClickOption extends IDEComponent {
 		if (isAutoComplete)
 			c = Main.editor.autocompletes.indexOf(this) == Main.editor.autocompleteindex ? Colors.explorerLight : d;
 		
+		if (!isActive) c = new Color(Colors.background2.getRed() - 5, Colors.background2.getGreen() - 5, Colors.background2.getBlue() - 5);
+		
 		g.setColor(c);
 		g.fillRect(x, y, width, HEIGHT);
 		
-		Fonts.drawString(isAutoComplete ? (text.length() > 25 ? text.substring(0, 22) + "..." : text) : text, x + 2, y + 2, new IDEFont(Fonts.lightGrayNormal, textSize), x + width, g);
+		Fonts.drawString(isAutoComplete ? (text.length() > 25 ? text.substring(0, 22) + "..." : text) : text, x + 2, y + 2, isActive ? new IDEFont(Fonts.lightGrayNormal, textSize) : new IDEFont(Fonts.lighterGrayNormal, textSize), x + width, g);
 		
 		if (isAutoComplete) {
 			g.drawImage(sprite, (x + width) - 20, y + 4, 16, 16, null);
