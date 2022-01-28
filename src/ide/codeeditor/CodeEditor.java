@@ -958,6 +958,7 @@ public class CodeEditor extends IDEComponent {
 			/*case ASSEMBLY: // ainda não
 				break;*/
 				
+		case BIN:
 			case BINARY:
 				l.clear();
 				
@@ -7738,7 +7739,7 @@ public class CodeEditor extends IDEComponent {
 		if (tabs.size() == 0)
 			CommandTerminal.runCommand("resettabscroll");
 		
-		callAutomaticColor();
+		//callAutomaticColor();
 		
 		//type();
 		
@@ -7752,6 +7753,7 @@ public class CodeEditor extends IDEComponent {
 		
 		if (editing != null && editing.getRegent() != null) {
 			switch (readMode) {
+			case BIN:
 			case BINARY:
 				codeType = minMode ? "Bin" : (Main.lang == Language.PORT ? "Binário" : "Binary");
 				break;
