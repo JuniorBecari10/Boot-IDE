@@ -909,6 +909,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				}
 
 				CodeEditor.FONT_SIZE = size;
+				CodeEditor.LINE_NUMBER_WIDTH = CodeEditor.FONT_SIZE * 4; 
 				hasAltered = true;
 
 				break;
