@@ -844,7 +844,7 @@ public class CommandTerminal extends IDEComponent {
 					}
 					
 					CodeEditor.FONT_SIZE = a0;
-					CodeEditor.LINE_NUMBER_WIDTH = CodeEditor.FONT_SIZE * 4;
+					//CodeEditor.LINE_NUMBER_WIDTH = CodeEditor.FONT_SIZE * 4;
 						
 					if (Main.editor.editing != null)
 						Main.editor.lines = Main.editor.readFile(Main.editor.editing.getRegent().getRegent());
