@@ -7682,7 +7682,7 @@ public class CodeEditor extends IDEComponent {
 		
 		callAutomaticColor();
 		
-		boolean hasSelected = false;
+		/*boolean hasSelected = false;
 		
 		for (Tab t : tabs) {
 			if (editing == t) hasSelected = true;
@@ -7706,9 +7706,7 @@ public class CodeEditor extends IDEComponent {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-		
-		
+		}*/
 		
 		//type();
 		
