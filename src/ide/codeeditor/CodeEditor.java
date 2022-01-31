@@ -1604,7 +1604,8 @@ public class CodeEditor extends IDEComponent {
 				|| ext.equalsIgnoreCase(".log") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".bf")
 				|| ext.equalsIgnoreCase(".conf")
 				|| ext.equalsIgnoreCase(".gitignore")
-				|| editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore"))
+				|| editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc")
+				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1"))
 			return fs;
 
 		if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm")
@@ -1621,20 +1622,6 @@ public class CodeEditor extends IDEComponent {
 				} catch (Exception e) {
 					continue;
 				}
-			}
-		}
-		
-		if (ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc")
-					|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1")) {
-			indxs = findWord(new String(chars), ":"); // depois de <palavra>
-
-			int len = 0;
-
-			for (Integer i : indxs) {
-				while (i + len < chars.length)
-					len++;
-
-				fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
 		}
 		
@@ -1873,8 +1860,7 @@ public class CodeEditor extends IDEComponent {
 			}
 
 			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm")
-					|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc")
-					|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1"))) {
+					|| ext.equalsIgnoreCase(".ejs"))) {
 				for (String s : syms) {
 					indxs = findWord(new String(chars), s); // antes de <palavra>
 
@@ -1978,56 +1964,6 @@ public class CodeEditor extends IDEComponent {
 
 						// addautocomplete.add(new AutoComplete(new String(sliceCharArray(c, c + len,
 						// chars)), AutoCompleteType.VARIABLE));
-						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-					}
-				}
-
-				if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd")
-						|| ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc"))) {
-					indxs = findWord(new String(chars), ")");
-
-					for (Integer i : indxs) {
-						int c = i;
-						int len = 0;
-
-						while (c < chars.length && c + len < chars.length && c > 0 && chars[c] != '(') {
-							c--;
-							len++;
-						}
-
-						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-					}
-
-					indxs = findWord(new String(chars), "]");
-
-					for (Integer i : indxs) {
-						int c = i;
-						int len = 0;
-
-						while (c < chars.length && c + len < chars.length && c > 0 && chars[c] != '['
-								&& chars[c] != ':') {
-							c--;
-							len++;
-						}
-
-						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-					}
-				}
-
-				if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
-						|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1"))) {
-					indxs = findWord(new String(chars), "->");
-
-					for (Integer i : indxs) {
-						int c = i;
-						int len = 0;
-
-						while (c < chars.length && c + len < chars.length && c > 0 && chars[c] != ' ' && chars[c] != ']'
-								&& chars[c] != ',' && chars[c] != '.' && chars[c] != ':') {
-							c--;
-							len++;
-						}
-
 						fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					}
 				}

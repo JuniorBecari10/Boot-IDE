@@ -240,8 +240,6 @@ public class CommandTerminal extends IDEComponent {
 				if (Main.editor.editing == null) break;
 				if (!Main.editor.selecting) break;
 				
-				System.out.println("a");
-				
 				List<String> lines = new ArrayList<>();
 				String str = "";
 				
