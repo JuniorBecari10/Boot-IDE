@@ -6248,7 +6248,7 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public static void execTerminal() {
-		CommandTerminal term = new CommandTerminal(Screen.WIDTH / 2 - 250, 25, 500, 30);
+		CommandTerminal term = new CommandTerminal(Screen.WIDTH / 2 - 250, 30, 500, 30); // 25
 
 		if (CommandTerminal.active)
 			return;
@@ -6751,10 +6751,6 @@ public class CodeEditor extends IDEComponent {
 		if (!isReadOnly) {
 			KeyInput.updateKeys();
 
-			if (!KeyInput.isShiftDown() && !lines.isEmpty())
-				if (drawcy > Main.screen.getHeight() || drawcy < 0)
-					CommandTerminal.runCommand("gotocursor");
-
 			StringBuilder cY = null;
 
 			try {
@@ -7176,12 +7172,32 @@ public class CodeEditor extends IDEComponent {
 	
 	public void detectShortcuts() {
 		// Detectar atalhos
-
+		
 					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && !alternateTabsMode) {
 						KeyInput.updateKeys();
 
 						RightClickOption.removeAllRightClickOptions();
 						CommandTerminal.runCommand("deselect");
+
+						return;
+					}
+					
+					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == 61 && !alternateTabsMode) {
+						KeyInput.updateKeys();
+						
+						System.out.println("a");
+
+						CommandTerminal.runCommand("setfontsize " + (FONT_SIZE + 2));
+
+						return;
+					}
+					
+					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_MINUS && !alternateTabsMode) {
+						KeyInput.updateKeys();
+						
+						System.out.println("b");
+						
+						CommandTerminal.runCommand("setfontsize " + (FONT_SIZE - 2));
 
 						return;
 					}
@@ -7222,7 +7238,6 @@ public class CodeEditor extends IDEComponent {
 						cursorY = lines.size();
 
 						CommandTerminal.runCommand("gotocursor");
-
 						setCursorWithinBounds();
 
 						return;
@@ -7245,7 +7260,8 @@ public class CodeEditor extends IDEComponent {
 						// scrX = (lines.get(cursorY - 1).getChars().size() * FONT_SIZE) - FONT_SIZE *
 						// 10;
 						cursorX = lines.get(cursorY - 1).getChars().size();
-
+						
+						CommandTerminal.runCommand("gotocursor");
 						setCursorWithinBounds();
 
 						return;

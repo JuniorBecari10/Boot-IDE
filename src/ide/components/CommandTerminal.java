@@ -77,7 +77,7 @@ public class CommandTerminal extends IDEComponent {
 	
 	// O Emmet não está disponível ainda, talvez na v4.0 ele venha
 	
-	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
+	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "getfontsize",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile", "resetreadmode",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
@@ -93,7 +93,7 @@ public class CommandTerminal extends IDEComponent {
 			"gensnippet cs/csmain str:class_name str:namespace"
 			};
 	
-	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
+	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "getfontsize",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
 			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile", "resetreadmode",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
@@ -196,6 +196,12 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "resetreadmode":
 				runCommand("setreadmode normal");
+				break;
+				
+			case "getfontsize":
+				CodeEditor.setSystemLook();
+				
+				JOptionPane.showMessageDialog(null, Texts.fontSizeIs + " " + CodeEditor.FONT_SIZE + " pixels.", Texts.getFontSize, JOptionPane.INFORMATION_MESSAGE);
 				break;
 				
 			case "version":
@@ -712,9 +718,34 @@ public class CommandTerminal extends IDEComponent {
 				//Main.editor.scrY = (Main.editor.cursorY * (CodeEditor.FONT_SIZE + (CodeEditor.FONT_SIZE / 3)));
 				
 				//Main.editor.scrX = CodeEditor.ruleOf3(100, 840, Main.editor.cursorX);
-				Main.editor.scrY = CodeEditor.ruleOf3(1000, 16791, Main.editor.cursorY - 1); // se o cursor y for 1000, o scroll y é 16791, agora, se o cursor y for x, quantos será o scroll y? Esse método faz isso.
+				//Main.editor.scrY = CodeEditor.ruleOf3(1000, 16791, Main.editor.cursorY - 1); // se o cursor y for 1000, o scroll y é 16791, agora, se o cursor y for x, quantos será o scroll y? Esse método faz isso.
 				
-				if (Main.editor.cursorY <= 7) Main.editor.scrY = 0;
+				//if (Main.editor.cursorY <= 7) Main.editor.scrY = 0;
+				
+				int drawcx = Main.editor.drawcx;
+				int drawcy = Main.editor.drawcy;
+				
+				while (drawcx < Main.editor.getX()) {
+					Main.editor.scrX -= CodeEditor.FONT_SIZE;
+					drawcx += CodeEditor.FONT_SIZE;
+				}
+				
+				while (drawcx > Main.screen.getWidth() - (Main.screen.getWidth() / 10)) {
+					Main.editor.scrX += CodeEditor.FONT_SIZE;
+					drawcx -= CodeEditor.FONT_SIZE;
+				}
+				
+				///////
+				
+				while (drawcy < CodeEditor.MIN_Y) {
+					Main.editor.scrY -= CodeEditor.FONT_SIZE;
+					drawcy += CodeEditor.FONT_SIZE;
+				}
+				
+				while (drawcy > Main.screen.getHeight() - (Main.screen.getHeight() / 10)) {
+					Main.editor.scrY += CodeEditor.FONT_SIZE;
+					drawcy -= CodeEditor.FONT_SIZE;
+				}
 				
 				break;
 				

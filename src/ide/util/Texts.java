@@ -196,6 +196,9 @@ public final class Texts {
 	public static String restartRequired;
 	public static String pleaseRestart;
 	
+	public static String getFontSize;
+	public static String fontSizeIs;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -376,6 +379,9 @@ public final class Texts {
 			restartRequired = "Reinicialização Necessária!";
 			pleaseRestart = "Por favor reinicie a " + Main.PROGRAM_NAME + " para que todas as mudanças sejam aplicadas.";
 			
+			getFontSize = "Pegar Tamanho da Fonte";
+			fontSizeIs = "O tamanho da fonte é de";
+			
 			break;
 		
 		case ENG:
@@ -555,6 +561,9 @@ public final class Texts {
 			
 			restartRequired = "Restart Required!";
 			pleaseRestart = "Please restart " + Main.PROGRAM_NAME + " for all the changes to be applied.";
+			
+			getFontSize = "Get Font Size";
+			fontSizeIs = "The font size is";
 			
 			break;
 		}
