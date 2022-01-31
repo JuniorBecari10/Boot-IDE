@@ -448,7 +448,8 @@ public class Tab extends IDEComponent implements Serializable {
 		if (hovered())
 			Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
-		button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
+		if (!closing)
+			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
 		
 		//if (Main.editor.editing == this)
 			button.tick();
@@ -503,6 +504,8 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			Main.editor.scrX = scrX;
 			Main.editor.scrY = scrY;
+			
+			Main.editor.setExtType(ListableFile.getFileExtension(regent.getRegent()));
 			
 			if (!isSaved())
 				save();

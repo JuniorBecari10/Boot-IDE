@@ -56,6 +56,8 @@ import ide.util.Texts;
 // Nota: para escrever em vermelho no console, ao invés de digitar System.out.println("texto"); use System.err.println("texto");
 
 public class CodeEditor extends IDEComponent {
+	
+	public static final int TAB_CLOSE_TIMEOUT = 300;
 
 	public static volatile int FONT_SIZE = 16; // 18, 16 (Padrão: 16)
 
@@ -718,7 +720,7 @@ public class CodeEditor extends IDEComponent {
 		killAllTabs = new Thread() {
 			public void run() {
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(TAB_CLOSE_TIMEOUT);
 				} catch (InterruptedException e) { // Esperar a animação acabar
 					e.printStackTrace();
 				}
@@ -5621,10 +5623,21 @@ public class CodeEditor extends IDEComponent {
 		if (indxs.size() > 0)
 			isPhpPart = false;
 	}
-
-	public List<IDEFont> automaticColor(char[] chars, String ext) {
+	
+	public void setExtType(String ext) {
 		extType = "";
 		foundExt = false;
+		
+		if (ListableFile.fileHasExtension(ext))
+			extType = getLowerBarFileName(ext);
+		else
+			extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
+		
+		if ((isReadOnly || editing.isReadOnly) && !extType.contains("(" + Texts.readOnly + ")"))
+			extType += " (" + Texts.readOnly + ")";
+	}
+
+	public List<IDEFont> automaticColor(char[] chars, String ext) {
 
 		/*
 		 * isMultilineCommenting = false;
@@ -5638,14 +5651,6 @@ public class CodeEditor extends IDEComponent {
 
 		for (int i = 0; i < chars.length; i++)
 			fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
-		
-		if (ListableFile.fileHasExtension(ext))
-			extType = getLowerBarFileName(ext);
-		else
-			extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
-		
-		if ((isReadOnly || editing.isReadOnly) && !extType.contains("(" + Texts.readOnly + ")"))
-			extType += " (" + Texts.readOnly + ")";
 		
 		if (!ListableFile.fileHasExtension(ext))
 			ext = editing.getRegent().getRegent().getName();
@@ -7676,6 +7681,34 @@ public class CodeEditor extends IDEComponent {
 			CommandTerminal.runCommand("resettabscroll");
 		
 		callAutomaticColor();
+		
+		boolean hasSelected = false;
+		
+		for (Tab t : tabs) {
+			if (editing == t) hasSelected = true;
+			
+			if (t.getWidth() == 0) {
+				toRemove.add(t);
+			}
+		}
+		
+		if (!hasSelected && !tabs.isEmpty()) {
+			Main.editor.editing = tabs.get(0);
+			
+			
+			Main.editor.scrX = tabs.get(0).scrX;
+			Main.editor.scrY = tabs.get(0).scrY;
+			
+			Main.editor.lines.clear();
+		
+			try {
+				Main.editor.lines = Main.editor.readFile(tabs.get(0).getRegent().getRegent());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 		
 		//type();
 		

@@ -126,7 +126,7 @@ public class RightClickOption extends IDEComponent {
 	public static RightClickOption getRightClickOptionHovered() {
 		for (IDEComponent i : IDEComponent.components)
 			if (i instanceof RightClickOption)
-				if (i.hovered()) { System.out.println("a"); return (RightClickOption) i; }
+				if (i.hovered()) return (RightClickOption) i;
 		
 		
 		for (RightClickOption r : Main.editor.autocompletes)
