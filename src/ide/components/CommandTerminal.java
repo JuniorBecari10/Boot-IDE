@@ -79,7 +79,7 @@ public class CommandTerminal extends IDEComponent {
 	
 	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "getfontsize",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
-			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile", "resetreadmode",
+			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode",
@@ -91,22 +91,6 @@ public class CommandTerminal extends IDEComponent {
 			"gengetter str:lang str:variable_name str:variable_type",
 			"gensetter str:lang str:variable_name str:variable_type",
 			"gensnippet cs/csmain str:class_name str:namespace"
-			};
-	
-	public static final String[] onlyCommands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "getfontsize",
-			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
-			"selectall", "generateconfigfile", "toggleexplorer", "loadconfigfile", "unloadconfigfile", "resetreadmode",
-			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
-			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab", "setexplorerdrag",
-			"gotoline", "setfontsize", "insertchar", "setreadmode",
-			"gendiv", "gensnippet",
-			"lorem", "ordertab", "openfile",
-			"setcursorpos",
-			"getproperty",
-			"setproperty",
-			"gengetter",
-			"gensetter",
-			"gensnippet"
 			};
 	
 	public static List<String> commandHints = new ArrayList<>();
@@ -411,7 +395,7 @@ public class CommandTerminal extends IDEComponent {
 				Main.editor.selecting = true;
 				break;
 				
-			case "generateconfigfile":
+			/*case "generateconfigfile":
 				int option = chooser.showSaveDialog(Main.screen.frame);
 				
 				if (option == JFileChooser.APPROVE_OPTION) {
@@ -433,7 +417,7 @@ public class CommandTerminal extends IDEComponent {
 						}
     				}
 				}
-				break;
+				break;*/
 				
 			case "toggleexplorer":
 				if (expOff)
@@ -446,7 +430,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "loadconfigfile":
-				option = chooser.showOpenDialog(Main.screen.frame);
+				/*option = chooser.showOpenDialog(Main.screen.frame);
 				
 				if (option == JFileChooser.APPROVE_OPTION) {
 					Main.conffile = chooser.getSelectedFile().getPath();
@@ -473,11 +457,11 @@ public class CommandTerminal extends IDEComponent {
 						CodeEditor.setSystemLook();
 						JOptionPane.showOptionDialog(null, Texts.pleaseRestart, Texts.restartRequired, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 					}
-				}
+				}*/
 				
 				break;
 				
-			case "unloadconfigfile":
+			/*case "unloadconfigfile":
 				Main.conffile = "none";
 				
 				Main.writeFile(Main.settingsFile);
@@ -492,7 +476,7 @@ public class CommandTerminal extends IDEComponent {
 					JOptionPane.showOptionDialog(null, Texts.pleaseRestart, Texts.restartRequired, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 				}
 				
-				break;
+				break;*/
 			
 			case "sysout":
 			case "syso":
@@ -691,7 +675,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "revertconfigfile":
+			/*case "revertconfigfile":
 				Colors.revertColors();
 				
 				Fonts.initFonts(Main.fntnr, Main.fntbl);
@@ -704,7 +688,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				//Main.load();
 				
-				break;
+				break;*/
 				
 			case "togglecodehelpers":
 				if (Main.editor.editing == null) break;
@@ -1418,6 +1402,14 @@ public class CommandTerminal extends IDEComponent {
 		
 		if (changeHints) {
 			commandHints.clear();
+			
+			String[] onlyCommands = new String[commands.length];
+			
+			for (int i = 0; i < commands.length; i++) {
+				String s = commands[i];
+				
+				onlyCommands[i] = s.split(" ")[0];
+			}
 			
 			for (int i = 0; i < onlyCommands.length; i++) {
 				String s = onlyCommands[i];

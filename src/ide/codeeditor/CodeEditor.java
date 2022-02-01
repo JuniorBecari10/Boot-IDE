@@ -7182,7 +7182,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 					
-					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == 61 && !alternateTabsMode) { // 61 = +
+					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == 61 && !alternateTabsMode) { // 61 = + | Ctrl + Increase Font Size
 						KeyInput.updateKeys();
 
 						CommandTerminal.runCommand("setfontsize " + (FONT_SIZE + 2));
@@ -7190,7 +7190,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 					
-					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_MINUS && !alternateTabsMode) {
+					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_MINUS && !alternateTabsMode) { // Ctrl - Decrease Font Size
 						KeyInput.updateKeys();
 						
 						CommandTerminal.runCommand("setfontsize " + (FONT_SIZE - 2));

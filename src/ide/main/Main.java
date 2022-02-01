@@ -53,6 +53,8 @@ public class Main implements Runnable, Tickable {
 	public static final String CONFIG_FILE_EXTENSION = ".conf";
     public static final String SETTINGS_FILE_EXTENSION = ".setconf";
     
+    public static final String DEFAULT_CONFIG_FILE_NAME = "config" + CONFIG_FILE_EXTENSION;
+    
     public static final String RESOURCE_FOLDER_NAME = "Resources";
     public static final String FONT_FILE_NAME = "Resources/font.png";
     public static final String BOLD_FILE_NAME = "Resources/bold.png";
@@ -111,7 +113,8 @@ public class Main implements Runnable, Tickable {
     public static boolean hasConfigFile = false;
     public static Language lang;
     
-    public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings" + SETTINGS_FILE_EXTENSION); // 08/05/2021 - 15:48
+    public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings" + SETTINGS_FILE_EXTENSION);
+    public static final File defaultConfigFile = new File(System.getProperty("user.dir") + "\\" + DEFAULT_CONFIG_FILE_NAME);
     
     public static final File resourcesFolder = new File(System.getProperty("user.dir") + "\\" + RESOURCE_FOLDER_NAME);
     
@@ -210,6 +213,17 @@ public class Main implements Runnable, Tickable {
         
         if (settingsFile.exists())
     		readFile(settingsFile);
+        
+        if (defaultConfigFile.exists()) {	
+        	conffile = defaultConfigFile.getPath();
+        	hasConfigFile = true;
+        }
+        else {
+        	ListableFile.generateConfigFile(defaultConfigFile);
+        	
+        	conffile = defaultConfigFile.getPath();
+        	hasConfigFile = true;
+        }
         
         if (!alreadyLoaded)
         	load();
