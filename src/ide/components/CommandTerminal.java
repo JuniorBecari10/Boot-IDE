@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
@@ -29,8 +28,6 @@ import ide.main.Main;
 import ide.main.Screen;
 import ide.util.Animation;
 import ide.util.Colors;
-import ide.util.Language;
-import ide.util.Spritesheet;
 import ide.util.Texts;
 
 /**
@@ -52,8 +49,6 @@ public class CommandTerminal extends IDEComponent {
 	private Animation cursor;
 	
 	public static String lastCommand = "";
-	
-	private static JFileChooser chooser;
 	
 	private static boolean changeHints = true;
 	private static int comIndex = 0;
@@ -95,7 +90,8 @@ public class CommandTerminal extends IDEComponent {
 	
 	public static List<String> commandHints = new ArrayList<>();
 	
-	private static boolean typedFlag = false;
+	@SuppressWarnings("unused")
+	private static boolean typedFlag = false; // é necessário que exista, pelo menos por enquando
 	
 	public CommandTerminal(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
@@ -123,8 +119,6 @@ public class CommandTerminal extends IDEComponent {
 				cursor.play();
 			}
 		}.start();
-		
-		chooser = new JFileChooser(Texts.save + "/" + Texts.open);
 	}
 	
 	/**
