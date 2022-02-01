@@ -427,36 +427,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("lineNumber: default\n");
 			w.write("selectedLineNumber: default\n");
 			w.write("\n");
-			/*
-			 * w.write("- Files\n"); w.write("\n"); w.write("spritesheet: default\n");
-			 * w.write("font-normal: default\n"); w.write("font-bold: default\n");
-			 */
-			/*
-			 * w.write("\n"); w.write("- Color Mode\n"); w.write("\n");
-			 * w.write("objectsMode: normal\n"); w.write("methodsMode: normal\n");
-			 * w.write("numbersMode: normal\n"); w.write("keywordsMode: normal\n");
-			 * w.write("variablesMode: normal\n"); w.write("commentsMode: normal\n");
-			 * w.write("stringsMode: normal\n"); w.write("genericsMode: normal\n");
-			 */
 			w.write("\n");
 			w.write("- Settings\n");
 			w.write("\n");
-			/*
-			 * w.write("Lembrar de abas quando fechar a Boot IDE: true\n");
-			 * w.write("Lembrar do arquivo de configurações: true\n"); w.write("\n");
-			 * w.write("Colorir Objetos: true\n"); w.write("Colorir Métodos: true\n");
-			 * w.write("Colorir Números: true\n");
-			 * w.write("Colorir Palavras-chave: true\n");
-			 * w.write("Colorir Variáveis: true\n"); w.write("Colorir Comentários: true\n");
-			 * w.write("Colorir Comentários: true\n"); w.write("Colorir Strings: true\n");
-			 * w.write("Colorir Genéricos: true\n");
-			 */
 			w.write("font_size: default\n");
 			w.write("language: default\n");
 			w.write("autocomplete_active: default\n");
 			w.write("automatically_open_tabs: default\n");
 			w.write("autocomplete_html_tags: default\n");
-			// w.write("put_chevrons_on_html_tags: default\n");
 
 			w.close();
 
@@ -464,7 +442,63 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void generateLocalConfigFile(File file, int fontSize) {
+		String pathStr = file.getAbsolutePath();
+		String s = pathStr.contains(Main.CONFIG_FILE_EXTENSION) ? pathStr + "" : pathStr + Main.CONFIG_FILE_EXTENSION;
 
+		// Path path = Paths.get(s);
+
+		try {
+			BufferedWriter w = /* Files.newBufferedWriter(path, StandardCharsets.UTF_8); */ new BufferedWriter(
+					new FileWriter(s));
+
+			w.write(Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
+					: "Boot IDE Configuration File" + "\n");
+			w.write("\n");
+			w.write("- Colors\n");
+			w.write("\n");
+			w.write("background: default\n");
+			w.write("background2: default\n");
+			w.write("backgroundLight: default\n");
+			w.write("explorer: default\n");
+			w.write("codeEditor: default\n");
+			w.write("explorerLight: default\n");
+			w.write("explorerLighter: default\n");
+			w.write("textLight: default\n");
+			w.write("textLighter: default\n");
+			w.write("objects: default\n");
+			w.write("methods: default\n");
+			w.write("numbers: default\n");
+			w.write("keywords: default\n");
+			w.write("variables: default\n");
+			w.write("comments: default\n");
+			w.write("strings: default\n");
+			w.write("symbols: default\n");
+			w.write("cursor: default\n");
+			w.write("selection: default\n");
+			w.write("other: default\n");
+			w.write("lowerBar: default\n");
+			w.write("error: default\n");
+			w.write("lineNumber: default\n");
+			w.write("selectedLineNumber: default\n");
+			w.write("\n");
+			w.write("\n");
+			w.write("- Settings\n");
+			w.write("\n");
+			w.write("font_size: " + fontSize + "\n");
+			w.write("language: default\n");
+			w.write("autocomplete_active: default\n");
+			w.write("automatically_open_tabs: default\n");
+			w.write("autocomplete_html_tags: default\n");
+
+			w.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void readConfigFile(String path) {
 		File f = new File(path);
 		Path p = f.toPath();

@@ -770,6 +770,7 @@ public class Main implements Runnable, Tickable {
     	closing:
         	if (WindowInput.isClosing()) {
         		writeFile(settingsFile);
+        		ListableFile.generateLocalConfigFile(defaultConfigFile, CodeEditor.FONT_SIZE);
         		
 	    		if (Main.editor.editing != null) { // não for nulo
 	    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
