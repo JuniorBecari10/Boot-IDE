@@ -54,7 +54,7 @@ public class CommandTerminal extends IDEComponent {
 	private static boolean changeHints = true;
 	private static int comIndex = 0;
 	
-	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
+	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "generateconfigfile",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
 			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode", "resetfontsize",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
@@ -369,7 +369,7 @@ public class CommandTerminal extends IDEComponent {
 				Main.editor.selecting = true;
 				break;
 				
-			/*case "generateconfigfile":
+			case "generateconfigfile":
 				int option = chooser.showSaveDialog(Main.screen.frame);
 				
 				if (option == JFileChooser.APPROVE_OPTION) {
@@ -391,7 +391,7 @@ public class CommandTerminal extends IDEComponent {
 						}
     				}
 				}
-				break;*/
+				break;
 				
 			case "toggleexplorer":
 				if (expOff)
@@ -404,7 +404,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "loadconfigfile":
-				int option = chooser.showOpenDialog(Main.screen.frame);
+				option = chooser.showOpenDialog(Main.screen.frame);
 				
 				if (option == JFileChooser.APPROVE_OPTION) {
 					//Main.conffile = chooser.getSelectedFile().getPath();

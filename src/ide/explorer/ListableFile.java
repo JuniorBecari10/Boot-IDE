@@ -425,8 +425,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("lowerBar: default\n");
 			w.write("error: default\n");
 			w.write("lineNumber: default\n");
-			w.write("selectedLineNumber: default\n");
-			w.write("\n");
+			w.write("selectedLineNumber: default");
+			/*w.write("\n");
 			w.write("\n");
 			w.write("- Settings\n");
 			w.write("\n");
@@ -434,7 +434,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("language: default\n");
 			w.write("autocomplete_active: default\n");
 			w.write("automatically_open_tabs: default\n");
-			w.write("autocomplete_html_tags: default\n");
+			w.write("autocomplete_html_tags: default\n");*/ // isso ele não escreve
 
 			w.close();
 
