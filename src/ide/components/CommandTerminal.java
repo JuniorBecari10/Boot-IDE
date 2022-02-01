@@ -55,7 +55,7 @@ public class CommandTerminal extends IDEComponent {
 	
 	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
-			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode",
+			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode", "resetfontsize",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode",
@@ -155,6 +155,10 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "resetreadmode":
 				runCommand("setreadmode normal");
+				break;
+				
+			case "resetfontsize":
+				runCommand("setfontsize 16");
 				break;
 				
 			case "version":
