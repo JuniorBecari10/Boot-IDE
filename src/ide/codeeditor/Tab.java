@@ -52,6 +52,7 @@ public class Tab extends IDEComponent implements Serializable {
 	private int drawW = WIDTH;
 	
 	public int scrX = 0, scrY = 0;
+	public int cx = 0, cy = 1;
 	
 	public boolean closing = false;
 	private boolean isSaved = true;
@@ -203,6 +204,8 @@ public class Tab extends IDEComponent implements Serializable {
 					
 					Main.editor.editing = next;
 					
+					Main.editor.cursorX = cx;
+					Main.editor.cursorY = cy;
 					
 					Main.editor.scrX = next.scrX;
 					Main.editor.scrY = next.scrY;
@@ -405,6 +408,9 @@ public class Tab extends IDEComponent implements Serializable {
 			Main.editor.scrX = scrX;
 			Main.editor.scrY = scrY;
 			
+			Main.editor.cursorX = cx;
+			Main.editor.cursorY = cy;
+			
 			break;
 			
 		case "alternate":
@@ -455,8 +461,11 @@ public class Tab extends IDEComponent implements Serializable {
 			button.tick();
 		
 		if (Main.editor.editing == this) {
-			scrX = Main.editor.scrX; // TODO
+			scrX = Main.editor.scrX;
 			scrY = Main.editor.scrY;
+			
+			cx = Main.editor.cursorX;
+			cy = Main.editor.cursorY;
 		}
 		
 		if (!regent.getRegent().exists()) close();
@@ -499,8 +508,8 @@ public class Tab extends IDEComponent implements Serializable {
 				e.printStackTrace();
 			}
 			
-			Main.editor.cursorX = 0;
-			Main.editor.cursorY = 1;
+			Main.editor.cursorX = cx;
+			Main.editor.cursorY = cy;
 			
 			Main.editor.scrX = scrX;
 			Main.editor.scrY = scrY;
