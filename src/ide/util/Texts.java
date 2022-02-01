@@ -30,9 +30,6 @@ public final class Texts {
 	public static String returnBaseFolder;
 	public static String reload;
 	
-	public static String configFileLoaded;
-	public static String noConfigFileLoaded;
-	
 	public static String codeHelpersOn;
 	public static String codeHelpersOff;
 	
@@ -211,9 +208,6 @@ public final class Texts {
 			oneFolderUp = "Uma Pasta Acima";
 			returnBaseFolder = "Retornar à Pasta Base";
 			reload = "Recarregar";
-			
-			configFileLoaded = "Arquivo de Configurações carregado.";
-			noConfigFileLoaded = "Não há nenhum Arquivo de Configurações carregado.";
 			
 			codeHelpersOn = "Os CodeHelpers estão ativados.";
 			codeHelpersOff = "Os CodeHelpers estão desativados.";
@@ -394,9 +388,6 @@ public final class Texts {
 			oneFolderUp = "One Folder Up";
 			returnBaseFolder = "Return to Base Folder";
 			reload = "Reload";
-			
-			configFileLoaded = "Configuration File loaded.";
-			noConfigFileLoaded = "There is no Configuration File loaded.";
 			
 			codeHelpersOn = "The CodeHelpers are enabled.";
 			codeHelpersOff = "The CodeHelpers are disabled.";

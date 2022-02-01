@@ -53,26 +53,7 @@ public class CommandTerminal extends IDEComponent {
 	private static boolean changeHints = true;
 	private static int comIndex = 0;
 	
-	/*
-	 * 	 Nota para novos comandos, queridos adicionadores de comandos
-	 *  
-	 *   [...]
-	 *  
-	 *   n° 103: 
-	 *   Se colocar num array tem que colocar no outro tbm senão não dá certo
-	 *   
-	 *   n° 104:
-	 *   Somente adicionem comandos se realmente forem necessários
-	 *   
-	 *   n° 105:
-	 *   O comando somente vai ser adicioando se estiver em ordem correta nos dois arrays, e aparecerá no autocomplete
-	 *   
-	 *   [...]
-	 */
-	
-	// O Emmet não está disponível ainda, talvez na v4.0 ele venha
-	
-	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "getfontsize",
+	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
 			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
@@ -91,7 +72,7 @@ public class CommandTerminal extends IDEComponent {
 	public static List<String> commandHints = new ArrayList<>();
 	
 	@SuppressWarnings("unused")
-	private static boolean typedFlag = false; // é necessário que exista, pelo menos por enquando
+	private static boolean typedFlag = false; // é necessário que exista, pelo menos por enquanto
 	
 	public CommandTerminal(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
@@ -174,12 +155,6 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "resetreadmode":
 				runCommand("setreadmode normal");
-				break;
-				
-			case "getfontsize":
-				CodeEditor.setSystemLook();
-				
-				JOptionPane.showMessageDialog(null, Texts.fontSizeIs + " " + CodeEditor.FONT_SIZE + " pixels.", Texts.getFontSize, JOptionPane.INFORMATION_MESSAGE);
 				break;
 				
 			case "version":
@@ -267,11 +242,7 @@ public class CommandTerminal extends IDEComponent {
 				StringSelection sel = new StringSelection(str);
 				Clipboard clip = Main.toolkit.getSystemClipboard();
 				
-				System.out.println("aa");
-				
 				clip.setContents(sel, sel);
-				
-				System.out.println("aaa");
 				
 				break;
 				
@@ -814,9 +785,9 @@ public class CommandTerminal extends IDEComponent {
 					int a0 = Integer.parseInt(args[0]);
 					
 					if (a0 < 8) {
-						CodeEditor.setSystemLook();
+						//CodeEditor.setSystemLook();
 						
-						JOptionPane.showMessageDialog(null, Texts.fontBelowMinimum, Texts.belowMinimum, JOptionPane.OK_OPTION);
+						//JOptionPane.showMessageDialog(null, Texts.fontBelowMinimum, Texts.belowMinimum, JOptionPane.OK_OPTION);
 						
 						return;
 					}

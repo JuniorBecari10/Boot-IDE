@@ -680,16 +680,13 @@ public class Main implements Runnable, Tickable {
 					
 					Fonts.drawString(t.getRegent().getRegent().getPath().substring(index), (x - 10) + 20, (y - 10) + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					
-					if (!hasConfigFile)
-						Fonts.drawString(Texts.noConfigFileLoaded, (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-					else
-						Fonts.drawString(Texts.configFileLoaded, (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-					
 					if (Main.editor.codeHelpersOn)
-						Fonts.drawString(Texts.codeHelpersOn, (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+						Fonts.drawString(Texts.codeHelpersOn, (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					else
-						Fonts.drawString(Texts.codeHelpersOff, (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-				
+						Fonts.drawString(Texts.codeHelpersOff, (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					
+					Fonts.drawString(Texts.fontSizeIs + " " + CodeEditor.FONT_SIZE + " pixels.", (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					
 					if (Main.editor.editing != null && Main.editor.editing.isReadOnly)
 						Fonts.drawString(Texts.fileAsReadOnly, (x - 10) + 20, (y - 10)+ 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				}
