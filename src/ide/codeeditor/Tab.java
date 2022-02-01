@@ -458,7 +458,7 @@ public class Tab extends IDEComponent implements Serializable {
 			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
 		
 		//if (Main.editor.editing == this)
-			button.tick();
+		button.tick();
 		
 		if (Main.editor.editing == this) {
 			scrX = Main.editor.scrX;

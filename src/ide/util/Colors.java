@@ -103,4 +103,12 @@ public class Colors {
     	
     	return img;
     }
+    
+    public static String toHex(Color c) {
+    	String r = Integer.toHexString(c.getRed());
+    	String g = Integer.toHexString(c.getGreen());
+    	String b = Integer.toHexString(c.getBlue());
+    	
+    	return "#" + r + g + b;
+    }
 }

@@ -226,7 +226,7 @@ public class Main implements Runnable, Tickable {
         }
         
         if (!alreadyLoaded)
-        	load();
+        	load(conffile);
         
         ListableFile.updateTypes();
         
@@ -237,7 +237,7 @@ public class Main implements Runnable, Tickable {
 		IDEComponent.toAdd.add(Main.reload);
     }
     
-    public static synchronized void load() {
+    public static synchronized void load(String conffile) {
     	alreadyLoaded = true;
     	
     	ListableFile.readConfigFile(conffile);
@@ -480,6 +480,8 @@ public class Main implements Runnable, Tickable {
     
     // o settings file tá
     public static void readFile(File setFile) {
+    	int lccx = 0, lccy = 0; // local cx (cursor x)
+    	
     	try {
 	    	Path p = setFile.toPath();
 	    	
@@ -526,11 +528,17 @@ public class Main implements Runnable, Tickable {
 					else if (i == 2)
 						tabindex = Integer.parseInt(s);
 					
-					else if (i == 3)
+					else if (i == 3) {
 						Main.editor.scrX = Integer.parseInt(s);
+						
+						lccx = Integer.parseInt(s);
+					}
 					
-					else if (i == 4)
+					else if (i == 4) {
 						Main.editor.scrY = Integer.parseInt(s);
+						
+						lccy = Integer.parseInt(s);
+					}
 					
 					else if (i == 5)
 						Main.editor.tabScr = Integer.parseInt(s);
@@ -538,7 +546,7 @@ public class Main implements Runnable, Tickable {
 					else if (i == 6) {
 						Main.explorer.setDrag(Integer.parseInt(s));
 						
-						load();
+						load(conffile);
 					}
 					
 					if (i > 6) {
@@ -560,7 +568,13 @@ public class Main implements Runnable, Tickable {
 	    	
 	    	if (Main.editor.tabs.size() > 0) {
 				Main.editor.editing = Main.editor.tabs.get(tabindex);
-	    	
+				
+				editor.editing.cx = lccx;
+				editor.editing.cy = lccy;
+				
+				editor.cursorX = lccx;
+				editor.cursorY = lccy;
+				
 		    	try {
 					Main.editor.lines = Main.editor.readFile(Main.editor.tabs.get(tabindex).getRegent().getRegent());
 				} catch (IOException e) {
@@ -770,7 +784,7 @@ public class Main implements Runnable, Tickable {
     	closing:
         	if (WindowInput.isClosing()) {
         		writeFile(settingsFile);
-        		ListableFile.generateLocalConfigFile(defaultConfigFile, CodeEditor.FONT_SIZE);
+        		ListableFile.generateLocalConfigFile(defaultConfigFile);
         		
 	    		if (Main.editor.editing != null) { // não for nulo
 	    			if (!Main.editor.editing.isSaved()) { // não estiver salvo

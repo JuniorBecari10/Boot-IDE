@@ -443,7 +443,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		}
 	}
 	
-	public static void generateLocalConfigFile(File file, int fontSize) {
+	public static void generateLocalConfigFile(File file) {
 		String pathStr = file.getAbsolutePath();
 		String s = pathStr.contains(Main.CONFIG_FILE_EXTENSION) ? pathStr + "" : pathStr + Main.CONFIG_FILE_EXTENSION;
 
@@ -458,39 +458,39 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("\n");
 			w.write("- Colors\n");
 			w.write("\n");
-			w.write("background: default\n");
-			w.write("background2: default\n");
-			w.write("backgroundLight: default\n");
-			w.write("explorer: default\n");
-			w.write("codeEditor: default\n");
-			w.write("explorerLight: default\n");
-			w.write("explorerLighter: default\n");
-			w.write("textLight: default\n");
-			w.write("textLighter: default\n");
-			w.write("objects: default\n");
-			w.write("methods: default\n");
-			w.write("numbers: default\n");
-			w.write("keywords: default\n");
-			w.write("variables: default\n");
-			w.write("comments: default\n");
-			w.write("strings: default\n");
-			w.write("symbols: default\n");
-			w.write("cursor: default\n");
-			w.write("selection: default\n");
-			w.write("other: default\n");
-			w.write("lowerBar: default\n");
-			w.write("error: default\n");
-			w.write("lineNumber: default\n");
-			w.write("selectedLineNumber: default\n");
+			w.write("background: " + Colors.toHex(Colors.background) + "\n");
+			w.write("background2: " + Colors.toHex(Colors.background2) + "\n");
+			w.write("backgroundLight: " + Colors.toHex(Colors.backgroundLight) + "\n");
+			w.write("explorer: " + Colors.toHex(Colors.explorer) + "\n");
+			w.write("codeEditor: " + Colors.toHex(Colors.codeEditor) + "\n");
+			w.write("explorerLight: " + Colors.toHex(Colors.explorerLight) + "\n");
+			w.write("explorerLighter: " + Colors.toHex(Colors.explorerLighter) + "\n");
+			w.write("textLight: " + Colors.toHex(Colors.textLight) + "\n");
+			w.write("textLighter: " + Colors.toHex(Colors.textLighter) + "\n");
+			w.write("objects: " + Colors.toHex(Colors.objects) + "\n");
+			w.write("methods: " + Colors.toHex(Colors.methods) + "\n");
+			w.write("numbers: " + Colors.toHex(Colors.numbers) + "\n");
+			w.write("keywords: " + Colors.toHex(Colors.keywords) + "\n");
+			w.write("variables: " + Colors.toHex(Colors.variables) + "\n");
+			w.write("comments: " + Colors.toHex(Colors.comments) + "\n");
+			w.write("strings: " + Colors.toHex(Colors.strings) + "\n");
+			w.write("symbols: " + Colors.toHex(Colors.symbols) + "\n");
+			w.write("cursor: " + Colors.toHex(Colors.cursor) + "\n");
+			w.write("selection: " + Colors.toHex(Colors.selection) + "\n");
+			w.write("other: " + Colors.toHex(Colors.other) + "\n");
+			w.write("lowerBar: " + Colors.toHex(Colors.lowerBar) + "\n");
+			w.write("error: " + Colors.toHex(Colors.error) + "\n");
+			w.write("lineNumber: " + Colors.toHex(Colors.lineNumber) + "\n");
+			w.write("selectedLineNumber: " + Colors.toHex(Colors.selectedLineNumber) + "\n");
 			w.write("\n");
 			w.write("\n");
 			w.write("- Settings\n");
 			w.write("\n");
-			w.write("font_size: " + fontSize + "\n");
-			w.write("language: default\n");
-			w.write("autocomplete_active: default\n");
-			w.write("automatically_open_tabs: default\n");
-			w.write("autocomplete_html_tags: default\n");
+			w.write("font_size: " + CodeEditor.FONT_SIZE + "\n");
+			w.write("language: " + Main.lang + "\n");
+			w.write("autocomplete_active: " + CodeEditor.isAutoCompleteActive + "\n");
+			w.write("automatically_open_tabs: " + CodeEditor.automaticallyOpenTabs + "\n");
+			w.write("autocomplete_html_tags: " + CodeEditor.autoCompleteHtmlTags + "\n");
 
 			w.close();
 

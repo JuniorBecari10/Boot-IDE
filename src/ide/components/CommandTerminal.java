@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
@@ -71,6 +72,8 @@ public class CommandTerminal extends IDEComponent {
 	
 	public static List<String> commandHints = new ArrayList<>();
 	
+	private static JFileChooser chooser;
+	
 	@SuppressWarnings("unused")
 	private static boolean typedFlag = false; // é necessário que exista, pelo menos por enquanto
 	
@@ -100,6 +103,8 @@ public class CommandTerminal extends IDEComponent {
 				cursor.play();
 			}
 		}.start();
+		
+		chooser = new JFileChooser(Texts.save + "/" + Texts.open);
 	}
 	
 	/**
@@ -399,12 +404,12 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "loadconfigfile":
-				/*option = chooser.showOpenDialog(Main.screen.frame);
+				int option = chooser.showOpenDialog(Main.screen.frame);
 				
 				if (option == JFileChooser.APPROVE_OPTION) {
-					Main.conffile = chooser.getSelectedFile().getPath();
+					//Main.conffile = chooser.getSelectedFile().getPath();
 					
-					Main.load();
+					Main.load(chooser.getSelectedFile().getPath());
 					
 					if (!ListableFile.hasAltered) {
 						String[] options = { Texts.yes, Texts.no };
@@ -426,7 +431,7 @@ public class CommandTerminal extends IDEComponent {
 						CodeEditor.setSystemLook();
 						JOptionPane.showOptionDialog(null, Texts.pleaseRestart, Texts.restartRequired, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 					}
-				}*/
+				}
 				
 				break;
 				
