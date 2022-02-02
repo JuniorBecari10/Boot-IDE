@@ -92,6 +92,8 @@ public class Explorer extends IDEComponent {
     	if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
     	if (CommandTerminal.expOff) return;
     	
+    	height = Main.screen.getHeight();
+    	
     	// Drag
     	
     	if (MouseInput.hovered(x + width - 5, y, 10, height) && !Main.editor.selecting) {

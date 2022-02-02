@@ -629,7 +629,14 @@ public class Main implements Runnable, Tickable {
             return;
         }
 
-        Graphics g = bs.getDrawGraphics();
+        Graphics g = null;
+        
+        try {
+        	g = bs.getDrawGraphics();
+        } catch (IllegalStateException e) {
+        	screen.createBufferStrategy(3);
+            return;
+        }
         
         Graphics2D g2 = (Graphics2D) g;
 

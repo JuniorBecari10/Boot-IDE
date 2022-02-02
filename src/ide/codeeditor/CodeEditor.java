@@ -7692,6 +7692,8 @@ public class CodeEditor extends IDEComponent {
 		if (tabs.size() == 0)
 			CommandTerminal.runCommand("resettabscroll");
 		
+		height = Main.screen.getHeight();
+		
 		callAutomaticColor();
 		
 		/*boolean hasSelected = false;
