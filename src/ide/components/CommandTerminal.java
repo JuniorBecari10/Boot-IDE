@@ -28,6 +28,7 @@ import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Animation;
 import ide.util.Colors;
+import ide.util.Language;
 import ide.util.Texts;
 
 /**
@@ -53,12 +54,12 @@ public class CommandTerminal extends IDEComponent {
 	private static boolean changeHints = true;
 	private static int comIndex = 0;
 	
-	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "generateconfigfile",
+	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "generateconfigfile", "getlang",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
 			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode", "resetfontsize",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
-			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode",
+			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode", "setlang str:lang",
 			"gendiv str:class_name", "gensnippet str:type",
 			"lorem int:num_words", "ordertab int:tab_from int:tab_to", "openfile str:file",
 			"setcursorpos int:x int:y",
@@ -73,7 +74,6 @@ public class CommandTerminal extends IDEComponent {
 	
 	private static JFileChooser chooser;
 	
-	@SuppressWarnings("unused")
 	private static boolean typedFlag = false; // é necessário que exista, pelo menos por enquanto
 	
 	public CommandTerminal(int x, int y, int width, int height) {
@@ -163,6 +163,12 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "resetfontsize":
 				runCommand("setfontsize 16");
+				break;
+				
+			case "getlang":
+				CodeEditor.setSystemLook();
+				
+				JOptionPane.showMessageDialog(null, Texts.langIs + " " + (Main.lang == Language.PORT ? "Português." : "English."), Texts.getLang, JOptionPane.INFORMATION_MESSAGE);
 				break;
 				
 			case "version":

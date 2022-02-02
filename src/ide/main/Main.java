@@ -648,7 +648,7 @@ public class Main implements Runnable, Tickable {
         
         if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))
 	        for (Tab t : Main.editor.tabs) {
-				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() && !t.button.hovered()) { // por algum motivo é + e não -
+				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() && !t.button.hovered() && !Tab.isTabDragged()) { // por algum motivo é + e não -
 					int index = t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0;
 					
 					int width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;

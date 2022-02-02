@@ -7198,10 +7198,11 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && alternateTabsMode) {
+					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && alternateTabsMode) { // Esc - Sair do modo alternar abas
 						alternateTabsMode = false;
 						exchanging = null;
 					}
+					
 					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME && !alternateTabsMode) { // Ctrl
 																																// +
 																																// Home

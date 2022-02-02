@@ -196,6 +196,9 @@ public final class Texts {
 	public static String getFontSize;
 	public static String fontSizeIs;
 	
+	public static String getLang;
+	public static String langIs;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -376,6 +379,9 @@ public final class Texts {
 			getFontSize = "Pegar Tamanho da Fonte";
 			fontSizeIs = "O tamanho da fonte é de";
 			
+			getLang = "Pegar Idioma";
+			langIs = "O idioma é";
+			
 			break;
 		
 		case ENG:
@@ -555,6 +561,9 @@ public final class Texts {
 			
 			getFontSize = "Get Font Size";
 			fontSizeIs = "The font size is";
+			
+			getLang = "Get Language";
+			langIs = "The language is";
 			
 			break;
 		}

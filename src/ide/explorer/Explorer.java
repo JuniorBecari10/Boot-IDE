@@ -134,7 +134,7 @@ public class Explorer extends IDEComponent {
     	}
     	
     	if (hovered() && !ListableFile.isListableFileHovered() && !MouseInput.hovered(x + width - 5, y, 10, height)) {
-    		System.out.println("a");
+    		//System.out.println("a");
     		Main.screen.setCursor(Cursor.getDefaultCursor());
     	}
     	

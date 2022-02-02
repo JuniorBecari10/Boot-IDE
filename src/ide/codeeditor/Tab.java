@@ -13,6 +13,9 @@ import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -56,6 +59,8 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	public boolean closing = false;
 	private boolean isSaved = true;
+	
+	private boolean dragging;
 	
 	public CloseTabButton button;
 	
@@ -432,6 +437,13 @@ public class Tab extends IDEComponent implements Serializable {
 		return false;
 	}
 	
+	public static boolean isTabDragged() {
+		for (Tab t : Main.editor.tabs)
+			if (t.dragged()) return true;
+		
+		return false;
+	}
+	
 	public void tick() {
 		if (regent == null || !regent.getRegent().exists()) {
 			close();
@@ -441,21 +453,44 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		if (width == 0) close();
 		
-		MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - 203;	// -WIDTH é um macete kkk - 77
-		
-		if (x < Main.editor.getX()) x = Main.editor.getX();
 		int x = this.x + Main.editor.tabScr;
 		
-		if (Main.editor.tabs.indexOf(this) - 1 > -1)
-			x = Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1).getX() + WIDTH + 3;
-		else
-			x = Tab.MIN_X + WIDTH + 3;
+		if (!isTabDragged()) {
+			MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - 203;	// -WIDTH é um macete kkk - 77
+			
+			if (x < Main.editor.getX()) x = Main.editor.getX();
+			
+			if (Main.editor.tabs.indexOf(this) - 1 > -1)
+				x = Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1).getX() + WIDTH + 3;
+			else
+				x = Tab.MIN_X + WIDTH + 3;
+		}
 		
 		if (hovered())
 			Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		if (!closing)
 			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
+		
+		if (dragged()) {
+			dragging = true;
+			
+			x = MouseInput.getMouseX();
+			//y = MouseInput.getMouseY();
+		}
+		
+		if (!dragged() && dragging) {
+			dragging = false;
+			
+			List<Tab> ts = Main.editor.tabs;
+			
+			Collections.sort(ts, new Comparator<Tab>() {
+				@Override
+				public int compare(Tab t1, Tab t2) {
+					return new Integer(t2.getX()).compareTo(t1.getX());
+				}
+			});
+		}
 		
 		//if (Main.editor.editing == this)
 		button.tick();
