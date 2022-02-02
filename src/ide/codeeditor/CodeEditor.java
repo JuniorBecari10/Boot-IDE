@@ -8116,7 +8116,7 @@ public class CodeEditor extends IDEComponent {
 				for (int i = 0; i < lines.size(); i++) {
 					int yr = MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY;
 	
-					if (yr < 0 || yr > Screen.HEIGHT)
+					if (yr < 0 || yr > Main.screen.getHeight())
 						continue;
 	
 					char[] cs = toCharArray(lines.get(i).getChars());
