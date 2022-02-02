@@ -967,6 +967,12 @@ public class Fonts {
         		continue;
     		}
     		
+    		else if (ch == 8226) {
+    			text[i] = fonts[i].getFont()[128];
+    			
+    			continue;
+    		}
+    		
     		int ind = c[i]; 						// pega o valor na tabela ASCII
     		
     		if (ind > 225) continue;

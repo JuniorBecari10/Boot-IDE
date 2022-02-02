@@ -1325,6 +1325,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	}
 	
 	public static boolean isListableFileHovered() {
+		if (Explorer.files == null) return false;
+		
 		for (ListableFile l : Explorer.files)
 			if (l.hovered()) return true;
 		

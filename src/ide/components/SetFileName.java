@@ -18,7 +18,6 @@ import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
-import ide.main.Screen;
 import ide.util.Animation;
 import ide.util.Colors;
 import ide.util.Texts;
@@ -179,7 +178,7 @@ public class SetFileName extends IDEComponent {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g.setColor(new Color(0, 0, 0, 0.3f));
-		g.fillRect(0, 0, Screen.WIDTH, Screen.HEIGHT);
+		g.fillRect(0, 0, Main.screen.getWidth(), Main.screen.getHeight());
 		
 		g.setColor(Colors.explorerLight);
 		g.fillRect(x, y, width, height);
