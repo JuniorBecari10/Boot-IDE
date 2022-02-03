@@ -165,6 +165,7 @@ public final class Texts {
 	public static String openFolder;
 	public static String wouldEdit;
 //	public static String openInDefaultEditor;
+	public static String openInNewTab;
 	
 	public static String openInEditor;
 	
@@ -345,6 +346,7 @@ public final class Texts {
 			openFolder = "Abrir Pasta";
 //			openInDefaultEditor = "Abrir no Editor Padrão";
 			wouldEdit = "Gostaria de editar o arquivo?";
+			openInNewTab = "Abrir em uma nova aba";
 			
 			in = "em";
 			lines = "linhas";
@@ -528,6 +530,7 @@ public final class Texts {
 			openFolder = "Open Folder";
 //			openInDefaultEditor = "Open In Default Editor";
 			wouldEdit = "Would like to edit the file?";
+			openInNewTab = "Open in a new tab";
 			
 			in = "in";
 			lines = "lines";

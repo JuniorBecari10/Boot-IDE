@@ -13,9 +13,6 @@ import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -60,7 +57,7 @@ public class Tab extends IDEComponent implements Serializable {
 	public boolean closing = false;
 	private boolean isSaved = true;
 	
-	private Tab dragging = null;
+	//private Tab dragging = null;
 	
 	public CloseTabButton button;
 	

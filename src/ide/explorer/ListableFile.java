@@ -394,8 +394,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		// Path path = Paths.get(s);
 
 		try {
-			BufferedWriter w = /* Files.newBufferedWriter(path, StandardCharsets.UTF_8); */ new BufferedWriter(
-					new FileWriter(s));
+			BufferedWriter w = /* Files.newBufferedWriter(path, StandardCharsets.UTF_8); */ new BufferedWriter(new FileWriter(s));
 
 			w.write(Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
 					: "Boot IDE Configuration File" + "\n");

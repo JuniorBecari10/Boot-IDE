@@ -383,7 +383,7 @@ public class CommandTerminal extends IDEComponent {
 					ListableFile.generateConfigFile(fl);
 					
 					CodeEditor.setSystemLook();
-					String[] options = { Texts.openFolder, Texts.cancel };
+					String[] options = { Texts.openFolder, Texts.cancel, /*Texts.openInNewTab*/ };
     				
     				CodeEditor.setSystemLook();
     				int selectedOption = JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
@@ -395,6 +395,13 @@ public class CommandTerminal extends IDEComponent {
 							e.printStackTrace();
 						}
     				}
+    				
+    				/*if (selectedOption == 2) {
+    					if (!fl.exists())
+    						System.out.println("a");
+    					
+    					ListableFile.addTab(ListableFile.newListableFile(fl), true);
+    				}*/
 				}
 				break;
 				
