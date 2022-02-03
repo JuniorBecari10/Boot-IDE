@@ -60,7 +60,7 @@ public class Tab extends IDEComponent implements Serializable {
 	public boolean closing = false;
 	private boolean isSaved = true;
 	
-	private boolean dragging;
+	private Tab dragging = null;
 	
 	public CloseTabButton button;
 	
@@ -466,31 +466,33 @@ public class Tab extends IDEComponent implements Serializable {
 				x = Tab.MIN_X + WIDTH + 3;
 		}
 		
+		//System.out.println(dragging + ", " + MouseInput.isMouseDragged());
+		
 		if (hovered())
 			Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		if (!closing)
 			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
 		
-		if (dragged()) {
-			dragging = true;
+		/*if (dragged() && dragging == null) {
+			dragging = this;
 			
-			x = MouseInput.getMouseX();
-			//y = MouseInput.getMouseY();
+			x = MouseInput.getMouseX() - 20;
+			y = MouseInput.getMouseY();
 		}
 		
-		if (!dragged() && dragging) {
-			dragging = false;
+		if (!MouseInput.isMouseDragged() && dragging == this) {
+			dragging = null;
 			
 			List<Tab> ts = Main.editor.tabs;
 			
-			Collections.sort(ts, new Comparator<Tab>() {
+			/*Collections.sort(ts, new Comparator<Tab>() {
 				@Override
 				public int compare(Tab t1, Tab t2) {
 					return new Integer(t2.getX()).compareTo(t1.getX());
 				}
-			});
-		}
+			});*
+		}*/
 		
 		//if (Main.editor.editing == this)
 		button.tick();

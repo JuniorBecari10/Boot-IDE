@@ -1452,7 +1452,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			IDEComponent.addRightClickOption((x + width), y - 30, widthDraw, Texts.createFolder, (s) -> execute(s),
 					"newfolder");
 
-			IDEComponent.addRightClickOption((x + width), y, widthDraw, Texts.openInEditor, (s) -> execute(s),
+			IDEComponent.addRightClickOption((x + width), y, widthDraw, regent.isFile(), Texts.openInEditor, (s) -> execute(s),
 					"openeditor");
 			IDEComponent.addRightClickOption((x + width), y + 30, widthDraw, Texts.delete, (s) -> execute(s), "del");
 			IDEComponent.addRightClickOption((x + width), y + 60, widthDraw, Texts.rename, (s) -> execute(s), "rename");
