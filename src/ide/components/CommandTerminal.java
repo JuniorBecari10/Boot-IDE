@@ -58,7 +58,7 @@ public class CommandTerminal extends IDEComponent {
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
 			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode", "resetfontsize",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
-			"revertconfigfile", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
+			"revertcolors", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode", "setlang str:lang",
 			"gendiv str:class_name", "gensnippet str:type",
 			"lorem int:num_words", "ordertab int:tab_from int:tab_to", "openfile str:file",
@@ -434,7 +434,7 @@ public class CommandTerminal extends IDEComponent {
 						Main.conffile = "none";
 						Main.hasConfigFile = false;
 						
-						runCommand("revertconfigfile");
+						runCommand("revertcolors");
 					}
 					
 					if (typedFlag) {
@@ -661,20 +661,20 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			/*case "revertconfigfile":
+			case "revertcolors":
 				Colors.revertColors();
 				
-				Fonts.initFonts(Main.fntnr, Main.fntbl);
+				/*Fonts.initFonts(Main.fntnr, Main.fntbl);
 				Main.spritesheet = new Spritesheet(Main.sprsh);
 				
 				CodeEditor.FONT_SIZE = 16;
 				
 				Main.lang = Language.ENG;
-				Texts.setTexts(Main.lang);
+				Texts.setTexts(Main.lang);*/
 				
-				//Main.load();
+				//Main.load(Main.conffile);
 				
-				break;*/
+				break;
 				
 			case "togglecodehelpers":
 				if (Main.editor.editing == null) break;

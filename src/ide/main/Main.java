@@ -646,6 +646,13 @@ public class Main implements Runnable, Tickable {
         for (IDEComponent c : IDEComponent.components)
             c.render(g);
         
+        if (editor.tabs.indexOf(editor.editing) == 0) {
+			g.setColor(Colors.textLight);
+			g2.setStroke(new BasicStroke(3f));
+			
+			g.drawLine(editor.getX(), 3, editor.getX(), CodeEditor.MIN_Y - 2);
+        }
+        
         if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))
 	        for (Tab t : Main.editor.tabs) {
 				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() && !t.button.hovered() && !Tab.isTabDragged()) { // por algum motivo é + e não -

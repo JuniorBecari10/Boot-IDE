@@ -49,7 +49,7 @@ public class Tab extends IDEComponent implements Serializable {
 	public static transient final int WIDTH = 200;
 	public static transient final int HEIGHT = 30;
 	
-	private int drawW = WIDTH;
+	public int drawW = WIDTH;
 	
 	public int scrX = 0, scrY = 0;
 	public int cx = 0, cy = 1;

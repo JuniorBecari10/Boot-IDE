@@ -1341,8 +1341,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		if (CommandTerminal.expOff)
 			return;
 		
-		if (hovered())
-			Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		/*if (hovered())
+			Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));*/
 		
 		if (!regent.exists() && Main.editor.tabs != null) {
 			Explorer.toRemove.add(this);
