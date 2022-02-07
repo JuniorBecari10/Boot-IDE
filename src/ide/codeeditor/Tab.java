@@ -605,7 +605,7 @@ public class Tab extends IDEComponent implements Serializable {
 		int x = this.x + Main.editor.tabScr;
 		
 		Color c = Main.editor.editing == this ? Colors.textLight : Colors.explorerLight;
-		Color bg = hovered() ? Colors.explorerLight : Colors.explorer;
+		Color bg = hovered() ? Colors.explorerLight : Colors.codeEditor;
 		
 		g.setColor(bg);
 		g2.setStroke(new BasicStroke(3f));
