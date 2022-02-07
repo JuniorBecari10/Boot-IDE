@@ -632,7 +632,15 @@ public class Tab extends IDEComponent implements Serializable {
 			g.drawImage(Main.lock, /*Main.editor.editing == this ? */(x + drawW) - 40 /*: (x + drawW) - 20*/, y + 7, 15, 15, null);
 		
 		//if (Main.editor.editing == this)
-			button.render(g);
+		button.render(g);
+		
+		if (Main.editor.editing != this) {
+			Color layer = new Color(bg.getRed(), bg.getGreen(), bg.getBlue(), 70);
+			
+			g.setColor(layer);
+			g2.setStroke(new BasicStroke(3f));
+			g2.fillRect(x, Y, drawW, HEIGHT);
+		}
 		
 		for (FileType f : ListableFile.types) {
 			if (f.getExtension().equalsIgnoreCase(extension)) {
