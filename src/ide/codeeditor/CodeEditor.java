@@ -8233,7 +8233,7 @@ public class CodeEditor extends IDEComponent {
 				g.drawLine(x, MIN_Y - 2, Main.screen.getWidth(), MIN_Y - 2);
 			}
 			
-			g.setColor(editing.hovered() ? Colors.explorerLight : Colors.explorer); // draw encima
+			g.setColor(editing.hovered() ? Colors.explorerLight : Colors.codeEditor); // draw encima
 			g2.setStroke(new BasicStroke(3f));
 			g2.fillRect(editing.getX() + 2, Tab.Y + Tab.HEIGHT - 2, editing.drawW - 3, 4);
 	
