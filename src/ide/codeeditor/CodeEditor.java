@@ -4616,7 +4616,7 @@ public class CodeEditor extends IDEComponent {
 					if (br) continue;
 				}
 				
-				for (int j = 0; j < indxs.size(); j++)
+				for (int j = 0; j < indxs.size(); j++) // para não colorir antes dos //
 					indxs.set(j, indxs.get(j) - 1);
 				
 				if (i < 0) i = 0;
