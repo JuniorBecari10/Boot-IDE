@@ -45,27 +45,35 @@ public class Colors {
     public static void revertColors() {
     	Color textLightOld = textLight;
     	
-    	 background = 		  Color.decode("#353b48");
-         backgroundLight = 	  Color.decode("#28394d");
-         explorer = 		  Color.decode("#222f3e");
-         codeEditor = 		  Color.decode("#222f3e");
+        background = 	  Color.decode("#353b48");
+        background2 = 	  Color.decode("#29394a");
+        backgroundLight = Color.decode("#28394d");
+        explorer = 		  Color.decode("#222f3e");
+        codeEditor = 	  explorer;
 
-         explorerLight = 	  Color.decode("#2d3f54");
-         textLight = 		  Color.decode("#95afc0");
-         textLighter = 		  Color.decode("#A9B4C2");
+        explorerLight =   Color.decode("#2d3f54"); // #2d3f54 // #32475e
+        explorerLighter = Color.decode("#354d69");
+        textLight = 	  Color.decode("#95afc0");
+        textLighter =     Color.decode("#A9B4C2");
         
-         objects = 		  	  Color.decode("#94fa92");
-         methods = 		  	  Color.decode("#e7d789");
-         numbers = 		  	  Color.decode("#5485b6");
-         keywords = 		  Color.decode("#95bddc");
-         variables = 	  	  Color.decode("#66e1f8");
+        objects = 		  Color.decode("#94fa92");
+        methods = 		  Color.decode("#e7d789");
+        numbers = 		  Color.decode("#5485b6");
+        keywords = 		  Color.decode("#95bddc");
+        variables = 	  Color.decode("#80d1f2"); // 66e1f8
         
-         comments = 					  textLighter;
-         strings = 					    	textLight;
-         symbols = 						 	 comments;
+        comments = 					  textLighter;
+        strings = 					    textLight;
+        symbols = 						 comments;
         
-         lowerBar = 		   Colors.backgroundLight;
-         other =						  Color.white;
+        selection = 	  Color.decode("#8c8c8c");
+        
+        other =						  Color.white;
+        error =			  Color.decode("#ff6961");
+        cursor = 					  Color.white;
+        lowerBar = 		   Colors.backgroundLight;
+        lineNumber =			 Colors.textLight;
+        selectedLineNumber=Color.decode("#c5d5ea");
          
          ////
          

@@ -650,7 +650,7 @@ public class Main implements Runnable, Tickable {
 			g.setColor(Colors.textLight);
 			g2.setStroke(new BasicStroke(3f));
 			
-			g.drawLine(editor.getX(), 3, editor.getX(), CodeEditor.MIN_Y - 2);
+			g.drawLine(editor.getX(), 3, editor.getX(), CodeEditor.MIN_Y - 1);
         }
         
         if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))
