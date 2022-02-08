@@ -1628,6 +1628,32 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		
+		if (ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".make") || ext.equalsIgnoreCase(".makefile")) {
+			indxs = findWord(new String(chars), "="); // antes de <palavra>
+
+			for (Integer i : indxs) {
+				int c = i;
+				int len = 0;
+
+				boolean hasSpace = false;
+
+				while (c < chars.length && c + len < chars.length && c > 0) {
+					c--;
+					len++;
+
+					if (chars[c] == ' ') {
+						if (hasSpace)
+							break;
+
+						if (!hasSpace)
+							hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
+					}
+				}
+
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+		}
+		
 		if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) {
 			indxs = findWord(new String(chars), ">");
 			
@@ -4349,6 +4375,30 @@ public class CodeEditor extends IDEComponent {
 									&& chars[c] != '.') {
 								c--;
 								len++;
+							}
+
+							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+						}
+						
+						indxs = findWord(new String(chars), "="); // antes de <palavra>
+
+						for (Integer i : indxs) {
+							int c = i;
+							int len = 0;
+
+							boolean hasSpace = false;
+
+							while (c < chars.length && c + len < chars.length && c > 0) {
+								c--;
+								len++;
+
+								if (chars[c] == ' ') {
+									if (hasSpace)
+										break;
+
+									if (!hasSpace)
+										hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
+								}
 							}
 
 							fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
