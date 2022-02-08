@@ -1675,6 +1675,17 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) {
+			indxs = findWord(new String(chars), "["); // depois de <palavra>
+
+			int len = 0;
+			for (Integer i : indxs) {
+				while (i + len < chars.length &&
+						chars[i + len] != ']')
+					len++;
+
+				fs = color(i, i + len + 1, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
 			indxs = findWord(new String(chars), ">");
 			
 			for (Integer i : indxs) {
