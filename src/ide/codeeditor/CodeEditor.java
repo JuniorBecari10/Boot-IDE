@@ -394,7 +394,7 @@ public class CodeEditor extends IDEComponent {
 			"LUA", "EJECT", "TSC", "SETLOCAL", "ENDLOCAL", "MAKE", "YARN", "COLOR" };
 
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
-	public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".pyx", ".ipynb", ".js",
+	/*public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".pyx", ".ipynb", ".js",
 			".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift",
 			".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".tsx", ".go", ".r", ".pl", ".t", ".jl", ".has", ".hs",
 			".fs", ".coffee", ".m", ".mm", ".pas", ".lpr", ".pp", ".scala", ".dart", ".zig", ".html", ".xhtml", ".htm",
@@ -408,7 +408,7 @@ public class CodeEditor extends IDEComponent {
 			".DART", ".ZIG", ".HTML", ".XHTML", ".HTM", ".CSS", ".XML", ".JSON", ".JSONC", ".MD", ".MARKDOWN", ".TXT",
 			".LOG", ".PDF", ".JAR", ".SVG", ".URNA", ".SAVE", ".CONF", ".MAKEFILE", ".MK", ".MAK", ".MAKE", ".SH", ".BASH_PROFILE", ".BASHRC",
 			".GITIGNORE", ".DOCKERFILE", ".CLASS", ".ZIP", ".BIN", ".LICENSE", ".CFG", ".CONFIG", ".JSX", ".EJS", ".LD",
-			".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP", ".PREFS", ".CLASSPATH", ".PROJECT", ".SLN" };
+			".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP", ".PREFS", ".CLASSPATH", ".PROJECT", ".SLN" };*/
 
 	public static final String[] luaKeys = { "and", "break", "do", "else", "elseif", "end", "false", "for", "function",
 			"if", "in", "local", "nil", "not", "or", "repeat", "return", "then", "true", "until", "while", "os", "io",
@@ -605,7 +605,7 @@ public class CodeEditor extends IDEComponent {
 			"userdel", "clear", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc",
 			"node", "nasm", "qemu", "gcc", "g++", "python", "lua", "if", "then", "else", "fi", "date", "eject", "tsc",
 			"pip", "pip3", "pipwin",
-			"setlocal", "endlocal", "make", "yarn", "color", "for", "PWD", "CD", "LS", "CAT", "CP", "MV", "MKDIR",
+			"setlocal", "endlocal", "make", "yarn", "color", "for", "PWD", "CD", "LS", "CAT ", "CP", "MV", "MKDIR",
 			"RMDIR", "RM", "TOUCH", "LOCATE", "FIND", "GREP", "SUDO", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR",
 			"CHMOD", "CHOWN", "JOBS", "KILL", "PING", "WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP",
 			"HOSTNAME", "USERADD", "USERDEL", "CLEAR", "GIT", "NPM", "CALL", "EXIST", "END", "EJECT", "SETLOCAL",
@@ -1502,7 +1502,8 @@ public class CodeEditor extends IDEComponent {
 		case ".prefs": return (Main.lang == Language.PORT ? "Arquivo de Preferências" : "Preferences File");
 		case ".bashrc": return minMode ? "Bashrc" : (Main.lang == Language.PORT ? "Arquivo de Configurações Bash" : "Bash Configuration File");
 		case ".bash_profile": return (Main.lang == Language.PORT ? "Perfil Bash" : "Bash Profile");
-
+		case ".toml": return minMode ? "Toml" : (Main.lang == Language.PORT ? "Arquivo de Configurações do Rust" : "Rust Configuration File");
+		
 		case ".png": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		case ".jpg": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		case ".jpeg": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
@@ -1983,7 +1984,7 @@ public class CodeEditor extends IDEComponent {
 		if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm")
 				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")
 				|| ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
-				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock"))) {
+				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock") || ext.equalsIgnoreCase(".toml"))) {
 			for (String s : cll) {
 				indxs = findWord(new String(chars), s);
 
@@ -3870,7 +3871,7 @@ public class CodeEditor extends IDEComponent {
 
 		if (ext.equalsIgnoreCase(".o") || ext.equalsIgnoreCase(".out") || ext.equalsIgnoreCase(".md")
 				|| ext.equalsIgnoreCase(".markdown") || ext.equalsIgnoreCase(".bf") || ext.equalsIgnoreCase(".obj")
-				|| ext.equalsIgnoreCase(".lock"))
+				|| ext.equalsIgnoreCase(".lock") || ext.equalsIgnoreCase(".toml"))
 			return fs;
 
 		List<Integer> indxs = new ArrayList<>();
@@ -4863,6 +4864,7 @@ public class CodeEditor extends IDEComponent {
 		case ".cfg":
 		case ".ini":
 		case ".lock":
+		case ".toml":
 		case ".gd":
 		case ".mcfunction":
 			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
