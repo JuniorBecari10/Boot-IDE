@@ -1707,7 +1707,7 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			if (ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".mjs")
-				|| ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".tsx")) {
+				|| ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".tsx") || ext.equalsIgnoreCase(".lua")) {
 				
 				indxs = findWord(new String(chars), "return"); // depois de <palavra>
 
