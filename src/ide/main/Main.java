@@ -651,7 +651,7 @@ public class Main implements Runnable, Tickable {
             c.render(g);
         
         for (Tab t : editor.tabs) {
-        	if (editor.editing == t && editor.editing.getX() + editor.tabScr == 280) {
+        	if (editor.editing == t && editor.editing.getX() + editor.tabScr == editor.getX()) {
     			g.setColor(Colors.textLight);
     			g2.setStroke(new BasicStroke(3f));
     			
