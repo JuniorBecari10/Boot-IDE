@@ -7910,8 +7910,8 @@ public class CodeEditor extends IDEComponent {
 			if (((MouseInput.hovered(x, height - 20, width, 20) || MouseInput.hovered(x, 0, width, 30)) || !Explorer.dragging && RightClickOption.isAutoCompleteActive() && !RightClickOption.isRightClickActive() && !RightClickOption.anyRightClickOptionHovered()) && !Tab.isTabHovered() && !MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10, Main.explorer.getHeight()))
 				Main.screen.setCursor(Cursor.getDefaultCursor());
 			
-			if (RightClickOption.anyRightClickOptionHovered() && !MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10, Main.explorer.getHeight()))
-				Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			/*if (RightClickOption.anyRightClickOptionHovered() && !MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10, Main.explorer.getHeight()))
+				Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));*/
 
 			if (leftClicked() && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive()
 					&& !alternateTabsMode

@@ -465,8 +465,12 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		//System.out.println(dragging + ", " + MouseInput.isMouseDragged());
 		
-		if (hovered())
-			Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		if (!RightClickOption.isRightClickActive()) {
+			if (hovered())
+				Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		} else {
+			Main.screen.setCursor(Cursor.getDefaultCursor());
+		}
 		
 		if (!closing)
 			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);

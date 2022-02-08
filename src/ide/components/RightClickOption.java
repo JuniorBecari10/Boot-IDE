@@ -194,7 +194,7 @@ public class RightClickOption extends IDEComponent {
 	public void render(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		Color c = hovered() ? Colors.explorerLight : Colors.background2;
+		Color c = hovered() && isActive ? Colors.explorerLight : Colors.background2;
 		Color d = c;
 		
 		//System.out.println(listRightClicks(true).indexOf(this)); // terminar
@@ -202,7 +202,7 @@ public class RightClickOption extends IDEComponent {
 		if (isAutoComplete)
 			c = Main.editor.autocompletes.indexOf(this) == Main.editor.autocompleteindex ? Colors.explorerLight : d;
 		
-		if (!isActive) c = new Color(Colors.background2.getRed() - 5, Colors.background2.getGreen() - 5, Colors.background2.getBlue() - 5);
+		//if (!isActive) c = new Color(Colors.background2.getRed() - 5, Colors.background2.getGreen() - 5, Colors.background2.getBlue() - 5);
 		
 		g.setColor(c);
 		g.fillRect(x, y, width, HEIGHT);
@@ -215,6 +215,13 @@ public class RightClickOption extends IDEComponent {
 			g.setColor(Colors.explorer);
 			g2.setStroke(new BasicStroke(1f));
 			g2.drawLine(x, y, x + width, y);
+		}
+		
+		if (!isActive) {
+			Color overlay = new Color(0, 0, 0, 50);
+			
+			g.setColor(overlay);
+			g.fillRect(x, y, width, height);
 		}
 	}
 }
