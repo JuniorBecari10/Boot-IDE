@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
 import ide.explorer.Explorer;
+import ide.explorer.FileType;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -210,6 +211,24 @@ public class SetFileName extends IDEComponent {
 		
 		if (hasIllegalChars(text.toString()))
 			Fonts.drawString(Texts.fileNameIllegal, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
+		
+		if (!isFile) return;
+		
+		for (FileType f : ListableFile.types) {
+			if (f.getExtension().equalsIgnoreCase(ListableFile.getFileExtension(text.toString()))) {
+				g.drawImage(f.getIcon(), MouseInput.getMouseX() - 35, MouseInput.getMouseY() - 16, 32, 32, null);
+				
+				return;
+			}
+			
+			else if (f.getExtension().equalsIgnoreCase(text.toString())) {
+				g.drawImage(f.getIcon(), MouseInput.getMouseX() - 35, MouseInput.getMouseY() - 16, 32, 32, null);
+				
+				return;
+			}
+		}
+		
+		g.drawImage(Main.UNKNOWN_FILE_ICON, MouseInput.getMouseX() - 35, MouseInput.getMouseY() - 16, 32, 32, null);
 		
 		//if (text.toString().trim().equals(""))
 		//	Fonts.drawString(Texts.cannotBeOnlySpaces, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);

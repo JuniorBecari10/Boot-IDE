@@ -660,7 +660,7 @@ public class Tab extends IDEComponent implements Serializable {
 			}
 		}
 		
-		g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 3, Y + 1, HEIGHT, HEIGHT, null);
+		g.drawImage(Main.UNKNOWN_FILE_ICON, x + 3, Y + 1, HEIGHT, HEIGHT, null);
 		
 		/*if (Main.editor.alternateTabsMode && Main.editor.exchanging == this) {
 			int xdr = (MouseInput.getMouseX() - drawW) - 10;

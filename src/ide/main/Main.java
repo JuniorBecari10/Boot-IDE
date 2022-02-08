@@ -63,6 +63,8 @@ public class Main implements Runnable, Tickable {
     public static final String PROGRAM_NAME = "Boot IDE";
     public static final String VERSION = "Beta 2 v4.3";
     
+    public static BufferedImage UNKNOWN_FILE_ICON = null;
+    
     //public static final String SUN_JAVA_COMMAND = "sun.java.command";
 	
     private boolean running = false;
@@ -162,6 +164,8 @@ public class Main implements Runnable, Tickable {
         screen = new Screen(PROGRAM_NAME);
         
         lang = Language.ENG; // default
+        
+        UNKNOWN_FILE_ICON = Main.spritesheet.getSprite(0, 64, 16, 16);
         
         //Fonts.initFonts(fntnr, fntbl);
         
