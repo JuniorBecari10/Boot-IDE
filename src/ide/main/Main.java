@@ -646,11 +646,13 @@ public class Main implements Runnable, Tickable {
         for (IDEComponent c : IDEComponent.components)
             c.render(g);
         
-        if (editor.tabs.indexOf(editor.editing) == 0) {
-			g.setColor(Colors.textLight);
-			g2.setStroke(new BasicStroke(3f));
-			
-			g.drawLine(editor.getX(), 3, editor.getX(), CodeEditor.MIN_Y - 1);
+        for (Tab t : editor.tabs) {
+        	if (editor.editing == t && editor.editing.getX() + editor.tabScr == 280) {
+    			g.setColor(Colors.textLight);
+    			g2.setStroke(new BasicStroke(3f));
+    			
+    			g.drawLine(editor.getX(), 3, editor.getX(), CodeEditor.MIN_Y - 1);
+            }
         }
         
         if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))

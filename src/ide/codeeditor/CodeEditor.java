@@ -8235,7 +8235,7 @@ public class CodeEditor extends IDEComponent {
 			
 			g.setColor(editing.hovered() ? Colors.explorerLight : Colors.codeEditor); // draw encima
 			g2.setStroke(new BasicStroke(3f));
-			g2.fillRect(editing.getX() + 2, Tab.Y + Tab.HEIGHT - 2, editing.drawW - 3, 4);
+			g2.fillRect(editing.getX() + 2 + tabScr, Tab.Y + Tab.HEIGHT - 2, editing.drawW - 3, 4);
 	
 			// desenhar barra inferior
 			if (editing != null) {
