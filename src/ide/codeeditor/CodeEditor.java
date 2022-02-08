@@ -4680,6 +4680,7 @@ public class CodeEditor extends IDEComponent {
 		case ".pas":
 		case ".lpr":
 		case ".scala":
+		case ".por":
 			String withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
 			char[] chs = withSpace.toCharArray();
 			
@@ -5152,6 +5153,7 @@ public class CodeEditor extends IDEComponent {
 		case ".css":
 		case ".json":
 		case ".jsonc":
+		case ".por":
 			indxs = findWord(new String(chars), "/*"); // colorir comentários multi-linha - caracteres diferentes
 			List<Integer> finals = findWord(new String(chars), "*/");
 			
