@@ -913,6 +913,13 @@ public class CommandTerminal extends IDEComponent {
 					
 					break;
 					
+				case "portugol":
+					String[] portstrs = { "programa {", "    ", "    funcao inicio() {", "        ", "    }", "}" };
+					
+					strs = portstrs;
+					
+					break;
+					
 				case "java":
 					String[] javastrs = { "public class " + classname + " {", "    ", "}"};
 					

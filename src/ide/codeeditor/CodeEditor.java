@@ -392,6 +392,9 @@ public class CodeEditor extends IDEComponent {
 			"CALL", "EXIST", "END", "JAVA", "JAVAC", "JAVAW", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON",
 			"PIP", "PIP3", "PIPWIN",
 			"LUA", "EJECT", "TSC", "SETLOCAL", "ENDLOCAL", "MAKE", "YARN", "COLOR" };
+	
+	public static final String[] porKeys = { "programa", "funcao", "inteiro", "caracter", "real", "cadeia", "para", "se", "senao", "enquanto",
+			"faca", "inclua", "biblioteca" };
 
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
 	/*public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".pyx", ".ipynb", ".js",
@@ -1226,6 +1229,7 @@ public class CodeEditor extends IDEComponent {
 		case ".zig": return zigKeys;
 		case ".gd": return gdKeys;
 		case ".mcfunction": return mcKeys;
+		case ".por": return porKeys;
 
 		case ".html": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
 		case ".xhtml": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys))); // será que tira o phpkeys? TODO
@@ -1441,6 +1445,7 @@ public class CodeEditor extends IDEComponent {
 		case ".bf": return "Brainfuck";
 		case ".gd": return "GDScript";
 		case ".mcfunction": return minMode ? "MC Function" : "Minecraft Function";
+		case ".por": return "Portugol";
 
 		case ".html": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
 		case ".xhtml": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
@@ -1624,6 +1629,21 @@ public class CodeEditor extends IDEComponent {
 					fs = color(indxs.get(i), finals.get(i), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				} catch (Exception e) {
 					continue;
+				}
+			}
+		}
+		
+		if (ext.equalsIgnoreCase(".por")) {
+			for (String s : porKeys) {
+				indxs = findWord(new String(chars), s); // depois de <palavra>
+
+				int len = 0;
+
+				for (Integer i : indxs) {
+					while (i + len < chars.length)
+						len++;
+
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				}
 			}
 		}
@@ -2105,6 +2125,22 @@ public class CodeEditor extends IDEComponent {
 			for (String s : vbKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
 														// s.length()).getFont().equals(Fonts.methodsNormal))
+
+				for (Integer i : indxs) {
+					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
+							|| ((i + s.length() < chars.length)
+									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
+						continue;
+
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+
+			break;
+			
+		case ".por":
+			for (String s : porKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s);
 
 				for (Integer i : indxs) {
 					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
