@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import ide.codeeditor.CodeEditor;
+import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.RenameFile;
@@ -320,5 +322,14 @@ public class Explorer extends IDEComponent {
 	        	f.render(g);
 	        }
         } catch (Exception e) { return; }
+        
+        for (Tab t : Main.editor.tabs) {
+        	if (Main.editor.editing == t && Main.editor.editing.getX() + Main.editor.tabScr == Main.editor.getX()) {
+    			g.setColor(Colors.textLight);
+    			g2.setStroke(new BasicStroke(3f));
+    			
+    			g.drawLine(Main.editor.getX(), 3, Main.editor.getX(), CodeEditor.MIN_Y - 1);
+            }
+        }
     }
 }
