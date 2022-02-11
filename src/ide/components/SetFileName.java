@@ -86,6 +86,30 @@ public class SetFileName extends IDEComponent {
 		if (KeyInput.isKeyPressed()) {
 			KeyInput.updateKeys();
 			
+			// Shortcuts Area
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C) { // Ctrl + C - Copiar (Tudo)
+				CodeEditor.copyText(text.toString());
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_V) { // Ctrl + V - Colar
+				if (cursorIndex >= text.length()) {
+					text.append(CodeEditor.clipboard);
+					cursorIndex += CodeEditor.clipboard.length();
+				}
+				else {
+					text.insert(cursorIndex, CodeEditor.clipboard);
+					cursorIndex += CodeEditor.clipboard.length();
+				}
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_X) { // Ctrl + X - Recortar (Tudo)
+				CodeEditor.copyText(text.toString());
+				
+				text = new StringBuilder();
+				cursorIndex = 0;
+			}
+			
 			if (KeyInput.isKeyPressed() && Character.isLetter(KeyInput.getCharPressed()) || KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) canShow = true;
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
@@ -212,23 +236,28 @@ public class SetFileName extends IDEComponent {
 		if (hasIllegalChars(text.toString()))
 			Fonts.drawString(Texts.fileNameIllegal, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
 		
+		Fonts.drawString("[Ctrl + C] " + Texts.copy, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 90, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString("[Ctrl + V] " + Texts.paste, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 120, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString("[Ctrl + X] " + Texts.cut, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 150, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		
 		if (!isFile) return;
 		
 		for (FileType f : ListableFile.types) {
 			if (f.getExtension().equalsIgnoreCase(ListableFile.getFileExtension(text.toString()))) {
-				g.drawImage(f.getIcon(), MouseInput.getMouseX() - 35, MouseInput.getMouseY() - 16, 32, 32, null);
+				g.drawImage(f.getIcon(), MouseInput.getMouseX() - 45, MouseInput.getMouseY() - 16, 32, 32, null);
 				
 				return;
 			}
 			
 			else if (f.getExtension().equalsIgnoreCase(text.toString())) {
-				g.drawImage(f.getIcon(), MouseInput.getMouseX() - 35, MouseInput.getMouseY() - 16, 32, 32, null);
+				g.drawImage(f.getIcon(), MouseInput.getMouseX() - 45, MouseInput.getMouseY() - 16, 32, 32, null);
 				
 				return;
 			}
 		}
 		
-		g.drawImage(Main.UNKNOWN_FILE_ICON, MouseInput.getMouseX() - 35, MouseInput.getMouseY() - 16, 32, 32, null);
+		if (!text.toString().isEmpty())
+			g.drawImage(Main.UNKNOWN_FILE_ICON, MouseInput.getMouseX() - 45, MouseInput.getMouseY() - 16, 32, 32, null);
 		
 		//if (text.toString().trim().equals(""))
 		//	Fonts.drawString(Texts.cannotBeOnlySpaces, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);

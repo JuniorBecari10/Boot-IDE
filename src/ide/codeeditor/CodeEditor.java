@@ -8,7 +8,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.HeadlessException;
 import java.awt.Rectangle;
+import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -1151,6 +1153,13 @@ public class CodeEditor extends IDEComponent {
 			arr[i++] = t;
 		
 		return arr;
+	}
+	
+	public static void copyText(String str) {
+		StringSelection sel = new StringSelection(str);
+		Clipboard clip = Main.toolkit.getSystemClipboard();
+		
+		clip.setContents(sel, sel);
 	}
 
 	public static String[] mergeStringArrays(String[] arr1, String[] arr2) {

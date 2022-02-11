@@ -1286,7 +1286,31 @@ public class CommandTerminal extends IDEComponent {
 			
 			// Shortcuts Area
 			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) { // Ctrl + Delete - Limpar
+				builder = new StringBuilder();
+				cursorIndex = 0;
+				
+				commandHints.clear();
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C) { // Ctrl + C - Copiar (Tudo)
+				CodeEditor.copyText(builder.toString());
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_V) { // Ctrl + V - Colar
+				if (cursorIndex >= builder.length()) {
+					builder.append(CodeEditor.clipboard);
+					cursorIndex += CodeEditor.clipboard.length();
+				}
+				else {
+					builder.insert(cursorIndex, CodeEditor.clipboard);
+					cursorIndex += CodeEditor.clipboard.length();
+				}
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_X) { // Ctrl + X - Recortar (Tudo)
+				CodeEditor.copyText(builder.toString());
+				
 				builder = new StringBuilder();
 				cursorIndex = 0;
 				
@@ -1460,5 +1484,8 @@ public class CommandTerminal extends IDEComponent {
 		Fonts.drawString(Texts.enter_Execute, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		Fonts.drawString(Texts.ctrl_del_Clear, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		Fonts.drawString(Texts.tab_Cycle, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 90, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString("[Ctrl + C] " + Texts.copy, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 130, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString("[Ctrl + V] " + Texts.paste, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 160, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString("[Ctrl + X] " + Texts.cut, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 190, new IDEFont(Fonts.lightGrayNormal, 20), g);
 	}
 }
