@@ -1042,7 +1042,7 @@ public class CodeEditor extends IDEComponent {
 		}
 
 		try {
-			new Thread() { // quando vc deleta as linhas isso acontece mesmo
+			new Thread() { // quando vc deleta as linhas ou fecha as tabs isso acontece mesmo
 				public void run() {
 					if (editing != null && editing.getRegent() != null && editing.getRegent().getRegent() != null)
 						for (IDELine l : lines) {
