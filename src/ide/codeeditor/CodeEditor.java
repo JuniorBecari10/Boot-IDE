@@ -1025,7 +1025,7 @@ public class CodeEditor extends IDEComponent {
 		}
 
 		List<IDELine> ls = new ArrayList<>();
-
+		
 		for (String s : l) {
 			List<Character> cs = new ArrayList<>();
 			List<IDEFont> fs = new ArrayList<>();
@@ -6322,6 +6322,8 @@ public class CodeEditor extends IDEComponent {
 
 		setCursorWithinBounds();
 		editing.setSaved(false);
+		
+		CommandTerminal.runCommand("gotocursor");
 	}
 
 	public void addNewLine(int yPos) {
