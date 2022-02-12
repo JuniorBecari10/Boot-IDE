@@ -49,6 +49,8 @@ public class CommandTerminal extends IDEComponent {
 	private boolean showCursor;
 	private Animation cursor;
 	
+	private int originalWidth;
+	
 	public static String lastCommand = "";
 	
 	private static boolean changeHints = true;
@@ -78,6 +80,8 @@ public class CommandTerminal extends IDEComponent {
 	
 	public CommandTerminal(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
+		
+		originalWidth = width;
 		
 		commandHints.clear();
 		
@@ -1275,6 +1279,13 @@ public class CommandTerminal extends IDEComponent {
 	public void tick() {
 		x = Main.screen.getWidth() / 2 - 250;
 		
+		if (x < 110) x = 110;
+		
+		if (x + width > Main.screen.getWidth() - 10) width = Main.screen.getWidth() - 10;
+		else width = originalWidth;
+		
+		System.out.println(width + ", " + Main.screen.getWidth());
+		
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
 			IDEComponent.toRemove.add(this);
 			
@@ -1449,10 +1460,10 @@ public class CommandTerminal extends IDEComponent {
 		
 		if (!builder.toString().isEmpty()) {
 			g.setColor(Colors.explorer);
-			g2.fillRect(x - 155, y + height + 15, width + 320, height * 20); // centralizar essa borda
+			g2.fillRect(x - 155 > 10 ? x - 155 : 10, y + height + 15, width + 320, height * 20); // centralizar essa borda
 			
 			g.setColor(Colors.explorerLight);
-			g2.drawRect(x - 155, y + height + 15, width + 320, height * 20);
+			g2.drawRect(x - 155 > 10 ? x - 155 : 10, y + height + 15, width + 320, height * 20);
 		}
 		
 		g.setColor(Colors.explorer);
@@ -1461,7 +1472,7 @@ public class CommandTerminal extends IDEComponent {
 		g.setColor(Colors.explorerLight);
 		g2.drawRect(x - 100, y, width + 200, height);
 		
-		Fonts.drawString(Texts.insertCommand, Main.screen.getWidth() / 2 - 100, y - 25, new IDEFont(Fonts.otherNormal, 20), g);
+		Fonts.drawString(Texts.insertCommand, Main.screen.getWidth() / 2 - 100 > 10 ? Main.screen.getWidth() / 2 - 100 : 10, y - 25, new IDEFont(Fonts.otherNormal, 20), g);
 		
 		Fonts.drawString(builder.toString(), (x - 100) + 4, y + 8, new IDEFont(Fonts.otherNormal, 18), g);
 		
@@ -1474,10 +1485,9 @@ public class CommandTerminal extends IDEComponent {
 		
 		for (int i = 0; i < commandHints.size(); i++) {
 			String cmd = commandHints.get(i);
-			
 			IDEFont font = (!changeHints && i == comIndex - 1) || (comIndex == commandHints.size() && i == comIndex) ? new IDEFont(Fonts.lightGrayNormal, 20) : new IDEFont(Fonts.otherNormal, 20);
 			
-			Fonts.drawString(cmd, x - 145, y + height + 20 + (22 * i), font, g2);
+			Fonts.drawString(cmd, x - 145 > 20 ? x - 145 : 20, y + height + 20 + (22 * i), font, g2);
 		}
 		
 		Fonts.drawString(Texts.esc_Cancel, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
