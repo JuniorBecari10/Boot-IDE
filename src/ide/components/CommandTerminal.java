@@ -699,7 +699,7 @@ public class CommandTerminal extends IDEComponent {
 				int drawcx = Main.editor.drawcx;
 				int drawcy = Main.editor.drawcy;
 				
-				while (drawcx < Main.editor.getX()) {
+				while (drawcx < Main.editor.getX() + 50) { // ARRUMAR ISSO AQUI QUANDO FOR ARRUMAR O X + 50 TODO TODO TODO
 					Main.editor.scrX -= CodeEditor.FONT_SIZE;
 					drawcx += CodeEditor.FONT_SIZE;
 				}
@@ -1284,7 +1284,7 @@ public class CommandTerminal extends IDEComponent {
 		if (x + width > Main.screen.getWidth() - 10) width = Main.screen.getWidth() - 10;
 		else width = originalWidth;
 		
-		System.out.println(width + ", " + Main.screen.getWidth());
+		//System.out.println(width + ", " + Main.screen.getWidth());
 		
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
 			IDEComponent.toRemove.add(this);
