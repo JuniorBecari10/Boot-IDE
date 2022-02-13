@@ -119,4 +119,12 @@ public class Colors {
     	
     	return "#" + r + g + b;
     }
+    
+    /*public static BufferedImage darker(BufferedImage img) {
+    	for (int x = 0; x < img.getWidth(); x++)
+    		for (int y = 0; y < img.getHeight(); y++)
+    			img.setRGB(x, y, new Color(img.getRGB(x, y)).darker().getRGB());
+    	
+    	return img;
+    }*/
 }

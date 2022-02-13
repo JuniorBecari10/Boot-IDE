@@ -1520,7 +1520,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		if (regent.isDirectory()) {
 			Fonts.drawString(name, x + 40, y + 4, new IDEFont(Fonts.lightGrayNormal, 16), width, g);
 
-			g.drawImage(Main.folder, x + 6, y, height - 5, height - 5, null);
+			g.drawImage(Main.folder, x + 6, y + 2, height - 5, height - 5, null);
 		} else if (regent.isFile()) {
 			Fonts.drawString(name, x + 40, y + 4, new IDEFont(Fonts.lightGrayNormal, 16), width, g);
 
@@ -1540,6 +1540,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				}
 			}
 			g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 5, y, height, height, null);
+		}
+		
+		if (regent.isHidden()) {
+			g.setColor(new Color(0, 0, 0, 30));
+			g.fillRect(x, y, width - 2, height);
 		}
 	}
 }

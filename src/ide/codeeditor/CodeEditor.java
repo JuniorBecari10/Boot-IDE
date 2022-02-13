@@ -6320,7 +6320,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		
-		CommandTerminal.runCommand("gotocursor");
+		//CommandTerminal.runCommand("gotocursor");
 		
 		setCursorWithinBounds();
 		editing.setSaved(false);
