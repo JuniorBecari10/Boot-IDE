@@ -498,8 +498,6 @@ public class Tab extends IDEComponent implements Serializable {
 			});
 		}*/
 		
-		System.out.println(dragging);
-		
 		if (dragged() && dragging == null) {
 			dragging = this;
 		}
