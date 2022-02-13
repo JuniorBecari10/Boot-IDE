@@ -419,12 +419,6 @@ public class Tab extends IDEComponent implements Serializable {
 			Main.editor.cursorY = cy;
 			
 			break;
-			
-		case "alternate":
-			Main.editor.alternateTabsMode = true;
-			Main.editor.exchanging = this;
-			
-			break;
 		}
 	}
 	
@@ -542,20 +536,7 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		if (!regent.getRegent().exists()) close();
 		
-		if (leftClicked() && !(Main.editor.editing == this ? button.leftClicked() : false /*pq inverte*/) && Main.editor.alternateTabsMode) {
-			Main.editor.exchanged = this;
-			
-			CommandTerminal.runCommand("ordertab " + Main.editor.tabs.indexOf(Main.editor.exchanging) + " " + Main.editor.tabs.indexOf(Main.editor.exchanged));
-			
-			Main.editor.alternateTabsMode = false;
-			
-			Main.editor.exchanging = null;
-			Main.editor.exchanged = null;
-			
-			return;
-		}
-		
-		if (leftClicked() && !button.leftClicked() && !Main.editor.alternateTabsMode) {
+		if (leftClicked() && !button.leftClicked()) {
 			if (Main.editor.editing != null && !isSaved())
 				Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
 			
@@ -592,7 +573,7 @@ public class Tab extends IDEComponent implements Serializable {
 				save();
 		}
 		
-		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered())) && !Main.editor.alternateTabsMode) {
+		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered()))) {
 			MouseInput.updateMouse();
 			
 			int width = Main.lang == Language.PORT ? 485 : 330;

@@ -85,11 +85,6 @@ public final class Texts {
 	
 	public static String openBootExplorer;
 	
-	public static String orderTabs;
-	
-	public static String selectTabOrder;
-	public static String leftClickTab;
-	
 	public static String noFolderLoadedLogoText;
 	public static String clickOnButton;
 	public static String loadOne;
@@ -269,11 +264,6 @@ public final class Texts {
 			
 			openBootExplorer = "Abrir no Explorador";
 			
-			orderTabs = "Ordenar Abas";
-			
-			selectTabOrder = "Selecione a aba que deseja trocar:";
-			leftClickTab = "[Clique Esquerdo -> Aba] Trocar";
-			
 			noFolderLoadedLogoText = "Não há nenhuma pasta carregada.";
 			clickOnButton = "Clique no botão [Selecionar Pasta Base]";
 			loadOne = "para carregar uma.";
@@ -452,11 +442,6 @@ public final class Texts {
 			closeOtherTabs = "Close other tabs";
 			
 			openBootExplorer = "Open in Explorer";
-			
-			orderTabs = "Order tabs";
-			
-			selectTabOrder = "Select the tab you want to swap:";
-			leftClickTab = "[Left Click -> Tab] Swap";
 			
 			noFolderLoadedLogoText = "There is no folder loaded.";
 			clickOnButton = "Click on button [Select Base Folder]";
