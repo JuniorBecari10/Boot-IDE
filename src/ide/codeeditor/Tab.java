@@ -13,6 +13,10 @@ import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -43,11 +47,11 @@ public class Tab extends IDEComponent implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static transient int MIN_X = 77; // TODO colocar o min x pra frente, funcionando
+	public static int MIN_X = 77; // TODO colocar o min x pra frente, funcionando
 	
-	public static transient final int Y = 3;
-	public static transient final int WIDTH = 200;
-	public static transient final int HEIGHT = 30;
+	public static final int Y = 3;
+	public static final int WIDTH = 200;
+	public static final int HEIGHT = 30;
 	
 	public int drawW = WIDTH;
 	
@@ -64,6 +68,7 @@ public class Tab extends IDEComponent implements Serializable {
 	public ListableFile regent;
 	
 	private boolean save = true;
+	public static Tab dragging;
 	
 	private final int animSpeed = 2;
 	
@@ -463,6 +468,10 @@ public class Tab extends IDEComponent implements Serializable {
 				x = Tab.MIN_X + WIDTH + 3;
 		}
 		
+		if (dragging != null) {
+			
+		}
+		
 		//System.out.println(dragging + ", " + MouseInput.isMouseDragged());
 		
 		if (!RightClickOption.isRightClickActive()) {
@@ -475,25 +484,50 @@ public class Tab extends IDEComponent implements Serializable {
 		if (!closing)
 			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
 		
-		/*if (dragged() && dragging == null) {
-			dragging = this;
+		/*if (dragged() && !dragging) {
+			dragging = true;
 			
 			x = MouseInput.getMouseX() - 20;
 			y = MouseInput.getMouseY();
 		}
 		
-		if (!MouseInput.isMouseDragged() && dragging == this) {
-			dragging = null;
+		if (!MouseInput.isMouseDragged() && dragging) {
+			dragging = false;
 			
 			List<Tab> ts = Main.editor.tabs;
 			
-			/*Collections.sort(ts, new Comparator<Tab>() {
+			Collections.sort(ts, new Comparator<Tab>() {
 				@Override
 				public int compare(Tab t1, Tab t2) {
 					return new Integer(t2.getX()).compareTo(t1.getX());
 				}
-			});*
+			});
 		}*/
+		
+		System.out.println(dragging);
+		
+		if (dragged() && dragging == null) {
+			dragging = this;
+		}
+		
+		if (dragging == this) {
+			x = MouseInput.getMouseX();
+		}
+		
+		if (!MouseInput.isMouseDragged() && dragging != null) {
+			dragging = null;
+			
+			List<Tab> ts = new ArrayList<>(Main.editor.tabs);
+			
+			Collections.sort(ts, new Comparator<Tab>() {
+				@Override
+				public int compare(Tab t1, Tab t2) {
+					return new Integer(t1.getX()).compareTo(t2.getX());
+				}
+			});
+			
+			Main.editor.tabs = ts;
+		}
 		
 		//if (Main.editor.editing == this)
 		button.tick();
@@ -570,7 +604,7 @@ public class Tab extends IDEComponent implements Serializable {
 			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 120, width, Texts.save, (s) -> execute(s), "save");
 			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 150, width, Texts.openBootExplorer, (s) -> execute(s), "showexp");
 			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, Texts.openExplorer, (s) -> execute(s), "sysexp");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.orderTabs, (s) -> execute(s), "alternate");
+			//IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.orderTabs, (s) -> execute(s), "alternate");
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			

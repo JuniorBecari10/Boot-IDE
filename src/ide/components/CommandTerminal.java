@@ -994,6 +994,13 @@ public class CommandTerminal extends IDEComponent {
 					
 					break;
 					
+				case "h":
+					String[] hstrs = { "#ifndef " + classname.toUpperCase() + "_H", "#define " + classname.toUpperCase() + "_H", "", "#endif" };
+					
+					strs = hstrs;
+					
+					break;
+					
 				case "ino":
 					String[] inostrs = { "void setup()", "{", "    ", "}", "", "void loop()", "{", "    ", "}"};
 					

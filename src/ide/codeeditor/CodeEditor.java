@@ -7963,7 +7963,7 @@ public class CodeEditor extends IDEComponent {
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;
 
-		if (MouseInput.leftDragged() && !alternateTabsMode && hovered()
+		if (MouseInput.leftDragged() && !alternateTabsMode && Tab.dragging == null && hovered()
 				&& !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
 			selecting = true;
 

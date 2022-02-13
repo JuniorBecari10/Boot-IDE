@@ -101,7 +101,7 @@ public class Explorer extends IDEComponent {
     	if (MouseInput.hovered(x + width - 5, y, 10, height) && !Main.editor.selecting && !ListableFile.isListableFileHovered()) {
 			Main.screen.setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
 			
-			if (MouseInput.leftDragged() && (!Main.editor.selecting || Main.editor.editing == null))
+			if (MouseInput.leftDragged() && (!Main.editor.selecting || Main.editor.editing == null) && Tab.dragging == null)
 				dragging = true;
 		}
     	
