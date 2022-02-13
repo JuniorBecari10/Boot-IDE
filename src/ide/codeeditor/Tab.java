@@ -342,7 +342,21 @@ public class Tab extends IDEComponent implements Serializable {
 			
 		case "runbash":
 			try {
-				ProcessBuilder pb = new ProcessBuilder("sh", "-c", "start", regent.getRegent().getName());
+				ProcessBuilder pb = new ProcessBuilder("./", regent.getRegent().getName());
+				File dir = regent.getRegent().getParentFile();
+				
+				pb.directory(dir);
+				
+				pb.start();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case "runwithbash":
+			try {
+				ProcessBuilder pb = new ProcessBuilder("sh", regent.getRegent().getName());
 				File dir = regent.getRegent().getParentFile();
 				
 				pb.directory(dir);
@@ -588,10 +602,13 @@ public class Tab extends IDEComponent implements Serializable {
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			if ((ListableFile.getFileExtension(regent.getRegent()).equals(".bat") || ListableFile.getFileExtension(regent.getRegent()).equals(".cmd") || ListableFile.getFileExtension(regent.getRegent()).equals(".com") || ListableFile.getFileExtension(regent.getRegent()).equals(".ps1")) && isWindows)
-				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 240, width, Texts.execute, (s) -> execute(s), "run");
+				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.execute, (s) -> execute(s), "run");
 			
 			if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && !isWindows)
-				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 240, width, Texts.execute, (s) -> execute(s), "runbash");
+				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.execute, (s) -> execute(s), "runbash");
+			
+			if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && isWindows)
+				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.executeBash, (s) -> execute(s), "runwithbash");
 		}
 		
 		if (isSaved) {

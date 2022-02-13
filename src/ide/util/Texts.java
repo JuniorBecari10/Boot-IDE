@@ -67,6 +67,7 @@ public final class Texts {
 	public static String openDefault;
 	
 	public static String execute;
+	public static String executeBash;
 	
 	public static String selectLine;
 	public static String selectAll;
@@ -246,6 +247,7 @@ public final class Texts {
 			openDefault = "Abrir arquivo com o programa padrão";
 			
 			execute = "Executar";
+			executeBash = "Executar com Bash";
 			
 			selectLine = "Selecionar Linha";
 			selectAll = "Selecionar Tudo";
@@ -425,6 +427,7 @@ public final class Texts {
 			openDefault = "Open file with default program";
 			
 			execute = "Execute";
+			executeBash = "Execute with Bash";
 			
 			selectLine = "Select Line";
 			selectAll = "Select All";
