@@ -6319,11 +6319,11 @@ public class CodeEditor extends IDEComponent {
 				index++;
 			}
 		}
-
-		setCursorWithinBounds();
-		editing.setSaved(false);
 		
 		CommandTerminal.runCommand("gotocursor");
+		
+		setCursorWithinBounds();
+		editing.setSaved(false);
 	}
 
 	public void addNewLine(int yPos) {

@@ -115,14 +115,14 @@ public class Main implements Runnable, Tickable {
     public static boolean hasConfigFile = false;
     public static Language lang;
     
-    public static final File settingsFile = new File(System.getProperty("user.dir") + "\\settings" + SETTINGS_FILE_EXTENSION);
-    public static final File defaultConfigFile = new File(System.getProperty("user.dir") + "\\" + DEFAULT_CONFIG_FILE_NAME);
+    public static final File settingsFile = new File(System.getProperty("user.dir") + File.separator + "settings" + SETTINGS_FILE_EXTENSION);
+    public static final File defaultConfigFile = new File(System.getProperty("user.dir") + File.separator + DEFAULT_CONFIG_FILE_NAME);
     
-    public static final File resourcesFolder = new File(System.getProperty("user.dir") + "\\" + RESOURCE_FOLDER_NAME);
+    public static final File resourcesFolder = new File(System.getProperty("user.dir") + File.separator + RESOURCE_FOLDER_NAME);
     
-    public static final File fontFile = new File(System.getProperty("user.dir") + "\\" + FONT_FILE_NAME);
-    public static final File boldFile = new File(System.getProperty("user.dir") + "\\" + BOLD_FILE_NAME);
-    public static final File spritesheetFile = new File(System.getProperty("user.dir") + "\\" + SPRITESHEET_FILE_NAME);
+    public static final File fontFile = new File(System.getProperty("user.dir") + File.separator + FONT_FILE_NAME);
+    public static final File boldFile = new File(System.getProperty("user.dir") + File.separator + BOLD_FILE_NAME);
+    public static final File spritesheetFile = new File(System.getProperty("user.dir") + File.separator + SPRITESHEET_FILE_NAME);
     
     // Sprites
     
