@@ -600,17 +600,17 @@ public class CodeEditor extends IDEComponent {
 			"typeof", "unsized", "virtual", "yield", "try", "union", "'static" };
 
 	public static final String[] shKeys = { "pwd", "cd", "ls", "cat", "cp", "mv", "mkdir", "rmdir", "rm", "touch", "case",
-			"locate", "find", "grep", "sudo", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs",
+			"locate", "find", "grep", "sudo", "su", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs",
 			"kill", "ping", "wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd",
 			"userdel", "clear", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc",
 			"node", "nasm", "qemu", "gcc", "g++", "python", "lua", "if", "then", "else", "fi", "date", "eject", "tsc",
-			"pip", "pip3", "pipwin",
+			"pip", "pip3", "pipwin", "read",
 			"setlocal", "endlocal", "make", "yarn", "color", "for", "PWD", "CD", "LS", "CAT ", "CP", "MV", "MKDIR",
-			"RMDIR", "RM", "TOUCH", "LOCATE", "FIND", "GREP", "SUDO", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR",
+			"RMDIR", "RM", "TOUCH", "LOCATE", "FIND", "GREP", "SUDO", "SU", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR",
 			"CHMOD", "CHOWN", "JOBS", "KILL", "PING", "WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP",
 			"HOSTNAME", "USERADD", "USERDEL", "CLEAR", "GIT", "NPM", "CALL", "EXIST", "END", "EJECT", "SETLOCAL",
 			"ENDLOCAL", "FOR", "JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA",
-			"PIP", "PIP3", "PIPWIN",
+			"PIP", "PIP3", "PIPWIN", "READ",
 			"JAVAW", "IF", "THEN", "ELSE", "FI", "DATE", "YARN", "COLOR", "TSC", "MAKE" };
 
 	public static final String[] tsKeys = { "type", "number", "protected", "else", "let", "catch", "if", "case", "in",
