@@ -397,7 +397,10 @@ public class Tab extends IDEComponent implements Serializable {
 				break;
 			}
 			
-			Explorer.scope = regent.getParent();
+			if (Main.baseFolder == null)
+				Main.baseFolder = regent.getParent().getRegent();
+			else
+				Explorer.scope = regent.getParent();
 			
 			ListableFile.files = ListableFile.loadFolder((!regent.getParent().getRegent().equals(Main.baseFolder) ? regent.getParent() : null));
 			
@@ -517,7 +520,7 @@ public class Tab extends IDEComponent implements Serializable {
 		}
 		
 		if (dragging == this) {
-			x = MouseInput.getMouseX();
+			x = MouseInput.getMouseX() - 20;
 		}
 		
 		if (!MouseInput.isMouseDragged() && dragging != null) {

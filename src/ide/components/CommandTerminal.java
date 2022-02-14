@@ -655,14 +655,14 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "closebasefolder":
-				Main.editor.tabs.clear();
+				//Main.editor.tabs.clear();
 				Main.baseFolder = null;
 				
 				Explorer.files.clear();
 				ListableFile.files.clear();
 				
 				Explorer.scope = null;
-				Main.editor.editing = null;
+				//Main.editor.editing = null;
 				
 				Main.screen.frame.setTitle("Boot IDE");
 				
