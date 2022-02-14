@@ -129,7 +129,7 @@ public class CommandTerminal extends IDEComponent {
 				try {
 					ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start");
 					
-					File dir = Explorer.scope != null ? Explorer.scope.getRegent() : Main.baseFolder; // eu tava fazendo o equivalente a isso: null.regent != null
+					File dir = Explorer.scope != null ? Explorer.scope.getRegent() : (Main.baseFolder == null ? new File(System.getProperty("user.dir")) : Main.baseFolder); // eu tava fazendo o equivalente a isso: null.regent != null
 					
 					pb.directory(dir);
 					
@@ -140,6 +140,8 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "sysexp":
+				if (Main.baseFolder == null) return;
+				
 				try {
 					Main.desktop.open(new File(Explorer.files.get(0).getRegent().getPath()).getParentFile());
 				} catch (IOException e) {
@@ -148,23 +150,33 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "closealltabs":
+				if (Main.baseFolder == null) return;
+				
 				Main.editor.tabs.clear();
 				break;
 				
 			case "resettabscroll":
+				if (Main.baseFolder == null) return;
+				
 				Main.editor.tabScr = 0;
 				break;
 				
 			case "reseteditorscroll":
+				if (Main.baseFolder == null) return;
+				
 				Main.editor.scrX = 0;
 				Main.editor.scrY = 0;
 				break;
 				
 			case "resetreadmode":
+				if (Main.baseFolder == null) return;
+				
 				runCommand("setreadmode normal");
 				break;
 				
 			case "resetfontsize":
+				if (Main.baseFolder == null) return;
+				
 				runCommand("setfontsize 16");
 				break;
 				
