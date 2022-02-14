@@ -555,13 +555,14 @@ public class Main implements Runnable, Tickable {
 					
 					if (i > 6) {
 						//if (!ListableFile.isPath(s)) continue;
-						
+						System.out.println("a");
 						File reg = new File(s);
-						File par = reg.getParentFile();
+						//File par = reg.getParentFile();
 						
 						//if (!reg.exists()) continue;
 						
-						Tab t = new Tab((i - 4) * Tab.WIDTH, ListableFile.search(reg, par));
+						System.out.println("a");
+						Tab t = new Tab((i - 4) * Tab.WIDTH, ListableFile.newListableFile(reg));
 						
 						Main.editor.tabs.add(t);
 					}
