@@ -607,8 +607,8 @@ public class Tab extends IDEComponent implements Serializable {
 			if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && !isWindows)
 				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.execute, (s) -> execute(s), "runbash");
 			
-			if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && isWindows)
-				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.executeBash, (s) -> execute(s), "runwithbash");
+			//if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && isWindows)
+			//	IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.executeBash, (s) -> execute(s), "runwithbash");
 		}
 		
 		if (isSaved) {
