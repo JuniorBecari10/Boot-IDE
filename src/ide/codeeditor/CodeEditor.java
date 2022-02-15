@@ -7993,11 +7993,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		else if (Main.baseFolder != null)
 			Main.screen.frame.setTitle(Main.baseFolder.getName() + " - " + Main.PROGRAM_NAME);
-		
-		if (Main.baseFolder == null && editing != null) {
-			Main.screen.frame.setTitle(editing.getRegent().getRegent().getName() + " - " + Main.PROGRAM_NAME);
-		}
-		
+
 		try {
 			clipboard = (String) Main.toolkit.getSystemClipboard().getData(DataFlavor.stringFlavor);
 		} catch (HeadlessException | UnsupportedFlavorException | IOException | IllegalStateException e) {

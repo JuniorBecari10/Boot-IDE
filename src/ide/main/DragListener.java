@@ -61,7 +61,7 @@ public class DragListener implements DropTargetListener {
 		        if (flavors[i].isFlavorJavaFileListType()) {
 		          dtde.acceptDrop(DnDConstants.ACTION_COPY);
 		          
-		          // Success!
+		          System.out.println("Success!");
 
 		          List<Object> list = (List<Object>) tr.getTransferData(flavors[i]);
 		          List<File> files = new ArrayList<>();

@@ -555,14 +555,13 @@ public class Main implements Runnable, Tickable {
 					
 					if (i > 6) {
 						//if (!ListableFile.isPath(s)) continue;
-						System.out.println("a");
+						
 						File reg = new File(s);
-						//File par = reg.getParentFile();
+						File par = reg.getParentFile();
 						
 						//if (!reg.exists()) continue;
 						
-						System.out.println("a");
-						Tab t = new Tab((i - 4) * Tab.WIDTH, ListableFile.newListableFile(reg));
+						Tab t = new Tab((i - 4) * Tab.WIDTH, ListableFile.search(reg, par));
 						
 						Main.editor.tabs.add(t);
 					}
@@ -654,12 +653,7 @@ public class Main implements Runnable, Tickable {
         if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))
 	        for (Tab t : Main.editor.tabs) {
 				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() && !t.button.hovered() && !Tab.isTabDragged()) { // por algum motivo é + e não -
-					int index;
-					
-					if (baseFolder != null)
-						index = t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0;
-					else
-						index = 0;
+					int index = t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0;
 					
 					int width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
 					int height = 100;

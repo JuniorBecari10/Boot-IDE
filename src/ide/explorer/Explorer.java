@@ -305,25 +305,25 @@ public class Explorer extends IDEComponent {
         g2.setStroke(new BasicStroke(3f));
         g2.drawLine(width - 1, 0, width - 1, height);
         
-        if (Main.baseFolder != null || baseFolderName != null) {
-	        Fonts.drawString(baseFolderName, x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 23), g);
-	        
-	    	g2.setStroke(new BasicStroke(4f));
-	        g.setColor(Colors.explorerLight);
-	        g2.drawLine(0, 199, width - 1, 199);
-	        
-	        Fonts.drawString(folderPath, x + 10, 170, new IDEFont(Fonts.lighterGrayNormal, 15), g);
-	        
-	        try {
-		        for (ListableFile f : Explorer.files) {
-		        	if (f.getY() < 200 || f.getY() > Main.screen.getHeight()) continue;
-		        	
-		        	f.render(g);
-		        }
-	        } catch (Exception e) { return; }
-        }
+        if (Main.baseFolder == null || baseFolderName == null) return;
         
-        for (Tab t : Main.editor.tabs) { // isso aqui não renderiza
+        Fonts.drawString(baseFolderName, x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 23), g);
+        
+    	g2.setStroke(new BasicStroke(4f));
+        g.setColor(Colors.explorerLight);
+        g2.drawLine(0, 199, width - 1, 199);
+        
+        Fonts.drawString(folderPath, x + 10, 170, new IDEFont(Fonts.lighterGrayNormal, 15), g);
+        
+        try {
+	        for (ListableFile f : Explorer.files) {
+	        	if (f.getY() < 200 || f.getY() > Main.screen.getHeight()) continue;
+	        	
+	        	f.render(g);
+	        }
+        } catch (Exception e) { return; }
+        
+        for (Tab t : Main.editor.tabs) {
         	if (Main.editor.editing == t && Main.editor.editing.getX() + Main.editor.tabScr == Main.editor.getX()) {
     			g.setColor(Colors.textLight);
     			g2.setStroke(new BasicStroke(3f));
