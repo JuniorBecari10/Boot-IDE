@@ -227,7 +227,32 @@ public class CodeEditor extends IDEComponent {
 			"</picture", "</pre", "</progress", "</q", "</rp", "</rt", "</ruby", "</s", "</samp", "</script",
 			"</section", "</select", "</small", "</source", "</span", "</strike", "</strong", "</style", "</sup",
 			"</svg", "</table", "</tbody", "</td", "</template", "</textarea", "</tfoot", "</th", "</thead", "</time",
-			"</title", "</tr", "</track", "</tt", "</u", "</ul", "</var", "</video", "</wbr", "</applet", "</webview" };
+			"</title", "</tr", "</track", "</tt", "</u", "</ul", "</var", "</video", "</wbr", "</applet", "</webview",
+			
+			"<!-->", "<!doctype>", "<?php>", "<!DOCTYPE>", "<a>", "<abbr>", "<acronym>",
+			"<address>", "<applet>", "<area>", "<article>", "<aside>", "<audio>", "<b>", "<base>", "<basefont>", "<bdi>", "<bdo>",
+			"<big>", "<blockquote>", "<body>", "<br>", "<button>", "<canvas>", "<caption>", "<center>", "<cite>", "<code>",
+			"<col>", "<colgroup>", "<data>", "<datalist>", "<dd>", "<del>", "<details>", "<dfn>", "<dialog>", "<dir>", "<div>",
+			"<dl>", "<dt>", "<em>", "<embed>", "<fieldset>", "<figcaption>", "<figure>", "<font>", "<footer>", "<form>", "<frame>",
+			"<frameset>", "<h1>", "<h2>", "<h3>", "<h4>", "<h5>", "<h6>", "<head>", "<header>", "<hr>", "<html>", "<i>", "<iframe>",
+			"<img>", "<input>", "<ins>", "<kbd>", "<label>", "<legend>", "<li>", "<link>", "<main>", "<map>", "<mark>", "<meta>",
+			"<meter>", "<nav>", "<noframes>", "<noscript>", "<object>", "<ol>", "<optgroup>", "<option>", "<output>", "<p>",
+			"<param>", "<picture>", "<pre>", "<progress>", "<q>", "<rp>", "<rt>", "<ruby>", "<s>", "<samp>", "<script>",
+			"<section>", "<select>", "<small>", "<source>", "<span>", "<strike>", "<strong>", "<style>", "<sup>", "<svg>",
+			"<table>", "<tbody>", "<td>", "<template>", "<textarea>", "<tfoot>", "<th>", "<thead>", "<time>", "<title>", "<tr>",
+			"<track>", "<tt>", "<u>", "<ul>", "<var>", "<video>", "<wbr>", "<applet>", "<webview>", "</a>", "</abbr>", "</acronym>",
+			"</address>", "</applet>", "</area>", "</article>", "</aside>", "</audio>", "</b>", "</base>", "</basefont>",
+			"</bdi>", "</bdo>", "</big>", "</blockquote>", "</body>", "</br>", "</button>", "</canvas>", "</caption>",
+			"</center>", "</cite>", "</code>", "</col>", "</colgroup>", "</data>", "</datalist>", "</dd>", "</del>", "</details>",
+			"</dfn>", "</dialog>", "</dir>", "</div>", "</dl>", "</dt>", "</em>", "</embed>", "</fieldset>", "</figcaption>",
+			"</figure>", "</font>", "</footer>", "</form>", "</frame>", "</frameset>", "</h1>", "</h2>", "</h3>", "</h4>", "</h5>",
+			"</h6>", "</head>", "</header>", "</hr>", "</html>", "</i>", "</iframe>", "</img>", "</input>", "</ins>", "</kbd>",
+			"</label>", "</legend>", "</li>", "</link>", "</main>", "</map>", "</mark>", "</meta>", "</meter>", "</nav>",
+			"</noframes>", "</noscript>", "</object>", "</ol>", "</optgroup>", "</option>", "</output>", "</p>", "</param>",
+			"</picture>", "</pre>", "</progress>", "</q>", "</rp>", "</rt>", "</ruby>", "</s>", "</samp>", "</script>",
+			"</section>", "</select>", "</small>", "</source>", "</span>", "</strike>", "</strong>", "</style>", "</sup>",
+			"</svg>", "</table>", "</tbody>", "</td>", "</template>", "</textarea>", "</tfoot>", "</th>", "</thead>", "</time>",
+			"</title>", "</tr>", "</track>", "</tt>", "</u>", "</ul>", "</var>", "</video>", "</wbr>", "</applet>", "</webview"};
 
 	public static final String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "1a", "2a", "3a", "4a",
 			"5a", "6a", "7a", "8a", "9a", "0a", // hex
@@ -3473,11 +3498,6 @@ public class CodeEditor extends IDEComponent {
 				indxs = findWord(new String(chars), s);
 
 				for (Integer i : indxs) {
-					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
-							|| ((i + s.length() < chars.length)
-									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
-						continue;
-
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
 				}
 			}
@@ -4044,7 +4064,7 @@ public class CodeEditor extends IDEComponent {
 			int index = 0;
 			for (String s : syms) {
 				indxs = findWord(new String(chars), s);
-				if (((ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) && (s != "<" && s != "/" && s != "="))) // resolver isso aqui
+				if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) // resolver isso aqui
 					continue;
 				
 				if (s == ">" && index == 0 && ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
@@ -4053,7 +4073,7 @@ public class CodeEditor extends IDEComponent {
 						| ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln")
 						| ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project")
 						| ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))
-						&& !(isCssPart || isJSPart || isPhpPart)) && (s != "<" && s != ">" && s != "/" && s != "="))
+						&& !(isCssPart || isJSPart || isPhpPart)) && (s != "="))
 					continue;
 				// if (!(isCssPart || isJSPart || isPhpPart) && ((ext.equalsIgnoreCase(".html")
 				// || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xhtml") ||
