@@ -289,7 +289,7 @@ public class Tab extends IDEComponent implements Serializable {
 				
 				if (s == null) break;
 				
-				w.write(s + "\n");
+				w.write(s + (System.getProperty("os.name").toLowerCase().startsWith("windows") ? "\r" : "") + "\n"); // se é windows termine com crlf (\r (cr) \n (lf))
 			}
 
 			w.close();

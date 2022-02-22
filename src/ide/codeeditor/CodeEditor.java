@@ -2104,6 +2104,8 @@ public class CodeEditor extends IDEComponent {
 							&& !isCharsEqual(chars[i + len], '\'')) {
 						len++;
 					}
+					
+					//if (isInside(i, '>', '<', str)) continue; // não vai funcionar
 
 					// if (i + len < chars.length) {
 					if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".ld")
@@ -4163,6 +4165,14 @@ public class CodeEditor extends IDEComponent {
 
 				for (int i = 0; i < indxs.size() - 1; i += 2)
 					fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
+				
+				///
+				indxs = findWord(new String(chars), "```");
+				
+				//System.out.println(indxs.size());
+				
+				for (int i = 0; i < indxs.size() - 1; i++)
+					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 
 				/*
 				 * indxs = findWord(new String(chars), "\""); // colorir comentários multi-linha
@@ -4730,8 +4740,9 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior é desfeito
+					if (isInside(i, '\"', '\"', withSpace) && isInside(i, '\'', '\'', withSpace) && isInside(i, '`', '`', withSpace)) { // se colocar 2 // na mesma linha o anterior é desfeito
 						br = true;
+						//System.out.println(br);
 						
 						//continue;
 					}
