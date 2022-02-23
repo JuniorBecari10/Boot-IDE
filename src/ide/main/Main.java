@@ -105,6 +105,9 @@ public class Main implements Runnable, Tickable {
     public static Spritesheet modifiedFontBold;
     public static Spritesheet modifiedIcons;
     
+    public static int inheritCx, inheritCy;
+    public static int inheritScrX, inheritScrY;
+    
     private static int tabindex = -1;
     
     public static Desktop desktop;
@@ -572,6 +575,9 @@ public class Main implements Runnable, Tickable {
 	    	
 	    	if (Main.editor.tabs.size() > 0) {
 				Main.editor.editing = Main.editor.tabs.get(tabindex);
+				
+				inheritCx = lccx;
+				inheritCy = lccy;
 				
 				editor.editing.cx = lccx;
 				editor.editing.cy = lccy;

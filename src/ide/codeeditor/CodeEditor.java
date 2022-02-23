@@ -7366,8 +7366,8 @@ public class CodeEditor extends IDEComponent {
 						cursorX = lines.get(lines.size() - 1).getChars().size();
 						cursorY = lines.size();
 
-						CommandTerminal.runCommand("gotocursor");
 						setCursorWithinBounds();
+						CommandTerminal.runCommand("gotocursor");
 
 						return;
 					}
@@ -7383,15 +7383,15 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END ) { // End - Fim da Linha
+					else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END) { // End - Fim da Linha
 						KeyInput.updateKeys();
 
 						// scrX = (lines.get(cursorY - 1).getChars().size() * FONT_SIZE) - FONT_SIZE *
 						// 10;
 						cursorX = lines.get(cursorY - 1).getChars().size();
 						
-						CommandTerminal.runCommand("gotocursor");
 						setCursorWithinBounds();
+						CommandTerminal.runCommand("gotocursor");
 
 						return;
 					}

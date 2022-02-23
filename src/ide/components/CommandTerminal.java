@@ -395,10 +395,12 @@ public class CommandTerminal extends IDEComponent {
 				if (option == JFileChooser.APPROVE_OPTION) {
 					File fl = chooser.getSelectedFile();
 					
+					if (!fl.getName().contains(Main.CONFIG_FILE_EXTENSION)) fl = new File(fl.getName() + Main.CONFIG_FILE_EXTENSION);
+					
 					ListableFile.generateConfigFile(fl);
 					
 					CodeEditor.setSystemLook();
-					String[] options = { Texts.openFolder, Texts.cancel, /*Texts.openInNewTab*/ };
+					String[] options = { Texts.openFolder, Texts.cancel, /*Texts.openInNewTab*/ Texts.openDefault };
     				
     				CodeEditor.setSystemLook();
     				int selectedOption = JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
@@ -406,6 +408,14 @@ public class CommandTerminal extends IDEComponent {
     				if (selectedOption == 0) {
     					try {
 							Main.desktop.open(fl.getParentFile());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+    				}
+    				
+    				if (selectedOption == 2) {
+    					try {
+							Main.desktop.open(fl);
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
