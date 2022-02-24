@@ -59,7 +59,7 @@ import ide.util.Texts;
 
 public class CodeEditor extends IDEComponent {
 	
-	public static final int TAB_CLOSE_TIMEOUT = 300;
+	public static final int TAB_ANIMATION_TIMEOUT = 300;
 
 	public static volatile int FONT_SIZE = 16; // 18, 16 (Padrão: 16)
 
@@ -745,7 +745,7 @@ public class CodeEditor extends IDEComponent {
 		killAllTabs = new Thread() {
 			public void run() {
 				try {
-					Thread.sleep(TAB_CLOSE_TIMEOUT);
+					Thread.sleep(TAB_ANIMATION_TIMEOUT);
 				} catch (InterruptedException e) { // Esperar a animação acabar
 					e.printStackTrace();
 				}
@@ -7179,6 +7179,15 @@ public class CodeEditor extends IDEComponent {
 						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 							KeyInput.updateKeys();
 							
+							if (RightClickOption.isAutoCompleteActive()) {
+								autocompleteindex--;
+								
+								if (autocompleteindex < 0)
+									autocompleteindex = 0;
+								
+								return;
+							}
+							
 							wordSinceSpace = "";
 							
 							if (cursorY == 1) cursorX = 0;
@@ -7198,6 +7207,15 @@ public class CodeEditor extends IDEComponent {
 
 						else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
 							KeyInput.updateKeys();
+							
+							if (RightClickOption.isAutoCompleteActive()) {
+								autocompleteindex++;
+								
+								if (autocompleteindex >= autocomplete.size())
+									autocompleteindex = autocomplete.size();
+								
+								return;
+							}
 							
 							wordSinceSpace = "";
 							
