@@ -400,7 +400,7 @@ public class CommandTerminal extends IDEComponent {
 					ListableFile.generateConfigFile(fl);
 					
 					CodeEditor.setSystemLook();
-					String[] options = { Texts.openFolder, Texts.cancel, /*Texts.openInNewTab*/ Texts.openDefault };
+					String[] options = { Texts.openFolder, Texts.cancel, /*Texts.openInNewTab*/ Texts.openInDefaultEditor };
     				
     				CodeEditor.setSystemLook();
     				int selectedOption = JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);

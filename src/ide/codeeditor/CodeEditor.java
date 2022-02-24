@@ -660,7 +660,7 @@ public class CodeEditor extends IDEComponent {
 	public static final String[] rbKeys = { "_ENCODING_", "_LINE_", "_FILE_", "BEGIN", "END", "alias", "and", "begin",
 			"break", "case", "class", "def", "defined?", "do", "else", "elsif", "end", "ensure", "false", "for", "if",
 			"in", "module", "next", "nil", "not", "or", "redo", "rescue", "retry", "return", "self", "super", "then",
-			"true", "undef", "unless", "until", "when", "while", "yield", "it", "each", "before", "new" };
+			"true", "undef", "unless", "until", "when", "while", "yield", "it", "each", "before", "new", "puts" };
 
 	public static final String[] scaKeys = { "abstract", "finally", "object", "trait", "catch", "forSome", "package",
 			"try", "class", "if", "private", "type", "def", "implicit", "protected", "val", "else", "lazy", "sealed",
