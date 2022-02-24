@@ -1416,6 +1416,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				Main.editor.isMultilineCommenting = false;
 				Main.editor.isAnotherIteration = false;
+				
+				Main.editor.wordSinceSpace = "";
 
 				for (Tab t : Main.editor.tabs)
 					if (t.getRegent().getRegent().getPath().equals(this.regent.getPath())) {
