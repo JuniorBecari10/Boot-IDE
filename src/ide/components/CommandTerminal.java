@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.lang.Thread.State;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -50,7 +51,8 @@ public class CommandTerminal extends IDEComponent {
 	
 	private int originalWidth;
 	
-	public static String lastCommand = "";
+	public static Stack<String> typedCommands = new Stack<>();
+	public static int tcIndex = 0; // typed commands index
 	
 	private static boolean changeHints = true;
 	private static int comIndex = 0;
@@ -61,7 +63,7 @@ public class CommandTerminal extends IDEComponent {
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertcolors", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
 			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode", "setlang str:lang",
-			"gendiv str:class_name", "gensnippet str:type",
+			"gendiv str:class_name", "gensnippet str:type", "selecttab int:index",
 			"lorem int:num_words", "openfile str:file",
 			"setcursorpos int:x int:y",
 			"getproperty str:property",
@@ -228,50 +230,54 @@ public class CommandTerminal extends IDEComponent {
 				if (Main.editor.editing == null) break;
 				if (!Main.editor.selecting) break;
 				
-				List<String> lines = new ArrayList<>();
-				String str = "";
-				
-				if (Main.editor.line1 != Main.editor.line2) { // se não selecionou uma linha só (selecionou várias)
-					for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) {
-						if (i == Main.editor.line1 - 1) {
-							if (Main.editor.index1 > Main.editor.lines.get(i).getChars().size())
-								Main.editor.index1 = Main.editor.lines.get(i).getChars().size();
+				try {
+					List<String> lines = new ArrayList<>();
+					String str = "";
+					
+					if (Main.editor.line1 != Main.editor.line2) { // se não selecionou uma linha só (selecionou várias)
+						for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) {
+							if (i == Main.editor.line1 - 1) {
+								if (Main.editor.index1 > Main.editor.lines.get(i).getChars().size())
+									Main.editor.index1 = Main.editor.lines.get(i).getChars().size();
+								
+								lines.add(new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars().subList(Main.editor.index1, Main.editor.lines.get(i).getChars().size()))));
+								
+								continue;
+							}
 							
-							lines.add(new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars().subList(Main.editor.index1, Main.editor.lines.get(i).getChars().size()))));
+							if (i == Main.editor.line2 - 1) {
+								lines.add(new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars().subList(0, Main.editor.index2))));
+								
+								continue;
+							}
 							
-							continue;
+							lines.add(new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars())));
 						}
 						
-						if (i == Main.editor.line2 - 1) {
-							lines.add(new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars().subList(0, Main.editor.index2))));
+						for (String s : lines) {
+							str += s;
 							
-							continue;
+							if (s != lines.get(lines.size() - 1)) // se não for a última linha (para não adicionar quebras de linha adicionais desnecessárias)
+								str += "\n";
+						}
+					}
+					else {
+						if (Main.editor.index2 < Main.editor.index1) { // que coisa não? (provavelmente isso nunca vai acontecer)
+							runCommand("deselect");
+							
+							break;
 						}
 						
-						lines.add(new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars())));
+						str = new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.line1 - 1).getChars().subList(Main.editor.index1, Main.editor.index2)));
 					}
 					
-					for (String s : lines) {
-						str += s;
-						
-						if (s != lines.get(lines.size() - 1)) // se não for a última linha (para não adicionar quebras de linha adicionais desnecessárias)
-							str += "\n";
-					}
-				}
-				else {
-					if (Main.editor.index2 < Main.editor.index1) { // que coisa não? (provavelmente isso nunca vai acontecer)
-						runCommand("deselect");
-						
-						break;
-					}
+					StringSelection sel = new StringSelection(str);
+					Clipboard clip = Main.toolkit.getSystemClipboard();
 					
-					str = new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.line1 - 1).getChars().subList(Main.editor.index1, Main.editor.index2)));
+					clip.setContents(sel, sel);
+				} catch (Exception e) {
+					return;
 				}
-				
-				StringSelection sel = new StringSelection(str);
-				Clipboard clip = Main.toolkit.getSystemClipboard();
-				
-				clip.setContents(sel, sel);
 				
 				break;
 				
@@ -769,6 +775,22 @@ public class CommandTerminal extends IDEComponent {
 							return;
 						
 					Main.editor.tabs.get(args0).close();
+						
+					break;
+				} catch (NumberFormatException e) {
+					break;
+				}
+				
+			case "selecttab":
+				try {
+					int args0 = Integer.parseInt(args[0]);
+					
+					if (Main.editor.tabs.size() == 0 ||
+						    args0 < 0 ||
+						    args0 > Main.editor.tabs.size())
+							return;
+						
+					Main.editor.tabs.get(args0).select();
 						
 					break;
 				} catch (NumberFormatException e) {
@@ -1345,15 +1367,27 @@ public class CommandTerminal extends IDEComponent {
 			if (KeyInput.isControlDown() || KeyInput.isAltDown() || KeyInput.isAltGrDown()) return;
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
-				builder = new StringBuilder(lastCommand);
+				if (tcIndex < 0)
+					tcIndex = 0;
 				
-				cursorIndex = lastCommand.length();
-			
+				builder = new StringBuilder(typedCommands.get(tcIndex));
+				
+				cursorIndex = typedCommands.get(tcIndex).length();
+				tcIndex--;
+				
 				commandHints.clear();
 			}
 			
 			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
-				builder = new StringBuilder();
+				tcIndex++;
+				
+				if (tcIndex >= typedCommands.size()) {
+					tcIndex = typedCommands.size() - 1;
+				}
+				
+				builder = new StringBuilder(typedCommands.get(tcIndex));
+				
+				cursorIndex = typedCommands.get(tcIndex).length();
 			
 				commandHints.clear();
 			}
@@ -1394,7 +1428,11 @@ public class CommandTerminal extends IDEComponent {
 			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
-				lastCommand = builder.toString(); // tem que ser o último que você digitou, não o último que executou (pq o sistema executa)
+				//lastCommand = builder.toString(); // tem que ser o último que você digitou, não o último que executou (pq o sistema executa)
+				
+				typedCommands.push(builder.toString());
+				tcIndex = typedCommands.size() - 1;
+				
 				typedFlag = true;
 				
 				runCommand(builder.toString());

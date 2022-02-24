@@ -454,6 +454,43 @@ public class Tab extends IDEComponent implements Serializable {
 		return false;
 	}
 	
+	public void select() {
+		if (Main.editor.editing != null && !isSaved())
+			Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
+		
+		Main.editor.wordSinceSpace = "";
+		RightClickOption.removeAllRightClickOptions();
+		
+		Main.editor.editing = this;
+		
+		Main.editor.isMultilineCommenting = false;
+		Main.editor.isAnotherIteration = false;
+		Main.editor.foundExt = false;
+		
+		if (Main.editor.searchWindow != null) {
+			Main.editor.searchWindow.setVisible(false);
+			Main.editor.alreadyAddedFrame = false;
+			SearchReplaceWindow.active = false;
+		}
+		
+		try {
+			Main.editor.lines = Main.editor.readFile(regent.getRegent());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Main.editor.cursorX = cx;
+		Main.editor.cursorY = cy;
+		
+		Main.editor.scrX = scrX;
+		Main.editor.scrY = scrY;
+		
+		Main.editor.setExtType(ListableFile.getFileExtension(regent.getRegent()));
+		
+		if (!isSaved())
+			save();
+	}
+	
 	public void tick() {
 		if (regent == null || !regent.getRegent().exists()) {
 			close();
@@ -517,7 +554,7 @@ public class Tab extends IDEComponent implements Serializable {
 		}
 		
 		if (dragging == this) {
-			x = MouseInput.getMouseX();
+			x = MouseInput.getMouseX() - 20;
 		}
 		
 		if (!MouseInput.isMouseDragged() && dragging != null) {
@@ -549,40 +586,7 @@ public class Tab extends IDEComponent implements Serializable {
 		if (!regent.getRegent().exists()) close();
 		
 		if (leftClicked() && !button.leftClicked()) {
-			if (Main.editor.editing != null && !isSaved())
-				Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
-			
-			Main.editor.wordSinceSpace = "";
-			RightClickOption.removeAllRightClickOptions();
-			
-			Main.editor.editing = this;
-			
-			Main.editor.isMultilineCommenting = false;
-			Main.editor.isAnotherIteration = false;
-			Main.editor.foundExt = false;
-			
-			if (Main.editor.searchWindow != null) {
-				Main.editor.searchWindow.setVisible(false);
-				Main.editor.alreadyAddedFrame = false;
-				SearchReplaceWindow.active = false;
-			}
-			
-			try {
-				Main.editor.lines = Main.editor.readFile(regent.getRegent());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			Main.editor.cursorX = cx;
-			Main.editor.cursorY = cy;
-			
-			Main.editor.scrX = scrX;
-			Main.editor.scrY = scrY;
-			
-			Main.editor.setExtType(ListableFile.getFileExtension(regent.getRegent()));
-			
-			if (!isSaved())
-				save();
+			select();
 		}
 		
 		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered()))) {

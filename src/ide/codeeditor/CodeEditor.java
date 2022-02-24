@@ -892,7 +892,8 @@ public class CodeEditor extends IDEComponent {
 					try {
 						Thread.sleep(1);
 					} catch (InterruptedException e) {
-						e.printStackTrace();
+						//e.printStackTrace();
+						Main.editor.restartTypeThread();
 					}
 				}
 			}
@@ -911,6 +912,38 @@ public class CodeEditor extends IDEComponent {
 					}
 			}
 		};*/
+	}
+	
+	public synchronized void restartTypeThread() {
+		cursorThread = new Thread() {
+			public void run() {
+				// int speed = 1;
+
+				while (true) {
+					realcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
+					realcy = MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY;
+
+					/*
+					 * if (drawcx != realcx) { if (drawcx < realcx) drawcx += speed; if (drawcx >
+					 * realcx) drawcx -= speed; }
+					 * 
+					 * if (drawcy != realcy) { if (drawcy < realcy) drawcy += speed; if (drawcy >
+					 * realcy) drawcy -= speed; }
+					 */
+
+					drawcx = realcx;
+					drawcy = realcy;
+
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+
+		cursorThread.start();
 	}
 
 	public boolean hovered() {
@@ -2235,41 +2268,7 @@ public class CodeEditor extends IDEComponent {
 		 * ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") ||
 		 * ext.equalsIgnoreCase(".cfg") || ext.equalsIgnoreCase(".classpath") ||
 		 * ext.equalsIgnoreCase(".csproj") || ext.equalsIgnoreCase(".project"))
-		 */ {
-			indxs = findWord(new String(chars), ">"); // colorir final de tags
-
-			for (Integer i : indxs) {
-				fs = color(i, i + 1, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
-			}
-
-			indxs = findWord(new String(chars), "<");
-
-			len = 0;
-
-			for (Integer i : indxs) {
-				while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
-						&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
-						&& chars[i + len] != ':' && chars[i + len] != '>' && chars[i + len] != '<')
-					len++;
-
-				if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
-			}
-
-			indxs = findWord(new String(chars), "</");
-
-			len = 0;
-
-			for (Integer i : indxs) {
-				while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
-						&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
-						&& chars[i + len] != ':')
-					len++;
-
-				if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
-			}
-		}
+		 */  // era aqui
 
 			indxs = findWord(new String(chars), "="); // html
 
@@ -2777,6 +2776,42 @@ public class CodeEditor extends IDEComponent {
 
 				for (Integer i : indxs) {
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+			
+			{
+				indxs = findWord(new String(chars), ">"); // colorir final de tags
+
+				for (Integer i : indxs) {
+					fs = color(i, i + 1, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
+
+				indxs = findWord(new String(chars), "<");
+
+				len = 0;
+
+				for (Integer i : indxs) {
+					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
+							&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
+							&& chars[i + len] != ':' && chars[i + len] != '>' && chars[i + len] != '<')
+						len++;
+
+					if (i + len < chars.length)
+						fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
+
+				indxs = findWord(new String(chars), "</");
+
+				len = 0;
+
+				for (Integer i : indxs) {
+					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
+							&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
+							&& chars[i + len] != ':')
+						len++;
+
+					if (i + len < chars.length)
+						fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 				}
 			}
 
