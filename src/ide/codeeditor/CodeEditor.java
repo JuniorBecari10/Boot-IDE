@@ -119,7 +119,7 @@ public class CodeEditor extends IDEComponent {
 	public static boolean isAutoCompleteActive = true;
 
 	public static Stack<List<IDELine>> undo = new Stack<>();
-	public static Stack<List<IDELine>> redo = new Stack<>();
+	public static int undoIndex;
 
 	public int tabScr = 0;
 	
@@ -270,7 +270,7 @@ public class CodeEditor extends IDEComponent {
 	public static final String[] phpKeys = { "abstract", "and", "as", "break", "callable", "case", "catch", "class",
 			"clone", "const", "continue", "declare", "default", "do", "echo", "else", "elseif", "enddeclare", "endfor",
 			"endforeach", "endif", "endswitch", "endwhile", "extends", "final", "finally", "fn", "for", "foreach",
-			"function", "global", "goto", "if", "implements", "include", "include_once", "instanceof", "insteadof",
+			"function", "each", "global", "goto", "if", "implements", "include", "include_once", "instanceof", "insteadof",
 			"interface", "match", "namespace", "new", "or", "print", "private", "protected", "public", "require",
 			"require_once", "return", "static", "switch", "throw", "trait", "try", "use", "var", "while", "yield",
 			"yield from", "__CLASS__", "__DIR__", "__FILE__", "__FUNCTION__", "__LINE__", "__METHOD__", "__NAMESPACE__",
@@ -4113,7 +4113,7 @@ public class CodeEditor extends IDEComponent {
 						| ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln")
 						| ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project")
 						| ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))
-						&& !(isCssPart || isJSPart || isPhpPart)) && (s != "="))
+						&& !(isCssPart || isJSPart || isPhpPart)) && (s != "=" && s != "<") && s != ">")
 					continue;
 				// if (!(isCssPart || isJSPart || isPhpPart) && ((ext.equalsIgnoreCase(".html")
 				// || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xhtml") ||
@@ -6954,6 +6954,7 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
 				KeyInput.updateKeys();
 				undo.push(lines);
+				undoIndex = undo.size() - 1;
 
 				RightClickOption.removeAllRightClickOptions();
 
@@ -7001,6 +7002,7 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				KeyInput.updateKeys();
 				 undo.push(lines);
+				 undoIndex = undo.size() - 1;
 
 				if (cursorX < cY.length()) {
 					cY.deleteCharAt(cursorX);
@@ -7018,6 +7020,7 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 				KeyInput.updateKeys();
 				 undo.push(lines);
+				 undoIndex = undo.size() - 1;
 				 
 				 if (!KeyInput.isShiftDown()) {
 					 if (!RightClickOption.isAutoCompleteActive()) {
@@ -7048,6 +7051,7 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
 				 undo.push(lines);
+				 undoIndex = undo.size() - 1;
 
 				if (RightClickOption.isAutoCompleteActive()) {
 					autocompletes.get(autocompleteindex).command
@@ -7193,6 +7197,7 @@ public class CodeEditor extends IDEComponent {
 						|| KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
 
 					 undo.push(lines);
+					 undoIndex = undo.size() - 1;
 					if (editing != null)
 						editing.setSaved(false);
 				}
@@ -7745,6 +7750,16 @@ public class CodeEditor extends IDEComponent {
 						
 						if (undo.isEmpty()) return;
 						
+						undoIndex--;
+						
+						for (IDELine l : undo.get(undoIndex)) {
+							System.out.println(l.getChars());
+							System.out.println("-----");
+						}
+						
+						defineLines(undo.get(undoIndex));
+						
+						/*
 						//undo.pop();
 						
 						List<IDELine> peek = undo.pop();
@@ -7760,15 +7775,13 @@ public class CodeEditor extends IDEComponent {
 							
 							i++;
 						}
-							
-						redo.push(peek);
 						
 						defineLines(peek);
 						
 						if (lines.isEmpty())
 							addNewLine(0);
 						 
-						//if (!undo.isEmpty()) undo.pop();
+						//if (!undo.isEmpty()) undo.pop();*/
 						
 						setCursorWithinBounds();
 						editing.setSaved(false);
@@ -7779,13 +7792,7 @@ public class CodeEditor extends IDEComponent {
 					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Y (Refazer)
 						KeyInput.updateKeys();
 						
-						
-						if (redo.isEmpty()) return;
-						
-						List<IDELine> peek = redo.peek();
-						
-						
-						int i = 0;
+						/*int i = 0;
 						
 						for (IDELine l : peek) { StringBuilder b = new StringBuilder(new
 						String(toCharArray(l.getChars())));
@@ -7804,7 +7811,7 @@ public class CodeEditor extends IDEComponent {
 						if (!redo.isEmpty()) redo.pop();
 						
 						setCursorWithinBounds();
-						editing.setSaved(false);
+						editing.setSaved(false);*/
 						
 						return;
 					}
@@ -7912,8 +7919,11 @@ public class CodeEditor extends IDEComponent {
 		
 		//this.lines.addAll(lines);
 		
+		int index = 0;
+		
 		for (IDELine l : lines) {
-			this.lines.add(l);
+			addNewLine(index);
+			register(new StringBuilder(new String(toCharArray(l.getChars()))), index++);
 		}
 	}
 
