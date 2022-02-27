@@ -294,6 +294,8 @@ public class Tab extends IDEComponent implements Serializable {
 
 			w.close();
 			
+			CodeEditor.undo.push(Main.editor.lines);
+			
 			setSaved(true);
 			save = true;
 		} catch (IOException e) {

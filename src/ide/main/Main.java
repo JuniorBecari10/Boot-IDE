@@ -840,9 +840,7 @@ public class Main implements Runnable, Tickable {
     }
     
     //@Override
-    public void runsd() {
-    	screen.requestFocus();
-    	
+    public void runold() {
     	long lastTime = System.nanoTime();
     	double targetFps = 60.0; // 120
     	double ns = 1E9 / targetFps;
@@ -854,6 +852,8 @@ public class Main implements Runnable, Tickable {
     	double timer = System.currentTimeMillis();
     	
     	//int tickOverflow = 0;
+    	
+    	screen.requestFocus();
     	
     	while (running) {
     		long now = System.nanoTime();

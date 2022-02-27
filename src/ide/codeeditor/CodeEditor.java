@@ -6391,7 +6391,7 @@ public class CodeEditor extends IDEComponent {
 		List<Character> chars = new ArrayList<>();
 		List<IDEFont> fs = new ArrayList<>();
 
-		chars.add('\0');
+		//chars.add('\0');
 		fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
 
 		lines.add(yPos, new IDELine(chars, fs));
@@ -6795,7 +6795,7 @@ public class CodeEditor extends IDEComponent {
 			String change = a.text;
 			
 			toAddAutoCompletes.add(new RightClickOption(drawcx + (Main.editor.getX() - originalEditorX),
-					(drawcy + FONT_SIZE) + index * height, 330, 32, 16, a.text, getAutoCompleteIcon(a.type),
+					(drawcy + FONT_SIZE /* + 2 */) + index * height, 330, 32, 16, a.text, getAutoCompleteIcon(a.type),
 					(e) -> makeChanges(e), change));
 
 			index++;
@@ -6934,7 +6934,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
 				KeyInput.updateKeys();
-				// undo.push(lines);
+				undo.push(lines);
 
 				RightClickOption.removeAllRightClickOptions();
 
@@ -6981,7 +6981,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				KeyInput.updateKeys();
-				// undo.push(lines);
+				 undo.push(lines);
 
 				if (cursorX < cY.length()) {
 					cY.deleteCharAt(cursorX);
@@ -6998,27 +6998,37 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 				KeyInput.updateKeys();
-				// undo.push(lines);
-
-				if (!RightClickOption.isAutoCompleteActive()) {
-					wordSinceSpace = "";
-					RightClickOption.removeAllRightClickOptions();
-
-					cY.insert(cursorX, "    "); // TODO fazer maleavel o tamanho da tab
-
-					cursorX += 4;
-					editing.setSaved(false);
-				} else {
-					autocompleteindex++;
-
-					if (autocompleteindex == autocompletes.size())
-						autocompleteindex = 0;
-				}
+				 undo.push(lines);
+				 
+				 if (!KeyInput.isShiftDown()) {
+					 if (!RightClickOption.isAutoCompleteActive()) {
+						wordSinceSpace = "";
+						RightClickOption.removeAllRightClickOptions();
+	
+						cY.insert(cursorX, "    ");
+	
+						cursorX += 4;
+						editing.setSaved(false);
+					} else {
+						autocompleteindex++;
+	
+						if (autocompleteindex == autocompletes.size())
+							autocompleteindex = 0;
+					}
+				 } else {
+					 wordSinceSpace = "";
+						RightClickOption.removeAllRightClickOptions();
+	
+						cY.insert(cursorX, "\t");
+	
+						cursorX += 4;
+						editing.setSaved(false);
+				 }
 			}
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
-				// undo.push(lines);
+				 undo.push(lines);
 
 				if (RightClickOption.isAutoCompleteActive()) {
 					autocompletes.get(autocompleteindex).command
@@ -7078,7 +7088,7 @@ public class CodeEditor extends IDEComponent {
 					wordSinceSpace += c;
 				if (keyCode == KeyEvent.VK_SPACE) {
 					wordSinceSpace = "";
-					RightClickOption.removeAllRightClickOptions();
+					RightClickOption.removeAllRightClickOptions(); // aqui
 				}
 				
 				if (editing != null)
@@ -7107,7 +7117,7 @@ public class CodeEditor extends IDEComponent {
 									.equalsIgnoreCase(".project")) {
 							if (c == '<') {
 								wordSinceSpace = "";
-								RightClickOption.removeAllRightClickOptions();
+								RightClickOption.removeAllRightClickOptions(); // aqui
 							}
 						}
 
@@ -7155,13 +7165,13 @@ public class CodeEditor extends IDEComponent {
 				if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB
 						&& KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46
 						&& !KeyInput.isShiftDown())
-					RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.)
+					RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.) // aqui
 				// if (KeyInput.getKeyCodePressed() == KeyEvent.)
 
 				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256
 						|| KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
 
-					// undo.push(lines);
+					 undo.push(lines);
 					if (editing != null)
 						editing.setSaved(false);
 				}
@@ -7269,7 +7279,7 @@ public class CodeEditor extends IDEComponent {
 
 							return;
 						}
-					} else {
+					} else { // isShiftDown()
 						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 							KeyInput.updateKeys();
 							
@@ -7711,56 +7721,70 @@ public class CodeEditor extends IDEComponent {
 
 					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
 						KeyInput.updateKeys();
-
-						/*
-						 * if (undo.isEmpty()) return;
-						 * 
-						 * undo.pop();
-						 * 
-						 * List<IDELine> peek = undo.peek();
-						 * 
-						 * int i = 0;
-						 * 
-						 * for (IDELine l : peek) { StringBuilder b = new StringBuilder(new
-						 * String(toCharArray(l.getChars())));
-						 * 
-						 * System.out.println(b);
-						 * 
-						 * register(b, i);
-						 * 
-						 * i++; }
-						 * 
-						 * redo.push(peek);
-						 * 
-						 * if (!undo.isEmpty()) undo.pop();
-						 */
-
+						
+						if (undo.isEmpty()) return;
+						
+						//undo.pop();
+						
+						List<IDELine> peek = undo.pop();
+						 
+						int i = 0;
+						
+						for (IDELine l : peek) {
+							StringBuilder b = new StringBuilder(new String(toCharArray(l.getChars())));
+							
+							//System.out.println(b);
+							
+							register(b, i);
+							
+							i++;
+						}
+							
+						redo.push(peek);
+						
+						defineLines(peek);
+						
+						if (lines.isEmpty())
+							addNewLine(0);
+						 
+						//if (!undo.isEmpty()) undo.pop();
+						
+						setCursorWithinBounds();
+						editing.setSaved(false);
+						
 						return;
 					}
 
 					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Y (Refazer)
 						KeyInput.updateKeys();
-
-						/*
-						 * if (redo.isEmpty()) return;
-						 * 
-						 * List<IDELine> peek = redo.peek();
-						 * 
-						 * 
-						 * int i = 0;
-						 * 
-						 * for (IDELine l : peek) { StringBuilder b = new StringBuilder(new
-						 * String(toCharArray(l.getChars())));
-						 * 
-						 * register(b, i);
-						 * 
-						 * i++; }
-						 * 
-						 * undo.push(peek);
-						 * 
-						 * if (!redo.isEmpty()) redo.pop();
-						 */
-
+						
+						
+						if (redo.isEmpty()) return;
+						
+						List<IDELine> peek = redo.peek();
+						
+						
+						int i = 0;
+						
+						for (IDELine l : peek) { StringBuilder b = new StringBuilder(new
+						String(toCharArray(l.getChars())));
+						
+						register(b, i);
+						
+						i++; }
+						
+						undo.push(peek);
+						
+						defineLines(peek);
+						
+						if (lines.isEmpty())
+							addNewLine(0);
+						
+						if (!redo.isEmpty()) redo.pop();
+						
+						setCursorWithinBounds();
+						editing.setSaved(false);
+						
 						return;
 					}
 				}
@@ -7861,10 +7885,21 @@ public class CodeEditor extends IDEComponent {
 	public boolean noneSelected() {
 		return index1 == index2 && line1 == line2;
 	}
+	
+	public synchronized void defineLines(List<IDELine> lines) {
+		this.lines.clear();
+		
+		//this.lines.addAll(lines);
+		
+		for (IDELine l : lines) {
+			this.lines.add(l);
+		}
+	}
 
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added)
 			return;
+		
 		if (tabs == null)
 			tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessário
 		
