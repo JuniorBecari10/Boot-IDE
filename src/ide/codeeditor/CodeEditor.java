@@ -1696,9 +1696,45 @@ public class CodeEditor extends IDEComponent {
 
 			for (int i = 0; i < indxs.size(); i++) {
 				try {
-					fs = color(indxs.get(i), finals.get(i), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+					fs = color(indxs.get(i), finals.get(i), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // TODO
 				} catch (Exception e) {
 					continue;
+				}
+			}
+			
+			{ // colorir tags dinâmicas
+				indxs = findWord(new String(chars), ">"); // colorir final de tags
+
+				for (Integer i : indxs) {
+					fs = color(i, i + 1, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
+
+				indxs = findWord(new String(chars), "<");
+
+				int len = 0;
+
+				for (Integer i : indxs) {
+					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
+							&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
+							&& chars[i + len] != ':' && chars[i + len] != '>' && chars[i + len] != '<')
+						len++;
+
+					if (i + len < chars.length)
+						fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
+
+				indxs = findWord(new String(chars), "</");
+
+				len = 0;
+
+				for (Integer i : indxs) {
+					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
+							&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
+							&& chars[i + len] != ':')
+						len++;
+
+					if (i + len < chars.length)
+						fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 				}
 			}
 		}
@@ -2785,42 +2821,6 @@ public class CodeEditor extends IDEComponent {
 
 				for (Integer i : indxs) {
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
-				}
-			}
-			
-			{ // colorir tags dinâmicas
-				indxs = findWord(new String(chars), ">"); // colorir final de tags
-
-				for (Integer i : indxs) {
-					fs = color(i, i + 1, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
-				}
-
-				indxs = findWord(new String(chars), "<");
-
-				len = 0;
-
-				for (Integer i : indxs) {
-					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
-							&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
-							&& chars[i + len] != ':' && chars[i + len] != '>' && chars[i + len] != '<')
-						len++;
-
-					if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
-				}
-
-				indxs = findWord(new String(chars), "</");
-
-				len = 0;
-
-				for (Integer i : indxs) {
-					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
-							&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
-							&& chars[i + len] != ':')
-						len++;
-
-					if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 				}
 			}
 
