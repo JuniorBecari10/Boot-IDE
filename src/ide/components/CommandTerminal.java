@@ -90,15 +90,21 @@ public class CommandTerminal extends IDEComponent {
 		
 		CodeEditor.setSystemLook();
 		
-		cursor = new Animation(2, true) {
+		cursor = new Animation() {
 			private boolean flip = false;
 			
 			public void play() {
-				showCursor = !flip;
-				
-				flip = !flip;
-				
-				super.play();
+				while (true) {
+					showCursor = !flip;
+	
+					flip = !flip;
+					
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		};
 		

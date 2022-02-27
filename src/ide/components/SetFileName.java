@@ -42,15 +42,21 @@ public class SetFileName extends IDEComponent {
 		
 		this.isFile = isFile;
 		
-		cursor = new Animation(2, true) { // 20
+		cursor = new Animation() { // 20
 			private boolean flip = false;
 			
 			public void play() {
-				showCursor = !flip;
-				
-				flip = !flip;
-				
-				super.play();
+				while (true) {
+					showCursor = !flip;
+	
+					flip = !flip;
+					
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		};
 		

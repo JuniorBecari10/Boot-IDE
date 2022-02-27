@@ -730,15 +730,21 @@ public class CodeEditor extends IDEComponent {
 		toAdd = new ArrayList<>();
 		toRemove = new ArrayList<>();
 
-		cursor = new Animation(2, true) {
+		cursor = new Animation() { // dá exception por causa de stackoverflow
 			private boolean flip = false;
 
 			public void play() {
-				showCursor = !flip;
-
-				flip = !flip;
-
-				super.play();
+				while (true) {
+					showCursor = !flip;
+	
+					flip = !flip;
+					
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		};
 		
