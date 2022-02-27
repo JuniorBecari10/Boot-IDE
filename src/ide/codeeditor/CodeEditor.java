@@ -1294,6 +1294,7 @@ public class CodeEditor extends IDEComponent {
 		case ".por": return porKeys;
 
 		case ".html": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
+		case ".svelte": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
 		case ".xhtml": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys))); // será que tira o phpkeys? TODO
 		case ".htm": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
 		case ".css": return mergeStringArrays(cssTags, props);
@@ -1512,6 +1513,7 @@ public class CodeEditor extends IDEComponent {
 		case ".html": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
 		case ".xhtml": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
 		case ".htm": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
+		case ".svelte": return "Svelte";
 		case ".css": return minMode ? "CSS" : "Cascading Style Sheets - CSS";
 		case ".xml": return minMode ? "XML" : "Extensible Markup Language - XML";
 		case ".sln": return minMode ? (Main.lang == Language.PORT ? "Solução do VS" : "VS Solution") : (Main.lang == Language.PORT ? "Solução do Microsoft Visual Studio"
@@ -1678,7 +1680,7 @@ public class CodeEditor extends IDEComponent {
 				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1"))
 			return fs;
 
-		if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm")
+		if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
 				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
 				|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
 				|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
@@ -1981,7 +1983,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 
-			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm")
+			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".svelte")
 					|| ext.equalsIgnoreCase(".ejs"))) {
 				for (String s : syms) {
 					indxs = findWord(new String(chars), s); // antes de <palavra>
@@ -2100,7 +2102,7 @@ public class CodeEditor extends IDEComponent {
 	public List<IDEFont> colorObjects(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 
-		if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm")
+		if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
 				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")
 				|| ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
 				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock") || ext.equalsIgnoreCase(".toml"))) {
@@ -2241,6 +2243,7 @@ public class CodeEditor extends IDEComponent {
 		case ".htm":
 		case ".xhtml":
 		case ".html":
+		case ".svelte":
 			if (isCssPart || isJSPart || isPhpPart)
 				for (String s : nums) { // colorir números
 					indxs = findWord(new String(chars), s);
@@ -2779,7 +2782,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
-			{
+			{ // colorir tags dinâmicas
 				indxs = findWord(new String(chars), ">"); // colorir final de tags
 
 				for (Integer i : indxs) {
@@ -3941,7 +3944,7 @@ public class CodeEditor extends IDEComponent {
 
 				// primeira vez usando labels!
 				methods: if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
-					if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm")
+					if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".svalte") | ext.equalsIgnoreCase(".htm")
 							| ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln")
 							| ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project")
 							| ext.equalsIgnoreCase(".ejs")) {
@@ -4010,7 +4013,7 @@ public class CodeEditor extends IDEComponent {
 
 		List<Integer> indxs = new ArrayList<>();
 
-		if ((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm")
+		if ((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".svelte") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm")
 				| ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln") | ext.equalsIgnoreCase(".classpath")
 				| ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt")
 				| ext.equalsIgnoreCase(".log")) && !(isCssPart || isJSPart || isPhpPart))
@@ -4025,7 +4028,7 @@ public class CodeEditor extends IDEComponent {
 				if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))
 					continue;
 
-				if ((((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm")
+				if ((((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".svelte") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm")
 						| ext.equalsIgnoreCase(".ejs") && isCssPart))
 						|| (ext.equalsIgnoreCase(".css") | ext.equalsIgnoreCase(".scss")))
 						&& hasAfter(new String(chars), i, '{'))
@@ -4106,7 +4109,7 @@ public class CodeEditor extends IDEComponent {
 				
 				if (s == ">" && index == 0 && ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
 				
-				if (((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm")
+				if (((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".svelte") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm")
 						| ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln")
 						| ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project")
 						| ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))
@@ -4117,14 +4120,14 @@ public class CodeEditor extends IDEComponent {
 				// ext.equalsIgnoreCase(".ejs")) && !isJSPart && (s != "<" && s != ">" && s !=
 				// "/" && s != "="))) continue;
 				if (((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss")
-						|| ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml")
+						|| ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".xhtml")
 								|| ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs"))) && isCssPart))
 						&& (s == "*"))
 					continue;
 				if ((ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
 						|| ext.equalsIgnoreCase(".cmd")) && (s == "+" || s == "@"))
 					continue;
-				if ((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".html")
+				if ((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".svelte")
 						|| ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm")
 						|| ext.equalsIgnoreCase(".ejs")) && (s == "@" || s == "#"))
 					continue;
@@ -4543,7 +4546,7 @@ public class CodeEditor extends IDEComponent {
 								if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))
 									continue;
 
-								if ((((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml")
+								if ((((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".svelte")
 										| ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".ejs") && isCssPart))
 										|| (ext.equalsIgnoreCase(".css") | ext.equalsIgnoreCase(".scss")))
 										&& hasAfter(new String(chars), i, '{'))
@@ -4842,6 +4845,7 @@ public class CodeEditor extends IDEComponent {
 
 		case ".xhtml": // para o js
 		case ".html":
+		case ".svelte":
 		case ".htm":
 		case ".ejs":
 			if (!isJSPart)
@@ -5626,6 +5630,7 @@ public class CodeEditor extends IDEComponent {
 		case ".htm":
 		case ".xhtml":
 		case ".html":
+		case ".svelte":
 		case ".svg":
 			indxs = findWord(new String(chars), "<!--"); // colorir comentários multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "-->");
@@ -6048,6 +6053,7 @@ public class CodeEditor extends IDEComponent {
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".project")
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".htm")
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html")
+					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".svelte")
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".xhtml")))
 				if (cursorX > 0 && !Character
 						.isLetter(new String(toCharArray(lines.get(cursorY - 1).getChars())).charAt(cursorX - 1)))
@@ -6864,6 +6870,8 @@ public class CodeEditor extends IDEComponent {
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent())
 							.equalsIgnoreCase(".xhtml")
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+							.equalsIgnoreCase(".svelte")
+					|| ListableFile.getFileExtension(editing.getRegent().getRegent())
 							.equalsIgnoreCase(".htm")
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent())
 							.equalsIgnoreCase(".ejs")
@@ -7106,6 +7114,8 @@ public class CodeEditor extends IDEComponent {
 					if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html")
 							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
 									.equalsIgnoreCase(".xhtml")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
+									.equalsIgnoreCase(".svelte")
 							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
 									.equalsIgnoreCase(".htm")
 							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
