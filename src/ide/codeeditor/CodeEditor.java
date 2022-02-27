@@ -7763,7 +7763,7 @@ public class CodeEditor extends IDEComponent {
 							System.out.println("-----");
 						}
 						
-						defineLines(undo.get(undoIndex));
+						this.lines = new ArrayList<>(undo.get(undoIndex));
 						
 						/*
 						//undo.pop();
@@ -7798,6 +7798,17 @@ public class CodeEditor extends IDEComponent {
 					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Y (Refazer)
 						KeyInput.updateKeys();
 						
+						if (undo.isEmpty()) return;
+						
+						undoIndex++;
+						
+						for (IDELine l : undo.get(undoIndex)) {
+							System.out.println(l.getChars());
+							System.out.println("-----");
+						}
+						
+						this.lines = new ArrayList<>(undo.get(undoIndex));
+						
 						/*int i = 0;
 						
 						for (IDELine l : peek) { StringBuilder b = new StringBuilder(new
@@ -7814,10 +7825,10 @@ public class CodeEditor extends IDEComponent {
 						if (lines.isEmpty())
 							addNewLine(0);
 						
-						if (!redo.isEmpty()) redo.pop();
+						if (!redo.isEmpty()) redo.pop();*/
 						
 						setCursorWithinBounds();
-						editing.setSaved(false);*/
+						editing.setSaved(false);
 						
 						return;
 					}
