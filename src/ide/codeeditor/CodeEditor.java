@@ -1696,7 +1696,7 @@ public class CodeEditor extends IDEComponent {
 
 			for (int i = 0; i < indxs.size(); i++) {
 				try {
-					fs = color(indxs.get(i), finals.get(i), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // TODO
+					fs = color(indxs.get(i), finals.get(i), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				} catch (Exception e) {
 					continue;
 				}
@@ -1718,7 +1718,7 @@ public class CodeEditor extends IDEComponent {
 							&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
 							&& chars[i + len] != ':' && chars[i + len] != '>' && chars[i + len] != '<')
 						len++;
-
+					
 					if (i + len < chars.length)
 						fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 				}
@@ -2025,8 +2025,11 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 
-			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".svelte")
-					|| ext.equalsIgnoreCase(".ejs"))) {
+			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
+					|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
+					|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
+					|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
+					|| ext.equalsIgnoreCase(".project"))) {
 				for (String s : syms) {
 					indxs = findWord(new String(chars), s); // antes de <palavra>
 
@@ -2145,6 +2148,10 @@ public class CodeEditor extends IDEComponent {
 		List<Integer> indxs = new ArrayList<>();
 
 		if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
+				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
+				|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
+				|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
+				|| ext.equalsIgnoreCase(".project")
 				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")
 				|| ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
 				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock") || ext.equalsIgnoreCase(".toml"))) {
@@ -3950,10 +3957,11 @@ public class CodeEditor extends IDEComponent {
 
 				// primeira vez usando labels!
 				methods: if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
-					if (ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".svalte") | ext.equalsIgnoreCase(".htm")
-							| ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln")
-							| ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project")
-							| ext.equalsIgnoreCase(".ejs")) {
+					if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
+							|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
+							|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
+							|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
+							|| ext.equalsIgnoreCase(".project")) {
 						if (!(isCssPart || isJSPart || isPhpPart))
 							break methods;
 					}
@@ -4019,10 +4027,12 @@ public class CodeEditor extends IDEComponent {
 
 		List<Integer> indxs = new ArrayList<>();
 
-		if ((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".svelte") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm")
-				| ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln") | ext.equalsIgnoreCase(".classpath")
-				| ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt")
-				| ext.equalsIgnoreCase(".log")) && !(isCssPart || isJSPart || isPhpPart))
+		if ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
+				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
+				|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
+				|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
+				|| ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".txt")
+				|| ext.equalsIgnoreCase(".log")) && !(isCssPart || isJSPart || isPhpPart))
 			return fs;
 
 		// boolean toContinue = false;
@@ -4034,8 +4044,11 @@ public class CodeEditor extends IDEComponent {
 				if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))
 					continue;
 
-				if ((((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".svelte") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm")
-						| ext.equalsIgnoreCase(".ejs") && isCssPart))
+				if ((((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
+						|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
+						|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
+						|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
+						|| ext.equalsIgnoreCase(".project") && isCssPart))
 						|| (ext.equalsIgnoreCase(".css") | ext.equalsIgnoreCase(".scss")))
 						&& hasAfter(new String(chars), i, '{'))
 					continue;
@@ -4115,10 +4128,11 @@ public class CodeEditor extends IDEComponent {
 				
 				if (s == ">" && index == 0 && ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
 				
-				if (((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".svelte") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".htm")
-						| ext.equalsIgnoreCase(".xml") | ext.equalsIgnoreCase(".sln")
-						| ext.equalsIgnoreCase(".classpath") | ext.equalsIgnoreCase(".project")
-						| ext.equalsIgnoreCase(".ejs") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))
+				if (((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
+						|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
+						|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
+						|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
+						|| ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))
 						&& !(isCssPart || isJSPart || isPhpPart)) && (s != "=" && s != "<") && s != ">")
 					continue;
 				// if (!(isCssPart || isJSPart || isPhpPart) && ((ext.equalsIgnoreCase(".html")
@@ -4126,16 +4140,21 @@ public class CodeEditor extends IDEComponent {
 				// ext.equalsIgnoreCase(".ejs")) && !isJSPart && (s != "<" && s != ">" && s !=
 				// "/" && s != "="))) continue;
 				if (((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss")
-						|| ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".xhtml")
-								|| ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".ejs"))) && isCssPart))
+						|| (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
+				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
+				|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
+				|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
+				|| ext.equalsIgnoreCase(".project")) && isCssPart))
 						&& (s == "*"))
 					continue;
 				if ((ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
 						|| ext.equalsIgnoreCase(".cmd")) && (s == "+" || s == "@"))
 					continue;
-				if ((ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".svelte")
-						|| ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".htm")
-						|| ext.equalsIgnoreCase(".ejs")) && (s == "@" || s == "#"))
+				if ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
+						|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
+						|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
+						|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
+						|| ext.equalsIgnoreCase(".project")) && (s == "@" || s == "#"))
 					continue;
 				
 				if ((ext.equalsIgnoreCase(".mcfunction")) && (s == "@"))
@@ -4552,8 +4571,11 @@ public class CodeEditor extends IDEComponent {
 								if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))
 									continue;
 
-								if ((((ext.equalsIgnoreCase(".html") | ext.equalsIgnoreCase(".xhtml") | ext.equalsIgnoreCase(".svelte")
-										| ext.equalsIgnoreCase(".htm") | ext.equalsIgnoreCase(".ejs") && isCssPart))
+								if (((((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
+										|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
+										|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
+										|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
+										|| ext.equalsIgnoreCase(".project")) && isCssPart))
 										|| (ext.equalsIgnoreCase(".css") | ext.equalsIgnoreCase(".scss")))
 										&& hasAfter(new String(chars), i, '{'))
 									continue;
@@ -7751,7 +7773,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
+					/*if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
 						KeyInput.updateKeys();
 						
 						if (undo.isEmpty()) return;
@@ -7764,30 +7786,6 @@ public class CodeEditor extends IDEComponent {
 						}
 						
 						this.lines = new ArrayList<>(undo.get(undoIndex));
-						
-						/*
-						//undo.pop();
-						
-						List<IDELine> peek = undo.pop();
-						 
-						int i = 0;
-						
-						for (IDELine l : peek) {
-							StringBuilder b = new StringBuilder(new String(toCharArray(l.getChars())));
-							
-							//System.out.println(b);
-							
-							register(b, i);
-							
-							i++;
-						}
-						
-						defineLines(peek);
-						
-						if (lines.isEmpty())
-							addNewLine(0);
-						 
-						//if (!undo.isEmpty()) undo.pop();*/
 						
 						setCursorWithinBounds();
 						editing.setSaved(false);
@@ -7809,29 +7807,11 @@ public class CodeEditor extends IDEComponent {
 						
 						this.lines = new ArrayList<>(undo.get(undoIndex));
 						
-						/*int i = 0;
-						
-						for (IDELine l : peek) { StringBuilder b = new StringBuilder(new
-						String(toCharArray(l.getChars())));
-						
-						register(b, i);
-						
-						i++; }
-						
-						undo.push(peek);
-						
-						defineLines(peek);
-						
-						if (lines.isEmpty())
-							addNewLine(0);
-						
-						if (!redo.isEmpty()) redo.pop();*/
-						
 						setCursorWithinBounds();
 						editing.setSaved(false);
 						
 						return;
-					}
+					}*/
 				}
 	
 	public void scrollTabs() {

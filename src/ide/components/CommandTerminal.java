@@ -1023,21 +1023,21 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "c":
-					String[] cstrs = { "#include <stdio.h>", "#include <stdlib.h>" };
+					String[] cstrs = { "#include <stdio.h>" };
 					
 					strs = cstrs;
 					
 					break;
 					
 				case "cmain":
-					String[] cmstrs = { "#include <stdio.h>", "#include <stdlib.h>", "", "int main()", "{", "    return 0;", "}"};
+					String[] cmstrs = { "#include <stdio.h>", "", "int main()", "{", "    return 0;", "}"};
 					
 					strs = cmstrs;
 					
 					break;
 					
 				case "cmainargs":
-					String[] cmastrs = { "#include <stdio.h>", "#include <stdlib.h>", "", "int main(int argc, char *argv[])", "{", "    return 0;", "}"};
+					String[] cmastrs = { "#include <stdio.h>", "", "int main(int argc, char *argv[])", "{", "    return 0;", "}"};
 					
 					strs = cmastrs;
 					
