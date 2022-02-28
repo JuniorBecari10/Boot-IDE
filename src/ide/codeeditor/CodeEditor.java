@@ -28,7 +28,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.Stack;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -118,8 +117,8 @@ public class CodeEditor extends IDEComponent {
 
 	public static boolean isAutoCompleteActive = true;
 
-	public static Stack<List<IDELine>> undo = new Stack<>();
-	public static int undoIndex;
+	//public static Stack<List<IDELine>> undo = new Stack<>();
+	//public static int undoIndex;
 
 	public int tabScr = 0;
 	
@@ -6981,8 +6980,8 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
 				KeyInput.updateKeys();
-				undo.push(lines);
-				undoIndex = undo.size() - 1;
+				//undo.push(lines);
+				//undoIndex = undo.size() - 1;
 
 				RightClickOption.removeAllRightClickOptions();
 
@@ -7029,8 +7028,8 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				KeyInput.updateKeys();
-				 undo.push(lines);
-				 undoIndex = undo.size() - 1;
+//				 undo.push(lines);
+//				 undoIndex = undo.size() - 1;
 
 				if (cursorX < cY.length()) {
 					cY.deleteCharAt(cursorX);
@@ -7047,8 +7046,8 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 				KeyInput.updateKeys();
-				 undo.push(lines);
-				 undoIndex = undo.size() - 1;
+//				 undo.push(lines);
+//				 undoIndex = undo.size() - 1;
 				 
 				 if (!KeyInput.isShiftDown()) {
 					 if (!RightClickOption.isAutoCompleteActive()) {
@@ -7078,8 +7077,8 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
-				 undo.push(lines);
-				 undoIndex = undo.size() - 1;
+//				 undo.push(lines);
+//				 undoIndex = undo.size() - 1;
 
 				if (RightClickOption.isAutoCompleteActive()) {
 					autocompletes.get(autocompleteindex).command
@@ -7224,8 +7223,8 @@ public class CodeEditor extends IDEComponent {
 				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256
 						|| KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
 
-					 undo.push(lines);
-					 undoIndex = undo.size() - 1;
+//					 undo.push(lines);
+//					 undoIndex = undo.size() - 1;
 					if (editing != null)
 						editing.setSaved(false);
 				}
