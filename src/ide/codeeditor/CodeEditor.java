@@ -283,7 +283,7 @@ public class CodeEditor extends IDEComponent {
 			"this", "throw", "throws", "transient", "true", "try", "typeof", "var", "void", "volatile", "while", "with",
 			"yield", "undefined", "of", "async", "window", "document", "console", "as", "from", "navigator",
 			"constructor", "debug", "declare", "namespace", "number", "string", "boolean", "array", "object", "any",
-			"void", "mutation" };
+			"void", "mutation", "set" };
 
 	public static final String[] cssTags = { "a", "abbr", "acronym", "address", "applet", "area", "article", "aside",
 			"audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas",
@@ -645,7 +645,7 @@ public class CodeEditor extends IDEComponent {
 			"const", "import", "string", "for", "interface", "delete", "switch", "public", "of", "await", "class",
 			"console", "false", "volatile", "any", "int", "instanceof", "super", "with", "async", "declare",
 			"namespace", "boolean", "short", "arguments", "window", "as", "from", "navigator", "constructor", "debug",
-			"array", "object", "any", "mutation" };
+			"array", "object", "any", "mutation", "set" };
 
 	public static final String[] ktKeys = { "as", "as?", "break", "class", "continue", "do", "else", "false", "for",
 			"fun", "if", "in", "!in", "interface", "is", "!is", "null", "object", "package", "return", "super", "this",
@@ -8420,8 +8420,7 @@ public class CodeEditor extends IDEComponent {
 	
 					// if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 	
-					Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + 50,
-							Main.screen.getWidth(), g);
+					Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + 50, Main.screen.getWidth(), g);
 	
 					String nums = String.valueOf(i + 1); // nums = num string
 					// int num = i + 1;
