@@ -88,6 +88,7 @@ public class CodeEditor extends IDEComponent {
 	public int keyWait = 0, maxKeyWait = 5;
 
 	public static boolean automaticallyOpenTabs = true;
+	public static boolean showWhitespace = true;
 
 	public boolean codeHelpersOn = true;
 
@@ -107,7 +108,7 @@ public class CodeEditor extends IDEComponent {
 	public FileReadMode readMode = FileReadMode.NORMAL;
 
 	private int realcx, realcy; // c = cursor
-	public int drawcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX,
+	public int drawcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX,
 			drawcy = MIN_Y + cursorY * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2;
 
 	private PressedAccent prAcc;
@@ -881,7 +882,7 @@ public class CodeEditor extends IDEComponent {
 				// int speed = 1;
 
 				while (true) {
-					realcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
+					realcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
 					realcy = MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY;
 
 					/*
@@ -926,7 +927,7 @@ public class CodeEditor extends IDEComponent {
 				// int speed = 1;
 
 				while (true) {
-					realcx = ((x + 50) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
+					realcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
 					realcy = MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY;
 
 					/*
@@ -5814,6 +5815,24 @@ public class CodeEditor extends IDEComponent {
 		
 		return fs;
 	}
+	
+	public List<IDEFont> colorWhitespaces(String ext, char[] chars, List<IDEFont> fs) {
+		List<Integer> indxs = new ArrayList<>();
+		
+		indxs = findWord(new String(chars), " "); // colorir espaços
+
+		for (Integer i : indxs) {
+			fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
+		}
+		
+		indxs = findWord(new String(chars), "\t"); // colorir espaços
+
+		for (Integer i : indxs) {
+			fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
+		}
+		
+		return fs;
+	}
 
 	public void resetHTML(char[] chars) {
 		List<Integer> indxs = new ArrayList<>();
@@ -5898,6 +5917,7 @@ public class CodeEditor extends IDEComponent {
 		fs = colorNumbers(ext, chars, fs);
 		fs = colorSymbols(ext, chars, fs);
 		fs = colorExtras(ext, chars, fs);
+		fs = colorWhitespaces(ext, chars, fs);
 		fs = colorComments(ext, chars, fs);
 
 		/////////////////////////////////////////////////////
@@ -7096,7 +7116,7 @@ public class CodeEditor extends IDEComponent {
 					spaces.append(' ');
 
 				for (int i = 0; i < countChar(cY.toString(), (char) 9); i++) // char 9 é o tab
-					spaces.append(' ');
+					spaces.append('\t');
 
 				int nSpaces = spaces.length();
 
@@ -7947,7 +7967,7 @@ public class CodeEditor extends IDEComponent {
 		
 		height = Main.screen.getHeight();
 		
-		int idx = 0;
+		/*int idx = 0;
 		for (List<IDELine> l : undo) {
 			try {
 				for (IDELine i : l) {
@@ -7956,7 +7976,7 @@ public class CodeEditor extends IDEComponent {
 			} catch (Exception e) {
 				break;
 			}
-		}
+		}*/
 		
 		callAutomaticColor();
 		
@@ -8369,7 +8389,7 @@ public class CodeEditor extends IDEComponent {
 									// (i + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY,
 									MIN_Y + ((i - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
 									// Main.screen.getWidth() + scrX,
-									((x + 50) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX
+									((x + (FONT_SIZE * 4)) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX
 											- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 									FONT_SIZE + (FONT_SIZE / 4));
 						}
@@ -8402,19 +8422,19 @@ public class CodeEditor extends IDEComponent {
 	
 						if (i == line1 - 1) { // - 1 porque a line1 é base 1
 							if (i == line2 - 1) {
-								g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
+								g.fillRect(((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
 																										// index1 até o
 																										// index2
 										MIN_Y + ((line1 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
-										(((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX)
-												- (((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
+										(((x + (FONT_SIZE * 4)) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX)
+												- (((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 										FONT_SIZE + (FONT_SIZE / 4));
 							} else {
-								g.fillRect(((x + 50) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
+								g.fillRect(((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
 																										// index1 até o fim
 																										// da linha
 										MIN_Y + ((line1 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
-										((((x + 50) + (lines.get(line1 - 1).getChars().size() - index1)
+										((((x + (FONT_SIZE * 4)) + (lines.get(line1 - 1).getChars().size() - index1)
 												* (FONT_SIZE - (FONT_SIZE / 4))) - scrX)
 												- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX)),
 										FONT_SIZE + (FONT_SIZE / 4));
@@ -8424,7 +8444,7 @@ public class CodeEditor extends IDEComponent {
 							if (i != line1 - 1) { // do 0 ao index2
 								g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
 										MIN_Y + ((line2 - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
-										((x + 50) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX
+										((x + (FONT_SIZE * 4)) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX
 												- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 										FONT_SIZE + (FONT_SIZE / 4));
 							}
@@ -8436,7 +8456,7 @@ public class CodeEditor extends IDEComponent {
 	
 					// if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 	
-					Fonts.drawChars(cs, (x + 50) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + 50, Main.screen.getWidth(), g);
+					Fonts.drawChars(cs, (x + (FONT_SIZE * 4)) - scrX, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, fs, x + (FONT_SIZE * 4), Main.screen.getWidth(), g);
 	
 					String nums = String.valueOf(i + 1); // nums = num string
 					// int num = i + 1;
@@ -8452,7 +8472,7 @@ public class CodeEditor extends IDEComponent {
 					Color c = i != cursorY - 1 ? Colors.codeEditor : Colors.explorerLight;
 	
 					g.setColor(c);
-					g.fillRect(x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, 50, FONT_SIZE + (FONT_SIZE / 4)); // linha
+					g.fillRect(x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, FONT_SIZE * 4, FONT_SIZE + (FONT_SIZE / 4)); // linha
 																														// do
 																														// num
 																														// da

@@ -973,6 +973,19 @@ public class Fonts {
     			continue;
     		}
     		
+    		if (CodeEditor.showWhitespace) {
+    			if (ch == ' ') {
+    				text[i] = fonts[i].getFont()[129];
+        			
+        			continue;
+    			}
+    			else if (ch == '\t') {
+    				text[i] = fonts[i].getFont()[130];
+        			
+        			continue;
+    			}
+    		}
+    		
     		int ind = c[i]; 						// pega o valor na tabela ASCII
     		
     		if (ind > 225) continue;
