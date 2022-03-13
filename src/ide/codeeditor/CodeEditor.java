@@ -28,6 +28,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.Stack;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -117,8 +118,8 @@ public class CodeEditor extends IDEComponent {
 
 	public static boolean isAutoCompleteActive = true;
 
-	//public static Stack<List<IDELine>> undo = new Stack<>();
-	//public static int undoIndex;
+	public static Stack<List<IDELine>> undo = new Stack<>();
+	public static Stack<List<IDELine>> redo = new Stack<>();
 
 	public int tabScr = 0;
 	
@@ -6980,8 +6981,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
 				KeyInput.updateKeys();
-				//undo.push(lines);
-				//undoIndex = undo.size() - 1;
+				undo.push(lines);
 
 				RightClickOption.removeAllRightClickOptions();
 
@@ -7028,8 +7028,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				KeyInput.updateKeys();
-//				 undo.push(lines);
-//				 undoIndex = undo.size() - 1;
+				 undo.push(lines);
 
 				if (cursorX < cY.length()) {
 					cY.deleteCharAt(cursorX);
@@ -7046,8 +7045,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 				KeyInput.updateKeys();
-//				 undo.push(lines);
-//				 undoIndex = undo.size() - 1;
+				 undo.push(lines);
 				 
 				 if (!KeyInput.isShiftDown()) {
 					 if (!RightClickOption.isAutoCompleteActive()) {
@@ -7077,8 +7075,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
-//				 undo.push(lines);
-//				 undoIndex = undo.size() - 1;
+				 undo.push(lines);
 
 				if (RightClickOption.isAutoCompleteActive()) {
 					autocompletes.get(autocompleteindex).command
@@ -7223,8 +7220,7 @@ public class CodeEditor extends IDEComponent {
 				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256
 						|| KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
 
-//					 undo.push(lines);
-//					 undoIndex = undo.size() - 1;
+					 undo.push(lines);
 					if (editing != null)
 						editing.setSaved(false);
 				}
@@ -7772,19 +7768,19 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					/*if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
+					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
 						KeyInput.updateKeys();
 						
 						if (undo.isEmpty()) return;
 						
-						undoIndex--;
+						List<IDELine> peek = undo.peek();
+						redo.push(undo.pop());
 						
-						for (IDELine l : undo.get(undoIndex)) {
-							System.out.println(l.getChars());
-							System.out.println("-----");
-						}
+						// define lines
+						//System.out.println(peek.get(0).getFonts().isEmpty());
+						this.lines = defineLines(peek);
 						
-						this.lines = new ArrayList<>(undo.get(undoIndex));
+						System.out.println(peek.equals(lines));
 						
 						setCursorWithinBounds();
 						editing.setSaved(false);
@@ -7795,22 +7791,18 @@ public class CodeEditor extends IDEComponent {
 					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Y (Refazer)
 						KeyInput.updateKeys();
 						
-						if (undo.isEmpty()) return;
+						if (redo.isEmpty()) return;
 						
-						undoIndex++;
+						List<IDELine> peek = redo.peek();
+						undo.push(redo.pop());
 						
-						for (IDELine l : undo.get(undoIndex)) {
-							System.out.println(l.getChars());
-							System.out.println("-----");
-						}
-						
-						this.lines = new ArrayList<>(undo.get(undoIndex));
+						this.lines = defineLines(peek);
 						
 						setCursorWithinBounds();
 						editing.setSaved(false);
 						
 						return;
-					}*/
+					}
 				}
 	
 	public void scrollTabs() {
@@ -7905,12 +7897,25 @@ public class CodeEditor extends IDEComponent {
 			}.start();
 		}
 	}
+	
+	public List<IDELine> defineLines(List<IDELine> lines) {
+		List<IDELine> ls = new ArrayList<>();
+		
+		for (IDELine l : lines) {
+			List<Character> chs = new ArrayList<>(l.getChars());
+			List<IDEFont> fnt = new ArrayList<>(l.getFonts());
+			
+			ls.add(new IDELine(chs, fnt));
+		}
+		
+		return ls;
+	}
 
 	public boolean noneSelected() {
 		return index1 == index2 && line1 == line2;
 	}
 	
-	public synchronized void defineLines(List<IDELine> lines) {
+	/*public synchronized void defineLines(List<IDELine> lines) {
 		this.lines.clear();
 		
 		//this.lines.addAll(lines);
@@ -7921,7 +7926,7 @@ public class CodeEditor extends IDEComponent {
 			addNewLine(index);
 			register(new StringBuilder(new String(toCharArray(l.getChars()))), index++);
 		}
-	}
+	}*/
 
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added)
@@ -7941,6 +7946,8 @@ public class CodeEditor extends IDEComponent {
 			CommandTerminal.runCommand("resettabscroll");
 		
 		height = Main.screen.getHeight();
+		
+		System.out.println(undo.size());
 		
 		callAutomaticColor();
 		
