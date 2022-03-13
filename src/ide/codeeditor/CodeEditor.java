@@ -415,7 +415,7 @@ public class CodeEditor extends IDEComponent {
 			"LUA", "EJECT", "TSC", "SETLOCAL", "ENDLOCAL", "MAKE", "YARN", "COLOR" };
 	
 	public static final String[] porKeys = { "programa", "funcao", "inteiro", "caracter", "real", "cadeia", "para", "se", "senao", "enquanto",
-			"faca", "inclua", "biblioteca" };
+			"faca", "inclua", "biblioteca", "retorne" };
 
 	// Não vai ter aqui as extensões do word, powerpoint, excel etc.
 	/*public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".pyx", ".ipynb", ".js",
