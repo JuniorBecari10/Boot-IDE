@@ -491,6 +491,8 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		if (!isSaved())
 			save();
+		
+		CommandTerminal.runCommand("resetundoredo");
 	}
 	
 	public void tick() {

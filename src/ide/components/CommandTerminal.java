@@ -839,7 +839,6 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "setwhitespaces":
 				CodeEditor.showWhitespace = Boolean.valueOf(args[0]);
-				
 				break;
 				
 			case "gotoline":
