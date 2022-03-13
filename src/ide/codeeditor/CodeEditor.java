@@ -118,8 +118,8 @@ public class CodeEditor extends IDEComponent {
 
 	public static boolean isAutoCompleteActive = true;
 
-	public static Stack<List<IDELine>> undo = new Stack<>();
-	public static Stack<List<IDELine>> redo = new Stack<>();
+	public Stack<List<IDELine>> undo = new Stack<>();
+	public Stack<List<IDELine>> redo = new Stack<>();
 
 	public int tabScr = 0;
 	
@@ -6981,7 +6981,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
 				KeyInput.updateKeys();
-				undo.push(lines);
+				undo.push(new ArrayList<>(lines));
 
 				RightClickOption.removeAllRightClickOptions();
 
@@ -7028,7 +7028,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				KeyInput.updateKeys();
-				 undo.push(lines);
+				 undo.push(new ArrayList<>(lines));
 
 				if (cursorX < cY.length()) {
 					cY.deleteCharAt(cursorX);
@@ -7045,7 +7045,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 				KeyInput.updateKeys();
-				 undo.push(lines);
+				 undo.push(new ArrayList<>(lines));
 				 
 				 if (!KeyInput.isShiftDown()) {
 					 if (!RightClickOption.isAutoCompleteActive()) {
@@ -7075,7 +7075,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
-				 undo.push(lines);
+				 undo.push(new ArrayList<>(lines));
 
 				if (RightClickOption.isAutoCompleteActive()) {
 					autocompletes.get(autocompleteindex).command
@@ -7220,7 +7220,7 @@ public class CodeEditor extends IDEComponent {
 				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256
 						|| KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
 
-					 undo.push(lines);
+					 undo.push(new ArrayList<>(lines));
 					if (editing != null)
 						editing.setSaved(false);
 				}
@@ -7780,7 +7780,7 @@ public class CodeEditor extends IDEComponent {
 						//System.out.println(peek.get(0).getFonts().isEmpty());
 						this.lines = defineLines(peek);
 						
-						System.out.println(peek.equals(lines));
+						System.out.println(peek.get(0).getChars());
 						
 						setCursorWithinBounds();
 						editing.setSaved(false);
@@ -7947,7 +7947,12 @@ public class CodeEditor extends IDEComponent {
 		
 		height = Main.screen.getHeight();
 		
-		System.out.println(undo.size());
+		int idx = 0;
+		for (List<IDELine> l : undo) {
+			for (IDELine i : l) {
+				System.out.println(idx++ + ": " + new String(toCharArray(i.getChars())));
+			}
+		}
 		
 		callAutomaticColor();
 		

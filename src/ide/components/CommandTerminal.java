@@ -320,7 +320,7 @@ public class CommandTerminal extends IDEComponent {
 							
 							runCommand("deselect");
 							Main.editor.setCursorWithinBounds();
-							CodeEditor.undo.push(Main.editor.lines);
+							Main.editor.undo.add(Main.editor.lines);
 							
 							Main.editor.editing.setSaved(false);
 					
