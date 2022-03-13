@@ -155,12 +155,12 @@ public class Tab extends IDEComponent implements Serializable {
 	public void close() {
 		closing = true;
 		
-		if (Main.editor.editing != null && save) { // não for nulo
-			if (!Main.editor.editing.isSaved()) { // não estiver salvo
+		if (save) { // não for nulo
+			if (!this.isSaved()) { // não estiver salvo
 				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
 				
 				CodeEditor.setSystemLook();
-				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 				
 				if (selectedOption == 0) save();
 				else if (selectedOption == 2) {
@@ -226,11 +226,11 @@ public class Tab extends IDEComponent implements Serializable {
 					
 					Main.editor.lines.clear();
 				
-					//try {
-						Main.editor.lines = Main.editor.defineLines(lines); //Main.editor.readFile(next.getRegent().getRegent());
-					//} catch (IOException e) {
-					//	e.printStackTrace();
-					//}
+					try {
+						Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}.start();
@@ -484,11 +484,11 @@ public class Tab extends IDEComponent implements Serializable {
 			SearchReplaceWindow.active = false;
 		}
 		
-		try {
-			Main.editor.lines = Main.editor.readFile(regent.getRegent());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		//try {
+			Main.editor.lines = Main.editor.defineLines(lines); //Main.editor.readFile(regent.getRegent()); // atenção nisso aqui! Não tá lendo das linhas internamente!
+		//} catch (IOException e) {
+		//	e.printStackTrace();
+		//}
 		
 		Main.editor.cursorX = cx;
 		Main.editor.cursorY = cy;
