@@ -7949,8 +7949,12 @@ public class CodeEditor extends IDEComponent {
 		
 		int idx = 0;
 		for (List<IDELine> l : undo) {
-			for (IDELine i : l) {
-				System.out.println(idx++ + ": " + new String(toCharArray(i.getChars())));
+			try {
+				for (IDELine i : l) {
+					System.out.println(idx++ + ": " + new String(toCharArray(i.getChars())));
+				}
+			} catch (Exception e) {
+				break;
 			}
 		}
 		

@@ -58,7 +58,7 @@ public class CommandTerminal extends IDEComponent {
 	private static int comIndex = 0;
 	
 	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "generateconfigfile", "getlang",
-			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "revivecursor",
+			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "resetundoredo",
 			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode", "resetfontsize",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertcolors", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
@@ -216,8 +216,8 @@ public class CommandTerminal extends IDEComponent {
 				Main.editor.selecting = false;
 				break;
 				
-			case "revivecursor":
-				if (Main.editor.cursorThread.isAlive() || Main.editor.cursorThread.getState() != State.TERMINATED) {
+			case "resetundoredo":
+				/*if (Main.editor.cursorThread.isAlive() || Main.editor.cursorThread.getState() != State.TERMINATED) {
 					try {
 						Main.editor.cursorThread.interrupt();
 					} catch (Exception e) {} // usar somente quando necessário
@@ -229,7 +229,11 @@ public class CommandTerminal extends IDEComponent {
 					}
 				};
 				
-				Main.editor.cursorThread.start();
+				Main.editor.cursorThread.start();*/
+				
+				Main.editor.undo.clear();
+				Main.editor.redo.clear();
+				
 				break;
 				
 			case "copy":
