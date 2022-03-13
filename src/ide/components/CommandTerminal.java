@@ -58,10 +58,10 @@ public class CommandTerminal extends IDEComponent {
 	
 	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "generateconfigfile", "getlang", "getwhitespaces",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "resetundoredo",
-			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode", "resetfontsize",
+			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode", "resetfontsize", "togglewhitespaces",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertcolors", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
-			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode", "setlang str:lang",
+			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode", "setlang str:lang", "setwhitespaces bool:true/false",
 			"gendiv str:class_name", "gensnippet str:type", "selecttab int:index",
 			"lorem int:num_words", "openfile str:file",
 			"setcursorpos int:x int:y",
@@ -462,6 +462,10 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
+			case "togglewhitespaces":
+				CodeEditor.showWhitespace ^= true;
+				break;
+				
 			case "loadconfigfile":
 				option = chooser.showOpenDialog(Main.screen.frame);
 				
@@ -831,6 +835,11 @@ public class CommandTerminal extends IDEComponent {
 					if (Main.editor.readMode == FileReadMode.NORMAL && Main.editor.isReadOnly && !CodeEditor.isBinary(ListableFile.getFileExtension(Main.editor.editing.getRegent().getRegent()))) runCommand("togglereadonly");
 					if (Main.editor.readMode != FileReadMode.NORMAL && !Main.editor.isReadOnly) runCommand("togglereadonly");
 				} catch (Exception e) {} // argumento errado
+				break;
+				
+			case "setwhitespaces":
+				CodeEditor.showWhitespace = Boolean.valueOf(args[0]);
+				
 				break;
 				
 			case "gotoline":
