@@ -493,6 +493,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("autocomplete_active: " + CodeEditor.isAutoCompleteActive + "\n");
 			w.write("automatically_open_tabs: " + CodeEditor.automaticallyOpenTabs + "\n");
 			w.write("autocomplete_html_tags: " + CodeEditor.autoCompleteHtmlTags + "\n");
+			w.write("show_whitespace: " + CodeEditor.showWhitespace + "\n");
 
 			w.close();
 
@@ -989,6 +990,16 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					break;
 
 				CodeEditor.autoCompleteHtmlTags = Boolean.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
+				
+			case "show_whitespace:":
+				if (split[1].equals("default"))
+					break;
+
+				CodeEditor.showWhitespace = Boolean.valueOf(split[1]);
 
 				hasAltered = true;
 
