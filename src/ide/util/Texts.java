@@ -196,6 +196,9 @@ public final class Texts {
 	public static String getLang;
 	public static String langIs;
 	
+	public static String getWhitespaceOn;
+	public static String whitespaceIs;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -370,11 +373,14 @@ public final class Texts {
 			restartRequired = "Reinicialização Necessária!";
 			pleaseRestart = "Por favor reinicie a " + Main.PROGRAM_NAME + " para que todas as mudanças sejam aplicadas.";
 			
-			getFontSize = "Pegar Tamanho da Fonte";
+			getFontSize = "Obter Tamanho da Fonte";
 			fontSizeIs = "O tamanho da fonte é de";
 			
-			getLang = "Pegar Idioma";
+			getLang = "Obter Idioma";
 			langIs = "O idioma é";
+			
+			getWhitespaceOn = "Obter Espaços em Branco Ligado/Desligado";
+			whitespaceIs = "Os Espaços em Branco estão";
 			
 			break;
 		
@@ -555,6 +561,9 @@ public final class Texts {
 			
 			getLang = "Get Language";
 			langIs = "The language is";
+			
+			getWhitespaceOn = "Get Whitespaces On/Off";
+			whitespaceIs = "The whitespaces are";
 			
 			break;
 		}

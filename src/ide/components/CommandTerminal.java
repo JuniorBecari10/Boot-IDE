@@ -56,7 +56,7 @@ public class CommandTerminal extends IDEComponent {
 	private static boolean changeHints = true;
 	private static int comIndex = 0;
 	
-	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "generateconfigfile", "getlang",
+	public static final String[] commands = { "cmd", "sysexp", "closealltabs", "resettabscroll", "generateconfigfile", "getlang", "getwhitespaces",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "resetundoredo",
 			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode", "resetfontsize",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
@@ -191,6 +191,12 @@ public class CommandTerminal extends IDEComponent {
 				CodeEditor.setSystemLook();
 				
 				JOptionPane.showMessageDialog(null, Texts.langIs + " " + (Main.lang == Language.PORT ? "Português." : "English."), Texts.getLang, JOptionPane.INFORMATION_MESSAGE);
+				break;
+				
+			case "getwhitespaces":
+				CodeEditor.setSystemLook();
+				
+				JOptionPane.showMessageDialog(null, Texts.whitespaceIs + " " + (Main.lang == Language.PORT ? (CodeEditor.showWhitespace ? "ligados." : "desligados.") : (CodeEditor.showWhitespace ? "on." : "off.")), Texts.getLang, JOptionPane.INFORMATION_MESSAGE);
 				break;
 				
 			case "version":
