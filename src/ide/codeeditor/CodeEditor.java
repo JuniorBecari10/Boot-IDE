@@ -7747,6 +7747,14 @@ public class CodeEditor extends IDEComponent {
 
 						return;
 					}
+					
+					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_O && !isReadOnly) { // Ctrl + O - Toggle Whitespaces
+						KeyInput.updateKeys();
+
+						CommandTerminal.runCommand("togglewhitespaces");
+
+						return;
+					}
 
 					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_P && !isReadOnly
 							) { // Ctrl + P (Toggle Code Helpers)
