@@ -7012,7 +7012,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public void type() {
 		System.out.println(KeyInput.getKeyCodePressed());
-		if (KeyInput.isAltGrDown()) {
+		if (KeyInput.isAltDown()) {
 			if (isNumber(KeyInput.getCharPressed())) {
 				CommandTerminal.runCommand("selecttab " + getNumberKey(KeyInput.getKeyCodePressed()));
 			}

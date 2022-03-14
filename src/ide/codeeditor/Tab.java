@@ -460,7 +460,7 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	public static boolean isTabDragged() {
 		for (Tab t : Main.editor.tabs)
-			if (t.dragged()) return true;
+			if (t.dragged() || dragging != null) return true;
 		
 		return false;
 	}
