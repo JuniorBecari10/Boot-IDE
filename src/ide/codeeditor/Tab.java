@@ -528,10 +528,6 @@ public class Tab extends IDEComponent implements Serializable {
 				x = Tab.MIN_X + WIDTH + 3;
 		}
 		
-		if (dragging != null) {
-			
-		}
-		
 		//System.out.println(dragging + ", " + MouseInput.isMouseDragged());
 		
 		if (!RightClickOption.isRightClickActive()) {
@@ -569,7 +565,7 @@ public class Tab extends IDEComponent implements Serializable {
 		}
 		
 		if (dragging == this) {
-			x = MouseInput.getMouseX() - 20;
+			x = MouseInput.getMouseX() - WIDTH / 2;
 		}
 		
 		if (!MouseInput.isMouseDragged() && dragging != null) {
@@ -580,7 +576,7 @@ public class Tab extends IDEComponent implements Serializable {
 			Collections.sort(ts, new Comparator<Tab>() {
 				@Override
 				public int compare(Tab t1, Tab t2) {
-					return new Integer(t1.getX()).compareTo(t2.getX());
+					return new Integer(t1.getX() - WIDTH / 2).compareTo(t2.getX());
 				}
 			});
 			

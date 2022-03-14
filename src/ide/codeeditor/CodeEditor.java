@@ -1221,6 +1221,14 @@ public class CodeEditor extends IDEComponent {
 		
 		clip.setContents(sel, sel);
 	}
+	
+	public static int getNumberKey(int keyCode) {
+		return keyCode - 48;
+	}
+	
+	public static boolean isNumber(int keyCode) {
+		return keyCode >= 48 && keyCode <= 57;
+	}
 
 	public static String[] mergeStringArrays(String[] arr1, String[] arr2) {
 		String[] res = new String[arr1.length + arr2.length];
@@ -7003,6 +7011,13 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public void type() {
+		System.out.println(KeyInput.getKeyCodePressed());
+		if (KeyInput.isAltGrDown()) {
+			if (isNumber(KeyInput.getCharPressed())) {
+				CommandTerminal.runCommand("selecttab " + getNumberKey(KeyInput.getKeyCodePressed()));
+			}
+		}
+		
 		if (!isReadOnly) {
 			KeyInput.updateKeys();
 
