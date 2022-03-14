@@ -1755,6 +1755,21 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		
+		if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s")) {
+			for (String s : asmKeys) {
+				indxs = findWord(new String(chars), s); // depois de <palavra>
+
+				int len = 0;
+
+				for (Integer i : indxs) {
+					while (i + len < chars.length)
+						len++;
+
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}
+			}
+		}
+		
 		if (ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".make") || ext.equalsIgnoreCase(".makefile")) {
 			indxs = findWord(new String(chars), "="); // antes de <palavra>
 
