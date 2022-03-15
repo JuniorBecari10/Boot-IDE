@@ -486,7 +486,6 @@ public class CodeEditor extends IDEComponent {
 			"cmovnc", "cmovne", "cmovne", "cmovng", "cmovng", "cmovnge", "cmovnge", "cmovnl", "cmovnl", "cmovnle",
 			"cmovnle", "cmovno", "cmovno", "cmovnp", "cmovnp", "cmovns", "cmovns", "cmovnz", "cmovnz", "cmovo", "cmovo",
 			"cmovp", "cmovp", "cmovpe", "cmovpo", "cmovs", "cmovz", "cmp", "cmppd", "cmpps", "cmps", "cmpsb", "cmpsd",
-			"cmpsl", "cmpss", "cmpsw", "cmpxchg", "cmpxchgb", "comisd", "comiss", "comm", "comment",
 			"controltransferinstructions", "cpp", "cpuid", "cqtd", "cqto", "cvtdqpd", "cvtdqps", "cvtpddq", "cvtpdpi",
 			"cvtpdps", "cvtpipd", "cvtpips", "cvtpsdq", "cvtpspd", "cvtpspi", "cvtsdsi", "cvtsdss", "cvtsisd",
 			"cvtsiss", "cvtsssd", "cvtsssi", "cvttpddq", "cvttpdpi", "cvttpsdq", "cvttpspi", "cvttsdsi", "cvttsssi",
