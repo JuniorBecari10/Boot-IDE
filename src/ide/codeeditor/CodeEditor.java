@@ -7011,13 +7011,6 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public void type() {
-		System.out.println(KeyInput.getKeyCodePressed());
-		if (KeyInput.isAltDown()) {
-			if (isNumber(KeyInput.getCharPressed())) {
-				CommandTerminal.runCommand("selecttab " + getNumberKey(KeyInput.getKeyCodePressed()));
-			}
-		}
-		
 		if (!isReadOnly) {
 			KeyInput.updateKeys();
 
@@ -8234,7 +8227,7 @@ public class CodeEditor extends IDEComponent {
 			/*if (RightClickOption.anyRightClickOptionHovered() && !MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10, Main.explorer.getHeight()))
 				Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));*/
 
-			if (leftClicked() && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive()
+			if (leftClicked() && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive() // TODO se quiser alterar o select, altere de leftclicked para dragged, e o cursor vai te seguir
 					&& !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
 				cursorX = mx;
 				cursorY = my;
