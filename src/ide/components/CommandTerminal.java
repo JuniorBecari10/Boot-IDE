@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
 import ide.codeeditor.FileReadMode;
+import ide.codeeditor.Tab;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
@@ -809,9 +810,17 @@ public class CommandTerminal extends IDEComponent {
 						    args0 < 0 ||
 						    args0 > Main.editor.tabs.size())
 							return;
-						
-					Main.editor.tabs.get(args0).select();
-						
+					
+					Tab sel = Main.editor.tabs.get(args0);
+					
+					sel.select();
+					
+					while (sel.getX() + Main.editor.tabScr >= Main.screen.getWidth())
+						Main.editor.tabScr -= 203;
+					
+					while (sel.getX() + Main.editor.tabScr < Main.editor.getX())
+						Main.editor.tabScr += 203;
+					
 					break;
 				} catch (NumberFormatException e) {
 					break;
