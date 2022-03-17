@@ -7467,7 +7467,25 @@ public class CodeEditor extends IDEComponent {
 	public void detectShortcuts() {
 		// Detectar atalhos
 		
-					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE ) {
+		if (KeyInput.isAltDown()) { // BASE 1
+			KeyInput.updateKeys();
+			
+			int indexSelected = tabs.indexOf(editing);
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && indexSelected > 0) {
+				KeyInput.updateKeys();
+				
+				CommandTerminal.runCommand("selecttab " + (indexSelected - 1));
+			}
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT && indexSelected < tabs.size() - 1) {
+				KeyInput.updateKeys();
+				
+				CommandTerminal.runCommand("selecttab " + (indexSelected + 1));
+			}
+		}
+		
+					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
 						KeyInput.updateKeys();
 
 						RightClickOption.removeAllRightClickOptions();
