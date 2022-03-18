@@ -394,12 +394,12 @@ public class CodeEditor extends IDEComponent {
 			"lock", "params", "ref", "out", "using", "alias", "await", "sizeof", "typeof", "stackalloc", "is", "base",
 			"this", "null", "false", "true", "value", "void", "bool", "byte", "interface", "char", "class", "decimal",
 			"double", "enum", "float", "int", "long", "sbyte", "short", "string", "super", "struct", "uint", "ulong",
-			"ushort", "add", "var", "dynamic", "global", "set", "namespace", "object", "as", "get" };
+			"ushort", "add", "var", "dynamic", "global", "set", "namespace", "object", "as", "get", "operator" };
 
 	public static final String[] rKeys = { "if", "else", "repeat", "while", "function", "for", "in", "next", "break",
 			"TRUE", "FALSE", "NULL", "Inf", "NaN", "NA", "NA_integer", "NA_real", "NA_complex", "NA_character" };
 
-	public static final String[] batCom = { "ver", "assoc", "cd", "cls", "copy", "del", "dir", "date", "echo", "@echo",
+	public static final String[] batCom = { "ver", "assoc", "cd", "cls", "copy", "del", "dir", "date", "echo", "@echo", "mode", "@mode",
 			"exit", "md", "move", "path", "pause", "prompt", "rd", "rem", "start", "time", "type", "on", "vol",
 			"attrib", "chkdsk", "choice", "cmd", "comp", "convert", "driverquery", "expand", "find", "format", "help",
 			"ipconfig", "label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo", "taskkill",
@@ -407,7 +407,7 @@ public class CodeEditor extends IDEComponent {
 			"for", "else", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc", "nasm", "pip",
 			"pip3", "pipwin", "as", "ld",
 			"qemu", "gcc", "g++", "python", "lua", "eject", "tsc", "setlocal", "endlocal", "make", "yarn", "color",
-			"VER", "ASSOC", "CD", "CLS", "COPY", "DEL", "DIR", "DATE", "ECHO", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
+			"VER", "ASSOC", "CD", "CLS", "COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "MODE", "@MODE", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE", "CMD", "COMP",
 			"CONVERT", "ON", "DRIVERQUERY", "EXPAND", "FIND", "FORMAT", "HELP", "IPCONFIG", "LABEL", "MORE", "NET",
 			"PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO", "TASKKILL", "XCOPY", "TREE", "FC", "TITLE",
