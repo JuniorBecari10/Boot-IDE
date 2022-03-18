@@ -149,7 +149,7 @@ public class Explorer extends IDEComponent {
     	maxTextWidth =   (width / 16) + 2;
     	maxFileCreateWidth = width / 18 + 2;
     	
-    	// Media Queries
+    	// Media Queries (só que em Java kkkk)
     	
     	if (width < 260) {
     		Main.newFile.setWidth(24);
