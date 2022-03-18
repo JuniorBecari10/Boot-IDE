@@ -34,25 +34,29 @@ public class OneFolderUpButton extends IDEComponent {
 		if (leftClicked()) {
 			MouseInput.updateMouse();
 			
-			Explorer.folderPath = "";
-			
-			Explorer.files.clear();
-			ListableFile.files.clear();
-			
-			if (Explorer.scope.getParent() == null) { // se for null é porque é a base folder
-				Explorer.scope = null; // coloca depois da verificação pra n dar exception
-				
-				int index = 0;
-				
-				for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
-					Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
-					
-					index++;
-				}
-			}
-			else // se não for é porque tem pasta antes
-				Explorer.files = ListableFile.loadFolder(Explorer.scope.getParent());
+			oneFolderUp();
 		}
+	}
+	
+	public static void oneFolderUp() {
+		Explorer.folderPath = "";
+		
+		Explorer.files.clear();
+		ListableFile.files.clear();
+		
+		if (Explorer.scope.getParent() == null) { // se for null é porque é a base folder
+			Explorer.scope = null; // coloca depois da verificação pra n dar exception
+			
+			int index = 0;
+			
+			for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
+				Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+				
+				index++;
+			}
+		}
+		else // se não for é porque tem pasta antes
+			Explorer.files = ListableFile.loadFolder(Explorer.scope.getParent());
 	}
 	
 	public void render(Graphics g) {

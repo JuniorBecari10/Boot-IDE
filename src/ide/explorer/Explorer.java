@@ -12,7 +12,10 @@ import ide.codeeditor.CodeEditor;
 import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.OneFolderUpButton;
+import ide.components.ReloadButton;
 import ide.components.RenameFile;
+import ide.components.ReturnToBaseFolderButton;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.fonts.Fonts;
@@ -219,10 +222,26 @@ public class Explorer extends IDEComponent {
     			return;
     		}
     		
-    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + N (Criar Novo Arquivo)
+    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_H) { // Ctrl + H (Uma Pasta Acima)
     			KeyInput.updateKeys();
     			
-    			Main.editor.execute("newfile");
+    			OneFolderUpButton.oneFolderUp();
+    			
+    			return;
+    		}
+    		
+    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_G) { // Ctrl + G (Retornar à Pasta Base)
+    			KeyInput.updateKeys();
+    			
+    			ReturnToBaseFolderButton.returnToBaseFolder();
+    			
+    			return;
+    		}
+    		
+    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_W) { // Ctrl + W (Recarregar)
+    			KeyInput.updateKeys();
+    			
+    			ReloadButton.reloadExplorer();
     			
     			return;
     		}

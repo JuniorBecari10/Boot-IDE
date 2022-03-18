@@ -30,11 +30,15 @@ public class ReloadButton extends IDEComponent {
 		if (leftClicked()) {
 			MouseInput.updateMouse();
 			
-			Explorer.files.clear();
-			ListableFile.files.clear();
-			
-			Explorer.files = ListableFile.loadFolder(Explorer.scope);
+			reloadExplorer();
 		}
+	}
+	
+	public static void reloadExplorer() {
+		Explorer.files.clear();
+		ListableFile.files.clear();
+		
+		Explorer.files = ListableFile.loadFolder(Explorer.scope);
 	}
 	
 	public void render(Graphics g) {

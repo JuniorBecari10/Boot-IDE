@@ -32,20 +32,24 @@ public class ReturnToBaseFolderButton extends IDEComponent {
 		if (leftClicked()) {
 			MouseInput.updateMouse();
 			
-			Explorer.folderPath = "";
+			returnToBaseFolder();
+		}
+	}
+	
+	public static void returnToBaseFolder() {
+		Explorer.folderPath = "";
+		
+		Explorer.files.clear();
+		ListableFile.files.clear();
+		
+		Explorer.scope = null;
+		
+		int index = 0;
+		
+		for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
+			Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
 			
-			Explorer.files.clear();
-			ListableFile.files.clear();
-			
-			Explorer.scope = null;
-			
-			int index = 0;
-			
-			for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
-				Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
-				
-				index++;
-			}
+			index++;
 		}
 	}
 	
