@@ -62,7 +62,7 @@ public class CommandTerminal extends IDEComponent {
 			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode", "resetfontsize", "togglewhitespaces",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertcolors", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
-			"gotoline int:line", "setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode", "setlang str:lang", "setwhitespaces bool:true/false",
+			"setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode", "setlang str:lang", "setwhitespaces bool:true/false",
 			"gendiv str:class_name", "gensnippet str:type", "selecttab int:index",
 			"lorem int:num_words", "openfile str:file",
 			"setcursorpos int:x int:y",
@@ -848,19 +848,6 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "setwhitespaces":
 				CodeEditor.showWhitespace = Boolean.valueOf(args[0]);
-				break;
-				
-			case "gotoline":
-				if (Main.editor.editing == null) break;
-				if (Main.editor.isReadOnly) break;
-				
-				try {
-					Main.editor.cursorY = Integer.parseInt(args[0]);
-					
-					runCommand("gotocursor");
-				} catch (NumberFormatException e) {
-					break;
-				}
 				break;
 				
 			case "setexplorerdrag":
