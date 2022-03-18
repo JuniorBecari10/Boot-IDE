@@ -7014,6 +7014,7 @@ public class CodeEditor extends IDEComponent {
 	public void type() {
 		if (!isReadOnly) {
 			KeyInput.updateKeys();
+			callAutomaticColor();
 
 			StringBuilder cY = null;
 
@@ -8027,8 +8028,6 @@ public class CodeEditor extends IDEComponent {
 				break;
 			}
 		}*/
-		
-		callAutomaticColor();
 		
 		/*boolean hasSelected = false;
 		

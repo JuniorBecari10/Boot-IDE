@@ -1326,6 +1326,7 @@ public class CommandTerminal extends IDEComponent {
 			}
 		}
 		
+		Main.editor.callAutomaticColor();
 		//Main.writeFile(Main.settingsFile);
 		Main.editor.setCursorWithinBounds();
 		
