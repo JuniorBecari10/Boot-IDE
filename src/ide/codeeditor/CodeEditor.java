@@ -6581,7 +6581,7 @@ public class CodeEditor extends IDEComponent {
 			editing.save();
 			break;
 
-		case "clr":
+		/*case "clr":
 			if (editing == null)
 				return;
 
@@ -6591,7 +6591,7 @@ public class CodeEditor extends IDEComponent {
 			editing.setSaved(false);
 
 			setCursorWithinBounds();
-			break;
+			break;*/
 
 		case "sysexp":
 			try {

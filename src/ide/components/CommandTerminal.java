@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -64,7 +65,7 @@ public class CommandTerminal extends IDEComponent {
 			"revertcolors", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
 			"setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode", "setlang str:lang", "setwhitespaces bool:true/false",
 			"gendiv str:class_name", "gensnippet str:type", "selecttab int:index",
-			"lorem int:num_words", "openfile str:file",
+			"lorem int:num_words", "swaptabs int:tab_from int:tab_to", "openfile str:file",
 			"setcursorpos int:x int:y",
 			"getproperty str:property",
 			"setproperty str:property str:new_value",
@@ -1140,6 +1141,20 @@ public class CommandTerminal extends IDEComponent {
 		
 		else if (args.length == 2) {
 			switch (com) {
+			case "swaptabs":
+				try {
+					if (Main.editor.tabs.size() < 2) break;
+
+					int idx1 = Integer.parseInt(args[0]);
+					int idx2 = Integer.parseInt(args[1]);
+
+					Collections.swap(Main.editor.tabs, idx1, idx2);
+				} catch (NumberFormatException | IndexOutOfBoundsException e) {
+					break;
+				}
+
+				break;
+				
 			case "setcursorpos":
 				if (Main.editor.editing == null) break;
 				if (Main.editor.isReadOnly) break;
