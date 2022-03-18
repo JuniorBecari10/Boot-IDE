@@ -23,6 +23,7 @@ import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
+import ide.input.WindowInput;
 import ide.main.Main;
 import ide.util.Colors;
 import ide.util.Language;
@@ -99,6 +100,9 @@ public class Explorer extends IDEComponent {
     	if (CommandTerminal.expOff) return;
     	
     	height = Main.screen.getHeight();
+    	
+    	if (WindowInput.isMaximized() || WindowInput.isActivated())
+    		ReloadButton.reloadExplorer();
     	
     	// Drag
     	
