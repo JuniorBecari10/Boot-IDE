@@ -308,7 +308,7 @@ public class CodeEditor extends IDEComponent {
 																														// novo
 	};
 
-	public static final String[] cssAdds = { "important", "screen", "and", "or", "from", "to", "rotate" };
+	public static final String[] cssAdds = { "important", "screen", "and", "or", "from", "to", "rotate", };
 
 	public static final String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
 			"animation-duration", "animation-fill-mode", "animation-iteration-count", "animation-name",

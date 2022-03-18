@@ -101,8 +101,8 @@ public class Explorer extends IDEComponent {
     	
     	height = Main.screen.getHeight();
     	
-    	if (WindowInput.isMaximized() || WindowInput.isActivated())
-    		ReloadButton.reloadExplorer();
+    	/*if (WindowInput.isMaximized() || !WindowInput.isActivated())
+    		ReloadButton.reloadExplorer();*/
     	
     	// Drag
     	
