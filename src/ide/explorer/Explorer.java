@@ -13,6 +13,7 @@ import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.OneFolderUpButton;
+import ide.components.OpenBaseFolderButton;
 import ide.components.ReloadButton;
 import ide.components.RenameFile;
 import ide.components.ReturnToBaseFolderButton;
@@ -213,6 +214,14 @@ public class Explorer extends IDEComponent {
     	
     	if (KeyInput.isKeyPressed()) {
     		// Atalhos
+    		
+    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Q) { // Ctrl + Q (Selecionar Pasta Base)
+    			KeyInput.updateKeys();
+    			
+    			OpenBaseFolderButton.openBaseFolder();
+    			
+    			return;
+    		}
     		
     		if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + Shift + N (Criar Nova Pasta)
     			KeyInput.updateKeys();

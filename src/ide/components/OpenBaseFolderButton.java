@@ -21,7 +21,7 @@ import ide.util.Texts;
 
 public class OpenBaseFolderButton extends IDEComponent {
 	
-	private JFileChooser chooser;
+	public static JFileChooser chooser;
 
 	public OpenBaseFolderButton(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -47,41 +47,45 @@ public class OpenBaseFolderButton extends IDEComponent {
 		if (leftClicked()) {
 			MouseInput.updateMouse();
 			
-			int option = chooser.showOpenDialog(Main.screen.frame);
+			openBaseFolder();
+		}
+	}
+	
+	public static void openBaseFolder() {
+		int option = chooser.showOpenDialog(Main.screen.frame);
 
-			if (option == JFileChooser.APPROVE_OPTION) {
-				if (chooser.getSelectedFile() == null || chooser.getSelectedFile().listFiles() == null) return;
-				
-				File sel = chooser.getSelectedFile();
-				
-				boolean alreadyHasBaseFolder = Main.baseFolder != null;
-				
-				Main.baseFolder = sel;
-				
-				Explorer.files.clear();
-				ListableFile.files.clear();
-				
-				Explorer.scope = null;
-				
-				int index = 0;
-				
-				for (File f : ListableFile.listFilesOrdered(Main.baseFolder))
-					Explorer.files.add(new ListableFile(0, 200 + (index++ * 30), Main.explorer.getWidth(), 30, f, null));
-				
-				Main.screen.frame.setTitle(Main.baseFolder.getName() + " - " + Main.PROGRAM_NAME);
-				
-				if (!alreadyHasBaseFolder) {
-					IDEComponent.toAdd.add(Main.oneFolder);
-					IDEComponent.toAdd.add(Main.returnBase);
-					IDEComponent.toAdd.add(Main.newFile);
-					IDEComponent.toAdd.add(Main.newFolder);
-					IDEComponent.toAdd.add(Main.reload);
-				}
-				
-				//Main.writeFile(Main.settingsFile);
-				
-				MouseInput.updateMouse();
+		if (option == JFileChooser.APPROVE_OPTION) {
+			if (chooser.getSelectedFile() == null || chooser.getSelectedFile().listFiles() == null) return;
+			
+			File sel = chooser.getSelectedFile();
+			
+			boolean alreadyHasBaseFolder = Main.baseFolder != null;
+			
+			Main.baseFolder = sel;
+			
+			Explorer.files.clear();
+			ListableFile.files.clear();
+			
+			Explorer.scope = null;
+			
+			int index = 0;
+			
+			for (File f : ListableFile.listFilesOrdered(Main.baseFolder))
+				Explorer.files.add(new ListableFile(0, 200 + (index++ * 30), Main.explorer.getWidth(), 30, f, null));
+			
+			Main.screen.frame.setTitle(Main.baseFolder.getName() + " - " + Main.PROGRAM_NAME);
+			
+			if (!alreadyHasBaseFolder) {
+				IDEComponent.toAdd.add(Main.oneFolder);
+				IDEComponent.toAdd.add(Main.returnBase);
+				IDEComponent.toAdd.add(Main.newFile);
+				IDEComponent.toAdd.add(Main.newFolder);
+				IDEComponent.toAdd.add(Main.reload);
 			}
+			
+			//Main.writeFile(Main.settingsFile);
+			
+			MouseInput.updateMouse();
 		}
 	}
 	
