@@ -57,7 +57,6 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	public int scrX = 0, scrY = 0;
 	public int cx = 0, cy = 1;
-	public List<IDELine> lines;
 	
 	public boolean closing = false;
 	private boolean isSaved = true;
@@ -107,12 +106,6 @@ public class Tab extends IDEComponent implements Serializable {
 				}
 			}
 		}.start();
-		
-		try {
-			lines = Main.editor.readFile(regent.getRegent());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Override
@@ -226,11 +219,11 @@ public class Tab extends IDEComponent implements Serializable {
 					
 					Main.editor.lines.clear();
 				
-					//try {
-						Main.editor.lines = Main.editor.defineLines(lines); //Main.editor.readFile(next.getRegent().getRegent());
-					//} catch (IOException e) {
-					//	e.printStackTrace();
-					//}
+					try {
+						Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}.start();
@@ -441,8 +434,6 @@ public class Tab extends IDEComponent implements Serializable {
 			Main.editor.cursorX = cx;
 			Main.editor.cursorY = cy;
 			
-			Main.editor.lines = Main.editor.defineLines(lines);
-			
 			break;
 		}
 	}
@@ -466,7 +457,7 @@ public class Tab extends IDEComponent implements Serializable {
 	}
 	
 	public void select() {
-		if (Main.editor.editing != null && !isSaved())
+		if (Main.editor.editing != null)
 			Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
 		
 		Main.editor.wordSinceSpace = "";
@@ -495,8 +486,6 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		Main.editor.scrX = scrX;
 		Main.editor.scrY = scrY;
-		
-		Main.editor.lines = Main.editor.defineLines(lines);
 		
 		Main.editor.setExtType(ListableFile.getFileExtension(regent.getRegent()));
 		
@@ -592,8 +581,6 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			cx = Main.editor.cursorX;
 			cy = Main.editor.cursorY;
-			
-			lines = new ArrayList<>(Main.editor.lines);
 		}
 		
 		if (!regent.getRegent().exists()) close();
