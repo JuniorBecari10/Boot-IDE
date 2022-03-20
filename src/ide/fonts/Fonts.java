@@ -249,6 +249,9 @@ public class Fonts {
     	for (int i = 0; i < ca.length; i++) {										// roda um loop for para associar as
     		int ind = ca[i] > 126 ? ca[i] - 3 : ca[i];								// imagens ao array
     		
+    		if (ind >= font.getFont().length)
+    			continue;
+    				
     		text[i] = font.getFont()[ind];
     	}
     	
