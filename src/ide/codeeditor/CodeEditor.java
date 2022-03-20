@@ -2210,7 +2210,7 @@ public class CodeEditor extends IDEComponent {
 							&& !isCharsEqual(chars[i + len], ',') && !isCharsEqual(chars[i + len], ';')
 							&& !isCharsEqual(chars[i + len], '.') && !isCharsEqual(chars[i + len], ':')
 							&& !isCharsEqual(chars[i + len], '=') && !isCharsEqual(chars[i + len], '\"')
-							&& !isCharsEqual(chars[i + len], '\'') &&!Character.isLowerCase(chars[i + len])) {
+							&& !isCharsEqual(chars[i + len], '\'')) {
 						len++;
 					}
 					
