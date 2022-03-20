@@ -2210,7 +2210,7 @@ public class CodeEditor extends IDEComponent {
 							&& !isCharsEqual(chars[i + len], ',') && !isCharsEqual(chars[i + len], ';')
 							&& !isCharsEqual(chars[i + len], '.') && !isCharsEqual(chars[i + len], ':')
 							&& !isCharsEqual(chars[i + len], '=') && !isCharsEqual(chars[i + len], '\"')
-							&& !isCharsEqual(chars[i + len], '\'')) {
+							&& !isCharsEqual(chars[i + len], '\'') &&!Character.isLowerCase(chars[i + len])) {
 						len++;
 					}
 					
@@ -7029,7 +7029,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
 				KeyInput.updateKeys();
-				undo.push(new ArrayList<>(lines));
+				undo.push(new ArrayList<>(getLines()));
 
 				RightClickOption.removeAllRightClickOptions();
 
@@ -7076,7 +7076,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				KeyInput.updateKeys();
-				 undo.push(new ArrayList<>(lines));
+				 undo.push(new ArrayList<>(getLines()));
 
 				if (cursorX < cY.length()) {
 					cY.deleteCharAt(cursorX);
@@ -7093,7 +7093,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 				KeyInput.updateKeys();
-				 undo.push(new ArrayList<>(lines));
+				 undo.push(new ArrayList<>(getLines()));
 				 
 				 if (!KeyInput.isShiftDown()) {
 					 if (!RightClickOption.isAutoCompleteActive()) {
@@ -7123,7 +7123,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
-				 undo.push(new ArrayList<>(lines));
+				 undo.push(new ArrayList<>(getLines()));
 
 				if (RightClickOption.isAutoCompleteActive()) {
 					autocompletes.get(autocompleteindex).command
@@ -7268,7 +7268,7 @@ public class CodeEditor extends IDEComponent {
 				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256
 						|| KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
 
-					 undo.push(new ArrayList<>(lines));
+					 undo.push(new ArrayList<>(getLines()));
 					if (editing != null)
 						editing.setSaved(false);
 				}
@@ -8001,6 +8001,15 @@ public class CodeEditor extends IDEComponent {
 			register(new StringBuilder(new String(toCharArray(l.getChars()))), index++);
 		}
 	}*/
+	
+	public List<IDELine> getLines() {
+		List<IDELine> ls = new ArrayList<>();
+		
+		for (IDELine l : lines)
+			ls.add(l);
+		
+		return ls;
+	}
 
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added)
@@ -8021,15 +8030,20 @@ public class CodeEditor extends IDEComponent {
 		
 		height = Main.screen.getHeight();
 		
-		/*int idx = 0;
-		for (List<IDELine> l : undo) {
+		/*int idx = 0; // debug
+		for (Iterator<List<IDELine>> it = undo.iterator(); it.hasNext();) {
+			List<IDELine> l = it.next();
+			
 			try {
 				for (IDELine i : l) {
-					System.out.println(idx++ + ": " + new String(toCharArray(i.getChars())));
+					System.out.println(idx + ": " + new String(toCharArray(i.getChars())));
 				}
 			} catch (Exception e) {
 				break;
 			}
+			
+			System.out.println();
+			idx++;
 		}*/
 		
 		/*boolean hasSelected = false;

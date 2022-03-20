@@ -23,7 +23,6 @@ import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
-import ide.input.WindowInput;
 import ide.main.Main;
 import ide.util.Colors;
 import ide.util.Language;
@@ -231,6 +230,14 @@ public class Explorer extends IDEComponent {
     			KeyInput.updateKeys();
     			
     			Main.editor.execute("newfolder");
+    			
+    			return;
+    		}
+    		
+    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + N (Criar Novo Arquivo)
+    			KeyInput.updateKeys();
+    			
+    			Main.editor.execute("newfile");
     			
     			return;
     		}
