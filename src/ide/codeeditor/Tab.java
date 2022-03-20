@@ -457,7 +457,7 @@ public class Tab extends IDEComponent implements Serializable {
 	}
 	
 	public void select() {
-		if (Main.editor.editing != null)
+		if (Main.editor.editing != null && !Main.editor.editing.isSaved())
 			Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
 		
 		Main.editor.wordSinceSpace = "";
