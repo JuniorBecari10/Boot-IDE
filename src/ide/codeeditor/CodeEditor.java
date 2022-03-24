@@ -6992,9 +6992,7 @@ public class CodeEditor extends IDEComponent {
 						if (chars[c + len] == ' ' || chars[c + len] == '>') {
 							char[] tagArray = Arrays.copyOfRange(chars, c, c + len);
 			
-							String tagStr = new String(tagArray);
-							tagStr = tagStr.replaceAll(" ", "");
-							tagStr = tagStr.substring(1);
+							String tagStr = new String(tagArray).replaceAll(" ", "").substring(1);
 			
 							tagStr = "</" + tagStr + ">"; // o fechamento da outra
 			
