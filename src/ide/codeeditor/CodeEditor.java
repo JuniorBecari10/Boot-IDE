@@ -3,7 +3,6 @@ package ide.codeeditor;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.HeadlessException;
@@ -6659,8 +6658,10 @@ public class CodeEditor extends IDEComponent {
 				return; // Vai modificar o que não existe?
 
 			RightClickOption.removeAllRightClickOptions(); // arrumar o negócio
-
-			if (!alreadyAddedFrame) {
+			
+			Explorer.searchReplaceActive = true;
+			
+			/*if (!alreadyAddedFrame) {
 				searchWindow = new SearchReplaceWindow();
 				alreadyAddedFrame = true;
 			} else {
@@ -6668,7 +6669,7 @@ public class CodeEditor extends IDEComponent {
 				searchWindow.requestFocus();
 
 				searchWindow.txbSearch.requestFocus();
-			}
+			}*/
 
 			break;
 		}
