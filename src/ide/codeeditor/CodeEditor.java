@@ -123,8 +123,6 @@ public class CodeEditor extends IDEComponent {
 	public Stack<List<IDELine>> redo = new Stack<>();
 
 	public int tabScr = 0;
-	
-	public static boolean autoCompleteHtmlTags = true;
 
 	public List<Tab> tabs;
 	public List<Tab> toAdd;
@@ -790,6 +788,7 @@ public class CodeEditor extends IDEComponent {
 		
 		typeThread.start();
 
+		// cursor thread
 		new Thread() {
 			public void run() { // 25 pra frente com o explorer desligado, isso é uma gambiarrinha viu
 				{
@@ -6938,6 +6937,8 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	private StringBuilder addExtraCode(StringBuilder cY, char digit) {
+		if (!codeHelpersOn) return cY;
+		
 		char[] chars = cY.toString().toCharArray();
 		
 		if (editing != null)
@@ -6965,7 +6966,7 @@ public class CodeEditor extends IDEComponent {
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent())
 							.equalsIgnoreCase(".csproj")
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-							.equalsIgnoreCase(".project")) && autoCompleteHtmlTags) {
+							.equalsIgnoreCase(".project"))) {
 				if (cursorX > 0 && chars[cursorX] == '>' && digit == '>') { // isso tem um bug mt chato que quando apaga a tag de fechar e tenta por de novo estraga td, talvez adicionar um keystroke que se apertado ele n detecta
 					if (cursorX > 0 && lines.get(cursorY - 1).getChars().get(cursorX - 1) == '>') return cY;
 					
@@ -8555,7 +8556,7 @@ public class CodeEditor extends IDEComponent {
 			// Desenhar cursor
 			if (showCursor && !WindowInput.isDeactivated() && drawcx > x + 45) {
 				g.setColor(Colors.cursor);
-				g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - (FONT_SIZE >= 16 ? 1 : 0),
+				g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - (FONT_SIZE >= 16 ? 1 : 0), // na posição x 12 ele aparece um pouco encima dos numeros
 						FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + (FONT_SIZE / 4));
 			}
 	
