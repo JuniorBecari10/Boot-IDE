@@ -21,7 +21,7 @@ public class ReloadButton extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (CommandTerminal.expOff) return;
+		if (CommandTerminal.expOff || Explorer.searchReplaceActive) return;
 		
 		x = Main.explorer.getWidth() - 40;
 		
@@ -42,7 +42,7 @@ public class ReloadButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		if (CommandTerminal.expOff) return;
+		if (CommandTerminal.expOff || Explorer.searchReplaceActive) return;
 		
 		if (Main.baseFolder == null) toRemove.add(this);
 		

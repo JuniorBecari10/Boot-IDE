@@ -15,8 +15,10 @@ public class InputBox extends IDEComponent {
 		
 		new Thread() {
 			public void run() {
-				if (KeyInput.isKeyPressed())
-					text += KeyInput.getCharPressed();
+				while (true) {
+					if (KeyInput.isKeyPressed())
+						text += KeyInput.getCharPressed();
+				}
 			}
 		}.start();
 	}

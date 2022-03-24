@@ -38,7 +38,7 @@ public class OpenBaseFolderButton extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (CommandTerminal.expOff) return;
+		if (CommandTerminal.expOff || Explorer.searchReplaceActive) return;
 		
 		chooser.setDialogTitle(Texts.selectBaseFolder + "...");
 		
@@ -90,7 +90,7 @@ public class OpenBaseFolderButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		if (CommandTerminal.expOff) return;
+		if (CommandTerminal.expOff || Explorer.searchReplaceActive) return;
 		
 		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
 			g.setColor(Colors.backgroundLight);

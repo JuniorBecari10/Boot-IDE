@@ -20,7 +20,7 @@ public class NewFileButton extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (CommandTerminal.expOff) return;
+		if (CommandTerminal.expOff || Explorer.searchReplaceActive) return;
 		if (Main.baseFolder == null) toRemove.add(this);
 		
 		x = Main.explorer.getWidth() - 200;
@@ -45,7 +45,7 @@ public class NewFileButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		if (CommandTerminal.expOff) return;
+		if (CommandTerminal.expOff || Explorer.searchReplaceActive) return;
 		
 		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
 			g.setColor(Colors.backgroundLight);
