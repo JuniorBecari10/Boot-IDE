@@ -199,6 +199,8 @@ public final class Texts {
 	public static String getWhitespaceOn;
 	public static String whitespaceIs;
 	
+	public static String back;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -259,7 +261,7 @@ public final class Texts {
 			
 			copy = "Copiar";
 			paste = "Colar";
-			cut = "Cortar";
+			cut = "Recortar";
 			deselect = "Desselecionar";
 			
 			closeTab = "Fechar aba";
@@ -381,6 +383,8 @@ public final class Texts {
 			
 			getWhitespaceOn = "Obter Espaços em Branco Ligado/Desligado";
 			whitespaceIs = "Os Espaços em Branco estão";
+			
+			back = "Voltar";
 			
 			break;
 		
@@ -564,6 +568,8 @@ public final class Texts {
 			
 			getWhitespaceOn = "Get Whitespaces On/Off";
 			whitespaceIs = "The whitespaces are";
+			
+			back = "Back";
 			
 			break;
 		}

@@ -24,6 +24,7 @@ import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.searchreplace.SearchReplaceCore;
 import ide.util.Colors;
 import ide.util.Language;
 import ide.util.Texts;
@@ -105,6 +106,11 @@ public class Explorer extends IDEComponent {
 	    /*if (WindowInput.isMaximized() || !WindowInput.isActivated())
 	    	ReloadButton.reloadExplorer();*/
 	    
+	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && searchReplaceActive) {
+	    	searchReplaceActive = false;
+	    	SearchReplaceCore.dispose();
+	    }
+	    
 	   	// Drag
 	   	
 	    if (MouseInput.hovered(x + width - 5, y, 10, height) && !Main.editor.selecting && !ListableFile.isListableFileHovered()) {
@@ -135,9 +141,11 @@ public class Explorer extends IDEComponent {
 	    	Main.editor.setX(width);
 	    	Main.editor.setWidth(Main.screen.getWidth());
 	    }
-	    	
+	    
+	    if (hovered())
+	    	Main.screen.setCursor(Cursor.getDefaultCursor());
+	    
 	    if (!searchReplaceActive) {
-	    	
 	    	if (ListableFile.files.isEmpty() && files.isEmpty()) hoveringListableFile = false;
 	    	
 	    	if (Main.baseFolder == null || !Main.baseFolder.exists()) {
@@ -343,8 +351,8 @@ public class Explorer extends IDEComponent {
 	        Fonts.drawString(Texts.explorerText, (width / 2 - xd) - (Main.lang == Language.PORT ? 40 : 0), y + 30, new IDEFont(Fonts.lightGrayNormal, 23), g);
 	        g.setColor(Colors.textLight);
 	        
-	        g2.setStroke(new BasicStroke(2f));
-	        g.drawLine(width / 2 - xd, y + 60, width / 2 + x2d, y + 60);
+	        /*g2.setStroke(new BasicStroke(2f));
+	        g.drawLine(width / 2 - xd, y + 60, width / 2 + x2d, y + 60);*/
         }
 	    
         g.setColor(Colors.explorerLight);
@@ -369,6 +377,9 @@ public class Explorer extends IDEComponent {
 		        	f.render(g);
 		        }
 	        } catch (Exception e) { return; }
+	    }
+	    else {
+	    	Fonts.drawString(Texts.searchReplace, x + 60, y + 21, new IDEFont(Fonts.lightGrayNormal, 18), g);
 	    }
 	    
 	    for (Tab t : Main.editor.tabs) {

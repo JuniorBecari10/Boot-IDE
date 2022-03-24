@@ -49,6 +49,7 @@ import ide.input.MouseInput;
 import ide.input.WindowInput;
 import ide.main.Main;
 import ide.main.Screen;
+import ide.searchreplace.SearchReplaceCore;
 import ide.util.Animation;
 import ide.util.Colors;
 import ide.util.Language;
@@ -6660,6 +6661,7 @@ public class CodeEditor extends IDEComponent {
 			RightClickOption.removeAllRightClickOptions(); // arrumar o negócio
 			
 			Explorer.searchReplaceActive = true;
+			SearchReplaceCore.init();
 			
 			/*if (!alreadyAddedFrame) {
 				searchWindow = new SearchReplaceWindow();
