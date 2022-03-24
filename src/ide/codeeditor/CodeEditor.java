@@ -94,6 +94,9 @@ public class CodeEditor extends IDEComponent {
 
 	public String codeType = "";
 	public String extType = "";
+	
+	public static boolean indentSpaces = true;
+	public static int indentLength = 4; // 4 caracteres "_ _ _ _"
 
 	public boolean isAnotherIteration = false;
 	public boolean foundExt = false;
@@ -7098,10 +7101,23 @@ public class CodeEditor extends IDEComponent {
 					 if (!RightClickOption.isAutoCompleteActive()) {
 						wordSinceSpace = "";
 						RightClickOption.removeAllRightClickOptions();
+						
+						String indentation = "\t";
+						
+						if (indentSpaces) {
+							indentation = "";
+							StringBuilder b = new StringBuilder();
+							
+							for (int i = 0; i < indentLength; i++) {
+								b.append(' ');
+							}
+							
+							indentation = b.toString();
+						}
+						
+						cY.insert(cursorX, indentation);
 	
-						cY.insert(cursorX, "    ");
-	
-						cursorX += 4;
+						cursorX += indentSpaces ? indentLength : 1;
 						editing.setSaved(false);
 					} else {
 						autocompleteindex++;
@@ -7112,10 +7128,24 @@ public class CodeEditor extends IDEComponent {
 				 } else {
 					 wordSinceSpace = "";
 						RightClickOption.removeAllRightClickOptions();
+						
+						String indentation = "\t";
+						
+						if (!indentSpaces) {
+							indentation = "";
+							StringBuilder b = new StringBuilder();
+							
+							for (int i = 0; i < indentLength; i++) {
+								b.append(' ');
+							}
+							
+							indentation = b.toString();
+						}
+						
+						cY.insert(cursorX, indentation);
 	
-						cY.insert(cursorX, "\t");
-	
-						cursorX += 4;
+						cursorX += !indentSpaces ? indentLength : 1;
+						
 						editing.setSaved(false);
 				 }
 			}

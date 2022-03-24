@@ -429,7 +429,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("lineNumber: default\n");
 			w.write("selectedLineNumber: default");
 			/*w.write("\n");
-			w.write("\n");
 			w.write("- Settings\n");
 			w.write("\n");
 			w.write("font_size: default\n");
@@ -485,12 +484,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("lineNumber: " + Colors.toHex(Colors.lineNumber) + "\n");
 			w.write("selectedLineNumber: " + Colors.toHex(Colors.selectedLineNumber) + "\n");
 			w.write("\n");
-			w.write("\n");
 			w.write("- Settings\n");
 			w.write("\n");
 			w.write("font_size: " + CodeEditor.FONT_SIZE + "\n");
 			w.write("language: " + Main.lang + "\n");
 			w.write("autocomplete_active: " + CodeEditor.isAutoCompleteActive + "\n");
+			w.write("indent_with_spaces: " + CodeEditor.indentSpaces + "\n");
+			w.write("indent_length: " + CodeEditor.indentLength + "\n");
 			w.write("automatically_open_tabs: " + CodeEditor.automaticallyOpenTabs + "\n");
 			w.write("show_whitespace: " + CodeEditor.showWhitespace + "\n");
 
@@ -965,6 +965,26 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					break;
 
 				CodeEditor.automaticallyOpenTabs = Boolean.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
+				
+			case "indent_with_spaces:":
+				if (split[1].equals("default"))
+					break;
+
+				CodeEditor.indentSpaces = Boolean.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
+				
+			case "indent_length:":
+				if (split[1].equals("default"))
+					break;
+
+				CodeEditor.indentLength = Integer.valueOf(split[1]);
 
 				hasAltered = true;
 
