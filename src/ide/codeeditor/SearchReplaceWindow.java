@@ -70,7 +70,7 @@ public class SearchReplaceWindow extends JFrame {
 	public SearchReplaceWindow() {
 		active = true;
 		
-		this.setAlwaysOnTop(true);
+		//this.setAlwaysOnTop(true);
 		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 364, 361); // deixa assim mesmo
@@ -259,7 +259,20 @@ public class SearchReplaceWindow extends JFrame {
 					count++;
 				}
 				
+				/*int i = 0;
+				for (IDELine l : Main.editor.lines) {
+					String s = new String(CodeEditor.toCharArray(l.getChars()));
+					String replText = txbReplace.getText();
+					
+					String text = chkCaseSensitive.isSelected() ? txbSearch.getText() : txbSearch.getText().toLowerCase();
+					
+					s = s.replaceAll(text, replText);
+					
+					Main.editor.register(new StringBuilder(s), i++);
+				}*/
+				
 				Main.editor.editing.setSaved(false);
+				Main.editor.undo.push(new ArrayList<>(Main.editor.getLines()));
 				
 				CommandTerminal.runCommand("gotocursor");
 				CommandTerminal.runCommand("deselect");
