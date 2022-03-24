@@ -24,6 +24,7 @@ import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.searchreplace.InputBox;
 import ide.searchreplace.SearchReplaceCore;
 import ide.util.Colors;
 import ide.util.Language;
@@ -38,6 +39,8 @@ public class Explorer extends IDEComponent {
 
 	public static String folderPath = "";
 	public static String folderPathFull = "";
+	
+	public static InputBox selected;
 	
 	public static boolean searchReplaceActive = false;
 	
@@ -346,7 +349,7 @@ public class Explorer extends IDEComponent {
         
         if (!searchReplaceActive) {
 	        int xd = Main.lang == Language.PORT ? x + 40 : x + 60;
-	        int x2d = Main.lang == Language.PORT ? xd + 14 : xd + 16; // dar uma arrumada
+	        //int x2d = Main.lang == Language.PORT ? xd + 14 : xd + 16; // dar uma arrumada
 	        
 	        Fonts.drawString(Texts.explorerText, (width / 2 - xd) - (Main.lang == Language.PORT ? 40 : 0), y + 30, new IDEFont(Fonts.lightGrayNormal, 23), g);
 	        g.setColor(Colors.textLight);

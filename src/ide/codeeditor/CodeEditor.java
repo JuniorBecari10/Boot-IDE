@@ -773,7 +773,7 @@ public class CodeEditor extends IDEComponent {
 			public void run() {
 				while (true) {
 					System.out.print(""); // tem que fazer isso
-					if (SetFileName.added || CommandTerminal.active || RenameFile.added) continue;
+					if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.searchReplaceActive) continue;
 					
 					Main.editor.scroll();
 					Main.editor.scrollTabs();

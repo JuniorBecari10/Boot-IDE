@@ -719,11 +719,11 @@ public class Main implements Runnable, Tickable {
 					Fonts.drawString(Texts.fontSizeIs + " " + CodeEditor.FONT_SIZE + " pixels.", (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					
 					if (Main.editor.editing != null && Main.editor.editing.isReadOnly)
-						Fonts.drawString(Texts.fileAsReadOnly, (x - 10) + 20, (y - 10)+ 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+						Fonts.drawString(Texts.fileAsReadOnly, (x - 10) + 20, (y - 10) + 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 				}
 	        }
         
-        if (explorer.hovered() && !CommandTerminal.expOff) {
+        if (explorer.hovered() && !CommandTerminal.expOff && !Explorer.searchReplaceActive) {
         	if (MouseInput.hovered(explorer.getX() + 10, 140, explorer.getWidth() - 10, 23) && Explorer.showBaseFolderCard && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
         		int xdr = MouseInput.getMouseX() + 10;
     			int ydr = MouseInput.getMouseY() - 10;
