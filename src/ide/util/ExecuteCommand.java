@@ -1,4 +1,4 @@
-package ide.components;
+package ide.util;
 
 /**
  * Uma interface no qual o método {@code execute()} vai ser executado em algum evento.

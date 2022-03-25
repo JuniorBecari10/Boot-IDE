@@ -14,6 +14,7 @@ import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
+import ide.util.ExecuteCommand;
 
 public class RightClickOption extends IDEComponent {
 	

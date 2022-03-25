@@ -21,7 +21,6 @@ import javax.swing.JOptionPane;
 import ide.codeeditor.CodeEditor;
 import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
-import ide.components.ExecuteCommand;
 import ide.components.IDEComponent;
 import ide.components.RenameFile;
 import ide.components.RightClickOption;
@@ -32,6 +31,7 @@ import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
+import ide.util.ExecuteCommand;
 import ide.util.Language;
 import ide.util.Texts;
 
