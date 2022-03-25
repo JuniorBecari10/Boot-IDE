@@ -116,6 +116,11 @@ public class SetFileName extends IDEComponent {
 				cursorIndex = 0;
 			}
 			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) { // Ctrl + Del (Deletar Tudo)
+				text = new StringBuilder();
+				cursorIndex = 0;
+			}
+			
 			if (KeyInput.isKeyPressed() && Character.isLetter(KeyInput.getCharPressed()) || KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) canShow = true;
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
@@ -245,6 +250,7 @@ public class SetFileName extends IDEComponent {
 		Fonts.drawString("[Ctrl + C] " + Texts.copy, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 90, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		Fonts.drawString("[Ctrl + V] " + Texts.paste, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 120, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		Fonts.drawString("[Ctrl + X] " + Texts.cut, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 150, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString("[Ctrl + Del] " + Texts.delete, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 180, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		
 		if (!isFile) return;
 		

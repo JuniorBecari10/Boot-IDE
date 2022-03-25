@@ -2,13 +2,21 @@ package ide.searchreplace;
 
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
+import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
+import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
+import ide.main.Main;
 import ide.util.Colors;
+import ide.util.Texts;
 
 public class InputBox extends IDEComponent {
 
@@ -21,7 +29,7 @@ public class InputBox extends IDEComponent {
 		
 		text = new StringBuilder();
 		
-		new Thread() {
+		/*new Thread() {
 			public void run() {
 				while (true) {
 					if (KeyInput.isKeyPressed() && canDigit) {
@@ -42,7 +50,7 @@ public class InputBox extends IDEComponent {
 					}
 				}
 			}
-		}.start();
+		}.start();*/
 	}
 	
 	public void tick() {
@@ -50,6 +58,77 @@ public class InputBox extends IDEComponent {
 			Explorer.selected = this;
 		
 		canDigit = Explorer.selected == this;
+		
+		if (KeyInput.isKeyPressed()) {
+			KeyInput.updateKeys();
+			
+			// Shortcuts Area
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C) { // Ctrl + C - Copiar (Tudo)
+				CodeEditor.copyText(text.toString());
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_V) { // Ctrl + V - Colar
+				if (cursorIndex >= text.length()) {
+					text.append(CodeEditor.clipboard);
+					cursorIndex += CodeEditor.clipboard.length();
+				}
+				else {
+					text.insert(cursorIndex, CodeEditor.clipboard);
+					cursorIndex += CodeEditor.clipboard.length();
+				}
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_X) { // Ctrl + X - Recortar (Tudo)
+				CodeEditor.copyText(text.toString());
+				
+				text = new StringBuilder();
+				cursorIndex = 0;
+			}
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) { // Ctrl + Del (Deletar Tudo)
+				text = new StringBuilder();
+				cursorIndex = 0;
+			}
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && cursorIndex > 0) cursorIndex--;
+			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT && cursorIndex < text.length()) cursorIndex++;
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE && cursorIndex > 0) {
+				text.deleteCharAt(cursorIndex - 1);
+				cursorIndex--;
+				
+				return;
+			}
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_SPACE && cursorIndex > 0) {
+				if (text.length() == 0) text.append(" ");
+				else text.insert(cursorIndex, " ");
+				
+				cursorIndex++;
+				
+				return;
+			}
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
+				if (cursorIndex > text.length() - 1) return;
+				
+				text.deleteCharAt(cursorIndex);
+				return;
+			}
+			
+			int keyCode = KeyInput.getKeyCodePressed();
+			char c = KeyInput.getCharPressed();
+			
+			c = Main.editor.addAccents(keyCode, c);
+			
+			if (KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256) return;
+			
+			cursorIndex++;
+			
+			if (text.length() == 0) text.append(c);
+			else text.insert(cursorIndex - 1, c);
+		}
 	}
 	
 	public String getText() {

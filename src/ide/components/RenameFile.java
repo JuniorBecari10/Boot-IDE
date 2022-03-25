@@ -120,7 +120,12 @@ public class RenameFile extends IDEComponent {
 				text = new StringBuilder();
 				cursorIndex = 0;
 			}
-
+			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) { // Ctrl + Del (Deletar Tudo)
+				text = new StringBuilder();
+				cursorIndex = 0;
+			}
+			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
 				IDEComponent.toRemove.add(this);
 				added = false;
@@ -263,6 +268,7 @@ public class RenameFile extends IDEComponent {
 		Fonts.drawString("[Ctrl + C] " + Texts.copy, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 90, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		Fonts.drawString("[Ctrl + V] " + Texts.paste, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 120, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		Fonts.drawString("[Ctrl + X] " + Texts.cut, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 150, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString("[Ctrl + Del] " + Texts.delete, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 180, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		
 		if (!old.isFile())
 			return;

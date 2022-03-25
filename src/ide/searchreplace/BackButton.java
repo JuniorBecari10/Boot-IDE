@@ -28,7 +28,8 @@ public class BackButton extends IDEComponent {
 		
 		if (leftClicked()) {
 			Explorer.searchReplaceActive = false;
-			IDEComponent.toRemove.add(this);
+			
+			SearchReplaceCore.dispose();
 		}
 	}
 	

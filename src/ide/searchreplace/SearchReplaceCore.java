@@ -9,7 +9,7 @@ public final class SearchReplaceCore {
 	
 	public static synchronized void init() {
 		IDEComponent.toAdd.add(new BackButton(20, 20, 24, 24, Main.spritesheet.getSprite(168, 0, 8, 8)));
-		IDEComponent.toAdd.add(new InputBox(20, 100, Main.explorer.getWidth() - 40, 30));
+		IDEComponent.toAdd.add(new InputBox(20, 100, Main.explorer.getWidth() - 40, 20));
 	}
 	
 	public static synchronized void dispose() {
