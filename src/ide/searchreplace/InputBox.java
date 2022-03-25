@@ -49,6 +49,8 @@ public class InputBox extends IDEComponent {
 	}
 	
 	public void tick() {
+		width = Main.explorer.getWidth() - 40;
+		
 		count++;
 		
 		if (count >= maxCount) {
