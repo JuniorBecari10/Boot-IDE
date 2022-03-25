@@ -235,7 +235,7 @@ public class RenameFile extends IDEComponent {
 		Fonts.drawString(text.toString(), x, y + 5, new IDEFont(Fonts.otherNormal, 18), g); // depois colocar drawchars
 																							// e o sistema de fontes
 
-		g.setColor(Color.white);
+		g.setColor(Colors.other);
 		g2.setStroke(new BasicStroke(2f));
 
 		if (showCursor)

@@ -1,6 +1,7 @@
 package ide.searchreplace;
 
 import ide.components.IDEComponent;
+import ide.explorer.Explorer;
 import ide.main.Main;
 
 public final class SearchReplaceCore {
@@ -13,6 +14,8 @@ public final class SearchReplaceCore {
 	}
 	
 	public static synchronized void dispose() {
+		Explorer.selected = null;
+		
 		for (IDEComponent i : IDEComponent.components) {
 			if (i instanceof BackButton || i instanceof InputBox)
 				IDEComponent.toRemove.add(i);

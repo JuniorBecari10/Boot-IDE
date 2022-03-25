@@ -773,7 +773,7 @@ public class CodeEditor extends IDEComponent {
 			public void run() {
 				while (true) {
 					System.out.print(""); // tem que fazer isso
-					if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.searchReplaceActive) continue;
+					if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) continue;
 					
 					Main.editor.scroll();
 					Main.editor.scrollTabs();
@@ -8062,6 +8062,9 @@ public class CodeEditor extends IDEComponent {
 		
 		height = Main.screen.getHeight();
 		
+		if (leftClicked())
+			Explorer.selected = null;
+		
 		/*int idx = 0; // debug
 		for (Iterator<List<IDELine>> it = undo.iterator(); it.hasNext();) {
 			List<IDELine> l = it.next();
@@ -8585,7 +8588,7 @@ public class CodeEditor extends IDEComponent {
 				showCursor = true;
 	
 			// Desenhar cursor
-			if (showCursor && !WindowInput.isDeactivated() && drawcx > x + 45) {
+			if (showCursor && !WindowInput.isDeactivated() && drawcx > x + 45 && Explorer.selected == null) {
 				g.setColor(Colors.cursor);
 				g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - (FONT_SIZE >= 16 ? 1 : 0), // na posição x 12 ele aparece um pouco encima dos numeros
 						FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + (FONT_SIZE / 4));

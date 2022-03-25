@@ -2,27 +2,22 @@ package ide.searchreplace;
 
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
-
-import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
-import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.main.Main;
 import ide.util.Colors;
-import ide.util.Texts;
 
 public class InputBox extends IDEComponent {
 
 	private StringBuilder text;
-	private boolean canDigit = false;
 	private int cursorIndex = 0;
+	private int count = 0, maxCount = 15;
+	private boolean showCursor = true;
 	
 	public InputBox(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
@@ -54,10 +49,16 @@ public class InputBox extends IDEComponent {
 	}
 	
 	public void tick() {
+		count++;
+		
+		if (count >= maxCount) {
+			count = 0;
+			
+			showCursor = !showCursor;
+		}
+		
 		if (leftClicked())
 			Explorer.selected = this;
-		
-		canDigit = Explorer.selected == this;
 		
 		if (KeyInput.isKeyPressed()) {
 			KeyInput.updateKeys();
@@ -143,5 +144,10 @@ public class InputBox extends IDEComponent {
 		g.fillRect(x, y, width, height);
 		
 		Fonts.drawString(getText(), x + 2, y + 2, new IDEFont(Fonts.otherNormal, 16), x + width, g);
+		
+		g.setColor(Colors.other);
+		
+		if (Explorer.selected == this && showCursor)
+			g.fillRect(x + 1 + (cursorIndex * (16 - 4)), y, 2, height);
 	}
 }
