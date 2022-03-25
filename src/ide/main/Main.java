@@ -148,6 +148,8 @@ public class Main implements Runnable, Tickable {
     
     public static BufferedImage lock;
     
+    public static BufferedImage back;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -192,6 +194,7 @@ public class Main implements Runnable, Tickable {
         notSelectedNotSavedTab = spritesheet.getSprite(16, 5, 5, 5);
         
         lock = spritesheet.getSprite(16, 10, 5, 5);
+        back = spritesheet.getSprite(168, 0, 8, 8);
         
         ///////
         
@@ -274,6 +277,7 @@ public class Main implements Runnable, Tickable {
         notSavedTab = Colors.swapColor(notSavedTab, Colors.textLightDefault, Colors.textLight);
         
         lock = Colors.swapColor(lock, Colors.textLightDefault, Colors.textLight);
+        back = Colors.swapColor(back, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         

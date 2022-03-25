@@ -60,7 +60,7 @@ public class InputBox extends IDEComponent {
 		if (leftClicked())
 			Explorer.selected = this;
 		
-		if (KeyInput.isKeyPressed()) {
+		if (KeyInput.isKeyPressed() && Explorer.selected == this) {
 			KeyInput.updateKeys();
 			
 			// Shortcuts Area

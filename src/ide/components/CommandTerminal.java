@@ -717,6 +717,11 @@ public class CommandTerminal extends IDEComponent {
 			case "revertcolors":
 				Colors.revertColors();
 				
+				String[] options = { "Ok" };
+				
+				CodeEditor.setSystemLook();
+				JOptionPane.showOptionDialog(null, Texts.pleaseRestart, Texts.restartRequired, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+				
 				/*Fonts.initFonts(Main.fntnr, Main.fntbl);
 				Main.spritesheet = new Spritesheet(Main.sprsh);
 				

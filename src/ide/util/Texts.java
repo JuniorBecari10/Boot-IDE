@@ -1,7 +1,5 @@
 package ide.util;
 
-import ide.main.Main;
-
 /**
  * Uma classe que lista todos os textos e palavras que estão na Boot IDE. Somente não listam os nomes das linguagens que aparecem embaixo da tela. Temos em português e inglês aqui.
  * 
@@ -373,7 +371,7 @@ public final class Texts {
 			propertyDoesntExist = "Essa propriedade não existe, ou um erro ocorreu.";
 			
 			restartRequired = "Reinicialização Necessária!";
-			pleaseRestart = "Por favor reinicie a " + Main.PROGRAM_NAME + " para que todas as mudanças sejam aplicadas.";
+			pleaseRestart = "Por favor reinicie o programa para que todas as mudanças sejam aplicadas.";
 			
 			getFontSize = "Obter Tamanho da Fonte";
 			fontSizeIs = "O tamanho da fonte é de";
@@ -558,7 +556,7 @@ public final class Texts {
 			propertyDoesntExist = "This property doesn't exist, or an error occurred.";
 			
 			restartRequired = "Restart Required!";
-			pleaseRestart = "Please restart " + Main.PROGRAM_NAME + " for all the changes to be applied.";
+			pleaseRestart = "Please restart the program for all the changes to be applied.";
 			
 			getFontSize = "Get Font Size";
 			fontSizeIs = "The font size is";
