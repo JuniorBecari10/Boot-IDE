@@ -382,7 +382,7 @@ public class Explorer extends IDEComponent {
 	        } catch (Exception e) { return; }
 	    }
 	    else {
-	    	Fonts.drawString(Texts.searchReplace, x + 60, y + 21, new IDEFont(Fonts.lightGrayNormal, 18), g);
+	    	Fonts.drawString(Main.lang == Language.PORT ? (width < 350 ? Texts.searchReplaceMin : Texts.searchReplace) : (width < 270 ? Texts.searchReplaceMin : Texts.searchReplace), x + 60, y + 21, new IDEFont(Fonts.lightGrayNormal, 18), g);
 	    	
 	    	Fonts.drawString(Texts.search + ":", x + 20, y + 75, new IDEFont(Fonts.lightGrayNormal, 16), g);
 	    	Fonts.drawString(Texts.replace + ":", x + 20, y + 145, new IDEFont(Fonts.lightGrayNormal, 16), g);

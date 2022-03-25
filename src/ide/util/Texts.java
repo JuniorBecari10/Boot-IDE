@@ -118,6 +118,7 @@ public final class Texts {
 	public static String didNothing;
 	
 	public static String searchReplace;
+	public static String searchReplaceMin;
 	
 	public static String search;
 	public static String replace;
@@ -303,6 +304,7 @@ public final class Texts {
 			didNothing = "Não fez nada!";
 			
 			searchReplace = "Localizar/Substituir";
+			searchReplaceMin = "L/S";
 			
 			search = "Localizar";
 			replace = "Substituir";
@@ -488,6 +490,7 @@ public final class Texts {
 			didNothing = "It did nothing!";
 			
 			searchReplace = "Search/Replace";
+			searchReplaceMin = "S/R";
 			
 			search = "Search";
 			replace = "Replace";
