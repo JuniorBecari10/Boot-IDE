@@ -149,6 +149,7 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage lock;
     
     public static BufferedImage back;
+    public static BufferedImage caseSensitive;
     
     ///
     
@@ -194,7 +195,9 @@ public class Main implements Runnable, Tickable {
         notSelectedNotSavedTab = spritesheet.getSprite(16, 5, 5, 5);
         
         lock = spritesheet.getSprite(16, 10, 5, 5);
+        
         back = spritesheet.getSprite(168, 0, 8, 8);
+        caseSensitive = spritesheet.getSprite(208, 0, 16, 16);
         
         ///////
         
@@ -277,7 +280,9 @@ public class Main implements Runnable, Tickable {
         notSavedTab = Colors.swapColor(notSavedTab, Colors.textLightDefault, Colors.textLight);
         
         lock = Colors.swapColor(lock, Colors.textLightDefault, Colors.textLight);
+        
         back = Colors.swapColor(back, Colors.textLightDefault, Colors.textLight);
+        caseSensitive = Colors.swapColor(caseSensitive, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         

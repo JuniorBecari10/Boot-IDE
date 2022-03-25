@@ -147,7 +147,7 @@ public class InputBox extends IDEComponent {
 		
 		g.setColor(Colors.other);
 		
-		if (Explorer.selected == this && showCursor)
+		if (Explorer.selected == this && showCursor && x + 1 + (cursorIndex * (16 - 4)) < x + width)
 			g.fillRect(x + 1 + (cursorIndex * (16 - 4)), y, 2, height);
 	}
 }
