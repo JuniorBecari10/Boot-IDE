@@ -21,8 +21,8 @@ public final class SearchReplaceCore {
 		IDEComponent.toAdd.add(Explorer.search);
 		IDEComponent.toAdd.add(Explorer.replace);
 		
-		IDEComponent.toAdd.add(new ExecuteButton(20, 250, Main.explorer.getWidth() - 40, 20, Texts.searchNext));
-		IDEComponent.toAdd.add(new ExecuteButton(20, 290, Main.explorer.getWidth() - 40, 20, Texts.replaceAll));
+		IDEComponent.toAdd.add(new ExecuteButton(20, 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext));
+		IDEComponent.toAdd.add(new ExecuteButton(20, 300, Main.explorer.getWidth() - 40, 20, Texts.replaceAll));
 		
 		IDEComponent.toAdd.add(new ToggleButton(20, 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430)); // fica por último
 		

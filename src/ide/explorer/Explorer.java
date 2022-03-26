@@ -347,7 +347,7 @@ public class Explorer extends IDEComponent {
 		    	for (ListableFile f : Explorer.files)
 		        	f.tick();
 	    	} catch (Exception e) { return; }
-    }
+	    }
     }
 
     public void render(Graphics g) {
