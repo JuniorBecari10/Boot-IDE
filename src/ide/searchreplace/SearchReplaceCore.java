@@ -25,8 +25,8 @@ public final class SearchReplaceCore {
 		if (Explorer.replace == null)
 			Explorer.replace = new InputBox(20, 170, Main.explorer.getWidth() - 40, 20);
 		
-		Explorer.entireDocument = new RadioButton(Main.explorer.getWidth() - 100, 210, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 430, true);
-		Explorer.selectedLines = new RadioButton(Main.explorer.getWidth() - 62, 210, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 430, false);
+		Explorer.entireDocument = new RadioButton(Main.explorer.getWidth() - 100, 210, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true);
+		Explorer.selectedLines = new RadioButton(Main.explorer.getWidth() - 62, 210, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false);
 		
 		IDEComponent.toAdd.add(new BackButton(20, 20, 24, 24, Main.back));
 		IDEComponent.toAdd.add(Explorer.search);
@@ -49,7 +49,7 @@ public final class SearchReplaceCore {
 		Explorer.selected = null;
 		
 		for (IDEComponent i : IDEComponent.components) {
-			if (i instanceof BackButton || i instanceof InputBox || i instanceof ToggleButton || i instanceof ExecuteButton)
+			if (i instanceof BackButton || i instanceof InputBox || i instanceof ToggleButton || i instanceof ExecuteButton || i instanceof RadioButton)
 				IDEComponent.toRemove.add(i);
 		}
 	}

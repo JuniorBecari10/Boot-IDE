@@ -46,6 +46,9 @@ public class RadioButton extends IDEComponent {
 	}
 	
 	public void tick() {
+		if (isEntireDoc) x = Main.explorer.getWidth() - 100;
+		else x = Main.explorer.getWidth() - 62;
+		
 		if (leftClicked()) {
 			if (!state) state = true;
 			
