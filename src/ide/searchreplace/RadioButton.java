@@ -8,6 +8,7 @@ import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.RenameFile;
 import ide.components.SetFileName;
+import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.MouseInput;
@@ -15,14 +16,16 @@ import ide.main.Main;
 import ide.util.Colors;
 import ide.util.Language;
 
-public class ToggleButton extends IDEComponent {
+public class RadioButton extends IDEComponent {
 
 	private boolean state;
 	private String caption;
 	
 	private int engLength, portLength;
 	
-	public ToggleButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption, int engLength, int portLength) {
+	private boolean isEntireDoc;
+	
+	public RadioButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption, int engLength, int portLength, boolean isEntireDoc) {
 		super(x, y, width, height, sprite);
 		
 		this.state = state;
@@ -30,6 +33,8 @@ public class ToggleButton extends IDEComponent {
 		
 		this.engLength = engLength;
 		this.portLength = portLength;
+		
+		this.isEntireDoc = isEntireDoc;
 	}
 	
 	public boolean getState() {
@@ -42,7 +47,13 @@ public class ToggleButton extends IDEComponent {
 	
 	public void tick() {
 		if (leftClicked()) {
-			state = !state;
+			if (!state) state = true;
+			
+			if (isEntireDoc) {
+				if (Explorer.selectedLines.state) Explorer.selectedLines.state = false;
+			}
+			else
+				if (Explorer.entireDocument.state) Explorer.entireDocument.state = false;
 		}
 	}
 	

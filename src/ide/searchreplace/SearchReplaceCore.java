@@ -1,5 +1,13 @@
 package ide.searchreplace;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
+import ide.codeeditor.CodeEditor;
+import ide.codeeditor.IDELine;
+import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
 import ide.main.Main;
@@ -17,12 +25,20 @@ public final class SearchReplaceCore {
 		if (Explorer.replace == null)
 			Explorer.replace = new InputBox(20, 170, Main.explorer.getWidth() - 40, 20);
 		
+		Explorer.entireDocument = new RadioButton(Main.explorer.getWidth() - 100, 210, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 430, true);
+		Explorer.selectedLines = new RadioButton(Main.explorer.getWidth() - 62, 210, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 430, false);
+		
 		IDEComponent.toAdd.add(new BackButton(20, 20, 24, 24, Main.back));
 		IDEComponent.toAdd.add(Explorer.search);
 		IDEComponent.toAdd.add(Explorer.replace);
 		
 		IDEComponent.toAdd.add(new ExecuteButton(20, 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext));
 		IDEComponent.toAdd.add(new ExecuteButton(20, 300, Main.explorer.getWidth() - 40, 20, Texts.replaceAll));
+		
+		IDEComponent.toAdd.add(new ToggleButton(20, 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430));
+		
+		IDEComponent.toAdd.add(Explorer.entireDocument);
+		IDEComponent.toAdd.add(Explorer.selectedLines);
 		
 		IDEComponent.toAdd.add(new ToggleButton(20, 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430)); // fica por último
 		
@@ -37,4 +53,55 @@ public final class SearchReplaceCore {
 				IDEComponent.toRemove.add(i);
 		}
 	}
+	
+	/*public static void searchNext(String searchText, boolean caseSensitive) {
+		if (txbSearch.getText().equals("")) return;
+		
+		List<Integer> linesfound = new ArrayList<>();
+		
+		if (!rdbtnSelectedLines.isSelected()) {
+			for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
+				IDELine l = Main.editor.lines.get(i);
+				String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+				
+				String text = caseSensitive ? txbSearch.getText() : txbSearch.getText().toLowerCase();
+				
+				if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+			}
+		}
+		else {
+			for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+				IDELine l = Main.editor.lines.get(i);
+				String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+				
+				String text = caseSensitive ? txbSearch.getText() : txbSearch.getText().toLowerCase();
+				
+				if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+			}
+		}
+		
+		if (linesfound.size() == 0) {
+			CodeEditor.setSystemLook();
+			JOptionPane.showMessageDialog(null, Texts.cannotFindWord, Texts.nothingFound, JOptionPane.WARNING_MESSAGE);
+			
+			return;
+		}
+		
+		try {
+			Main.editor.cursorY = (linesfound.get(occurnum) - 1) + 2;
+		} catch (IndexOutOfBoundsException f) {
+			occurnum = 0;
+			
+			Main.editor.cursorY = (linesfound.get(occurnum) - 1) + 2;
+			CommandTerminal.runCommand("gotocursor");
+			
+			CodeEditor.setSystemLook();
+			JOptionPane.showMessageDialog(null, Texts.didNotFindAfterThat, Texts.itsTheEnd, JOptionPane.INFORMATION_MESSAGE);
+			
+		}
+		
+		occurnum++;
+		
+		CommandTerminal.runCommand("gotocursor");
+	}*/
 }

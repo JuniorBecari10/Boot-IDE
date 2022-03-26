@@ -151,6 +151,9 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage back;
     public static BufferedImage caseSensitive;
     
+    public static BufferedImage entireDocument;
+    public static BufferedImage selectedLines;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -198,6 +201,9 @@ public class Main implements Runnable, Tickable {
         
         back = spritesheet.getSprite(168, 0, 8, 8);
         caseSensitive = spritesheet.getSprite(208, 0, 16, 16);
+        
+        entireDocument = spritesheet.getSprite(240, 0, 16, 16);
+        selectedLines = spritesheet.getSprite(256, 0, 16, 16);
         
         ///////
         
@@ -283,6 +289,9 @@ public class Main implements Runnable, Tickable {
         
         back = Colors.swapColor(back, Colors.textLightDefault, Colors.textLight);
         caseSensitive = Colors.swapColor(caseSensitive, Colors.textLightDefault, Colors.textLight);
+        
+        entireDocument = Colors.swapColor(entireDocument, Colors.textLightDefault, Colors.textLight);
+        selectedLines = Colors.swapColor(selectedLines, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         
