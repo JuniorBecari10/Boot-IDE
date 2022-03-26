@@ -42,6 +42,8 @@ public class Explorer extends IDEComponent {
 	
 	public static InputBox selected;
 	
+	public static InputBox search, replace;
+	
 	public static boolean searchReplaceActive = false;
 	
 	public static boolean hoveringListableFile;
@@ -108,6 +110,15 @@ public class Explorer extends IDEComponent {
 	    
 	    /*if (WindowInput.isMaximized() || !WindowInput.isActivated())
 	    	ReloadButton.reloadExplorer();*/
+	    
+	    if (searchReplaceActive) {
+	    	if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
+	    		KeyInput.updateKeys();
+	    		
+	    		if (selected == search) selected = replace;
+	    		else selected = search;
+	    	}
+	    }
 	    
 	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && searchReplaceActive) {
 	    	searchReplaceActive = false;
