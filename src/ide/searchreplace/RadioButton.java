@@ -68,8 +68,12 @@ public class RadioButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
+		if (!isEntireDoc) {
+			if (!Main.editor.selecting) sprite = Main.selectedLinesDarker;
+			else sprite = Main.selectedLines;
+		}
+		
 		if (hovered()) {
-			
 			if (!isEntireDoc && Main.editor.selecting) {
 				g.setColor(Colors.explorerLight);
 				g.fillRect(x, y, width, height);

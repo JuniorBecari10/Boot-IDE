@@ -154,6 +154,8 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage entireDocument;
     public static BufferedImage selectedLines;
     
+    public static BufferedImage selectedLinesDarker;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -204,6 +206,7 @@ public class Main implements Runnable, Tickable {
         
         entireDocument = spritesheet.getSprite(240, 0, 16, 16);
         selectedLines = spritesheet.getSprite(256, 0, 16, 16);
+        selectedLinesDarker = spritesheet.getSprite(256, 0, 16, 16);
         
         ///////
         
@@ -292,6 +295,8 @@ public class Main implements Runnable, Tickable {
         
         entireDocument = Colors.swapColor(entireDocument, Colors.textLightDefault, Colors.textLight);
         selectedLines = Colors.swapColor(selectedLines, Colors.textLightDefault, Colors.textLight);
+        
+        selectedLinesDarker = Colors.swapColor(selectedLinesDarker, Colors.textLightDefault, Colors.textLight.darker());
         
         /// Change some colors ///
         

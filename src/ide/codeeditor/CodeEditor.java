@@ -7031,10 +7031,12 @@ public class CodeEditor extends IDEComponent {
 			} catch (Exception e) {
 				return;
 			}
-
+			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
 				KeyInput.updateKeys();
 				undo.push(new ArrayList<>(getLines()));
+				
+				CommandTerminal.runCommand("gotocursor");
 
 				RightClickOption.removeAllRightClickOptions();
 
@@ -7082,6 +7084,8 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				KeyInput.updateKeys();
 				 undo.push(new ArrayList<>(getLines()));
+				 
+				 CommandTerminal.runCommand("gotocursor");
 
 				if (cursorX < cY.length()) {
 					cY.deleteCharAt(cursorX);
@@ -7099,6 +7103,8 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 				KeyInput.updateKeys();
 				 undo.push(new ArrayList<>(getLines()));
+				 
+				 CommandTerminal.runCommand("gotocursor");
 				 
 				 if (!KeyInput.isShiftDown()) {
 					 if (!RightClickOption.isAutoCompleteActive()) {
@@ -7156,6 +7162,8 @@ public class CodeEditor extends IDEComponent {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
 				 undo.push(new ArrayList<>(getLines()));
+				 
+				 CommandTerminal.runCommand("gotocursor");
 
 				if (RightClickOption.isAutoCompleteActive()) {
 					autocompletes.get(autocompleteindex).command
@@ -7261,7 +7269,7 @@ public class CodeEditor extends IDEComponent {
 				cursorX++;
 
 				setCursorWithinBounds();
-
+				
 				// Add AutoComplete
 
 				if ((Character.isLetter(c) || isNumber(c) || KeyInput.getCharPressed() == 46) && !isReadOnly
@@ -7299,8 +7307,10 @@ public class CodeEditor extends IDEComponent {
 
 				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256
 						|| KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
-
+					
 					 undo.push(new ArrayList<>(getLines()));
+					 
+					 CommandTerminal.runCommand("gotocursor");
 					if (editing != null)
 						editing.setSaved(false);
 				}
