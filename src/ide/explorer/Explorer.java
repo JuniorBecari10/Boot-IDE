@@ -27,6 +27,7 @@ import ide.main.Main;
 import ide.searchreplace.InputBox;
 import ide.searchreplace.RadioButton;
 import ide.searchreplace.SearchReplaceCore;
+import ide.searchreplace.ToggleButton;
 import ide.util.Colors;
 import ide.util.Language;
 import ide.util.Texts;
@@ -44,6 +45,7 @@ public class Explorer extends IDEComponent {
 	public static InputBox selected;
 	
 	public static InputBox search, replace;
+	public static ToggleButton caseSensitive;
 	public static RadioButton entireDocument, selectedLines;
 	
 	public static boolean searchReplaceActive = false;

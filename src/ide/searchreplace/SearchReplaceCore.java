@@ -25,8 +25,14 @@ public final class SearchReplaceCore {
 		if (Explorer.replace == null)
 			Explorer.replace = new InputBox(20, 170, Main.explorer.getWidth() - 40, 20);
 		
-		Explorer.entireDocument = new RadioButton(Main.explorer.getWidth() - 100, 210, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true);
-		Explorer.selectedLines = new RadioButton(Main.explorer.getWidth() - 62, 210, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false);
+		if (Explorer.entireDocument == null)
+			Explorer.entireDocument = new RadioButton(Main.explorer.getWidth() - 100, 210, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true);
+		
+		if (Explorer.selectedLines == null)
+			Explorer.selectedLines = new RadioButton(Main.explorer.getWidth() - 62, 210, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false);
+		
+		if (Explorer.caseSensitive == null)
+			Explorer.caseSensitive = new ToggleButton(20, 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430);
 		
 		IDEComponent.toAdd.add(new BackButton(20, 20, 24, 24, Main.back));
 		IDEComponent.toAdd.add(Explorer.search);
@@ -35,12 +41,10 @@ public final class SearchReplaceCore {
 		IDEComponent.toAdd.add(new ExecuteButton(20, 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext));
 		IDEComponent.toAdd.add(new ExecuteButton(20, 300, Main.explorer.getWidth() - 40, 20, Texts.replaceAll));
 		
-		IDEComponent.toAdd.add(new ToggleButton(20, 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430));
-		
 		IDEComponent.toAdd.add(Explorer.entireDocument);
 		IDEComponent.toAdd.add(Explorer.selectedLines);
 		
-		IDEComponent.toAdd.add(new ToggleButton(20, 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430)); // fica por último
+		IDEComponent.toAdd.add(Explorer.caseSensitive); // fica por último
 		
 		Explorer.selected = Explorer.search;
 	}
