@@ -10,11 +10,16 @@ public final class SearchReplaceCore {
 	private SearchReplaceCore() {}
 	
 	public static synchronized void init() {
+		InputBox search = new InputBox(20, 100, Main.explorer.getWidth() - 40, 20);
+		InputBox replace = new InputBox(20, 170, Main.explorer.getWidth() - 40, 20);
+		
 		IDEComponent.toAdd.add(new BackButton(20, 20, 24, 24, Main.back));
-		IDEComponent.toAdd.add(new InputBox(20, 100, Main.explorer.getWidth() - 40, 20));
-		IDEComponent.toAdd.add(new InputBox(20, 170, Main.explorer.getWidth() - 40, 20));
+		IDEComponent.toAdd.add(search);
+		IDEComponent.toAdd.add(replace);
 		
 		IDEComponent.toAdd.add(new ToggleButton(20, 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430));
+		
+		Explorer.selected = search;
 	}
 	
 	public static synchronized void dispose() {
