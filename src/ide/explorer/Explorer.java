@@ -116,6 +116,9 @@ public class Explorer extends IDEComponent {
 	    	ReloadButton.reloadExplorer();*/
 	    
 	    if (searchReplaceActive) {
+	    	if (entireDocument.getState() == false && selectedLines.getState() == false)
+	    		entireDocument.setState(true);
+	    	
 	    	if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 	    		KeyInput.updateKeys();
 	    		

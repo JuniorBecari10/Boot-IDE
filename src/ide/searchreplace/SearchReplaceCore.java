@@ -38,8 +38,8 @@ public final class SearchReplaceCore {
 		IDEComponent.toAdd.add(Explorer.search);
 		IDEComponent.toAdd.add(Explorer.replace);
 		
-		IDEComponent.toAdd.add(new ExecuteButton(20, 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext));
-		IDEComponent.toAdd.add(new ExecuteButton(20, 300, Main.explorer.getWidth() - 40, 20, Texts.replaceAll));
+		IDEComponent.toAdd.add(new ExecuteButton(20, 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState())));
+		IDEComponent.toAdd.add(new ExecuteButton(20, 300, Main.explorer.getWidth() - 40, 20, Texts.replaceAll, () -> replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState())));
 		
 		IDEComponent.toAdd.add(Explorer.entireDocument);
 		IDEComponent.toAdd.add(Explorer.selectedLines);
@@ -58,17 +58,18 @@ public final class SearchReplaceCore {
 		}
 	}
 	
-	/*public static void searchNext(String searchText, boolean caseSensitive) {
-		if (txbSearch.getText().equals("")) return;
+	public static void searchNext(String searchText, boolean caseSensitive, boolean isEntireDocument) {
+		int occurnum = 0;
+		if (searchText.equals("")) return;
 		
 		List<Integer> linesfound = new ArrayList<>();
 		
-		if (!rdbtnSelectedLines.isSelected()) {
+		if (isEntireDocument) { // se não é selectedlines...
 			for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
 				IDELine l = Main.editor.lines.get(i);
 				String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
 				
-				String text = caseSensitive ? txbSearch.getText() : txbSearch.getText().toLowerCase();
+				String text = caseSensitive ? searchText : searchText.toLowerCase();
 				
 				if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
 			}
@@ -78,7 +79,7 @@ public final class SearchReplaceCore {
 				IDELine l = Main.editor.lines.get(i);
 				String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
 				
-				String text = caseSensitive ? txbSearch.getText() : txbSearch.getText().toLowerCase();
+				String text = caseSensitive ? searchText : searchText.toLowerCase();
 				
 				if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
 			}
@@ -107,5 +108,78 @@ public final class SearchReplaceCore {
 		occurnum++;
 		
 		CommandTerminal.runCommand("gotocursor");
-	}*/
+		Explorer.selected = null;
+	}
+	
+	public static void replaceAll(String searchText, String replaceText, boolean caseSensitive, boolean isEntireDocument) {
+		if (Main.editor.isReadOnly) return;
+		if (searchText.equals("")) return;
+		
+		List<Integer> linesfound = new ArrayList<>();
+		
+		String text = caseSensitive ? searchText : searchText.toLowerCase();
+		String replText = replaceText;
+		
+		if (isEntireDocument) {
+			for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
+				IDELine l = Main.editor.lines.get(i);
+				String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+				
+				if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+			}
+		}
+		else {
+			for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
+				IDELine l = Main.editor.lines.get(i);
+				String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+				
+				if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+			}
+		}
+		
+		if (linesfound.size() == 0) {
+			CodeEditor.setSystemLook();
+			JOptionPane.showMessageDialog(null, Texts.cannotFindWord, Texts.nothingFound, JOptionPane.WARNING_MESSAGE);
+			
+			return;
+		}
+		
+		int count = 0;
+		
+		for (Integer i : linesfound) {
+			String s = new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars()));
+			
+			s = s.replaceAll(text, replText);
+			
+			Main.editor.register(new StringBuilder(s), i);
+			
+			count++;
+		}
+		
+		/*int i = 0;
+		for (IDELine l : Main.editor.lines) {
+			String s = new String(CodeEditor.toCharArray(l.getChars()));
+			String replText = txbReplace.getText();
+			
+			String text = chkCaseSensitive.isSelected() ? searchText : searchText.toLowerCase();
+			
+			s = s.replaceAll(text, replText);
+			
+			Main.editor.register(new StringBuilder(s), i++);
+		}*/
+		
+		Main.editor.editing.setSaved(false);
+		Main.editor.undo.push(new ArrayList<>(Main.editor.getLines()));
+		
+		CommandTerminal.runCommand("gotocursor");
+		CommandTerminal.runCommand("deselect");
+		
+		Main.screen.requestFocus();
+		
+		Main.editor.callAutomaticColor();
+		Explorer.selected = null;
+		
+		CodeEditor.setSystemLook();
+		JOptionPane.showMessageDialog(null, Texts.replaced + " " + Texts.occurences + " " + Texts.in +  " " + count + " " + Texts.lines + ".", Texts.success + "!", JOptionPane.INFORMATION_MESSAGE);
+	}
 }

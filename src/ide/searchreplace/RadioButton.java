@@ -50,6 +50,8 @@ public class RadioButton extends IDEComponent {
 		else x = Main.explorer.getWidth() - 62;
 		
 		if (leftClicked()) {
+			if (!isEntireDoc && !Main.editor.selecting) return;
+			
 			if (!state) state = true;
 			
 			if (isEntireDoc) {
@@ -58,12 +60,25 @@ public class RadioButton extends IDEComponent {
 			else
 				if (Explorer.entireDocument.state) Explorer.entireDocument.state = false;
 		}
+		
+		if (!isEntireDoc && !Main.editor.selecting && state) {
+			state = false;
+			if (Explorer.entireDocument.state) Explorer.entireDocument.state = true;
+		}
 	}
 	
 	public void render(Graphics g) {
 		if (hovered()) {
-			g.setColor(Colors.explorerLight);
-			g.fillRect(x, y, width, height);
+			
+			if (!isEntireDoc && Main.editor.selecting) {
+				g.setColor(Colors.explorerLight);
+				g.fillRect(x, y, width, height);
+			}
+			
+			if (isEntireDoc) {
+				g.setColor(Colors.explorerLight);
+				g.fillRect(x, y, width, height);
+			}
 		}
 		
 		super.render(g);

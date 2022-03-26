@@ -8227,10 +8227,10 @@ public class CodeEditor extends IDEComponent {
 		 * if (drawcy < realcy) drawcy += speed; if (drawcy > realcy) drawcy -= speed;
 		 */
 
-		if (MouseInput.isLeftPressed()
-				|| (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() != KeyEvent.VK_BACK_SPACE)
-						&& ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2) && !RightClickOption.anyRightClickOptionHovered()))
-			CommandTerminal.runCommand("deselect"); // terminar TODO
+		if (MouseInput.isLeftPressed() || (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() != KeyEvent.VK_BACK_SPACE) && ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2) && !RightClickOption.anyRightClickOptionHovered())) {
+			if (Main.explorer.hovered() && !Explorer.searchReplaceActive)
+				CommandTerminal.runCommand("deselect"); // terminar TODO
+		}
 
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;

@@ -11,15 +11,20 @@ import ide.util.Colors;
 public class ExecuteButton extends IDEComponent {
 	
 	private String text;
-
-	public ExecuteButton(int x, int y, int width, int height, String text) {
+	private Execute execute;
+	
+	public ExecuteButton(int x, int y, int width, int height, String text, Execute execute) {
 		super(x, y, width, height, null);
 		
 		this.text = text;
+		this.execute = execute;
 	}
 	
 	public void tick() {
 		width = Main.explorer.getWidth() - 40;
+		
+		if (leftClicked())
+			execute.execute();
 	}
 	
 	public void render(Graphics g) {
