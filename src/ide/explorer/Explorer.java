@@ -24,6 +24,7 @@ import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.searchreplace.ExecuteButton;
 import ide.searchreplace.InputBox;
 import ide.searchreplace.RadioButton;
 import ide.searchreplace.SearchReplaceCore;
@@ -47,6 +48,7 @@ public class Explorer extends IDEComponent {
 	public static InputBox search, replace;
 	public static ToggleButton caseSensitive;
 	public static RadioButton entireDocument, selectedLines;
+	public static ExecuteButton searchNext, replaceAll;
 	
 	public static boolean searchReplaceActive = false;
 	

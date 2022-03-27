@@ -206,7 +206,6 @@ public class Main implements Runnable, Tickable {
         
         entireDocument = spritesheet.getSprite(240, 0, 16, 16);
         selectedLines = spritesheet.getSprite(256, 0, 16, 16);
-        selectedLinesDarker = spritesheet.getSprite(256, 0, 16, 16);
         
         ///////
         
@@ -295,8 +294,6 @@ public class Main implements Runnable, Tickable {
         
         entireDocument = Colors.swapColor(entireDocument, Colors.textLightDefault, Colors.textLight);
         selectedLines = Colors.swapColor(selectedLines, Colors.textLightDefault, Colors.textLight);
-        
-        selectedLinesDarker = Colors.swapColor(selectedLinesDarker, Colors.textLightDefault, Colors.textLight.darker());
         
         /// Change some colors ///
         

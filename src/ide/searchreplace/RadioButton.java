@@ -24,6 +24,7 @@ public class RadioButton extends IDEComponent {
 	private int engLength, portLength;
 	
 	private boolean isEntireDoc;
+	private BufferedImage originalSprite;
 	
 	public RadioButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption, int engLength, int portLength, boolean isEntireDoc) {
 		super(x, y, width, height, sprite);
@@ -35,6 +36,8 @@ public class RadioButton extends IDEComponent {
 		this.portLength = portLength;
 		
 		this.isEntireDoc = isEntireDoc;
+		
+		this.originalSprite = sprite;
 	}
 	
 	public boolean getState() {
@@ -68,10 +71,10 @@ public class RadioButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		if (!isEntireDoc) {
+		/*if (!isEntireDoc) {
 			if (!Main.editor.selecting) sprite = Main.selectedLinesDarker;
 			else sprite = Main.selectedLines;
-		}
+		}*/
 		
 		if (hovered()) {
 			if (!isEntireDoc && Main.editor.selecting) {
@@ -84,6 +87,9 @@ public class RadioButton extends IDEComponent {
 				g.fillRect(x, y, width, height);
 			}
 		}
+		
+		if (!isEntireDoc && !Main.editor.selecting) sprite = Colors.brightness(originalSprite, .7f);
+		if (!isEntireDoc && Main.editor.selecting) sprite = originalSprite;
 		
 		super.render(g);
 		

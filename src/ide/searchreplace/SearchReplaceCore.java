@@ -34,12 +34,18 @@ public final class SearchReplaceCore {
 		if (Explorer.caseSensitive == null)
 			Explorer.caseSensitive = new ToggleButton(20, 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430);
 		
+		if (Explorer.searchNext == null)
+			Explorer.searchNext = new ExecuteButton(20, 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState()));
+		
+		if (Explorer.replaceAll == null)
+			Explorer.replaceAll = new ExecuteButton(20, 300, Main.explorer.getWidth() - 40, 20, Texts.replaceAll, () -> replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState()));
+		
 		IDEComponent.toAdd.add(new BackButton(20, 20, 24, 24, Main.back));
 		IDEComponent.toAdd.add(Explorer.search);
 		IDEComponent.toAdd.add(Explorer.replace);
 		
-		IDEComponent.toAdd.add(new ExecuteButton(20, 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState())));
-		IDEComponent.toAdd.add(new ExecuteButton(20, 300, Main.explorer.getWidth() - 40, 20, Texts.replaceAll, () -> replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState())));
+		IDEComponent.toAdd.add(Explorer.searchNext);
+		IDEComponent.toAdd.add(Explorer.replaceAll);
 		
 		IDEComponent.toAdd.add(Explorer.entireDocument);
 		IDEComponent.toAdd.add(Explorer.selectedLines);

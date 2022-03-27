@@ -737,7 +737,7 @@ public class CommandTerminal extends IDEComponent {
 			case "togglecodehelpers":
 				if (Main.editor.editing == null) break;
 				
-				Main.editor.codeHelpersOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor syntaxerrorson, true (lógico que o nome da variável n seria esse né :/)
+				Main.editor.codeHelpersOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor codehelperson, true (lógico que o nome da variável n seria esse né :/)
 				break;
 				
 			case "gotocursor":

@@ -2,6 +2,7 @@ package ide.util;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 
 import ide.main.Main;
 
@@ -118,6 +119,12 @@ public class Colors {
     	String b = Integer.toHexString(c.getBlue());
     	
     	return "#" + r + g + b;
+    }
+    
+    public static BufferedImage brightness(BufferedImage img, float scaleFactor) {
+    	RescaleOp op = new RescaleOp(scaleFactor, 0, null);
+    	
+    	return op.filter(img, null);
     }
     
     /*public static BufferedImage darker(BufferedImage img) {
