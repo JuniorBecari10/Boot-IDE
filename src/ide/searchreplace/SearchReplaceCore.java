@@ -56,10 +56,10 @@ public final class SearchReplaceCore {
 			Explorer.regex = new ToggleButton(58, 210, 32, 32, Main.regex, false, Texts.regex, 280, 270);
 		
 		if (Explorer.searchNext == null)
-			Explorer.searchNext = new ExecuteButton(20, 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState()));
+			Explorer.searchNext = new ExecuteButton(20, 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()));
 		
 		if (Explorer.replaceAll == null)
-			Explorer.replaceAll = new ExecuteButton(20, 300, Main.explorer.getWidth() - 40, 20, Texts.replaceAll, () -> replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState()));
+			Explorer.replaceAll = new ExecuteButton(20, 300, Main.explorer.getWidth() - 40, 20, Texts.replaceAll, () -> replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()));
 	}
 	
 	public static synchronized void dispose() {
@@ -71,7 +71,7 @@ public final class SearchReplaceCore {
 		}
 	}
 	
-	public static void searchNext(String searchText, boolean caseSensitive, boolean isEntireDocument) {
+	public static void searchNext(String searchText, boolean caseSensitive, boolean regex, boolean isEntireDocument) {
 		int occurnum = 0;
 		if (searchText.equals("")) return;
 		
@@ -84,7 +84,13 @@ public final class SearchReplaceCore {
 				
 				String text = caseSensitive ? searchText : searchText.toLowerCase();
 				
-				if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+				if (!regex) {
+					if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+				}
+				else {
+					if (s.matches(searchText)) linesfound.add(i);
+				}
+						
 			}
 		}
 		else {
@@ -94,7 +100,12 @@ public final class SearchReplaceCore {
 				
 				String text = caseSensitive ? searchText : searchText.toLowerCase();
 				
-				if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+				if (!regex) {
+					if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+				}
+				else {
+					if (s.matches(searchText)) linesfound.add(i);
+				}
 			}
 		}
 		
@@ -124,7 +135,7 @@ public final class SearchReplaceCore {
 		Explorer.selected = null;
 	}
 	
-	public static void replaceAll(String searchText, String replaceText, boolean caseSensitive, boolean isEntireDocument) {
+	public static void replaceAll(String searchText, String replaceText, boolean caseSensitive, boolean regex, boolean isEntireDocument) {
 		if (Main.editor.isReadOnly) return;
 		if (searchText.equals("")) return;
 		
@@ -138,7 +149,12 @@ public final class SearchReplaceCore {
 				IDELine l = Main.editor.lines.get(i);
 				String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
 				
-				if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+				if (!regex) {
+					if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+				}
+				else {
+					if (s.matches(searchText)) linesfound.add(i);
+				}
 			}
 		}
 		else {
@@ -146,7 +162,12 @@ public final class SearchReplaceCore {
 				IDELine l = Main.editor.lines.get(i);
 				String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
 				
-				if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+				if (!regex) {
+					if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+				}
+				else {
+					if (s.matches(searchText)) linesfound.add(i);
+				}
 			}
 		}
 		

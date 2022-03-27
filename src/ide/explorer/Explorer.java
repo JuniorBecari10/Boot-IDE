@@ -131,16 +131,16 @@ public class Explorer extends IDEComponent {
 	    		else selected = search;
 	    	}
 	    	
-	    	if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+	    	if (selected == null && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 	    		KeyInput.updateKeys();
 	    		
-	    		SearchReplaceCore.searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState());
+	    		SearchReplaceCore.searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState());
 	    	}
 	    	
-	    	if (KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+	    	if (selected == null && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 	    		KeyInput.updateKeys();
 	    		
-	    		SearchReplaceCore.replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState());
+	    		SearchReplaceCore.replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState());
 	    	}
 	    	
 	    	if (selected != null && KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Desselecionar a caixa Search)
