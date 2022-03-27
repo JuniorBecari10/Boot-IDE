@@ -7630,7 +7630,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 					
-					else if (Explorer.searchReplaceActive && KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Selecionar a caixa Search)
+					else if (Explorer.searchReplaceActive && Explorer.selected == null && KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Selecionar a caixa Search)
 						KeyInput.updateKeys();
 						
 						Explorer.selected = Explorer.search;

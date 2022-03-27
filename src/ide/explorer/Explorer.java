@@ -130,6 +130,14 @@ public class Explorer extends IDEComponent {
 	    		if (selected == search) selected = replace;
 	    		else selected = search;
 	    	}
+	    	
+	    	if (selected != null && KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Desselecionar a caixa Search)
+				KeyInput.updateKeys();
+				
+				Explorer.selected = null;
+				
+				return;
+			}
 	    }
 	    
 	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && searchReplaceActive) {
@@ -303,15 +311,6 @@ public class Explorer extends IDEComponent {
 	    			
 	    			return;
 	    		}
-	    		
-	    		if (Explorer.searchReplaceActive && KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Desselecionar a caixa Search)
-					KeyInput.updateKeys();
-					
-					if (selected == search)
-						Explorer.selected = null;
-					
-					return;
-				}
 	    	}
 	    	
 	    	if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered())) && !hoveringListableFile) {
