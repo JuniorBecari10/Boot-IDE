@@ -168,10 +168,10 @@ public class CodeEditor extends IDEComponent {
 
 	///
 
-	public static BufferedImage functions = Main.icons.getSprite(0, 0, 8, 8);
-	public static BufferedImage objects = Main.icons.getSprite(8, 0, 8, 8);
-	public static BufferedImage keywords = Main.icons.getSprite(16, 0, 8, 8);
-	public static BufferedImage variables = Main.icons.getSprite(24, 0, 8, 8);
+	public static BufferedImage functions = Main.spritesheet.getSprite(176, 0, 8, 8);
+	public static BufferedImage objects = Main.spritesheet.getSprite(184, 0, 8, 8);
+	public static BufferedImage keywords = Main.spritesheet.getSprite(192, 0, 8, 8);
+	public static BufferedImage variables = Main.spritesheet.getSprite(200, 0, 8, 8);
 
 	///
 
