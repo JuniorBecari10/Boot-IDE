@@ -717,7 +717,21 @@ public class CodeEditor extends IDEComponent {
 			"master", "puppet", "remotesync", "mastersync", "puppetsync", "PI", "TAU", "INF", "NAN", "bool", "int",
 			"float", "String", "void", "true", "false" };
 	
-	public static final String[] mcKeys = { "true", "false", "minecraft", "?", "ability", "advancement", "alwaysday", "attribute", "ban", "ban-ip", "banlist", "bossbar", "camerashake", "changesetting", "clear", "clearspawnpoint", "clone", "connect", "data", "datapack", "daylock", "debug", "dedicatedwsserver", "defaultgamemode", "deop", "dialogue", "difficulty", "effect", "enchant", "event", "execute", "experience", "fill", "fog", "forceload", "function", "gamemode", "gamerule", "gametest", "give", "help", "immutableworld", "item", "jfr", "kick", "fill", "list", "locate", "locatebiome", "loot", "me", "mobevent", "msg", "music", "op", "ops", "pardon", "pardon-ip", "particle", "perf", "permission", "playanimation", "playsound", "publish", "recipe", "reload", "remove", "replaceitem", "ride", "save", "save-all", "save-off", "save-on", "say", "schedule", "scoreboard", "seed", "setblock", "setidletimeout", "setmaxplayers", "setworldspawn", "spawnpoint", "spectate", "spreadplayers", "stop", "stopsound", "structure", "summon", "tag", "team", "teammsg", "tell", "tellraw", "testfor", "testforblock", "testforblocks", "tickingarea", "time", "title", "titleraw", "tm", "toggledownfall", "tp", "trigger", "w", "wb", "weather", "whitelist", "worldborder", "worldbuilder", "wsserver", "xp" };
+	public static final String[] mcKeys = { "true", "false", "minecraft", "?", "ability", "advancement", "alwaysday", "attribute", "ban", "ban-ip",
+			"banlist", "bossbar", "camerashake", "changesetting", "clear", "clearspawnpoint", "clone", "connect", "data", "datapack", "daylock",
+			"debug", "dedicatedwsserver", "defaultgamemode", "deop", "dialogue", "difficulty", "effect", "enchant", "event", "execute", "experience",
+			"fill", "fog", "forceload", "function", "gamemode", "gamerule", "gametest", "give", "help", "immutableworld", "item", "jfr", "kick",
+			"fill", "list", "locate", "locatebiome", "loot", "me", "mobevent", "msg", "music", "op", "ops", "pardon", "pardon-ip", "particle", "perf",
+			"permission", "playanimation", "playsound", "publish", "recipe", "reload", "remove", "replaceitem", "ride", "save", "save-all", "save-off",
+			"save-on", "say", "schedule", "scoreboard", "seed", "setblock", "setidletimeout", "setmaxplayers", "setworldspawn", "spawnpoint", "spectate",
+			"spreadplayers", "stop", "stopsound", "structure", "summon", "tag", "team", "teammsg", "tell", "tellraw", "testfor", "testforblock",
+			"testforblocks", "tickingarea", "time", "title", "titleraw", "tm", "toggledownfall", "tp", "trigger", "w", "wb", "weather", "whitelist",
+			"worldborder", "worldbuilder", "wsserver", "xp" };
+	
+	public static final String[] oCamlKeys = { "and", "as", "assert", "asr", "begin", "class", "constraint", "do", "done", "downto", "else", "end",
+			"exception", "external", "false", "for", "fun", "function", "functor", "if", "in", "include", "inherir", "initializer", "land", "lazy",
+			"let", "lor", "lsl", "lsr", "lxor", "match", "method", "mod", "module", "mutable", "new", "nonrec", "object", "of", "open", "or", "private",
+			"rec", "sig", "struct", "then", "to", "true", "try", "type", "val", "virtual", "when", "while", "with" };
 	
 	public Thread typeThread;
 	public Thread killAllTabs;
@@ -1310,7 +1324,12 @@ public class CodeEditor extends IDEComponent {
 		case ".gd": return gdKeys;
 		case ".mcfunction": return mcKeys;
 		case ".por": return porKeys;
-
+		case ".cmxa": return oCamlKeys;
+		case ".ml": return oCamlKeys;
+		case ".mli": return oCamlKeys;
+		case ".mly": return oCamlKeys;
+		case ".clt": return oCamlKeys;
+		
 		case ".html": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
 		case ".svelte": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
 		case ".xhtml": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys))); // será que tira o phpkeys? TODO
@@ -1527,6 +1546,11 @@ public class CodeEditor extends IDEComponent {
 		case ".gd": return "GDScript";
 		case ".mcfunction": return minMode ? "MC Function" : "Minecraft Function";
 		case ".por": return "Portugol";
+		case ".cmxa": return "OCaml";
+		case ".ml": return "OCaml";
+		case ".mli": return "OCaml";
+		case ".mly": return "OCaml";
+		case ".clt": return "OCaml";
 
 		case ".html": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
 		case ".xhtml": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
@@ -2293,6 +2317,26 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".por":
 			for (String s : porKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s);
+
+				for (Integer i : indxs) {
+					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
+							|| ((i + s.length() < chars.length)
+									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
+						continue;
+
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+
+			break;
+			
+		case ".cmxa":
+		case ".ml":
+		case ".mli":
+		case ".mly":
+		case ".clt":
+			for (String s : oCamlKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 
 				for (Integer i : indxs) {
@@ -4238,6 +4282,8 @@ public class CodeEditor extends IDEComponent {
 					fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 
 				///
+				
+				if (ext.equalsIgnoreCase(".cmxa") || ext.equalsIgnoreCase(".ml") || ext.equalsIgnoreCase(".mli") || ext.equalsIgnoreCase(".mly") || ext.equalsIgnoreCase(".clt")) return fs;
 
 				indxs = findWord(new String(chars), "`"); // colorir strings
 
@@ -5604,6 +5650,11 @@ public class CodeEditor extends IDEComponent {
 		case ".pas":
 		case ".lpr":
 		case ".pp":
+		case ".cmxa":
+		case ".ml":
+		case ".mli":
+		case ".mly":
+		case ".clt":
 			indxs = findWord(new String(chars), "(*"); // colorir comentários multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "*)");
 
@@ -6150,6 +6201,8 @@ public class CodeEditor extends IDEComponent {
 			break;
 
 		case 39: // -> ( ' ) Aspas Simples
+			if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".cmxa") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".ml") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".mli") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".mly") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".clt")) break;
+			
 			if (pre.length() == 0 || cursorX == pre.length())
 				pre.append((char) 39);
 			else

@@ -93,7 +93,6 @@ public final class SearchReplaceCore {
 				else {
 					if (s.matches(searchText)) linesfound.add(i);
 				}
-						
 			}
 		}
 		else {
