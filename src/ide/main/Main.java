@@ -78,7 +78,6 @@ public class Main implements Runnable, Tickable {
     public static CodeEditor editor;
     
     public static Spritesheet spritesheet;
-    public static Spritesheet icons;
     
     public static Logo logo;
     
@@ -96,7 +95,6 @@ public class Main implements Runnable, Tickable {
     public static String fntnr = "/font.png";
     public static String fntbl = "/bold.png";
     public static String conffile = "none";
-    public static String iconsfile = "/autocomplete-icons.png";
     
     public static Spritesheet originalSpritesheet;
     
@@ -166,7 +164,6 @@ public class Main implements Runnable, Tickable {
     		args = new String[1];
     	
     	originalSpritesheet = new Spritesheet(sprsh);
-        icons = new Spritesheet(iconsfile);
     	
         modifiedSpritesheet = new Spritesheet(spritesheetFile);
         
