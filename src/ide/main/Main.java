@@ -61,7 +61,7 @@ public class Main implements Runnable, Tickable {
     public static final String SPRITESHEET_FILE_NAME = "Resources/spritesheet.png";
     
     public static final String PROGRAM_NAME = "Boot IDE";
-    public static final String VERSION = "Beta 1 v4.4";
+    public static final String VERSION = "Beta 2 v4.4";
     
     public static BufferedImage UNKNOWN_FILE_ICON = null;
     

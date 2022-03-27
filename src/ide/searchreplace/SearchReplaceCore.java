@@ -80,12 +80,15 @@ public final class SearchReplaceCore {
 		if (isEntireDocument) { // se não é selectedlines...
 			for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
 				IDELine l = Main.editor.lines.get(i);
-				String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+				String s = new String(CodeEditor.toCharArray(l.getChars()));
 				
 				String text = caseSensitive ? searchText : searchText.toLowerCase();
 				
 				if (!regex) {
-					if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+					if (!caseSensitive) {
+						if (s.toLowerCase().contains(text)) linesfound.add(i);
+					} else
+						if (s.contains(text)) linesfound.add(i);
 				}
 				else {
 					if (s.matches(searchText)) linesfound.add(i);
@@ -96,12 +99,15 @@ public final class SearchReplaceCore {
 		else {
 			for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
 				IDELine l = Main.editor.lines.get(i);
-				String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+				String s = new String(CodeEditor.toCharArray(l.getChars()));
 				
 				String text = caseSensitive ? searchText : searchText.toLowerCase();
 				
 				if (!regex) {
-					if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+					if (!caseSensitive) {
+						if (s.toLowerCase().contains(text)) linesfound.add(i);
+					} else
+						if (s.contains(text)) linesfound.add(i);
 				}
 				else {
 					if (s.matches(searchText)) linesfound.add(i);
@@ -141,16 +147,19 @@ public final class SearchReplaceCore {
 		
 		List<Integer> linesfound = new ArrayList<>();
 		
-		String text = caseSensitive ? searchText : searchText.toLowerCase();
+		String text = caseSensitive ? searchText : searchText;
 		String replText = replaceText;
 		
 		if (isEntireDocument) {
 			for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
 				IDELine l = Main.editor.lines.get(i);
-				String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+				String s = new String(CodeEditor.toCharArray(l.getChars()));
 				
 				if (!regex) {
-					if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+					if (!caseSensitive) {
+						if (s.toLowerCase().contains(text)) linesfound.add(i);
+					} else
+						if (s.contains(text)) linesfound.add(i);
 				}
 				else {
 					if (s.matches(searchText)) linesfound.add(i);
@@ -160,10 +169,13 @@ public final class SearchReplaceCore {
 		else {
 			for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) { // tem que ser for normal mesmo pq preciso do numero
 				IDELine l = Main.editor.lines.get(i);
-				String s = new String(CodeEditor.toCharArray(l.getChars())).toLowerCase();
+				String s = new String(CodeEditor.toCharArray(l.getChars()));
 				
 				if (!regex) {
-					if (s.contains(text)) linesfound.add(i); // viu pq precisa do numero?
+					if (!caseSensitive) {
+						if (s.toLowerCase().contains(text)) linesfound.add(i);
+					} else
+						if (s.contains(text)) linesfound.add(i);
 				}
 				else {
 					if (s.matches(searchText)) linesfound.add(i);
@@ -183,7 +195,10 @@ public final class SearchReplaceCore {
 		for (Integer i : linesfound) {
 			String s = new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars()));
 			
-			s = s.replaceAll(text, replText);
+			if (!caseSensitive)
+				s = s.toLowerCase().replace(text, replText);
+			else
+				s = s.replace(text, replText);
 			
 			Main.editor.register(new StringBuilder(s), i);
 			
