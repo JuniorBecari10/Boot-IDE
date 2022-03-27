@@ -304,7 +304,7 @@ public final class Texts {
 			configFileNotChanged = "O Arquivo de Configurações foi carregado, mas nada foi alterado. Deseja que ele continue carregado?";
 			didNothing = "Não fez nada!";
 			
-			searchReplace = "Localizar/Substituir";
+			searchReplace = "Local./Subst.";
 			searchReplaceMin = "L/S";
 			
 			search = "Localizar";
