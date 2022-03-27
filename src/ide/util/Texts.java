@@ -127,6 +127,7 @@ public final class Texts {
 	public static String selectedLines;
 	
 	public static String caseSensitive;
+	public static String regex;
 	
 	public static String scope;
 	public static String options;
@@ -322,6 +323,7 @@ public final class Texts {
 			close = "Fechar";
 			
 			caseSensitive = "Sensível a letras maiúsculas";
+			regex = "Expressão Regular";
 			
 			cannotFindWord = "O Localizar/Substituir não encontrou nesse documento as palavras solicitadas, usando as configurações atuais.";
 			
@@ -508,6 +510,7 @@ public final class Texts {
 			close = "Close";
 			
 			caseSensitive = "Case Sensitive";
+			regex = "Regular Expression";
 			
 			cannotFindWord = "Search/Replace could not find the requested words in this document using the current settings.";
 			

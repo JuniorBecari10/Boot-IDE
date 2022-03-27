@@ -30,6 +30,7 @@ public final class SearchReplaceCore {
 		IDEComponent.toAdd.add(Explorer.entireDocument);
 		IDEComponent.toAdd.add(Explorer.selectedLines);
 		
+		IDEComponent.toAdd.add(Explorer.regex);
 		IDEComponent.toAdd.add(Explorer.caseSensitive); // fica por último
 		
 		Explorer.selected = Explorer.search;
@@ -50,6 +51,9 @@ public final class SearchReplaceCore {
 		
 		if (Explorer.caseSensitive == null)
 			Explorer.caseSensitive = new ToggleButton(20, 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430);
+		
+		if (Explorer.regex == null)
+			Explorer.regex = new ToggleButton(58, 210, 32, 32, Main.regex, false, Texts.regex, 280, 270);
 		
 		if (Explorer.searchNext == null)
 			Explorer.searchNext = new ExecuteButton(20, 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState()));

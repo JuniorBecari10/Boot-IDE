@@ -46,7 +46,7 @@ public class Explorer extends IDEComponent {
 	public static InputBox selected;
 	
 	public static InputBox search, replace;
-	public static ToggleButton caseSensitive;
+	public static ToggleButton caseSensitive, regex;
 	public static RadioButton entireDocument, selectedLines;
 	public static ExecuteButton searchNext, replaceAll;
 	
@@ -118,7 +118,7 @@ public class Explorer extends IDEComponent {
 	    	ReloadButton.reloadExplorer();*/
 	    
 	    if (searchReplaceActive) {
-	    	if (search == null || replace == null || caseSensitive == null || entireDocument == null || selectedLines == null || searchNext == null || replaceAll == null)
+	    	if (search == null || replace == null || caseSensitive == null || regex == null || entireDocument == null || selectedLines == null || searchNext == null || replaceAll == null)
 	    		SearchReplaceCore.initComponents();
 	    	
 	    	if (entireDocument.getState() == false && selectedLines.getState() == false)
@@ -129,6 +129,18 @@ public class Explorer extends IDEComponent {
 	    		
 	    		if (selected == search) selected = replace;
 	    		else selected = search;
+	    	}
+	    	
+	    	if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+	    		KeyInput.updateKeys();
+	    		
+	    		SearchReplaceCore.searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState());
+	    	}
+	    	
+	    	if (KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+	    		KeyInput.updateKeys();
+	    		
+	    		SearchReplaceCore.replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState());
 	    	}
 	    	
 	    	if (selected != null && KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Desselecionar a caixa Search)

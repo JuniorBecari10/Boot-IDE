@@ -742,6 +742,7 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "gotocursor":
 				if (Main.editor.editing == null) break;
+				if (!(Main.editor.drawcx < Main.editor.getX() + (CodeEditor.FONT_SIZE * 4) || Main.editor.drawcx > Main.screen.getWidth() || Main.editor.drawcy < Main.editor.getY() || Main.editor.drawcy > Main.screen.getHeight())) break;
 				
 				//Main.editor.scrY = (Main.editor.cursorY * (CodeEditor.FONT_SIZE + (CodeEditor.FONT_SIZE / 3)));
 				

@@ -280,7 +280,7 @@ public class CodeEditor extends IDEComponent {
 
 	public static final String[] jsKeys = { "abstract", "arguments", "await", "boolean", "break", "byte", "case",
 			"catch", "char", "class", "const", "continue", "debugger", "default", "delete", "do", "double", "else",
-			"enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if",
+			"enum", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if",
 			"implements", "import", "in", "instanceof", "int", "interface", "let", "long", "native", "new", "null",
 			"package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized",
 			"this", "throw", "throws", "transient", "true", "try", "typeof", "var", "void", "volatile", "while", "with",
@@ -395,7 +395,7 @@ public class CodeEditor extends IDEComponent {
 			"lock", "params", "ref", "out", "using", "alias", "await", "sizeof", "typeof", "stackalloc", "is", "base",
 			"this", "null", "false", "true", "value", "void", "bool", "byte", "interface", "char", "class", "decimal",
 			"double", "enum", "float", "int", "long", "sbyte", "short", "string", "super", "struct", "uint", "ulong",
-			"ushort", "add", "var", "dynamic", "global", "set", "namespace", "object", "as", "get", "operator" };
+			"ushort", "add", "var", "dynamic", "global", "set", "namespace", "object", "as", "get", "operator", "nameof" };
 
 	public static final String[] rKeys = { "if", "else", "repeat", "while", "function", "for", "in", "next", "break",
 			"TRUE", "FALSE", "NULL", "Inf", "NaN", "NA", "NA_integer", "NA_real", "NA_complex", "NA_character" };
@@ -643,7 +643,7 @@ public class CodeEditor extends IDEComponent {
 			"byte", "double", "var", "module", "enum", "as", "transient", "document", "long", "undefined", "default",
 			"goto", "native", "yield", "get", "typeof", "break", "abstract", "throw", "char", "return", "synchronized",
 			"debugger", "do", "float", "while", "continue", "function", "export", "new", "package", "static", "void",
-			"finally", "this", "throws", "eval", "extends", "null", "final", "true", "try", "implements", "private",
+			"finally", "this", "throws", "extends", "null", "final", "true", "try", "implements", "private",
 			"const", "import", "string", "for", "interface", "delete", "switch", "public", "of", "await", "class",
 			"console", "false", "volatile", "any", "int", "instanceof", "super", "with", "async", "declare",
 			"namespace", "boolean", "short", "arguments", "window", "as", "from", "navigator", "constructor", "debug",
@@ -7328,6 +7328,8 @@ public class CodeEditor extends IDEComponent {
 						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 							KeyInput.updateKeys();
 							
+							CommandTerminal.runCommand("gotocursor");
+							
 							if (RightClickOption.isAutoCompleteActive()) {
 								autocompleteindex--;
 								
@@ -7356,6 +7358,8 @@ public class CodeEditor extends IDEComponent {
 
 						else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
 							KeyInput.updateKeys();
+							
+							CommandTerminal.runCommand("gotocursor");
 							
 							if (RightClickOption.isAutoCompleteActive()) {
 								autocompleteindex++;
@@ -7386,6 +7390,8 @@ public class CodeEditor extends IDEComponent {
 						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
 							KeyInput.updateKeys();
 							
+							CommandTerminal.runCommand("gotocursor");
+							
 							wordSinceSpace = "";
 							
 							cursorX--;
@@ -7404,6 +7410,8 @@ public class CodeEditor extends IDEComponent {
 						else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
 							KeyInput.updateKeys();
 							
+							CommandTerminal.runCommand("gotocursor");
+							
 							wordSinceSpace = "";
 							
 							cursorX++;
@@ -7421,6 +7429,8 @@ public class CodeEditor extends IDEComponent {
 					} else { // isShiftDown()
 						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
 							KeyInput.updateKeys();
+							
+							CommandTerminal.runCommand("gotocursor");
 							
 							wordSinceSpace = "";
 							
@@ -7444,6 +7454,8 @@ public class CodeEditor extends IDEComponent {
 						else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
 							KeyInput.updateKeys();
 							
+							CommandTerminal.runCommand("gotocursor");
+							
 							wordSinceSpace = "";
 							
 							if (noneSelected())
@@ -7464,6 +7476,8 @@ public class CodeEditor extends IDEComponent {
 						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT) {
 							KeyInput.updateKeys();
 							
+							CommandTerminal.runCommand("gotocursor");
+							
 							wordSinceSpace = "";
 							
 							if (noneSelected())
@@ -7483,6 +7497,8 @@ public class CodeEditor extends IDEComponent {
 
 						else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT) {
 							KeyInput.updateKeys();
+							
+							CommandTerminal.runCommand("gotocursor");
 							
 							wordSinceSpace = "";
 							
@@ -7892,7 +7908,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
+					/*if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
 						KeyInput.updateKeys();
 						
 						if (undo.isEmpty()) return;
@@ -7926,7 +7942,7 @@ public class CodeEditor extends IDEComponent {
 						editing.setSaved(false);
 						
 						return;
-					}
+					}*/
 				}
 	
 	public void scrollTabs() {
