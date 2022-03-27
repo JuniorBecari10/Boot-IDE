@@ -118,6 +118,9 @@ public class Explorer extends IDEComponent {
 	    	ReloadButton.reloadExplorer();*/
 	    
 	    if (searchReplaceActive) {
+	    	if (search == null || replace == null || caseSensitive == null || entireDocument == null || selectedLines == null || searchNext == null || replaceAll == null)
+	    		SearchReplaceCore.initComponents();
+	    	
 	    	if (entireDocument.getState() == false && selectedLines.getState() == false)
 	    		entireDocument.setState(true);
 	    	
@@ -300,6 +303,15 @@ public class Explorer extends IDEComponent {
 	    			
 	    			return;
 	    		}
+	    		
+	    		if (Explorer.searchReplaceActive && KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Desselecionar a caixa Search)
+					KeyInput.updateKeys();
+					
+					if (selected == search)
+						Explorer.selected = null;
+					
+					return;
+				}
 	    	}
 	    	
 	    	if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered())) && !hoveringListableFile) {

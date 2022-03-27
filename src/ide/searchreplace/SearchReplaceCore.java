@@ -18,7 +18,24 @@ public final class SearchReplaceCore {
 	private SearchReplaceCore() {}
 	
 	public static synchronized void init() {
+		initComponents();
 		
+		IDEComponent.toAdd.add(new BackButton(20, 20, 24, 24, Main.back));
+		IDEComponent.toAdd.add(Explorer.search);
+		IDEComponent.toAdd.add(Explorer.replace);
+		
+		IDEComponent.toAdd.add(Explorer.searchNext);
+		IDEComponent.toAdd.add(Explorer.replaceAll);
+		
+		IDEComponent.toAdd.add(Explorer.entireDocument);
+		IDEComponent.toAdd.add(Explorer.selectedLines);
+		
+		IDEComponent.toAdd.add(Explorer.caseSensitive); // fica por último
+		
+		Explorer.selected = Explorer.search;
+	}
+	
+	public static synchronized void initComponents() {
 		if (Explorer.search == null)
 			Explorer.search = new InputBox(20, 100, Main.explorer.getWidth() - 40, 20);
 		
@@ -39,20 +56,6 @@ public final class SearchReplaceCore {
 		
 		if (Explorer.replaceAll == null)
 			Explorer.replaceAll = new ExecuteButton(20, 300, Main.explorer.getWidth() - 40, 20, Texts.replaceAll, () -> replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.entireDocument.getState()));
-		
-		IDEComponent.toAdd.add(new BackButton(20, 20, 24, 24, Main.back));
-		IDEComponent.toAdd.add(Explorer.search);
-		IDEComponent.toAdd.add(Explorer.replace);
-		
-		IDEComponent.toAdd.add(Explorer.searchNext);
-		IDEComponent.toAdd.add(Explorer.replaceAll);
-		
-		IDEComponent.toAdd.add(Explorer.entireDocument);
-		IDEComponent.toAdd.add(Explorer.selectedLines);
-		
-		IDEComponent.toAdd.add(Explorer.caseSensitive); // fica por último
-		
-		Explorer.selected = Explorer.search;
 	}
 	
 	public static synchronized void dispose() {

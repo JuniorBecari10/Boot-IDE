@@ -7592,7 +7592,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME ) { // Home - Começo da Linha
+					else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) { // Home - Começo da Linha
 						KeyInput.updateKeys();
 
 						scrX = 0;
@@ -7627,6 +7627,14 @@ public class CodeEditor extends IDEComponent {
 
 						execute("searchrep");
 
+						return;
+					}
+					
+					else if (Explorer.searchReplaceActive && KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Selecionar a caixa Search)
+						KeyInput.updateKeys();
+						
+						Explorer.selected = Explorer.search;
+						
 						return;
 					}
 
