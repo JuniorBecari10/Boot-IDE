@@ -674,7 +674,7 @@ public class Main implements Runnable, Tickable {
         g.fillRect(0, 0, Screen.WIDTH, Screen.HEIGHT);
 
         for (IDEComponent c : IDEComponent.components)
-            c.render(g);
+        	c.render(g);
         
         if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))
 	        for (Tab t : Main.editor.tabs) {

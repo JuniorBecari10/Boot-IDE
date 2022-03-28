@@ -1546,11 +1546,11 @@ public class CodeEditor extends IDEComponent {
 		case ".gd": return "GDScript";
 		case ".mcfunction": return minMode ? "MC Function" : "Minecraft Function";
 		case ".por": return "Portugol";
-		case ".cmxa": return "OCaml";
-		case ".ml": return "OCaml";
-		case ".mli": return "OCaml";
-		case ".mly": return "OCaml";
-		case ".clt": return "OCaml";
+		case ".cmxa": return minMode ? "OCaml" : "Objective Caml - OCaml";
+		case ".ml": return minMode ? "OCaml" : "Objective Caml - OCaml";
+		case ".mli": return minMode ? "OCaml" : "Objective Caml - OCaml";
+		case ".mly": return minMode ? "OCaml" : "Objective Caml - OCaml";
+		case ".clt": return minMode ? "OCaml" : "Objective Caml - OCaml";
 
 		case ".html": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
 		case ".xhtml": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";

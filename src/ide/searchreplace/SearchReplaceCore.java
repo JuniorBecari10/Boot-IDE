@@ -82,13 +82,13 @@ public final class SearchReplaceCore {
 				IDELine l = Main.editor.lines.get(i);
 				String s = new String(CodeEditor.toCharArray(l.getChars()));
 				
-				String text = caseSensitive ? searchText : searchText.toLowerCase();
-				
 				if (!regex) {
-					if (!caseSensitive) {
-						if (s.toLowerCase().contains(text)) linesfound.add(i);
-					} else
-						if (s.contains(text)) linesfound.add(i);
+					if (caseSensitive) {
+						if (s.contains(searchText)) linesfound.add(i);
+					}
+					else {
+						if (s.toLowerCase().contains(searchText.toLowerCase())) linesfound.add(i);
+					}
 				}
 				else {
 					if (s.matches(searchText)) linesfound.add(i);
