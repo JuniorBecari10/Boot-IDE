@@ -365,12 +365,8 @@ public class Explorer extends IDEComponent {
 						else if (MouseInput.wheelDown() && last.getY() > 200) first.setY(first.getY() - 90);
 		    		}
 		    		
-		    		//System.out.println(last.getY());
-		    		
 		    		if (first.getY() > 200) first.setY(200);
-		    		if (last.getY() < 230) last.setY(230);
-		    		
-		    		//System.out.println(last.getY() + "\n------");
+		    		if (last.getY() < 200) first.setY(230 - (files.size() * 30));
 				}
 	    	}
 	    	
