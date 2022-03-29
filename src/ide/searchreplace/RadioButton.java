@@ -88,8 +88,8 @@ public class RadioButton extends IDEComponent {
 			}
 		}
 		
-		if (!isEntireDoc && !Main.editor.selecting) sprite = Colors.brightness(originalSprite, .7f);
-		if (!isEntireDoc && Main.editor.selecting) sprite = originalSprite;
+		/*if (!isEntireDoc && !Main.editor.selecting) sprite = Colors.brightness(originalSprite, .7f);
+		if (!isEntireDoc && Main.editor.selecting) sprite = originalSprite;*/
 		
 		super.render(g);
 		
