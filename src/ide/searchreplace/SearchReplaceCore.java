@@ -142,6 +142,8 @@ public final class SearchReplaceCore {
 			return;
 		}
 		
+		CommandTerminal.runCommand("gotocursor");
+		
 		try {
 			Main.editor.cursorX = xPos.get(occurnum);
 			Main.editor.cursorY = (linesfound.get(occurnum) - 1) + 2;
@@ -150,7 +152,6 @@ public final class SearchReplaceCore {
 			
 			Main.editor.cursorX = xPos.get(occurnum);
 			Main.editor.cursorY = (linesfound.get(occurnum) - 1) + 2;
-			CommandTerminal.runCommand("gotocursor");
 			
 			CodeEditor.setSystemLook();
 			JOptionPane.showMessageDialog(null, Texts.didNotFindAfterThat, Texts.itsTheEnd, JOptionPane.INFORMATION_MESSAGE);

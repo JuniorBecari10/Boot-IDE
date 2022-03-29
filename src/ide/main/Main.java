@@ -153,8 +153,6 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage entireDocument;
     public static BufferedImage selectedLines;
     
-    public static BufferedImage selectedLinesDarker;
-    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com

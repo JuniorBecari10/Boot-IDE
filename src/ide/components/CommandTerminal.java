@@ -895,6 +895,8 @@ public class CommandTerminal extends IDEComponent {
 				} catch (NumberFormatException | IOException e) {
 					CodeEditor.FONT_SIZE = prevsize;
 				}
+				
+				runCommand("gotocursor");
 				break;
 				
 			case "insertchar":
