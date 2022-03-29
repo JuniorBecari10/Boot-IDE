@@ -5977,7 +5977,7 @@ public class CodeEditor extends IDEComponent {
 		if (editing == null)
 			return fs;
 		
-		if ((isBinary(ext) || !isFormatSupported(ext)) && !(ext.equalsIgnoreCase(".ini")
+		if ((isBinary(ext) || !isFormatSupported(ext)) || ext.equalsIgnoreCase(".setconf") && !(ext.equalsIgnoreCase(".ini")
 				&& ext.equalsIgnoreCase(".make") && ext.equalsIgnoreCase(".mk") && ext.equalsIgnoreCase(".mak")
 				&& editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile")
 				&& editing.getRegent().getRegent().getName().equalsIgnoreCase("dockerfile"))) {
