@@ -18,6 +18,7 @@ import ide.util.Texts;
 public final class SearchReplaceCore {
 
 	private SearchReplaceCore() {}
+	private static int occurnum = 0;
 	
 	public static synchronized void init() {
 		initComponents();
@@ -74,7 +75,6 @@ public final class SearchReplaceCore {
 	}
 	
 	public static void searchNext(String searchText, boolean caseSensitive, boolean regex, boolean isEntireDocument) {
-		int occurnum = 0;
 		if (searchText.equals("")) return;
 		
 		List<Integer> linesfound = new ArrayList<>();
