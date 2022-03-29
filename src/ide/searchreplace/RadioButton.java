@@ -24,7 +24,7 @@ public class RadioButton extends IDEComponent {
 	private int engLength, portLength;
 	
 	private boolean isEntireDoc;
-	private BufferedImage originalSprite;
+	//private BufferedImage originalSprite;
 	
 	public RadioButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption, int engLength, int portLength, boolean isEntireDoc) {
 		super(x, y, width, height, sprite);
@@ -37,7 +37,7 @@ public class RadioButton extends IDEComponent {
 		
 		this.isEntireDoc = isEntireDoc;
 		
-		this.originalSprite = sprite;
+		//this.originalSprite = sprite;
 	}
 	
 	public boolean getState() {
