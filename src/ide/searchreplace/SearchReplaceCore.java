@@ -2,6 +2,8 @@ package ide.searchreplace;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
@@ -76,6 +78,7 @@ public final class SearchReplaceCore {
 		if (searchText.equals("")) return;
 		
 		List<Integer> linesfound = new ArrayList<>();
+		List<Integer> xPos = new ArrayList<>();
 		
 		if (isEntireDocument) { // se não é selectedlines...
 			for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
@@ -84,14 +87,26 @@ public final class SearchReplaceCore {
 				
 				if (!regex) {
 					if (caseSensitive) {
-						if (s.contains(searchText)) linesfound.add(i);
+						if (s.contains(searchText)) {
+							linesfound.add(i);
+							xPos.add(s.indexOf(searchText));
+						}
 					}
 					else {
-						if (s.toLowerCase().contains(searchText.toLowerCase())) linesfound.add(i);
+						if (s.toLowerCase().contains(searchText.toLowerCase())) {
+							linesfound.add(i);
+							xPos.add(s.toLowerCase().indexOf(searchText.toLowerCase()));
+						}
 					}
 				}
 				else {
-					if (s.matches(searchText)) linesfound.add(i);
+					Pattern p = Pattern.compile(searchText);
+					Matcher m = p.matcher(s);
+					
+					if (m.find()) {
+						linesfound.add(i);
+						xPos.add(s.indexOf(m.group(occurnum)));
+					}
 				}
 			}
 		}
@@ -100,13 +115,19 @@ public final class SearchReplaceCore {
 				IDELine l = Main.editor.lines.get(i);
 				String s = new String(CodeEditor.toCharArray(l.getChars()));
 				
-				String text = caseSensitive ? searchText : searchText.toLowerCase();
-				
 				if (!regex) {
-					if (!caseSensitive) {
-						if (s.toLowerCase().contains(text)) linesfound.add(i);
-					} else
-						if (s.contains(text)) linesfound.add(i);
+					if (caseSensitive) {
+						if (s.contains(searchText)) {
+							linesfound.add(i);
+							xPos.add(s.indexOf(searchText));
+						}
+					}
+					else {
+						if (s.toLowerCase().contains(searchText.toLowerCase())) {
+							linesfound.add(i);
+							xPos.add(s.toLowerCase().indexOf(searchText.toLowerCase()));
+						}
+					}
 				}
 				else {
 					if (s.matches(searchText)) linesfound.add(i);
@@ -122,10 +143,12 @@ public final class SearchReplaceCore {
 		}
 		
 		try {
+			Main.editor.cursorX = xPos.get(occurnum);
 			Main.editor.cursorY = (linesfound.get(occurnum) - 1) + 2;
 		} catch (IndexOutOfBoundsException f) {
 			occurnum = 0;
 			
+			Main.editor.cursorX = xPos.get(occurnum);
 			Main.editor.cursorY = (linesfound.get(occurnum) - 1) + 2;
 			CommandTerminal.runCommand("gotocursor");
 			
@@ -145,6 +168,7 @@ public final class SearchReplaceCore {
 		if (searchText.equals("")) return;
 		
 		List<Integer> linesfound = new ArrayList<>();
+		List<Integer> xPos = new ArrayList<>();
 		
 		String text = caseSensitive ? searchText : searchText;
 		String replText = replaceText;
@@ -155,10 +179,18 @@ public final class SearchReplaceCore {
 				String s = new String(CodeEditor.toCharArray(l.getChars()));
 				
 				if (!regex) {
-					if (!caseSensitive) {
-						if (s.toLowerCase().contains(text)) linesfound.add(i);
-					} else
-						if (s.contains(text)) linesfound.add(i);
+					if (caseSensitive) {
+						if (s.contains(searchText)) {
+							linesfound.add(i);
+							xPos.add(s.indexOf(searchText));
+						}
+					}
+					else {
+						if (s.toLowerCase().contains(searchText.toLowerCase())) {
+							linesfound.add(i);
+							xPos.add(s.toLowerCase().indexOf(searchText.toLowerCase()));
+						}
+					}
 				}
 				else {
 					if (s.matches(searchText)) linesfound.add(i);
@@ -171,10 +203,18 @@ public final class SearchReplaceCore {
 				String s = new String(CodeEditor.toCharArray(l.getChars()));
 				
 				if (!regex) {
-					if (!caseSensitive) {
-						if (s.toLowerCase().contains(text)) linesfound.add(i);
-					} else
-						if (s.contains(text)) linesfound.add(i);
+					if (caseSensitive) {
+						if (s.contains(searchText)) {
+							linesfound.add(i);
+							xPos.add(s.indexOf(searchText));
+						}
+					}
+					else {
+						if (s.toLowerCase().contains(searchText.toLowerCase())) {
+							linesfound.add(i);
+							xPos.add(s.toLowerCase().indexOf(searchText.toLowerCase()));
+						}
+					}
 				}
 				else {
 					if (s.matches(searchText)) linesfound.add(i);
@@ -195,7 +235,7 @@ public final class SearchReplaceCore {
 			String s = new String(CodeEditor.toCharArray(Main.editor.lines.get(i).getChars()));
 			
 			if (!caseSensitive)
-				s = s.toLowerCase().replace(text, replText);
+				s = s.replaceAll("(?i)" + text, replText);
 			else
 				s = s.replace(text, replText);
 			
