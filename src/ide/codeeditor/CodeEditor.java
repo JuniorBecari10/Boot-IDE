@@ -8520,7 +8520,7 @@ public class CodeEditor extends IDEComponent {
 		if (editing == null) selecting = false;
 	}
 
-	public void render(Graphics g) {
+	public synchronized void render(Graphics g) {
 		try {
 			// if (editing == null) return;
 	
