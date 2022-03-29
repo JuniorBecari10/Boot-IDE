@@ -8318,6 +8318,9 @@ public class CodeEditor extends IDEComponent {
 			if (Main.explorer.hovered() && !Explorer.searchReplaceActive)
 				CommandTerminal.runCommand("deselect"); // terminar TODO
 		}
+		
+		if (leftClicked() && selecting)
+			CommandTerminal.runCommand("deselect");
 
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;

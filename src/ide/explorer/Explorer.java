@@ -356,8 +356,21 @@ public class Explorer extends IDEComponent {
 		    		ListableFile first = files.get(0);
 		    		ListableFile last = files.get(files.size() - 1);
 		    		
-					if (MouseInput.wheelUp() && first.getY() < 200) first.setY(first.getY() + 30);
-					else if (MouseInput.wheelDown() && last.getY() > 200) first.setY(first.getY() - 30);
+		    		if (!KeyInput.isControlDown()) {
+						if (MouseInput.wheelUp() && first.getY() < 200) first.setY(first.getY() + 30);
+						else if (MouseInput.wheelDown() && last.getY() > 200) first.setY(first.getY() - 30);
+		    		}
+		    		else {
+		    			if (MouseInput.wheelUp() && first.getY() < 200) first.setY(first.getY() + 90);
+						else if (MouseInput.wheelDown() && last.getY() > 200) first.setY(first.getY() - 90);
+		    		}
+		    		
+		    		//System.out.println(last.getY());
+		    		
+		    		if (first.getY() > 200) first.setY(200);
+		    		if (last.getY() < 230) last.setY(230);
+		    		
+		    		//System.out.println(last.getY() + "\n------");
 				}
 	    	}
 	    	
