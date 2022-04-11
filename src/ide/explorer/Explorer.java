@@ -391,7 +391,7 @@ public class Explorer extends IDEComponent {
 	    }
     }
 
-    public void render(Graphics g) {
+    public synchronized void render(Graphics g) {
     	if (CommandTerminal.expOff) return; // melhorar o ícone do img, e adicionar suorte ao formato .o
     	
     	Graphics2D g2 = (Graphics2D) g;

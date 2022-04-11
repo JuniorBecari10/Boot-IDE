@@ -631,7 +631,7 @@ public class Tab extends IDEComponent implements Serializable {
 		this.x = x;
 	}
 	
-	public void render(Graphics g) {
+	public synchronized void render(Graphics g) {
 		if (regent == null || !regent.getRegent().exists()) {
 			close();
 			
@@ -651,6 +651,21 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		g.setColor(c);
 		g.drawRect(x, Y, drawW, HEIGHT);
+		
+		/*if (Main.editor.editing == this || (Main.editor.editing != this && hovered() && !Main.editor.editing.equals(Main.editor.tabs.get(Main.editor.tabs.indexOf(this) + 1)))) {
+			g.setColor(bg);
+			g2.setStroke(new BasicStroke(3f));
+			g2.fillRect(x, Y, drawW, HEIGHT);
+			
+			g.setColor(c);
+			g.drawRect(x, Y, drawW, HEIGHT);
+		}
+		
+		if (Main.editor.editing != this && !hovered()) {
+			g.setColor(Colors.textLight);
+			g2.setStroke(new BasicStroke(2f));
+			g2.drawLine(x + width, y + 5, x + width, y + height - 5);
+		}*/
 		
 		String extension = ListableFile.getFileExtension(regent.getRegent());
 		

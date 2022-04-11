@@ -1524,7 +1524,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		y = Explorer.files.get(index - 1).y + height;
 	}
 
-	public void render(Graphics g) {
+	public synchronized void render(Graphics g) {
 		if (y < 200 || y > Main.screen.getHeight())
 			return;
 		if (CommandTerminal.expOff)
