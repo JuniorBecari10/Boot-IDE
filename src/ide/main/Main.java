@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -855,8 +856,9 @@ public class Main implements Runnable, Tickable {
     		BufferedWriter wr = Files.newBufferedWriter(logFile.toPath(), StandardCharsets.UTF_8);
     		
     		String st = getStackTrace(e);
+    		Calendar c = Calendar.getInstance();
     		
-			wr.write("An Exception occurred in " + PROGRAM_NAME + ".\n\n");
+			wr.write("An Exception occurred in " + PROGRAM_NAME + " at " + c.getTime() + ".\n\n");
 			wr.write("Message: " + e.getMessage() + "\n");
 			wr.write("Localized Message: " + e.getLocalizedMessage() + "\n");
 			wr.write("Cause: " + e.getCause() + "\n\n");

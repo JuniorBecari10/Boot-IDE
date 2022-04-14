@@ -8165,6 +8165,7 @@ public class CodeEditor extends IDEComponent {
 	
 	private void onClick() {
 		Explorer.selected = null;
+		System.out.println(1 / 0);
 		
 		if (selecting)
 			CommandTerminal.runCommand("deselect");
