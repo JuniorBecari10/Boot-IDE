@@ -4126,6 +4126,24 @@ public class CodeEditor extends IDEComponent {
 						|| (ext.equalsIgnoreCase(".css") | ext.equalsIgnoreCase(".scss")))
 						&& hasAfter(new String(chars), i, '{'))
 					continue;
+				
+				int len = 0;
+
+				for (Integer j : indxs) {
+					while (j + len < chars.length && chars[j + len] != ' ' && chars[j + len] != '[' && chars[j + len] != ']'
+							&& chars[j + len] != '(' && chars[j + len] != ')' && chars[j + len] != ',' && chars[j + len] != ';'
+							&& chars[j + len] != '.' && chars[j + len] != ':')
+						len++;
+				}
+				
+				int c = i;
+				
+				while (chars[c] != ' ') {
+					c--;
+				}
+				if (chars[c] == ' ') {
+					if (Character.isLetter(chars[c + 1])) break;
+				}
 
 				/*
 				 * if (Character.isLetter(chars[i - 1])) for (int j = i; i > 1; i--) { if
@@ -4147,7 +4165,7 @@ public class CodeEditor extends IDEComponent {
 				// if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i +
 				// s.length()])) continue;
 
-				fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+				fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 			}
 		}
 
@@ -8252,6 +8270,8 @@ public class CodeEditor extends IDEComponent {
 		
 		if (leftClicked() || rightClicked())
 			onClick();
+		
+		callAutomaticColor(); // tem que ficar rodando
 		
 		width = Main.screen.getWidth() - x;
 		
