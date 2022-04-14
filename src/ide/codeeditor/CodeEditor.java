@@ -4136,13 +4136,16 @@ public class CodeEditor extends IDEComponent {
 						len++;
 				}
 				
+				char[] chs = (" " + new String(chars)).toCharArray();
+				
 				int c = i;
 				
-				while (c > 0 && chars[c] != ' ') {
+				while (chs[c] != ' ') {
 					c--;
 				}
-				if (c > 0 && chars[c] == ' ') {
-					if (Character.isLetter(chars[c + 1])) break; // no index0 o problema ainda existe
+				
+				if (chs[c] == ' ') {
+					if (Character.isLetter(chs[c + 1])) break; // no index0 o problema ainda existe
 				}
 
 				/*
@@ -4165,7 +4168,7 @@ public class CodeEditor extends IDEComponent {
 				// if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i +
 				// s.length()])) continue;
 
-				fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+				fs = color(i - 2, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 			}
 		}
 
