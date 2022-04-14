@@ -8130,7 +8130,7 @@ public class CodeEditor extends IDEComponent {
 		return ls;
 	}
 	
-	private void onMouseDown() {
+	private void onClick() {
 		Explorer.selected = null;
 		
 		if (selecting)
@@ -8212,7 +8212,7 @@ public class CodeEditor extends IDEComponent {
 		height = Main.screen.getHeight();
 		
 		if (leftClicked() || rightClicked())
-			onMouseDown();
+			onClick();
 		
 		width = Main.screen.getWidth() - x;
 		

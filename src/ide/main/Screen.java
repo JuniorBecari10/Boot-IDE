@@ -76,7 +76,7 @@ public class Screen extends Canvas {
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);			// pra fazer a tela de confirmação o fechamento deve ser feito por código
 		frame.setFocusTraversalKeysEnabled(false); // tem q ter esses dois
 		frame.setVisible(true);
-		
+		//frame.setUndecorated(true); // ele aqui causa exception
 		requestFocus();
     }
     

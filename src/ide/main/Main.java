@@ -164,101 +164,107 @@ public class Main implements Runnable, Tickable {
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
     
     public Main() {
-    	if (args == null)
-    		args = new String[1];
-    	
-    	originalSpritesheet = new Spritesheet(sprsh);
-    	
-        modifiedSpritesheet = new Spritesheet(spritesheetFile);
-        
-        spritesheet = spritesheetFile.exists() ? modifiedSpritesheet : originalSpritesheet;
-        
-        toolkit = Toolkit.getDefaultToolkit();
-        screen = new Screen(PROGRAM_NAME);
-        
-        lang = Language.ENG; // default
-        
-        UNKNOWN_FILE_ICON = Main.spritesheet.getSprite(0, 64, 16, 16);
-        
-        //Fonts.initFonts(fntnr, fntbl);
-        
-        ///////
-        
-        baseFolderSpr = spritesheet.getSprite(0, 0, 16, 16);
-        
-        newFileSpr = spritesheet.getSprite(96, 0, 16, 16);
-        newFolderSpr = spritesheet.getSprite(112, 0, 16, 16);
-        folderUp = spritesheet.getSprite(64, 0, 16, 16);
-        backBaseFolder = spritesheet.getSprite(80, 0, 16, 16);
-        reloadSpr = spritesheet.getSprite(128, 0, 16, 16);
-        
-        folder = spritesheet.getSprite(48, 0, 16, 16);
-        star = spritesheet.getSprite(32, 0, 16, 16);
-        
-        closeTab = spritesheet.getSprite(16, 0, 5, 5);
-        notSelectedCloseTab = spritesheet.getSprite(16, 0, 5, 5);
-        
-        notSavedTab = spritesheet.getSprite(16, 5, 5, 5);
-        notSelectedNotSavedTab = spritesheet.getSprite(16, 5, 5, 5);
-        
-        lock = spritesheet.getSprite(16, 10, 5, 5);
-        back = spritesheet.getSprite(168, 0, 8, 8);
-        
-        caseSensitive = spritesheet.getSprite(208, 0, 16, 16);
-        regex = spritesheet.getSprite(224, 0, 16, 16);
-        
-        entireDocument = spritesheet.getSprite(240, 0, 16, 16);
-        selectedLines = spritesheet.getSprite(256, 0, 16, 16);
-        
-        ///////
-        
-        explorer = new Explorer(0, 0, 280, Screen.HEIGHT);
-        editor = new CodeEditor(280, 0, Screen.WIDTH - 280, Screen.HEIGHT); // esses 2 precisa ser inicializados depois das fontes e da spritesheet
-        
-        logo = new Logo(Screen.WIDTH / 2 + 80, Screen.HEIGHT / 2 - 120, 160, 160, star);
-        
-        screen.setFrameIcon(spritesheet.getSprite(144, 0, 16, 16));
-        
-        openBase = new OpenBaseFolderButton(20, 70, 48, 48, baseFolderSpr);
-        oneFolder = new OneFolderUpButton(160, 85, 32, 32, folderUp);
-        returnBase = new ReturnToBaseFolderButton(200, 85, 32, 32, backBaseFolder);
-        newFile = new NewFileButton(80, 85, 32, 32, newFileSpr);
-        newFolder = new NewFolderButton(120, 85, 32, 32, newFolderSpr);
-        reload = new ReloadButton(240, 85, 32, 32, reloadSpr);
-        
-        desktop = Desktop.getDesktop();
-        
-        IDEComponent.components.add(editor);
-        IDEComponent.components.add(explorer);
-        
-        IDEComponent.components.add(logo);
-        
-        IDEComponent.components.add(openBase);
-        
-        if (settingsFile.exists())
-    		readFile(settingsFile);
-        
-        if (defaultConfigFile.exists()) {	
-        	conffile = defaultConfigFile.getPath();
-        	hasConfigFile = true;
-        }
-        else {
-        	ListableFile.generateConfigFile(defaultConfigFile);
-        	
-        	conffile = defaultConfigFile.getPath();
-        	hasConfigFile = true;
-        }
-        
-        if (!alreadyLoaded)
-        	load(conffile);
-        
-        ListableFile.updateTypes();
-        
-        IDEComponent.toAdd.add(Main.newFile);
-		IDEComponent.toAdd.add(Main.newFolder);
-		IDEComponent.toAdd.add(Main.oneFolder);
-		IDEComponent.toAdd.add(Main.returnBase);
-		IDEComponent.toAdd.add(Main.reload);
+    	try {
+	    	if (args == null)
+	    		args = new String[1];
+	    	
+	    	originalSpritesheet = new Spritesheet(sprsh);
+	    	
+	        modifiedSpritesheet = new Spritesheet(spritesheetFile);
+	        
+	        spritesheet = spritesheetFile.exists() ? modifiedSpritesheet : originalSpritesheet;
+	        
+	        toolkit = Toolkit.getDefaultToolkit();
+	        screen = new Screen(PROGRAM_NAME);
+	        
+	        lang = Language.ENG; // default
+	        
+	        UNKNOWN_FILE_ICON = Main.spritesheet.getSprite(0, 64, 16, 16);
+	        
+	        //Fonts.initFonts(fntnr, fntbl);
+	        
+	        ///////
+	        
+	        baseFolderSpr = spritesheet.getSprite(0, 0, 16, 16);
+	        
+	        newFileSpr = spritesheet.getSprite(96, 0, 16, 16);
+	        newFolderSpr = spritesheet.getSprite(112, 0, 16, 16);
+	        folderUp = spritesheet.getSprite(64, 0, 16, 16);
+	        backBaseFolder = spritesheet.getSprite(80, 0, 16, 16);
+	        reloadSpr = spritesheet.getSprite(128, 0, 16, 16);
+	        
+	        folder = spritesheet.getSprite(48, 0, 16, 16);
+	        star = spritesheet.getSprite(32, 0, 16, 16);
+	        
+	        closeTab = spritesheet.getSprite(16, 0, 5, 5);
+	        notSelectedCloseTab = spritesheet.getSprite(16, 0, 5, 5);
+	        
+	        notSavedTab = spritesheet.getSprite(16, 5, 5, 5);
+	        notSelectedNotSavedTab = spritesheet.getSprite(16, 5, 5, 5);
+	        
+	        lock = spritesheet.getSprite(16, 10, 5, 5);
+	        back = spritesheet.getSprite(168, 0, 8, 8);
+	        
+	        caseSensitive = spritesheet.getSprite(208, 0, 16, 16);
+	        regex = spritesheet.getSprite(224, 0, 16, 16);
+	        
+	        entireDocument = spritesheet.getSprite(240, 0, 16, 16);
+	        selectedLines = spritesheet.getSprite(256, 0, 16, 16);
+	        
+	        ///////
+	        
+	        explorer = new Explorer(0, 0, 280, Screen.HEIGHT);
+	        editor = new CodeEditor(280, 0, Screen.WIDTH - 280, Screen.HEIGHT); // esses 2 precisa ser inicializados depois das fontes e da spritesheet
+	        
+	        logo = new Logo(Screen.WIDTH / 2 + 80, Screen.HEIGHT / 2 - 120, 160, 160, star);
+	        
+	        screen.setFrameIcon(spritesheet.getSprite(144, 0, 16, 16));
+	        
+	        openBase = new OpenBaseFolderButton(20, 70, 48, 48, baseFolderSpr);
+	        oneFolder = new OneFolderUpButton(160, 85, 32, 32, folderUp);
+	        returnBase = new ReturnToBaseFolderButton(200, 85, 32, 32, backBaseFolder);
+	        newFile = new NewFileButton(80, 85, 32, 32, newFileSpr);
+	        newFolder = new NewFolderButton(120, 85, 32, 32, newFolderSpr);
+	        reload = new ReloadButton(240, 85, 32, 32, reloadSpr);
+	        
+	        desktop = Desktop.getDesktop();
+	        
+	        IDEComponent.components.add(editor);
+	        IDEComponent.components.add(explorer);
+	        
+	        IDEComponent.components.add(logo);
+	        
+	        IDEComponent.components.add(openBase);
+	        
+	        if (settingsFile.exists())
+	    		readFile(settingsFile);
+	        
+	        if (defaultConfigFile.exists()) {	
+	        	conffile = defaultConfigFile.getPath();
+	        	hasConfigFile = true;
+	        }
+	        else {
+	        	ListableFile.generateConfigFile(defaultConfigFile);
+	        	
+	        	conffile = defaultConfigFile.getPath();
+	        	hasConfigFile = true;
+	        }
+	        
+	        if (!alreadyLoaded)
+	        	load(conffile);
+	        
+	        ListableFile.updateTypes();
+	        
+	        IDEComponent.toAdd.add(Main.newFile);
+			IDEComponent.toAdd.add(Main.newFolder);
+			IDEComponent.toAdd.add(Main.oneFolder);
+			IDEComponent.toAdd.add(Main.returnBase);
+			IDEComponent.toAdd.add(Main.reload);
+    	} catch (Exception e) {
+    		writeLog(e);
+    		
+    		System.exit(1);
+    	}
     }
     
     public static synchronized void load(String conffile) {
@@ -844,7 +850,7 @@ public class Main implements Runnable, Tickable {
         bs.show();
     }
     
-    private void writeLog(Throwable e) {
+    public static void writeLog(Throwable e) {
     	try {
     		BufferedWriter wr = Files.newBufferedWriter(logFile.toPath(), StandardCharsets.UTF_8);
     		
@@ -863,7 +869,7 @@ public class Main implements Runnable, Tickable {
 		}
     }
     
-    private void close(int status) {
+    public static void close(int status) {
     	closing:
         	if (WindowInput.isClosing()) {
         		writeFile(settingsFile);
