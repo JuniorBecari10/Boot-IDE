@@ -438,8 +438,8 @@ public class CodeEditor extends IDEComponent {
 			".LOCK", ".INI", ".DLL", ".URL", ".AUTHORS", ".IMG", ".FLP", ".PREFS", ".CLASSPATH", ".PROJECT", ".SLN" };*/
 
 	public static final String[] luaKeys = { "and", "break", "do", "else", "elseif", "end", "false", "for", "function",
-			"if", "in", "local", "nil", "not", "or", "repeat", "return", "then", "true", "until", "while", "os", "io",
-			"math", "string", "require", "table", "debug", "self", "const" };
+			"if", "in", "local", "nil", "not", "or", "repeat", "return", "then", "true", "until", "while",
+			"require", "self", "const" };
 
 	public static final String[] zigKeys = { "align", "allowzero", "and", "anyframe", "anytype", "asm", "async",
 			"await", "break", "catch", "comptime", "const", "continue", "defer", "else", "enum", "errdefer", "error",
@@ -8165,7 +8165,6 @@ public class CodeEditor extends IDEComponent {
 	
 	private void onClick() {
 		Explorer.selected = null;
-		System.out.println(1 / 0);
 		
 		if (selecting)
 			CommandTerminal.runCommand("deselect");
