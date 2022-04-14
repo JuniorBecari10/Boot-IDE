@@ -8129,6 +8129,63 @@ public class CodeEditor extends IDEComponent {
 		
 		return ls;
 	}
+	
+	private void onMouseDown() {
+		Explorer.selected = null;
+		
+		if (leftClicked() && selecting)
+			CommandTerminal.runCommand("deselect");
+		
+		if (leftClicked() && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive() // TODO se quiser alterar o select, altere de leftclicked para dragged, e o cursor vai te seguir
+				&& !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
+			cursorX = mx;
+			cursorY = my;
+			
+			wordSinceSpace = ""; // se n funcionar corre aqui e nas setas e deleta ta
+
+			setCursorWithinBounds();
+		}
+		
+		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered()))) {
+			int width = Main.lang == Language.PORT ? 550 : 510;
+			List<RightClickOption> list = new ArrayList<>();
+			
+			list.add(new RightClickOption(0, 0, width, Texts.openCmd, (s) -> execute(s), "cmd"));
+			list.add(new RightClickOption(0, 0, width, Texts.openTerminal, (s) -> execute(s), "term"));
+			
+			if (Main.baseFolder != null) {
+				list.add(new RightClickOption(0, 0, width, Texts.openExplorer, (s) -> execute(s), "sysexp"));
+				list.add(new RightClickOption(0, 0, width, Texts.setBaseFolder, (s) -> execute(s), "setbase"));
+				
+				if (editing != null) {
+					list.add(new RightClickOption(0, 0, width, Texts.openDefault, (s) -> execute(s), "opendef"));
+					
+					list.add(new RightClickOption(0, 0, width, !Explorer.searchReplaceActive, Texts.open + " " + Texts.searchReplace, (s) -> execute(s), "searchrep"));
+					list.add(new RightClickOption(0, 0, width, Texts.selectLine, (s) -> CommandTerminal.runCommand(s), "selectline"));
+					list.add(new RightClickOption(0, 0, width, Texts.selectAll, (s) -> CommandTerminal.runCommand(s), "selectall"));
+					
+					if (!isReadOnly)
+						list.add(new RightClickOption(0, 0, width, Texts.save, (s) -> execute(s), "save"));
+					
+					if (selecting) {
+						list.add(new RightClickOption(0, 0, width, Texts.deselect, (s) -> CommandTerminal.runCommand(s), "deselect"));
+						list.add(new RightClickOption(0, 0, width, Texts.copy, (s) -> CommandTerminal.runCommand(s), "copy"));
+					}
+					
+					if (!isReadOnly) {
+						list.add(new RightClickOption(0, 0, width, Texts.paste, (s) -> CommandTerminal.runCommand(s), "paste"));
+						
+						if (selecting) {
+							list.add(new RightClickOption(0, 0, width, Texts.cut, (s) -> CommandTerminal.runCommand(s), "cut"));
+							list.add(new RightClickOption(0, 0, width, Texts.delete, (s) -> CommandTerminal.runCommand(s), "del"));
+						}
+					}
+				}
+			}
+			
+			IDEComponent.addRightClickOptions(MouseInput.getMouseX(), MouseInput.getMouseY(), list.toArray(new RightClickOption[list.size()]));
+		}
+	}
 
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added)
@@ -8149,8 +8206,8 @@ public class CodeEditor extends IDEComponent {
 		
 		height = Main.screen.getHeight();
 		
-		if (leftClicked())
-			Explorer.selected = null;
+		if (leftClicked() || rightClicked())
+			onMouseDown();
 		
 		/*int idx = 0; // debug
 		for (Iterator<List<IDELine>> it = undo.iterator(); it.hasNext();) {
@@ -8319,8 +8376,7 @@ public class CodeEditor extends IDEComponent {
 				CommandTerminal.runCommand("deselect"); // terminar TODO
 		}
 		
-		if (leftClicked() && selecting)
-			CommandTerminal.runCommand("deselect");
+		
 
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;
@@ -8386,58 +8442,10 @@ public class CodeEditor extends IDEComponent {
 			
 			/*if (RightClickOption.anyRightClickOptionHovered() && !MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10, Main.explorer.getHeight()))
 				Main.screen.setCursor(new Cursor(Cursor.HAND_CURSOR));*/
-
-			if (leftClicked() && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive() // TODO se quiser alterar o select, altere de leftclicked para dragged, e o cursor vai te seguir
-					&& !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
-				cursorX = mx;
-				cursorY = my;
-				
-				wordSinceSpace = ""; // se n funcionar corre aqui e nas setas e deleta ta
-
-				setCursorWithinBounds();
-			}
 		} else
 			Main.screen.setCursor(Cursor.getDefaultCursor());
 
-		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered()))) {
-			int width = Main.lang == Language.PORT ? 550 : 510;
-			List<RightClickOption> list = new ArrayList<>();
-			
-			list.add(new RightClickOption(0, 0, width, Texts.openCmd, (s) -> execute(s), "cmd"));
-			list.add(new RightClickOption(0, 0, width, Texts.openTerminal, (s) -> execute(s), "term"));
-			
-			if (Main.baseFolder != null) {
-				list.add(new RightClickOption(0, 0, width, Texts.openExplorer, (s) -> execute(s), "sysexp"));
-				list.add(new RightClickOption(0, 0, width, Texts.setBaseFolder, (s) -> execute(s), "setbase"));
-				
-				if (editing != null) {
-					list.add(new RightClickOption(0, 0, width, Texts.openDefault, (s) -> execute(s), "opendef"));
-					
-					list.add(new RightClickOption(0, 0, width, !Explorer.searchReplaceActive, Texts.open + " " + Texts.searchReplace, (s) -> execute(s), "searchrep"));
-					list.add(new RightClickOption(0, 0, width, Texts.selectLine, (s) -> CommandTerminal.runCommand(s), "selectline"));
-					list.add(new RightClickOption(0, 0, width, Texts.selectAll, (s) -> CommandTerminal.runCommand(s), "selectall"));
-					
-					if (!isReadOnly)
-						list.add(new RightClickOption(0, 0, width, Texts.save, (s) -> execute(s), "save"));
-					
-					if (selecting) {
-						list.add(new RightClickOption(0, 0, width, Texts.deselect, (s) -> CommandTerminal.runCommand(s), "deselect"));
-						list.add(new RightClickOption(0, 0, width, Texts.copy, (s) -> CommandTerminal.runCommand(s), "copy"));
-					}
-					
-					if (!isReadOnly) {
-						list.add(new RightClickOption(0, 0, width, Texts.paste, (s) -> CommandTerminal.runCommand(s), "paste"));
-						
-						if (selecting) {
-							list.add(new RightClickOption(0, 0, width, Texts.cut, (s) -> CommandTerminal.runCommand(s), "cut"));
-							list.add(new RightClickOption(0, 0, width, Texts.delete, (s) -> CommandTerminal.runCommand(s), "del"));
-						}
-					}
-				}
-			}
-			
-			IDEComponent.addRightClickOptions(MouseInput.getMouseX(), MouseInput.getMouseY(), list.toArray(new RightClickOption[list.size()]));
-		}
+		
 		
 		if (!selecting)
 			directionStarted = Direction.NONE;
