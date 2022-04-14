@@ -8219,6 +8219,33 @@ public class CodeEditor extends IDEComponent {
 		// colocar isso numa variavel constante
 		minMode = width < (selecting ? 800 : 600); // 850 - original
 		
+		// Scroll by Keyboard
+		
+		if (KeyInput.isKeyPressed() && KeyInput.isControlDown()) {
+			if (!KeyInput.isShiftDown()) {
+				if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP && scrY > 0)
+					scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+				else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 3 < lines.size() * (FONT_SIZE + (FONT_SIZE / 4)))
+					scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+				
+				if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && scrX > 0)
+					scrX -= (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+				else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT)
+					scrX += (FONT_SIZE + (FONT_SIZE / 4)) * 3;
+			}
+			else {
+				if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP && scrY > 0)
+					scrY -= (FONT_SIZE + (FONT_SIZE / 4)) * 6;
+				else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN && scrY + (FONT_SIZE + (FONT_SIZE / 4)) * 6 < lines.size() * (FONT_SIZE + (FONT_SIZE / 4)))
+					scrY += (FONT_SIZE + (FONT_SIZE / 4)) * 6;
+				
+				if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && scrX > 0)
+					scrX -= (FONT_SIZE + (FONT_SIZE / 4)) * 6;
+				else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT)
+					scrX += (FONT_SIZE + (FONT_SIZE / 4)) * 6;
+			}
+		}
+		
 		// Set Lower Bar values
 		if (editing != null && editing.getRegent() != null) {
 			switch (readMode) {
@@ -8327,8 +8354,6 @@ public class CodeEditor extends IDEComponent {
 		 * 
 		 * if (drawcy < realcy) drawcy += speed; if (drawcy > realcy) drawcy -= speed;
 		 */
-		
-		
 
 		if (FONT_SIZE < 1)
 			FONT_SIZE = 16;

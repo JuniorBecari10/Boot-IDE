@@ -308,6 +308,23 @@ public class Explorer extends IDEComponent {
 	    	showBaseFolderCard = false;
 	    	showFolderPathCard = false;
 	    	
+	    	/*if (selected == null && KeyInput.isKeyPressed() && KeyInput.isControlDown()) {
+	    		ListableFile first = files.get(0);
+	    		ListableFile last = files.get(files.size() - 1);
+	    		
+	    		if (!KeyInput.isAltDown()) {
+					if (MouseInput.wheelUp() && first.getY() < 200) first.setY(first.getY() + 30);
+					else if (MouseInput.wheelDown() && last.getY() > 200) first.setY(first.getY() - 30);
+	    		}
+	    		else {
+	    			if (MouseInput.wheelUp() && first.getY() < 200) first.setY(first.getY() + 90);
+					else if (MouseInput.wheelDown() && last.getY() > 200) first.setY(first.getY() - 90);
+	    		}
+	    		
+	    		if (first.getY() > 200) first.setY(200);
+	    		if (last.getY() < 200) first.setY(230 - (files.size() * 30));
+	    	}*/
+	    	
 	    	if (KeyInput.isKeyPressed()) {
 	    		// Atalhos
 	    		
