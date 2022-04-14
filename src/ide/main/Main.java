@@ -730,7 +730,7 @@ public class Main implements Runnable, Tickable {
 							if (width < 470)
 								width = 470;
 					}
-					else if (Main.editor.editing.isReadOnly) {
+					else if (Main.editor.editing != null && Main.editor.editing.isReadOnly) {
 						if (lang == Language.PORT)
 							if (width < 480)
 								width = 480;
