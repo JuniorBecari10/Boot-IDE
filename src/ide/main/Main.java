@@ -843,6 +843,8 @@ public class Main implements Runnable, Tickable {
     
     @Override
     public void run() {
+    	screen.requestFocus();
+    	
     	while (running) {
     		tick();
     		render();
