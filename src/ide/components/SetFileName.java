@@ -158,7 +158,7 @@ public class SetFileName extends IDEComponent {
 				if (text.length() == 0 || text.toString().endsWith(".")) return;
 				if (hasIllegalChars(text.toString())) return;
 				
-				File f = new File(Explorer.getScopePath() + "/" + text.toString());
+				File f = new File(Explorer.getScopePath() + File.separator + text.toString());
 				
 				if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath()))) {
 					//CommandTerminal.runCommand("openfile " + text.toString());
@@ -168,6 +168,8 @@ public class SetFileName extends IDEComponent {
 					
 					IDEComponent.toRemove.add(this);
 					added = false;
+					
+					return;
 				}
 				
 				//if (text.toString().trim().equals("")) return;
