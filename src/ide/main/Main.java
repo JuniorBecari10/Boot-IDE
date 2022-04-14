@@ -13,6 +13,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -59,6 +61,8 @@ public class Main implements Runnable, Tickable {
     public static final String FONT_FILE_NAME = "Resources/font.png";
     public static final String BOLD_FILE_NAME = "Resources/bold.png";
     public static final String SPRITESHEET_FILE_NAME = "Resources/spritesheet.png";
+    
+    public static final String LOG_FILE_NAME = "Exception.log";
     
     public static final String PROGRAM_NAME = "Boot IDE";
     public static final String VERSION = "Beta 2 v4.4";
@@ -124,6 +128,8 @@ public class Main implements Runnable, Tickable {
     public static final File fontFile = new File(System.getProperty("user.dir") + File.separator + FONT_FILE_NAME);
     public static final File boldFile = new File(System.getProperty("user.dir") + File.separator + BOLD_FILE_NAME);
     public static final File spritesheetFile = new File(System.getProperty("user.dir") + File.separator + SPRITESHEET_FILE_NAME);
+    
+    public static final File logFile = new File(System.getProperty("user.dir") + File.separator + LOG_FILE_NAME);
     
     // Sprites
     
@@ -617,12 +623,35 @@ public class Main implements Runnable, Tickable {
     		   MouseInput.isMousePressed() || MouseInput.isMouseClicked() || MouseInput.isMouseDragged() ||
     		   WindowInput.isActivated() || ComponentInput.windowMoved() || ComponentInput.windowResized();
     }*/
+    
+    public static String getStackTrace(Throwable t) { // Fonte: Apache Commons
+    	if (t == null) return "";
+    	
+    	StringWriter sw = new StringWriter();
+    	t.printStackTrace(new PrintWriter(sw, true));
+    	
+    	return sw.toString();
+    }
 
     public synchronized void start() {
+    	if (running) return;
+    	
         running = true;
 
         t = new Thread(this, "Main-Thread");
         t.start();
+    }
+    
+    public synchronized void stop() {
+    	if (!running) return;
+    	
+    	running = false;
+    	
+    	try {
+			t.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
     }
 
     @Override
@@ -815,7 +844,26 @@ public class Main implements Runnable, Tickable {
         bs.show();
     }
     
-    private void close() {
+    private void writeLog(Throwable e) {
+    	try {
+    		BufferedWriter wr = Files.newBufferedWriter(logFile.toPath(), StandardCharsets.UTF_8);
+    		
+    		String st = getStackTrace(e);
+    		
+			wr.write("An Exception occurred in " + PROGRAM_NAME + ".\n\n");
+			wr.write("Message: " + e.getMessage() + "\n");
+			wr.write("Localized Message: " + e.getLocalizedMessage() + "\n");
+			wr.write("Cause: " + e.getCause() + "\n\n");
+			
+			wr.write("Stack Trace:\n" + st);
+			
+			wr.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+    }
+    
+    private void close(int status) {
     	closing:
         	if (WindowInput.isClosing()) {
         		writeFile(settingsFile);
@@ -837,7 +885,7 @@ public class Main implements Runnable, Tickable {
 	    			}
 	    		}
 	    		
-	    		System.exit(0);
+	    		System.exit(status);
 	    	}
     }
     
@@ -846,16 +894,22 @@ public class Main implements Runnable, Tickable {
     	screen.requestFocus();
     	
     	while (running) {
-    		tick();
-    		render();
-    		
-    		close();
-    		
     		try {
-				Thread.sleep(1000 / 60);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+	    		tick();
+	    		render();
+	    		
+	    		close(0);
+	    		
+	    		try {
+					Thread.sleep(1000 / 60);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+    		} catch (Throwable e) {
+    			writeLog(e);
+    			
+    			close(1);
+    		}
     	}
     }
     
@@ -889,7 +943,7 @@ public class Main implements Runnable, Tickable {
     				tickOverflow++;
     			}*/
     			
-    			close();
+    			close(0);
     			
     			delta--;
     			frames++;
