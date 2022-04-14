@@ -11,6 +11,7 @@ import ide.components.SetFileName;
 import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
@@ -26,7 +27,9 @@ public class RadioButton extends IDEComponent {
 	private boolean isEntireDoc;
 	//private BufferedImage originalSprite;
 	
-	public RadioButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption, int engLength, int portLength, boolean isEntireDoc) {
+	private int keyCodeShortcut;
+	
+	public RadioButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption, int engLength, int portLength, boolean isEntireDoc, int keyCodeShortcut) {
 		super(x, y, width, height, sprite);
 		
 		this.state = state;
@@ -38,6 +41,8 @@ public class RadioButton extends IDEComponent {
 		this.isEntireDoc = isEntireDoc;
 		
 		//this.originalSprite = sprite;
+		
+		this.keyCodeShortcut = keyCodeShortcut;
 	}
 	
 	public boolean getState() {
@@ -52,7 +57,7 @@ public class RadioButton extends IDEComponent {
 		if (isEntireDoc) x = Main.explorer.getWidth() - 100;
 		else x = Main.explorer.getWidth() - 62;
 		
-		if (leftClicked()) {
+		if (leftClicked() || (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == keyCodeShortcut)) {
 			if (!isEntireDoc && !Main.editor.selecting) return;
 			
 			if (!state) state = true;

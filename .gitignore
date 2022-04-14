@@ -1,14 +1,8 @@
-.conf
 *.conf
 *.setconf
-.setconf
-settings.setconf
+/bin/*
 /bin/
-commit.bat
-status.bat
-commitold.bat
+*.bat
 /Resources/
 /Resources/*
-/Resourcess/
-/Resourcesss/*
 *.txt

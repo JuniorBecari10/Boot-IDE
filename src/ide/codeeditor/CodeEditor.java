@@ -256,7 +256,7 @@ public class CodeEditor extends IDEComponent {
 			"</svg>", "</table>", "</tbody>", "</td>", "</template>", "</textarea>", "</tfoot>", "</th>", "</thead>", "</time>",
 			"</title>", "</tr>", "</track>", "</tt>", "</u>", "</ul>", "</var>", "</video>", "</wbr>", "</applet>", "</webview"};
 
-	public static final String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "1a", "2a", "3a", "4a",
+	public static final String[] nums = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"/*, "1a", "2a", "3a", "4a",
 			"5a", "6a", "7a", "8a", "9a", "0a", // hex
 			"1b", "2b", "3b", "4b", "5b", "6b", "7b", "8b", "9b", "0b", "1c", "2c", "3c", "4c", "5c", "6c", "7c", "8c",
 			"9c", "0c", "1d", "2d", "3d", "4d", "5d", "6d", "7d", "8d", "9d", "0d", "1e", "2e", "3e", "4e", "5e", "6e",
@@ -267,7 +267,7 @@ public class CodeEditor extends IDEComponent {
 			"7E", "8E", "9E", "0E", "1F", "2F", "3F", "4F", "5F", "6F", "7F", "8F", "9F", "0F", "1L", "2L", "3L", "4L",
 			"5L", "6L", "7L", "8L", "9L", "0L", "1x", "2x", "3x", "4x", "5x", "6x", "7x", "8x", "9x", "0x", "1X", "2X",
 			"3X", "4X", "5X", "6X", "7X", "8X", "9X", "0X", "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "0h",
-			"1H", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "0H" };
+			"1H", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "0H"*/ };
 
 	public static final String[] phpKeys = { "abstract", "and", "as", "break", "callable", "case", "catch", "class",
 			"clone", "const", "continue", "declare", "default", "do", "echo", "else", "elseif", "enddeclare", "endfor",
@@ -2731,7 +2731,7 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 
-				for (String s : cssTags) { // colorir tags
+				for (String s : cssTags) { // colorir tags | "em" está aqui
 					indxs = findWord(new String(chars), s);
 
 					for (Integer i : indxs) {
@@ -8133,10 +8133,10 @@ public class CodeEditor extends IDEComponent {
 	private void onMouseDown() {
 		Explorer.selected = null;
 		
-		if (leftClicked() && selecting)
+		if (selecting)
 			CommandTerminal.runCommand("deselect");
 		
-		if (leftClicked() && !RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive() // TODO se quiser alterar o select, altere de leftclicked para dragged, e o cursor vai te seguir
+		if (!RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive() // TODO se quiser alterar o select, altere de leftclicked para dragged, e o cursor vai te seguir
 				&& !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
 			cursorX = mx;
 			cursorY = my;
@@ -8185,6 +8185,11 @@ public class CodeEditor extends IDEComponent {
 			
 			IDEComponent.addRightClickOptions(MouseInput.getMouseX(), MouseInput.getMouseY(), list.toArray(new RightClickOption[list.size()]));
 		}
+		
+		if (MouseInput.isLeftPressed() || (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() != KeyEvent.VK_BACK_SPACE) && ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2) && !RightClickOption.anyRightClickOptionHovered())) {
+			if (Main.explorer.hovered() && !Explorer.searchReplaceActive)
+				CommandTerminal.runCommand("deselect");
+		}
 	}
 
 	public void tick() {
@@ -8199,7 +8204,7 @@ public class CodeEditor extends IDEComponent {
 		
 		if (tabs.size() > 0)
 			if (tabs.get(0).getX() + tabScr > x + 10)
-				CommandTerminal.runCommand("resettabscroll");
+				CommandTerminal.runCommand("resettabscroll"); // colocar no onmouseroll
 
 		if (tabs.size() == 0)
 			CommandTerminal.runCommand("resettabscroll");
@@ -8209,58 +8214,12 @@ public class CodeEditor extends IDEComponent {
 		if (leftClicked() || rightClicked())
 			onMouseDown();
 		
-		/*int idx = 0; // debug
-		for (Iterator<List<IDELine>> it = undo.iterator(); it.hasNext();) {
-			List<IDELine> l = it.next();
-			
-			try {
-				for (IDELine i : l) {
-					System.out.println(idx + ": " + new String(toCharArray(i.getChars())));
-				}
-			} catch (Exception e) {
-				break;
-			}
-			
-			System.out.println();
-			idx++;
-		}*/
-		
-		/*boolean hasSelected = false;
-		
-		for (Tab t : tabs) {
-			if (editing == t) hasSelected = true;
-			
-			if (t.getWidth() == 0) {
-				toRemove.add(t);
-			}
-		}
-		
-		if (!hasSelected && !tabs.isEmpty()) {
-			Main.editor.editing = tabs.get(0);
-			
-			
-			Main.editor.scrX = tabs.get(0).scrX;
-			Main.editor.scrY = tabs.get(0).scrY;
-			
-			Main.editor.lines.clear();
-		
-			try {
-				Main.editor.lines = Main.editor.readFile(tabs.get(0).getRegent().getRegent());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}*/
-		
-		//type();
-		
-		/*if (!typeThread.isAlive())
-			typeThread.start();*/
+		width = Main.screen.getWidth() - x;
 		
 		// colocar isso numa variavel constante
 		minMode = width < (selecting ? 800 : 600); // 850 - original
 		
 		// Set Lower Bar values
-		
 		if (editing != null && editing.getRegent() != null) {
 			switch (readMode) {
 			case BIN:
@@ -8292,8 +8251,6 @@ public class CodeEditor extends IDEComponent {
 					extType = getLowerBarFileNameWithoutExtension(editing.getRegent().getRegent().getName());
 			}
 		}
-		
-		width = Main.screen.getWidth() - x;
 
 		/*
 		 * for (Tab i : tabs) { for (Tab j : tabs) { if (i.getRegent() == j.getRegent()
@@ -8370,11 +8327,6 @@ public class CodeEditor extends IDEComponent {
 		 * 
 		 * if (drawcy < realcy) drawcy += speed; if (drawcy > realcy) drawcy -= speed;
 		 */
-
-		if (MouseInput.isLeftPressed() || (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() != KeyEvent.VK_BACK_SPACE) && ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2) && !RightClickOption.anyRightClickOptionHovered())) {
-			if (Main.explorer.hovered() && !Explorer.searchReplaceActive)
-				CommandTerminal.runCommand("deselect"); // terminar TODO
-		}
 		
 		
 

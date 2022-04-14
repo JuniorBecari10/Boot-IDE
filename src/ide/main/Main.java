@@ -629,7 +629,7 @@ public class Main implements Runnable, Tickable {
     public void tick() {
     	for (IDEComponent c : IDEComponent.components)
             c.tick();
-        
+    	
         KeyInput.updateKeys();
         MouseInput.updateMouse();
         ComponentInput.update();
@@ -714,7 +714,7 @@ public class Main implements Runnable, Tickable {
 					if (Main.editor.editing.isReadOnly)
 						height = 130;
 					
-					Rectangle intersection = new Rectangle(x, y, width, height).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
+					Rectangle intersection = new Rectangle(x, y, width, height).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999, Main.screen.getHeight()));
 					
 					if (!intersection.isEmpty()) {
 						x -= intersection.getWidth();

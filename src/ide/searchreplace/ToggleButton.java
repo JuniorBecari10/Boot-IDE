@@ -10,6 +10,7 @@ import ide.components.RenameFile;
 import ide.components.SetFileName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
@@ -22,7 +23,9 @@ public class ToggleButton extends IDEComponent {
 	
 	private int engLength, portLength;
 	
-	public ToggleButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption, int engLength, int portLength) {
+	private int keyCodeShortcut;
+	
+	public ToggleButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption, int engLength, int portLength, int keyCodeShortcut) {
 		super(x, y, width, height, sprite);
 		
 		this.state = state;
@@ -30,6 +33,8 @@ public class ToggleButton extends IDEComponent {
 		
 		this.engLength = engLength;
 		this.portLength = portLength;
+		
+		this.keyCodeShortcut = keyCodeShortcut;
 	}
 	
 	public boolean getState() {
@@ -41,7 +46,9 @@ public class ToggleButton extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (leftClicked()) {
+		if (leftClicked() || (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == keyCodeShortcut)) {
+			KeyInput.updateKeys();
+			
 			state = !state;
 		}
 	}
