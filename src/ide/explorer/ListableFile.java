@@ -1392,7 +1392,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			MouseInput.updateMouse();
 			
 			for (Tab t : Main.editor.tabs) {
-				if (t.regent.getRegent().equals(regent)) return;
+				if (t.regent.getRegent().equals(regent)) {
+					t.select();
+					
+					return;
+				}
 			}
 
 			if (Explorer.folderPath.length() > Main.explorer.maxTextWidth)

@@ -4128,7 +4128,7 @@ public class CodeEditor extends IDEComponent {
 					continue;
 				
 				int len = 0;
-
+				
 				for (Integer j : indxs) {
 					while (j + len < chars.length && chars[j + len] != ' ' && chars[j + len] != '[' && chars[j + len] != ']'
 							&& chars[j + len] != '(' && chars[j + len] != ')' && chars[j + len] != ',' && chars[j + len] != ';'
@@ -4138,11 +4138,11 @@ public class CodeEditor extends IDEComponent {
 				
 				int c = i;
 				
-				while (chars[c] != ' ') {
+				while (c > 0 && chars[c] != ' ') {
 					c--;
 				}
-				if (chars[c] == ' ') {
-					if (Character.isLetter(chars[c + 1])) break;
+				if (c > 0 && chars[c] == ' ') {
+					if (Character.isLetter(chars[c + 1])) break; // no index0 o problema ainda existe
 				}
 
 				/*
