@@ -66,6 +66,7 @@ public final class SearchReplaceCore {
 	}
 	
 	public static synchronized void dispose() {
+		Explorer.searchReplaceActive = false;
 		Explorer.selected = null;
 		
 		for (IDEComponent i : IDEComponent.components) {

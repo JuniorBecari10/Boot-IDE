@@ -8209,6 +8209,9 @@ public class CodeEditor extends IDEComponent {
 		if (tabs.size() == 0)
 			CommandTerminal.runCommand("resettabscroll");
 		
+		if (Main.editor.tabs.isEmpty())
+			SearchReplaceCore.dispose();
+		
 		height = Main.screen.getHeight();
 		
 		if (leftClicked() || rightClicked())

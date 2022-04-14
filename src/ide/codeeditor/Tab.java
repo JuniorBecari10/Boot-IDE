@@ -33,6 +33,7 @@ import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
 import ide.main.Main;
+import ide.searchreplace.SearchReplaceCore;
 import ide.util.Colors;
 import ide.util.Language;
 import ide.util.Texts;
