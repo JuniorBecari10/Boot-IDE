@@ -8,7 +8,6 @@ import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.RenameFile;
 import ide.components.SetFileName;
-import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.MouseInput;
@@ -27,8 +26,6 @@ public class BackButton extends IDEComponent {
 		if (CommandTerminal.expOff) return;
 		
 		if (leftClicked()) {
-			Explorer.searchReplaceActive = false;
-			
 			SearchReplaceCore.dispose();
 		}
 	}

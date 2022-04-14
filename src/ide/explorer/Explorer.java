@@ -188,7 +188,6 @@ public class Explorer extends IDEComponent {
 	    }
 	    
 	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && searchReplaceActive) {
-	    	searchReplaceActive = false;
 	    	SearchReplaceCore.dispose();
 	    }
 	    

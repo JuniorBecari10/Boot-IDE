@@ -5090,6 +5090,39 @@ public class CodeEditor extends IDEComponent {
 					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			}
 			
+			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			chs = withSpace.toCharArray();
+			
+			indxs = findWord(new String(chs), "//"); // colorir comentários de uma linha
+			
+			if (fs.size() == 0)
+				break;
+
+			for (Integer i : indxs) {
+				if (!indxs.isEmpty()) {
+					boolean br = false;
+					
+					if (i >= indxs.size()) i = indxs.size() - 1;
+					
+					if (isInside(i, '\"', '\"', withSpace) && isInside(i, '\'', '\'', withSpace) && isInside(i, '`', '`', withSpace)) { // se colocar 2 // na mesma linha o anterior é desfeito
+						br = true;
+						//System.out.println(br);
+						
+						//continue;
+					}
+					
+					if (br) continue;
+				}
+				
+				for (int j = 0; j < indxs.size(); j++) // para colorir o primeiro /
+					indxs.set(j, indxs.get(j) - 1);
+				
+				if (i < 0) i = 0;
+				
+				if (indxs.size() != 0)
+					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			}
+			
 			break;
 
 		case ".lua":
