@@ -1139,11 +1139,14 @@ public class CodeEditor extends IDEComponent {
 
 			return ls;
 		}
+		
+		callAutomaticColor();
 
 		String ext = ListableFile.getFileExtension(file);
-
-		if (editing != null && (isBinary(ext) || editing.isReadOnly)) {
+		
+		if (editing != null && (isBinary(ext) || editing.isReadOnly || !file.canWrite())) {
 			isReadOnly = true;
+			editing.isReadOnly = true;
 		}
 
 		return ls;
@@ -8684,6 +8687,7 @@ public class CodeEditor extends IDEComponent {
 					Color c = i != cursorY - 1 ? Colors.codeEditor : Colors.explorerLight;
 	
 					g.setColor(c);
+					
 					g.fillRect(x, MIN_Y + (i * (FONT_SIZE + (FONT_SIZE / 4))) - scrY, FONT_SIZE * 4, FONT_SIZE + (FONT_SIZE / 4)); // linha
 																														// do
 																														// num
