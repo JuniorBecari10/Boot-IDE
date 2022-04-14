@@ -1,6 +1,5 @@
 package ide.searchreplace;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -48,16 +47,16 @@ public final class SearchReplaceCore {
 			Explorer.replace = new InputBox(20, 170, Main.explorer.getWidth() - 40, 20);
 		
 		if (Explorer.entireDocument == null)
-			Explorer.entireDocument = new RadioButton(Main.explorer.getWidth() - 100, 210, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true, KeyEvent.VK_E);
+			Explorer.entireDocument = new RadioButton(Main.explorer.getWidth() - 100, 210, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true);
 		
 		if (Explorer.selectedLines == null)
-			Explorer.selectedLines = new RadioButton(Main.explorer.getWidth() - 62, 210, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false, KeyEvent.VK_L);
+			Explorer.selectedLines = new RadioButton(Main.explorer.getWidth() - 62, 210, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false);
 		
 		if (Explorer.caseSensitive == null)
-			Explorer.caseSensitive = new ToggleButton(20, 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430, KeyEvent.VK_S);
+			Explorer.caseSensitive = new ToggleButton(20, 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430);
 		
 		if (Explorer.regex == null)
-			Explorer.regex = new ToggleButton(58, 210, 32, 32, Main.regex, false, Texts.regex, 280, 270, KeyEvent.VK_R);
+			Explorer.regex = new ToggleButton(58, 210, 32, 32, Main.regex, false, Texts.regex, 280, 270);
 		
 		if (Explorer.searchNext == null)
 			Explorer.searchNext = new ExecuteButton(20, 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()));

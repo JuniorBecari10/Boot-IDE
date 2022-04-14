@@ -124,32 +124,67 @@ public class Explorer extends IDEComponent {
 	    	if (entireDocument.getState() == false && selectedLines.getState() == false)
 	    		entireDocument.setState(true);
 	    	
-	    	if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
+	    	if (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 	    		KeyInput.updateKeys();
 	    		
 	    		if (selected == search) selected = replace;
 	    		else selected = search;
 	    	}
 	    	
-	    	if (selected != null && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
-	    		KeyInput.updateKeys();
-	    		
-	    		SearchReplaceCore.replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState());
+	    	if (selected != null && KeyInput.isKeyPressed()) {
+		    	if (KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+		    		KeyInput.updateKeys();
+		    		
+		    		SearchReplaceCore.replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState());
+		    	}
+		    	
+		    	if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+		    		KeyInput.updateKeys();
+		    		
+		    		SearchReplaceCore.searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState());
+		    	}
+		    	
+		    	if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_S) { // Ctrl + S (Case Sensitive)
+					KeyInput.updateKeys();
+					
+					Explorer.caseSensitive.invertState();
+					
+					return;
+				}
+		    	
+		    	if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_R) { // Ctrl + R (Regex)
+					KeyInput.updateKeys();
+					
+					Explorer.regex.invertState();
+					
+					return;
+				}
+		    	
+		    	if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_E) { // Ctrl + E (Entire Document)
+					KeyInput.updateKeys();
+					
+					if (Main.editor.selecting) {
+						if (Explorer.entireDocument.getState()) {
+							Explorer.entireDocument.setState(false);
+							Explorer.selectedLines.setState(true);
+						}
+						else {
+							Explorer.entireDocument.setState(true);
+							Explorer.selectedLines.setState(false);
+						}
+					}
+					
+					return;
+				}
+		    	
+		    	if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Desselecionar a caixa Search)
+					KeyInput.updateKeys();
+					
+					Explorer.selected = null;
+					
+					return;
+				}
 	    	}
-	    	
-	    	if (selected != null && KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
-	    		KeyInput.updateKeys();
-	    		
-	    		SearchReplaceCore.searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState());
-	    	}
-	    	
-	    	if (selected != null && KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Desselecionar a caixa Search)
-				KeyInput.updateKeys();
-				
-				Explorer.selected = null;
-				
-				return;
-			}
 	    }
 	    
 	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && searchReplaceActive) {

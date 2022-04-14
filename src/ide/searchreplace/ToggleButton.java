@@ -23,9 +23,7 @@ public class ToggleButton extends IDEComponent {
 	
 	private int engLength, portLength;
 	
-	private int keyCodeShortcut;
-	
-	public ToggleButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption, int engLength, int portLength, int keyCodeShortcut) {
+	public ToggleButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption, int engLength, int portLength) {
 		super(x, y, width, height, sprite);
 		
 		this.state = state;
@@ -33,12 +31,14 @@ public class ToggleButton extends IDEComponent {
 		
 		this.engLength = engLength;
 		this.portLength = portLength;
-		
-		this.keyCodeShortcut = keyCodeShortcut;
 	}
 	
 	public boolean getState() {
 		return state;
+	}
+	
+	public void invertState() {
+		this.state = !this.state;
 	}
 	
 	public void setState(boolean state) {
@@ -46,7 +46,7 @@ public class ToggleButton extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (leftClicked() || (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == keyCodeShortcut)) {
+		if (leftClicked()) {
 			KeyInput.updateKeys();
 			
 			state = !state;
