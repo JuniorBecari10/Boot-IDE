@@ -8309,12 +8309,13 @@ public class CodeEditor extends IDEComponent {
 		if (Main.editor.tabs.isEmpty())
 			SearchReplaceCore.dispose();
 		
+		for (Tab t : tabs)
+			if (t.drawW == 0) t.close();
+		
 		height = Main.screen.getHeight();
 		
 		/*if (editing != null && !tabs.isEmpty() && tabs.indexOf(editing) < 0)
 			tabs.get(0).select();*/
-		
-		System.out.println(editing);
 		
 		if (leftClicked() || rightClicked())
 			onClick();

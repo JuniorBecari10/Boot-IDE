@@ -53,6 +53,8 @@ public class Tab extends IDEComponent implements Serializable {
 	public static final int WIDTH = 200;
 	public static final int HEIGHT = 30;
 	
+	public static boolean allowAnimation = true;
+	
 	public int drawW = WIDTH;
 	
 	public int scrX = 0, scrY = 0;
@@ -88,6 +90,8 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			Main.editor.isReadOnly = true;
 		}
+		
+		if (!allowAnimation) return;
 		
 		new Thread() {
 			public void run() {
@@ -170,6 +174,55 @@ public class Tab extends IDEComponent implements Serializable {
 		}
 		
 		Tab t = this;
+		
+		if (!allowAnimation) {
+			Main.editor.isMultilineCommenting = false; // TODO closeother reseta o cursor
+			Main.editor.isAnotherIteration = false;
+			Main.editor.foundExt = false;
+			
+			Main.editor.toRemove.add(t);
+			
+			Main.editor.selecting = false;
+			
+			if (Main.editor.tabs.size() == 1) {
+				Main.editor.editing = null;
+				
+				return;
+			}
+			
+			if (!Main.editor.tabs.isEmpty()) {
+				Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() > 0 ? Main.editor.tabs.size() - 1 : 0).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
+				
+				// aqui rola uma exception TODO
+				Tab next = Main.editor.tabs.indexOf(t) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(t) - 1);
+				
+				if (Main.editor.toRemove != null && !Main.editor.toRemove.get(0).equals(t)) // aqui rola um nullpointerexception quando fecha uma tab
+					next = t;
+				
+				if (Main.editor.editing == t) {
+					Main.editor.cursorX = 0;
+					Main.editor.cursorY = 1;
+				}
+				
+				Main.editor.editing = next;
+				
+				Main.editor.cursorX = cx;
+				Main.editor.cursorY = cy;
+				
+				Main.editor.scrX = next.scrX;
+				Main.editor.scrY = next.scrY;
+				
+				Main.editor.lines.clear();
+			
+				try {
+					Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return;
+		}
 		
 		new Thread() {
 			public void run() {
@@ -507,8 +560,6 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			return;
 		}
-		
-		if (drawW == 0) close();
 		
 		int x = this.x + Main.editor.tabScr;
 		

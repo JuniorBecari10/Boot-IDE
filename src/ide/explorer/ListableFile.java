@@ -498,6 +498,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("indent_length: " + CodeEditor.indentLength + "\n");
 			w.write("automatically_open_tabs: " + CodeEditor.automaticallyOpenTabs + "\n");
 			w.write("show_whitespace: " + CodeEditor.showWhitespace + "\n");
+			w.write("allow_tab_animation: " + Tab.allowAnimation + "\n");
 
 			w.close();
 
@@ -1018,7 +1019,16 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				hasAltered = true;
 
 				break;
+			
+			case "allow_tab_animation:":
+				if (split[1].equals("default"))
+					break;
 
+				Tab.allowAnimation = Boolean.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
 			/*
 			 * case "put_chevrons_on_html_tags:": if (split[1].equals("default")) break;
 			 * 
