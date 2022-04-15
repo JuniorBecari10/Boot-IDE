@@ -777,7 +777,7 @@ public class CommandTerminal extends IDEComponent {
 					drawcy += CodeEditor.FONT_SIZE;
 				}
 				
-				while (drawcy > Main.screen.getHeight() - (Main.screen.getHeight() / 10)) {
+				while (drawcy > Main.screen.getHeight() - (Main.screen.getHeight() / 10) - 30) {
 					Main.editor.scrY += CodeEditor.FONT_SIZE;
 					drawcy -= CodeEditor.FONT_SIZE;
 				}

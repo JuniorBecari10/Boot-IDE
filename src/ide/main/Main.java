@@ -922,50 +922,50 @@ public class Main implements Runnable, Tickable {
     }
     
     //@Override
-    public void runold() {
-    	long lastTime = System.nanoTime();
-    	double targetFps = 60.0; // 120
-    	double ns = 1E9 / targetFps;
-    	double delta = 0;
-    	
-    	//boolean reachedFps = false;
-    	
-    	int frames = 0;
-    	double timer = System.currentTimeMillis();
-    	
-    	//int tickOverflow = 0;
-    	
-    	screen.requestFocus();
-    	
-    	while (running) {
-    		long now = System.nanoTime();
-    		
-    		delta += (now - lastTime) / ns;
-    		lastTime = now;
-    		
-    		if (delta >= 1) {
-    			if (frames < targetFps) { // ver isso aqui
-    				tick();
-				    render();
-    			} /*else {
-    				tickOverflow++;
-    			}*/
-    			
-    			close(0);
-    			
-    			delta--;
-    			frames++;
-    		}
-    		
-    		if (System.currentTimeMillis() - timer >= 1000) {
-    			/*if (tickOverflow > 0)
-    				System.out.println("Tick Overflow: Skipping " + tickOverflow + " ticks.");*/
-    			
-    			System.out.println("FPS: " + frames);
-    			
-    			frames = 0;
-    			timer += 1000;
-    		}
-    	}
-    }
+//    public void runold() {
+//    	long lastTime = System.nanoTime();
+//    	double targetFps = 60.0; // 120
+//    	double ns = 1E9 / targetFps;
+//    	double delta = 0;
+//    	
+//    	//boolean reachedFps = false;
+//    	
+//    	int frames = 0;
+//    	double timer = System.currentTimeMillis();
+//    	
+//    	//int tickOverflow = 0;
+//    	
+//    	screen.requestFocus();
+//    	
+//    	while (running) {
+//    		long now = System.nanoTime();
+//    		
+//    		delta += (now - lastTime) / ns;
+//    		lastTime = now;
+//    		
+//    		if (delta >= 1) {
+//    			if (frames < targetFps) { // ver isso aqui
+//    				tick();
+//				    render();
+//    			} /*else {
+//    				tickOverflow++;
+//    			}*/
+//    			
+//    			close(0);
+//    			
+//    			delta--;
+//    			frames++;
+//    		}
+//    		
+//    		if (System.currentTimeMillis() - timer >= 1000) {
+//    			/*if (tickOverflow > 0)
+//    				System.out.println("Tick Overflow: Skipping " + tickOverflow + " ticks.");*/
+//    			
+//    			System.out.println("FPS: " + frames);
+//    			
+//    			frames = 0;
+//    			timer += 1000;
+//    		}
+//    	}
+//    }
 }

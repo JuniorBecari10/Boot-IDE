@@ -1741,6 +1741,30 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
+			indxs = findWord(new String(chars), "="); // antes de <palavra>
+
+			for (Integer i : indxs) {
+				int c = i;
+				int len = 0;
+
+				boolean hasSpace = false;
+
+				while (c < chars.length && c + len < chars.length && c > 0) {
+					c--;
+					len++;
+
+					if (chars[c] == ' ') {
+						if (hasSpace)
+							break;
+
+						if (!hasSpace)
+							hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
+					}
+				}
+
+				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+			}
+			
 			{ // colorir tags dinâmicas
 				indxs = findWord(new String(chars), ">"); // colorir final de tags
 
@@ -7156,7 +7180,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
 				KeyInput.updateKeys();
-				undo.push(new ArrayList<>(getLines()));
+				addToUndo();
 				
 				CommandTerminal.runCommand("gotocursor");
 
@@ -7205,7 +7229,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				KeyInput.updateKeys();
-				 undo.push(new ArrayList<>(getLines()));
+				 addToUndo();
 				 
 				 CommandTerminal.runCommand("gotocursor");
 
@@ -7224,7 +7248,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 				KeyInput.updateKeys();
-				 undo.push(new ArrayList<>(getLines()));
+				 addToUndo();
 				 
 				 CommandTerminal.runCommand("gotocursor");
 				 
@@ -7283,7 +7307,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
-				 undo.push(new ArrayList<>(getLines()));
+				 addToUndo();
 				 
 				 CommandTerminal.runCommand("gotocursor");
 
@@ -7430,7 +7454,7 @@ public class CodeEditor extends IDEComponent {
 				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256
 						|| KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
 					
-					 undo.push(new ArrayList<>(getLines()));
+					 addToUndo();
 					 
 					 CommandTerminal.runCommand("gotocursor");
 					if (editing != null)
@@ -8260,6 +8284,10 @@ public class CodeEditor extends IDEComponent {
 				CommandTerminal.runCommand("deselect");
 		}
 	}
+	
+	private void addToUndo() {
+		undo.push(new ArrayList<>(getLines()));
+	}
 
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || RenameFile.added)
@@ -8294,7 +8322,6 @@ public class CodeEditor extends IDEComponent {
 		minMode = width < (selecting ? 800 : 600); // 850 - original
 		
 		// Scroll by Keyboard
-		
 		if (KeyInput.isKeyPressed() && KeyInput.isControlDown()) {
 			if (!KeyInput.isShiftDown()) {
 				if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP && scrY > 0)
