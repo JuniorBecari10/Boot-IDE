@@ -142,6 +142,10 @@ public class Tab extends IDEComponent implements Serializable {
 		this.regent = regent;
 	}
 	
+	public String toString() {
+		return "Tab: Regent: " + regent;
+	}
+	
 	/**
 	 * Fecha essa Tab.
 	 */
@@ -201,7 +205,7 @@ public class Tab extends IDEComponent implements Serializable {
 					// aqui rola uma exception TODO
 					Tab next = Main.editor.tabs.indexOf(t) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(t) - 1);
 					
-					if (!Main.editor.toRemove.get(0).equals(t)) // aqui rola um nullpointerexception quando fecha uma tab
+					if (Main.editor.toRemove != null && !Main.editor.toRemove.get(0).equals(t)) // aqui rola um nullpointerexception quando fecha uma tab
 						next = t;
 					
 					if (Main.editor.editing == t) {
@@ -434,6 +438,8 @@ public class Tab extends IDEComponent implements Serializable {
 			Main.editor.cursorX = cx;
 			Main.editor.cursorY = cy;
 			
+			select();
+			
 			break;
 		}
 	}
@@ -502,7 +508,7 @@ public class Tab extends IDEComponent implements Serializable {
 			return;
 		}
 		
-		if (width == 0) close();
+		if (drawW == 0) close();
 		
 		int x = this.x + Main.editor.tabScr;
 		

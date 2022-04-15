@@ -8311,6 +8311,11 @@ public class CodeEditor extends IDEComponent {
 		
 		height = Main.screen.getHeight();
 		
+		/*if (editing != null && !tabs.isEmpty() && tabs.indexOf(editing) < 0)
+			tabs.get(0).select();*/
+		
+		System.out.println(editing);
+		
 		if (leftClicked() || rightClicked())
 			onClick();
 		

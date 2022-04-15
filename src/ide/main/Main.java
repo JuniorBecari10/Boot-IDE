@@ -858,6 +858,8 @@ public class Main implements Runnable, Tickable {
     		String st = getStackTrace(e);
     		Calendar c = Calendar.getInstance();
     		
+    		System.err.println("An error occurred (Also written in " + LOG_FILE_NAME + "):\n" + st);
+    		
 			wr.write("An Exception occurred in " + PROGRAM_NAME + ", Main-Thread at " + c.getTime() + ".\n\n");
 			wr.write("Message: " + e.getMessage() + "\n");
 			wr.write("Localized Message: " + e.getLocalizedMessage() + "\n");
