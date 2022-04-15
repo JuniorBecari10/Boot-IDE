@@ -173,6 +173,7 @@ public class Tab extends IDEComponent implements Serializable {
 			}
 		}
 		
+		// por causa da thread
 		Tab t = this;
 		
 		if (!allowAnimation) {
@@ -255,11 +256,13 @@ public class Tab extends IDEComponent implements Serializable {
 				if (!Main.editor.tabs.isEmpty()) {
 					Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() > 0 ? Main.editor.tabs.size() - 1 : 0).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
 					
-					// aqui rola uma exception TODO
 					Tab next = Main.editor.tabs.indexOf(t) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(t) - 1);
 					
-					if (Main.editor.toRemove != null && !Main.editor.toRemove.get(0).equals(t)) // aqui rola um nullpointerexception quando fecha uma tab
+					if (Main.editor.toRemove != null && Main.editor.toRemove.get(0) != null && !Main.editor.toRemove.get(0).equals(t)) // aqui rola um nullpointerexception quando fecha uma tab | é o get(0) que é null
 						next = t;
+					
+					if (Main.editor.toRemove.get(0) == null)
+						next = Main.editor.tabs.get(0);
 					
 					if (Main.editor.editing == t) {
 						Main.editor.cursorX = 0;
@@ -491,7 +494,7 @@ public class Tab extends IDEComponent implements Serializable {
 			Main.editor.cursorX = cx;
 			Main.editor.cursorY = cy;
 			
-			select();
+			Main.editor.tabs.get(0).select();
 			
 			break;
 		}

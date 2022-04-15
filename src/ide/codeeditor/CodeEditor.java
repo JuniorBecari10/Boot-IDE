@@ -96,7 +96,7 @@ public class CodeEditor extends IDEComponent {
 	public String extType = "";
 	
 	public static boolean indentSpaces = true;
-	public static int indentLength = 4; // 4 caracteres "_ _ _ _"
+	public static int indentLength = 4; // 4 caracteres (padrão) "_ _ _ _"
 
 	public boolean isAnotherIteration = false;
 	public boolean foundExt = false;
@@ -1118,27 +1118,21 @@ public class CodeEditor extends IDEComponent {
 			ls.add(gen);
 		}
 
-		try {
-			new Thread() { // quando vc deleta as linhas ou fecha as tabs isso acontece mesmo
-				public void run() {
-					if (editing != null && editing.getRegent() != null && editing.getRegent().getRegent() != null)
-						for (IDELine l : lines) {
-							if (editing != null && editing.closing)
-								break;
+		new Thread() { // quando vc deleta as linhas ou fecha as tabs isso (exception) acontece mesmo
+			public void run() {
+				if (editing != null && editing.getRegent() != null && editing.getRegent().getRegent() != null)
+					for (IDELine l : lines) {
+						if (editing != null && editing.closing)
+							break;
 
-							l.setFonts(automaticColor(toCharArray(l.getChars()),
-									ListableFile.getFileExtension(editing.getRegent().getRegent())));
+						l.setFonts(automaticColor(toCharArray(l.getChars()),
+								ListableFile.getFileExtension(editing.getRegent().getRegent())));
 
-							if (editing != null && editing.closing)
-								break;
-						}
-				}
-			}.start();
-		} catch (Exception e) {
-			System.err.println("Deu um problema na Thread. " + e.getLocalizedMessage());
-
-			return ls;
-		}
+						if (editing != null && editing.closing)
+							break;
+					}
+			}
+		}.start();
 		
 		callAutomaticColor();
 
@@ -6041,6 +6035,7 @@ public class CodeEditor extends IDEComponent {
 			extType += " (" + Texts.readOnly + ")";
 	}
 
+	// my precious
 	public List<IDEFont> automaticColor(char[] chars, String ext) {
 
 		/*
@@ -8054,7 +8049,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					/*if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
+					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
 						KeyInput.updateKeys();
 						
 						if (undo.isEmpty()) return;
@@ -8088,7 +8083,7 @@ public class CodeEditor extends IDEComponent {
 						editing.setSaved(false);
 						
 						return;
-					}*/
+					}
 				}
 	
 	public void scrollTabs() {
@@ -8286,7 +8281,7 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	private void addToUndo() {
-		undo.push(new ArrayList<>(getLines()));
+		undo.push(lines);
 	}
 
 	public void tick() {
@@ -8408,7 +8403,9 @@ public class CodeEditor extends IDEComponent {
 		}
   
 		if (!typeThread.isAlive() || typeThread.getState() == State.TERMINATED) {
-			typeThread.start();
+			try {
+				typeThread.start();
+			} catch (IllegalStateException e) {}
 		}
 
 		if (Explorer.dragging)
