@@ -8218,7 +8218,7 @@ public class CodeEditor extends IDEComponent {
 	private void onClick() {
 		Explorer.selected = null;
 		
-		if (selecting)
+		if (selecting && leftClicked())
 			CommandTerminal.runCommand("deselect");
 		
 		if (!RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive() // TODO se quiser alterar o select, altere de leftclicked para dragged, e o cursor vai te seguir
