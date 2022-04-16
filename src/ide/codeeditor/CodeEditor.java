@@ -8399,7 +8399,9 @@ public class CodeEditor extends IDEComponent {
 		if (!typeThread.isAlive() || typeThread.getState() == State.TERMINATED) {
 			try {
 				typeThread.start();
-			} catch (IllegalStateException e) {}
+			} catch (IllegalStateException e) {
+				return;
+			}
 		}
 
 		if (Explorer.dragging)

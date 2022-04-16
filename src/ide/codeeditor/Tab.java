@@ -123,7 +123,7 @@ public class Tab extends IDEComponent implements Serializable {
         
         return mouse.intersects(comp);
     }
-
+	
 	public int getX() {
 		return x;
 	}
@@ -567,9 +567,9 @@ public class Tab extends IDEComponent implements Serializable {
 			return;
 		}
 		
-		int x = this.x + Main.editor.tabScr;
+		int x = dragging == null ? this.x + Main.editor.tabScr : this.x;
 		
-		if (!isTabDragged()) {
+		if (!isTabDragged() || dragging == null) {
 			MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - 203;	// -WIDTH é um macete kkk - 77
 			
 			if (x < Main.editor.getX()) x = Main.editor.getX();
@@ -589,7 +589,7 @@ public class Tab extends IDEComponent implements Serializable {
 			Main.screen.setCursor(Cursor.getDefaultCursor());
 		}
 		
-		if (!closing)
+		if (!closing && dragging != this)
 			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
 		
 		/*if (dragged() && !dragging) {
@@ -617,7 +617,8 @@ public class Tab extends IDEComponent implements Serializable {
 		}
 		
 		if (dragging == this) {
-			x = MouseInput.getMouseX() - WIDTH / 2;
+			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);		// o x do botão vai ficar antes pq eu gosto do efeito
+			x = MouseInput.getMouseX() - (WIDTH / 2) - Main.editor.tabScr;
 		}
 		
 		if (!MouseInput.isMouseDragged() && dragging != null) {
@@ -628,7 +629,7 @@ public class Tab extends IDEComponent implements Serializable {
 			Collections.sort(ts, new Comparator<Tab>() {
 				@Override
 				public int compare(Tab t1, Tab t2) {
-					return new Integer(t1.getX() - WIDTH / 2).compareTo(t2.getX());
+					return new Integer(t1.getX() - (WIDTH / 2) + Main.editor.tabScr).compareTo(t2.getX() + Main.editor.tabScr);
 				}
 			});
 			
