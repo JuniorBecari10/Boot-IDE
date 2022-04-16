@@ -110,6 +110,8 @@ public class Tab extends IDEComponent implements Serializable {
 				}
 			}
 		}.start();
+		
+		Main.editor.setCursorWithinBounds();
 	}
 	
 	@Override
@@ -555,6 +557,7 @@ public class Tab extends IDEComponent implements Serializable {
 			save();*/
 		
 		CommandTerminal.runCommand("resetundoredo");
+		Main.editor.setCursorWithinBounds();
 	}
 	
 	public void tick() {
