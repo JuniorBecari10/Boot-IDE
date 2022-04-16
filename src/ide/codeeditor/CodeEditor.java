@@ -386,7 +386,7 @@ public class CodeEditor extends IDEComponent {
 			"static_cast", "false", "catch", "operator", "template", "friend", "private", "class", "this", "inline",
 			"public", "throw", "const_cast", "delete", "mutable", "protected", "true", "try", "typeid", "typename",
 			"using", "virtual", "wchar_t", "#include", "include", "#define", "string", "#ifdef", "#ifndef", "#error", "#pragma", "#endif",
-			"override", "std", "size_t", "duint", "uint8_t", "uint16_t", "comment", "lib", "NULL", "alignof" };
+			"override", "std", "size_t", "duint", "uint8_t", "uint16_t", "comment", "lib", "NULL", "alignof", "nullptr" };
 
 	public static final String[] csKeys = { "abstract", "async", "const", "event", "extern", "new", "override",
 			"partial", "readonly", "sealed", "static", "unsafe", "virtual", "volatile", "public", "private", "internal",
@@ -8767,7 +8767,7 @@ public class CodeEditor extends IDEComponent {
 			// Desenhar cursor
 			if (showCursor && !WindowInput.isDeactivated() && drawcx > x + 45 && Explorer.selected == null) {
 				g.setColor(Colors.cursor);
-				g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy - (FONT_SIZE >= 16 ? 1 : 0), // na posição x 12 ele aparece um pouco encima dos numeros
+				g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy, // na posição x 12 ele aparece um pouco encima dos numeros
 						FONT_SIZE > 10 ? 2 : 1, FONT_SIZE + (FONT_SIZE / 4));
 			}
 	

@@ -1009,7 +1009,7 @@ public class Fonts {
     		//if ((i < 33 || (i > 126 && i < 161) || i > 255) && i != 8721) chr = unknown;
     		
     		//g.drawImage(shadow, (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) + (int) (Math.ceil(CodeEditor.FONT_SIZE / 16)), ydraw + (int) (Math.ceil(CodeEditor.FONT_SIZE / 16)), fonts[i].getSize() + ((ch == 'i' || ch == ',' || ch == ';') && (CodeEditor.FONT_SIZE == 14 || CodeEditor.FONT_SIZE == 13) ? 1 : 0), fonts[i].getSize(), null);
-    		g.drawImage(chr, (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw, fonts[i].getSize() + ((ch == 'i' || ch == ',' || ch == ';') && (CodeEditor.FONT_SIZE == 14 || CodeEditor.FONT_SIZE == 13) ? 1 : 0), fonts[i].getSize(), null);
+    		g.drawImage(chr, (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw, fonts[i].getSize() + ((ch == 'i' || ch == ',' || ch == ';' || ch == '|') && (CodeEditor.FONT_SIZE == 14 || CodeEditor.FONT_SIZE == 13) ? 1 : 0), fonts[i].getSize(), null);
     			
     	}
     }
