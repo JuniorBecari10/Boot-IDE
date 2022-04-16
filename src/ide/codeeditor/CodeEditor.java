@@ -6067,15 +6067,12 @@ public class CodeEditor extends IDEComponent {
 		
 		if ((isBinary(ext) || !isFormatSupported(ext)) || ext.equalsIgnoreCase(".setconf") && !(ext.equalsIgnoreCase(".ini")
 				&& ext.equalsIgnoreCase(".make") && ext.equalsIgnoreCase(".mk") && ext.equalsIgnoreCase(".mak")
-				&& editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile")
+				&& editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") && ext.equalsIgnoreCase(".txt") && ext.equalsIgnoreCase(".log")
 				&& editing.getRegent().getRegent().getName().equalsIgnoreCase("dockerfile"))) {
 			fs = colorWhitespaces(ext, chars, fs);
 			
 			return fs;
 		}
-		
-		if (ext.equals(".txt") || ext.equals(".log"))
-			return fs;
 
 		/////////////////////////////////////////////////////
 
