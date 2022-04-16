@@ -6073,6 +6073,9 @@ public class CodeEditor extends IDEComponent {
 			
 			return fs;
 		}
+		
+		if (ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log"))
+			return fs;
 
 		/////////////////////////////////////////////////////
 
