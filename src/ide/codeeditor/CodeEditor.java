@@ -2286,12 +2286,12 @@ public class CodeEditor extends IDEComponent {
 						
 						int c = i;
 						
-						while (chs[c] != ' ') {
+						while (c > 0 && (chs[c] != ' ' || chs[c] != '(' || chs[c] != ')' || chs[c] != '[' || chs[c] != ']' || chs[c] != '{' || chs[c] != '}' || chs[c] != ',' || chs[c] != '.' || chs[c] != '<' || chs[c] != '>' || chs[c] != ';' || chs[c] != ':' || chs[c] != '?' || chs[c] != '/' || chs[c] != '\\' || chs[c] != '|' || chs[c] != '+' || chs[c] != '-' || chs[c] != '*' || chs[c] != '=' || chs[c] != '&' || chs[c] != '%' || chs[c] != '$' || chs[c] != '#' || chs[c] != '!' || chs[c] != '@' || chs[c] != '`' || chs[c] != '´' || chs[c] != '^' || chs[c] != '~')) {
 							c--;
 						}
 						
 						if (chs[c] == ' ') {
-							if (Character.isLowerCase(chs[c + 1])) break; // no index0 o problema ainda existe
+							if (Character.isLowerCase(chs[c + 1])) break;
 						}
 						
 						//addautocomplete.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));

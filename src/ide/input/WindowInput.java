@@ -65,6 +65,8 @@ public class WindowInput implements WindowListener {
 	@Override
 	public void windowClosing(WindowEvent e) {
 		closing = true;
+		
+		//Main.close(0);
 	}
 
 	@Override

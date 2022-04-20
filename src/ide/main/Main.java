@@ -121,6 +121,8 @@ public class Main implements Runnable, Tickable {
     public static boolean hasConfigFile = false;
     public static Language lang;
     
+    public static Main main;
+    
     public static final File settingsFile = new File(System.getProperty("user.dir") + File.separator + "settings" + SETTINGS_FILE_EXTENSION);
     public static final File defaultConfigFile = new File(System.getProperty("user.dir") + File.separator + DEFAULT_CONFIG_FILE_NAME);
     
