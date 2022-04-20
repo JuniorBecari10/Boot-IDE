@@ -733,9 +733,11 @@ public class CodeEditor extends IDEComponent {
 			"let", "lor", "lsl", "lsr", "lxor", "match", "method", "mod", "module", "mutable", "new", "nonrec", "object", "of", "open", "or", "private",
 			"rec", "sig", "struct", "then", "to", "true", "try", "type", "val", "virtual", "when", "while", "with" };
 	
-	public static final String[] tfKeys = { "resource", "true", "false", "any", "variable", "string", "number", "bool" };
+	public static final String[] tfKeys = { "resource", "provider", "true", "false", "any", "variable", "string", "number", "bool" };
 	
 	public static final String[] vbsKeys = { "Dim", "Set", "Nothing", "Is", "Null", "True", "False" }; 
+	
+	public static final String[] vKeys = { "as", "asm", "assert", "atomic", "break", "const", "continue", "defer", "else", "embed", "enum", "false", "fn", "for", "go", "goto", "if", "import", "in", "interface", "is", "lock", "match", "module", "mut", "none", "or", "pub", "return", "rlock", "select", "shared", "sizeof", "static", "struct", "true", "type", "typeof", "union", "unsafe", "volatile", "__offsetof", "bool", "string", "i8", "i16", "int", "i64", "i128", "u8", "u16", "u32", "u64", "u128", "rune", "f32", "f64", "isize", "usize", "voidptr", "any" };
 	
 	public Thread typeThread;
 	public Thread killAllTabs;
@@ -1354,6 +1356,10 @@ public class CodeEditor extends IDEComponent {
 		case ".bashrc": return shKeys;
 		case ".bash_profile": return shKeys;
 		case ".tf": return tfKeys;
+		case ".v": return vKeys;
+		case ".vh": return vKeys;
+		case ".vsh": return vKeys;
+		case "v.mod": return vKeys;
 		
 		default: return null;
 		}
@@ -2341,6 +2347,26 @@ public class CodeEditor extends IDEComponent {
 
 		case ".vb":
 			for (String s : vbKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
+														// s.length()).getFont().equals(Fonts.methodsNormal))
+
+				for (Integer i : indxs) {
+					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
+							|| ((i + s.length() < chars.length)
+									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
+						continue;
+
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+
+			break;
+			
+		case ".v":
+		case ".vh":
+		case ".vsh":
+		case "v.mod":
+			for (String s : vKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
 														// s.length()).getFont().equals(Fonts.methodsNormal))
 
@@ -4198,7 +4224,7 @@ public class CodeEditor extends IDEComponent {
 						&& hasAfter(new String(chars), i, '{'))
 					continue;
 				
-				int len = 0;
+				/*int len = 0;
 				
 				for (Integer j : indxs) {
 					while (j + len < chars.length && chars[j + len] != ' ' && chars[j + len] != '[' && chars[j + len] != ']'
@@ -4211,13 +4237,13 @@ public class CodeEditor extends IDEComponent {
 				
 				int c = i;
 				
-				while (chs[c] != ' ') {
+				while (c > 0 && chars[c] != ' ') {
 					c--;
 				}
 				
 				if (chs[c] == ' ') {
-					if (Character.isLetter(chs[c + 1])) break; // no index0 o problema ainda existe
-				}
+					if (Character.isLetter(chars[c + 1])) break; // no index0 o problema ainda existe
+				}*/
 
 				/*
 				 * if (Character.isLetter(chars[i - 1])) for (int j = i; i > 1; i--) { if
@@ -4239,7 +4265,7 @@ public class CodeEditor extends IDEComponent {
 				// if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i +
 				// s.length()])) continue;
 
-				fs = color(i - 2, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+				fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 			}
 		}
 
@@ -4971,6 +4997,10 @@ public class CodeEditor extends IDEComponent {
 		case ".lpr":
 		case ".scala":
 		case ".por":
+		case ".v":
+		case ".vh":
+		case ".vsh":
+		case "v.mod":
 			String withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
 			char[] chs = withSpace.toCharArray();
 			
@@ -5547,6 +5577,10 @@ public class CodeEditor extends IDEComponent {
 		case ".jsonc":
 		case ".por":
 		case ".tf":
+		case ".v":
+		case ".vh":
+		case ".vsh":
+		case "v.mod":
 			indxs = findWord(new String(chars), "/*"); // colorir comentários multi-linha - caracteres diferentes
 			List<Integer> finals = findWord(new String(chars), "*/");
 			
@@ -8771,9 +8805,9 @@ public class CodeEditor extends IDEComponent {
 				for (int i = 0; i < lines.size(); i++) {
 					if (selecting) {
 						g.setColor(Colors.selection);
-	
+						
 						if (i > line1 && i < line2) { // do meio
-							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
+							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do 0 até o index2
 									// (i + 1) * (FONT_SIZE + (FONT_SIZE / 4)) - scrY,
 									MIN_Y + ((i - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY,
 									// Main.screen.getWidth() + scrX,
