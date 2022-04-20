@@ -733,6 +733,8 @@ public class CodeEditor extends IDEComponent {
 			"let", "lor", "lsl", "lsr", "lxor", "match", "method", "mod", "module", "mutable", "new", "nonrec", "object", "of", "open", "or", "private",
 			"rec", "sig", "struct", "then", "to", "true", "try", "type", "val", "virtual", "when", "while", "with" };
 	
+	public static final String[] tfKeys = { "resource", "true", "false", "any", "variable", "string", "number", "bool" };
+	
 	public Thread typeThread;
 	public Thread killAllTabs;
 	
@@ -1348,6 +1350,7 @@ public class CodeEditor extends IDEComponent {
 		case ".ld": return ldKeys;
 		case ".bashrc": return shKeys;
 		case ".bash_profile": return shKeys;
+		case ".tf": return tfKeys;
 		
 		default: return null;
 		}
@@ -1611,6 +1614,7 @@ public class CodeEditor extends IDEComponent {
 		case ".bashrc": return minMode ? "Bashrc" : (Main.lang == Language.PORT ? "Arquivo de Configurações Bash" : "Bash Configuration File");
 		case ".bash_profile": return (Main.lang == Language.PORT ? "Perfil Bash" : "Bash Profile");
 		case ".toml": return minMode ? "Toml" : (Main.lang == Language.PORT ? "Arquivo de Configurações do Rust" : "Rust Configuration File");
+		case ".tf": return "Terraform";
 		
 		case ".png": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		case ".jpg": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
@@ -2350,6 +2354,22 @@ public class CodeEditor extends IDEComponent {
 			
 		case ".por":
 			for (String s : porKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s);
+
+				for (Integer i : indxs) {
+					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
+							|| ((i + s.length() < chars.length)
+									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
+						continue;
+
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+
+			break;
+			
+		case ".tf":
+			for (String s : tfKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s);
 
 				for (Integer i : indxs) {
@@ -5214,6 +5234,73 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			break;
+			
+		case ".tf":
+			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			chs = withSpace.toCharArray();
+			
+			indxs = findWord(new String(chs), "//"); // colorir comentários de uma linha
+			
+			if (fs.size() == 0)
+				break;
+
+			for (Integer i : indxs) {
+				if (!indxs.isEmpty()) {
+					boolean br = false;
+					
+					if (i >= indxs.size()) i = indxs.size() - 1;
+					
+					if (isInside(i, '\"', '\"', withSpace) && isInside(i, '\'', '\'', withSpace) && isInside(i, '`', '`', withSpace)) { // se colocar 2 // na mesma linha o anterior é desfeito
+						br = true;
+						//System.out.println(br);
+						
+						//continue;
+					}
+					
+					if (br) continue;
+				}
+				
+				for (int j = 0; j < indxs.size(); j++) // para colorir o primeiro /
+					indxs.set(j, indxs.get(j) - 1);
+				
+				if (i < 0) i = 0;
+				
+				if (indxs.size() != 0)
+					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			}
+			
+			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			chs = withSpace.toCharArray();
+			
+			indxs = findWord(new String(chs), "#"); // colorir comentários de uma linha
+			
+			if (fs.size() == 0)
+				break;
+
+			for (Integer i : indxs) {
+				if (!indxs.isEmpty()) {
+					boolean br = false;
+					
+					if (i >= indxs.size()) i = indxs.size() - 1;
+					
+					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior é desfeito
+						br = true;
+						
+						break;
+					}
+					
+					if (br) break;
+				}
+				
+				for (int j = 0; j < indxs.size(); j++)
+					indxs.set(j, indxs.get(j) - 1);
+				
+				if (indxs.size() != 0)
+					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+			}
+			
+			
+			break;
 
 		case ".py":
 		case ".pyx":
@@ -5438,6 +5525,7 @@ public class CodeEditor extends IDEComponent {
 		case ".json":
 		case ".jsonc":
 		case ".por":
+		case ".tf":
 			indxs = findWord(new String(chars), "/*"); // colorir comentários multi-linha - caracteres diferentes
 			List<Integer> finals = findWord(new String(chars), "*/");
 			
