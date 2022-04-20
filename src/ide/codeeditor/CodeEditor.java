@@ -735,6 +735,8 @@ public class CodeEditor extends IDEComponent {
 	
 	public static final String[] tfKeys = { "resource", "true", "false", "any", "variable", "string", "number", "bool" };
 	
+	public static final String[] vbsKeys = { "Dim", "Set", "Nothing", "Is", "Null", "True", "False" }; 
+	
 	public Thread typeThread;
 	public Thread killAllTabs;
 	
@@ -1328,6 +1330,7 @@ public class CodeEditor extends IDEComponent {
 		case ".mli": return oCamlKeys;
 		case ".mly": return oCamlKeys;
 		case ".clt": return oCamlKeys;
+		case ".vbs": return vbsKeys;
 		
 		case ".html": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
 		case ".svelte": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
@@ -1551,7 +1554,8 @@ public class CodeEditor extends IDEComponent {
 		case ".mli": return minMode ? "OCaml" : "Objective Caml - OCaml";
 		case ".mly": return minMode ? "OCaml" : "Objective Caml - OCaml";
 		case ".clt": return minMode ? "OCaml" : "Objective Caml - OCaml";
-
+		case ".vbs": return minMode ? "VBScript" : "Visual Basic Script - VBScript";
+		
 		case ".html": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
 		case ".xhtml": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
 		case ".htm": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
@@ -2337,6 +2341,23 @@ public class CodeEditor extends IDEComponent {
 
 		case ".vb":
 			for (String s : vbKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
+														// s.length()).getFont().equals(Fonts.methodsNormal))
+
+				for (Integer i : indxs) {
+					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
+							|| ((i + s.length() < chars.length)
+									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
+						continue;
+
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+
+			break;
+			
+		case ".vbs":
+			for (String s : vbsKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
 														// s.length()).getFont().equals(Fonts.methodsNormal))
 
