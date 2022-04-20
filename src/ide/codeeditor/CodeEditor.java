@@ -737,7 +737,17 @@ public class CodeEditor extends IDEComponent {
 	
 	public static final String[] vbsKeys = { "Dim", "Set", "Nothing", "Is", "Null", "True", "False" }; 
 	
-	public static final String[] vKeys = { "as", "asm", "assert", "atomic", "break", "const", "continue", "defer", "else", "embed", "enum", "false", "fn", "for", "go", "goto", "if", "import", "in", "interface", "is", "lock", "match", "module", "mut", "none", "or", "pub", "return", "rlock", "select", "shared", "sizeof", "static", "struct", "true", "type", "typeof", "union", "unsafe", "volatile", "__offsetof", "bool", "string", "i8", "i16", "int", "i64", "i128", "u8", "u16", "u32", "u64", "u128", "rune", "f32", "f64", "isize", "usize", "voidptr", "any" };
+	public static final String[] vKeys = { "as", "asm", "assert", "atomic", "break", "const", "continue", "defer", "else", "embed", "enum", "false", "fn",
+			"for", "go", "goto", "if", "import", "in", "interface", "is", "lock", "match", "module", "mut", "none", "or", "pub", "return", "rlock", "select",
+			"shared", "sizeof", "static", "struct", "true", "type", "typeof", "union", "unsafe", "volatile", "__offsetof", "bool", "string", "i8", "i16",
+			"int", "i64", "i128", "u8", "u16", "u32", "u64", "u128", "rune", "f32", "f64", "isize", "usize", "voidptr", "any" };
+	
+	public static final String[] basKeys = { "let", "data", "read", "restore", "dim", "if", "then", "else", "for", "to", "step", "next", "while", "wend",
+			"repeat", "until", "do", "loop", "until", "goto", "gosub", "on", "def", "fn", "list", "print", "input", "tab", "spc", "abs", "atn", "cos",
+			"exp", "int", "log", "rnd", "sin", "sqr", "tan", "rem", "usr", "call", "tron", "troff", "asm",
+			 "LET", "DATA", "READ", "RESTORE", "DIM", "IF", "THEN", "ELSE", "FOR", "TO", "STEP", "NEXT", "WHILE", "WEND", "REPEAT", "UNTIL", "DO", "LOOP",
+			 "UNTIL", "GOTO", "GOSUB", "ON", "DEF", "FN", "LIST", "PRINT", "INPUT", "TAB", "SPC", "ABS", "ATN", "COS", "EXP", "INT", "LOG", "RND", "SIN",
+			 "SQR", "TAN", "REM", "USR", "CALL", "TRON", "TROFF", "ASM"};
 	
 	public Thread typeThread;
 	public Thread killAllTabs;
@@ -1333,6 +1343,7 @@ public class CodeEditor extends IDEComponent {
 		case ".mly": return oCamlKeys;
 		case ".clt": return oCamlKeys;
 		case ".vbs": return vbsKeys;
+		case ".bas": return basKeys;
 		
 		case ".html": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
 		case ".svelte": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
@@ -1561,6 +1572,10 @@ public class CodeEditor extends IDEComponent {
 		case ".mly": return minMode ? "OCaml" : "Objective Caml - OCaml";
 		case ".clt": return minMode ? "OCaml" : "Objective Caml - OCaml";
 		case ".vbs": return minMode ? "VBScript" : "Visual Basic Script - VBScript";
+		case ".v": return "V";
+		case ".vh": return "V";
+		case ".vsh": return "V";
+		case ".bas": return minMode ? "BASIC" : "Beginners' All-purpose Symbolic Instruction Code - BASIC";
 		
 		case ".html": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
 		case ".xhtml": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
@@ -2290,7 +2305,7 @@ public class CodeEditor extends IDEComponent {
 							|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
 							|| ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml")
 							|| ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".json")
-							|| ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".mcfunction"))
+							|| ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".mcfunction") || ext.equalsIgnoreCase(".bas"))
 						fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					else {
 						if (i - 1 > 0 && Character.isLetter(chars[i - 1]))
@@ -2347,6 +2362,23 @@ public class CodeEditor extends IDEComponent {
 
 		case ".vb":
 			for (String s : vbKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
+														// s.length()).getFont().equals(Fonts.methodsNormal))
+
+				for (Integer i : indxs) {
+					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
+							|| ((i + s.length() < chars.length)
+									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
+						continue;
+
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+
+			break;
+			
+		case ".bas":
+			for (String s : basKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
 														// s.length()).getFont().equals(Fonts.methodsNormal))
 
@@ -8460,7 +8492,7 @@ public class CodeEditor extends IDEComponent {
 		width = Main.screen.getWidth() - x;
 		
 		// colocar isso numa variavel constante
-		minMode = width < (selecting ? 800 : 600); // 850 - original
+		minMode = width < 800; // 850 - original, (selecting ? 800 : 600)
 		
 		// Scroll by Keyboard
 		if (KeyInput.isKeyPressed() && KeyInput.isControlDown()) {
