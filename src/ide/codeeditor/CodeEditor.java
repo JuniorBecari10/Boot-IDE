@@ -2294,7 +2294,7 @@ public class CodeEditor extends IDEComponent {
 						
 						int c = i;
 						
-						while (c > 0 && (chs[c] != ' ' || chs[c] != '(' || chs[c] != ')' || chs[c] != '[' || chs[c] != ']' || chs[c] != '{' || chs[c] != '}' || chs[c] != ',' || chs[c] != '.' || chs[c] != '<' || chs[c] != '>' || chs[c] != ';' || chs[c] != ':' || chs[c] != '?' || chs[c] != '/' || chs[c] != '\\' || chs[c] != '|' || chs[c] != '+' || chs[c] != '-' || chs[c] != '*' || chs[c] != '=' || chs[c] != '&' || chs[c] != '%' || chs[c] != '$' || chs[c] != '#' || chs[c] != '!' || chs[c] != '@' || chs[c] != '`' || chs[c] != '´' || chs[c] != '^' || chs[c] != '~')) {
+						while (c > 0 && (chs[c] != ' ' || chs[c] == '(' || chs[c] == ')' || chs[c] == '[' || chs[c] == ']' || chs[c] == '{' || chs[c] == '}' || chs[c] == ',' || chs[c] == '.' || chs[c] == '<' || chs[c] == '>' || chs[c] == ';' || chs[c] == ':' || chs[c] == '?' || chs[c] == '/' || chs[c] == '\\' || chs[c] == '|' || chs[c] == '+' || chs[c] == '-' || chs[c] == '*' || chs[c] == '=' || chs[c] == '&' || chs[c] == '%' || chs[c] == '$' || chs[c] == '#' || chs[c] == '!' || chs[c] == '@' || chs[c] == '`' || chs[c] == '´' || chs[c] == '^' || chs[c] == '~')) {
 							c--;
 						}
 						
@@ -8158,7 +8158,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
+					/*if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
 						KeyInput.updateKeys();
 						
 						if (undo.isEmpty()) return;
@@ -8192,7 +8192,7 @@ public class CodeEditor extends IDEComponent {
 						editing.setSaved(false);
 						
 						return;
-					}
+					}*/
 				}
 	
 	public void scrollTabs() {
