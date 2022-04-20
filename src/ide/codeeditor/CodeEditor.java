@@ -735,7 +735,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public static final String[] tfKeys = { "resource", "provider", "true", "false", "any", "variable", "string", "number", "bool" };
 	
-	public static final String[] vbsKeys = { "Dim", "Set", "Nothing", "Is", "Null", "True", "False" }; 
+	public static final String[] vbsKeys = { "Dim", "Set", "Nothing", "Is", "Null", "True", "False" };
 	
 	public static final String[] vKeys = { "as", "asm", "assert", "atomic", "break", "const", "continue", "defer", "else", "embed", "enum", "false", "fn",
 			"for", "go", "goto", "if", "import", "in", "interface", "is", "lock", "match", "module", "mut", "none", "or", "pub", "return", "rlock", "select",
@@ -744,10 +744,12 @@ public class CodeEditor extends IDEComponent {
 	
 	public static final String[] basKeys = { "let", "data", "read", "restore", "dim", "if", "then", "else", "for", "to", "step", "next", "while", "wend",
 			"repeat", "until", "do", "loop", "until", "goto", "gosub", "on", "def", "fn", "list", "print", "input", "tab", "spc", "abs", "atn", "cos",
-			"exp", "int", "log", "rnd", "sin", "sqr", "tan", "rem", "usr", "call", "tron", "troff", "asm",
+			"exp", "int", "log", "rnd", "sin", "sqr", "tan", "rem", "usr", "call", "tron", "troff", "asm", "sub", "as", "poke", "peek", "single", "long",
+			"integer", "string", "and", "or", "xor", "not",
 			 "LET", "DATA", "READ", "RESTORE", "DIM", "IF", "THEN", "ELSE", "FOR", "TO", "STEP", "NEXT", "WHILE", "WEND", "REPEAT", "UNTIL", "DO", "LOOP",
 			 "UNTIL", "GOTO", "GOSUB", "ON", "DEF", "FN", "LIST", "PRINT", "INPUT", "TAB", "SPC", "ABS", "ATN", "COS", "EXP", "INT", "LOG", "RND", "SIN",
-			 "SQR", "TAN", "REM", "USR", "CALL", "TRON", "TROFF", "ASM"};
+			 "SQR", "TAN", "REM", "USR", "CALL", "TRON", "TROFF", "ASM", "SUB", "AS", "POKE", "PEEK", "SINGLE", "LONG", "INTEGER", "STRING",
+			 "AND", "OR", "XOR", "NOT" };
 	
 	public Thread typeThread;
 	public Thread killAllTabs;
@@ -1827,6 +1829,21 @@ public class CodeEditor extends IDEComponent {
 		
 		if (ext.equalsIgnoreCase(".por")) {
 			for (String s : porKeys) {
+				indxs = findWord(new String(chars), s); // depois de <palavra>
+
+				int len = 0;
+
+				for (Integer i : indxs) {
+					while (i + len < chars.length)
+						len++;
+
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}
+			}
+		}
+		
+		if (ext.equalsIgnoreCase(".bas")) {
+			for (String s : basKeys) {
 				indxs = findWord(new String(chars), s); // depois de <palavra>
 
 				int len = 0;
@@ -4256,7 +4273,7 @@ public class CodeEditor extends IDEComponent {
 						&& hasAfter(new String(chars), i, '{'))
 					continue;
 				
-				/*int len = 0;
+				int len = 0;
 				
 				for (Integer j : indxs) {
 					while (j + len < chars.length && chars[j + len] != ' ' && chars[j + len] != '[' && chars[j + len] != ']'
@@ -4269,13 +4286,13 @@ public class CodeEditor extends IDEComponent {
 				
 				int c = i;
 				
-				while (c > 0 && chars[c] != ' ') {
+				while (c > 0 && (chs[c] != ' ' || chs[c] == '(' || chs[c] == ')' || chs[c] == '[' || chs[c] == ']' || chs[c] == '{' || chs[c] == '}' || chs[c] == ',' || chs[c] == '.' || chs[c] == '<' || chs[c] == '>' || chs[c] == ';' || chs[c] == ':' || chs[c] == '?' || chs[c] == '/' || chs[c] == '\\' || chs[c] == '|' || chs[c] == '+' || chs[c] == '-' || chs[c] == '*' || chs[c] == '=' || chs[c] == '&' || chs[c] == '%' || chs[c] == '$' || chs[c] == '#' || chs[c] == '!' || chs[c] == '@' || chs[c] == '`' || chs[c] == '´' || chs[c] == '^' || chs[c] == '~')) {
 					c--;
 				}
 				
-				if (chs[c] == ' ') {
-					if (Character.isLetter(chars[c + 1])) break; // no index0 o problema ainda existe
-				}*/
+				if (chs[c] == ' ' || chs[c] != '(' || chs[c] != ')' || chs[c] != '[' || chs[c] != ']' || chs[c] != '{' || chs[c] != '}' || chs[c] != ',' || chs[c] != '.' || chs[c] != '<' || chs[c] != '>' || chs[c] != ';' || chs[c] != ':' || chs[c] != '?' || chs[c] != '/' || chs[c] != '\\' || chs[c] != '|' || chs[c] != '+' || chs[c] != '-' || chs[c] != '*' || chs[c] != '=' || chs[c] != '&' || chs[c] != '%' || chs[c] != '$' || chs[c] != '#' || chs[c] != '!' || chs[c] != '@' || chs[c] != '`' || chs[c] != '´' || chs[c] != '^' || chs[c] != '~') {
+					if (Character.isLetter(chs[c + 1])) break; // no index0 o problema ainda existe
+				}
 
 				/*
 				 * if (Character.isLetter(chars[i - 1])) for (int j = i; i > 1; i--) { if
@@ -4297,7 +4314,7 @@ public class CodeEditor extends IDEComponent {
 				// if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i +
 				// s.length()])) continue;
 
-				fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+				fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 			}
 		}
 
