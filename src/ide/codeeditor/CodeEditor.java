@@ -4290,7 +4290,7 @@ public class CodeEditor extends IDEComponent {
 					c--;
 				}
 				
-				if (chs[c] == ' ' || chs[c] != '(' || chs[c] != ')' || chs[c] != '[' || chs[c] != ']' || chs[c] != '{' || chs[c] != '}' || chs[c] != ',' || chs[c] != '.' || chs[c] != '<' || chs[c] != '>' || chs[c] != ';' || chs[c] != ':' || chs[c] != '?' || chs[c] != '/' || chs[c] != '\\' || chs[c] != '|' || chs[c] != '+' || chs[c] != '-' || chs[c] != '*' || chs[c] != '=' || chs[c] != '&' || chs[c] != '%' || chs[c] != '$' || chs[c] != '#' || chs[c] != '!' || chs[c] != '@' || chs[c] != '`' || chs[c] != '´' || chs[c] != '^' || chs[c] != '~') {
+				if (chs[c] == ' ') {// || chs[c] != '(' || chs[c] != ')' || chs[c] != '[' || chs[c] != ']' || chs[c] != '{' || chs[c] != '}' || chs[c] != ',' || chs[c] != '.' || chs[c] != '<' || chs[c] != '>' || chs[c] != ';' || chs[c] != ':' || chs[c] != '?' || chs[c] != '/' || chs[c] != '\\' || chs[c] != '|' || chs[c] != '+' || chs[c] != '-' || chs[c] != '*' || chs[c] != '=' || chs[c] != '&' || chs[c] != '%' || chs[c] != '$' || chs[c] != '#' || chs[c] != '!' || chs[c] != '@' || chs[c] != '`' || chs[c] != '´' || chs[c] != '^' || chs[c] != '~') {
 					if (Character.isLetter(chs[c + 1])) break; // no index0 o problema ainda existe
 				}
 
