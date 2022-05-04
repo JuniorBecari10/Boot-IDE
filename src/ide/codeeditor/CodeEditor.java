@@ -16,7 +16,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.Thread.State;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -61,7 +60,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public static final int TAB_ANIMATION_TIMEOUT = 300;
 
-	public static volatile int FONT_SIZE = 16; // 18, 16 (Padrão: 16)
+	public static int FONT_SIZE = 16; // 18, 16 (Padrão: 16)
 
 	final int originalEditorX = 280;
 
