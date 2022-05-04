@@ -781,7 +781,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		};
 		
-		killAllTabs = new Thread() {
+		killAllTabs = new Thread("killAllTabs") {
 			public void run() {
 				try {
 					Thread.sleep(TAB_ANIMATION_TIMEOUT);
@@ -793,7 +793,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		};
 
-		cursorThread = new Thread() {
+		cursorThread = new Thread("cursorThread") { // precisa ser em outra thread
 			public void run() {
 				cursor.play();
 			}
@@ -801,147 +801,35 @@ public class CodeEditor extends IDEComponent {
 
 		cursorThread.start();
 		
-		typeThread = new Thread() {
+		typeThread = new Thread("typeThread") {
 			public void run() {
 				while (true) {
-					System.out.print(""); // tem que fazer isso
-					if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) continue;
-					
-					Main.editor.scroll();
-					Main.editor.scrollTabs();
-					
-					if (KeyInput.isKeyPressed()) {
-						if ((!SetFileName.added && !CommandTerminal.active) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown())) {
-			    			Main.editor.type();
-			    			Main.editor.detectArrows();
+					try {
+						System.out.print(""); // tem que fazer isso -- azideia ksksksks
+						if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) continue;
+						
+						Main.editor.scroll();
+						Main.editor.scrollTabs();
+						
+						// o problema é daqui pra baixo, ou é CIMA? cima pq se o loop continuar sem executar a parte de baixo continua alto o uso da cpu, e o break ou return abaixam, e a parte de cima que fica executando sempre, mas se tirar ela e deixar só a de baixo continua alto mesmo assim
+						
+						//if (true) break; // - é a presença do loop que enche a cpu | veja se usarmos return ou break ao invés de continue dá certo
+						
+						if (KeyInput.isKeyPressed()) {
+							if ((!SetFileName.added && !CommandTerminal.active) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown())) {
+				    			Main.editor.type();
+				    			Main.editor.detectArrows();
+							}
+							Main.editor.detectShortcuts();
 						}
-						Main.editor.detectShortcuts();
+					} catch (Exception e) {
+						continue;
 					}
 				}
 			}
 		};
 		
 		typeThread.start();
-
-		// cursor thread
-		new Thread() {
-			public void run() { // 25 pra frente com o explorer desligado, isso é uma gambiarrinha viu
-				{
-					int offset = CommandTerminal.expOff ? Main.editor.getX() : 0;
-					int lcx = !CommandTerminal.expOff ? 0 : Main.editor.getX();
-
-					int lcmx = mx;
-					int lcmy = my;
-
-					while (true) {
-						if (Main.editor == null) continue;
-						
-						int off = (FONT_SIZE * 3);
-						
-						lcmy = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1)
-								+ (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
-						lcmx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / FONT_SIZE)
-								+ (scrX / FONT_SIZE));
-
-						while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset < MouseInput
-								.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica
-												// adicionando enquanto for menor
-							lcmx++;
-
-						while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset > MouseInput
-								.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica
-												// adicionando enquanto for menor
-							lcmx--;
-
-						while (MIN_Y + lcmy * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 < MouseInput
-								.getMouseY()) // o mesmo para aqui, só que com o y
-							lcmy++;
-
-						while (MIN_Y + lcmy * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 > MouseInput
-								.getMouseY()) // o mesmo para aqui, só que com o y
-							lcmy--;
-
-						if (FONT_SIZE < 13)
-							lcmx--;
-
-						lcmx = setWithinBounds(lcmx, lcmy, true);
-						lcmy = setWithinBounds(lcmx, lcmy, false);
-
-						//////////////
-
-						my = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1)
-								+ (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
-						mx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / FONT_SIZE) + (scrX / FONT_SIZE));
-
-						while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < MouseInput
-								.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica
-												// adicionando enquanto for menor
-							mx++;
-
-						while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX > MouseInput
-								.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica
-												// adicionando enquanto for menor
-							mx--;
-
-						while (MIN_Y + my * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 < MouseInput
-								.getMouseY()) // o mesmo para aqui, só que com o y
-							my++;
-
-						while (MIN_Y + my * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 > MouseInput
-								.getMouseY()) // o mesmo para aqui, só que com o y
-							my--;
-
-						//if (FONT_SIZE < 13)
-							mx--;
-
-						mx = setWithinBounds(mx, my, true);
-						my = setWithinBounds(mx, my, false);
-
-						if (CommandTerminal.expOff) {
-							mx = lcmx;
-							my = lcmy;
-						}
-
-						try {
-							Thread.sleep(1000 / 120);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}
-		}.start();
-
-		cursorThread = new Thread() {
-			public void run() {
-				// int speed = 1;
-
-				while (true) {
-					realcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
-					realcy = MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY;
-
-					/*
-					 * if (drawcx != realcx) { if (drawcx < realcx) drawcx += speed; if (drawcx >
-					 * realcx) drawcx -= speed; }
-					 * 
-					 * if (drawcy != realcy) { if (drawcy < realcy) drawcy += speed; if (drawcy >
-					 * realcy) drawcy -= speed; }
-					 */
-
-					drawcx = realcx;
-					drawcy = realcy;
-					
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						//e.printStackTrace();
-						Main.editor.restartTypeThread();
-					}
-				}
-			}
-		};
-
-		cursorThread.start();
 		
 		/*typeThread = new Thread() {
 			public void run() {
@@ -956,8 +844,148 @@ public class CodeEditor extends IDEComponent {
 		};*/
 	}
 	
+	public synchronized void typeLogic() {
+		try {
+			System.out.print(""); // tem que fazer isso -- azideia ksksksks
+			if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) return;
+			
+			Main.editor.scroll();
+			Main.editor.scrollTabs();
+			
+			// o problema é daqui pra baixo, ou é CIMA? cima pq se o loop continuar sem executar a parte de baixo continua alto o uso da cpu, e o break ou return abaixam, e a parte de cima que fica executando sempre, mas se tirar ela e deixar só a de baixo continua alto mesmo assim
+			
+			//if (true) break; // - é a presença do loop que enche a cpu | veja se usarmos return ou break ao invés de continue dá certo
+			
+			if (KeyInput.isKeyPressed()) {
+				if ((!SetFileName.added && !CommandTerminal.active) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown())) {
+	    			Main.editor.type();
+	    			Main.editor.detectArrows();
+				}
+				Main.editor.detectShortcuts();
+			}
+		} catch (Exception e) {
+			return;
+		}
+	}
+	
+	public synchronized void cursor() {
+		int offset = CommandTerminal.expOff ? Main.editor.getX() : 0;
+		int lcx = !CommandTerminal.expOff ? 0 : Main.editor.getX();
+
+		int lcmx = mx;
+		int lcmy = my;
+
+		if (Main.editor == null) return;
+
+		int off = (FONT_SIZE * 3);
+
+		lcmy = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1)
+				+ (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
+		lcmx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / FONT_SIZE)
+				+ (scrX / FONT_SIZE));
+
+		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset < MouseInput
+				.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica
+			// adicionando enquanto for menor
+			lcmx++;
+
+		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset > MouseInput
+				.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica
+			// adicionando enquanto for menor
+			lcmx--;
+
+		while (MIN_Y + lcmy * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 < MouseInput
+				.getMouseY()) // o mesmo para aqui, só que com o y
+			lcmy++;
+
+		while (MIN_Y + lcmy * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 > MouseInput
+				.getMouseY()) // o mesmo para aqui, só que com o y
+			lcmy--;
+
+		if (FONT_SIZE < 13)
+			lcmx--;
+
+		lcmx = setWithinBounds(lcmx, lcmy, true);
+		lcmy = setWithinBounds(lcmx, lcmy, false);
+
+		//////////////
+
+		my = (MouseInput.getMouseY() / (FONT_SIZE + (FONT_SIZE / 4)) - 1)
+				+ (scrY / (FONT_SIZE + (FONT_SIZE / 4)));
+		mx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / FONT_SIZE) + (scrX / FONT_SIZE));
+
+		while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < MouseInput
+				.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica
+			// adicionando enquanto for menor
+			mx++;
+
+		while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX > MouseInput
+				.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica
+			// adicionando enquanto for menor
+			mx--;
+
+		while (MIN_Y + my * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 < MouseInput
+				.getMouseY()) // o mesmo para aqui, só que com o y
+			my++;
+
+		while (MIN_Y + my * (FONT_SIZE + (FONT_SIZE / 4)) - FONT_SIZE - scrY - 2 > MouseInput
+				.getMouseY()) // o mesmo para aqui, só que com o y
+			my--;
+
+		//if (FONT_SIZE < 13)
+		mx--;
+
+		mx = setWithinBounds(mx, my, true);
+		my = setWithinBounds(mx, my, false);
+
+		if (CommandTerminal.expOff) {
+			mx = lcmx;
+			my = lcmy;
+		}
+		
+		/// another (one)
+		
+		realcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
+		realcy = MIN_Y + ((cursorY - 1) * (FONT_SIZE + (FONT_SIZE / 4))) - scrY;
+
+		/*
+		 * if (drawcx != realcx) { if (drawcx < realcx) drawcx += speed; if (drawcx >
+		 * realcx) drawcx -= speed; }
+		 * 
+		 * if (drawcy != realcy) { if (drawcy < realcy) drawcy += speed; if (drawcy >
+		 * realcy) drawcy -= speed; }
+		 */
+
+		drawcx = realcx;
+		drawcy = realcy;
+	}
+	
+	/*public synchronized void typeLogic() {
+		try {
+			System.out.print(""); // tem que fazer isso -- azideia ksksksks
+			if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) return;
+			
+			Main.editor.scroll();
+			Main.editor.scrollTabs();
+			
+			// o problema é daqui pra baixo, ou é CIMA? cima pq se o loop continuar sem executar a parte de baixo continua alto o uso da cpu, e o break ou return abaixam, e a parte de cima que fica executando sempre, mas se tirar ela e deixar só a de baixo continua alto mesmo assim
+			
+			//if (true) break; // - é a presença do loop que enche a cpu | veja se usarmos return ou break ao invés de continue dá certo
+			
+			if (KeyInput.isKeyPressed()) {
+				if ((!SetFileName.added && !CommandTerminal.active) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown())) {
+	    			Main.editor.type();
+	    			Main.editor.detectArrows();
+				}
+				Main.editor.detectShortcuts();
+			}
+		} catch (Exception e) {
+			return;
+		}
+	}*/
+	
 	public synchronized void restartTypeThread() {
-		cursorThread = new Thread() {
+		cursorThread = new Thread("cursorThread restart") {
 			public void run() {
 				// int speed = 1;
 
@@ -1136,7 +1164,7 @@ public class CodeEditor extends IDEComponent {
 			ls.add(gen);
 		}
 
-		new Thread() { // quando vc deleta as linhas ou fecha as tabs isso (exception) acontece mesmo
+		new Thread("automaticColor") { // quando vc deleta as linhas ou fecha as tabs isso (exception) acontece mesmo
 			public void run() {
 				if (editing != null && editing.getRegent() != null && editing.getRegent().getRegent() != null)
 					for (IDELine l : lines) {
@@ -6895,7 +6923,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 
 		case "opendef":
-			new Thread() {
+			new Thread("open default program") {
 				public void run() {
 					try {
 						Main.desktop.open(editing.getRegent().getRegent());
@@ -7151,22 +7179,27 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public synchronized void callAutomaticColor() {
-		new Thread() {
-			public void run() {
-				try {
-					if (editing == null)
+		try {
+			new Thread("automaticColor method call") {
+				public void run() {
+					try {
+						if (editing == null)
+							return;
+	
+						for (IDELine l : lines) {
+							l.setFonts(automaticColor(toCharArray(l.getChars()),
+									ListableFile.getFileExtension(editing.getRegent().getRegent())));
+	
+						}
+					} catch (Exception e) {
 						return;
-
-					for (IDELine l : lines) {
-						l.setFonts(automaticColor(toCharArray(l.getChars()),
-								ListableFile.getFileExtension(editing.getRegent().getRegent())));
-
 					}
-				} catch (Exception e) {
-					return;
 				}
-			}
-		}.start();
+			}.start();
+			
+		} catch (Exception e) {
+			return;
+		}
 	}
 
 	/*
@@ -8303,8 +8336,8 @@ public class CodeEditor extends IDEComponent {
 	
 	public void scroll() {
 		if (MouseInput.isMouseRolling()) { // resolver isso aqui
-			new Thread() {
-				public void run() {
+			//new Thread("scroll") {
+				//public void run() {
 					if (Main.editor.hovered()) {
 						if (RightClickOption.isAutoCompleteActive()) {
 							if (KeyInput.isControlDown() && KeyInput.isShiftDown()) {
@@ -8366,8 +8399,8 @@ public class CodeEditor extends IDEComponent {
 
 						return;
 					}
-				}
-			}.start();
+				//}
+			//}.start();
 		}
 	}
 	
@@ -8581,23 +8614,23 @@ public class CodeEditor extends IDEComponent {
 
 		verifyDuplicateTabs();
 
-		if (!cursorThread.isAlive() || cursorThread.getState() == State.TERMINATED) {
-			cursorThread = new Thread() {
+		/*if (!cursorThread.isAlive() || cursorThread.getState() == State.TERMINATED) {
+			cursorThread = new Thread("cursorthread 3") {
 				public void run() {
 					cursor.play();
 				}
 			};
 
 			cursorThread.start();
-		}
+		}*/
   
-		if (!typeThread.isAlive() || typeThread.getState() == State.TERMINATED) {
+		/*if (!typeThread.isAlive() || typeThread.getState() == State.TERMINATED) {
 			try {
 				typeThread.start();
-			} catch (IllegalStateException e) {
+			} catch (Exception e) {
 				return;
 			}
-		}
+		}*/
 
 		if (Explorer.dragging)
 			CommandTerminal.runCommand("deselect");
@@ -8725,7 +8758,7 @@ public class CodeEditor extends IDEComponent {
 		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active) { // TODO -- essa
 			setCursorWithinBounds();
 
-			new Thread() {
+			new Thread("automaticcolor 2") {
 				public void run() {
 					try {
 						if (editing == null)
@@ -8798,6 +8831,9 @@ public class CodeEditor extends IDEComponent {
 			editing = null;
 
 		if (editing == null) selecting = false;
+		
+		cursor();
+		//typeLogic();
 	}
 
 	public synchronized void render(Graphics g) {
