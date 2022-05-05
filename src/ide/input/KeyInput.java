@@ -72,6 +72,9 @@ public final class KeyInput extends KeyAdapter {
         if (Explorer.setFileName != null)
         	Explorer.setFileName.type();
         
+        if (Explorer.renameFile != null)
+        	Explorer.renameFile.type();
+        
         /*if (Character.isLetterOrDigit(charPressed)) {
 	        keyCodes.add(keyCodePressed);
 	        chars.add(charPressed);

@@ -93,7 +93,9 @@ public class RenameFile extends IDEComponent {
 		if (KeyInput.isKeyPressed() && Character.isLetter(KeyInput.getCharPressed())
 				|| KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE)
 			canShow = true;
-
+	}
+	
+	public synchronized void type() {
 		if (KeyInput.isKeyPressed()) {
 			KeyInput.updateKeys();
 

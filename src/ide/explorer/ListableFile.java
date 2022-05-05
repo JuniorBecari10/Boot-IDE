@@ -1270,14 +1270,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			break;
 
 		case "rename":
-			RenameFile ren = new RenameFile(0, y, Main.explorer.getWidth() - 3, 30, regent);
+			Explorer.renameFile = new RenameFile(0, y, Main.explorer.getWidth() - 3, 30, regent);
 
 			if (RenameFile.added)
 				return;
 
 			RenameFile.added = true;
 
-			IDEComponent.toAdd.add(ren);
+			IDEComponent.toAdd.add(Explorer.renameFile);
 
 			break;
 
