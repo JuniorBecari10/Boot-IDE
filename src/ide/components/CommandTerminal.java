@@ -1378,6 +1378,29 @@ public class CommandTerminal extends IDEComponent {
 			active = false;
 		}
 		
+		if (changeHints) {
+			commandHints.clear();
+			
+			String[] onlyCommands = new String[commands.length];
+			
+			for (int i = 0; i < commands.length; i++) {
+				String s = commands[i];
+				
+				onlyCommands[i] = s.split(" ")[0];
+			}
+			
+			for (int i = 0; i < onlyCommands.length; i++) {
+				String s = onlyCommands[i];
+				String dgt = builder.toString().split(" ")[0]; // dgt = digitado
+				
+				if (s.contains(dgt)) commandHints.add(commands[i]);
+			}
+			
+			if (builder.toString().equals("")) commandHints.clear();
+		}
+	}
+	
+	public synchronized void type() {
 		if (KeyInput.isKeyPressed()) {
 			KeyInput.updateKeys();
 			
@@ -1528,27 +1551,6 @@ public class CommandTerminal extends IDEComponent {
 			else builder.insert(cursorIndex, c); // o erro era ordem de parâmetros, pois usar um char como int tbm vale
 			
 			cursorIndex++;
-		}
-		
-		if (changeHints) {
-			commandHints.clear();
-			
-			String[] onlyCommands = new String[commands.length];
-			
-			for (int i = 0; i < commands.length; i++) {
-				String s = commands[i];
-				
-				onlyCommands[i] = s.split(" ")[0];
-			}
-			
-			for (int i = 0; i < onlyCommands.length; i++) {
-				String s = onlyCommands[i];
-				String dgt = builder.toString().split(" ")[0]; // dgt = digitado
-				
-				if (s.contains(dgt)) commandHints.add(commands[i]);
-			}
-			
-			if (builder.toString().equals("")) commandHints.clear();
 		}
 	}
 	

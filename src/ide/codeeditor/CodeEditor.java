@@ -753,6 +753,8 @@ public class CodeEditor extends IDEComponent {
 	public Thread typeThread;
 	public Thread killAllTabs;
 	
+	public static CommandTerminal terminal;
+	
 	///////
 
 	public CodeEditor(int x, int y, int width, int height) {
@@ -6875,13 +6877,13 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public static void execTerminal() {
-		CommandTerminal term = new CommandTerminal(Screen.WIDTH / 2 - 250, 30, 500, 30); // 25
+		terminal = new CommandTerminal(Screen.WIDTH / 2 - 250, 30, 500, 30); // 25
 
 		if (CommandTerminal.active)
 			return;
 
 		CommandTerminal.active = true;
-		IDEComponent.toAdd.add(term);
+		IDEComponent.toAdd.add(terminal);
 	}
 
 	public void execute(String arg) {

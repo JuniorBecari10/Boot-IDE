@@ -3,6 +3,7 @@ package ide.input;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import ide.codeeditor.CodeEditor;
 import ide.explorer.Explorer;
 import ide.main.Main;
 
@@ -74,6 +75,9 @@ public final class KeyInput extends KeyAdapter {
         
         if (Explorer.renameFile != null)
         	Explorer.renameFile.type();
+        
+        if (CodeEditor.terminal != null)
+        	CodeEditor.terminal.type();
         
         /*if (Character.isLetterOrDigit(charPressed)) {
 	        keyCodes.add(keyCodePressed);
