@@ -589,9 +589,6 @@ public class Tab extends IDEComponent implements Serializable {
 			Main.screen.setCursor(Cursor.getDefaultCursor());
 		}
 		
-		if (!closing && dragging != this)
-			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
-		
 		/*if (dragged() && !dragging) {
 			dragging = true;
 			
@@ -617,8 +614,8 @@ public class Tab extends IDEComponent implements Serializable {
 		}
 		
 		if (dragging == this) {
-			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);		// o x do botão vai ficar antes pq eu gosto do efeito
 			x = MouseInput.getMouseX() - (WIDTH / 2) - Main.editor.tabScr;
+			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
 		}
 		
 		if (!MouseInput.isMouseDragged() && dragging != null) {
@@ -691,6 +688,9 @@ public class Tab extends IDEComponent implements Serializable {
 			else
 				button.setSprite(Main.notSelectedNotSavedTab);
 		}
+		
+		if (!closing && dragging != this)
+			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
 		
 		this.x = x;
 	}
