@@ -61,7 +61,9 @@ public class InputBox extends IDEComponent {
 		
 		if (leftClicked())
 			Explorer.selected = this;
-		
+	}
+	
+	public synchronized void type() {
 		if (KeyInput.isKeyPressed() && Explorer.selected == this) {
 			KeyInput.updateKeys();
 			

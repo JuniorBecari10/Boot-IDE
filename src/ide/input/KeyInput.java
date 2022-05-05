@@ -79,6 +79,9 @@ public final class KeyInput extends KeyAdapter {
         if (CodeEditor.terminal != null)
         	CodeEditor.terminal.type();
         
+        if (Explorer.selected != null)
+        	Explorer.selected.type();
+        
         /*if (Character.isLetterOrDigit(charPressed)) {
 	        keyCodes.add(keyCodePressed);
 	        chars.add(charPressed);

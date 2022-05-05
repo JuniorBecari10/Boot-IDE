@@ -94,8 +94,6 @@ public class SetFileName extends IDEComponent {
 	
 	public synchronized void type() {
 		if (KeyInput.isKeyPressed()) {
-			KeyInput.updateKeys();
-			
 			// Shortcuts Area
 			
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C) { // Ctrl + C - Copiar (Tudo)

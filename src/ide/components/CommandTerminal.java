@@ -1402,7 +1402,6 @@ public class CommandTerminal extends IDEComponent {
 	
 	public synchronized void type() {
 		if (KeyInput.isKeyPressed()) {
-			KeyInput.updateKeys();
 			
 			// Shortcuts Area
 			
