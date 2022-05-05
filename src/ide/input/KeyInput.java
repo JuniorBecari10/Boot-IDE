@@ -69,6 +69,8 @@ public final class KeyInput extends KeyAdapter {
         altDown = e.isAltDown();
         altGrDown = e.isAltGraphDown();
         
+        Main.editor.typeLogic();
+        
         if (Explorer.searchReplaceActive) {
 	    	if (Explorer.search == null || Explorer.replace == null || Explorer.caseSensitive == null || Explorer.regex == null || Explorer.entireDocument == null || Explorer.selectedLines == null || Explorer.searchNext == null || Explorer.replaceAll == null)
 	    		SearchReplaceCore.initComponents();
@@ -138,8 +140,6 @@ public final class KeyInput extends KeyAdapter {
 				}
 	    	}
 	    }
-        
-        Main.editor.typeLogic();
         
         if (Explorer.setFileName != null)
         	Explorer.setFileName.type();

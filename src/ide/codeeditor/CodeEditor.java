@@ -847,11 +847,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public synchronized void typeLogic() {
 		try {
-			System.out.print(""); // tem que fazer isso -- azideia ksksksks
 			if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) return;
-			
-			Main.editor.scroll();
-			Main.editor.scrollTabs();
 			
 			// o problema é daqui pra baixo, ou é CIMA? cima pq se o loop continuar sem executar a parte de baixo continua alto o uso da cpu, e o break ou return abaixam, e a parte de cima que fica executando sempre, mas se tirar ela e deixar só a de baixo continua alto mesmo assim
 			
@@ -867,6 +863,11 @@ public class CodeEditor extends IDEComponent {
 		} catch (Exception e) {
 			return;
 		}
+	}
+	
+	public synchronized void scrollLogic() {
+		Main.editor.scroll();
+		Main.editor.scrollTabs();
 	}
 	
 	public synchronized void cursor() {

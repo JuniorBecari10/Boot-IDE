@@ -7,6 +7,8 @@ import java.awt.event.MouseWheelEvent;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
+import ide.main.Main;
+
 public final class MouseInput extends MouseInputAdapter {
     
     private static int mouseX, mouseY;
@@ -185,5 +187,8 @@ public final class MouseInput extends MouseInputAdapter {
     	
     	if (notches < 0) roll = MouseWheelRoll.UP;
     	else roll = MouseWheelRoll.DOWN;
+    	
+    	Main.editor.scroll();
+		Main.editor.scrollTabs();
     }
 }
