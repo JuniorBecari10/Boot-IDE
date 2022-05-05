@@ -828,7 +828,7 @@ public class CodeEditor extends IDEComponent {
 			}
 		};
 		
-		typeThread.start();
+		//typeThread.start();
 		
 		/*typeThread = new Thread() {
 			public void run() {
