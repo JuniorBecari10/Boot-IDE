@@ -3,6 +3,7 @@ package ide.input;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import ide.explorer.Explorer;
 import ide.main.Main;
 
 public final class KeyInput extends KeyAdapter {
@@ -67,6 +68,9 @@ public final class KeyInput extends KeyAdapter {
         altGrDown = e.isAltGraphDown();
         
         Main.editor.typeLogic();
+        
+        if (Explorer.setFileName != null)
+        	Explorer.setFileName.type();
         
         /*if (Character.isLetterOrDigit(charPressed)) {
 	        keyCodes.add(keyCodePressed);

@@ -89,6 +89,10 @@ public class SetFileName extends IDEComponent {
 			added = false;
 		}
 		
+		
+	}
+	
+	public synchronized void type() {
 		if (KeyInput.isKeyPressed()) {
 			KeyInput.updateKeys();
 			

@@ -43,6 +43,9 @@ public class Explorer extends IDEComponent {
 	public static String folderPath = "";
 	public static String folderPathFull = "";
 	
+	public static SetFileName setFileName;
+	public static RenameFile reanemFile;
+	
 	public static InputBox selected;
 	
 	public static InputBox search, replace;
