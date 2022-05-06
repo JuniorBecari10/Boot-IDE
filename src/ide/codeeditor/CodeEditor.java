@@ -706,7 +706,7 @@ public class CodeEditor extends IDEComponent {
 
 	public static final String[] specialHtmlVariables = { "html" };
 
-	public static final String[] jsonKeys = { "true", "false", "null" };
+	public static final String[] jsonKeys = { "true", "false", "True", "False", "null" };
 
 	public static final String[] bfKeys = { "+", "-", ">", "<", ".", ",", "[", "]" };
 
@@ -1826,42 +1826,6 @@ public class CodeEditor extends IDEComponent {
 				}
 
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
-			}
-			
-			{ // colorir tags dinâmicas
-				indxs = findWord(new String(chars), ">"); // colorir final de tags
-
-				for (Integer i : indxs) {
-					fs = color(i, i + 1, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
-				}
-
-				indxs = findWord(new String(chars), "<");
-
-				int len = 0;
-
-				for (Integer i : indxs) {
-					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
-							&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
-							&& chars[i + len] != ':' && chars[i + len] != '>' && chars[i + len] != '<')
-						len++;
-					
-					if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
-				}
-
-				indxs = findWord(new String(chars), "</");
-
-				len = 0;
-
-				for (Integer i : indxs) {
-					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
-							&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
-							&& chars[i + len] != ':')
-						len++;
-
-					if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
-				}
 			}
 		}
 		
@@ -4721,7 +4685,47 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + len, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
 				}
 			}
+			
+			if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
+					|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
+					|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
+					|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
+					|| ext.equalsIgnoreCase(".project")) { // colorir tags dinâmicas
+				indxs = findWord(new String(chars), ">"); // colorir final de tags
 
+				for (Integer i : indxs) {
+					fs = color(i, i + 1, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
+
+				indxs = findWord(new String(chars), "<");
+
+				int len = 0;
+
+				for (Integer i : indxs) {
+					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
+							&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
+							&& chars[i + len] != ':' && chars[i + len] != '>' && chars[i + len] != '<')
+						len++;
+					
+					if (i + len < chars.length)
+						fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
+
+				indxs = findWord(new String(chars), "</");
+
+				len = 0;
+
+				for (Integer i : indxs) {
+					while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
+							&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
+							&& chars[i + len] != ':')
+						len++;
+
+					if (i + len < chars.length)
+						fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				}
+			}
+			
 		}
 		return fs;
 	}
@@ -6311,7 +6315,6 @@ public class CodeEditor extends IDEComponent {
 
 	// my precious
 	public List<IDEFont> automaticColor(char[] chars, String ext) {
-
 		/*
 		 * isMultilineCommenting = false;
 		 * 
@@ -8001,7 +8004,7 @@ public class CodeEditor extends IDEComponent {
 						scrY = 0;
 
 						cursorX = 0;
-						cursorY = 0;
+						cursorY = 1;
 
 						setCursorWithinBounds();
 
