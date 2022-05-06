@@ -4777,6 +4777,50 @@ public class CodeEditor extends IDEComponent {
 						}
 
 						break;
+						
+					case "authors":
+						indxs = findWord(new String(chars), "<");
+						List<Integer> finals = findWord(new String(chars), ">");
+
+						for (int i = 0; i < indxs.size(); i++) {
+							try {
+								fs = color(indxs.get(i), finals.get(i) + 1, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+							} catch (Exception e) {
+								continue;
+							}
+						}
+						
+						String withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+						char[] chs = withSpace.toCharArray();
+						
+						indxs = findWord(new String(chs), "#"); // colorir comentários de uma linha
+						
+						if (fs.size() == 0)
+							break;
+
+						for (Integer i : indxs) {
+							if (!indxs.isEmpty()) {
+								boolean br = false;
+								
+								if (i >= indxs.size()) i = indxs.size() - 1;
+								
+								if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior é desfeito
+									br = true;
+									
+									break;
+								}
+								
+								if (br) break;
+							}
+							
+							for (int j = 0; j < indxs.size(); j++)
+								indxs.set(j, indxs.get(j) - 1);
+							
+							if (indxs.size() != 0)
+								fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+						}
+						
+						break;
 
 					case "makefile":
 						for (String s : mergeStringArrays(makeKeys, shKeys)) { // colorir keywords
