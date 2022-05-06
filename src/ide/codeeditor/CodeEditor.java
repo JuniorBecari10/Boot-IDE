@@ -1541,6 +1541,14 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public static String getLowerBarFileName(String ext) {
+		// casos específicos
+		
+		if (Main.editor.editing.getRegent().getRegent().getName().equalsIgnoreCase("readme.md"))
+			return Main.lang == Language.PORT ? "Leia-Me" : "Read Me";
+		
+		if (Main.editor.editing.getRegent().getRegent().getName().equalsIgnoreCase("v.mod"))
+			return "V";
+		
 		switch (ext.toLowerCase()) {
 		case ".java": return "Java";
 		case ".class": return minMode ? "Class" :  (Main.lang == Language.PORT ? "Arquivo Bytecode do Java" : "Java Bytecode File");
