@@ -29,7 +29,7 @@ public class ReturnToBaseFolderButton extends IDEComponent {
 		
 		if (Main.baseFolder == null) toRemove.add(this);
 		
-		if (leftClicked()) {
+		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !RenameFile.added && Explorer.selected == null)) {
 			MouseInput.updateMouse();
 			
 			returnToBaseFolder();

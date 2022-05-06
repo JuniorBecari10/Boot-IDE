@@ -27,7 +27,7 @@ public class NewFileButton extends IDEComponent {
 		
 		if (x < (Main.openBase.getX() + Main.openBase.getWidth()) + 2) x = (Main.openBase.getX() + Main.openBase.getWidth()) + 2;
 		
-		if (leftClicked()) {
+		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !RenameFile.added && Explorer.selected == null)) {
 			MouseInput.updateMouse();
 			
 			int y = 200;

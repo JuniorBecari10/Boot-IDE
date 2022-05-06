@@ -44,7 +44,7 @@ public class OpenBaseFolderButton extends IDEComponent {
 		
 		super.tick();
 		
-		if (leftClicked()) {
+		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !RenameFile.added && Explorer.selected == null)) {
 			MouseInput.updateMouse();
 			
 			openBaseFolder();

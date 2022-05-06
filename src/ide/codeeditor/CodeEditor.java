@@ -312,7 +312,7 @@ public class CodeEditor extends IDEComponent {
 
 	public static final String[] props = { "align-content", "align-items", "all", "animation", "animation-direction",
 			"animation-duration", "animation-fill-mode", "animation-iteration-count", "animation-name",
-			"animation-play-state", "animation-timing-function", "backface-visibility", "background",
+			"animation-play-state", "animation-timing-function", "aspect-ratio", "backface-visibility", "background",
 			"background-attachment", "background-blend-mode", "background-clip", "background-color", "background-image",
 			"background-origin", "background-position", "background-repeat", "background-size", "border",
 			"border-bottom", "border-bottom-color", "border-bottom-left-radius", "border-bottom-right-radius",

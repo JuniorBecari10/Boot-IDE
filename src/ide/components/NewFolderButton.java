@@ -27,7 +27,7 @@ public class NewFolderButton extends IDEComponent {
 		
 		if (x < (Main.newFile.getX() + Main.newFile.getWidth()) + 2) x = (Main.newFile.getX() + Main.newFile.getWidth()) + 2;
 		
-		if (leftClicked()) {
+		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !RenameFile.added && Explorer.selected == null)) {
 			MouseInput.updateMouse();
 			
 			int y = 200;

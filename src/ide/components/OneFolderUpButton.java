@@ -31,7 +31,7 @@ public class OneFolderUpButton extends IDEComponent {
 		
 		if (Explorer.scope == null) return;
 		
-		if (leftClicked()) {
+		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !RenameFile.added && Explorer.selected == null)) {
 			MouseInput.updateMouse();
 			
 			oneFolderUp();
