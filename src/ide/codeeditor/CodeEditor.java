@@ -297,7 +297,7 @@ public class CodeEditor extends IDEComponent {
 			"pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source",
 			"span", "strike", "strong", "style", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot",
 			"th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "applet", "moz",
-			"webkit", "ms", "mixin", "webview", "user", "select", "drag", "src" /* TODO colocar mais desses ultimos */ // TODO
+			"webkit", "ms", "mixin", "extend", "webview", "user", "select", "drag", "src" /* TODO colocar mais desses ultimos */ // TODO
 																														// talvez
 																														// se
 																														// der
@@ -1591,7 +1591,7 @@ public class CodeEditor extends IDEComponent {
 		case ".scala": return "Scala";
 		case ".dart": return "Dart";
 		case ".zig": return "Zig";
-		case ".scss": return minMode ? "SCSS" : "Sass Cascading Style Sheets - SCSS";
+		case ".scss": return minMode ? "SCSS" : "Synctactically Awesome Style Sheets - SCSS";
 		case ".ipynb": return "Jupyter Notebook";
 		case ".vb": return "Visual Basic";
 		case ".bf": return "Brainfuck";
@@ -6987,34 +6987,30 @@ public class CodeEditor extends IDEComponent {
 
 		case "newfile":
 			int y = 200;
-
-			if (Explorer.files.size() > 0)
-				y = Explorer.files.get(Explorer.files.size() - 1).getY() + 30;
-
-			SetFileName set = new SetFileName(0, y, Main.explorer.getWidth() - 3, 30, true);
-
-			if (SetFileName.added)
-				return;
-
+			
+			if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).getY() + 30;
+			
+			Explorer.setFileName = new SetFileName(0, y, Main.explorer.getWidth() - 3, 30, true);
+			
+			if (SetFileName.added) return;
+			
 			SetFileName.added = true;
-
-			IDEComponent.toAdd.add(set);
+			
+			IDEComponent.toAdd.add(Explorer.setFileName);
 			break;
 
 		case "newfolder":
 			y = 200;
-
-			if (Explorer.files.size() > 0)
-				y = Explorer.files.get(Explorer.files.size() - 1).getY() + 30;
-
-			set = new SetFileName(0, y, Main.explorer.getWidth() - 3, 30, false);
-
-			if (SetFileName.added)
-				return;
-
+			
+			if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).getY() + 30;
+			
+			Explorer.setFileName = new SetFileName(0, y, Main.explorer.getWidth() - 3, 30, false);
+			
+			if (SetFileName.added) return;
+			
 			SetFileName.added = true;
-
-			IDEComponent.toAdd.add(set);
+			
+			IDEComponent.toAdd.add(Explorer.setFileName);
 			break;
 
 		case "searchrep":

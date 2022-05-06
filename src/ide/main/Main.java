@@ -66,7 +66,7 @@ public class Main implements Runnable, Tickable {
     public static final String LOG_FILE_NAME = "Exception.log";
     
     public static final String PROGRAM_NAME = "Boot IDE";
-    public static final String VERSION = "Beta 3 v4.4";
+    public static final String VERSION = "Beta 4 v4.4";
     
     public static BufferedImage UNKNOWN_FILE_ICON = null;
     
@@ -862,7 +862,7 @@ public class Main implements Runnable, Tickable {
     		
     		System.err.println("An error occurred (Also written in " + LOG_FILE_NAME + "):\n" + st);
     		
-			wr.write("An Exception occurred in " + PROGRAM_NAME + ", Main-Thread at " + c.getTime() + ".\n\n");
+			wr.write("An Exception occurred in " + PROGRAM_NAME + " at " + c.getTime() + ".\n\n");
 			wr.write("Message: " + e.getMessage() + "\n");
 			wr.write("Localized Message: " + e.getLocalizedMessage() + "\n");
 			wr.write("Cause: " + e.getCause() + "\n\n");
