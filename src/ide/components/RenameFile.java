@@ -96,6 +96,8 @@ public class RenameFile extends IDEComponent {
 	}
 	
 	public synchronized void type() {
+		if (SetFileName.added || CommandTerminal.active || !RenameFile.added || Explorer.selected != null) return;
+		
 		if (KeyInput.isKeyPressed()) {
 			// Shortcuts Area
 
