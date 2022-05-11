@@ -19,7 +19,7 @@ First, download the code in your computer via **git clone** or the **Code** butt
 
 Open the project on your favorite IDE and click Run/Execute.
 
-#### by Command-Line (CLI)
+#### by the Command-Line (CLI)
 
 Boot IDE doesn't have dependencies, so it's easy to compile and run. Follow the steps below: <br />
 
@@ -28,7 +28,7 @@ cd src
 javac -d ../bin ide/main/Start.java
 
 cd ../bin
-java ide.main.Start
+java ide.main.Start -cp .
 ```
 
 ### How to Use
@@ -55,7 +55,7 @@ Primeiro, baixe o código no seu computador via **git clone** ou o botão **Code
 
 Abra o projeto na sua IDE preferida e clique em Executar.
 
-#### Por Linha de Comando (CLI)
+#### Pela Linha de Comando (CLI)
 
 A Boot IDE não tem dependências, então é fácil compilar e executar. Siga os passos abaixo: <br />
 
@@ -64,7 +64,7 @@ cd src
 javac -d ../bin ide/main/Start.java
 
 cd ../bin
-java ide.main.Start
+java ide.main.Start -cp .
 ```
 
 ### Como Usar
