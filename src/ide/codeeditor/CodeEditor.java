@@ -1402,7 +1402,7 @@ public class CodeEditor extends IDEComponent {
 		case ".v": return vKeys;
 		case ".vh": return vKeys;
 		case ".vsh": return vKeys;
-		case "v.mod": return vKeys;
+		case ".mod": return vKeys;
 		
 		default: return null;
 		}
@@ -1546,9 +1546,6 @@ public class CodeEditor extends IDEComponent {
 		if (Main.editor.editing.getRegent().getRegent().getName().equalsIgnoreCase("readme.md"))
 			return Main.lang == Language.PORT ? "Leia-Me" : "Read Me";
 		
-		if (Main.editor.editing.getRegent().getRegent().getName().equalsIgnoreCase("v.mod"))
-			return "V";
-		
 		switch (ext.toLowerCase()) {
 		case ".java": return "Java";
 		case ".class": return minMode ? "Class" :  (Main.lang == Language.PORT ? "Arquivo Bytecode do Java" : "Java Bytecode File");
@@ -1615,6 +1612,7 @@ public class CodeEditor extends IDEComponent {
 		case ".v": return "V";
 		case ".vh": return "V";
 		case ".vsh": return "V";
+		case ".mod": return "V";
 		case ".bas": return minMode ? "BASIC" : "Beginners' All-purpose Symbolic Instruction Code - BASIC";
 		
 		case ".html": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
@@ -2416,7 +2414,7 @@ public class CodeEditor extends IDEComponent {
 		case ".v":
 		case ".vh":
 		case ".vsh":
-		case "v.mod":
+		case ".mod":
 			for (String s : vKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
 														// s.length()).getFont().equals(Fonts.methodsNormal))
@@ -4292,7 +4290,7 @@ public class CodeEditor extends IDEComponent {
 					c--;
 				}
 				
-				if (chs[c] == ' ') {// || chs[c] != '(' || chs[c] != ')' || chs[c] != '[' || chs[c] != ']' || chs[c] != '{' || chs[c] != '}' || chs[c] != ',' || chs[c] != '.' || chs[c] != '<' || chs[c] != '>' || chs[c] != ';' || chs[c] != ':' || chs[c] != '?' || chs[c] != '/' || chs[c] != '\\' || chs[c] != '|' || chs[c] != '+' || chs[c] != '-' || chs[c] != '*' || chs[c] != '=' || chs[c] != '&' || chs[c] != '%' || chs[c] != '$' || chs[c] != '#' || chs[c] != '!' || chs[c] != '@' || chs[c] != '`' || chs[c] != '´' || chs[c] != '^' || chs[c] != '~') {
+				if (chs[c] == ' ' || chs[c] != '(' || chs[c] != ')' || chs[c] != '[' || chs[c] != ']' || chs[c] != '{' || chs[c] != '}' || chs[c] != ',' || chs[c] != '.' || chs[c] != '<' || chs[c] != '>' || chs[c] != ';' || chs[c] != ':' || chs[c] != '?' || chs[c] != '/' || chs[c] != '\\' || chs[c] != '|' || chs[c] != '+' || chs[c] != '-' || chs[c] != '*' || chs[c] != '=' || chs[c] != '&' || chs[c] != '%' || chs[c] != '$' || chs[c] != '#' || chs[c] != '!' || chs[c] != '@' || chs[c] != '`' || chs[c] != '´' || chs[c] != '^' || chs[c] != '~') {
 					if (Character.isLetter(chs[c + 1])) break; // no index0 o problema ainda existe
 				}
 
@@ -5135,7 +5133,7 @@ public class CodeEditor extends IDEComponent {
 		case ".v":
 		case ".vh":
 		case ".vsh":
-		case "v.mod":
+		case ".mod":
 			String withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
 			char[] chs = withSpace.toCharArray();
 			
@@ -5715,7 +5713,7 @@ public class CodeEditor extends IDEComponent {
 		case ".v":
 		case ".vh":
 		case ".vsh":
-		case "v.mod":
+		case ".mod":
 			indxs = findWord(new String(chars), "/*"); // colorir comentários multi-linha - caracteres diferentes
 			List<Integer> finals = findWord(new String(chars), "*/");
 			
@@ -8327,7 +8325,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					/*if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
+					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
 						KeyInput.updateKeys();
 						
 						if (undo.isEmpty()) return;
@@ -8339,7 +8337,7 @@ public class CodeEditor extends IDEComponent {
 						//System.out.println(peek.get(0).getFonts().isEmpty());
 						this.lines = defineLines(peek);
 						
-						System.out.println(peek.get(0).getChars());
+						//System.out.println(peek.get(0).getChars());
 						
 						setCursorWithinBounds();
 						editing.setSaved(false);
@@ -8361,7 +8359,7 @@ public class CodeEditor extends IDEComponent {
 						editing.setSaved(false);
 						
 						return;
-					}*/
+					}
 				}
 	
 	public void scrollTabs() {
@@ -8559,7 +8557,10 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	private void addToUndo() {
-		undo.push(lines);
+		List<IDELine> l = new ArrayList<>();
+		l.addAll(lines);
+		
+		undo.push(l);
 	}
 
 	public void tick() {

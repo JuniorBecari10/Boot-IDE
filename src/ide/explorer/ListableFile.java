@@ -62,7 +62,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			t.add(new FileType("readme.md",Main.spritesheet.getSprite(752,32,16,16)));
 			t.add(new FileType("package.json",Main.spritesheet.getSprite(576,16,16,16)));
 			t.add(new FileType("package-lock.json",Main.spritesheet.getSprite(576,16,16,16)));
-			t.add(new FileType("v.mod", Main.spritesheet.getSprite(688, 16, 16, 16)));
+			t.add(new FileType(".mod", Main.spritesheet.getSprite(688, 16, 16, 16)));
 			
 			t.add(new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16)));
 			t.add(new FileType(".class",Main.spritesheet.getSprite(272,32, 16, 16)));

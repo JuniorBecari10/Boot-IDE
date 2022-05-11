@@ -13,6 +13,10 @@ public class IDELine {
 		this.chars = chars;
 		this.fonts = fonts;
 	}
+	
+	public String toString() {
+		return "IDELine | chars: " + chars;
+	}
 
 	public List<Character> getChars() {
 		return chars;
