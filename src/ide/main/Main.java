@@ -438,7 +438,7 @@ public class Main implements Runnable, Tickable {
 					ListableFile.files.clear();
 					
 					Explorer.scope = null;
-	        	  	
+	        	    
 	        	  	int index = 0;
 					
 					for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {

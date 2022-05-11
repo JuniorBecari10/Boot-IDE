@@ -15,7 +15,7 @@ There are 3 compiled forms: **EXE**, **JAR** and **Linux Executable**. Choose th
 **If you want to compile from source, do this:** <br />
 First, download the code in your computer via **git clone** or the **Code** button on GitHub.
 
-#### By a IDE
+#### By an IDE
 
 Open the project on your favorite IDE and click Run/Execute.
 
@@ -55,7 +55,7 @@ Primeiro, baixe o código no seu computador via **git clone** ou o botão **Code
 
 Abra o projeto na sua IDE preferida e clique em Executar.
 
-#### por Linha de Comando (CLI)
+#### Por Linha de Comando (CLI)
 
 A Boot IDE não tem dependências, então é fácil compilar e executar. Siga os passos abaixo: <br />
 
