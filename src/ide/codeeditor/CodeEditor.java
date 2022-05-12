@@ -907,6 +907,8 @@ public class CodeEditor extends IDEComponent {
 
 		if (FONT_SIZE < 13)
 			lcmx--;
+		
+		if (CommandTerminal.expOff) lcmx += ruleOf3(16, 22, FONT_SIZE);
 
 		lcmx = setWithinBounds(lcmx, lcmy, true);
 		lcmy = setWithinBounds(lcmx, lcmy, false);
@@ -8043,6 +8045,7 @@ public class CodeEditor extends IDEComponent {
 						cursorY = lines.size();
 
 						setCursorWithinBounds();
+						
 						CommandTerminal.runCommand("gotocursor");
 
 						return;
