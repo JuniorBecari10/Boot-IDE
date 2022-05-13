@@ -8629,7 +8629,7 @@ public class CodeEditor extends IDEComponent {
 			
 			return output;
 		} catch (Exception e) {
-			System.out.println("Exception: " + Main.getStackTrace(e));
+			//System.out.println("Exception: " + Main.getStackTrace(e));
 			return null;
 		}
 	}
@@ -8650,7 +8650,7 @@ public class CodeEditor extends IDEComponent {
 			// colocar a string no undo
 			undo.push(list);
 		} catch (Exception e) {
-			System.out.println("Exception: " + Main.getStackTrace(e));
+			//System.out.println("Exception: " + Main.getStackTrace(e));
 			return;
 		}
 	}
