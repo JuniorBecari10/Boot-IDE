@@ -8612,6 +8612,8 @@ public class CodeEditor extends IDEComponent {
 		height = Main.screen.getHeight();
 		LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
 		
+		System.out.println(lines.get(0).getFonts().get(0));
+		
 		/*if (editing != null && !tabs.isEmpty() && tabs.indexOf(editing) < 0)
 			tabs.get(0).select();*/
 		

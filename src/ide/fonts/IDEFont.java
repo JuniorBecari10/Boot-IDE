@@ -51,4 +51,17 @@ public class IDEFont {
 		this.size = size;
 	}
 	
+	public String toString() {
+		String s = "IDEFont | size: " + size + ", font: [";
+		int[] pix = Colors.getColors(font[0]);
+		
+		for (int i : pix)
+			s += i + ", ";
+		
+		s = s.substring(0, s.length() - 2);
+		
+		s += "]";
+		
+		return s;
+	}
 }

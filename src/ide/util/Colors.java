@@ -2,7 +2,6 @@ package ide.util;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.awt.image.RescaleOp;
 
 import ide.main.Main;
 
@@ -121,11 +120,18 @@ public class Colors {
     	return "#" + r + g + b;
     }
     
-    public static BufferedImage brightness(BufferedImage img, float scaleFactor) {
+    public static int[] getColors(BufferedImage img) {
+    	int[] pixels = new int[img.getWidth() * img.getHeight()];
+    	img.getRGB(0, 0, img.getWidth(), img.getHeight(), pixels, 0, img.getWidth());
+    	
+    	return pixels;
+    }
+    
+    /*public static BufferedImage brightness(BufferedImage img, float scaleFactor) {
     	RescaleOp op = new RescaleOp(scaleFactor, 0, null);
     	
     	return op.filter(img, null);
-    }
+    }*/
     
     /*public static BufferedImage darker(BufferedImage img) {
     	for (int x = 0; x < img.getWidth(); x++)
