@@ -356,7 +356,7 @@ public class Tab extends IDEComponent implements Serializable {
 
 			w.close();
 			
-			Main.editor.undo.add(Main.editor.lines);
+			Main.editor.addToUndo();
 			
 			setSaved(true);
 			save = true;
@@ -532,12 +532,6 @@ public class Tab extends IDEComponent implements Serializable {
 		Main.editor.isMultilineCommenting = false;
 		Main.editor.isAnotherIteration = false;
 		Main.editor.foundExt = false;
-		
-		if (Main.editor.searchWindow != null) {
-			Main.editor.searchWindow.setVisible(false);
-			Main.editor.alreadyAddedFrame = false;
-			SearchReplaceWindow.active = false;
-		}
 		
 		try {
 			Main.editor.lines = Main.editor.readFile(regent.getRegent());

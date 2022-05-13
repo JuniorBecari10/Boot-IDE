@@ -52,6 +52,7 @@ import ide.searchreplace.SearchReplaceCore;
 import ide.util.Animation;
 import ide.util.Colors;
 import ide.util.Language;
+import ide.util.Serialization;
 import ide.util.Texts;
 
 // Nota: para escrever em vermelho no console, ao invés de digitar System.out.println("texto"); use System.err.println("texto");
@@ -122,16 +123,15 @@ public class CodeEditor extends IDEComponent {
 
 	public static boolean isAutoCompleteActive = true;
 
-	public Stack<List<IDELine>> undo = new Stack<>();
-	public Stack<List<IDELine>> redo = new Stack<>();
+	public Stack<String> undo = new Stack<>();
+	public Stack<String> redo = new Stack<>();
 
 	public int tabScr = 0;
 
 	public List<Tab> tabs;
 	public List<Tab> toAdd;
 	public List<Tab> toRemove;
-
-	public SearchReplaceWindow searchWindow;
+	
 	public boolean alreadyAddedFrame = false;
 
 	// public static BufferedImage gradient;
@@ -8356,7 +8356,7 @@ public class CodeEditor extends IDEComponent {
 						
 						if (undo.isEmpty()) return;
 						
-						List<IDELine> peek = undo.peek();
+						List<IDELine> peek = peekUndo();
 						redo.push(undo.pop());
 						
 						// define lines
@@ -8376,7 +8376,7 @@ public class CodeEditor extends IDEComponent {
 						
 						if (redo.isEmpty()) return;
 						
-						List<IDELine> peek = redo.peek();
+						List<IDELine> peek = peekRedo();
 						undo.push(redo.pop());
 						
 						this.lines = defineLines(peek);
@@ -8582,11 +8582,73 @@ public class CodeEditor extends IDEComponent {
 		}
 	}
 	
-	private void addToUndo() {
-		List<IDELine> l = new ArrayList<>();
-		l.addAll(lines);
-		
-		undo.push(l);
+	public List<IDELine> peekUndo() {
+		try {
+			// pegar o peek real, como string
+			String peek = undo.peek();
+			
+			// pegar a lista de objetos como strings
+			List<String> objs = Serialization.deserializeList(peek);
+			
+			List<IDELine> output = new ArrayList<>();
+			
+			// deserializar cada objeto e colocar na lista output
+			
+			for (String s : objs) {
+				IDELine l = (IDELine) Serialization.objectFromString(s);
+				output.add(l);
+			}
+			
+			return output;
+		} catch (Exception e) {
+			System.out.println("Exception: " + Main.getStackTrace(e));
+			return null;
+		}
+	}
+	
+	public List<IDELine> peekRedo() {
+		try {
+			// pegar o peek real, como string
+			String peek = redo.peek();
+			
+			// pegar a lista de objetos como strings
+			List<String> objs = Serialization.deserializeList(peek);
+			
+			List<IDELine> output = new ArrayList<>();
+			
+			// deserializar cada objeto e colocar na lista output
+			
+			for (String s : objs) {
+				IDELine l = (IDELine) Serialization.objectFromString(s);
+				output.add(l);
+			}
+			
+			return output;
+		} catch (Exception e) {
+			System.out.println("Exception: " + Main.getStackTrace(e));
+			return null;
+		}
+	}
+	
+	public void addToUndo() {
+		try {
+			// converter os objetos da lista em strings e colocar numa lista de strings, que são os objetos
+			List<String> objs = new ArrayList<>();
+			
+			for (IDELine l : lines) {
+				String s = Serialization.objectToString(l);
+				objs.add(s);
+			}
+			
+			// converter a lista de strings em uma string
+			String list = Serialization.serializeList(objs);
+			
+			// colocar a string no undo
+			undo.push(list);
+		} catch (Exception e) {
+			System.out.println("Exception: " + Main.getStackTrace(e));
+			return;
+		}
 	}
 
 	public void tick() {
@@ -8611,8 +8673,6 @@ public class CodeEditor extends IDEComponent {
 		
 		height = Main.screen.getHeight();
 		LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
-		
-		System.out.println(lines.get(0).getFonts().get(0));
 		
 		/*if (editing != null && !tabs.isEmpty() && tabs.indexOf(editing) < 0)
 			tabs.get(0).select();*/

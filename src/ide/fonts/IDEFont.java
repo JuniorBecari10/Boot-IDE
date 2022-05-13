@@ -2,6 +2,7 @@ package ide.fonts;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 import ide.util.Colors;
 
@@ -11,9 +12,11 @@ import ide.util.Colors;
  * @author Juninho
  *
  */
-public class IDEFont {
+public class IDEFont implements Serializable {
 
-	private BufferedImage[] font;
+	private static final long serialVersionUID = 1L;
+	
+	private transient BufferedImage[] font;
 	private int size;
 	
 	public IDEFont(BufferedImage[] font, int size) {
@@ -49,19 +52,5 @@ public class IDEFont {
 	
 	public void setSize(int size) {
 		this.size = size;
-	}
-	
-	public String toString() {
-		String s = "IDEFont | size: " + size + ", font: [";
-		int[] pix = Colors.getColors(font[0]);
-		
-		for (int i : pix)
-			s += i + ", ";
-		
-		s = s.substring(0, s.length() - 2);
-		
-		s += "]";
-		
-		return s;
 	}
 }

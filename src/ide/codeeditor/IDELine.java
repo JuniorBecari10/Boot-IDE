@@ -1,21 +1,20 @@
 package ide.codeeditor;
 
+import java.io.Serializable;
 import java.util.List;
 
 import ide.fonts.IDEFont;
 
-public class IDELine {
-
+public class IDELine implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	private List<Character> chars;
 	private List<IDEFont> fonts;
 	
 	public IDELine(List<Character> chars, List<IDEFont> fonts) {
 		this.chars = chars;
 		this.fonts = fonts;
-	}
-	
-	public String toString() {
-		return "IDELine | chars: " + chars;
 	}
 
 	public List<Character> getChars() {

@@ -259,7 +259,7 @@ public final class SearchReplaceCore {
 		}*/
 		
 		Main.editor.editing.setSaved(false);
-		Main.editor.undo.push(new ArrayList<>(Main.editor.getLines()));
+		Main.editor.addToUndo();
 		
 		CommandTerminal.runCommand("gotocursor");
 		CommandTerminal.runCommand("deselect");
