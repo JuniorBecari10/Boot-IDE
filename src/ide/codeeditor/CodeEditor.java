@@ -8354,6 +8354,8 @@ public class CodeEditor extends IDEComponent {
 					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
 						KeyInput.updateKeys();
 						
+						RightClickOption.removeAllRightClickOptions();
+						
 						if (undo.isEmpty()) return;
 						
 						List<IDELine> peek = peekUndo();
@@ -8373,6 +8375,8 @@ public class CodeEditor extends IDEComponent {
 
 					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Y (Refazer)
 						KeyInput.updateKeys();
+						
+						RightClickOption.removeAllRightClickOptions();
 						
 						if (redo.isEmpty()) return;
 						
