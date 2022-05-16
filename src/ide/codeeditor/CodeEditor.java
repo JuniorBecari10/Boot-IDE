@@ -6276,7 +6276,7 @@ public class CodeEditor extends IDEComponent {
 			fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
 		}
 		
-		indxs = findWord(new String(chars), "\t"); // colorir espaços
+		indxs = findWord(new String(chars), "\t"); // colorir tabs
 
 		for (Integer i : indxs) {
 			fs = color(i, i + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);
@@ -6360,8 +6360,11 @@ public class CodeEditor extends IDEComponent {
 			return fs;
 		}
 		
-		if (ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log"))
+		if (ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log")) {
+			fs = colorWhitespaces(ext, chars, fs);
+			
 			return fs;
+		}
 
 		/////////////////////////////////////////////////////
 
