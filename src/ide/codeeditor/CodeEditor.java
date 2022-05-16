@@ -4302,7 +4302,7 @@ public class CodeEditor extends IDEComponent {
 				}
 				
 				if (chs[c] == ' ' || chs[c] != '(' || chs[c] != ')' || chs[c] != '[' || chs[c] != ']' || chs[c] != '{' || chs[c] != '}' || chs[c] != ',' || chs[c] != '.' || chs[c] != '<' || chs[c] != '>' || chs[c] != ';' || chs[c] != ':' || chs[c] != '?' || chs[c] != '/' || chs[c] != '\\' || chs[c] != '|' || chs[c] != '+' || chs[c] != '-' || chs[c] != '*' || chs[c] != '=' || chs[c] != '&' || chs[c] != '%' || chs[c] != '$' || chs[c] != '#' || chs[c] != '!' || chs[c] != '@' || chs[c] != '`' || chs[c] != '´' || chs[c] != '^' || chs[c] != '~') {
-					if (Character.isLetter(chs[c + 1])) break; // no index0 o problema ainda existe
+					if (Character.isLetter(chs[c + 1])) break;
 				}
 
 				/*
@@ -4371,21 +4371,21 @@ public class CodeEditor extends IDEComponent {
 			return fs;
 
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
-			
 			int index = 0;
 			for (String s : syms) {
 				indxs = findWord(new String(chars), s);
 				if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) // resolver isso aqui
 					continue;
 				
-				if (s == ">" && index == 0 && ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
+				// não colorir > em markdown
+				if (s == ">" && index == 0 && (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) continue;
 				
 				if (((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
 						|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
 						|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
 						|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
-						|| ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))
-						&& !(isCssPart || isJSPart || isPhpPart)) && (s != "=" && s != "<") && s != ">")
+						|| ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log"))
+						&& !(isCssPart || isJSPart || isPhpPart)) && (s != "="))
 					continue;
 				// if (!(isCssPart || isJSPart || isPhpPart) && ((ext.equalsIgnoreCase(".html")
 				// || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xhtml") ||
@@ -8605,7 +8605,7 @@ public class CodeEditor extends IDEComponent {
 			
 			return output;
 		} catch (Exception e) {
-			System.out.println("Exception: " + Main.getStackTrace(e));
+			//System.out.println("Exception: " + Main.getStackTrace(e));
 			return null;
 		}
 	}
