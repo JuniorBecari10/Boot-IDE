@@ -1816,11 +1816,14 @@ public class CodeEditor extends IDEComponent {
 			for (Integer i : indxs) {
 				int len = 0;
 				
-				while (i + len < chars.length && chars[i + len] != ' ') {
+				i++;
+				
+				while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '<' && chars[i + len] != '>') {
 					len++;
 				}
 				
 				try {
+					fs = color(i - 1, i + 1, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 					fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
 				} catch (Exception e) {
 					continue;
