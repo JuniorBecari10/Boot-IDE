@@ -1813,6 +1813,20 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			
+			for (Integer i : indxs) {
+				int len = 0;
+				
+				while (i + len < chars.length && chars[i + len] != ' ') {
+					len++;
+				}
+				
+				try {
+					fs = color(i, i + len, new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs);
+				} catch (Exception e) {
+					continue;
+				}
+			}
+			/*
 			indxs = findWord(new String(chars), "="); // antes de <palavra>
 
 			for (Integer i : indxs) {
@@ -1836,6 +1850,7 @@ public class CodeEditor extends IDEComponent {
 
 				fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 			}
+			*/
 		}
 		
 		if (ext.equalsIgnoreCase(".por")) {
@@ -4284,7 +4299,7 @@ public class CodeEditor extends IDEComponent {
 						&& hasAfter(new String(chars), i, '{'))
 					continue;
 				
-				int len = 0;
+				/*int len = 0;
 				
 				for (Integer j : indxs) {
 					while (j + len < chars.length && chars[j + len] != ' ' && chars[j + len] != '[' && chars[j + len] != ']'
@@ -4297,13 +4312,13 @@ public class CodeEditor extends IDEComponent {
 				
 				int c = i;
 				
-				while (c > 0 && (chs[c] != ' ' || chs[c] == '(' || chs[c] == ')' || chs[c] == '[' || chs[c] == ']' || chs[c] == '{' || chs[c] == '}' || chs[c] == ',' || chs[c] == '.' || chs[c] == '<' || chs[c] == '>' || chs[c] == ';' || chs[c] == ':' || chs[c] == '?' || chs[c] == '/' || chs[c] == '\\' || chs[c] == '|' || chs[c] == '+' || chs[c] == '-' || chs[c] == '*' || chs[c] == '=' || chs[c] == '&' || chs[c] == '%' || chs[c] == '$' || chs[c] == '#' || chs[c] == '!' || chs[c] == '@' || chs[c] == '`' || chs[c] == '´' || chs[c] == '^' || chs[c] == '~')) {
+				while (c > 0 && chars[c] != ' ') {
 					c--;
 				}
 				
-				if (chs[c] == ' ' || chs[c] != '(' || chs[c] != ')' || chs[c] != '[' || chs[c] != ']' || chs[c] != '{' || chs[c] != '}' || chs[c] != ',' || chs[c] != '.' || chs[c] != '<' || chs[c] != '>' || chs[c] != ';' || chs[c] != ':' || chs[c] != '?' || chs[c] != '/' || chs[c] != '\\' || chs[c] != '|' || chs[c] != '+' || chs[c] != '-' || chs[c] != '*' || chs[c] != '=' || chs[c] != '&' || chs[c] != '%' || chs[c] != '$' || chs[c] != '#' || chs[c] != '!' || chs[c] != '@' || chs[c] != '`' || chs[c] != '´' || chs[c] != '^' || chs[c] != '~') {
-					if (Character.isLetter(chs[c + 1])) break;
-				}
+				if (chs[c] == ' ') {
+					if (Character.isLetter(chars[c + 1])) break; // no index0 o problema ainda existe
+				}*/
 
 				/*
 				 * if (Character.isLetter(chars[i - 1])) for (int j = i; i > 1; i--) { if
@@ -4325,7 +4340,7 @@ public class CodeEditor extends IDEComponent {
 				// if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i +
 				// s.length()])) continue;
 
-				fs = color(i, i + len, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
+				fs = color(i, i + s.length(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 			}
 		}
 
@@ -4371,21 +4386,21 @@ public class CodeEditor extends IDEComponent {
 			return fs;
 
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
+			
 			int index = 0;
 			for (String s : syms) {
 				indxs = findWord(new String(chars), s);
 				if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) // resolver isso aqui
 					continue;
 				
-				// não colorir > em markdown
-				if (s == ">" && index == 0 && (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) continue;
+				if (s == ">" && index == 0 && ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) continue;
 				
 				if (((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
 						|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
 						|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
 						|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
-						|| ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log"))
-						&& !(isCssPart || isJSPart || isPhpPart)) && (s != "="))
+						|| ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))
+						&& !(isCssPart || isJSPart || isPhpPart)) && (s != "=" && s != "<") && s != ">")
 					continue;
 				// if (!(isCssPart || isJSPart || isPhpPart) && ((ext.equalsIgnoreCase(".html")
 				// || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xhtml") ||
@@ -4430,6 +4445,7 @@ public class CodeEditor extends IDEComponent {
 
 		return fs;
 	}
+	
 
 	public List<IDEFont> colorExtras(String ext, char[] chars, List<IDEFont> fs) {
 		if (editing == null)
