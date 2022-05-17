@@ -27,6 +27,7 @@ import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.searchreplace.SearchReplaceCore;
 import ide.util.Animation;
 import ide.util.Colors;
 import ide.util.Language;
@@ -467,6 +468,9 @@ public class CommandTerminal extends IDEComponent {
 					Main.editor.setX(0);
 				
 				expOff ^= true;	// uma forma de togglar boolean (^ é xor gate)
+				
+				if (Explorer.searchReplaceActive)
+					SearchReplaceCore.dispose();
 				
 				break;
 				

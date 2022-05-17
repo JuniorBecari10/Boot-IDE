@@ -157,6 +157,14 @@ public class Explorer extends IDEComponent {
 	    
 	    if (hovered())
 	    	Main.screen.setCursor(Cursor.getDefaultCursor());
+			
+			if (searchReplaceActive) {
+				if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_K) {
+					KeyInput.updateKeys();
+					
+					CommandTerminal.runCommand("toggleexplorer");
+				}
+	    }
 	    
 	    if (!searchReplaceActive) {
 	    	if (ListableFile.files.isEmpty() && files.isEmpty()) hoveringListableFile = false;

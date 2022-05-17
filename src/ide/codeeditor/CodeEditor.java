@@ -873,7 +873,9 @@ public class CodeEditor extends IDEComponent {
 	
 	public synchronized void cursor() {
 		int offset = CommandTerminal.expOff ? Main.editor.getX() : 0;
-		int lcx = !CommandTerminal.expOff ? 0 : Main.editor.getX();
+		//int lcx = !CommandTerminal.expOff ? 0 : Main.editor.getX();
+		
+		System.out.println(offset);
 
 		int lcmx = mx;
 		int lcmy = my;
@@ -887,12 +889,12 @@ public class CodeEditor extends IDEComponent {
 		lcmx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / FONT_SIZE)
 				+ (scrX / FONT_SIZE));
 
-		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset < MouseInput
+		while (((offset + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset < MouseInput
 				.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica
 			// adicionando enquanto for menor
 			lcmx++;
 
-		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset > MouseInput
+		while (((offset + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset > MouseInput
 				.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica
 			// adicionando enquanto for menor
 			lcmx--;
@@ -7088,7 +7090,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 
 		case "searchrep":
-			if (editing == null)
+			if (editing == null || CommandTerminal.expOff)
 				return; // Vai modificar o que não existe?
 
 			RightClickOption.removeAllRightClickOptions(); // arrumar o negócio
