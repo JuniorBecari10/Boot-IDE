@@ -4399,8 +4399,8 @@ public class CodeEditor extends IDEComponent {
 						|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
 						|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
 						|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
-						|| ext.equalsIgnoreCase(".project") | ext.equalsIgnoreCase(".txt") | ext.equalsIgnoreCase(".log"))
-						&& !(isCssPart || isJSPart || isPhpPart)) && (s != "=" && s != "<") && s != ">")
+						|| ext.equalsIgnoreCase(".project"))
+						&& !(isCssPart || isJSPart || isPhpPart)) && (s != "="))
 					continue;
 				// if (!(isCssPart || isJSPart || isPhpPart) && ((ext.equalsIgnoreCase(".html")
 				// || ext.equalsIgnoreCase(".htm") || ext.equalsIgnoreCase(".xhtml") ||
