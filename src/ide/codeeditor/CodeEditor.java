@@ -2351,23 +2351,11 @@ public class CodeEditor extends IDEComponent {
 							|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
 							|| ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml")
 							|| ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".json")
-							|| ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".mcfunction") || ext.equalsIgnoreCase(".bas"))
+							|| ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".mcfunction"))
 						fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 					else {
 						if (i - 1 > 0 && Character.isLetter(chars[i - 1]))
 							continue;
-						
-						char[] chs = (" " + new String(chars)).toCharArray();
-						
-						int c = i;
-						
-						while (c > 0 && (chs[c] != ' ' || chs[c] == '(' || chs[c] == ')' || chs[c] == '[' || chs[c] == ']' || chs[c] == '{' || chs[c] == '}' || chs[c] == ',' || chs[c] == '.' || chs[c] == '<' || chs[c] == '>' || chs[c] == ';' || chs[c] == ':' || chs[c] == '?' || chs[c] == '/' || chs[c] == '\\' || chs[c] == '|' || chs[c] == '+' || chs[c] == '-' || chs[c] == '*' || chs[c] == '=' || chs[c] == '&' || chs[c] == '%' || chs[c] == '$' || chs[c] == '#' || chs[c] == '!' || chs[c] == '@' || chs[c] == '`' || chs[c] == '´' || chs[c] == '^' || chs[c] == '~')) {
-							c--;
-						}
-						
-						if (chs[c] == ' ') {
-							if (Character.isLowerCase(chs[c + 1])) break;
-						}
 						
 						//addautocomplete.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
 						fs = color(i, i + len, new IDEFont(Fonts.objectsNormal, FONT_SIZE), fs);
