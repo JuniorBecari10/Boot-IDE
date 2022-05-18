@@ -7485,8 +7485,13 @@ public class CodeEditor extends IDEComponent {
 					} else {
 						autocompleteindex++;
 	
-						if (autocompleteindex == autocompletes.size())
+						if (autocompleteindex == autocompletes.size()) {
 							autocompleteindex = 0;
+							autocompletescroll = 0;
+						}
+						
+						if (autocompletes.get(autocompleteindex).getY() >= height)
+							autocompletescroll += 90;
 					}
 				 } else {
 					 wordSinceSpace = "";
@@ -7687,8 +7692,14 @@ public class CodeEditor extends IDEComponent {
 							if (RightClickOption.isAutoCompleteActive()) {
 								autocompleteindex--;
 								
-								if (autocompleteindex < 0)
+								if (autocompleteindex < 0) {
 									autocompleteindex = 0;
+									autocompletescroll = 0;
+								}
+								
+								if (autocompletes.get(autocompleteindex).getY() <= y)
+									autocompletescroll -= 90;
+								
 								return;
 							}
 							
@@ -7717,8 +7728,13 @@ public class CodeEditor extends IDEComponent {
 							if (RightClickOption.isAutoCompleteActive()) {
 								autocompleteindex++;
 								
-								if (autocompleteindex == autocompletes.size())
+								if (autocompleteindex == autocompletes.size()) {
 									autocompleteindex = 0;
+									autocompletescroll = 0;
+								}
+								
+								if (autocompletes.get(autocompleteindex).getY() >= height)
+									autocompletescroll += 90;
 								
 								return;
 							}
