@@ -8678,6 +8678,12 @@ public class CodeEditor extends IDEComponent {
 		int index = 0;
 
 		for (RightClickOption r : autocompletes) {
+			r.setX(drawcx);
+
+			index++;
+		}
+		
+		for (RightClickOption r : autocompletes) {
 			r.setY(((drawcy - autocompletescroll) + FONT_SIZE) + index * 30);
 
 			index++;
@@ -9041,7 +9047,7 @@ public class CodeEditor extends IDEComponent {
 			// Desenhar cursor
 			if (showCursor && !WindowInput.isDeactivated() && drawcx > x + 45 && Explorer.selected == null) {
 				g.setColor(Colors.cursor);
-				g.fillRect(drawcx + (Main.editor.getX() - originalEditorX), drawcy, // na posição x 12 ele aparece um pouco encima dos numeros
+				g.fillRect(drawcx, drawcy, // na posição x 12 ele aparece um pouco encima dos numeros
 						FONT_SIZE > 10 ? 2 : 1, LINE_HEIGHT);
 			}
 	
