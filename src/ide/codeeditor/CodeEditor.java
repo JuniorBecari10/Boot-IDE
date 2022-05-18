@@ -140,7 +140,7 @@ public class CodeEditor extends IDEComponent {
 
 	public static final int MIN_Y = 35;
 
-	private boolean showCursor;
+	public boolean showCursor;
 
 	public Thread cursorThread;
 	public Animation cursor;
@@ -855,12 +855,10 @@ public class CodeEditor extends IDEComponent {
 			// adicionando enquanto for menor
 			lcmx--;
 
-		while (MIN_Y + lcmy * (LINE_HEIGHT) - FONT_SIZE - scrY - 2 < MouseInput
-				.getMouseY()) // o mesmo para aqui, só que com o y
+		while (MIN_Y + lcmy * (LINE_HEIGHT) - FONT_SIZE - scrY - 2 < MouseInput.getMouseY()) // o mesmo para aqui, só que com o y
 			lcmy++;
 
-		while (MIN_Y + lcmy * (LINE_HEIGHT) - FONT_SIZE - scrY - 2 > MouseInput
-				.getMouseY()) // o mesmo para aqui, só que com o y
+		while (MIN_Y + lcmy * (LINE_HEIGHT) - FONT_SIZE - scrY - 2 > MouseInput.getMouseY()) // o mesmo para aqui, só que com o y
 			lcmy--;
 
 		if (FONT_SIZE < 13)

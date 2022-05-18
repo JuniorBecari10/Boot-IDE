@@ -17,10 +17,6 @@ public class InputBox extends IDEComponent {
 	private StringBuilder text;
 	private int cursorIndex = 0;
 	
-	int count = 0, maxCount = 15;
-	
-	private boolean showCursor = true;
-	
 	public InputBox(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
 		
@@ -29,14 +25,6 @@ public class InputBox extends IDEComponent {
 	
 	public void tick() {
 		width = Main.explorer.getWidth() - 40;
-		
-		count++;
-		
-		if (count >= maxCount) {
-			count = 0;
-			
-			showCursor = !showCursor;
-		}
 		
 		if (leftClicked())
 			Explorer.selected = this;
@@ -130,7 +118,7 @@ public class InputBox extends IDEComponent {
 		
 		g.setColor(Colors.other);
 		
-		if (Explorer.selected == this && showCursor && x + 1 + (cursorIndex * (16 - 4)) < x + width)
+		if (Explorer.selected == this && Main.editor.showCursor && x + 1 + (cursorIndex * (16 - 4)) < x + width)
 			g.fillRect(x + 1 + (cursorIndex * (16 - 4)), y, 2, height);
 	}
 }
