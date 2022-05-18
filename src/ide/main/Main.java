@@ -69,8 +69,6 @@ public class Main implements Runnable, Tickable {
     public static final String VERSION = "Beta 6 v4.4";
     
     public static BufferedImage UNKNOWN_FILE_ICON = null;
-    
-    //public static final String SUN_JAVA_COMMAND = "sun.java.command";
 	
     private boolean running = false;
     
