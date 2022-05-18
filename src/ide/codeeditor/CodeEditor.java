@@ -735,8 +735,6 @@ public class CodeEditor extends IDEComponent {
 	
 	public static final String[] tfKeys = { "resource", "provider", "true", "false", "any", "variable", "string", "number", "bool" };
 	
-	public static final String[] vbsKeys = { "Dim", "Set", "Nothing", "Is", "Null", "True", "False" };
-	
 	public static final String[] vKeys = { "as", "asm", "assert", "atomic", "break", "const", "continue", "defer", "else", "embed", "enum", "false", "fn",
 			"for", "go", "goto", "if", "import", "in", "interface", "is", "lock", "match", "module", "mut", "none", "or", "pub", "return", "rlock", "select",
 			"shared", "sizeof", "static", "struct", "true", "type", "typeof", "union", "unsafe", "volatile", "__offsetof", "bool", "string", "i8", "i16",
@@ -1289,7 +1287,7 @@ public class CodeEditor extends IDEComponent {
 		case ".mli": return oCamlKeys;
 		case ".mly": return oCamlKeys;
 		case ".clt": return oCamlKeys;
-		case ".vbs": return vbsKeys;
+		case ".vbs": return vbKeys;
 		case ".bas": return basKeys;
 		
 		case ".html": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
@@ -2353,7 +2351,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".vbs":
-			for (String s : vbsKeys) { // colorir keywords
+			for (String s : vbKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
 														// s.length()).getFont().equals(Fonts.methodsNormal))
 
@@ -4356,7 +4354,7 @@ public class CodeEditor extends IDEComponent {
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			{
-				indxs = findWord(new String(chars), Character.toString((char) 34)); // colorir strings
+				indxs = findWord(new String(chars), "\""); // colorir strings
 
 				List<Integer> removeIndxs = new ArrayList<>();
 
@@ -4425,20 +4423,22 @@ public class CodeEditor extends IDEComponent {
 
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-				indxs = findWord(new String(chars), Character.toString((char) 39)); // colorir chars
-
-				removeIndxs = new ArrayList<>();
-
-				for (Integer i : indxs) {
-					if (i <= 0)
-						continue;
-
-					if (new String(chars).charAt(i - 1) == '\\')
-						removeIndxs.add(i);
+				if (!(ext.equalsIgnoreCase(".vb") || ext.equalsIgnoreCase(".vbs"))) {
+					indxs = findWord(new String(chars), "'"); // colorir chars
+	
+					removeIndxs = new ArrayList<>();
+	
+					for (Integer i : indxs) {
+						if (i <= 0)
+							continue;
+	
+						if (new String(chars).charAt(i - 1) == '\\')
+							removeIndxs.add(i);
+					}
+	
+					for (int i = 0; i < indxs.size() - 1; i += 2)
+						fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 				}
-
-				for (int i = 0; i < indxs.size() - 1; i += 2)
-					fs = color(indxs.get(i), indxs.get(i + 1) + 1, new IDEFont(Fonts.stringsNormal, FONT_SIZE), fs);
 			}
 
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4714,7 +4714,7 @@ public class CodeEditor extends IDEComponent {
 							}
 						}
 						
-						String withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+						String withSpace = " " + new String(chars);
 						char[] chs = withSpace.toCharArray();
 						
 						indxs = findWord(new String(chs), "#"); // colorir comentários de uma linha
@@ -5056,7 +5056,7 @@ public class CodeEditor extends IDEComponent {
 		case ".vh":
 		case ".vsh":
 		case ".mod":
-			String withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			String withSpace = " " + new String(chars);
 			char[] chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "//"); // colorir comentários de uma linha
@@ -5072,9 +5072,6 @@ public class CodeEditor extends IDEComponent {
 					
 					if (isInside(i, '\"', '\"', withSpace) && isInside(i, '\'', '\'', withSpace) && isInside(i, '`', '`', withSpace)) { // se colocar 2 // na mesma linha o anterior é desfeito
 						br = true;
-						//System.out.println(br);
-						
-						//continue;
 					}
 					
 					if (br) continue;
@@ -5092,21 +5089,22 @@ public class CodeEditor extends IDEComponent {
 			break;
 
 		case ".vb":
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+		case ".vbs":
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "'"); // colorir comentários de uma linha
 			
 			if (fs.size() == 0)
 				break;
-			
+
 			for (Integer i : indxs) {
 				if (!indxs.isEmpty()) {
 					boolean br = false;
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior é desfeito
+					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior é desfeito
 						br = true;
 						
 						break;
@@ -5132,7 +5130,7 @@ public class CodeEditor extends IDEComponent {
 			if (!isJSPart)
 				break;
 			
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "//"); // colorir comentários de uma linha
@@ -5174,7 +5172,7 @@ public class CodeEditor extends IDEComponent {
 		case ".com":
 		case ".bat":
 		case ".cmd":
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "REM"); // colorir comentários de uma linha
@@ -5206,7 +5204,7 @@ public class CodeEditor extends IDEComponent {
 			
 			///////////////
 			
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "rem"); // colorir comentários de uma linha
@@ -5240,7 +5238,7 @@ public class CodeEditor extends IDEComponent {
 
 		case ".s":
 		case ".asm":
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), ";"); // colorir comentários de uma linha
@@ -5270,7 +5268,7 @@ public class CodeEditor extends IDEComponent {
 					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			}
 			
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "//"); // colorir comentários de uma linha
@@ -5309,7 +5307,7 @@ public class CodeEditor extends IDEComponent {
 		case ".sql":
 		case ".has":
 		case ".hs":
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "--"); // colorir comentários de uma linha
@@ -5342,7 +5340,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".tf":
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "//"); // colorir comentários de uma linha
@@ -5375,7 +5373,7 @@ public class CodeEditor extends IDEComponent {
 					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
 			}
 			
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "#"); // colorir comentários de uma linha
@@ -5431,7 +5429,7 @@ public class CodeEditor extends IDEComponent {
 		case ".toml":
 		case ".gd":
 		case ".mcfunction":
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "#"); // colorir comentários de uma linha
@@ -5464,7 +5462,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 
 		case ".php":
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "//"); // colorir comentários de uma linha
@@ -5496,7 +5494,7 @@ public class CodeEditor extends IDEComponent {
 			
 			//////////
 			
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "#"); // colorir comentários de uma linha
@@ -5530,7 +5528,7 @@ public class CodeEditor extends IDEComponent {
 
 		case ".markdown":
 		case ".md":
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "[//]: #"); // colorir comentários de uma linha
@@ -5563,7 +5561,7 @@ public class CodeEditor extends IDEComponent {
 			
 			///////////////
 			
-			withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
 			indxs = findWord(new String(chs), "[]: #"); // colorir comentários de uma linha
@@ -5687,7 +5685,7 @@ public class CodeEditor extends IDEComponent {
 				fs = color(i, i + "*/".length(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs); // tem q dar offset
 			}
 			
-//			String withSpace = " " + new String(chars); // maior gambiarra que essa n existe kkkk
+//			String withSpace = " " + new String(chars);
 //			char[] chs = withSpace.toCharArray();
 //			
 //			indxs = findWord(new String(chs), "/*"); // colorir comentários multilinha - caracteres diferentes
