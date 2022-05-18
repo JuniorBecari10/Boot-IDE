@@ -831,7 +831,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public synchronized void cursor() {
 		int offset = CommandTerminal.expOff ? Main.editor.getX() : 0;
-		//int lcx = !CommandTerminal.expOff ? 0 : Main.editor.getX();
+		int lcx = !CommandTerminal.expOff ? 0 : Main.editor.getX();
 
 		int lcmx = mx;
 		int lcmy = my;
@@ -845,12 +845,12 @@ public class CodeEditor extends IDEComponent {
 		lcmx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / FONT_SIZE)
 				+ (scrX / FONT_SIZE));
 
-		while (((offset + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset < MouseInput
+		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset < MouseInput
 				.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica
 			// adicionando enquanto for menor
 			lcmx++;
 
-		while (((offset + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset > MouseInput
+		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset > MouseInput
 				.getMouseX()) // detecta se a posição real do cursor for menor do que a do cursor e fica
 			// adicionando enquanto for menor
 			lcmx--;
@@ -866,7 +866,10 @@ public class CodeEditor extends IDEComponent {
 		if (FONT_SIZE < 13)
 			lcmx--;
 		
-		if (CommandTerminal.expOff) lcmx += ruleOf3(16, 22, FONT_SIZE);
+		if (CommandTerminal.expOff)
+			lcmx--;
+		
+		//if (CommandTerminal.expOff) lcmx += ruleOf3(16, 22, FONT_SIZE);
 
 		lcmx = setWithinBounds(lcmx, lcmy, true);
 		lcmy = setWithinBounds(lcmx, lcmy, false);
