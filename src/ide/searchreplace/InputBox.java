@@ -21,63 +21,22 @@ public class InputBox extends IDEComponent {
 	
 	private boolean showCursor = true;
 	
-	public Thread cursor;
-	
 	public InputBox(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
 		
 		text = new StringBuilder();
-		
-		cursor = new Thread("cursor") {
-			public void run() {
-				while (true) {
-					count++;
-					
-					if (count >= maxCount) {
-						count = 0;
-						
-						showCursor = !showCursor;
-					}
-				}
-			}
-		};
-		
-		cursor.start();
-		
-		/*new Thread() {
-			public void run() {
-				while (true) {
-					if (KeyInput.isKeyPressed() && canDigit) {
-						KeyInput.updateKeys();
-						
-						if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
-							KeyInput.updateKeys();
-							if (cursorIndex == 0) continue;
-							
-							text.deleteCharAt(cursorIndex - 1);
-							cursorIndex--;
-						}
-						
-						if (cursorIndex == text.length()) text.append(KeyInput.getCharPressed());
-						else text.insert(cursorIndex, KeyInput.getCharPressed());
-						
-						cursorIndex++;
-					}
-				}
-			}
-		}.start();*/
 	}
 	
 	public void tick() {
 		width = Main.explorer.getWidth() - 40;
 		
-		/*count++;
+		count++;
 		
 		if (count >= maxCount) {
 			count = 0;
 			
 			showCursor = !showCursor;
-		}*/
+		}
 		
 		if (leftClicked())
 			Explorer.selected = this;
