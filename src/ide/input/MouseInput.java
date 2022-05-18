@@ -118,16 +118,25 @@ public final class MouseInput extends MouseInputAdapter {
 
         mouseX = e.getX();
         mouseY = e.getY();
+        
+        if (Main.main != null)
+	        Main.main.mainLogic();
     }
 	
 	@Override
 	public void mouseExited(MouseEvent e) {
 		mouseMoved = false;
+		
+		if (Main.main != null)
+	        Main.main.mainLogic();
 	}
 	
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		//mouseMoved = true;
+		
+		if (Main.main != null)
+	        Main.main.mainLogic();
 	}
 
     @Override

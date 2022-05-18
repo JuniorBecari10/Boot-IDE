@@ -902,7 +902,7 @@ public class Main implements Runnable, Tickable {
     }
     
     public synchronized void mainLogic() {
-    	try {
+    	/*try {
 	    	tick();
 	    	render();
 	    	
@@ -911,12 +911,27 @@ public class Main implements Runnable, Tickable {
     		writeLog(e);
     		
     		close(1);
-    	}
+    	}*/
     }
     
     @Override
     public void run() {
     	screen.requestFocus();
+    	
+    	while (true) {
+    		try {
+    	    	tick();
+    	    	render();
+    	    	
+    	    	Thread.sleep(1000 / 60);
+    	    	
+    	    	close(0);
+        	} catch (Throwable e) {
+        		writeLog(e);
+        		
+        		close(1);
+        	}
+    	}
     }
     
     //@Override

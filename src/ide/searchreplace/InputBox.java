@@ -16,13 +16,33 @@ public class InputBox extends IDEComponent {
 
 	private StringBuilder text;
 	private int cursorIndex = 0;
-	private int count = 0, maxCount = 15;
+	
+	int count = 0, maxCount = 15;
+	
 	private boolean showCursor = true;
+	
+	public Thread cursor;
 	
 	public InputBox(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
 		
 		text = new StringBuilder();
+		
+		cursor = new Thread("cursor") {
+			public void run() {
+				while (true) {
+					count++;
+					
+					if (count >= maxCount) {
+						count = 0;
+						
+						showCursor = !showCursor;
+					}
+				}
+			}
+		};
+		
+		cursor.start();
 		
 		/*new Thread() {
 			public void run() {
@@ -51,13 +71,13 @@ public class InputBox extends IDEComponent {
 	public void tick() {
 		width = Main.explorer.getWidth() - 40;
 		
-		count++;
+		/*count++;
 		
 		if (count >= maxCount) {
 			count = 0;
 			
 			showCursor = !showCursor;
-		}
+		}*/
 		
 		if (leftClicked())
 			Explorer.selected = this;
