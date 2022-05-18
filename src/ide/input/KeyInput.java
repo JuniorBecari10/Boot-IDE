@@ -157,6 +157,9 @@ public final class KeyInput extends KeyAdapter {
 	        keyCodes.add(keyCodePressed);
 	        chars.add(charPressed);
         }*/
+        
+        if (Main.main != null)
+	        Main.main.mainLogic();
     }
 
     @Override
@@ -170,5 +173,8 @@ public final class KeyInput extends KeyAdapter {
         shiftDown = e.isShiftDown();
         altDown = e.isAltDown();
         altGrDown = e.isAltGraphDown();
+        
+        if (Main.main != null)
+	        Main.main.mainLogic();
     }
 }

@@ -687,7 +687,7 @@ public class Main implements Runnable, Tickable {
         	Explorer.files = new ArrayList<>(ListableFile.files);
     }
 
-    public void render() {
+    public synchronized void render() {
         BufferStrategy bs = screen.getBufferStrategy();
 
         if (bs == null) {
@@ -901,28 +901,22 @@ public class Main implements Runnable, Tickable {
 	    	}
     }
     
+    public synchronized void mainLogic() {
+    	try {
+	    	tick();
+	    	render();
+	    	
+	    	close(0);
+    	} catch (Throwable e) {
+    		writeLog(e);
+    		
+    		close(1);
+    	}
+    }
+    
     @Override
     public void run() {
     	screen.requestFocus();
-    	
-    	while (running) {
-    		try {
-	    		tick();
-	    		render();
-	    		
-	    		close(0);
-	    		
-	    		try {
-					Thread.sleep(1000 / 60);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-    		} catch (Throwable e) {
-    			writeLog(e);
-    			
-    			close(1);
-    		}
-    	}
     }
     
     //@Override

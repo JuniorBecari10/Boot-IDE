@@ -1151,6 +1151,7 @@ public class CommandTerminal extends IDEComponent {
 					bl.insert(Main.editor.cursorX, lorem);
 					
 					Main.editor.register(bl, Main.editor.cursorY - 1);
+					Main.editor.editing.setSaved(false);
 				} catch (Exception e) { break; }
 					
 				break;

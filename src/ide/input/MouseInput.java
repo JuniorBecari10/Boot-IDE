@@ -139,6 +139,9 @@ public final class MouseInput extends MouseInputAdapter {
         mouseClicked = false;
         
         mouseMoved = true;
+        
+        if (Main.main != null)
+	        Main.main.mainLogic();
     }
     
     @Override
@@ -147,6 +150,9 @@ public final class MouseInput extends MouseInputAdapter {
 
         mouseX = e.getX();
         mouseY = e.getY();
+        
+        if (Main.main != null)
+	        Main.main.mainLogic();
     }
 
     @Override
@@ -161,6 +167,9 @@ public final class MouseInput extends MouseInputAdapter {
 
         mouseX = e.getX();
         mouseY = e.getY();
+        
+        if (Main.main != null)
+	        Main.main.mainLogic();
     }
 
     @Override
@@ -177,6 +186,9 @@ public final class MouseInput extends MouseInputAdapter {
     	
     	leftDragged = false;
     	rightDragged = false;
+    	
+    	if (Main.main != null)
+	        Main.main.mainLogic();
     }
     
     @Override
@@ -190,5 +202,8 @@ public final class MouseInput extends MouseInputAdapter {
     	
     	Main.editor.scroll();
 		Main.editor.scrollTabs();
+		
+		if (Main.main != null)
+	        Main.main.mainLogic();
     }
 }

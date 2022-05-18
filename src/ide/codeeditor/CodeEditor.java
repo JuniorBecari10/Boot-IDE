@@ -751,7 +751,6 @@ public class CodeEditor extends IDEComponent {
 			 "SQR", "TAN", "REM", "USR", "CALL", "TRON", "TROFF", "ASM", "SUB", "AS", "POKE", "PEEK", "SINGLE", "LONG", "INTEGER", "STRING",
 			 "AND", "OR", "XOR", "NOT" };
 	
-	public Thread typeThread;
 	public Thread killAllTabs;
 	
 	public static CommandTerminal terminal;
@@ -779,6 +778,9 @@ public class CodeEditor extends IDEComponent {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+					
+					if (Main.main != null)
+						Main.main.mainLogic();
 				}
 			}
 		};
@@ -802,48 +804,6 @@ public class CodeEditor extends IDEComponent {
 		};
 
 		cursorThread.start();
-		
-		typeThread = new Thread("typeThread") {
-			public void run() {
-				while (true) {
-					try {
-						System.out.print(""); // tem que fazer isso -- azideia ksksksks
-						if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) continue;
-						
-						Main.editor.scroll();
-						Main.editor.scrollTabs();
-						
-						// o problema é daqui pra baixo, ou é CIMA? cima pq se o loop continuar sem executar a parte de baixo continua alto o uso da cpu, e o break ou return abaixam, e a parte de cima que fica executando sempre, mas se tirar ela e deixar só a de baixo continua alto mesmo assim
-						
-						//if (true) break; // - é a presença do loop que enche a cpu | veja se usarmos return ou break ao invés de continue dá certo
-						
-						if (KeyInput.isKeyPressed()) {
-							if ((!SetFileName.added && !CommandTerminal.active) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown())) {
-				    			Main.editor.type();
-				    			Main.editor.detectArrows();
-							}
-							Main.editor.detectShortcuts();
-						}
-					} catch (Exception e) {
-						continue;
-					}
-				}
-			}
-		};
-		
-		//typeThread.start();
-		
-		/*typeThread = new Thread() {
-			public void run() {
-				while (true)
-					try {
-						Main.editor.type();
-					} catch (Exception e) {
-						System.err.println(e.getMessage());
-						continue;
-					}
-			}
-		};*/
 	}
 	
 	public synchronized void typeLogic() {
@@ -874,8 +834,6 @@ public class CodeEditor extends IDEComponent {
 	public synchronized void cursor() {
 		int offset = CommandTerminal.expOff ? Main.editor.getX() : 0;
 		//int lcx = !CommandTerminal.expOff ? 0 : Main.editor.getX();
-		
-		System.out.println(offset);
 
 		int lcmx = mx;
 		int lcmy = my;
@@ -965,62 +923,6 @@ public class CodeEditor extends IDEComponent {
 
 		drawcx = realcx;
 		drawcy = realcy;
-	}
-	
-	/*public synchronized void typeLogic() {
-		try {
-			System.out.print(""); // tem que fazer isso -- azideia ksksksks
-			if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) return;
-			
-			Main.editor.scroll();
-			Main.editor.scrollTabs();
-			
-			// o problema é daqui pra baixo, ou é CIMA? cima pq se o loop continuar sem executar a parte de baixo continua alto o uso da cpu, e o break ou return abaixam, e a parte de cima que fica executando sempre, mas se tirar ela e deixar só a de baixo continua alto mesmo assim
-			
-			//if (true) break; // - é a presença do loop que enche a cpu | veja se usarmos return ou break ao invés de continue dá certo
-			
-			if (KeyInput.isKeyPressed()) {
-				if ((!SetFileName.added && !CommandTerminal.active) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown())) {
-	    			Main.editor.type();
-	    			Main.editor.detectArrows();
-				}
-				Main.editor.detectShortcuts();
-			}
-		} catch (Exception e) {
-			return;
-		}
-	}*/
-	
-	public synchronized void restartTypeThread() {
-		cursorThread = new Thread("cursorThread restart") {
-			public void run() {
-				// int speed = 1;
-
-				while (true) {
-					realcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
-					realcy = MIN_Y + ((cursorY - 1) * (LINE_HEIGHT)) - scrY;
-
-					/*
-					 * if (drawcx != realcx) { if (drawcx < realcx) drawcx += speed; if (drawcx >
-					 * realcx) drawcx -= speed; }
-					 * 
-					 * if (drawcy != realcy) { if (drawcy < realcy) drawcy += speed; if (drawcy >
-					 * realcy) drawcy -= speed; }
-					 */
-
-					drawcx = realcx;
-					drawcy = realcy;
-
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		};
-
-		cursorThread.start();
 	}
 
 	public boolean hovered() {
@@ -8772,24 +8674,6 @@ public class CodeEditor extends IDEComponent {
 				tabScr = 0; // ver o problema da tab
 
 		verifyDuplicateTabs();
-
-		/*if (!cursorThread.isAlive() || cursorThread.getState() == State.TERMINATED) {
-			cursorThread = new Thread("cursorthread 3") {
-				public void run() {
-					cursor.play();
-				}
-			};
-
-			cursorThread.start();
-		}*/
-  
-		/*if (!typeThread.isAlive() || typeThread.getState() == State.TERMINATED) {
-			try {
-				typeThread.start();
-			} catch (Exception e) {
-				return;
-			}
-		}*/
 
 		if (Explorer.dragging)
 			CommandTerminal.runCommand("deselect");

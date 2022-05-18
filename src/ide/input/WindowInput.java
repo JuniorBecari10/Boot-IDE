@@ -3,6 +3,8 @@ package ide.input;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import ide.main.Main;
+
 public class WindowInput implements WindowListener {
 	
 	private static boolean activated = true;
@@ -60,35 +62,51 @@ public class WindowInput implements WindowListener {
 	@Override
 	public void windowClosed(WindowEvent e) {
 		closed = true;
+		
+		if (Main.main != null)
+	        Main.main.mainLogic();
 	}
 
 	@Override
 	public void windowClosing(WindowEvent e) {
 		closing = true;
 		
-		//Main.close(0);
+		if (Main.main != null)
+	        Main.main.mainLogic();
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 		deactivated = true;
 		activated = false;
+		
+		if (Main.main != null)
+	        Main.main.mainLogic();
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 		maximized = true;
 		minimized = false;
+		
+		if (Main.main != null)
+	        Main.main.mainLogic();
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
 		minimized = true;
 		maximized = false;
+		
+		if (Main.main != null)
+	        Main.main.mainLogic();
 	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {
 		opened = true;
+		
+		if (Main.main != null)
+	        Main.main.mainLogic();
 	}
 }
