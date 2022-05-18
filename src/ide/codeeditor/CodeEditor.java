@@ -7462,6 +7462,7 @@ public class CodeEditor extends IDEComponent {
 				 if (!KeyInput.isShiftDown()) {
 					 if (!RightClickOption.isAutoCompleteActive()) {
 						wordSinceSpace = "";
+						
 						RightClickOption.removeAllRightClickOptions();
 						
 						String indentation = "\t";
@@ -7652,7 +7653,7 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 
-				if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB
+				if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && KeyInput.getKeyCodePressed() != KeyEvent.VK_UP && KeyInput.getKeyCodePressed() != KeyEvent.VK_DOWN/* && KeyInput.getKeyCodePressed() != KeyEvent.VK_LEFT && KeyInput.getKeyCodePressed() != KeyEvent.VK_RIGHT*/
 						&& KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46
 						&& !KeyInput.isShiftDown())
 					RightClickOption.removeAllRightClickOptions(); // 46 é o ponto (.) // aqui
@@ -7688,7 +7689,6 @@ public class CodeEditor extends IDEComponent {
 								
 								if (autocompleteindex < 0)
 									autocompleteindex = 0;
-								
 								return;
 							}
 							
@@ -7717,8 +7717,8 @@ public class CodeEditor extends IDEComponent {
 							if (RightClickOption.isAutoCompleteActive()) {
 								autocompleteindex++;
 								
-								if (autocompleteindex >= autocomplete.size())
-									autocompleteindex = autocomplete.size();
+								if (autocompleteindex == autocompletes.size())
+									autocompleteindex = 0;
 								
 								return;
 							}
@@ -8678,13 +8678,15 @@ public class CodeEditor extends IDEComponent {
 		int index = 0;
 
 		for (RightClickOption r : autocompletes) {
-			r.setX(drawcx);
+			r.setY(((drawcy - autocompletescroll) + FONT_SIZE) + index * 30);
 
 			index++;
 		}
 		
+		index = 0;
+		
 		for (RightClickOption r : autocompletes) {
-			r.setY(((drawcy - autocompletescroll) + FONT_SIZE) + index * 30);
+			r.setX(drawcx);
 
 			index++;
 		}
