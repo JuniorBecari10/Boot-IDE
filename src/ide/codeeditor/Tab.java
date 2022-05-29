@@ -99,6 +99,7 @@ public class Tab extends IDEComponent implements Serializable {
 				
 				while (drawW < WIDTH) {
 					drawW += animSpeed;
+					Main.canRunLoop = true;
 					
 					button.setX((x + Main.editor.tabScr + drawW) - 20);
 					
@@ -231,6 +232,7 @@ public class Tab extends IDEComponent implements Serializable {
 			public void run() {
 				while (drawW > 0) {
 					drawW -= animSpeed;
+					Main.canRunLoop = true;
 					
 					button.setX((x + Main.editor.tabScr + drawW) - 20);
 					
@@ -565,9 +567,7 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		if (!isTabDragged() || dragging == null) {
 			MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - 203;	// -WIDTH é um macete kkk - 77
-			int targetX = 0;
-			
-			if (targetX < Main.editor.getX()) targetX = Main.editor.getX();
+			int targetX = Main.editor.getX();
 			
 			if (Main.editor.tabs.indexOf(this) - 1 > -1)
 				targetX = Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1).getX() + WIDTH + 3;
@@ -708,14 +708,14 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		Color c = Main.editor.editing == this ? Colors.textLight : Colors.explorerLight;
 		Color bg = hovered() ? Colors.explorerLight : Colors.codeEditor;
-		
+
 		g.setColor(bg);
 		g2.setStroke(new BasicStroke(3f));
 		g2.fillRect(x, Y, drawW, HEIGHT);
-		
+
 		g.setColor(c);
 		g.drawRect(x, Y, drawW, HEIGHT);
-		
+
 		/*if (Main.editor.editing == this || (Main.editor.editing != this && hovered() && !Main.editor.editing.equals(Main.editor.tabs.get(Main.editor.tabs.indexOf(this) + 1)))) {
 			g.setColor(bg);
 			g2.setStroke(new BasicStroke(3f));

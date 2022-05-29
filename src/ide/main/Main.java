@@ -68,7 +68,7 @@ public class Main implements Runnable, Tickable {
     public static final String PROGRAM_NAME = "Boot IDE";
     public static final String VERSION = "Beta 6 v4.4";
     
-    private static boolean canRunLoop = true;
+    public static boolean canRunLoop = true;
     
     public static BufferedImage UNKNOWN_FILE_ICON = null;
 	
@@ -170,6 +170,13 @@ public class Main implements Runnable, Tickable {
     	try {
 	    	if (args == null)
 	    		args = new String[1];
+	    	
+	    	// Propriedades
+	    	
+	    	System.setProperty("com.apple.mrj.application.apple.menu.about.name", PROGRAM_NAME);
+	    	System.setProperty("sun.java.command", PROGRAM_NAME);
+	    	
+	    	//System.getProperties().list(System.out);
 	    	
 	    	originalSpritesheet = new Spritesheet(sprsh);
 	    	
