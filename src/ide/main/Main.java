@@ -66,7 +66,7 @@ public class Main implements Runnable, Tickable {
     public static final String LOG_FILE_NAME = "Exception.log";
     
     public static final String PROGRAM_NAME = "Boot IDE";
-    public static final String VERSION = "Beta 6 v4.4";
+    public static final String VERSION = "Beta 7 v4.4";
     
     public static boolean canRunLoop = true;
     
