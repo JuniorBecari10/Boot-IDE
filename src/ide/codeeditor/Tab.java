@@ -565,13 +565,19 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		if (!isTabDragged() || dragging == null) {
 			MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - 203;	// -WIDTH é um macete kkk - 77
+			int targetX = 0;
 			
-			if (x < Main.editor.getX()) x = Main.editor.getX();
+			if (targetX < Main.editor.getX()) targetX = Main.editor.getX();
 			
 			if (Main.editor.tabs.indexOf(this) - 1 > -1)
-				x = Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1).getX() + WIDTH + 3;
+				targetX = Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1).getX() + WIDTH + 3;
 			else
-				x = Tab.MIN_X + WIDTH + 3;
+				targetX = Tab.MIN_X + WIDTH + 3;
+			
+			if (x < targetX) x += 40;
+			if (x > targetX) x -= 40;
+			
+			if (x - targetX < 40) x = targetX;
 		}
 		
 		//System.out.println(dragging + ", " + MouseInput.isMouseDragged());

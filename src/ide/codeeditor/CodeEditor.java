@@ -1954,6 +1954,54 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				}
 			}
+			
+			if (ext.equalsIgnoreCase(".go")) {
+					indxs = findWord(new String(chars), "return"); // depois de <palavra>
+
+					int len = 0;
+
+					for (Integer i : indxs) {
+						len = 0;
+
+						while (i + len < chars.length)
+							len++;
+
+						// if (i + len < chars.length)
+						fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+					}
+					
+					///
+					
+					indxs = findWord(new String(chars), "package"); // depois de <palavra>
+
+					len = 0;
+
+					for (Integer i : indxs) {
+						len = 0;
+
+						while (i + len < chars.length)
+							len++;
+
+						// if (i + len < chars.length)
+						fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+					}
+					
+					///
+					
+					indxs = findWord(new String(chars), "var"); // depois de <palavra>
+
+					len = 0;
+
+					for (Integer i : indxs) {
+						len = 0;
+
+						while (i + len < chars.length)
+							len++;
+
+						// if (i + len < chars.length)
+						fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+					}
+				}
 
 			if (ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".pyx")
 					|| ext.equalsIgnoreCase(".ipynb")) {

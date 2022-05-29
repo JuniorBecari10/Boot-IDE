@@ -921,7 +921,6 @@ public class Main implements Runnable, Tickable {
 
     	while (running) {
     		try {
-    			System.out.println(canRunLoop);
     			if (canRunLoop) {
     				tick();
     				render();
