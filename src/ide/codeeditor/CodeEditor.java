@@ -669,7 +669,8 @@ public class CodeEditor extends IDEComponent {
 
 	public static final String[] goKeys = { "break", "default", "func", "interface", "select", "case", "defer", "go",
 			"map", "struct", "chan", "else", "goto", "package", "switch", "const", "fallthrough", "if", "range", "type",
-			"continue", "for", "import", "return", "var" };
+			"continue", "for", "import", "return", "var",
+			"bool", "int", "float32", "float64", "string", "uint8", "uint16", "uint32", "uint64", "int8", "int16", "int32", "int64", "uint", "uintptr", "complex64", "complex128" };
 
 	public static final String[] vbKeys = { "AddHandler", "AddressOf", "Alias", "And", "AndAlso", "As", "Boolean",
 			"ByRef", "Byte", "ByVal", "Call", "Case", "Catch", "CBool", "CByte", "CChar", "CDate", "CDbl", "CDec",
@@ -1527,7 +1528,7 @@ public class CodeEditor extends IDEComponent {
 		case ".vh": return "V";
 		case ".vsh": return "V";
 		case ".mod": return "V";
-		case ".bas": return minMode ? "BASIC" : "Beginners' All-purpose Symbolic Instruction Code - BASIC";
+		case ".bas": return minMode ? "BASIC" : "Beginners' All-Purpose Symbolic Instruction Code - BASIC";
 		
 		case ".html": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
 		case ".xhtml": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
@@ -1760,6 +1761,21 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (ext.equalsIgnoreCase(".por")) {
+			for (String s : porKeys) {
+				indxs = findWord(new String(chars), s); // depois de <palavra>
+
+				int len = 0;
+
+				for (Integer i : indxs) {
+					while (i + len < chars.length)
+						len++;
+
+					fs = color(i, i + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
+				}
+			}
+		}
+		
+		if (ext.equalsIgnoreCase(".go")) {
 			for (String s : porKeys) {
 				indxs = findWord(new String(chars), s); // depois de <palavra>
 
@@ -8608,6 +8624,8 @@ public class CodeEditor extends IDEComponent {
 		
 		/*if (editing != null && !tabs.isEmpty() && tabs.indexOf(editing) < 0)
 			tabs.get(0).select();*/
+		
+		setCursorWithinBounds();
 		
 		if (leftClicked() || rightClicked())
 			onClick();

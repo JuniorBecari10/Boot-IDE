@@ -68,6 +68,8 @@ public class Main implements Runnable, Tickable {
     public static final String PROGRAM_NAME = "Boot IDE";
     public static final String VERSION = "Beta 6 v4.4";
     
+    private static boolean canRunLoop = true;
+    
     public static BufferedImage UNKNOWN_FILE_ICON = null;
 	
     private boolean running = false;
@@ -900,7 +902,8 @@ public class Main implements Runnable, Tickable {
     }
     
     public synchronized void mainLogic() {
-    	try {
+    	canRunLoop = true;
+    	/*try {
 	    	tick();
 	    	render();
 	    	
@@ -909,14 +912,16 @@ public class Main implements Runnable, Tickable {
     		writeLog(e);
     		
     		close(1);
-    	}
+    	}*/
     }
     
     @Override
     public void run() {
     	screen.requestFocus();
     	
-    	/*while (true) {
+    	while (running) {
+    		System.out.println(canRunLoop);
+    		
     		try {
     	    	tick();
     	    	render();
@@ -929,7 +934,9 @@ public class Main implements Runnable, Tickable {
         		
         		close(1);
         	}
-    	}*/
+    		
+    		canRunLoop = false;
+    	}
     }
     
     //@Override
