@@ -918,24 +918,25 @@ public class Main implements Runnable, Tickable {
     @Override
     public void run() {
     	screen.requestFocus();
-    	
+
     	while (running) {
-    		System.out.println(canRunLoop);
-    		
     		try {
-    	    	tick();
-    	    	render();
-    	    	
-    	    	Thread.sleep(1000 / 60);
-    	    	
-    	    	close(0);
-        	} catch (Throwable e) {
-        		writeLog(e);
-        		
-        		close(1);
-        	}
-    		
-    		canRunLoop = false;
+    			System.out.println(canRunLoop);
+    			if (canRunLoop) {
+    				tick();
+    				render();
+    				
+    				canRunLoop = false;
+    			}
+
+    			Thread.sleep(1000 / 60);
+
+    			close(0);
+    		} catch (Throwable e) {
+    			writeLog(e);
+
+    			close(1);
+    		}
     	}
     }
     
