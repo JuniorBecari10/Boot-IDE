@@ -76,6 +76,8 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	public boolean isReadOnly;
 	
+	public FileReadMode readMode = FileReadMode.NORMAL;
+	
 	public Tab(int x, ListableFile regent) {
 		super(x, Y, WIDTH, HEIGHT, null);
 		
@@ -85,7 +87,7 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		String ext = ListableFile.getFileExtension(regent.getRegent());
 		
-		if (CodeEditor.isBinary(ext) || Main.editor.readMode != FileReadMode.NORMAL) {
+		if (CodeEditor.isBinary(ext) || readMode != FileReadMode.NORMAL) {
 			isReadOnly = true;
 			
 			Main.editor.isReadOnly = true;
@@ -334,7 +336,7 @@ public class Tab extends IDEComponent implements Serializable {
 	 * Salvar Arquivo
 	 */
 	public void save() {
-		if (isReadOnly || Main.editor.lines.isEmpty() || Main.editor.lines == null || Main.editor.readMode != FileReadMode.NORMAL) return;
+		if (isReadOnly || Main.editor.lines.isEmpty() || Main.editor.lines == null || readMode != FileReadMode.NORMAL) return;
 		
 		try {
 			Charset ch = Main.editor.codeType.equals("UTF-8") ? StandardCharsets.UTF_8 : StandardCharsets.ISO_8859_1;
@@ -745,8 +747,16 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		Fonts.drawString(regent.getRegent().getName(), x + 35, Y + 5, font, limit, g);
 	
-		if (isReadOnly)
-			g.drawImage(Main.lock, /*Main.editor.editing == this ? */(x + drawW) - 40 /*: (x + drawW) - 20*/, y + 7, 15, 15, null);
+		if (isReadOnly) {
+			if (readMode == FileReadMode.NORMAL)
+				g.drawImage(Main.lock, /*Main.editor.editing == this ? */(x + drawW) - 40 /*: (x + drawW) - 20*/, y + 7, 15, 15, null);
+			else {
+				if (readMode == FileReadMode.HEX)
+					g.drawImage(Main.hexView, (x + drawW) - 40, y + 7, 15, 15, null);
+				else if (readMode == FileReadMode.BIN)
+					g.drawImage(Main.binView, (x + drawW) - 40, y + 7, 15, 15, null);
+			}
+		}
 		
 		//if (Main.editor.editing == this)
 		button.render(g);

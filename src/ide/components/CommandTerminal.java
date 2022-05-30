@@ -790,7 +790,7 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "togglereadonly":
 				if (Main.editor.editing == null) break;
-				if (Main.editor.isReadOnly && (Main.editor.readMode != FileReadMode.NORMAL || !Main.editor.editing.getRegent().getRegent().canWrite())) break;
+				if (Main.editor.isReadOnly && (Main.editor.editing.readMode != FileReadMode.NORMAL || !Main.editor.editing.getRegent().getRegent().canWrite())) break;
 				
 				runCommand("deselect");
 				
@@ -854,12 +854,12 @@ public class CommandTerminal extends IDEComponent {
 			
 			case "setreadmode":
 				try {
-					Main.editor.readMode = FileReadMode.valueOf(args[0].toUpperCase());
+					Main.editor.editing.readMode = FileReadMode.valueOf(args[0].toUpperCase());
 					
 					Main.editor.lines = Main.editor.readFile(Main.editor.editing.getRegent().getRegent());
 					
-					if (Main.editor.readMode == FileReadMode.NORMAL && Main.editor.isReadOnly && !CodeEditor.isBinary(ListableFile.getFileExtension(Main.editor.editing.getRegent().getRegent()))) runCommand("togglereadonly");
-					if (Main.editor.readMode != FileReadMode.NORMAL && !Main.editor.isReadOnly) runCommand("togglereadonly");
+					if (Main.editor.editing.readMode == FileReadMode.NORMAL && Main.editor.isReadOnly && !CodeEditor.isBinary(ListableFile.getFileExtension(Main.editor.editing.getRegent().getRegent()))) runCommand("togglereadonly");
+					if (Main.editor.editing.readMode != FileReadMode.NORMAL && !Main.editor.isReadOnly) runCommand("togglereadonly");
 				} catch (Exception e) {} // argumento errado
 				break;
 				

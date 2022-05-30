@@ -109,7 +109,6 @@ public class CodeEditor extends IDEComponent {
 	public int scrY = 0;
 
 	public Direction directionStarted = Direction.NONE;
-	public FileReadMode readMode = FileReadMode.NORMAL;
 
 	private int realcx, realcy; // c = cursor
 	public int drawcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX,
@@ -994,7 +993,7 @@ public class CodeEditor extends IDEComponent {
 		if (l.isEmpty())
 			l.add("");
 		
-		switch (readMode) {
+		switch (editing.readMode) {
 			/*case ASSEMBLY: // ainda não
 				break;*/
 				
@@ -1847,6 +1846,19 @@ public class CodeEditor extends IDEComponent {
 			}
 		}
 		
+		if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s")) {
+			for (String s : asmKeys) {
+				indxs = findWord(new String(chars), s);
+				
+				for (Integer i : indxs) {
+					if (i != 0)
+						continue;
+	
+					fs = color(i, fs.size(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+		}
+		
 		if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")) {
 			indxs = findWord(new String(chars), "["); // depois de <palavra>
 
@@ -2026,8 +2038,7 @@ public class CodeEditor extends IDEComponent {
 						}
 					}
 
-					// addautocomplete.add(new AutoComplete(new String(sliceCharArray(c, c + len,
-					// chars)), AutoCompleteType.VARIABLE));
+					//addautocomplete.add(new AutoComplete(new String(sliceCharArray(c, c + len, chars)), AutoCompleteType.VARIABLE));
 					fs = color(c, c + len, new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs);
 				}
 
@@ -6213,9 +6224,11 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public List<IDEFont> colorOtherModes(String ext, char[] chars, List<IDEFont> fs) {
+		if (fs.size() == 0) return fs;
+		
 		List<Integer> indxs = new ArrayList<>();
 		
-		switch (readMode) {
+		switch (editing.readMode) {
 		/*case ASSEMBLY: // muito menos aqui
 			break;*/
 		
@@ -6314,7 +6327,7 @@ public class CodeEditor extends IDEComponent {
 		if (!ListableFile.fileHasExtension(ext))
 			ext = editing.getRegent().getRegent().getName();
 		
-		if (readMode != FileReadMode.NORMAL) {
+		if (editing.readMode != FileReadMode.NORMAL) {
 			fs = colorOtherModes(ext, chars, fs);
 			
 			return fs;
@@ -8714,7 +8727,7 @@ public class CodeEditor extends IDEComponent {
 		
 		// Set Lower Bar values
 		if (editing != null && editing.getRegent() != null) {
-			switch (readMode) {
+			switch (editing.readMode) {
 			case BIN:
 			case BINARY:
 				codeType = minMode ? "Bin" : (Main.lang == Language.PORT ? "Binário" : "Binary");

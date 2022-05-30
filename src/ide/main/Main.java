@@ -162,6 +162,9 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage entireDocument;
     public static BufferedImage selectedLines;
     
+    public static BufferedImage hexView;
+    public static BufferedImage binView;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -170,11 +173,6 @@ public class Main implements Runnable, Tickable {
     	try {
 	    	if (args == null)
 	    		args = new String[1];
-	    	
-	    	// Propriedades
-	    	
-	    	System.setProperty("com.apple.mrj.application.apple.menu.about.name", PROGRAM_NAME);
-	    	System.setProperty("sun.java.command", PROGRAM_NAME);
 	    	
 	    	//System.getProperties().list(System.out);
 	    	
@@ -220,6 +218,9 @@ public class Main implements Runnable, Tickable {
 	        
 	        entireDocument = spritesheet.getSprite(240, 0, 16, 16);
 	        selectedLines = spritesheet.getSprite(256, 0, 16, 16);
+	        
+	        hexView = spritesheet.getSprite(24, 0, 8, 8);
+	        binView = spritesheet.getSprite(24, 8, 8, 8);
 	        
 	        ///////
 	        
@@ -314,6 +315,9 @@ public class Main implements Runnable, Tickable {
         
         entireDocument = Colors.swapColor(entireDocument, Colors.textLightDefault, Colors.textLight);
         selectedLines = Colors.swapColor(selectedLines, Colors.textLightDefault, Colors.textLight);
+        
+        hexView = Colors.swapColor(hexView, Colors.textLightDefault, Colors.textLight);
+        binView = Colors.swapColor(binView, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         
