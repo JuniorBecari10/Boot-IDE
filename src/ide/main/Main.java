@@ -25,6 +25,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
+import ide.codeeditor.FileReadMode;
 import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
@@ -785,8 +786,12 @@ public class Main implements Runnable, Tickable {
 					
 					Fonts.drawString(Texts.fontSizeIs + " " + CodeEditor.FONT_SIZE + " pixels.", (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					
-					if (Main.editor.editing != null && Main.editor.editing.isReadOnly)
-						Fonts.drawString(Texts.fileAsReadOnly, (x - 10) + 20, (y - 10) + 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					if (Main.editor.editing != null && Main.editor.editing.isReadOnly) {
+						if (Main.editor.editing.readMode == FileReadMode.NORMAL)
+							Fonts.drawString(Texts.fileAsReadOnly, (x - 10) + 20, (y - 10) + 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+						else
+							Fonts.drawString(Texts.fileAsReadOnly.replace(Texts.readOnly, CodeEditor.getReadModeName(Main.editor.editing.readMode)), (x - 10) + 20, (y - 10) + 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					}
 				}
 	        }
         

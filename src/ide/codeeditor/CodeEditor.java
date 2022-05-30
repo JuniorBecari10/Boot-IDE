@@ -966,6 +966,44 @@ public class CodeEditor extends IDEComponent {
 	public static <T> List<T> removeDuplicates(List<T> list) {
 		return new ArrayList<>(new LinkedHashSet<>(list));
 	}
+	
+	/*public static String prettyBinary(String binary, int blockSize, String separator) {
+
+        List<String> result = new ArrayList<>();
+        int index = 0;
+        while (index < binary.length()) {
+            result.add(binary.substring(index, Math.min(index + blockSize, binary.length())));
+            index += blockSize;
+        }
+
+        return result.stream().collect(Collectors.joining(separator));
+    }*/
+	
+	public static String getReadModeName(FileReadMode mode) {
+		switch (mode) {
+		case BIN:
+		case BINARY:
+			return Main.lang == Language.PORT ? "Binário" : "Binary";
+		case HEX:
+			return "Hex";
+		default:
+			return "";
+		
+		}
+	}
+	
+	public static String convertStringToBinary(String input) {
+
+        StringBuilder result = new StringBuilder();
+        char[] chars = input.toCharArray();
+        for (char aChar : chars) {
+            result.append(
+                    String.format("%8s", Integer.toBinaryString(aChar))   // char -> int, auto-cast
+                            .replaceAll(" ", "0")                         // zero pads
+            );
+        }
+        return result.toString();
+    }
 
 	public List<IDELine> readFile(File file) throws IOException {
 		Main.editor.line1 = 0;
@@ -997,35 +1035,32 @@ public class CodeEditor extends IDEComponent {
 			/*case ASSEMBLY: // ainda não
 				break;*/
 				
-		case BIN:
+			case BIN:
 			case BINARY:
+				List<String> ls = new ArrayList<>(l);
 				l.clear();
 				
-				String raw = convertFileToBinary(file.toPath());
-				String[] lines = splitByNCharacters(raw, 32);
-				
-				for (int i = 0; i < lines.length; i++) {
-					String[] line = new String[32];
-					int index = 0;
-					
-					for (int j = 0; j < lines[i].length(); j++) {
-						char c = lines[i].charAt(j);
-						
-						line[index] += c;
-						
-						if (j % 8 == 0 && j != 0) index++;
-					}
-					
-					StringBuilder bl = new StringBuilder();
-					
-					for (String s : line)
-						bl.append(s + " ");
-					
-					lines[i] = bl.toString();
+				for (int i = 0; i < l.size(); i++) {
+					System.out.println(convertStringToBinary(ls.get(i)));
+					l.add(convertStringToBinary(ls.get(i)));
 				}
 				
-				for (String s : lines) {
+				for (String s : l) {
 					s = s.replace("null", "");
+					s = s.substring(0, s.length() - 29);
+					
+					String[] bins = s.split(" ");
+					
+					StringBuilder sb = new StringBuilder(s);
+					sb.append(" | ");
+					
+					for (String bin : bins) {
+						System.out.println(bin);
+						int ch = Integer.parseInt(bin, 2);
+						sb.append((char) ch);
+					}
+					
+					s = sb.toString();
 					
 					l.add(s);
 				}
@@ -1035,8 +1070,8 @@ public class CodeEditor extends IDEComponent {
 			case HEX:
 				l.clear();
 				
-				raw = convertFileToHex(file.toPath());
-				lines = raw.split("\n");
+				String raw = convertFileToHex(file.toPath());
+				String[] lines = raw.split("\n");
 				
 				for (String s : lines) {
 					StringBuilder b = new StringBuilder(s);

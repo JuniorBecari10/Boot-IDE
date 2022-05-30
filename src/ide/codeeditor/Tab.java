@@ -753,7 +753,7 @@ public class Tab extends IDEComponent implements Serializable {
 			else {
 				if (readMode == FileReadMode.HEX)
 					g.drawImage(Main.hexView, (x + drawW) - 40, y + 7, 15, 15, null);
-				else if (readMode == FileReadMode.BIN)
+				else if (readMode == FileReadMode.BIN || readMode == FileReadMode.BINARY)
 					g.drawImage(Main.binView, (x + drawW) - 40, y + 7, 15, 15, null);
 			}
 		}
