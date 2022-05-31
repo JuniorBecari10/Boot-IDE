@@ -576,10 +576,12 @@ public class Tab extends IDEComponent implements Serializable {
 			else
 				targetX = Tab.MIN_X + WIDTH + 3;
 			
-			if (x < targetX) x += 40;
+			/*if (x < targetX) x += 40;
 			if (x > targetX) x -= 40;
 			
-			if (x - targetX < 40) x = targetX;
+			if (x - targetX < 40) x = targetX;*/
+			
+			x = targetX;
 		}
 		
 		//System.out.println(dragging + ", " + MouseInput.isMouseDragged());
