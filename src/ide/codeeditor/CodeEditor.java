@@ -1128,6 +1128,7 @@ public class CodeEditor extends IDEComponent {
 				
 				for (String s : lines) {
 					s = s.replace("null", "");
+					s = s.substring(0, s.length() - 29);
 					
 					l.add(s);
 				}
@@ -3125,29 +3126,6 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 			}
-
-			for (String s : specialHtmlVariables) { // colorir tags
-				indxs = findWord(new String(chars), s);
-
-				for (Integer i : indxs) {
-					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
-							|| ((i + s.length() < chars.length)
-									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
-						continue;
-
-					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar
-																										// offset
-				}
-			}
-
-			for (String s : tags) { // colorir tags
-				indxs = findWord(new String(chars), s);
-
-				for (Integer i : indxs) {
-					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
-				}
-			}
-
 			break;
 
 		case ".scss":
@@ -6341,6 +6319,8 @@ public class CodeEditor extends IDEComponent {
 			
 			fs = color(0, indxs.get(0) - 1, new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 			fs = color(indxs.get(0), indxs.get(0) + 1, new IDEFont(Fonts.symbolsNormal, FONT_SIZE), fs);*/
+			
+			fs = color(0, fs.size(), new IDEFont(Fonts.numbersNormal, FONT_SIZE), fs);
 			break;
 			
 		case HEX:
@@ -6415,6 +6395,34 @@ public class CodeEditor extends IDEComponent {
 		if ((isReadOnly || editing.isReadOnly) && !extType.contains("(" + Texts.readOnly + ")"))
 			extType += " (" + Texts.readOnly + ")";
 	}
+	
+	public List<IDEFont> colorHTMLTags(String ext, char[] chars, List<IDEFont> fs) {
+		List<Integer> indxs = new ArrayList<>();
+		
+		for (String s : specialHtmlVariables) { // colorir tags
+			indxs = findWord(new String(chars), s);
+
+			for (Integer i : indxs) {
+				if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
+						|| ((i + s.length() < chars.length)
+								&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
+					continue;
+
+				fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar
+				// offset
+			}
+		}
+
+		for (String s : tags) { // colorir tags
+			indxs = findWord(new String(chars), s);
+
+			for (Integer i : indxs) {
+				fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+			}
+		}
+		
+		return fs;
+	}
 
 	// my precious
 	public List<IDEFont> automaticColor(char[] chars, String ext) {
@@ -6467,6 +6475,7 @@ public class CodeEditor extends IDEComponent {
 		fs = colorKeywords(ext, chars, fs);
 		fs = colorNumbers(ext, chars, fs);
 		fs = colorSymbols(ext, chars, fs);
+		fs = colorHTMLTags(ext, chars, fs);
 		fs = colorExtras(ext, chars, fs);
 		fs = colorWhitespaces(ext, chars, fs);
 		fs = colorComments(ext, chars, fs);
