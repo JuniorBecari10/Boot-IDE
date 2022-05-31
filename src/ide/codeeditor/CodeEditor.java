@@ -6403,25 +6403,31 @@ public class CodeEditor extends IDEComponent {
 	public List<IDEFont> colorHTMLTags(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
-		for (String s : specialHtmlVariables) { // colorir tags
-			indxs = findWord(new String(chars), s);
-
-			for (Integer i : indxs) {
-				if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
-						|| ((i + s.length() < chars.length)
-								&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
-					continue;
-
-				fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar
-				// offset
+		if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
+				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
+				|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
+				|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
+				|| ext.equalsIgnoreCase(".project")) {
+			for (String s : specialHtmlVariables) { // colorir tags
+				indxs = findWord(new String(chars), s);
+	
+				for (Integer i : indxs) {
+					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
+							|| ((i + s.length() < chars.length)
+									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
+						continue;
+	
+					fs = color(i, i + s.length(), new IDEFont(Fonts.variablesNormal, FONT_SIZE), fs); // tem q dar
+					// offset
+				}
 			}
-		}
-
-		for (String s : tags) { // colorir tags
-			indxs = findWord(new String(chars), s);
-
-			for (Integer i : indxs) {
-				fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+	
+			for (String s : tags) { // colorir tags
+				indxs = findWord(new String(chars), s);
+	
+				for (Integer i : indxs) {
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsNormal, FONT_SIZE), fs); // tem q dar offset
+				}
 			}
 		}
 		
