@@ -674,7 +674,7 @@ public class CodeEditor extends IDEComponent {
 			"map", "struct", "chan", "else", "goto", "package", "switch", "const", "fallthrough", "if", "range", "type",
 			"continue", "for", "import", "return", "var",
 			"bool", "int", "float32", "float64", "string", "uint8", "uint16", "uint32", "uint64", "int8", "int16",
-			"int32", "int64", "uint", "uintptr", "complex64", "complex128" };
+			"int32", "int64", "uint", "uintptr", "complex64", "complex128", "true", "false" };
 
 	public static final String[] vbKeys = { "AddHandler", "AddressOf", "Alias", "And", "AndAlso", "As", "Boolean",
 			"ByRef", "Byte", "ByVal", "Call", "Case", "Catch", "CBool", "CByte", "CChar", "CDate", "CDbl", "CDec",
@@ -1565,7 +1565,7 @@ public class CodeEditor extends IDEComponent {
 		// casos específicos
 		
 		if (Main.editor.editing.getRegent().getRegent().getName().equalsIgnoreCase("readme.md"))
-			return Main.lang == Language.PORT ? "Leia-Me" : "Read Me";
+			return Main.lang == Language.PORT ? "Leia-Me (Markdown)" : "Read Me (Markdown)";
 		
 		switch (ext.toLowerCase()) {
 		case ".java": return "Java";

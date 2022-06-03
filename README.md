@@ -23,12 +23,37 @@ Open the project on your favorite IDE and click Run/Execute.
 
 Boot IDE doesn't have dependencies, so it's easy to compile and run. Follow the steps below: <br />
 
+##### To Compile
+
+```batch
+cd src
+javac -d ../bin ide/main/Start.java
+```
+
+##### To Run
+
+```batch
+cd bin
+java ide.main.Start -cp .
+```
+
+##### To Compile and Run
+
 ```batch
 cd src
 javac -d ../bin ide/main/Start.java
 
 cd ../bin
 java ide.main.Start -cp .
+```
+
+### How to generate a JAR file
+
+To generate a JAR file, you need to have the compiled program (i.e. the .class files), then execute:
+
+```batch
+cd bin
+jar cf Boot-IDE.jar *
 ```
 
 ### How to Use
@@ -59,12 +84,37 @@ Abra o projeto na sua IDE preferida e clique em Executar.
 
 A Boot IDE não tem dependências, então é fácil compilar e executar. Siga os passos abaixo: <br />
 
+##### Para Compilar
+
+```batch
+cd src
+javac -d ../bin ide/main/Start.java
+```
+
+##### Para Executar
+
+```batch
+cd bin
+java ide.main.Start -cp .
+```
+
+##### Para Compilar e Executar
+
 ```batch
 cd src
 javac -d ../bin ide/main/Start.java
 
 cd ../bin
 java ide.main.Start -cp .
+```
+
+### Como gerar um arquivo JAR
+
+Para gerar um arquivo JAR, você precisa ter o programa compilado (isto é, os arquivos .class), então execute:
+
+```batch
+cd bin
+jar cf Boot-IDE.jar *
 ```
 
 ### Como Usar
