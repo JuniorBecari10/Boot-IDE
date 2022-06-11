@@ -76,6 +76,8 @@ public class CodeEditor extends IDEComponent {
 	public int index1, index2; // TODO fazer a verificação do CSS se está dentro do seletor, e se tiver, colore
 								// números
 	
+	public static final int MAX_UNDOS = 10;
+	
 	public boolean shouldColor = true;
 
 	public boolean isCssPart;
@@ -8495,7 +8497,7 @@ public class CodeEditor extends IDEComponent {
 						
 						// define lines
 						//System.out.println(peek.get(0).getFonts().isEmpty());
-						this.lines = defineLines(peek);
+						Main.editor.lines = defineLines(peek);
 						
 						//System.out.println(peek.get(0).getChars());
 						
@@ -8786,6 +8788,10 @@ public class CodeEditor extends IDEComponent {
 				} catch (Exception e) {
 					//System.out.println("Exception: " + Main.getStackTrace(e));
 					return;
+				} finally {
+					if (undo.size() > MAX_UNDOS) {
+						undo.remove(0);
+					}
 				}
 			}
 		}.start();
