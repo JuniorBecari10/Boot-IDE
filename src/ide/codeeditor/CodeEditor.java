@@ -8767,24 +8767,28 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public void addToUndo() {
-		try {
-			// converter os objetos da lista em strings e colocar numa lista de strings, que são os objetos
-			List<String> objs = new ArrayList<>();
-			
-			for (IDELine l : lines) {
-				String s = Serialization.objectToString(l);
-				objs.add(s);
+		new Thread() {
+			public void run() {
+				try {
+					// converter os objetos da lista em strings e colocar numa lista de strings, que são os objetos
+					List<String> objs = new ArrayList<>();
+					
+					for (IDELine l : lines) {
+						String s = Serialization.objectToString(l);
+						objs.add(s);
+					}
+					
+					// converter a lista de strings em uma string
+					String list = Serialization.serializeList(objs);
+					
+					// colocar a string no undo
+					undo.push(list);
+				} catch (Exception e) {
+					//System.out.println("Exception: " + Main.getStackTrace(e));
+					return;
+				}
 			}
-			
-			// converter a lista de strings em uma string
-			String list = Serialization.serializeList(objs);
-			
-			// colocar a string no undo
-			undo.push(list);
-		} catch (Exception e) {
-			//System.out.println("Exception: " + Main.getStackTrace(e));
-			return;
-		}
+		}.start();
 	}
 
 	public void tick() {
@@ -9270,7 +9274,7 @@ public class CodeEditor extends IDEComponent {
 				showCursor = true;
 	
 			// Desenhar cursor
-			if (showCursor && !WindowInput.isDeactivated() && drawcx > x + 45 && Explorer.selected == null) {
+			if (showCursor && !WindowInput.isDeactivated() && drawcx > x + (FONT_SIZE * 4) - 1 && Explorer.selected == null) {
 				g.setColor(Colors.cursor);
 				g.fillRect(drawcx, drawcy, // na posição x 12 ele aparece um pouco encima dos numeros
 						FONT_SIZE > 10 ? 2 : 1, LINE_HEIGHT);
