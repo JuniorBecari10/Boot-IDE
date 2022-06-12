@@ -6,7 +6,11 @@ RUNCD=cd bin
 RUN=java
 RUNARGS=ide.main.Start -cp .
 
+JARCD=cd bin
+JAR=jar cf Boot-IDE.jar *
+
 build: compile
+all: compile
 
 compile:
 	$(COMPCD) && \
@@ -15,3 +19,7 @@ compile:
 run:
 	$(RUNCD) && \
 	$(RUN) $(RUNARGS)
+
+jar:
+	$(JARCD) && \
+	$(JAR)
