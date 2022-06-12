@@ -652,7 +652,7 @@ public class CodeEditor extends IDEComponent {
 			"const", "import", "string", "for", "interface", "delete", "switch", "public", "of", "await", "class",
 			"console", "false", "volatile", "any", "int", "instanceof", "super", "with", "async", "declare",
 			"namespace", "boolean", "short", "arguments", "window", "as", "from", "navigator", "constructor", "debug",
-			"array", "object", "any", "mutation", "set" };
+			"array", "object", "any", "mutation", "set", "bigint" };
 
 	public static final String[] ktKeys = { "as", "as?", "break", "class", "continue", "do", "else", "false", "for",
 			"fun", "if", "in", "!in", "interface", "is", "!is", "null", "object", "package", "return", "super", "this",
@@ -4641,6 +4641,8 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 			if (ext.equalsIgnoreCase(".bf")) {
+				fs = color(0, fs.size(), new IDEFont(Fonts.commentsNormal, FONT_SIZE), fs);
+				
 				indxs = findWord(new String(chars), "[");
 
 				for (Integer i : indxs) {
@@ -5248,7 +5250,7 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			break;
-
+		
 		case ".vb":
 		case ".vbs":
 			withSpace = " " + new String(chars);
