@@ -411,7 +411,7 @@ public class CodeEditor extends IDEComponent {
 			"ipconfig", "label", "more", "net", "ping", "shutdown", "sort", "subst", "subst", "systeminfo", "taskkill",
 			"xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto", "rmdir", "icacls", "takeown", "if",
 			"for", "else", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc", "nasm", "pip",
-			"pip3", "pipwin", "as", "ld", "7z", "rename", "bash", "export",
+			"pip3", "pipwin", "as", "ld", "7z", "rename", "bash", "export", "vi", "vim", "nano", "clang", "qemu", "qemu-system-x86-64",
 			"qemu", "gcc", "g++", "python", "lua", "eject", "tsc", "setlocal", "endlocal", "make", "yarn", "color",
 			"VER", "ASSOC", "CD", "CLS", "COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "MODE", "@MODE", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE", "CMD", "COMP",
@@ -419,7 +419,7 @@ public class CodeEditor extends IDEComponent {
 			"PING", "SHUTDOWN", "SORT", "SUBST", "SUBST", "SYSTEMINFO", "TASKKILL", "XCOPY", "TREE", "FC", "TITLE",
 			"SET", "BASH", "NODE", "OFF", "GOTO", "RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM",
 			"CALL", "EXIST", "END", "JAVA", "JAVAC", "JAVAW", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON",
-			"PIP", "PIP3", "PIPWIN", "AS", "LD", "7Z", "RENAME", "BASH", "EXPORT",
+			"PIP", "PIP3", "PIPWIN", "AS", "LD", "7Z", "RENAME", "BASH", "EXPORT", "VI", "VIM", "NANO", "CLANG", "QEMU", "QEMU-SYSTEM-x86-64", "QEMU-SYSTEM-X86-64",
 			"LUA", "EJECT", "TSC", "SETLOCAL", "ENDLOCAL", "MAKE", "YARN", "COLOR" };
 	
 	public static final String[] porKeys = { "programa", "funcao", "inteiro", "caracter", "real", "cadeia", "para", "se", "senao", "enquanto",
@@ -635,13 +635,13 @@ public class CodeEditor extends IDEComponent {
 			"kill", "ping", "wget", "uname", "top", "history", "man", "echo", "zip", "unzip", "hostname", "useradd",
 			"userdel", "clear", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc",
 			"node", "nasm", "qemu", "gcc", "g++", "python", "lua", "if", "then", "else", "fi", "date", "eject", "tsc",
-			"pip", "pip3", "pipwin", "read", "export", "as", "ld", "7z", "rename", "bash",
+			"pip", "pip3", "pipwin", "read", "export", "as", "ld", "7z", "rename", "bash", "vi", "vim", "nano", "clang", "qemu", "qemu-system-x86-64",
 			"setlocal", "endlocal", "make", "yarn", "color", "for", "PWD", "CD", "LS", "CAT ", "CP", "MV", "MKDIR",
 			"RMDIR", "RM", "TOUCH", "LOCATE", "FIND", "GREP", "SUDO", "SU", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR",
 			"CHMOD", "CHOWN", "JOBS", "KILL", "PING", "WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP",
 			"HOSTNAME", "USERADD", "EXPORT", "USERDEL", "CLEAR", "GIT", "NPM", "CALL", "EXIST", "END", "EJECT", "SETLOCAL",
 			"ENDLOCAL", "FOR", "JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA",
-			"PIP", "PIP3", "PIPWIN", "READ", "AS", "LD", "7Z", "RENAME", "BASH",
+			"PIP", "PIP3", "PIPWIN", "READ", "AS", "LD", "7Z", "RENAME", "BASH", "VI", "VIM", "NANO", "CLANG", "QEMU", "QEMU-SYSTEM-x86-64", "QEMU-SYSTEM-X86-64",
 			"JAVAW", "IF", "THEN", "ELSE", "FI", "DATE", "YARN", "COLOR", "TSC", "MAKE" };
 
 	public static final String[] tsKeys = { "type", "number", "protected", "else", "let", "catch", "if", "case", "in",
@@ -676,7 +676,7 @@ public class CodeEditor extends IDEComponent {
 			"map", "struct", "chan", "else", "goto", "package", "switch", "const", "fallthrough", "if", "range", "type",
 			"continue", "for", "import", "return", "var",
 			"bool", "int", "float32", "float64", "string", "uint8", "uint16", "uint32", "uint64", "int8", "int16",
-			"int32", "int64", "uint", "uintptr", "complex64", "complex128", "true", "false" };
+			"int32", "int64", "uint", "uintptr", "complex64", "complex128", "true", "false", "range" };
 
 	public static final String[] vbKeys = { "AddHandler", "AddressOf", "Alias", "And", "AndAlso", "As", "Boolean",
 			"ByRef", "Byte", "ByVal", "Call", "Case", "Catch", "CBool", "CByte", "CChar", "CDate", "CDbl", "CDec",
