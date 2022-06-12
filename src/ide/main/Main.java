@@ -933,9 +933,9 @@ public class Main implements Runnable, Tickable {
     
     @Override
     public void run() {
-        screen.requestFocus();
+    	screen.requestFocus();
         
-        long lastTime = System.nanoTime();
+        /*long lastTime = System.nanoTime();
         final double targetFps = 60.0;
         double ns = 1E9 / targetFps;
         double delta = 0;
@@ -962,7 +962,26 @@ public class Main implements Runnable, Tickable {
                 
                 delta--;
             }
-        }
+        }*/
+        
+    	while (running) {
+    		try {
+    			if (canRunLoop) {
+    				tick();
+    				render();
+    				
+    				canRunLoop = false;
+    			}
+
+    			Thread.sleep(1000 / 60);
+
+    			close(0);
+    		} catch (Throwable e) {
+    			writeLog(e);
+
+    			close(1);
+    		}
+    	}
     }
     
     //@Override
