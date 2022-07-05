@@ -8,3 +8,5 @@
 *.txt
 *.log
 *.jar
+.classpath
+.project
