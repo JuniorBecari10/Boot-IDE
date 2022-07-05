@@ -9033,8 +9033,6 @@ public class CodeEditor extends IDEComponent {
 		} else
 			Main.screen.setCursor(Cursor.getDefaultCursor());
 
-		
-		
 		if (!selecting)
 			directionStarted = Direction.NONE;
 
