@@ -61,8 +61,9 @@ public class DragListener implements DropTargetListener {
 		        if (flavors[i].isFlavorJavaFileListType()) {
 		          dtde.acceptDrop(DnDConstants.ACTION_COPY);
 		          
-		          System.out.println("Success!");
-
+		          //System.out.println("Success!");
+		          // Success!
+		          
 		          List<Object> list = (List<Object>) tr.getTransferData(flavors[i]);
 		          List<File> files = new ArrayList<>();
 		          
@@ -133,7 +134,7 @@ public class DragListener implements DropTargetListener {
 							public void run() {
 								try {
 									Main.editor.lines = Main.editor.readFile(files.get(0));
-								} catch (IOException e) { // não suportado, se caiu aqui
+								} catch (IOException e) { // nï¿½o suportado, se caiu aqui
 									return;
 								}
 							}
