@@ -385,7 +385,7 @@ public class Explorer extends IDEComponent {
     }
 
     public synchronized void render(Graphics g) {
-    	if (CommandTerminal.expOff) return; // melhorar o �cone do img, e adicionar suorte ao formato .o
+    	if (CommandTerminal.expOff) return;
     	
     	Graphics2D g2 = (Graphics2D) g;
     	
@@ -405,7 +405,7 @@ public class Explorer extends IDEComponent {
 	    
         g.setColor(Colors.explorerLight);
 	    g2.setStroke(new BasicStroke(3f));
-	    g2.drawLine(width - 1, Screen.DECORATION_HEIGHT, width - 1, height); // linha que divide do codeeditor
+	    g2.drawLine(width - 1, Screen.DECORATION_HEIGHT, width - 1, height); // linha vertical que divide do codeeditor
 	        
 	    if (!searchReplaceActive) {
 	        if (Main.baseFolder == null || baseFolderName == null) return;
@@ -438,6 +438,7 @@ public class Explorer extends IDEComponent {
 	    		g.setColor(Colors.textLight);
 	    		g2.setStroke(new BasicStroke(3f));
 	    		
+	    		// linha à esquerda da primeira tab
 	    		g.drawLine(Main.editor.getX(), Screen.DECORATION_HEIGHT + 3, Main.editor.getX(), Screen.DECORATION_HEIGHT + CodeEditor.MIN_Y - 1);
 	        }
 	    }

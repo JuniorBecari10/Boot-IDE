@@ -232,7 +232,7 @@ public class Main implements Runnable, Tickable {
 	        
 	        screen.setFrameIcon(spritesheet.getSprite(144, 0, 16, 16));
 	        
-	        openBase = new OpenBaseFolderButton(20, Screen.DECORATION_HEIGHT + 70, 48, 48, baseFolderSpr);
+	        openBase = new OpenBaseFolderButton(20, Screen.DECORATION_HEIGHT + Screen.DECORATION_HEIGHT + 70, 48, 48, baseFolderSpr);
 	        oneFolder = new OneFolderUpButton(160, Screen.DECORATION_HEIGHT + 85, 32, 32, folderUp);
 	        returnBase = new ReturnToBaseFolderButton(200, Screen.DECORATION_HEIGHT + 85, 32, 32, backBaseFolder);
 	        newFile = new NewFileButton(80, Screen.DECORATION_HEIGHT + 85, 32, 32, newFileSpr);
