@@ -33,6 +33,7 @@ import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
 import ide.main.Main;
+import ide.main.Screen;
 import ide.util.Colors;
 import ide.util.Language;
 import ide.util.Texts;
@@ -49,7 +50,7 @@ public class Tab extends IDEComponent implements Serializable {
 
 	public static int MIN_X = 77; // TODO colocar o min x pra frente, funcionando
 	
-	public static final int Y = 3;
+	public static final int Y = Screen.DECORATION_HEIGHT + 3;
 	public static final int WIDTH = 200;
 	public static final int HEIGHT = 30;
 	

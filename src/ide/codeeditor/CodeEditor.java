@@ -139,7 +139,7 @@ public class CodeEditor extends IDEComponent {
 
 	public static String clipboard = "";
 
-	public static final int MIN_Y = 35;
+	public static final int MIN_Y = Screen.DECORATION_HEIGHT + 35;
 
 	public boolean showCursor;
 

@@ -439,7 +439,7 @@ public class Explorer extends IDEComponent {
 	    		g2.setStroke(new BasicStroke(3f));
 	    		
 	    		// linha à esquerda da primeira tab
-	    		g.drawLine(Main.editor.getX(), Screen.DECORATION_HEIGHT + 3, Main.editor.getX(), Screen.DECORATION_HEIGHT + CodeEditor.MIN_Y - 1);
+	    		g.drawLine(Main.editor.getX(), Screen.DECORATION_HEIGHT + 3, Main.editor.getX(), CodeEditor.MIN_Y - 1);
 	        }
 	    }
     }
