@@ -19,6 +19,8 @@ public class Screen extends Canvas {
     public JFrame frame;
     
     // initial dimensions
+    
+    public static final int DECORATION_HEIGHT = 30;
 
     public static final int WIDTH =  (int) getScreenSize().getWidth();
     public static final int HEIGHT = (int) getScreenSize().getHeight() - 50;
@@ -73,7 +75,7 @@ public class Screen extends Canvas {
 		
         frame.pack();
 		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);			// pra fazer a tela de confirmação o fechamento deve ser feito por código
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);			// pra fazer a tela de confirmaï¿½ï¿½o o fechamento deve ser feito por cï¿½digo
 		frame.setFocusTraversalKeysEnabled(false); // tem q ter esses dois
 		frame.setVisible(true);
 		//frame.setUndecorated(true); // ele aqui causa exception

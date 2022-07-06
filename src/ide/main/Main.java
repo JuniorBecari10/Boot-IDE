@@ -168,7 +168,7 @@ public class Main implements Runnable, Tickable {
     
     ///
     
-    // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
+    // TODO verificar se o args 0 contï¿½m boot ou ide e pegar o args 1 e fazer o abrir com
     
     public Main() {
     	try {
@@ -225,19 +225,19 @@ public class Main implements Runnable, Tickable {
 	        
 	        ///////
 	        
-	        explorer = new Explorer(0, 0, 280, Screen.HEIGHT);
-	        editor = new CodeEditor(280, 0, Screen.WIDTH - 280, Screen.HEIGHT); // esses 2 precisa ser inicializados depois das fontes e da spritesheet
+	        explorer = new Explorer(0, Screen.DECORATION_HEIGHT, 280, Screen.HEIGHT);
+	        editor = new CodeEditor(280, Screen.DECORATION_HEIGHT, Screen.WIDTH - 280, Screen.HEIGHT); // esses 2 precisa ser inicializados depois das fontes e da spritesheet
 	        
-	        logo = new Logo(Screen.WIDTH / 2 + 80, Screen.HEIGHT / 2 - 120, 160, 160, star);
+	        logo = new Logo(Screen.WIDTH / 2 + 80, Screen.DECORATION_HEIGHT + (Screen.HEIGHT / 2 - 120), 160, 160, star);
 	        
 	        screen.setFrameIcon(spritesheet.getSprite(144, 0, 16, 16));
 	        
-	        openBase = new OpenBaseFolderButton(20, 70, 48, 48, baseFolderSpr);
-	        oneFolder = new OneFolderUpButton(160, 85, 32, 32, folderUp);
-	        returnBase = new ReturnToBaseFolderButton(200, 85, 32, 32, backBaseFolder);
-	        newFile = new NewFileButton(80, 85, 32, 32, newFileSpr);
-	        newFolder = new NewFolderButton(120, 85, 32, 32, newFolderSpr);
-	        reload = new ReloadButton(240, 85, 32, 32, reloadSpr);
+	        openBase = new OpenBaseFolderButton(20, Screen.DECORATION_HEIGHT + 70, 48, 48, baseFolderSpr);
+	        oneFolder = new OneFolderUpButton(160, Screen.DECORATION_HEIGHT + 85, 32, 32, folderUp);
+	        returnBase = new ReturnToBaseFolderButton(200, Screen.DECORATION_HEIGHT + 85, 32, 32, backBaseFolder);
+	        newFile = new NewFileButton(80, Screen.DECORATION_HEIGHT + 85, 32, 32, newFileSpr);
+	        newFolder = new NewFolderButton(120, Screen.DECORATION_HEIGHT + 85, 32, 32, newFolderSpr);
+	        reload = new ReloadButton(240, Screen.DECORATION_HEIGHT + 85, 32, 32, reloadSpr);
 	        
 	        desktop = Desktop.getDesktop();
 	        
@@ -350,7 +350,7 @@ public class Main implements Runnable, Tickable {
      * 
      * <br />
      * 
-     * Código de: <a href="https://dzone.com/articles/programmatically-restart-java">https://dzone.com/articles/programmatically-restart-java</a>
+     * Cï¿½digo de: <a href="https://dzone.com/articles/programmatically-restart-java">https://dzone.com/articles/programmatically-restart-java</a>
      * 
      * @param runBeforeRestart some custom code to be run before restarting
      * @throws IOException
@@ -477,7 +477,7 @@ public class Main implements Runnable, Tickable {
 						public void run() {
 							try {
 								Main.editor.lines = Main.editor.readFile(file);
-							} catch (IOException e) { // não suportado, se caiu aqui
+							} catch (IOException e) { // nï¿½o suportado, se caiu aqui
 								return;
 							}
 						}
@@ -530,7 +530,7 @@ public class Main implements Runnable, Tickable {
 		}
     }
     
-    // o settings file tá
+    // o settings file tï¿½
     public static void readFile(File setFile) {
     	int lccx = 0, lccy = 0; // local cx (cursor x)
     	
@@ -552,7 +552,7 @@ public class Main implements Runnable, Tickable {
 					
 					if (i == 0) {
 						Fonts.initFonts(fntnr, fntbl);
-						spritesheet = spritesheetFile.exists() ? modifiedSpritesheet : originalSpritesheet; // fazer o closebasefolder não descarregar o config file
+						spritesheet = spritesheetFile.exists() ? modifiedSpritesheet : originalSpritesheet; // fazer o closebasefolder nï¿½o descarregar o config file
 						
 				        if (s.equals("none")) baseFolder = null;
 				        else {
@@ -726,7 +726,7 @@ public class Main implements Runnable, Tickable {
         
         if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))
 	        for (Tab t : Main.editor.tabs) {
-				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() && !t.button.hovered() && !Tab.isTabDragged()) { // por algum motivo é + e não -
+				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() && !t.button.hovered() && !Tab.isTabDragged()) { // por algum motivo ï¿½ + e nï¿½o -
 					int index = t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0;
 					
 					int width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
@@ -897,8 +897,8 @@ public class Main implements Runnable, Tickable {
         		writeFile(settingsFile);
         		ListableFile.generateLocalConfigFile(defaultConfigFile);
         		
-	    		if (Main.editor.editing != null) { // não for nulo
-	    			if (!Main.editor.editing.isSaved()) { // não estiver salvo
+	    		if (Main.editor.editing != null) { // nï¿½o for nulo
+	    			if (!Main.editor.editing.isSaved()) { // nï¿½o estiver salvo
 	    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
 	    				
 	    				CodeEditor.setSystemLook();

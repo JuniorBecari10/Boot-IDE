@@ -24,6 +24,7 @@ import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.main.Screen;
 import ide.searchreplace.ExecuteButton;
 import ide.searchreplace.InputBox;
 import ide.searchreplace.RadioButton;
@@ -185,7 +186,7 @@ public class Explorer extends IDEComponent {
 	    	maxTextWidth =   (width / 16) + 2;
 	    	maxFileCreateWidth = width / 18 + 2;
 	    	
-	    	// Media Queries (só que em Java kkkk)
+	    	// Media Queries (sÃ³ que em Java kkkk)
 	    	
 	    	if (width < 260) {
 	    		Main.newFile.setWidth(24);
@@ -300,7 +301,7 @@ public class Explorer extends IDEComponent {
 	    			return;
 	    		}
 	    		
-	    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_G) { // Ctrl + G (Retornar à Pasta Base)
+	    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_G) { // Ctrl + G (Retornar ï¿½ Pasta Base)
 	    			KeyInput.updateKeys();
 	    			
 	    			ReturnToBaseFolderButton.returnToBaseFolder();
@@ -384,7 +385,7 @@ public class Explorer extends IDEComponent {
     }
 
     public synchronized void render(Graphics g) {
-    	if (CommandTerminal.expOff) return; // melhorar o ícone do img, e adicionar suorte ao formato .o
+    	if (CommandTerminal.expOff) return; // melhorar o ï¿½cone do img, e adicionar suorte ao formato .o
     	
     	Graphics2D g2 = (Graphics2D) g;
     	
@@ -404,7 +405,7 @@ public class Explorer extends IDEComponent {
 	    
         g.setColor(Colors.explorerLight);
 	    g2.setStroke(new BasicStroke(3f));
-	    g2.drawLine(width - 1, 0, width - 1, height); // linha que divide do codeeditor
+	    g2.drawLine(width - 1, Screen.DECORATION_HEIGHT, width - 1, height); // linha que divide do codeeditor
 	        
 	    if (!searchReplaceActive) {
 	        if (Main.baseFolder == null || baseFolderName == null) return;
@@ -413,9 +414,9 @@ public class Explorer extends IDEComponent {
         
 	    	g2.setStroke(new BasicStroke(4f));
 	        g.setColor(Colors.explorerLight);
-	        g2.drawLine(0, 199, width - 1, 199);
+	        g2.drawLine(0, Screen.DECORATION_HEIGHT + 199, width - 1, Screen.DECORATION_HEIGHT + 199); // linha que divide os listablefiles
 	        
-	        Fonts.drawString(folderPath, x + 10, 170, new IDEFont(Fonts.lighterGrayNormal, 15), g);
+	        Fonts.drawString(folderPath, x + 10, Screen.DECORATION_HEIGHT + 170, new IDEFont(Fonts.lighterGrayNormal, 15), g);
 	        
 	        try {
 		        for (ListableFile f : Explorer.files) {
@@ -437,7 +438,7 @@ public class Explorer extends IDEComponent {
 	    		g.setColor(Colors.textLight);
 	    		g2.setStroke(new BasicStroke(3f));
 	    		
-	    		g.drawLine(Main.editor.getX(), 3, Main.editor.getX(), CodeEditor.MIN_Y - 1);
+	    		g.drawLine(Main.editor.getX(), Screen.DECORATION_HEIGHT + 3, Main.editor.getX(), Screen.DECORATION_HEIGHT + CodeEditor.MIN_Y - 1);
 	        }
 	    }
     }
