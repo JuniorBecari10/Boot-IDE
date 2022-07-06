@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
 import ide.main.Main;
+import ide.main.Screen;
 
 public final class MouseInput extends MouseInputAdapter {
     
@@ -26,6 +27,8 @@ public final class MouseInput extends MouseInputAdapter {
     private static boolean rightDragged;
     
     private static boolean mouseRolled;
+    
+    private static int pX = 0, pY = 0;
     
     public static boolean hovered(int x, int y, int w, int h) {
     	Rectangle bs = new Rectangle(x, y, w, h);
@@ -52,7 +55,7 @@ public final class MouseInput extends MouseInputAdapter {
     	rightPressed = false;
     	
     	mouseRolled = false;
-    	//mouseMoved = false; // olha o comentário
+    	//mouseMoved = false; // olha o comentï¿½rio
     }
     
     public static void updateMouseRoll() {
@@ -119,6 +122,9 @@ public final class MouseInput extends MouseInputAdapter {
         mouseX = e.getX();
         mouseY = e.getY();
         
+        if (mouseY < Screen.DECORATION_HEIGHT && leftDragged)
+        	Main.screen.frame.setLocation(Main.screen.frame.getLocation().x + e.getX() - pX, Main.screen.frame.getLocation().y + e.getY() - pY);
+        
         if (Main.main != null)
 	        Main.main.mainLogic();
     }
@@ -176,6 +182,9 @@ public final class MouseInput extends MouseInputAdapter {
 
         mouseX = e.getX();
         mouseY = e.getY();
+        
+        pX = e.getX();
+		pY = e.getY();
         
         if (Main.main != null)
 	        Main.main.mainLogic();

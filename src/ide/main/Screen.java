@@ -4,6 +4,9 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.dnd.DropTarget;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JFrame;
 
@@ -69,13 +72,13 @@ public class Screen extends Canvas {
         frame = new JFrame(title);
         
         frame.add(this);
-		frame.setResizable(true);
-		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		//frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		frame.setFocusTraversalKeysEnabled(false);
-		
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);			// pra fazer a tela de confirma��o o fechamento deve ser feito por c�digo
+		frame.setUndecorated(true);
+
         frame.pack();
 		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);			// pra fazer a tela de confirma��o o fechamento deve ser feito por c�digo
 		frame.setFocusTraversalKeysEnabled(false); // tem q ter esses dois
 		frame.setVisible(true);
 		//frame.setUndecorated(true); // ele aqui causa exception
