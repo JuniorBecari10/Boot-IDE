@@ -51,6 +51,7 @@ import ide.util.Language;
 import ide.util.Spritesheet;
 import ide.util.Texts;
 import ide.util.Tickable;
+import topcomponents.TopComponent;
 
 public class Main implements Runnable, Tickable {
 	
@@ -697,6 +698,9 @@ public class Main implements Runnable, Tickable {
         
         if (!ListableFile.files.isEmpty())
         	Explorer.files = new ArrayList<>(ListableFile.files);
+        
+        for (TopComponent t : TopComponent.topComponents)
+			t.tick();
     }
 
     public synchronized void render() {
@@ -878,6 +882,9 @@ public class Main implements Runnable, Tickable {
         String text = screen.frame.getTitle();
 		Fonts.drawString(text, (screen.frame.getWidth() / 2) - ((text.length() * 12) / 2), Screen.DECORATION_HEIGHT / 2 - (16 / 2), new IDEFont(Fonts.lighterGrayNormal, 16), g);
         
+		for (TopComponent t : TopComponent.topComponents)
+			t.render(g);
+		
         bs.show();
     }
     
