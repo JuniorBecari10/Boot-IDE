@@ -51,6 +51,9 @@ import ide.util.Language;
 import ide.util.Spritesheet;
 import ide.util.Texts;
 import ide.util.Tickable;
+import topcomponents.CloseWindow;
+import topcomponents.MaximizeWindow;
+import topcomponents.MinimizeWindow;
 import topcomponents.TopComponent;
 
 public class Main implements Runnable, Tickable {
@@ -98,6 +101,10 @@ public class Main implements Runnable, Tickable {
     
     public static File baseFolder;
     
+    public static CloseWindow closeWindow;
+    public static MinimizeWindow minimizeWindow;
+    public static MaximizeWindow maximizeWindow;
+    
     public static String sprsh = "/spritesheet.png";
     public static String fntnr = "/font.png";
     public static String fntbl = "/bold.png";
@@ -122,6 +129,8 @@ public class Main implements Runnable, Tickable {
     
     public static boolean hasConfigFile = false;
     public static Language lang;
+    
+    public static OS os;
     
     public static Main main;
     
@@ -167,7 +176,14 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage hexView;
     public static BufferedImage binView;
     
-    public static OS os;
+    public static BufferedImage closeWindowSpr;
+    public static BufferedImage minimizeWindowSpr;
+    public static BufferedImage maximizeWindowSpr;
+    public static BufferedImage maximizedWindowSpr;
+    
+    public static BufferedImage closeWindowHoverSpr;
+    public static BufferedImage minimizeWindowHoverSpr;
+    public static BufferedImage maximizeWindowHoverSpr;
     
     ///
     
@@ -228,6 +244,22 @@ public class Main implements Runnable, Tickable {
 	        hexView = spritesheet.getSprite(24, 0, 8, 8);
 	        binView = spritesheet.getSprite(24, 8, 8, 8);
 	        
+	        if (os == OS.MAC) {
+	        	closeWindowSpr = spritesheet.getSprite(288, 0, 7, 7);
+	        	minimizeWindowSpr = spritesheet.getSprite(295, 0, 7, 7);
+	        	maximizeWindowSpr = spritesheet.getSprite(288, 7, 7, 7);
+	        	
+	        	closeWindowHoverSpr = spritesheet.getSprite(304, 0, 7, 7);
+	        	minimizeWindowHoverSpr = spritesheet.getSprite(311, 0, 7, 7);
+	        	maximizeWindowHoverSpr = spritesheet.getSprite(304, 7, 7, 7);
+	        }
+	        else {
+	        	closeWindowSpr = spritesheet.getSprite(272, 0, 7, 7);
+	        	minimizeWindowSpr = spritesheet.getSprite(279, 0, 7, 7);
+	        	maximizeWindowSpr = spritesheet.getSprite(272, 7, 7, 7);
+	        	maximizedWindowSpr = spritesheet.getSprite(279, 7, 7, 7);
+	        }
+	        
 	        ///////
 	        
 	        explorer = new Explorer(0, Screen.DECORATION_HEIGHT, 280, Screen.HEIGHT);
@@ -237,12 +269,21 @@ public class Main implements Runnable, Tickable {
 	        
 	        screen.setFrameIcon(spritesheet.getSprite(144, 0, 16, 16));
 	        
-	        openBase = new OpenBaseFolderButton(20, Screen.DECORATION_HEIGHT + Screen.DECORATION_HEIGHT + 70, 48, 48, baseFolderSpr);
+	        openBase = new OpenBaseFolderButton(20, Screen.DECORATION_HEIGHT + 70, 48, 48, baseFolderSpr);
 	        oneFolder = new OneFolderUpButton(160, Screen.DECORATION_HEIGHT + 85, 32, 32, folderUp);
 	        returnBase = new ReturnToBaseFolderButton(200, Screen.DECORATION_HEIGHT + 85, 32, 32, backBaseFolder);
 	        newFile = new NewFileButton(80, Screen.DECORATION_HEIGHT + 85, 32, 32, newFileSpr);
 	        newFolder = new NewFolderButton(120, Screen.DECORATION_HEIGHT + 85, 32, 32, newFolderSpr);
 	        reload = new ReloadButton(240, Screen.DECORATION_HEIGHT + 85, 32, 32, reloadSpr);
+	        
+	        if (os == OS.MAC) {
+	        	
+	        }
+	        else {
+	        	closeWindow = new CloseWindow(screen.getWidth() - Screen.DECORATION_HEIGHT, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, closeWindowSpr);
+	        	maximizeWindow = new MaximizeWindow(screen.getWidth() - Screen.DECORATION_HEIGHT * 2, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, maximizeWindowSpr);
+	        	minimizeWindow = new MinimizeWindow(screen.getWidth() - Screen.DECORATION_HEIGHT * 3, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, minimizeWindowSpr);
+	        }
 	        
 	        desktop = Desktop.getDesktop();
 	        
@@ -252,6 +293,10 @@ public class Main implements Runnable, Tickable {
 	        IDEComponent.components.add(logo);
 	        
 	        IDEComponent.components.add(openBase);
+	        
+	        TopComponent.topComponents.add(closeWindow);
+	        TopComponent.topComponents.add(maximizeWindow);
+	        TopComponent.topComponents.add(minimizeWindow);
 	        
 	        if (settingsFile.exists())
 	    		readFile(settingsFile);

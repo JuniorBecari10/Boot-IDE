@@ -222,13 +222,13 @@ public class Explorer extends IDEComponent {
 	    	}
 	    	
 	    	if (width < 200) {
-	    		Main.openBase.setY(75);
+	    		Main.openBase.setY(Screen.DECORATION_HEIGHT + 75);
 	    		
 	    		Main.openBase.setWidth(36);
 	    		Main.openBase.setHeight(36);
 	    	}
 	    	if (width > 200) {
-	    		Main.openBase.setY(70);
+	    		Main.openBase.setY(Screen.DECORATION_HEIGHT + 70);
 	    		
 	    		Main.openBase.setWidth(48);
 	    		Main.openBase.setHeight(48);
