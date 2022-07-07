@@ -676,7 +676,7 @@ public class CodeEditor extends IDEComponent {
 			"map", "struct", "chan", "else", "goto", "package", "switch", "const", "fallthrough", "if", "range", "type",
 			"continue", "for", "import", "return", "var",
 			"bool", "int", "float32", "float64", "string", "uint8", "uint16", "uint32", "uint64", "int8", "int16",
-			"int32", "int64", "uint", "uintptr", "complex64", "complex128", "true", "false", "range" };
+			"int32", "int64", "uint", "uintptr", "complex64", "complex128", "true", "false", "nil", "byte" };
 
 	public static final String[] vbKeys = { "AddHandler", "AddressOf", "Alias", "And", "AndAlso", "As", "Boolean",
 			"ByRef", "Byte", "ByVal", "Call", "Case", "Catch", "CBool", "CByte", "CChar", "CDate", "CDbl", "CDec",
@@ -7062,7 +7062,7 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public static void execTerminal() {
-		terminal = new CommandTerminal(Screen.WIDTH / 2 - 250, 30, 500, 30); // 25
+		terminal = new CommandTerminal(Screen.WIDTH / 2 - 250, Screen.DECORATION_HEIGHT + 40 /*30*/, 500, 30); // 25
 
 		if (CommandTerminal.active)
 			return;

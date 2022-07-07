@@ -796,7 +796,7 @@ public class Main implements Runnable, Tickable {
 	        }
         
         if (explorer.hovered() && !CommandTerminal.expOff && !Explorer.searchReplaceActive) {
-        	if (MouseInput.hovered(explorer.getX() + 10, 140, explorer.getWidth() - 10, 23) && Explorer.showBaseFolderCard && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
+        	if (MouseInput.hovered(explorer.getX() + 10, Screen.DECORATION_HEIGHT + 140, explorer.getWidth() - 10, 23) && Explorer.showBaseFolderCard && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
         		int xdr = MouseInput.getMouseX() + 10;
     			int ydr = MouseInput.getMouseY() - 10;
     			
@@ -821,7 +821,7 @@ public class Main implements Runnable, Tickable {
     			Fonts.drawString(Main.baseFolder.getName(), xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
         	}
         	
-        	if (MouseInput.hovered(explorer.getX() + 10, 170, explorer.getWidth() - 10, 23) && !Explorer.folderPathFull.isEmpty() && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
+        	if (MouseInput.hovered(explorer.getX() + 10, Screen.DECORATION_HEIGHT + 170, explorer.getWidth() - 10, 23) && !Explorer.folderPathFull.isEmpty() && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
         		String scopeStr = Explorer.getScopePath().contains(baseFolder.getName()) ? Explorer.getScopePath().substring(Explorer.getScopePath().indexOf(baseFolder.getName())) : Explorer.getScopePath();
         		
         		int xdr = MouseInput.getMouseX() + 10;
@@ -865,6 +865,18 @@ public class Main implements Runnable, Tickable {
 			
 			Fonts.drawString(explorer.getWidth() + "px", x + 5, y, new IDEFont(Fonts.lightGrayNormal, 20), g);
         }
+        
+        // draw window top
+        
+        g.setColor(Colors.explorerLight);
+        g.fillRect(0, 0, screen.getWidth(), Screen.DECORATION_HEIGHT);
+        
+        g.setColor(Colors.explorerLighter);
+        g2.setStroke(new BasicStroke(3f));
+        g2.drawLine(0, Screen.DECORATION_HEIGHT, screen.getWidth(), Screen.DECORATION_HEIGHT);
+        
+        String text = screen.frame.getTitle();
+		Fonts.drawString(text, (screen.frame.getWidth() / 2) - ((text.length() * 12) / 2), Screen.DECORATION_HEIGHT / 2 - (16 / 2), new IDEFont(Fonts.lighterGrayNormal, 16), g);
         
         bs.show();
     }

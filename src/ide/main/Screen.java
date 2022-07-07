@@ -4,9 +4,6 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.dnd.DropTarget;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JFrame;
 
@@ -42,6 +39,8 @@ public class Screen extends Canvas {
 
     private ComponentInput componentInput;
     
+    public ComponentResizer cr;
+    
     public Screen(String title) {
     	initWindow(title, new Dimension(MIN_W, MIN_H));
 
@@ -56,6 +55,11 @@ public class Screen extends Canvas {
         addMouseMotionListener(mouseInput);
         addMouseWheelListener(mouseInput);
         addComponentListener(componentInput);
+        
+        cr = new ComponentResizer(frame);
+		
+		cr.setMinimumSize(new Dimension(150, 150));
+		cr.setMaximumSize(new Dimension(Main.toolkit.getScreenSize()));
         
         frame.addComponentListener(componentInput);
         
@@ -74,9 +78,9 @@ public class Screen extends Canvas {
         frame.add(this);
 		//frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		frame.setFocusTraversalKeysEnabled(false);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);			// pra fazer a tela de confirma��o o fechamento deve ser feito por c�digo
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);			// pra fazer a tela de confirma��o o fechamento deve ser feito por c�digo		
 		frame.setUndecorated(true);
-
+		
         frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setFocusTraversalKeysEnabled(false); // tem q ter esses dois

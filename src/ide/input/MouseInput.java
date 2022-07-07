@@ -125,6 +125,9 @@ public final class MouseInput extends MouseInputAdapter {
         if (mouseY < Screen.DECORATION_HEIGHT && leftDragged)
         	Main.screen.frame.setLocation(Main.screen.frame.getLocation().x + e.getX() - pX, Main.screen.frame.getLocation().y + e.getY() - pY);
         
+        if (Main.screen != null && Main.screen.cr != null)
+        	Main.screen.cr.mouseDrag(e);
+        
         if (Main.main != null)
 	        Main.main.mainLogic();
     }
@@ -133,6 +136,9 @@ public final class MouseInput extends MouseInputAdapter {
 	public void mouseExited(MouseEvent e) {
 		mouseMoved = false;
 		
+		if (Main.screen != null && Main.screen.cr != null)
+			Main.screen.cr.mouseExit(e);
+		
 		if (Main.main != null)
 	        Main.main.mainLogic();
 	}
@@ -140,6 +146,9 @@ public final class MouseInput extends MouseInputAdapter {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		//mouseMoved = true;
+		
+		if (Main.screen != null && Main.screen.cr != null)
+			Main.screen.cr.mouseEnter(e);
 		
 		if (Main.main != null)
 	        Main.main.mainLogic();
@@ -154,6 +163,9 @@ public final class MouseInput extends MouseInputAdapter {
         mouseClicked = false;
         
         mouseMoved = true;
+        
+        if (Main.screen != null && Main.screen.cr != null)
+        	Main.screen.cr.mouseMove(e);
         
         if (Main.main != null)
 	        Main.main.mainLogic();
@@ -186,6 +198,9 @@ public final class MouseInput extends MouseInputAdapter {
         pX = e.getX();
 		pY = e.getY();
         
+		if (Main.screen != null && Main.screen.cr != null)
+			Main.screen.cr.mousePress(e);
+		
         if (Main.main != null)
 	        Main.main.mainLogic();
     }
@@ -204,6 +219,9 @@ public final class MouseInput extends MouseInputAdapter {
     	
     	leftDragged = false;
     	rightDragged = false;
+    	
+    	if (Main.screen != null && Main.screen.cr != null)
+    		Main.screen.cr.mouseRelease(e);
     	
     	if (Main.main != null)
 	        Main.main.mainLogic();
