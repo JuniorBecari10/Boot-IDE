@@ -17,6 +17,11 @@ public class MaximizeWindow extends TopComponent {
 	public void tick() {
 		x = Main.screen.getWidth() - Screen.DECORATION_HEIGHT * 2;
 		
+		if (Main.screen.frame.getBounds().equals(new Rectangle(0, 0, Main.toolkit.getScreenSize().width, Main.toolkit.getScreenSize().height)))
+			sprite = Main.maximizedWindowSpr;
+		else
+			sprite = Main.maximizeWindowSpr;
+		
 		if (leftClicked()) {
 			boolean isMaximized = Main.screen.frame.getState() == JFrame.MAXIMIZED_BOTH;
 			
