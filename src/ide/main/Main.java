@@ -167,6 +167,8 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage hexView;
     public static BufferedImage binView;
     
+    public static OS os;
+    
     ///
     
     // TODO verificar se o args 0 cont�m boot ou ide e pegar o args 1 e fazer o abrir com
@@ -177,6 +179,8 @@ public class Main implements Runnable, Tickable {
 	    		args = new String[1];
 	    	
 	    	//System.getProperties().list(System.out);
+	    	
+	    	os = getOS();
 	    	
 	    	originalSpritesheet = new Spritesheet(sprsh);
 	    	
@@ -278,6 +282,16 @@ public class Main implements Runnable, Tickable {
     		
     		System.exit(1);
     	}
+    }
+    
+    public static OS getOS() {
+    	String name = System.getProperty("os.name").toLowerCase();
+    	
+    	if (name.contains("windows")) return OS.WINDOWS;
+    	else if (name.contains("mac")) return OS.MAC;
+    	else if (name.contains("linux")) return OS.LINUX;
+    	
+    	return OS.OTHER;
     }
     
     public static synchronized void load(String conffile) {
@@ -948,6 +962,10 @@ public class Main implements Runnable, Tickable {
     		
     		close(1);
     	}*/
+    }
+    
+    public synchronized void closeWindow() {
+    	canRunLoop = false;
     }
     
     @Override

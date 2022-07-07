@@ -1,6 +1,7 @@
 package topcomponents;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 import ide.components.IDEComponent;
@@ -13,7 +14,7 @@ import ide.components.IDEComponent;
  */
 public abstract class TopComponent extends IDEComponent {
 	
-	public static List<TopComponent> topComponents;
+	public static List<TopComponent> topComponents = new ArrayList<>();
 	
 	public TopComponent(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
