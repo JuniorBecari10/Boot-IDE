@@ -3,6 +3,7 @@ package topcomponents;
 import java.awt.image.BufferedImage;
 
 import ide.main.Main;
+import ide.main.Screen;
 
 public class CloseWindow extends TopComponent {
 
@@ -11,8 +12,10 @@ public class CloseWindow extends TopComponent {
 	}
 	
 	public void tick() {
+		x = Main.screen.getWidth() - Screen.DECORATION_HEIGHT;
+		
 		if (leftClicked())
-			Main.main.closeWindow();
+			Main.closeForced(0);
 	}
 
 }

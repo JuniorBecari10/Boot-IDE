@@ -4,6 +4,7 @@ import java.awt.Frame;
 import java.awt.image.BufferedImage;
 
 import ide.main.Main;
+import ide.main.Screen;
 
 public class MinimizeWindow extends TopComponent {
 
@@ -12,6 +13,8 @@ public class MinimizeWindow extends TopComponent {
 	}
 	
 	public void tick() {
+		x = Main.screen.getWidth() - Screen.DECORATION_HEIGHT * 3;
+		
 		if (leftClicked())
 			Main.screen.frame.setState(Frame.ICONIFIED);
 	}

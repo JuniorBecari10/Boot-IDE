@@ -266,7 +266,9 @@ public class ComponentResizer extends MouseAdapter
 		{
 			int cursorType = cursors.get( direction );
 			Cursor cursor = Cursor.getPredefinedCursor( cursorType );
-			source.setCursor( cursor );
+			
+			if (!cursor.equals(Cursor.getDefaultCursor()))
+				source.setCursor( cursor );
 		}
 	}
 
@@ -275,7 +277,9 @@ public class ComponentResizer extends MouseAdapter
 		if (! resizing)
 		{
 			Component source = e.getComponent();
-			sourceCursor = source.getCursor();
+			
+			if (!source.getCursor().equals(Cursor.getDefaultCursor()))
+				sourceCursor = source.getCursor();
 		}
 	}
 
@@ -284,7 +288,9 @@ public class ComponentResizer extends MouseAdapter
 		if (! resizing)
 		{
 			Component source = e.getComponent();
-			source.setCursor( sourceCursor );
+			
+			if (!source.getCursor().equals(Cursor.getDefaultCursor()))
+				source.setCursor( sourceCursor );
 		}
 	}
 
@@ -323,7 +329,9 @@ public class ComponentResizer extends MouseAdapter
 		resizing = false;
 
 		Component source = e.getComponent();
-		source.setCursor( sourceCursor );
+		
+		if (!source.getCursor().equals(Cursor.getDefaultCursor()))
+			source.setCursor( sourceCursor );
 
 		if (source instanceof JComponent)
 		{
@@ -428,8 +436,7 @@ public class ComponentResizer extends MouseAdapter
 
 		while (dimension + drag > maximum)
 			drag -= snapSize;
-
-
+		
 		return drag;
 	}
 

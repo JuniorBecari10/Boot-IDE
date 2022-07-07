@@ -301,7 +301,7 @@ public class Main implements Runnable, Tickable {
 	        if (settingsFile.exists())
 	    		readFile(settingsFile);
 	        
-	        if (defaultConfigFile.exists()) {	
+	        if (defaultConfigFile.exists()) {
 	        	conffile = defaultConfigFile.getPath();
 	        	hasConfigFile = true;
 	        }
@@ -740,6 +740,9 @@ public class Main implements Runnable, Tickable {
     	for (IDEComponent c : IDEComponent.components)
             c.tick();
     	
+    	for (TopComponent t : TopComponent.topComponents)
+			t.tick();
+    	
         KeyInput.updateKeys();
         MouseInput.updateMouse();
         ComponentInput.update();
@@ -758,8 +761,8 @@ public class Main implements Runnable, Tickable {
         if (!ListableFile.files.isEmpty())
         	Explorer.files = new ArrayList<>(ListableFile.files);
         
-        for (TopComponent t : TopComponent.topComponents)
-			t.tick();
+        Rectangle bounds = new Rectangle(screen.frame.getBounds().x, screen.frame.getBounds().y, screen.getBounds().width, screen.getBounds().height);
+        screen.frame.setBounds(bounds);
     }
 
     public synchronized void render() {
@@ -994,58 +997,44 @@ public class Main implements Runnable, Tickable {
 	    		System.exit(status);
 	    	}
     }
-    
+
+    public static void closeForced(int status) {
+    	writeFile(settingsFile);
+    	ListableFile.generateLocalConfigFile(defaultConfigFile);
+
+    	if (Main.editor.editing != null) { // n�o for nulo
+    		if (!Main.editor.editing.isSaved()) { // n�o estiver salvo
+    			String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
+
+    			CodeEditor.setSystemLook();
+    			int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+
+    			if (selectedOption == 0) Main.editor.editing.save();
+    			else if (selectedOption == 2) {
+    				WindowInput.update();
+    				
+    				return;
+    			}
+    		}
+    	}
+
+    	System.exit(status);
+    }
+
     public synchronized void mainLogic() {
     	canRunLoop = true;
-    	/*try {
-	    	tick();
-	    	render();
-	    	
-	    	close(0);
-    	} catch (Throwable e) {
-    		writeLog(e);
-    		
-    		close(1);
-    	}*/
     }
     
     public synchronized void closeWindow() {
     	canRunLoop = false;
+    	
+    	close(0);
     }
     
     @Override
     public void run() {
     	screen.requestFocus();
-        
-        /*long lastTime = System.nanoTime();
-        final double targetFps = 60.0;
-        double ns = 1E9 / targetFps;
-        double delta = 0;
-        
-        while (true) {
-            long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
-            lastTime = now;
-            
-            if (delta >= 1) {
-                try {
-                    if (canRunLoop) {
-                        tick();
-                        render();
-                        
-                        canRunLoop = false;
-                    }
-                    
-                    close(0);
-                } catch (Throwable e) {
-                    writeLog(e);
-                    close(1);
-                }
-                
-                delta--;
-            }
-        }*/
-        
+    	
     	while (running) {
     		try {
     			if (canRunLoop) {
@@ -1065,52 +1054,4 @@ public class Main implements Runnable, Tickable {
     		}
     	}
     }
-    
-    //@Override
-//    public void runold() {
-//    	long lastTime = System.nanoTime();
-//    	double targetFps = 60.0; // 120
-//    	double ns = 1E9 / targetFps;
-//    	double delta = 0;
-//    	
-//    	//boolean reachedFps = false;
-//    	
-//    	int frames = 0;
-//    	double timer = System.currentTimeMillis();
-//    	
-//    	//int tickOverflow = 0;
-//    	
-//    	screen.requestFocus();
-//    	
-//    	while (running) {
-//    		long now = System.nanoTime();
-//    		
-//    		delta += (now - lastTime) / ns;
-//    		lastTime = now;
-//    		
-//    		if (delta >= 1) {
-//    			if (frames < targetFps) { // ver isso aqui
-//    				tick();
-//				    render();
-//    			} /*else {
-//    				tickOverflow++;
-//    			}*/
-//    			
-//    			close(0);
-//    			
-//    			delta--;
-//    			frames++;
-//    		}
-//    		
-//    		if (System.currentTimeMillis() - timer >= 1000) {
-//    			/*if (tickOverflow > 0)
-//    				System.out.println("Tick Overflow: Skipping " + tickOverflow + " ticks.");*/
-//    			
-//    			System.out.println("FPS: " + frames);
-//    			
-//    			frames = 0;
-//    			timer += 1000;
-//    		}
-//    	}
-//    }
 }

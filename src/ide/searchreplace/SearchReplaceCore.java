@@ -13,6 +13,7 @@ import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
 import ide.main.Main;
+import ide.main.Screen;
 import ide.util.Texts;
 
 public final class SearchReplaceCore {
@@ -34,35 +35,35 @@ public final class SearchReplaceCore {
 		IDEComponent.toAdd.add(Explorer.selectedLines);
 		
 		IDEComponent.toAdd.add(Explorer.regex);
-		IDEComponent.toAdd.add(Explorer.caseSensitive); // fica por último
+		IDEComponent.toAdd.add(Explorer.caseSensitive); // fica por ï¿½ltimo
 		
 		Explorer.selected = Explorer.search;
 	}
 	
 	public static synchronized void initComponents() {
 		if (Explorer.search == null)
-			Explorer.search = new InputBox(20, 100, Main.explorer.getWidth() - 40, 20);
+			Explorer.search = new InputBox(20, Screen.DECORATION_HEIGHT +  100, Main.explorer.getWidth() - 40, 20);
 		
 		if (Explorer.replace == null)
-			Explorer.replace = new InputBox(20, 170, Main.explorer.getWidth() - 40, 20);
+			Explorer.replace = new InputBox(20, Screen.DECORATION_HEIGHT + 170, Main.explorer.getWidth() - 40, 20);
 		
 		if (Explorer.entireDocument == null)
-			Explorer.entireDocument = new RadioButton(Main.explorer.getWidth() - 100, 210, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true);
+			Explorer.entireDocument = new RadioButton(Main.explorer.getWidth() - 100, Screen.DECORATION_HEIGHT + 210, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true);
 		
 		if (Explorer.selectedLines == null)
-			Explorer.selectedLines = new RadioButton(Main.explorer.getWidth() - 62, 210, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false);
+			Explorer.selectedLines = new RadioButton(Main.explorer.getWidth() - 62, Screen.DECORATION_HEIGHT + 210, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false);
 		
 		if (Explorer.caseSensitive == null)
-			Explorer.caseSensitive = new ToggleButton(20, 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430);
+			Explorer.caseSensitive = new ToggleButton(20, Screen.DECORATION_HEIGHT + 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430);
 		
 		if (Explorer.regex == null)
-			Explorer.regex = new ToggleButton(58, 210, 32, 32, Main.regex, false, Texts.regex, 280, 270);
+			Explorer.regex = new ToggleButton(58, Screen.DECORATION_HEIGHT + 210, 32, 32, Main.regex, false, Texts.regex, 280, 270);
 		
 		if (Explorer.searchNext == null)
-			Explorer.searchNext = new ExecuteButton(20, 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()));
+			Explorer.searchNext = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()));
 		
 		if (Explorer.replaceAll == null)
-			Explorer.replaceAll = new ExecuteButton(20, 300, Main.explorer.getWidth() - 40, 20, Texts.replaceAll, () -> replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()));
+			Explorer.replaceAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 300, Main.explorer.getWidth() - 40, 20, Texts.replaceAll, () -> replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()));
 	}
 	
 	public static synchronized void dispose() {
@@ -81,7 +82,7 @@ public final class SearchReplaceCore {
 		List<Integer> linesfound = new ArrayList<>();
 		List<Integer> xPos = new ArrayList<>();
 		
-		if (isEntireDocument) { // se não é selectedlines...
+		if (isEntireDocument) { // se nï¿½o ï¿½ selectedlines...
 			for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
 				IDELine l = Main.editor.lines.get(i);
 				String s = new String(CodeEditor.toCharArray(l.getChars()));
