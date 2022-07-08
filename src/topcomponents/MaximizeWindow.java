@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 import ide.main.Main;
-import ide.main.Screen;
+import screen.Screen;
 
 public class MaximizeWindow extends TopComponent {
 
@@ -24,7 +24,14 @@ public class MaximizeWindow extends TopComponent {
 			sprite = Main.maximizeWindowSpr;
 		
 		if (leftClicked()) {
-			boolean isMaximized = Main.screen.frame.getState() == JFrame.MAXIMIZED_BOTH | Main.screen.maximized;
+			Main.screen.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			
+			Rectangle bounds = Main.screen.frame.getBounds();
+			DisplayMode mode = Main.screen.frame.getGraphicsConfiguration().getDevice().getDisplayMode();
+			
+			Main.screen.frame.setBounds(bounds.x, bounds.y, mode.getWidth(), mode.getHeight());
+			
+			/*boolean isMaximized = Main.screen.frame.getState() == JFrame.MAXIMIZED_BOTH | Main.screen.maximized;
 			
 			if (!isMaximized) {
 				Main.screen.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -40,7 +47,7 @@ public class MaximizeWindow extends TopComponent {
 				
 				Main.screen.frame.setBounds(new Rectangle(0, 0, Screen.WIDTH, Screen.HEIGHT));
 				Main.screen.maximized = false;
-			}
+			}*/
 		}
 	}
 

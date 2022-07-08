@@ -3,7 +3,7 @@ package topcomponents;
 import java.awt.image.BufferedImage;
 
 import ide.main.Main;
-import ide.main.Screen;
+import screen.Screen;
 
 public class CloseWindow extends TopComponent {
 

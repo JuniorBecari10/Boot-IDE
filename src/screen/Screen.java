@@ -1,4 +1,4 @@
-package ide.main;
+package screen;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -11,6 +11,9 @@ import ide.input.ComponentInput;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
+import ide.main.ComponentResizer;
+import ide.main.DragListener;
+import ide.main.Main;
 
 public class Screen extends Canvas {
     
@@ -58,10 +61,14 @@ public class Screen extends Canvas {
         addMouseWheelListener(mouseInput);
         addComponentListener(componentInput);
         
-        cr = new ComponentResizer(frame);
+        cr = new ComponentResizer();
+        
+        cr.setSnapSize(new Dimension(10, 10));
 		
-		cr.setMinimumSize(new Dimension(150, 150));
+		cr.setMinimumSize(new Dimension(300, 200));
 		cr.setMaximumSize(new Dimension(Main.toolkit.getScreenSize()));
+		
+		cr.registerComponent(frame);
         
         frame.addComponentListener(componentInput);
         

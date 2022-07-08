@@ -51,6 +51,7 @@ import ide.util.Language;
 import ide.util.Spritesheet;
 import ide.util.Texts;
 import ide.util.Tickable;
+import screen.Screen;
 import topcomponents.CloseWindow;
 import topcomponents.MaximizeWindow;
 import topcomponents.MinimizeWindow;
@@ -743,7 +744,7 @@ public class Main implements Runnable, Tickable {
     	for (TopComponent t : TopComponent.topComponents)
 			t.tick();
     	
-    	System.out.println(screen.frame.getBounds());
+    	System.out.println(MouseInput.getMouseY());
     	
         KeyInput.updateKeys();
         MouseInput.updateMouse();

@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
 import ide.main.Main;
-import ide.main.Screen;
+import screen.Screen;
 
 public final class MouseInput extends MouseInputAdapter {
     
@@ -133,14 +133,11 @@ public final class MouseInput extends MouseInputAdapter {
         mouseX = e.getX();
         mouseY = e.getY();
         
-        if ((mouseY < Screen.DECORATION_HEIGHT && !leftDragged) || leftDragged)
+        if (mouseY < Screen.DECORATION_HEIGHT || ComponentInput.windowMoved())
         	Main.screen.frame.setLocation(Main.screen.frame.getLocation().x + p.x - pX, Main.screen.frame.getLocation().y + p.y - pY);
         
         if (Main.main != null)
 	        Main.main.mainLogic();
-        
-        if (Main.screen != null && Main.screen.cr != null)
-        	Main.screen.cr.mouseDrag(e);
     }
 	
 	@Override
@@ -149,9 +146,6 @@ public final class MouseInput extends MouseInputAdapter {
 		
 		if (Main.main != null)
 	        Main.main.mainLogic();
-		
-		if (Main.screen != null && Main.screen.cr != null)
-			Main.screen.cr.mouseExit(e);
 	}
 	
 	@Override
@@ -160,9 +154,6 @@ public final class MouseInput extends MouseInputAdapter {
 		
 		if (Main.main != null)
 	        Main.main.mainLogic();
-		
-		if (Main.screen != null && Main.screen.cr != null)
-			Main.screen.cr.mouseEnter(e);
 	}
 
     @Override
@@ -177,9 +168,6 @@ public final class MouseInput extends MouseInputAdapter {
         
         if (Main.main != null)
 	        Main.main.mainLogic();
-        
-        if (Main.screen != null && Main.screen.cr != null)
-        	Main.screen.cr.mouseMove(e);
     }
     
     @Override
@@ -211,9 +199,6 @@ public final class MouseInput extends MouseInputAdapter {
 		
         if (Main.main != null)
 	        Main.main.mainLogic();
-        
-        if (Main.screen != null && Main.screen.cr != null)
-			Main.screen.cr.mousePress(e);
     }
 
     @Override
@@ -233,9 +218,6 @@ public final class MouseInput extends MouseInputAdapter {
     	
     	if (Main.main != null)
 	        Main.main.mainLogic();
-    	
-    	if (Main.screen != null && Main.screen.cr != null)
-    		Main.screen.cr.mouseRelease(e);
     }
     
     @Override

@@ -30,11 +30,11 @@ import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
-import ide.main.Screen;
 import ide.util.Colors;
 import ide.util.ExecuteCommand;
 import ide.util.Language;
 import ide.util.Texts;
+import screen.Screen;
 
 public class ListableFile extends IDEComponent implements ExecuteCommand {
 

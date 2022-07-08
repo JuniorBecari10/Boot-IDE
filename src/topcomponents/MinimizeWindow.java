@@ -4,7 +4,7 @@ import java.awt.Frame;
 import java.awt.image.BufferedImage;
 
 import ide.main.Main;
-import ide.main.Screen;
+import screen.Screen;
 
 public class MinimizeWindow extends TopComponent {
 

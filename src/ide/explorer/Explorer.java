@@ -24,7 +24,6 @@ import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
-import ide.main.Screen;
 import ide.searchreplace.ExecuteButton;
 import ide.searchreplace.InputBox;
 import ide.searchreplace.RadioButton;
@@ -33,6 +32,7 @@ import ide.searchreplace.ToggleButton;
 import ide.util.Colors;
 import ide.util.Language;
 import ide.util.Texts;
+import screen.Screen;
 
 public class Explorer extends IDEComponent {
 	
