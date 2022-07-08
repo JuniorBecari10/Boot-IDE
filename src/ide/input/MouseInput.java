@@ -1,5 +1,7 @@
 package ide.input;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -105,6 +107,13 @@ public final class MouseInput extends MouseInputAdapter {
 	public static boolean rightDragged() {
 		return rightDragged;
 	}
+	
+	public static Point getMouseLocation() {
+		int x = MouseInfo.getPointerInfo().getLocation().x - Main.screen.frame.getLocation().x;
+		int y = MouseInfo.getPointerInfo().getLocation().y - Main.screen.frame.getLocation().y;
+		
+		return new Point(x, y);
+	}
 
 	@Override
     public void mouseDragged(MouseEvent e) {
@@ -118,12 +127,15 @@ public final class MouseInput extends MouseInputAdapter {
     		rightDragged = true;
         
         mouseMoved = true;
-
+        
+        Point p = getMouseLocation();
+        System.out.println(p);
+        
         mouseX = e.getX();
         mouseY = e.getY();
         
-        if (mouseY < Screen.DECORATION_HEIGHT && leftDragged)
-        	Main.screen.frame.setLocation(Main.screen.frame.getLocation().x + e.getX() - pX, Main.screen.frame.getLocation().y + e.getY() - pY);
+        if ((mouseY < Screen.DECORATION_HEIGHT && !leftDragged) || leftDragged)
+        	Main.screen.frame.setLocation(Main.screen.frame.getLocation().x + p.x - pX, Main.screen.frame.getLocation().y + p.y - pY);
         
         if (Main.main != null)
 	        Main.main.mainLogic();
