@@ -18,6 +18,8 @@ public class Screen extends Canvas {
 
     public JFrame frame;
     
+    public boolean maximized = false;
+    
     // initial dimensions
     
     public static final int DECORATION_HEIGHT = 30;
@@ -94,6 +96,9 @@ public class Screen extends Canvas {
     }
 
     public static Dimension getScreenSize() {
-        return Main.toolkit.getScreenSize();
+    	/*DisplayMode mode = Main.screen.frame.getGraphicsConfiguration().getDevice().getDisplayMode();
+    	
+        return new Dimension(mode.getWidth(), mode.getHeight());*/
+    	return Main.toolkit.getScreenSize();
     }
 }

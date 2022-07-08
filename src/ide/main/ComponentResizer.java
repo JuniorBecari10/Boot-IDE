@@ -6,13 +6,15 @@ import java.util.*;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
+import ide.input.MouseInput;
+
 /**
  *  The ComponentResizer allows you to resize a component by dragging a border
  *  of the component.
  */
 public class ComponentResizer extends MouseAdapter
 {
-	private final static Dimension MINIMUM_SIZE = new Dimension(10, 10); // 10, 10
+	private final static Dimension MINIMUM_SIZE = new Dimension(10, 10);
 	private final static Dimension MAXIMUM_SIZE =
 		new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
@@ -241,7 +243,7 @@ public class ComponentResizer extends MouseAdapter
 	public void mouseMove(MouseEvent e)
 	{
 		Component source = e.getComponent();
-		Point location = e.getPoint();
+		Point location = MouseInput.getMouseLocation();
 		direction = 0;
 
 		if (location.x < dragInsets.left)
@@ -306,7 +308,7 @@ public class ComponentResizer extends MouseAdapter
 		resizing = true;
 
 		Component source = e.getComponent();
-		pressed = e.getPoint();
+		pressed = MouseInput.getMouseLocation();
 		SwingUtilities.convertPointToScreen(pressed, source);
 		bounds = source.getBounds();
 
@@ -330,8 +332,8 @@ public class ComponentResizer extends MouseAdapter
 
 		Component source = e.getComponent();
 		
-		if (!source.getCursor().equals(Cursor.getDefaultCursor()))
-			source.setCursor( sourceCursor );
+		/*if (!source.getCursor().equals(Cursor.getDefaultCursor()))
+			source.setCursor( sourceCursor );*/
 
 		if (source instanceof JComponent)
 		{
@@ -352,7 +354,7 @@ public class ComponentResizer extends MouseAdapter
 		if (resizing == false) return;
 
 		Component source = e.getComponent();
-		Point dragged = e.getPoint();
+		Point dragged = MouseInput.getMouseLocation();
 		SwingUtilities.convertPointToScreen(dragged, source);
 
 		changeBounds(source, direction, bounds, pressed, dragged);

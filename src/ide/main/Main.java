@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
@@ -744,7 +743,7 @@ public class Main implements Runnable, Tickable {
     	for (TopComponent t : TopComponent.topComponents)
 			t.tick();
     	
-    	//System.out.println(MouseInfo.getPointerInfo().getLocation());
+    	System.out.println(screen.frame.getBounds());
     	
         KeyInput.updateKeys();
         MouseInput.updateMouse();
@@ -949,6 +948,9 @@ public class Main implements Runnable, Tickable {
         
 		for (TopComponent t : TopComponent.topComponents)
 			t.render(g);
+		
+		if (os == OS.WINDOWS)
+			g.drawImage(star, 10, Screen.DECORATION_HEIGHT / 2 - (16 / 2), 16, 16, null);
 		
         bs.show();
     }

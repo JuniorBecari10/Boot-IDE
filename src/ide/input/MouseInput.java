@@ -129,7 +129,6 @@ public final class MouseInput extends MouseInputAdapter {
         mouseMoved = true;
         
         Point p = getMouseLocation();
-        System.out.println(p);
         
         mouseX = e.getX();
         mouseY = e.getY();
