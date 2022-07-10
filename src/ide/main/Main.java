@@ -74,6 +74,8 @@ public class Main implements Runnable, Tickable {
     public static final String PROGRAM_NAME = "Boot IDE";
     public static final String VERSION = "Beta 7 v4.4";
     
+    public static boolean forceMacButtons = true;
+    
     public static boolean canRunLoop = true;
     
     public static BufferedImage UNKNOWN_FILE_ICON = null;
@@ -245,21 +247,10 @@ public class Main implements Runnable, Tickable {
 	        hexView = spritesheet.getSprite(24, 0, 8, 8);
 	        binView = spritesheet.getSprite(24, 8, 8, 8);
 	        
-	        if (os == OS.MAC) {
-	        	closeWindowSpr = spritesheet.getSprite(288, 0, 7, 7);
-	        	minimizeWindowSpr = spritesheet.getSprite(295, 0, 7, 7);
-	        	maximizeWindowSpr = spritesheet.getSprite(288, 7, 7, 7);
-	        	
-	        	closeWindowHoverSpr = spritesheet.getSprite(304, 0, 7, 7);
-	        	minimizeWindowHoverSpr = spritesheet.getSprite(311, 0, 7, 7);
-	        	maximizeWindowHoverSpr = spritesheet.getSprite(304, 7, 7, 7);
-	        }
-	        else {
-	        	closeWindowSpr = spritesheet.getSprite(272, 0, 7, 7);
-	        	minimizeWindowSpr = spritesheet.getSprite(279, 0, 7, 7);
-	        	maximizeWindowSpr = spritesheet.getSprite(272, 7, 7, 7);
-	        	maximizedWindowSpr = spritesheet.getSprite(279, 7, 7, 7);
-	        }
+	        closeWindowSpr = spritesheet.getSprite(272, 0, 7, 7);
+	        minimizeWindowSpr = spritesheet.getSprite(279, 0, 7, 7);
+	        maximizeWindowSpr = spritesheet.getSprite(272, 7, 7, 7);
+	        maximizedWindowSpr = spritesheet.getSprite(279, 7, 7, 7);
 	        
 	        ///////
 	        
@@ -277,14 +268,9 @@ public class Main implements Runnable, Tickable {
 	        newFolder = new NewFolderButton(120, Screen.DECORATION_HEIGHT + 85, 32, 32, newFolderSpr);
 	        reload = new ReloadButton(240, Screen.DECORATION_HEIGHT + 85, 32, 32, reloadSpr);
 	        
-	        if (os == OS.MAC) {
-	        	
-	        }
-	        else {
-	        	closeWindow = new CloseWindow(screen.getWidth() - Screen.DECORATION_HEIGHT, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, closeWindowSpr);
-	        	maximizeWindow = new MaximizeWindow(screen.getWidth() - Screen.DECORATION_HEIGHT * 2, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, maximizeWindowSpr);
-	        	minimizeWindow = new MinimizeWindow(screen.getWidth() - Screen.DECORATION_HEIGHT * 3, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, minimizeWindowSpr);
-	        }
+	        closeWindow = new CloseWindow(screen.getWidth() - Screen.DECORATION_HEIGHT, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, closeWindowSpr);
+	        maximizeWindow = new MaximizeWindow(screen.getWidth() - Screen.DECORATION_HEIGHT * 2, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, maximizeWindowSpr);
+	        minimizeWindow = new MinimizeWindow(screen.getWidth() - Screen.DECORATION_HEIGHT * 3, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, minimizeWindowSpr);
 	        
 	        desktop = Desktop.getDesktop();
 	        
@@ -294,10 +280,6 @@ public class Main implements Runnable, Tickable {
 	        IDEComponent.components.add(logo);
 	        
 	        IDEComponent.components.add(openBase);
-	        
-	        TopComponent.topComponents.add(closeWindow);
-	        TopComponent.topComponents.add(maximizeWindow);
-	        TopComponent.topComponents.add(minimizeWindow);
 	        
 	        if (settingsFile.exists())
 	    		readFile(settingsFile);
@@ -315,6 +297,24 @@ public class Main implements Runnable, Tickable {
 	        
 	        if (!alreadyLoaded)
 	        	load(conffile);
+	        
+	        if (forceMacButtons || os == OS.MAC) {
+	        	closeWindowSpr = spritesheet.getSprite(288, 0, 7, 7);
+	        	minimizeWindowSpr = spritesheet.getSprite(295, 0, 7, 7);
+	        	maximizeWindowSpr = spritesheet.getSprite(288, 7, 7, 7);
+	        	
+	        	closeWindowHoverSpr = spritesheet.getSprite(304, 0, 7, 7);
+	        	minimizeWindowHoverSpr = spritesheet.getSprite(311, 0, 7, 7);
+	        	maximizeWindowHoverSpr = spritesheet.getSprite(304, 7, 7, 7);
+	        	
+	        	closeWindow = new CloseWindow(Screen.DECORATION_HEIGHT * 3, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, closeWindowSpr);
+		        maximizeWindow = new MaximizeWindow(Screen.DECORATION_HEIGHT * 2, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, maximizeWindowSpr);
+		        minimizeWindow = new MinimizeWindow(0, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, minimizeWindowSpr);
+	        }
+	        
+	        TopComponent.topComponents.add(closeWindow);
+	        TopComponent.topComponents.add(maximizeWindow);
+	        TopComponent.topComponents.add(minimizeWindow);
 	        
 	        ListableFile.updateTypes();
 	        
@@ -950,7 +950,7 @@ public class Main implements Runnable, Tickable {
 		for (TopComponent t : TopComponent.topComponents)
 			t.render(g);
 		
-		if (os == OS.WINDOWS)
+		if (os != OS.MAC && !forceMacButtons)
 			g.drawImage(star, 10, Screen.DECORATION_HEIGHT / 2 - (16 / 2), 16, 16, null);
 		
         bs.show();

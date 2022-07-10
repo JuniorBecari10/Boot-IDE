@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ide.components.IDEComponent;
+import ide.main.Main;
+import ide.main.OS;
 import ide.util.Colors;
 
 /**
@@ -23,7 +25,7 @@ public abstract class TopComponent extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		if (hovered()) {
+		if (hovered() && !(Main.forceMacButtons || Main.os == OS.MAC)) {
 			g.setColor(Colors.explorerLighter);
 			g.fillRect(x, y, width, height);
 		}

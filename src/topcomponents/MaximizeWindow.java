@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 import ide.main.Main;
+import ide.main.OS;
 import screen.Screen;
 
 public class MaximizeWindow extends TopComponent {
@@ -18,18 +19,25 @@ public class MaximizeWindow extends TopComponent {
 	public void tick() {
 		x = Main.screen.getWidth() - Screen.DECORATION_HEIGHT * 2;
 		
-		if (Main.screen.frame.getBounds().equals(new Rectangle(0, 0, Main.toolkit.getScreenSize().width, Main.toolkit.getScreenSize().height)))
+		if (Main.screen.frame.getBounds().equals(new Rectangle(0, 0, Main.toolkit.getScreenSize().width, Main.toolkit.getScreenSize().height)) | Main.screen.frame.getState() == JFrame.MAXIMIZED_BOTH)
 			sprite = Main.maximizedWindowSpr;
 		else
 			sprite = Main.maximizeWindowSpr;
 		
+		if ((Main.forceMacButtons || Main.os == OS.MAC) && hovered())
+			sprite = Main.maximizeWindowHoverSpr;
+		else if ((Main.forceMacButtons || Main.os == OS.MAC) && !hovered())
+			sprite = Main.maximizeWindowSpr;
+		
 		if (leftClicked()) {
-			Main.screen.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			
-			Rectangle bounds = Main.screen.frame.getBounds();
-			DisplayMode mode = Main.screen.frame.getGraphicsConfiguration().getDevice().getDisplayMode();
-			
-			Main.screen.frame.setBounds(bounds.x, bounds.y, mode.getWidth(), mode.getHeight());
+			{
+				Main.screen.frame.setExtendedState(Main.screen.frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+				
+				Rectangle bounds = Main.screen.frame.getBounds();
+				DisplayMode mode = Main.screen.frame.getGraphicsConfiguration().getDevice().getDisplayMode();
+				
+				//Main.screen.frame.setBounds(bounds.x, bounds.y, mode.getWidth(), mode.getHeight() - 200);
+			}
 			
 			/*boolean isMaximized = Main.screen.frame.getState() == JFrame.MAXIMIZED_BOTH | Main.screen.maximized;
 			

@@ -21,8 +21,6 @@ public class Screen extends Canvas {
 
     public JFrame frame;
     
-    public boolean maximized = false;
-    
     // initial dimensions
     
     public static final int DECORATION_HEIGHT = 30;
