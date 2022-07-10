@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
@@ -134,8 +135,10 @@ public final class MouseInput extends MouseInputAdapter {
         mouseX = e.getX();
         mouseY = e.getY();
         
-        if (mouseY < Screen.DECORATION_HEIGHT || ComponentInput.windowMoved())
+        if (mouseY < Screen.DECORATION_HEIGHT || ComponentInput.windowMoved()) {
         	Main.screen.frame.setLocation(Main.screen.frame.getLocation().x + p.x - pX, Main.screen.frame.getLocation().y + p.y - pY);
+        	Main.screen.frame.setExtendedState(JFrame.NORMAL);
+        }
         
         if (Main.main != null)
 	        Main.main.mainLogic();
@@ -223,6 +226,9 @@ public final class MouseInput extends MouseInputAdapter {
     	
     	if (Main.main != null)
 	        Main.main.mainLogic();
+    	
+    	if (MouseInfo.getPointerInfo().getLocation().y == 0)
+    		MaximizeWindow.maximize();
     }
     
     @Override

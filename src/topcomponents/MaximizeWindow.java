@@ -1,7 +1,6 @@
 package topcomponents;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
@@ -17,13 +16,14 @@ public class MaximizeWindow extends TopComponent {
 	}
 	
 	public static void maximize() {
-		if (Main.screen.frame.getState() != JFrame.MAXIMIZED_BOTH) {
+		if (Main.screen.frame.getExtendedState() != (Main.screen.frame.getExtendedState() | JFrame.MAXIMIZED_BOTH)) {
 			GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			Main.screen.frame.setMaximizedBounds(env.getMaximumWindowBounds());
 			Main.screen.frame.setExtendedState(Main.screen.frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		}
 		else {
-			Main.screen.frame.setState(JFrame.NORMAL);
+			Main.screen.frame.setExtendedState(JFrame.NORMAL);
+			Main.screen.frame.setBounds(Main.screen.frame.getBounds().x, Main.screen.frame.getBounds().y, Screen.WIDTH, Screen.HEIGHT);
 		}
 	}
 	
