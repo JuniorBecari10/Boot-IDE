@@ -17,7 +17,10 @@ public class MaximizeWindow extends TopComponent {
 	}
 	
 	public void tick() {
-		x = Main.screen.getWidth() - Screen.DECORATION_HEIGHT * 2;
+		if (!Main.forceMacButtons && Main.os != OS.MAC)
+			x = Main.screen.getWidth() - Screen.DECORATION_HEIGHT * 2;
+		else
+			x = Screen.DECORATION_HEIGHT * 2;
 		
 		if (Main.screen.frame.getBounds().equals(new Rectangle(0, 0, Main.toolkit.getScreenSize().width, Main.toolkit.getScreenSize().height)) | Main.screen.frame.getState() == JFrame.MAXIMIZED_BOTH)
 			sprite = Main.maximizedWindowSpr;

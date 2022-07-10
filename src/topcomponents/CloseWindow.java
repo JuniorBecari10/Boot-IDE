@@ -13,7 +13,10 @@ public class CloseWindow extends TopComponent {
 	}
 	
 	public void tick() {
-		x = Main.screen.getWidth() - Screen.DECORATION_HEIGHT;
+		if (!Main.forceMacButtons && Main.os != OS.MAC)
+			x = Main.screen.getWidth() - Screen.DECORATION_HEIGHT;
+		else
+			x = 0;
 		
 		if ((Main.forceMacButtons || Main.os == OS.MAC) && hovered())
 			sprite = Main.closeWindowHoverSpr;

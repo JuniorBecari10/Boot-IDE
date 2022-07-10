@@ -74,7 +74,7 @@ public class Main implements Runnable, Tickable {
     public static final String PROGRAM_NAME = "Boot IDE";
     public static final String VERSION = "Beta 7 v4.4";
     
-    public static boolean forceMacButtons = true;
+    public static boolean forceMacButtons = false;
     
     public static boolean canRunLoop = true;
     
@@ -310,6 +310,8 @@ public class Main implements Runnable, Tickable {
 	        	closeWindow = new CloseWindow(Screen.DECORATION_HEIGHT * 3, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, closeWindowSpr);
 		        maximizeWindow = new MaximizeWindow(Screen.DECORATION_HEIGHT * 2, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, maximizeWindowSpr);
 		        minimizeWindow = new MinimizeWindow(0, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, minimizeWindowSpr);
+		        
+		        System.out.println(closeWindow.getX());
 	        }
 	        
 	        TopComponent.topComponents.add(closeWindow);
@@ -743,8 +745,6 @@ public class Main implements Runnable, Tickable {
     	
     	for (TopComponent t : TopComponent.topComponents)
 			t.tick();
-    	
-    	System.out.println(MouseInput.getMouseY());
     	
         KeyInput.updateKeys();
         MouseInput.updateMouse();

@@ -14,7 +14,10 @@ public class MinimizeWindow extends TopComponent {
 	}
 	
 	public void tick() {
-		x = Main.screen.getWidth() - Screen.DECORATION_HEIGHT * 3;
+		if (!Main.forceMacButtons && Main.os != OS.MAC)
+			x = Main.screen.getWidth() - Screen.DECORATION_HEIGHT * 3;
+		else
+			x = Screen.DECORATION_HEIGHT;
 		
 		if ((Main.forceMacButtons || Main.os == OS.MAC) && hovered())
 			sprite = Main.minimizeWindowHoverSpr;
