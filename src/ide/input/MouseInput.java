@@ -11,6 +11,7 @@ import javax.swing.event.MouseInputAdapter;
 
 import ide.main.Main;
 import screen.Screen;
+import topcomponents.MaximizeWindow;
 
 public final class MouseInput extends MouseInputAdapter {
     
@@ -179,6 +180,10 @@ public final class MouseInput extends MouseInputAdapter {
         
         if (Main.main != null)
 	        Main.main.mainLogic();
+        
+        if (e.getClickCount() == 2 && mouseY < Screen.DECORATION_HEIGHT) {
+        	MaximizeWindow.maximize();
+        }
     }
 
     @Override

@@ -1,6 +1,6 @@
 package topcomponents;
 
-import java.awt.DisplayMode;
+import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
@@ -16,13 +16,24 @@ public class MaximizeWindow extends TopComponent {
 		super(x, y, width, height, sprite);
 	}
 	
+	public static void maximize() {
+		if (Main.screen.frame.getState() != JFrame.MAXIMIZED_BOTH) {
+			GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			Main.screen.frame.setMaximizedBounds(env.getMaximumWindowBounds());
+			Main.screen.frame.setExtendedState(Main.screen.frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		}
+		else {
+			Main.screen.frame.setState(JFrame.NORMAL);
+		}
+	}
+	
 	public void tick() {
 		if (!Main.forceMacButtons && Main.os != OS.MAC)
 			x = Main.screen.getWidth() - Screen.DECORATION_HEIGHT * 2;
 		else
 			x = Screen.DECORATION_HEIGHT * 2;
 		
-		if (Main.screen.frame.getBounds().equals(new Rectangle(0, 0, Main.toolkit.getScreenSize().width, Main.toolkit.getScreenSize().height)) | Main.screen.frame.getState() == JFrame.MAXIMIZED_BOTH)
+		if (Main.screen.frame.getState() == JFrame.MAXIMIZED_BOTH)
 			sprite = Main.maximizedWindowSpr;
 		else
 			sprite = Main.maximizeWindowSpr;
@@ -33,32 +44,7 @@ public class MaximizeWindow extends TopComponent {
 			sprite = Main.maximizeWindowSpr;
 		
 		if (leftClicked()) {
-			{
-				Main.screen.frame.setExtendedState(Main.screen.frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-				
-				Rectangle bounds = Main.screen.frame.getBounds();
-				DisplayMode mode = Main.screen.frame.getGraphicsConfiguration().getDevice().getDisplayMode();
-				
-				//Main.screen.frame.setBounds(bounds.x, bounds.y, mode.getWidth(), mode.getHeight() - 200);
-			}
-			
-			/*boolean isMaximized = Main.screen.frame.getState() == JFrame.MAXIMIZED_BOTH | Main.screen.maximized;
-			
-			if (!isMaximized) {
-				Main.screen.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-				
-				DisplayMode mode = Main.screen.frame.getGraphicsConfiguration().getDevice().getDisplayMode();
-				
-				Main.screen.frame.setBounds(new Rectangle(1, 1, mode.getWidth(), mode.getHeight()));
-				Main.screen.maximized = true;
-			}
-			
-			else {
-				Main.screen.frame.setState(JFrame.NORMAL);
-				
-				Main.screen.frame.setBounds(new Rectangle(0, 0, Screen.WIDTH, Screen.HEIGHT));
-				Main.screen.maximized = false;
-			}*/
+			maximize();
 		}
 	}
 
