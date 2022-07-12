@@ -5237,6 +5237,10 @@ public class CodeEditor extends IDEComponent {
 						br = true;
 					}
 					
+					if (i > 1)
+						System.out.println(chars[i - 2]);
+					if (i > 1 && chars[i - 2] == ':') continue;
+					
 					if (br) continue;
 				}
 				

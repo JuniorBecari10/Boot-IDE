@@ -188,6 +188,8 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage minimizeWindowHoverSpr;
     public static BufferedImage maximizeWindowHoverSpr;
     
+    public static BufferedImage deactivatedMacButtons;
+    
     ///
     
     // TODO verificar se o args 0 cont�m boot ou ide e pegar o args 1 e fazer o abrir com
@@ -307,11 +309,11 @@ public class Main implements Runnable, Tickable {
 	        	minimizeWindowHoverSpr = spritesheet.getSprite(311, 0, 7, 7);
 	        	maximizeWindowHoverSpr = spritesheet.getSprite(304, 7, 7, 7);
 	        	
+	        	deactivatedMacButtons = spritesheet.getSprite(295, 7, 7, 7);
+	        	
 	        	closeWindow = new CloseWindow(Screen.DECORATION_HEIGHT * 3, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, closeWindowSpr);
 		        maximizeWindow = new MaximizeWindow(Screen.DECORATION_HEIGHT * 2, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, maximizeWindowSpr);
 		        minimizeWindow = new MinimizeWindow(0, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, minimizeWindowSpr);
-		        
-		        System.out.println(closeWindow.getX());
 	        }
 	        
 	        TopComponent.topComponents.add(closeWindow);

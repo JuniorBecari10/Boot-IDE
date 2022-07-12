@@ -1409,7 +1409,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		if (leftClicked() && !(y < Screen.DECORATION_HEIGHT + 200 || y > Main.screen.getHeight()) && !RightClickOption.isRightClickActive()) {
 			MouseInput.updateMouse();
 			
-			if (Main.editor.editing != null)
+			if (Main.editor.editing != null && regent.isFile())
 				Main.editor.editing.save();
 			
 			for (Tab t : Main.editor.tabs) {

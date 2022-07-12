@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import ide.input.WindowInput;
 import ide.main.Main;
 import ide.main.OS;
 import screen.Screen;
@@ -37,6 +38,9 @@ public class MaximizeWindow extends TopComponent {
 			sprite = Main.maximizedWindowSpr;
 		else
 			sprite = Main.maximizeWindowSpr;
+		
+		if (WindowInput.isDeactivated() && (Main.forceMacButtons || Main.os == OS.MAC))
+			sprite = Main.deactivatedMacButtons;
 		
 		if ((Main.forceMacButtons || Main.os == OS.MAC) && hovered())
 			sprite = Main.maximizeWindowHoverSpr;
