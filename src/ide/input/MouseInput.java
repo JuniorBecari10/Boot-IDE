@@ -1,10 +1,14 @@
 package ide.input;
 
+import java.awt.Cursor;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -33,6 +37,9 @@ public final class MouseInput extends MouseInputAdapter {
     private static boolean mouseRolled;
     
     private static int pX = 0, pY = 0;
+    
+    public static Map<Boolean, String> mousePoint;
+    public static String direction;
     
     public static boolean hovered(int x, int y, int w, int h) {
     	Rectangle bs = new Rectangle(x, y, w, h);
@@ -142,6 +149,65 @@ public final class MouseInput extends MouseInputAdapter {
         
         if (Main.main != null)
 	        Main.main.mainLogic();
+        
+        if (!Main.screen.frame.getCursor().equals(Cursor.getDefaultCursor())) {
+
+            switch (direction) {
+            case "N":
+                if (e.getYOnScreen() > Main.screen.frame.getY()) {
+                    Main.screen.frame.setBounds(Main.screen.frame.getX(), e.getYOnScreen(), Main.screen.frame.getWidth(), Main.screen.frame.getHeight() - (e.getYOnScreen() - Main.screen.frame.getY()));
+                } else {
+                    Main.screen.frame.setBounds(Main.screen.frame.getX(), e.getYOnScreen(), Main.screen.frame.getWidth(), Main.screen.frame.getHeight() + (Main.screen.frame.getY() - e.getYOnScreen()));
+                }
+                break;
+            case "E":
+                Main.screen.frame.setBounds(Main.screen.frame.getX(), Main.screen.frame.getY(), e.getX(), Main.screen.frame.getHeight());
+                break;
+            case "S":
+                Main.screen.frame.setBounds(Main.screen.frame.getX(), Main.screen.frame.getY(), Main.screen.frame.getWidth(), e.getY());
+                break;
+            case "W":
+                if (e.getXOnScreen() > Main.screen.frame.getX()) {
+                    Main.screen.frame.setBounds(e.getXOnScreen(), Main.screen.frame.getY(), Main.screen.frame.getWidth() - (e.getXOnScreen() - Main.screen.frame.getX()), Main.screen.frame.getHeight());
+                } else {
+                    Main.screen.frame.setBounds(e.getXOnScreen(), Main.screen.frame.getY(), Main.screen.frame.getWidth() + (Main.screen.frame.getX() - e.getXOnScreen()), Main.screen.frame.getHeight());
+                }
+                break;
+            case "NE":
+                Main.screen.frame.setBounds(Main.screen.frame.getX(), Main.screen.frame.getY(), e.getX(), Main.screen.frame.getHeight());
+
+                if (e.getYOnScreen() > Main.screen.frame.getY()) {
+                    Main.screen.frame.setBounds(Main.screen.frame.getX(), e.getYOnScreen(), Main.screen.frame.getWidth(), Main.screen.frame.getHeight() - (e.getYOnScreen() - Main.screen.frame.getY()));
+                } else {
+                    Main.screen.frame.setBounds(Main.screen.frame.getX(), e.getYOnScreen(), Main.screen.frame.getWidth(), Main.screen.frame.getHeight() + (Main.screen.frame.getY() - e.getYOnScreen()));
+                }
+                break;
+            case "SE":
+
+                Main.screen.frame.setBounds(Main.screen.frame.getX(), Main.screen.frame.getY(), e.getX(), e.getY());
+                break;
+            case "SW":
+                Main.screen.frame.setBounds(Main.screen.frame.getX(), Main.screen.frame.getY(), Main.screen.frame.getWidth(), e.getY());
+                if (e.getXOnScreen() > Main.screen.frame.getX()) {
+                    Main.screen.frame.setBounds(e.getXOnScreen(), Main.screen.frame.getY(), Main.screen.frame.getWidth() - (e.getXOnScreen() - Main.screen.frame.getX()), Main.screen.frame.getHeight());
+                } else {
+                    Main.screen.frame.setBounds(e.getXOnScreen(), Main.screen.frame.getY(), Main.screen.frame.getWidth() + (Main.screen.frame.getX() - e.getXOnScreen()), Main.screen.frame.getHeight());
+                }
+                break;
+            case "NW":
+                if (e.getYOnScreen() > Main.screen.frame.getY()) {
+                    Main.screen.frame.setBounds(Main.screen.frame.getX(), e.getYOnScreen(), Main.screen.frame.getWidth(), Main.screen.frame.getHeight() - (e.getYOnScreen() - Main.screen.frame.getY()));
+                } else {
+                    Main.screen.frame.setBounds(Main.screen.frame.getX(), e.getYOnScreen(), Main.screen.frame.getWidth(), Main.screen.frame.getHeight() + (Main.screen.frame.getY() - e.getYOnScreen()));
+                }
+                if (e.getXOnScreen() > Main.screen.frame.getX()) {
+                    Main.screen.frame.setBounds(e.getXOnScreen(), Main.screen.frame.getY(), Main.screen.frame.getWidth() - (e.getXOnScreen() - Main.screen.frame.getX()), Main.screen.frame.getHeight());
+                } else {
+                    Main.screen.frame.setBounds(e.getXOnScreen(), Main.screen.frame.getY(), Main.screen.frame.getWidth() + (Main.screen.frame.getX() - e.getXOnScreen()), Main.screen.frame.getHeight());
+                }
+                break;
+            }
+        }
     }
 	
 	@Override
@@ -172,6 +238,50 @@ public final class MouseInput extends MouseInputAdapter {
         
         if (Main.main != null)
 	        Main.main.mainLogic();
+        
+        mousePoint = new HashMap<Boolean, String>();
+        mousePoint.put(e.getY() < 5, "N");
+        mousePoint.put(e.getX() > (Main.screen.frame.getWidth() - 5), "E");
+        mousePoint.put(e.getY() > (Main.screen.frame.getHeight() - 5), "S");
+        mousePoint.put(e.getX() < 5, "W");
+        mousePoint.put(e.getY() < 5 && e.getX() > (Main.screen.frame.getWidth() - 5), "NE");
+        mousePoint.put(e.getY() > (Main.screen.frame.getHeight() - 5) && e.getX() > (Main.screen.frame.getWidth() - 5), "SE");
+        mousePoint.put(e.getY() > (Main.screen.frame.getHeight() - 5) && e.getX() <= 5, "SW");
+        mousePoint.put(e.getY() < 5 && e.getX() < 5, "NW");
+
+        for (Entry<Boolean, String> item : mousePoint.entrySet()) {
+            if (item.getKey()) {
+                direction = item.getValue();
+                switch (item.getValue()) {
+                case "N":
+                	Main.screen.frame.setCursor(Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR));
+                    break;
+                case "E":
+                	Main.screen.frame.setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
+                    break;
+                case "S":
+                	Main.screen.frame.setCursor(Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR));
+                    break;
+                case "W":
+                	Main.screen.frame.setCursor(Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
+                    break;
+                case "NE":
+                	Main.screen.frame.setCursor(Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR));
+                    break;
+                case "SE":
+                	Main.screen.frame.setCursor(Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR));
+                    break;
+                case "SW":
+                	Main.screen.frame.setCursor(Cursor.getPredefinedCursor(Cursor.SW_RESIZE_CURSOR));
+                    break;
+                case "NW":
+                	Main.screen.frame.setCursor(Cursor.getPredefinedCursor(Cursor.NW_RESIZE_CURSOR));
+                    break;
+                }
+            } else {
+            	Main.screen.frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            }
+        }
     }
     
     @Override

@@ -59,15 +59,6 @@ public class Screen extends Canvas {
         addMouseWheelListener(mouseInput);
         addComponentListener(componentInput);
         
-        cr = new ComponentResizer();
-        
-        cr.setSnapSize(new Dimension(10, 10));
-		
-		cr.setMinimumSize(new Dimension(300, 200));
-		cr.setMaximumSize(new Dimension(Main.toolkit.getScreenSize()));
-		
-		cr.registerComponent(frame);
-        
         frame.addComponentListener(componentInput);
         
         frame.addWindowListener(windowInput);
