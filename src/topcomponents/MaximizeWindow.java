@@ -39,13 +39,13 @@ public class MaximizeWindow extends TopComponent {
 		else
 			sprite = Main.maximizeWindowSpr;
 		
-		if (WindowInput.isDeactivated() && (Main.forceMacButtons || Main.os == OS.MAC))
-			sprite = Main.deactivatedMacButtons;
-		
 		if ((Main.forceMacButtons || Main.os == OS.MAC) && hovered())
 			sprite = Main.maximizeWindowHoverSpr;
 		else if ((Main.forceMacButtons || Main.os == OS.MAC) && !hovered())
 			sprite = Main.maximizeWindowSpr;
+		
+		if (WindowInput.isDeactivated() && (Main.forceMacButtons || Main.os == OS.MAC))
+			sprite = Main.deactivatedMacButtons;
 		
 		if (leftClicked()) {
 			maximize();

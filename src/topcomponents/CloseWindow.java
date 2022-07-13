@@ -2,6 +2,7 @@ package topcomponents;
 
 import java.awt.image.BufferedImage;
 
+import ide.input.WindowInput;
 import ide.main.Main;
 import ide.main.OS;
 import screen.Screen;
@@ -22,6 +23,9 @@ public class CloseWindow extends TopComponent {
 			sprite = Main.closeWindowHoverSpr;
 		else if ((Main.forceMacButtons || Main.os == OS.MAC) && !hovered())
 			sprite = Main.closeWindowSpr;
+		
+		if (WindowInput.isDeactivated() && (Main.forceMacButtons || Main.os == OS.MAC))
+			sprite = Main.deactivatedMacButtons;
 		
 		if (leftClicked())
 			Main.closeForced(0);
