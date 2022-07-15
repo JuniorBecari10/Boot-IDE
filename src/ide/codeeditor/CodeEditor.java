@@ -47,13 +47,13 @@ import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
 import ide.main.Main;
+import ide.screen.Screen;
 import ide.searchreplace.SearchReplaceCore;
 import ide.util.Animation;
 import ide.util.Colors;
 import ide.util.Language;
 import ide.util.Serialization;
 import ide.util.Texts;
-import screen.Screen;
 
 // Nota: para escrever em vermelho no console, ao inv�s de digitar System.out.println("texto"); use System.err.println("texto");
 

@@ -1,11 +1,11 @@
-package topcomponents;
+package ide.topcomponents;
 
 import java.awt.image.BufferedImage;
 
 import ide.input.WindowInput;
 import ide.main.Main;
 import ide.main.OS;
-import screen.Screen;
+import ide.screen.Screen;
 
 public class CloseWindow extends TopComponent {
 

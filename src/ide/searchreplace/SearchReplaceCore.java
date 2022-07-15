@@ -13,8 +13,8 @@ import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
 import ide.main.Main;
+import ide.screen.Screen;
 import ide.util.Texts;
-import screen.Screen;
 
 public final class SearchReplaceCore {
 

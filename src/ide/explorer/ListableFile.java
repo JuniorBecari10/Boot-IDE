@@ -30,11 +30,11 @@ import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.screen.Screen;
 import ide.util.Colors;
 import ide.util.ExecuteCommand;
 import ide.util.Language;
 import ide.util.Texts;
-import screen.Screen;
 
 public class ListableFile extends IDEComponent implements ExecuteCommand {
 
@@ -460,7 +460,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	public static void generateLocalConfigFile(File file) {
 		String pathStr = file.getAbsolutePath();
 		String s = pathStr.contains(Main.CONFIG_FILE_EXTENSION) ? pathStr + "" : pathStr + Main.CONFIG_FILE_EXTENSION;
-
+		
 		// Path path = Paths.get(s);
 
 		try {
@@ -519,10 +519,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	public static void readConfigFile(String path) {
 		File f = new File(path);
 		Path p = f.toPath();
+		boolean readConfigs = false;
 
 		if (!f.exists())
 			CommandTerminal.runCommand("unloadconfigfile");
-
+		
+		// se esse config file for o da pasta do programa, pode ler as configurações dele, senão, não leia porque é um outro arquivo lido pelo loadconfigfile
+		if (f.getParentFile().getAbsolutePath().equals(Main.userDir))
+			readConfigs = true;
+		
 		hasAltered = false;
 
 		List<String> lines = new ArrayList<>();
@@ -948,6 +953,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			 */
 
 			case "font_size:":
+				if (!readConfigs) break;
+				
 				if (split[1].equals("default"))
 					break;
 
@@ -966,6 +973,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "autocomplete_active:":
+				if (!readConfigs) break;
+				
 				if (split[1].equals("default"))
 					break;
 
@@ -976,6 +985,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "automatically_open_tabs:":
+				if (!readConfigs) break;
+				
 				if (split[1].equals("default"))
 					break;
 
@@ -986,6 +997,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 				
 			case "indent_with_spaces:":
+				if (!readConfigs) break;
+				
 				if (split[1].equals("default"))
 					break;
 
@@ -996,6 +1009,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 				
 			case "indent_length:":
+				if (!readConfigs) break;
+				
 				if (split[1].equals("default"))
 					break;
 
@@ -1006,6 +1021,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "language:":
+				if (!readConfigs) break;
+				
 				if (split[1].equals("default"))
 					break;
 
@@ -1020,6 +1037,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 				
 			case "show_whitespace:":
+				if (!readConfigs) break;
+				
 				if (split[1].equals("default"))
 					break;
 
@@ -1030,6 +1049,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 			
 			case "allow_tab_animation:":
+				if (!readConfigs) break;
+				
 				if (split[1].equals("default"))
 					break;
 
@@ -1040,6 +1061,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 				
 			case "force_mac_buttons:":
+				if (!readConfigs) break;
+				
 				if (split[1].equals("default"))
 					break;
 

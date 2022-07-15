@@ -1,4 +1,4 @@
-package topcomponents;
+package ide.topcomponents;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

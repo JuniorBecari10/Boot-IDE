@@ -33,10 +33,10 @@ import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
 import ide.main.Main;
+import ide.screen.Screen;
 import ide.util.Colors;
 import ide.util.Language;
 import ide.util.Texts;
-import screen.Screen;
 
 /**
  * Representa uma aba da IDE.

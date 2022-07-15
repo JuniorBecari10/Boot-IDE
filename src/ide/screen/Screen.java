@@ -1,4 +1,4 @@
-package screen;
+package ide.screen;
 
 import java.awt.Canvas;
 import java.awt.Dimension;

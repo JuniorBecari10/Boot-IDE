@@ -46,16 +46,16 @@ import ide.input.ComponentInput;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
+import ide.screen.Screen;
+import ide.topcomponents.CloseWindow;
+import ide.topcomponents.MaximizeWindow;
+import ide.topcomponents.MinimizeWindow;
+import ide.topcomponents.TopComponent;
 import ide.util.Colors;
 import ide.util.Language;
 import ide.util.Spritesheet;
 import ide.util.Texts;
 import ide.util.Tickable;
-import screen.Screen;
-import topcomponents.CloseWindow;
-import topcomponents.MaximizeWindow;
-import topcomponents.MinimizeWindow;
-import topcomponents.TopComponent;
 
 public class Main implements Runnable, Tickable {
 	
@@ -73,6 +73,8 @@ public class Main implements Runnable, Tickable {
     
     public static final String PROGRAM_NAME = "Boot IDE";
     public static final String VERSION = "Beta 7 v4.4";
+    
+    public static final String userDir = System.getProperty("user.dir"); 
     
     public static boolean forceMacButtons = false;
     
@@ -202,7 +204,7 @@ public class Main implements Runnable, Tickable {
 	    	//System.getProperties().list(System.out);
 	    	
 	    	os = getOS();
-	    	
+
 	    	originalSpritesheet = new Spritesheet(sprsh);
 	    	
 	        modifiedSpritesheet = new Spritesheet(spritesheetFile);

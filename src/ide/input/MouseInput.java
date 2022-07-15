@@ -15,8 +15,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
 import ide.main.Main;
-import screen.Screen;
-import topcomponents.MaximizeWindow;
+import ide.screen.Screen;
+import ide.topcomponents.MaximizeWindow;
 
 public final class MouseInput extends MouseInputAdapter {
     

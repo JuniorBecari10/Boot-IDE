@@ -1,4 +1,4 @@
-package topcomponents;
+package ide.topcomponents;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import ide.input.WindowInput;
 import ide.main.Main;
 import ide.main.OS;
-import screen.Screen;
+import ide.screen.Screen;
 
 public class MaximizeWindow extends TopComponent {
 
