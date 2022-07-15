@@ -54,6 +54,8 @@ public class Explorer extends IDEComponent {
 	public static RadioButton entireDocument, selectedLines;
 	public static ExecuteButton searchNext, replaceAll;
 	
+	public static int MINIMUM_Y = Screen.DECORATION_HEIGHT + 200;
+	
 	public static boolean searchReplaceActive = false;
 	
 	public static boolean hoveringListableFile;

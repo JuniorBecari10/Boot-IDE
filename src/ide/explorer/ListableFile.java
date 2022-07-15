@@ -1421,6 +1421,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		if (CommandTerminal.expOff)
 			return;
 		
+		if (y < Explorer.MINIMUM_Y) y = Explorer.MINIMUM_Y;
+		
 		if (hovered())
 			Main.screen.setCursor(Cursor.getDefaultCursor());
 		
