@@ -955,7 +955,7 @@ public class Main implements Runnable, Tickable {
 		if (os != OS.MAC && !forceMacButtons)
 			g.drawImage(star, 10, Screen.DECORATION_HEIGHT / 2 - (16 / 2), 16, 16, null);
 		
-		if (!WindowInput.isActivated()) {
+		if (WindowInput.isDeactivated()) {
 			g.setColor(new Color(0, 0, 0, 0.2f));
 			g.fillRect(0, 0, Main.screen.getWidth(), Screen.DECORATION_HEIGHT + 3);
 		}

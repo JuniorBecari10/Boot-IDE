@@ -23,7 +23,7 @@ public class Screen extends Canvas {
     
     // initial dimensions
     
-    public static final int DECORATION_HEIGHT = 30;
+    public static int DECORATION_HEIGHT = 30;
 
     public static final int WIDTH =  (int) getScreenSize().getWidth();
     public static final int HEIGHT = (int) getScreenSize().getHeight() - 50;
