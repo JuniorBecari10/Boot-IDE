@@ -507,6 +507,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("automatically_open_tabs: " + CodeEditor.automaticallyOpenTabs + "\n");
 			w.write("show_whitespace: " + CodeEditor.showWhitespace + "\n");
 			w.write("allow_tab_animation: " + Tab.allowAnimation + "\n");
+			w.write("force_mac_buttons: " + Main.forceMacButtons + "\n");
 
 			w.close();
 
@@ -1033,6 +1034,16 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					break;
 
 				Tab.allowAnimation = Boolean.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
+				
+			case "force_mac_buttons:":
+				if (split[1].equals("default"))
+					break;
+
+				Main.forceMacButtons = Boolean.valueOf(split[1]);
 
 				hasAltered = true;
 

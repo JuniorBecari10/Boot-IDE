@@ -74,7 +74,7 @@ public class Main implements Runnable, Tickable {
     public static final String PROGRAM_NAME = "Boot IDE";
     public static final String VERSION = "Beta 7 v4.4";
     
-    public static boolean forceMacButtons = true;
+    public static boolean forceMacButtons = false;
     
     public static boolean canRunLoop = true;
     
