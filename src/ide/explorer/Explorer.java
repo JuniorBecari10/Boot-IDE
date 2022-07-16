@@ -54,7 +54,7 @@ public class Explorer extends IDEComponent {
 	public static RadioButton entireDocument, selectedLines;
 	public static ExecuteButton searchNext, replaceAll;
 	
-	public static int MINIMUM_Y = Screen.DECORATION_HEIGHT + 200;
+	public static int MINIMUM_Y = 200 + Screen.DECORATION_HEIGHT;
 	
 	public static boolean searchReplaceActive = false;
 	
@@ -223,13 +223,13 @@ public class Explorer extends IDEComponent {
 	    		Main.reload.setHeight(32);
 	    	}
 	    	
-	    	if (width < 200) {
+	    	if (width < MINIMUM_Y) {
 	    		Main.openBase.setY(Screen.DECORATION_HEIGHT + 75);
 	    		
 	    		Main.openBase.setWidth(36);
 	    		Main.openBase.setHeight(36);
 	    	}
-	    	if (width > 200) {
+	    	if (width > MINIMUM_Y) {
 	    		Main.openBase.setY(Screen.DECORATION_HEIGHT + 70);
 	    		
 	    		Main.openBase.setWidth(48);
@@ -256,16 +256,16 @@ public class Explorer extends IDEComponent {
 	    		ListableFile last = files.get(files.size() - 1);
 	    		
 	    		if (!KeyInput.isAltDown()) {
-					if (MouseInput.wheelUp() && first.getY() < 200) first.setY(first.getY() + 30);
-					else if (MouseInput.wheelDown() && last.getY() > 200) first.setY(first.getY() - 30);
+					if (MouseInput.wheelUp() && first.getY() < MINIMUM_Y) first.setY(first.getY() + 30);
+					else if (MouseInput.wheelDown() && last.getY() > MINIMUM_Y) first.setY(first.getY() - 30);
 	    		}
 	    		else {
-	    			if (MouseInput.wheelUp() && first.getY() < 200) first.setY(first.getY() + 90);
-					else if (MouseInput.wheelDown() && last.getY() > 200) first.setY(first.getY() - 90);
+	    			if (MouseInput.wheelUp() && first.getY() < MINIMUM_Y) first.setY(first.getY() + 90);
+					else if (MouseInput.wheelDown() && last.getY() > MINIMUM_Y) first.setY(first.getY() - 90);
 	    		}
 	    		
-	    		if (first.getY() > 200) first.setY(200);
-	    		if (last.getY() < 200) first.setY(230 - (files.size() * 30));
+	    		if (first.getY() > MINIMUM_Y) first.setY(MINIMUM_Y);
+	    		if (last.getY() < MINIMUM_Y) first.setY(230 - (files.size() * 30));
 	    	}*/
 	    	
 	    	if (KeyInput.isKeyPressed()) {
@@ -352,16 +352,16 @@ public class Explorer extends IDEComponent {
 		    		ListableFile last = files.get(files.size() - 1);
 		    		
 		    		if (!KeyInput.isControlDown()) {
-						if (MouseInput.wheelUp() && first.getY() < 200) first.setY(first.getY() + 30);
-						else if (MouseInput.wheelDown() && last.getY() > 200) first.setY(first.getY() - 30);
+						if (MouseInput.wheelUp() && first.getY() < MINIMUM_Y) first.setY(first.getY() + 30);
+						else if (MouseInput.wheelDown() && last.getY() > MINIMUM_Y) first.setY(first.getY() - 30);
 		    		}
 		    		else {
-		    			if (MouseInput.wheelUp() && first.getY() < 200) first.setY(first.getY() + 90);
-						else if (MouseInput.wheelDown() && last.getY() > 200) first.setY(first.getY() - 90);
+		    			if (MouseInput.wheelUp() && first.getY() < MINIMUM_Y) first.setY(first.getY() + 90);
+						else if (MouseInput.wheelDown() && last.getY() > MINIMUM_Y) first.setY(first.getY() - 90);
 		    		}
 		    		
-		    		if (first.getY() > 200) first.setY(200);
-		    		if (last.getY() < 200) first.setY(230 - (files.size() * 30));
+		    		if (first.getY() > MINIMUM_Y) first.setY(MINIMUM_Y);
+		    		if (last.getY() < MINIMUM_Y) first.setY(230 - (files.size() * 30));
 				}
 	    	}
 	    	
@@ -377,7 +377,7 @@ public class Explorer extends IDEComponent {
 	    	if (Main.baseFolder.getName().length() > maxTitleWidth)
 	    		showBaseFolderCard = true;
 	    	
-	    	// if (f.getY() < 200 || f.getY() > Main.screen.getHeight()) continue;
+	    	// if (f.getY() < MINIMUM_Y || f.getY() > Main.screen.getHeight()) continue;
 	    	
 	    	try {
 		    	for (ListableFile f : Explorer.files)
@@ -422,7 +422,7 @@ public class Explorer extends IDEComponent {
 	        
 	        try {
 		        for (ListableFile f : Explorer.files) {
-		        	if (f.getY() < 200 || f.getY() > Main.screen.getHeight()) continue;
+		        	if (f.getY() < MINIMUM_Y || f.getY() > Main.screen.getHeight()) continue;
 		        	
 		        	f.render(g);
 		        }

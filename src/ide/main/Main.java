@@ -112,7 +112,7 @@ public class Main implements Runnable, Tickable {
     
     public static String sprsh = "/spritesheet.png";
     public static String fntnr = "/font.png";
-    public static String fntbl = "/bold.png";
+    public static String fnted = "/editorfont.png";
     public static String conffile = "none";
     
     public static Spritesheet originalSpritesheet;
@@ -194,7 +194,7 @@ public class Main implements Runnable, Tickable {
     
     ///
     
-    // TODO verificar se o args 0 cont�m boot ou ide e pegar o args 1 e fazer o abrir com
+    // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
     
     public Main() {
     	try {
@@ -218,7 +218,7 @@ public class Main implements Runnable, Tickable {
 	        
 	        UNKNOWN_FILE_ICON = Main.spritesheet.getSprite(0, 64, 16, 16);
 	        
-	        //Fonts.initFonts(fntnr, fntbl);
+	        //Fonts.initFonts(fntnr, fnted);
 	        
 	        ///////
 	        
@@ -352,7 +352,7 @@ public class Main implements Runnable, Tickable {
     	ListableFile.readConfigFile(conffile);
     	
         Texts.setTexts(lang);
-        Fonts.initFonts(fntnr, fntbl);
+        Fonts.initFonts(fntnr, fnted);
         
         ////////
         
@@ -618,7 +618,7 @@ public class Main implements Runnable, Tickable {
 					String s = lines.get(i);
 					
 					if (i == 0) {
-						Fonts.initFonts(fntnr, fntbl);
+						Fonts.initFonts(fntnr, fnted);
 						spritesheet = spritesheetFile.exists() ? modifiedSpritesheet : originalSpritesheet; // fazer o closebasefolder n�o descarregar o config file
 						
 				        if (s.equals("none")) baseFolder = null;

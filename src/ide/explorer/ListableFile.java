@@ -358,7 +358,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		File[] listFiles = folder.listFiles() == null ? new File[0] : folder.listFiles();
 
 		for (File f : listFiles) {
-			fl.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, parent));
+			fl.add(new ListableFile(0, Explorer.MINIMUM_Y + (index * 30), Main.explorer.getWidth(), 30, f, parent));
 
 			index++;
 		}
@@ -368,14 +368,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				return l;
 		}
 
-		// N�o achei nada
+		// Não achei nada
 		return null;
 	}
 
 	/*
-	 * Como � composto o Arquivo:
+	 * Como é composto o Arquivo:
 	 * 
-	 * Arquivo de Configura��es para Boot IDE
+	 * Arquivo de Configurações para Boot IDE
 	 * 
 	 * - Colors
 	 * 
@@ -1127,7 +1127,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				int index = 0;
 
 				for (File f : listFilesOrdered(folder.regent)) {
-					files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, folder));
+					files.add(new ListableFile(0, Explorer.MINIMUM_Y + (index * 30), Main.explorer.getWidth(), 30, f, folder));
 
 					index++;
 				}
@@ -1136,7 +1136,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			int index = 0;
 
 			for (File f : listFilesOrdered(Main.baseFolder)) {
-				files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
+				files.add(new ListableFile(0, Explorer.MINIMUM_Y + (index * 30), Main.explorer.getWidth(), 30, f, null));
 
 				index++;
 			}
@@ -1421,7 +1421,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		if (CommandTerminal.expOff)
 			return;
 		
-		if (y < Explorer.MINIMUM_Y) y = Explorer.MINIMUM_Y;
+		//if (y < Explorer.MINIMUM_Y) y = Explorer.MINIMUM_Y;
 		
 		if (hovered())
 			Main.screen.setCursor(Cursor.getDefaultCursor());

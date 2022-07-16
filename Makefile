@@ -8,6 +8,7 @@ RUNARGS=ide.main.Start -cp .
 
 JARCD=cd bin
 JAR=jar cf Boot-IDE.jar *
+LAUNCHJAR=java -jar Boot-IDE.jar
 
 build: compile
 all: compile
@@ -23,3 +24,7 @@ run:
 jar:
 	$(JARCD) && \
 	$(JAR)
+
+launchjar:
+	$(JARCD) && \
+	$(LAUNCHJAR)
