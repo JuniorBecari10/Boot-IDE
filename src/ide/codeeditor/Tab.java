@@ -340,7 +340,7 @@ public class Tab extends IDEComponent implements Serializable {
 		if (isReadOnly || Main.editor.lines.isEmpty() || Main.editor.lines == null || readMode != FileReadMode.NORMAL) return;
 		
 		try {
-			Charset ch = Main.editor.codeType.equals("UTF-8") ? StandardCharsets.UTF_8 : StandardCharsets.ISO_8859_1;
+			Charset ch = Main.editor.codeType.equalsIgnoreCase("UTF-8") ? StandardCharsets.UTF_8 : StandardCharsets.ISO_8859_1;
 			
 			BufferedWriter w = Files.newBufferedWriter(regent.getRegent().toPath(), ch); // precisa escrever em utf-8 tbm!!
 			
@@ -356,7 +356,7 @@ public class Tab extends IDEComponent implements Serializable {
 				
 				if (s == null) break;
 				
-				w.write(s + (System.getProperty("os.name").toLowerCase().startsWith("windows") ? "\r" : "") + "\n"); // se � windows termine com crlf (\r (cr) \n (lf))
+				w.write(s + CodeEditor.lineEnding.getCh());
 			}
 
 			w.close();

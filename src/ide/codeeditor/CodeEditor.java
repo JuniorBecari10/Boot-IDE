@@ -74,9 +74,11 @@ public class CodeEditor extends IDEComponent {
 
 	public int line1, line2;
 	public int index1, index2; // TODO fazer a verifica��o do CSS se est� dentro do seletor, e se tiver, colore
-								// n�meros
+								// números
 	
 	public static final int MAX_UNDOS = 10;
+	
+	public static LineEnding lineEnding = LineEnding.LF;
 	
 	public boolean shouldColor = true;
 
@@ -99,7 +101,7 @@ public class CodeEditor extends IDEComponent {
 	public String extType = "";
 	
 	public static boolean indentSpaces = true;
-	public static int indentLength = 4; // 4 caracteres (padr�o) "_ _ _ _"
+	public static int indentLength = 4; // 4 caracteres (padrão) "_ _ _ _"
 
 	public boolean isAnotherIteration = false;
 	public boolean foundExt = false;
