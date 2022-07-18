@@ -19,6 +19,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
+import ide.codeeditor.LineEnding;
 import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
@@ -508,6 +509,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("show_whitespace: " + CodeEditor.showWhitespace + "\n");
 			w.write("allow_tab_animation: " + Tab.allowAnimation + "\n");
 			w.write("force_mac_buttons: " + Main.forceMacButtons + "\n");
+			w.write("line_ending: " + CodeEditor.lineEnding + "\n");
 
 			w.close();
 
@@ -1067,6 +1069,22 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					break;
 
 				Main.forceMacButtons = Boolean.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
+				
+			case "line_ending:":
+				if (!readConfigs) break;
+				
+				if (split[1].equals("default"))
+					break;
+
+				try {
+					CodeEditor.lineEnding = LineEnding.valueOf(split[1].toUpperCase());
+				} catch (IllegalArgumentException e) {
+					break;
+				}
 
 				hasAltered = true;
 

@@ -78,6 +78,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public static final int MAX_UNDOS = 10;
 	
+	// valor padrão de LF
 	public static LineEnding lineEnding = LineEnding.LF;
 	
 	public boolean shouldColor = true;
