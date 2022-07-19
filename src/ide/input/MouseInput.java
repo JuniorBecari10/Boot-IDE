@@ -37,6 +37,7 @@ public final class MouseInput extends MouseInputAdapter {
     private static boolean mouseRolled;
     
     private static int pX = 0, pY = 0;
+    private Rectangle screenBounds;
     
     public static Map<Boolean, String> mousePoint;
     public static String direction;
@@ -167,11 +168,7 @@ public final class MouseInput extends MouseInputAdapter {
                 Main.screen.frame.setBounds(Main.screen.frame.getX(), Main.screen.frame.getY(), Main.screen.frame.getWidth(), e.getY());
                 break;
             case "W":
-                if (e.getXOnScreen() > Main.screen.frame.getX()) {
-                    Main.screen.frame.setBounds(e.getXOnScreen(), Main.screen.frame.getY(), Main.screen.frame.getWidth() - (e.getXOnScreen() - Main.screen.frame.getX()), Main.screen.frame.getHeight());
-                } else {
-                    Main.screen.frame.setBounds(e.getXOnScreen(), Main.screen.frame.getY(), Main.screen.frame.getWidth() + (Main.screen.frame.getX() - e.getXOnScreen()), Main.screen.frame.getHeight());
-                }
+            	Main.screen.frame.setBounds(e.getXOnScreen(), Main.screen.frame.getY(), (int) (screenBounds.getWidth() - Math.abs(e.getXOnScreen() - pX)), Main.screen.frame.getHeight());
                 break;
             case "NE":
                 Main.screen.frame.setBounds(Main.screen.frame.getX(), Main.screen.frame.getY(), e.getX(), Main.screen.frame.getHeight());
@@ -183,7 +180,6 @@ public final class MouseInput extends MouseInputAdapter {
                 }
                 break;
             case "SE":
-
                 Main.screen.frame.setBounds(Main.screen.frame.getX(), Main.screen.frame.getY(), e.getX(), e.getY());
                 break;
             case "SW":
@@ -314,6 +310,8 @@ public final class MouseInput extends MouseInputAdapter {
         
         pX = e.getX();
 		pY = e.getY();
+		
+		screenBounds = Main.screen.frame.getBounds();
 		
         if (Main.main != null)
 	        Main.main.mainLogic();

@@ -7300,17 +7300,17 @@ public class CodeEditor extends IDEComponent {
 	 */
 
 	/**
-	 * <!-- Slk merm�o vc pode estilizar com css --> <style> pre { font-family:
+	 * <!-- Slk mermão vc pode estilizar com css --> <style> pre { font-family:
 	 * "Calibri"; font-size: 15px; } </style>
 	 * 
-	 * Gera um Lorem Ipsum aleat�rio a partir das palavras do array, com pontua��o e
+	 * Gera um Lorem Ipsum aleatório a partir das palavras do array, com pontuação e
 	 * tudo.
 	 * 
 	 * <pre>
-	 * Ele suporta somente um par�grafo.
+	 * Ele suporta somente um parágrafo.
 	 * </pre>
 	 * 
-	 * @param numWords - O n�mero de palavras no total que o texto vai ter.
+	 * @param numWords - O número de palavras no total que o texto vai ter.
 	 * @return O texto gerado.
 	 */
 	public static String generateLoremIpsum(int numWords) {

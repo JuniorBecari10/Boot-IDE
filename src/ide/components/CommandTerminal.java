@@ -64,7 +64,7 @@ public class CommandTerminal extends IDEComponent {
 			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode", "resetfontsize", "togglewhitespaces",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
 			"revertcolors", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
-			"setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode", "setlang str:lang", "setwhitespaces bool:true/false",
+			"setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode", "setwhitespaces bool:true/false",
 			"gendiv str:class_name", "gensnippet str:type", "selecttab int:index",
 			"lorem int:num_words", "swaptabs int:tab_from int:tab_to", "openfile str:file",
 			"setcursorpos int:x int:y",
@@ -471,7 +471,7 @@ public class CommandTerminal extends IDEComponent {
 				else
 					Main.editor.setX(0);
 				
-				expOff ^= true;	// uma forma de togglar boolean (^ � xor gate)
+				expOff ^= true;	// uma forma de togglar boolean (^ é xor gate)
 				
 				if (Explorer.searchReplaceActive)
 					SearchReplaceCore.dispose();
@@ -751,7 +751,7 @@ public class CommandTerminal extends IDEComponent {
 			case "togglecodehelpers":
 				if (Main.editor.editing == null) break;
 				
-				Main.editor.codeHelpersOn ^= true; // m�todo pr�tico de inverter boolean, porque em Assembly mais ou menos seria assim: xor codehelperson, true (l�gico que o nome da vari�vel n seria esse n� :/)
+				Main.editor.codeHelpersOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor codehelperson, true (l�gico que o nome da vari�vel n seria esse n� :/)
 				break;
 				
 			case "gotocursor":
@@ -976,14 +976,14 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "css":
-					String[] cssstrs = { "* {", "    margin: 0;", "    padding: 0;", "    box-sizing: border-box;", "    font-family: sans-serif;", "}"};
+					String[] cssstrs = { "* {", "    margin: 0;", "    padding: 0;", "    box-sizing: border-box;", "    font-family: sans-serif;", "}" };
 					
 					strs = cssstrs;
 					
 					break;
 					
 				case "csssimple":
-					String[] csssstrs = { "* {", "    margin: 0;", "    padding: 0;", "}"};
+					String[] csssstrs = { "* {", "    margin: 0;", "    padding: 0;", "}" };
 					
 					strs = csssstrs;
 					
@@ -1011,28 +1011,28 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "java":
-					String[] javastrs = { "public class " + classname + " {", "    ", "}"};
+					String[] javastrs = { "public class " + classname + " {", "    ", "}" };
 					
 					strs = javastrs;
 					
 					break;
 					
 				case "javainterface":
-					String[] javaintstrs = { "public interface " + classname + " {", "    ", "}"};
+					String[] javaintstrs = { "public interface " + classname + " {", "    ", "}" };
 					
 					strs = javaintstrs;
 					
 					break;
 					
 				case "javaenum":
-					String[] javaenstrs = { "public enum " + classname + " {", "    ", "}"};
+					String[] javaenstrs = { "public enum " + classname + " {", "    ", "}" };
 					
 					strs = javaenstrs;
 					
 					break;
 					
 				case "javamain":
-					String[] javamstrs = { "public class " + classname + " {", "    ", "    public static void main(String[] args) {", "        ", "    }", "}"};
+					String[] javamstrs = { "public class " + classname + " {", "    ", "    public static void main(String[] args) {", "        ", "    }", "}" };
 					
 					strs = javamstrs;
 					
@@ -1046,14 +1046,14 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "cppmain":
-					String[] cppmstrs = { "#include <iostream>", "", "using namespace std;", "", "int main()", "{", "    return 0;", "}"};
+					String[] cppmstrs = { "#include <iostream>", "", "using namespace std;", "", "int main()", "{", "    return 0;", "}" };
 					
 					strs = cppmstrs;
 					
 					break;
 					
 				case "cppmainargs":
-					String[] cppmastrs = { "#include <iostream>", "", "using namespace std;", "", "int main(int argc, char *argv[])", "{", "    return 0;", "}"};
+					String[] cppmastrs = { "#include <iostream>", "", "using namespace std;", "", "int main(int argc, char *argv[])", "{", "    return 0;", "}" };
 					
 					strs = cppmastrs;
 					
@@ -1067,14 +1067,14 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "cmain":
-					String[] cmstrs = { "#include <stdio.h>", "", "int main()", "{", "    return 0;", "}"};
+					String[] cmstrs = { "#include <stdio.h>", "", "int main()", "{", "    return 0;", "}" };
 					
 					strs = cmstrs;
 					
 					break;
 					
 				case "cmainargs":
-					String[] cmastrs = { "#include <stdio.h>", "", "int main(int argc, char *argv[])", "{", "    return 0;", "}"};
+					String[] cmastrs = { "#include <stdio.h>", "", "int main(int argc, char *argv[])", "{", "    return 0;", "}" };
 					
 					strs = cmastrs;
 					
@@ -1088,9 +1088,16 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "ino":
-					String[] inostrs = { "void setup()", "{", "    ", "}", "", "void loop()", "{", "    ", "}"};
+					String[] inostrs = { "void setup()", "{", "    ", "}", "", "void loop()", "{", "    ", "}" };
 					
 					strs = inostrs;
+					
+					break;
+					
+				case "go":
+					String[] gostrs = { "package main", "", "import (", "    \"fmt\"", ")", "", "func main() {", "    ", "}" };
+					
+					strs = gostrs;
 					
 					break;
 				}
