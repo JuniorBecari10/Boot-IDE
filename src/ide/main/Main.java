@@ -66,7 +66,7 @@ public class Main implements Runnable, Tickable {
     
     public static final String RESOURCE_FOLDER_NAME = "Resources";
     public static final String FONT_FILE_NAME = "Resources/font.png";
-    public static final String BOLD_FILE_NAME = "Resources/bold.png";
+    public static final String EDITORFONT_FILE_NAME = "Resources/editorfont.png";
     public static final String SPRITESHEET_FILE_NAME = "Resources/spritesheet.png";
     
     public static final String LOG_FILE_NAME = "Exception.log";
@@ -86,6 +86,8 @@ public class Main implements Runnable, Tickable {
     
     public static Screen screen;
     public static Toolkit toolkit;
+    
+    public static boolean writeFiles = true;
 
     private Thread t;
 
@@ -110,10 +112,10 @@ public class Main implements Runnable, Tickable {
     public static MinimizeWindow minimizeWindow;
     public static MaximizeWindow maximizeWindow;
     
-    public static String sprsh = "/spritesheet.png";
-    public static String fntnr = "/font.png";
-    public static String fnted = "/editorfont.png";
-    public static String conffile = "none";
+    public static String sprsh = "/spritesheet.png"; // sprsh - spritesheet
+    public static String fntnr = "/font.png"; // fntnr - font normal
+    public static String fnted = "/editorfont.png"; // fnted - font editor
+    public static String conffile = "none"; // conffile - config(uration) file
     
     public static Spritesheet originalSpritesheet;
     
@@ -145,7 +147,7 @@ public class Main implements Runnable, Tickable {
     public static final File resourcesFolder = new File(System.getProperty("user.dir") + File.separator + RESOURCE_FOLDER_NAME);
     
     public static final File fontFile = new File(System.getProperty("user.dir") + File.separator + FONT_FILE_NAME);
-    public static final File boldFile = new File(System.getProperty("user.dir") + File.separator + BOLD_FILE_NAME);
+    public static final File editorFontFile = new File(System.getProperty("user.dir") + File.separator + EDITORFONT_FILE_NAME);
     public static final File spritesheetFile = new File(System.getProperty("user.dir") + File.separator + SPRITESHEET_FILE_NAME);
     
     public static final File logFile = new File(System.getProperty("user.dir") + File.separator + LOG_FILE_NAME);
@@ -206,10 +208,16 @@ public class Main implements Runnable, Tickable {
 	    	os = getOS();
 
 	    	originalSpritesheet = new Spritesheet(sprsh);
-	    	
 	        modifiedSpritesheet = new Spritesheet(spritesheetFile);
-	        
 	        spritesheet = spritesheetFile.exists() ? modifiedSpritesheet : originalSpritesheet;
+	        
+	        if (fontFile.exists())
+	        	fntnr = FONT_FILE_NAME;
+	        
+	        if (editorFontFile.exists())
+	        	fnted = EDITORFONT_FILE_NAME;
+	        
+	        //System.out.println(fntnr + " " + fnted);
 	        
 	        toolkit = Toolkit.getDefaultToolkit();
 	        screen = new Screen(PROGRAM_NAME);

@@ -1,20 +1,22 @@
 package ide.util;
 
+import ide.main.Main;
+
 /**
- * Uma classe que lista todos os textos e palavras que estão na Boot IDE. Somente não listam os nomes das linguagens que aparecem embaixo da tela. Temos em português e inglês aqui.
+ * Uma classe que lista todos os textos e palavras que estï¿½o na Boot IDE. Somente nï¿½o listam os nomes das linguagens que aparecem embaixo da tela. Temos em portuguï¿½s e inglï¿½s aqui.
  * 
  * Linguagens:
- * 	Português
- * 	Inglês
+ * 	Portuguï¿½s
+ * 	Inglï¿½s
  * 
- * Tradutores de Inglês: Boot (eu hehe) e <a href="https://www.deepl.com/translator">DeepL</a>.
+ * Tradutores de Inglï¿½s: Boot (eu hehe) e <a href="https://www.deepl.com/translator">DeepL</a>.
  * 
  * @author junio
  *
  */
 public final class Texts {
 	
-	private Texts() {} // não vai instanciar não viu
+	private Texts() {} // nï¿½o vai instanciar nï¿½o viu
 
 	// --------------------------------------
 	
@@ -33,7 +35,7 @@ public final class Texts {
 	
 	public static String fileAsReadOnly;
 	
-	public static String baseFolder_; // _ é dois pontos :
+	public static String baseFolder_; // _ ï¿½ dois pontos :
 	public static String actualFolder_;
 	
 	public static String esc_Cancel;
@@ -201,6 +203,11 @@ public final class Texts {
 	
 	public static String back;
 	
+	public static String closeApply;
+	
+	public static String programWillClose;
+	public static String thisWillCloseProgram;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -211,13 +218,13 @@ public final class Texts {
 			createFile = "Criar Novo Arquivo";
 			createFolder = "Criar Nova Pasta";
 			oneFolderUp = "Uma Pasta Acima";
-			returnBaseFolder = "Retornar à Pasta Base";
+			returnBaseFolder = "Retornar Ã  Pasta Base";
 			reload = "Recarregar";
 			
-			codeHelpersOn = "Os CodeHelpers estão ativados.";
-			codeHelpersOff = "Os CodeHelpers estão desativados.";
+			codeHelpersOn = "Os CodeHelpers estÃ£o ativados.";
+			codeHelpersOff = "Os CodeHelpers estÃ£o desativados.";
 			
-			fileAsReadOnly = "Esse arquivo está como somente leitura.";
+			fileAsReadOnly = "Esse arquivo estÃ¡ como somente leitura.";
 			
 			baseFolder_ = "Pasta Base:";
 			actualFolder_ = "Pasta Atual:";
@@ -229,7 +236,7 @@ public final class Texts {
 			
 			renameFile = "Renomear Arquivo";
 			
-			fileExists = "Já existe um arquivo nessa pasta com esse nome.";
+			fileExists = "JÃ¡ existe um arquivo nessa pasta com esse nome.";
 			
 			readOnly = "Somente Leitura";
 			
@@ -249,7 +256,7 @@ public final class Texts {
 			openTerminal = "Abrir Terminal de Comando";
 			openExplorer = "Abrir no Explorador de Arquivos";
 			setBaseFolder = "Definir pasta atual como Pasta Base";
-			openDefault = "Abrir arquivo com o programa padrão";
+			openDefault = "Abrir arquivo com o programa padrï¿½o";
 			
 			execute = "Executar";
 			executeBash = "Executar com Bash";
@@ -271,38 +278,38 @@ public final class Texts {
 			
 			openBootExplorer = "Abrir no Explorador";
 			
-			noFolderLoadedLogoText = "Não há nenhuma pasta carregada.";
-			clickOnButton = "Clique no botão [Selecionar Pasta Base]";
+			noFolderLoadedLogoText = "NÃ£o hÃ¡ nenhuma pasta carregada.";
+			clickOnButton = "Clique no botÃ£o [Selecionar Pasta Base]";
 			loadOne = "para carregar uma.";
 			
 			ctrl_Win_Prompt = "[Ctrl + Windows / B] Prompt de Comando";
 			ctrl_T_terminal = "[Ctrl + T] Terminal de Comando";
-			rightClick_Options = "[Clique Direito] Mais Opções";
+			rightClick_Options = "[Clique Direito] Mais OpÃ§Ãµes";
 			
 			yes = "   Sim   ";
-			no = "   Não   ";
+			no = "   NÃ£o   ";
 			
 			sureDelete = "Tem certeza de que deseja deletar o arquivo";
-			confirmDelete = "Confirmar Exclusão";
+			confirmDelete = "Confirmar ExclusÃ£o";
 			
-			delError = "Ocorreu um erro ao deletar. Lembre-se de que pastas não podem ser excluídas se não estiverem vazias!";
-			cantDelete = "Não foi possível deletar.";
+			delError = "Ocorreu um erro ao deletar. Lembre-se de que pastas nï¿½o podem ser excluï¿½das se nï¿½o estiverem vazias!";
+			cantDelete = "NÃ£o foi possÃ­vel deletar.";
 			
-			cantFindDefault = "O sistema não encontrou um programa padrão para abrir esse arquivo.";
-			nothingFound = "Não encontrou nada!";
+			cantFindDefault = "O sistema nÃ£o encontrou um programa padrÃ£o para abrir esse arquivo.";
+			nothingFound = "NÃ£o encontrou nada!";
 			
 			cancel = "Cancelar";
 			
 			theFile = "O arquivo";
-			isNotSaved = "não está salvo. Deseja salvá-lo antes de fechar?";
+			isNotSaved = "nÃ£o estÃ¡ salvo. Deseja salvÃ¡-lo antes de fechar?";
 			
-			fileNameIllegal = "O nome do arquivo contém caracteres não permitidos.";
-			cannotBeOnlySpaces = "O nome do arquivo não pode ser somente espaços!";
+			fileNameIllegal = "O nome do arquivo contÃ©m caracteres nï¿½o permitidos.";
+			cannotBeOnlySpaces = "O nome do arquivo nÃ£o pode ser somente espaï¿½os!";
 			
 			confirmSave = "Confirmar Salvamento do Arquivo";
 			
-			configFileNotChanged = "O Arquivo de Configurações foi carregado, mas nada foi alterado. Deseja que ele continue carregado?";
-			didNothing = "Não fez nada!";
+			configFileNotChanged = "O Arquivo de ConfiguraÃ§Ãµes foi carregado, mas nada foi alterado. Deseja que ele continue carregado?";
+			didNothing = "NÃ£o fez nada!";
 			
 			searchReplace = "Local./Subst.";
 			searchReplaceMin = "L/S";
@@ -314,36 +321,36 @@ public final class Texts {
 			selectedLines = "Linhas Selecionadas";
 			
 			scope = "Local";
-			options = "Opções";
+			options = "OpÃ§Ãµes";
 			
-			searchNext = "Localizar Próximo";
-			replaceNext = "Substituir Próximo";
+			searchNext = "Localizar PrÃ³ximo";
+			replaceNext = "Substituir PrÃ³ximo";
 			replaceAll = "Substituir Todos";
 			
 			close = "Fechar";
 			
-			caseSensitive = "Sensível a letras maiúsculas";
-			regex = "Expressão Regular";
+			caseSensitive = "SensÃ­vel a letras maiÃºsculas";
+			regex = "ExpressÃ£o Regular";
 			
-			cannotFindWord = "O Localizar/Substituir não encontrou nesse documento as palavras solicitadas, usando as configurações atuais.";
+			cannotFindWord = "O Localizar/Substituir nÃ£o encontrou nesse documento as palavras solicitadas, usando as configuraÃ§Ãµes atuais.";
 			
-			didNotFindAfterThat = "Não foram mais encontradas palavras correspondentes.";
-			itsTheEnd = "É o fim!";
+			didNotFindAfterThat = "NÃ£o foram mais encontradas palavras correspondentes.";
+			itsTheEnd = "Ã© o fim!";
 			
-			replaced = "Substituídas";
-			occurences = "ocorrência(s)";
+			replaced = "SubstituÃ­das";
+			occurences = "ocorrÃªncia(s)";
 			
 			success = "Sucesso";
 			
-			dont = "Não";
+			dont = "NÃ£o";
 			
-			tab_Cycle = "[Tab] Alternar Entre Opções";
+			tab_Cycle = "[Tab] Alternar Entre OpÃ§Ãµes";
 			
-			cannotBeEmpty = "O nome do arquivo não pode ser vazio!";
+			cannotBeEmpty = "O nome do arquivo nÃ£o pode ser vazio!";
 			
-			wantOpenFile = "Você deseja abrir o arquivo para editá-lo?";
+			wantOpenFile = "VocÃª deseja abrir o arquivo para editÃ¡-lo?";
 			openFolder = "Abrir Pasta";
-			openInDefaultEditor = "Abrir no Editor Padrão";
+			openInDefaultEditor = "Abrir no Editor PadrÃ£o";
 			wouldEdit = "Gostaria de editar o arquivo?";
 			openInNewTab = "Abrir em uma nova aba";
 			
@@ -352,15 +359,15 @@ public final class Texts {
 			
 			openInEditor = "Abrir no Editor";
 			
-			cannotEndDot = "O nome do arquivo não pode terminar com um ponto!";
+			cannotEndDot = "O nome do arquivo nï¿½o pode terminar com um ponto!";
 			
 			anErrorOccurred = "Um erro ocorreu.";
 			errorCreatingFile = "Um erro ocorreu ao criar o arquivo.";
 			
-			fontBelowMinimum = "O tamanho da fonte está abaixo do mínimo! (Mínimo: 8)";
-			belowMinimum = "Abaixo do mínimo!";
+			fontBelowMinimum = "O tamanho da fonte estï¿½ abaixo do mÃ­nimo! (MÃ­nimo: 8)";
+			belowMinimum = "Abaixo do mÃ­nimo!";
 			
-			version = "Versão";
+			version = "VersÃ£o";
 			
 			selecting = "Selecionando";
 			
@@ -370,23 +377,27 @@ public final class Texts {
 			valueOfTheProperty = "O valor da propriedade";
 			newValueOfTheProperty = "O novo valor da propriedade";
 			
-			is = "é";
+			is = "Ã©";
 			
-			propertyDoesntExist = "Essa propriedade não existe, ou um erro ocorreu.";
+			propertyDoesntExist = "Essa propriedade nÃ£o existe, ou um erro ocorreu.";
 			
-			restartRequired = "Reinicialização Necessária!";
-			pleaseRestart = "Por favor reinicie o programa para que todas as mudanças sejam aplicadas.";
+			restartRequired = "ReinicializaÃ§Ã£o NecessÃ¡ria!";
+			pleaseRestart = "Por favor reinicie o programa para que todas as mudanÃ§as sejam aplicadas.";
 			
 			getFontSize = "Obter Tamanho da Fonte";
-			fontSizeIs = "O tamanho da fonte é de";
+			fontSizeIs = "O tamanho da fonte Ã© de";
 			
 			getLang = "Obter Idioma";
-			langIs = "O idioma é";
+			langIs = "O idioma Ã©";
 			
-			getWhitespaceOn = "Obter Espaços em Branco Ligado/Desligado";
-			whitespaceIs = "Os Espaços em Branco estão";
+			getWhitespaceOn = "Obter Espaï¿½os em Branco Ligado/Desligado";
+			whitespaceIs = "Os Espaï¿½os em Branco estÃ£o";
 			
 			back = "Voltar";
+			
+			closeApply = "Fechar e aplicar";
+			programWillClose = Main.PROGRAM_NAME + " vai fechar!";
+			thisWillCloseProgram = "Isso vai fechar a " + Main.PROGRAM_NAME + ". Deseja continuar?";
 			
 			break;
 		
@@ -574,6 +585,10 @@ public final class Texts {
 			whitespaceIs = "The whitespaces are";
 			
 			back = "Back";
+			
+			closeApply = "Close and apply";
+			programWillClose = Main.PROGRAM_NAME + " will close!";
+			thisWillCloseProgram = "This will close " + Main.PROGRAM_NAME + ". Do you want to continue?";
 			
 			break;
 		}

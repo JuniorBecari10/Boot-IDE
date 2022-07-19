@@ -182,7 +182,7 @@ public class CodeEditor extends IDEComponent {
 	///////
 
 	public static final String[] syms = { "(", ")", "[", "]", "{", "}", ",", ".", "<", ">", ";", ":", "?", "/", "\\",
-			"|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`", "�", "^", "~" };
+			"|", "+", "-", "*", "=", "&", "%", "$", "#", "!", "@", "`", "´", "^", "~" }; // se aparecer um desses estranho, é porque é o acento agudo (´)
 
 	public static final String[] loremWords = { "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
 			"curabitur", "vel", "hendrerit", "libero", "eleifend", "blandit", "nunc", "ornare", "odio", "ut", "orci",
@@ -706,8 +706,8 @@ public class CodeEditor extends IDEComponent {
 			"@private", "@property", "@try", "@throw", "@catch", "@finally", "@synthesize", "@dynamic", "@selector",
 			"atomic", "nonatomic", "retain" };
 
-	public static final String[] ideConfKeys = { "Arquivo de Configura��es da Boot IDE", "Boot IDE Configuration File",
-			"port", "eng", "PORT", "ENG", "Colors", "Files", "Settings", "default", "true", "false" };
+	public static final String[] ideConfKeys = { "Arquivo de Configurações da Boot IDE", "Boot IDE Configuration File",
+			"port", "eng", "PORT", "ENG", "Colors", "Files", "Settings", "default", "true", "false", "LF", "lf", "CR", "cr", "CRLF", "crlf" };
 
 	public static final String[] makeKeys = { "if", "else", "export" };
 

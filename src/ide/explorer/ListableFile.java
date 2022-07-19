@@ -1389,7 +1389,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				public void run() {
 					try {
 						Main.editor.lines = Main.editor.readFile(file.getRegent());
-					} catch (IOException e) { // n�o suportado, se caiu aqui
+					} catch (IOException e) { // não suportado, se caiu aqui
 						return;
 					}
 				}

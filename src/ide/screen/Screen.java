@@ -74,7 +74,6 @@ public class Screen extends Canvas {
         frame = new JFrame(title);
         
         frame.add(this);
-		//frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		frame.setFocusTraversalKeysEnabled(false);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);			// pra fazer a tela de confirma��o o fechamento deve ser feito por c�digo		
 		frame.setUndecorated(true);
@@ -84,6 +83,7 @@ public class Screen extends Canvas {
 		frame.setFocusTraversalKeysEnabled(false); // tem q ter esses dois
 		frame.setVisible(true);
 		//frame.setUndecorated(true); // ele aqui causa exception
+		
 		requestFocus();
     }
     
