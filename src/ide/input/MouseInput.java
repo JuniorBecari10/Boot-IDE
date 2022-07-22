@@ -39,6 +39,8 @@ public final class MouseInput extends MouseInputAdapter {
     private static int pX = 0, pY = 0;
     private Rectangle screenBounds;
     
+    private static final int DRAG_BOUNDS = 5;
+    
     public static Map<Boolean, String> mousePoint;
     public static String direction;
     
@@ -236,14 +238,14 @@ public final class MouseInput extends MouseInputAdapter {
 	        Main.main.mainLogic();
         
         mousePoint = new HashMap<Boolean, String>();
-        mousePoint.put(e.getY() < 5, "N");
-        mousePoint.put(e.getX() > (Main.screen.frame.getWidth() - 5), "E");
-        mousePoint.put(e.getY() > (Main.screen.frame.getHeight() - 5), "S");
-        mousePoint.put(e.getX() < 5, "W");
-        mousePoint.put(e.getY() < 5 && e.getX() > (Main.screen.frame.getWidth() - 5), "NE");
-        mousePoint.put(e.getY() > (Main.screen.frame.getHeight() - 5) && e.getX() > (Main.screen.frame.getWidth() - 5), "SE");
-        mousePoint.put(e.getY() > (Main.screen.frame.getHeight() - 5) && e.getX() <= 5, "SW");
-        mousePoint.put(e.getY() < 5 && e.getX() < 5, "NW");
+        mousePoint.put(e.getY() < DRAG_BOUNDS, "N");
+        mousePoint.put(e.getX() > (Main.screen.frame.getWidth() - DRAG_BOUNDS), "E");
+        mousePoint.put(e.getY() > (Main.screen.frame.getHeight() - DRAG_BOUNDS), "S");
+        mousePoint.put(e.getX() < DRAG_BOUNDS, "W");
+        mousePoint.put(e.getY() < DRAG_BOUNDS && e.getX() > (Main.screen.frame.getWidth() - DRAG_BOUNDS), "NE");
+        mousePoint.put(e.getY() > (Main.screen.frame.getHeight() - DRAG_BOUNDS) && e.getX() > (Main.screen.frame.getWidth() - DRAG_BOUNDS), "SE");
+        mousePoint.put(e.getY() > (Main.screen.frame.getHeight() - DRAG_BOUNDS) && e.getX() <= DRAG_BOUNDS, "SW");
+        mousePoint.put(e.getY() < DRAG_BOUNDS && e.getX() < DRAG_BOUNDS, "NW");
 
         for (Entry<Boolean, String> item : mousePoint.entrySet()) {
             if (item.getKey()) {

@@ -25,6 +25,8 @@ Boot IDE doesn't have dependencies, so it's easy to compile and run. Follow the 
 
 ##### To Compile
 
+You can use `make`, `make build` or `make compile` to compile (requires make). It will run the following command:
+
 ```batch
 cd src
 javac -d ../bin ide/main/Start.java
@@ -32,12 +34,16 @@ javac -d ../bin ide/main/Start.java
 
 ##### To Run
 
+You can use `make run` to run (requires make). It will run the following command:
+
 ```batch
 cd bin
 java ide.main.Start -cp .
 ```
 
 ##### To Compile and Run
+
+You can use `make compile run` or `make build run` to compile and run (requires make). It will run the following commands:
 
 ```batch
 cd src
@@ -50,6 +56,8 @@ java ide.main.Start -cp .
 ### How to generate a JAR file
 
 To generate a JAR file, you need to have the compiled program (i.e. the .class files), then execute:
+
+You can use `make jar` to generate (requires make). It will run the following command:
 
 ```batch
 cd bin
@@ -86,6 +94,8 @@ A Boot IDE não tem dependências, então é fácil compilar e executar. Siga os
 
 ##### Para Compilar
 
+Você pode usar `make`, `make build` ou `make compile` para compilar (requer make instalado). Ele vai executar o seguinte comando:
+
 ```batch
 cd src
 javac -d ../bin ide/main/Start.java
@@ -93,12 +103,16 @@ javac -d ../bin ide/main/Start.java
 
 ##### Para Executar
 
+Você pode usar `make run` para executar (requer make instalado). Ele vai executar o seguinte comando:
+
 ```batch
 cd bin
 java ide.main.Start -cp .
 ```
 
 ##### Para Compilar e Executar
+
+Você pode usar `make compile run` ou `make build run` para compilar e executar (requer make instalado). Ele vai executar os seguintes comandos:
 
 ```batch
 cd src
@@ -111,6 +125,8 @@ java ide.main.Start -cp .
 ### Como gerar um arquivo JAR
 
 Para gerar um arquivo JAR, você precisa ter o programa compilado (isto é, os arquivos .class), então execute:
+
+Você pode usar `make jar` para gerar (requer make instalado). Ele vai executar o seguinte comando:
 
 ```batch
 cd bin
