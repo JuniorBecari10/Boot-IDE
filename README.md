@@ -64,6 +64,17 @@ cd bin
 jar cf Boot-IDE.jar *
 ```
 
+### How to run a JAR file
+
+Once generated the JAR, you can run it by executing:
+
+You can use `make launchjar` to run (requires make). It will run the following command:
+
+```batch
+cd bin
+java -jar Boot-IDE.jar
+```
+
 ### How to Use
 
 In the first time you open Boot IDE, it doesn't have any folders loaded. Then click on **Select Base Folder** button, and select one. <br />
@@ -131,6 +142,17 @@ Você pode usar `make jar` para gerar (requer make instalado). Ele vai executar 
 ```batch
 cd bin
 jar cf Boot-IDE.jar *
+```
+
+### Como executar um arquivo JAR
+
+Gerado o arquivo JAR, você pode executá-lo pelo comando:
+
+Você pode usar `make launchjar` para executar (requer make instalado). Ele vai executar o seguinte comando:
+
+```batch
+cd bin
+java -jar Boot-IDE.jar
 ```
 
 ### Como Usar
