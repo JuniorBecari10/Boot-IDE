@@ -39,7 +39,7 @@ public final class MouseInput extends MouseInputAdapter {
     private static int pX = 0, pY = 0;
     private Rectangle screenBounds;
     
-    private static final int DRAG_BOUNDS = 5;
+    public static final int DRAG_BOUNDS = 5;
     
     public static Map<Boolean, String> mousePoint;
     public static String direction;
