@@ -962,35 +962,35 @@ public class CommandTerminal extends IDEComponent {
 				
 				switch (args[0].toLowerCase()) {
 				case "html":
-					String[] htmlstrs = { "<!DOCTYPE html>", "<html>", "    <head>", "        <title></title>", "        ", "        <meta charset=\"UTF-8\">", "    </head>", "    <body>", "    </body>", "</html>" };
+					String[] htmlstrs = { "<!DOCTYPE html>", "<html>", CodeEditor.getIndentation(1) + "<head>", CodeEditor.getIndentation(2) + "<title></title>", CodeEditor.getIndentation(2), CodeEditor.getIndentation(2) + "<meta charset=\"UTF-8\">", CodeEditor.getIndentation(1) + "</head>", CodeEditor.getIndentation(1) + "<body>", CodeEditor.getIndentation(1) + "</body>", "</html>" };
 					
 					strs = htmlstrs;
 					
 					break;
 					
 				case "html5":
-					String[] htmlnewstrs = { "<!DOCTYPE html>", "<html>", "    <head>", "        <title></title>", "        ", "        <meta charset=\"UTF-8\">", "        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", "    </head>", "    <body>", "    </body>", "</html>" };
+					String[] htmlnewstrs = { "<!DOCTYPE html>", "<html>", CodeEditor.getIndentation(1) + "<head>", CodeEditor.getIndentation(2) + "<title></title>", CodeEditor.getIndentation(2), CodeEditor.getIndentation(2) + "<meta charset=\"UTF-8\">", CodeEditor.getIndentation(2) + "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", CodeEditor.getIndentation(2) + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", CodeEditor.getIndentation(1) + "</head>", CodeEditor.getIndentation(1) + "<body>", CodeEditor.getIndentation(1) + "</body>", "</html>" };
 					
 					strs = htmlnewstrs;
 					
 					break;
 					
 				case "css":
-					String[] cssstrs = { "* {", "    margin: 0;", "    padding: 0;", "    box-sizing: border-box;", "    font-family: sans-serif;", "}" };
+					String[] cssstrs = { "* {", CodeEditor.getIndentation(1) + "margin: 0;", CodeEditor.getIndentation(1) + "padding: 0;", CodeEditor.getIndentation(1) + "box-sizing: border-box;", CodeEditor.getIndentation(1) + "font-family: sans-serif;", "}" };
 					
 					strs = cssstrs;
 					
 					break;
 					
 				case "csssimple":
-					String[] csssstrs = { "* {", "    margin: 0;", "    padding: 0;", "}" };
+					String[] csssstrs = { "* {", CodeEditor.getIndentation(1) + "margin: 0;", CodeEditor.getIndentation(1) + "padding: 0;", "}" };
 					
 					strs = csssstrs;
 					
 					break;
 					
 				case "vbmain":
-					String[] vbmstrs = { "Imports System", "", "Module " + classname, "    ", "    Sub Main()", "        ", "    End Sub", "    ", "End Module" };
+					String[] vbmstrs = { "Imports System", "", "Module " + classname, "    ", CodeEditor.getIndentation(1) + "Sub Main()", CodeEditor.getIndentation(2), CodeEditor.getIndentation(1) + "End Sub", CodeEditor.getIndentation(1) , "End Module" };
 					
 					strs = vbmstrs;
 					
@@ -1004,35 +1004,35 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "portugol":
-					String[] portstrs = { "programa {", "    ", "    funcao inicio() {", "        ", "    }", "}" };
+					String[] portstrs = { "programa {", CodeEditor.getIndentation(1), CodeEditor.getIndentation(1) + "funcao inicio() {", CodeEditor.getIndentation(2), CodeEditor.getIndentation(1) + "}", "}" };
 					
 					strs = portstrs;
 					
 					break;
 					
 				case "java":
-					String[] javastrs = { "public class " + classname + " {", "    ", "}" };
+					String[] javastrs = { "public class " + classname + " {", CodeEditor.getIndentation(1), "}" };
 					
 					strs = javastrs;
 					
 					break;
 					
 				case "javainterface":
-					String[] javaintstrs = { "public interface " + classname + " {", "    ", "}" };
+					String[] javaintstrs = { "public interface " + classname + " {", CodeEditor.getIndentation(1), "}" };
 					
 					strs = javaintstrs;
 					
 					break;
 					
 				case "javaenum":
-					String[] javaenstrs = { "public enum " + classname + " {", "    ", "}" };
+					String[] javaenstrs = { "public enum " + classname + " {", CodeEditor.getIndentation(1), "}" };
 					
 					strs = javaenstrs;
 					
 					break;
 					
 				case "javamain":
-					String[] javamstrs = { "public class " + classname + " {", "    ", "    public static void main(String[] args) {", "        ", "    }", "}" };
+					String[] javamstrs = { "public class " + classname + " {", CodeEditor.getIndentation(1), CodeEditor.getIndentation(1) + "public static void main(String[] args) {", CodeEditor.getIndentation(2), CodeEditor.getIndentation(1) + "}", "}" };
 					
 					strs = javamstrs;
 					
@@ -1046,14 +1046,14 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "cppmain":
-					String[] cppmstrs = { "#include <iostream>", "", "using namespace std;", "", "int main()", "{", "    return 0;", "}" };
+					String[] cppmstrs = { "#include <iostream>", "", "using namespace std;", "", "int main()", "{", CodeEditor.getIndentation(1) + "return 0;", "}" };
 					
 					strs = cppmstrs;
 					
 					break;
 					
 				case "cppmainargs":
-					String[] cppmastrs = { "#include <iostream>", "", "using namespace std;", "", "int main(int argc, char *argv[])", "{", "    return 0;", "}" };
+					String[] cppmastrs = { "#include <iostream>", "", "using namespace std;", "", "int main(int argc, char *argv[])", "{", CodeEditor.getIndentation(1) + "return 0;", "}" };
 					
 					strs = cppmastrs;
 					
@@ -1074,7 +1074,7 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "cmainargs":
-					String[] cmastrs = { "#include <stdio.h>", "", "int main(int argc, char *argv[])", "{", "    return 0;", "}" };
+					String[] cmastrs = { "#include <stdio.h>", "", "int main(int argc, char *argv[])", "{", CodeEditor.getIndentation(1) + "return 0;", "}" };
 					
 					strs = cmastrs;
 					
@@ -1088,14 +1088,14 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "ino":
-					String[] inostrs = { "void setup()", "{", "    ", "}", "", "void loop()", "{", "    ", "}" };
+					String[] inostrs = { "void setup()", "{", CodeEditor.getIndentation(1), "}", "", "void loop()", "{", CodeEditor.getIndentation(1), "}" };
 					
 					strs = inostrs;
 					
 					break;
 					
 				case "go":
-					String[] gostrs = { "package main", "", "import (", "    \"fmt\"", ")", "", "func main() {", "    ", "}" };
+					String[] gostrs = { "package main", "", "import (", CodeEditor.getIndentation(1) + "\"fmt\"", ")", "", "func main() {", CodeEditor.getIndentation(1), "}" };
 					
 					strs = gostrs;
 					

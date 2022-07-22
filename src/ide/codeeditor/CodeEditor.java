@@ -7065,6 +7065,22 @@ public class CodeEditor extends IDEComponent {
 			e.printStackTrace();
 		}
 	}
+	
+	public static String getIndentation(int level) {
+		StringBuilder b = new StringBuilder();
+		
+		if (indentSpaces) {
+			for (int i = 0, n = indentLength * level; i < n; i++) {
+				b.append(' ');
+			}
+		} else {
+			for (int i = 0, n = level; i < n; i++) {
+				b.append('\t');
+			}
+		}
+		
+		return b.toString();
+	}
 
 	public static void execTerminal() {
 		terminal = new CommandTerminal(Screen.WIDTH / 2 - 250, Screen.DECORATION_HEIGHT + 40 /*30*/, 500, 30); // 25
