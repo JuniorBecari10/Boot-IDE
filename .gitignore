@@ -1,10 +1,13 @@
 *.conf
 *.setconf
-/bin/*
-/bin/
 *.bat
-/Resources/
-/Resources/*
+*.log
+bin/*.conf
+bin/*.setconf
+bin/*.log
+bin/Resources
+Resources
+Resources/*
 *.txt
 *.log
 *.jar

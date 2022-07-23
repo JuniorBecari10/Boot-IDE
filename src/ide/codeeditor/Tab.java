@@ -155,7 +155,78 @@ public class Tab extends IDEComponent implements Serializable {
 	public String toString() {
 		return "Tab: Regent: " + regent;
 	}
-	
+
+	public void closeWithoutAnimation() {
+		closing = true;
+
+		if (Main.editor.editing != null && save) { // n�o for nulo
+			if (!Main.editor.editing.isSaved()) { // n�o estiver salvo
+				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
+
+				CodeEditor.setSystemLook();
+				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+
+				if (selectedOption == 0) save();
+				else if (selectedOption == 2) {
+					WindowInput.update();
+					closing = false;
+
+					return;
+				}
+			}
+		}
+
+		// por causa da thread
+		Tab t = this;
+
+		Main.editor.isMultilineCommenting = false; // TODO closeother reseta o cursor
+		Main.editor.isAnotherIteration = false;
+		Main.editor.foundExt = false;
+
+		Main.editor.toRemove.add(t);
+
+		Main.editor.selecting = false;
+
+		if (Main.editor.tabs.size() == 1) {
+			Main.editor.editing = null;
+
+			return;
+		}
+
+		if (!Main.editor.tabs.isEmpty()) {
+			Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() > 0 ? Main.editor.tabs.size() - 1 : 0).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
+
+			Tab next = Main.editor.tabs.indexOf(t) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(t) - 1);
+
+			if (Main.editor.toRemove != null && Main.editor.toRemove.get(0) != null && !Main.editor.toRemove.get(0).equals(t)) // aqui rola um nullpointerexception quando fecha uma tab | � o get(0) que � null
+				next = t;
+
+			if (Main.editor.toRemove.get(0) == null)
+				next = Main.editor.tabs.get(0);
+
+			if (Main.editor.editing == t) {
+				Main.editor.cursorX = 0;
+				Main.editor.cursorY = 1;
+			}
+
+			Main.editor.editing = next;
+
+			Main.editor.cursorX = cx;
+			Main.editor.cursorY = cy;
+
+			Main.editor.scrX = next.scrX;
+			Main.editor.scrY = next.scrY;
+
+			Main.editor.lines.clear();
+
+			try {
+				Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	/**
 	 * Fecha essa Tab.
 	 */
@@ -583,6 +654,8 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			return;
 		}
+		
+		if (width < 10) closeWithoutAnimation();
 		
 		int x = dragging == null ? this.x + Main.editor.tabScr : this.x;
 		

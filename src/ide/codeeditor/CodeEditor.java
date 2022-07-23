@@ -1026,7 +1026,7 @@ public class CodeEditor extends IDEComponent {
         for (char aChar : chars) {
             result.append(
                     String.format("%8s", Integer.toBinaryString(aChar))   // char -> int, auto-cast
-                            .replaceAll(" ", "0")                         // zero pads
+                            //.replaceAll(" ", "0")                         // zero pads
             );
         }
         return prettyBinary(result.toString(), 8, "");
@@ -8842,6 +8842,9 @@ public class CodeEditor extends IDEComponent {
 		
 		height = Main.screen.getHeight();
 		LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
+		
+		if (tabs.indexOf(editing) < 0 && !tabs.isEmpty())
+			tabs.get(0).select();
 		
 		/*if (editing != null && !tabs.isEmpty() && tabs.indexOf(editing) < 0)
 			tabs.get(0).select();*/

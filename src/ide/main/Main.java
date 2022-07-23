@@ -222,6 +222,8 @@ public class Main implements Runnable, Tickable {
 	        toolkit = Toolkit.getDefaultToolkit();
 	        screen = new Screen(PROGRAM_NAME);
 	        
+	        MaximizeWindow.maximize();
+	        
 	        lang = Language.ENG; // default
 	        
 	        UNKNOWN_FILE_ICON = Main.spritesheet.getSprite(0, 64, 16, 16);
