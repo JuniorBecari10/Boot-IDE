@@ -679,7 +679,7 @@ public class CodeEditor extends IDEComponent {
 			"map", "struct", "chan", "else", "goto", "package", "switch", "const", "fallthrough", "if", "range", "type",
 			"continue", "for", "import", "return", "var",
 			"bool", "int", "float32", "float64", "string", "uint8", "uint16", "uint32", "uint64", "int8", "int16",
-			"int32", "int64", "uint", "uintptr", "complex64", "complex128", "true", "false", "nil", "byte" };
+			"int32", "int64", "uint", "uintptr", "complex64", "complex128", "true", "false", "nil", "byte", "error" };
 
 	public static final String[] vbKeys = { "AddHandler", "AddressOf", "Alias", "And", "AndAlso", "As", "Boolean",
 			"ByRef", "Byte", "ByVal", "Call", "Case", "Catch", "CBool", "CByte", "CChar", "CDate", "CDbl", "CDec",
@@ -1158,7 +1158,7 @@ public class CodeEditor extends IDEComponent {
 				
 				for (String s : lines) {
 					StringBuilder b = new StringBuilder(s);
-					b.delete(45, 59);
+					b.delete(45, 59); // eliminar espaços que ficam depois
 					
 					s = b.toString();
 					
@@ -8849,9 +8849,7 @@ public class CodeEditor extends IDEComponent {
 		height = Main.screen.getHeight();
 		LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
 		
-		if (tabs.indexOf(editing) < 0 && !tabs.isEmpty())
-			tabs.get(0).select();
-		
+		// arrumar isso aqui pra n dar erro
 		/*if (editing != null && !tabs.isEmpty() && tabs.indexOf(editing) < 0)
 			tabs.get(0).select();*/
 		
