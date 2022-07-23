@@ -1115,7 +1115,8 @@ public class CodeEditor extends IDEComponent {
 				String raw = convertFileToBinary(file.toPath());
 				String[] lines = splitByNCharacters(raw, 32);
 				
-				for (int i = 0; i < lines.length; i++) {
+				
+				/*for (int i = 0; i < lines.length; i++) {
 					String[] line = new String[32];
 					int index = 0;
 					
@@ -1140,6 +1141,11 @@ public class CodeEditor extends IDEComponent {
 					s = s.substring(0, s.length() - 29);
 					
 					l.add(s);
+				}*/
+				
+				for (String s : lines) {
+					String[] parts = splitByNCharacters(s, 8);
+					l.add(String.join(" ", parts));
 				}
 				
 				break;
