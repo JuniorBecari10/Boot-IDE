@@ -8556,17 +8556,15 @@ public class CodeEditor extends IDEComponent {
 				}
 	
 	public void scrollTabs() {
-		if (MouseInput.hovered(x, 0, Main.screen.getWidth(), Tab.HEIGHT) && tabs != null && tabs.size() > 0) {
+		if (MouseInput.hovered(x, Screen.DECORATION_HEIGHT, Main.screen.getWidth(), Tab.HEIGHT) && tabs != null && tabs.size() > 0) {
 			if (MouseInput.isMouseRolling()) {
 				if (MouseInput.wheelUp() && tabScr < 0) {
 					MouseInput.updateMouseRoll();
-					
-					tabScr += 203; // 3 � a compensa��o para as tab n se distanciar
+					tabScr += 203; // 3 é a compensação para as tab n se distanciar
 				}
 				else if (MouseInput.wheelDown()
 						&& (tabs.get(tabs.size() - 1).getX() + tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280)) { // 280
 					MouseInput.updateMouseRoll();
-					
 					tabScr -= 203;
 				}
 
