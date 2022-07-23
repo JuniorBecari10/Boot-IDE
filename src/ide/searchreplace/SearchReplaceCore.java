@@ -163,7 +163,7 @@ public final class SearchReplaceCore {
 		occurnum++;
 		
 		CommandTerminal.runCommand("gotocursor");
-		Explorer.selected = null;
+		//Explorer.selected = null;
 	}
 	
 	public static void replaceAll(String searchText, String replaceText, boolean caseSensitive, boolean regex, boolean isEntireDocument) {
@@ -268,7 +268,7 @@ public final class SearchReplaceCore {
 		Main.screen.requestFocus();
 		
 		Main.editor.callAutomaticColor();
-		Explorer.selected = null;
+		//Explorer.selected = null;
 		
 		CodeEditor.setSystemLook();
 		JOptionPane.showMessageDialog(null, Texts.replaced + " " + Texts.occurences + " " + Texts.in +  " " + count + " " + Texts.lines + ".", Texts.success + "!", JOptionPane.INFORMATION_MESSAGE);

@@ -9306,9 +9306,14 @@ public class CodeEditor extends IDEComponent {
 				showCursor = true;
 	
 			// Desenhar cursor
-			if (showCursor && !WindowInput.isDeactivated() && drawcx > x + (FONT_SIZE * 4) - 1 && Explorer.selected == null) {
+			if (showCursor && !WindowInput.isDeactivated() && drawcx > x + (FONT_SIZE * 4) - 1) {
 				g.setColor(Colors.cursor);
-				g.fillRect(drawcx, drawcy, // na posi��o x 12 ele aparece um pouco encima dos numeros
+				
+				if (Explorer.selected != null) {
+					g.setColor(Colors.setAlpha(Colors.cursor, 127));
+				}
+				
+				g.fillRect(drawcx, drawcy, // na posição x 12 ele aparece um pouco encima dos numeros
 						FONT_SIZE > 10 ? 2 : 1, LINE_HEIGHT);
 			}
 	

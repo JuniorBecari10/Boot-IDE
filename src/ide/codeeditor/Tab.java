@@ -557,21 +557,6 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			Main.editor.tabScr = 0;
 			
-			try {
-				Main.editor.lines = Main.editor.readFile(regent.getRegent());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			Main.editor.cursorX = 0;
-			Main.editor.cursorY = 1;
-			
-			Main.editor.scrX = scrX;
-			Main.editor.scrY = scrY;
-			
-			Main.editor.cursorX = cx;
-			Main.editor.cursorY = cy;
-			
 			Main.editor.tabs.get(0).select();
 			
 			break;

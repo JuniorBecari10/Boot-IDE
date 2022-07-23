@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import ide.main.Main;
 
 /**
- * Uma classe para organizar as cores. Como se fosse uma paleta. Também tem outras coisas úteis.
+ * Uma classe para organizar as cores. Como se fosse uma paleta. Tambï¿½m tem outras coisas ï¿½teis.
  */
 public class Colors {
     
@@ -125,6 +125,10 @@ public class Colors {
     	img.getRGB(0, 0, img.getWidth(), img.getHeight(), pixels, 0, img.getWidth());
     	
     	return pixels;
+    }
+    
+    public static Color setAlpha(Color c, int alpha) {
+    	return new Color(c.getRed(), c.getGreen(), c.getBlue(), alpha);
     }
     
     /*public static BufferedImage brightness(BufferedImage img, float scaleFactor) {
