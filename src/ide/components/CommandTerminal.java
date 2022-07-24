@@ -1385,8 +1385,6 @@ public class CommandTerminal extends IDEComponent {
 	public void tick() {
 		//x = Main.screen.getWidth() / 2 - 250;
 		
-		if (x < 110) x = 110;
-		
 		if (x + width > Main.screen.getWidth() - 10) width = Main.screen.getWidth() - 10;
 		else width = originalWidth;
 		
@@ -1397,6 +1395,8 @@ public class CommandTerminal extends IDEComponent {
 			x = Main.screen.getWidth() / 2 - 250;
 			width = originalWidth;
 		}
+		
+		if (x < 110) x = 110;
 		
 		//System.out.println(width + ", " + Main.screen.getWidth());
 		
