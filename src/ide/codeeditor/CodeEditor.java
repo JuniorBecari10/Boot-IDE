@@ -63,6 +63,8 @@ public class CodeEditor extends IDEComponent {
 
 	public static int FONT_SIZE = 16; // 18, 16 (Padr�o: 16)
 	public static int LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
+	
+	public static final int CURSOR_OPACITY = 127;
 
 	final int originalEditorX = 280;
 
@@ -73,7 +75,7 @@ public class CodeEditor extends IDEComponent {
 	public boolean selecting;
 
 	public int line1, line2;
-	public int index1, index2; // TODO fazer a verifica��o do CSS se est� dentro do seletor, e se tiver, colore
+	public int index1, index2; // TODO fazer a verificação do CSS se está dentro do seletor, e se tiver, colore
 								// números
 	
 	public static final int MAX_UNDOS = 10;
@@ -9310,7 +9312,7 @@ public class CodeEditor extends IDEComponent {
 				g.setColor(Colors.cursor);
 				
 				if (Explorer.selected != null) {
-					g.setColor(Colors.setAlpha(Colors.cursor, 127));
+					g.setColor(Colors.setAlpha(Colors.cursor, CURSOR_OPACITY));
 				}
 				
 				g.fillRect(drawcx, drawcy, // na posição x 12 ele aparece um pouco encima dos numeros

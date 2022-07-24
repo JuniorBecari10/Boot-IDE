@@ -41,6 +41,8 @@ import ide.util.Texts;
  */
 public class CommandTerminal extends IDEComponent {
 	
+	public static final int MAX_CHARS = 49;
+	
 	public static boolean active = false;
 	private int cursorIndex = 0;
 	
@@ -136,6 +138,8 @@ public class CommandTerminal extends IDEComponent {
 		if (args.length == 0) {
 			switch (com) {
 			case "cmd":
+				// desabilitar se n for windows
+				
 				try {
 					ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start");
 					
@@ -1379,12 +1383,20 @@ public class CommandTerminal extends IDEComponent {
 	}
 	
 	public void tick() {
-		x = Main.screen.getWidth() / 2 - 250;
+		//x = Main.screen.getWidth() / 2 - 250;
 		
 		if (x < 110) x = 110;
 		
 		if (x + width > Main.screen.getWidth() - 10) width = Main.screen.getWidth() - 10;
 		else width = originalWidth;
+		
+		if (builder.length() > MAX_CHARS) {
+			x = 110;
+			width = Main.screen.getWidth() - 225;
+		} else {
+			x = Main.screen.getWidth() / 2 - 250;
+			width = originalWidth;
+		}
 		
 		//System.out.println(width + ", " + Main.screen.getWidth());
 		
@@ -1579,13 +1591,17 @@ public class CommandTerminal extends IDEComponent {
 		
 		g2.setStroke(new BasicStroke(3f));
 		
+		// caixa das sugestões
+		
 		if (!builder.toString().isEmpty()) {
 			g.setColor(Colors.explorer);
-			g2.fillRect(x - 155 > 10 ? x - 155 : 10, y + height + 15, width + 320, height * 20); // centralizar essa borda
+			g2.fillRect(x - 155 > 10 ? x - 155 : 10, y + height + 15, builder.length() <= MAX_CHARS ? width + 320 : width + 200, height * 20); // centralizar essa borda
 			
 			g.setColor(Colors.explorerLight);
-			g2.drawRect(x - 155 > 10 ? x - 155 : 10, y + height + 15, width + 320, height * 20);
+			g2.drawRect(x - 155 > 10 ? x - 155 : 10, y + height + 15, builder.length() <= MAX_CHARS ? width + 320 : width + 200, height * 20);
 		}
+		
+		// caixa do terminal
 		
 		g.setColor(Colors.explorer);
 		g2.fillRect(x - 100, y + 5, width + 200, height);
