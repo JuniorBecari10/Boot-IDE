@@ -229,13 +229,15 @@ public class CommandTerminal extends IDEComponent {
 			case "deselect":
 				if (Main.editor.editing == null) break;
 				
-				Main.editor.line1 = 0; // 0, n�o � 1 n�o?
+				Main.editor.line1 = 0; // 0, não é 1 não?
 				Main.editor.line2 = 0;
 				
 				Main.editor.index1 = 0;
 				Main.editor.index2 = 0;
 				
 				Main.editor.selecting = false;
+				
+				Explorer.entireDocument.setState(true);
 				break;
 				
 			case "resetundoredo":
