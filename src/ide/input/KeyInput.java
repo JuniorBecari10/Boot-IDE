@@ -6,8 +6,8 @@ import java.awt.event.KeyEvent;
 import ide.codeeditor.CodeEditor;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
+import ide.explorercomponents.SearchReplaceCore;
 import ide.main.Main;
-import ide.searchreplace.SearchReplaceCore;
 
 public final class KeyInput extends KeyAdapter {
 	

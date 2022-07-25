@@ -19,17 +19,17 @@ import ide.components.RenameFile;
 import ide.components.ReturnToBaseFolderButton;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
+import ide.explorercomponents.ExecuteButton;
+import ide.explorercomponents.InputBox;
+import ide.explorercomponents.SearchReplaceRadioButton;
+import ide.explorercomponents.SearchReplaceCore;
+import ide.explorercomponents.ToggleButton;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.screen.Screen;
-import ide.searchreplace.ExecuteButton;
-import ide.searchreplace.InputBox;
-import ide.searchreplace.RadioButton;
-import ide.searchreplace.SearchReplaceCore;
-import ide.searchreplace.ToggleButton;
 import ide.util.Colors;
 import ide.util.Language;
 import ide.util.Texts;
@@ -51,7 +51,7 @@ public class Explorer extends IDEComponent {
 	
 	public static InputBox search, replace;
 	public static ToggleButton caseSensitive, regex;
-	public static RadioButton entireDocument, selectedLines;
+	public static SearchReplaceRadioButton entireDocument, selectedLines;
 	public static ExecuteButton searchNext, replaceAll;
 	
 	public static int MINIMUM_Y = 200 + Screen.DECORATION_HEIGHT;

@@ -1,4 +1,4 @@
-package ide.searchreplace;
+package ide.explorercomponents;
 
 import java.awt.Graphics;
 

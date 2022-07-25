@@ -1,4 +1,4 @@
-package ide.searchreplace;
+package ide.explorercomponents;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,10 +49,10 @@ public final class SearchReplaceCore {
 			Explorer.replace = new InputBox(20, Screen.DECORATION_HEIGHT + 170, Main.explorer.getWidth() - 40, 20);
 		
 		if (Explorer.entireDocument == null)
-			Explorer.entireDocument = new RadioButton(Main.explorer.getWidth() - 100, Screen.DECORATION_HEIGHT + 210, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true);
+			Explorer.entireDocument = new SearchReplaceRadioButton(Main.explorer.getWidth() - 100, Screen.DECORATION_HEIGHT + 210, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true);
 		
 		if (Explorer.selectedLines == null)
-			Explorer.selectedLines = new RadioButton(Main.explorer.getWidth() - 62, Screen.DECORATION_HEIGHT + 210, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false);
+			Explorer.selectedLines = new SearchReplaceRadioButton(Main.explorer.getWidth() - 62, Screen.DECORATION_HEIGHT + 210, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false);
 		
 		if (Explorer.caseSensitive == null)
 			Explorer.caseSensitive = new ToggleButton(20, Screen.DECORATION_HEIGHT + 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430);
@@ -72,7 +72,7 @@ public final class SearchReplaceCore {
 		Explorer.selected = null;
 		
 		for (IDEComponent i : IDEComponent.components) {
-			if (i instanceof BackButton || i instanceof InputBox || i instanceof ToggleButton || i instanceof ExecuteButton || i instanceof RadioButton)
+			if (i instanceof BackButton || i instanceof InputBox || i instanceof ToggleButton || i instanceof ExecuteButton || i instanceof SearchReplaceRadioButton)
 				IDEComponent.toRemove.add(i);
 		}
 	}

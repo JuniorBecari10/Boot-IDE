@@ -1,4 +1,4 @@
-package ide.searchreplace;
+package ide.explorercomponents;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -16,7 +16,7 @@ import ide.main.Main;
 import ide.util.Colors;
 import ide.util.Language;
 
-public class RadioButton extends IDEComponent {
+public class SearchReplaceRadioButton extends IDEComponent {
 
 	private boolean state;
 	private String caption;
@@ -26,7 +26,7 @@ public class RadioButton extends IDEComponent {
 	private boolean isEntireDoc;
 	//private BufferedImage originalSprite;
 	
-	public RadioButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption, int engLength, int portLength, boolean isEntireDoc) {
+	public SearchReplaceRadioButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption, int engLength, int portLength, boolean isEntireDoc) {
 		super(x, y, width, height, sprite);
 		
 		this.state = state;
