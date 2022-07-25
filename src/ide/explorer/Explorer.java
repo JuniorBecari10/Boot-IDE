@@ -56,7 +56,8 @@ public class Explorer extends IDEComponent {
 	
 	public static int MINIMUM_Y = 200 + Screen.DECORATION_HEIGHT;
 	
-	public static boolean searchReplaceActive = false;
+	//public static boolean searchReplaceActive = false;
+	public static ExplorerMode explorerMode = ExplorerMode.EXPLORER;
 	
 	public static boolean hoveringListableFile;
 	
@@ -123,7 +124,7 @@ public class Explorer extends IDEComponent {
 	    /*if (WindowInput.isMaximized() || !WindowInput.isActivated())
 	    	ReloadButton.reloadExplorer();*/
 	    
-	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && searchReplaceActive) {
+	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && explorerMode == ExplorerMode.SEARCHREPLACE) {
 	    	SearchReplaceCore.dispose();
 	    }
 	    
@@ -161,7 +162,7 @@ public class Explorer extends IDEComponent {
 	    if (hovered())
 	    	Main.screen.setCursor(Cursor.getDefaultCursor());
 			
-			if (searchReplaceActive) {
+			if (explorerMode == ExplorerMode.SEARCHREPLACE) {
 				if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_K) {
 					KeyInput.updateKeys();
 					
@@ -169,7 +170,7 @@ public class Explorer extends IDEComponent {
 				}
 	    }
 	    
-	    if (!searchReplaceActive) {
+	    if (explorerMode == ExplorerMode.EXPLORER) {
 	    	if (ListableFile.files.isEmpty() && files.isEmpty()) hoveringListableFile = false;
 	    	
 	    	if (Main.baseFolder == null || !Main.baseFolder.exists()) {
@@ -394,7 +395,7 @@ public class Explorer extends IDEComponent {
         g.setColor(Colors.explorer);
         g.fillRect(x, y, width, height); 
         
-        if (!searchReplaceActive) {
+        if (explorerMode == ExplorerMode.EXPLORER) {
 	        int xd = Main.lang == Language.PORT ? x + 40 : x + 60;
 	        //int x2d = Main.lang == Language.PORT ? xd + 14 : xd + 16; // dar uma arrumada
 	        
@@ -409,7 +410,7 @@ public class Explorer extends IDEComponent {
 	    g2.setStroke(new BasicStroke(3f));
 	    g2.drawLine(width - 1, Screen.DECORATION_HEIGHT, width - 1, height); // linha vertical que divide do codeeditor
 	        
-	    if (!searchReplaceActive) {
+	    if (explorerMode == ExplorerMode.EXPLORER) {
 	        if (Main.baseFolder == null || baseFolderName == null) return;
 	        
 	        Fonts.drawString(baseFolderName, x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 23), g);

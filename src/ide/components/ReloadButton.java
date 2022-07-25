@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import ide.explorer.Explorer;
+import ide.explorer.ExplorerMode;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -21,7 +22,7 @@ public class ReloadButton extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (CommandTerminal.expOff || Explorer.searchReplaceActive) return;
+		if (CommandTerminal.expOff || Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) return;
 		
 		x = Main.explorer.getWidth() - 40;
 		
@@ -42,7 +43,7 @@ public class ReloadButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		if (CommandTerminal.expOff || Explorer.searchReplaceActive) return;
+		if (CommandTerminal.expOff || Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) return;
 		
 		if (Main.baseFolder == null) toRemove.add(this);
 		

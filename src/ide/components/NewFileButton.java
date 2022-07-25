@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import ide.explorer.Explorer;
+import ide.explorer.ExplorerMode;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.MouseInput;
@@ -20,7 +21,7 @@ public class NewFileButton extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (CommandTerminal.expOff || Explorer.searchReplaceActive) return;
+		if (CommandTerminal.expOff || Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) return;
 		if (Main.baseFolder == null) toRemove.add(this);
 		
 		x = Main.explorer.getWidth() - 200;
@@ -45,7 +46,7 @@ public class NewFileButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		if (CommandTerminal.expOff || Explorer.searchReplaceActive) return;
+		if (CommandTerminal.expOff || Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) return;
 		
 		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
 			g.setColor(Colors.backgroundLight);

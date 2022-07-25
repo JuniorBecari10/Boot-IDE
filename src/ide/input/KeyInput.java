@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 import ide.codeeditor.CodeEditor;
 import ide.explorer.Explorer;
+import ide.explorer.ExplorerMode;
 import ide.main.Main;
 import ide.searchreplace.SearchReplaceCore;
 
@@ -71,7 +72,7 @@ public final class KeyInput extends KeyAdapter {
         
         Main.editor.typeLogic();
         
-        if (Explorer.searchReplaceActive) {
+        if (Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) {
 	    	if (Explorer.search == null || Explorer.replace == null || Explorer.caseSensitive == null || Explorer.regex == null || Explorer.entireDocument == null || Explorer.selectedLines == null || Explorer.searchNext == null || Explorer.replaceAll == null)
 	    		SearchReplaceCore.initComponents();
 	    	

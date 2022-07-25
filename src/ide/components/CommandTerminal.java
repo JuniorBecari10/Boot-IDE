@@ -21,6 +21,7 @@ import ide.codeeditor.CodeEditor;
 import ide.codeeditor.FileReadMode;
 import ide.codeeditor.Tab;
 import ide.explorer.Explorer;
+import ide.explorer.ExplorerMode;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -479,7 +480,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				expOff ^= true;	// uma forma de togglar boolean (^ é xor gate)
 				
-				if (Explorer.searchReplaceActive)
+				if (Explorer.explorerMode == ExplorerMode.EXPLORER)
 					SearchReplaceCore.dispose();
 				
 				break;

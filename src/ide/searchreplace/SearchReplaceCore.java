@@ -12,6 +12,7 @@ import ide.codeeditor.IDELine;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
+import ide.explorer.ExplorerMode;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.util.Texts;
@@ -67,7 +68,7 @@ public final class SearchReplaceCore {
 	}
 	
 	public static synchronized void dispose() {
-		Explorer.searchReplaceActive = false;
+		Explorer.explorerMode = ExplorerMode.EXPLORER;
 		Explorer.selected = null;
 		
 		for (IDEComponent i : IDEComponent.components) {

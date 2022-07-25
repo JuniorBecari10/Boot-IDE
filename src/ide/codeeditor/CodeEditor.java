@@ -38,6 +38,7 @@ import ide.components.RenameFile;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
+import ide.explorer.ExplorerMode;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
@@ -210,7 +211,7 @@ public class CodeEditor extends IDEComponent {
 			"float", "for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long", "native",
 			"new", "package", "private", "protected", "public", "return", "short", "static", "strictfp", "super",
 			"switch", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile", "while",
-			"true", "false", "null", "yield", "sealed", "var" };
+			"true", "false", "null", "yield", "sealed", "var", "record" };
 
 	public static final String[] tags = { "<!--", "<!doctype", "<?php", "<!DOCTYPE", "<a", "<abbr", "<acronym",
 			"<address", "<applet", "<area", "<article", "<aside", "<audio", "<b", "<base", "<basefont", "<bdi", "<bdo",
@@ -7232,7 +7233,7 @@ public class CodeEditor extends IDEComponent {
 
 			RightClickOption.removeAllRightClickOptions(); // arrumar o neg�cio
 			
-			Explorer.searchReplaceActive = true;
+			Explorer.explorerMode = ExplorerMode.SEARCHREPLACE;
 			SearchReplaceCore.init();
 			
 			/*if (!alreadyAddedFrame) {
@@ -8254,7 +8255,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 					
-					else if (Explorer.searchReplaceActive && Explorer.selected == null && KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Selecionar a caixa Search)
+					else if (Explorer.explorerMode == ExplorerMode.SEARCHREPLACE && Explorer.selected == null && KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Selecionar a caixa Search)
 						KeyInput.updateKeys();
 						
 						Explorer.selected = Explorer.search;
@@ -8717,7 +8718,7 @@ public class CodeEditor extends IDEComponent {
 				if (editing != null) {
 					list.add(new RightClickOption(0, 0, width, Texts.openDefault, (s) -> execute(s), "opendef"));
 					
-					list.add(new RightClickOption(0, 0, width, !Explorer.searchReplaceActive, Texts.open + " " + Texts.searchReplace, (s) -> execute(s), "searchrep"));
+					list.add(new RightClickOption(0, 0, width, Explorer.explorerMode == ExplorerMode.EXPLORER, Texts.open + " " + Texts.searchReplace, (s) -> execute(s), "searchrep"));
 					list.add(new RightClickOption(0, 0, width, Texts.selectLine, (s) -> CommandTerminal.runCommand(s), "selectline"));
 					list.add(new RightClickOption(0, 0, width, Texts.selectAll, (s) -> CommandTerminal.runCommand(s), "selectall"));
 					
@@ -8744,7 +8745,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (MouseInput.isLeftPressed() || (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() != KeyEvent.VK_BACK_SPACE) && ((cursorX != index1 && cursorY != line1) && (cursorX != index2 && cursorY != line2) && !RightClickOption.anyRightClickOptionHovered())) {
-			if (Main.explorer.hovered() && !Explorer.searchReplaceActive)
+			if (Main.explorer.hovered() && Explorer.explorerMode == ExplorerMode.EXPLORER)
 				CommandTerminal.runCommand("deselect");
 		}
 	}

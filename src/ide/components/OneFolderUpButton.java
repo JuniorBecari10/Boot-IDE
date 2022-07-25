@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import ide.explorer.Explorer;
+import ide.explorer.ExplorerMode;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -22,7 +23,7 @@ public class OneFolderUpButton extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (CommandTerminal.expOff || Explorer.searchReplaceActive) return;
+		if (CommandTerminal.expOff || Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) return;
 		if (Main.baseFolder == null) toRemove.add(this);
 		
 		x = Main.explorer.getWidth() - 120;
@@ -44,8 +45,8 @@ public class OneFolderUpButton extends IDEComponent {
 		Explorer.files.clear();
 		ListableFile.files.clear();
 		
-		if (Explorer.scope.getParent() == null) { // se for null é porque é a base folder
-			Explorer.scope = null; // coloca depois da verificação pra n dar exception
+		if (Explorer.scope.getParent() == null) { // se for null ï¿½ porque ï¿½ a base folder
+			Explorer.scope = null; // coloca depois da verificaï¿½ï¿½o pra n dar exception
 			
 			int index = 0;
 			
@@ -55,12 +56,12 @@ public class OneFolderUpButton extends IDEComponent {
 				index++;
 			}
 		}
-		else // se não for é porque tem pasta antes
+		else // se nï¿½o for ï¿½ porque tem pasta antes
 			Explorer.files = ListableFile.loadFolder(Explorer.scope.getParent());
 	}
 	
 	public void render(Graphics g) {
-		if (CommandTerminal.expOff || Explorer.searchReplaceActive) return;
+		if (CommandTerminal.expOff || Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) return;
 		
 		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
 			g.setColor(Colors.backgroundLight);

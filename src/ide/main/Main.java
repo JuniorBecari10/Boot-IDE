@@ -39,6 +39,7 @@ import ide.components.RenameFile;
 import ide.components.ReturnToBaseFolderButton;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
+import ide.explorer.ExplorerMode;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -878,7 +879,7 @@ public class Main implements Runnable, Tickable {
 				}
 	        }
         
-        if (explorer.hovered() && !CommandTerminal.expOff && !Explorer.searchReplaceActive) {
+        if (explorer.hovered() && !CommandTerminal.expOff && Explorer.explorerMode == ExplorerMode.EXPLORER) {
         	if (MouseInput.hovered(explorer.getX() + 10, Screen.DECORATION_HEIGHT + 140, explorer.getWidth() - 10, 23) && Explorer.showBaseFolderCard && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
         		int xdr = MouseInput.getMouseX() + 10;
     			int ydr = MouseInput.getMouseY() - 10;
