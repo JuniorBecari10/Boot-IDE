@@ -20,9 +20,10 @@ import ide.components.ReturnToBaseFolderButton;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.explorercomponents.ExecuteButton;
+import ide.explorercomponents.ExplorerTab;
 import ide.explorercomponents.InputBox;
-import ide.explorercomponents.SearchReplaceRadioButton;
 import ide.explorercomponents.SearchReplaceCore;
+import ide.explorercomponents.SearchReplaceRadioButton;
 import ide.explorercomponents.ToggleButton;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -38,6 +39,8 @@ public class Explorer extends IDEComponent {
 	
 	public static List<ListableFile> files;
 	public static List<ListableFile> toRemove;
+	
+	public static List<ExplorerTab> tabs;
 	
 	public static ListableFile scope;
 
@@ -56,7 +59,6 @@ public class Explorer extends IDEComponent {
 	
 	public static int MINIMUM_Y = 200 + Screen.DECORATION_HEIGHT;
 	
-	//public static boolean searchReplaceActive = false;
 	public static ExplorerMode explorerMode = ExplorerMode.EXPLORER;
 	
 	public static boolean hoveringListableFile;
@@ -78,8 +80,19 @@ public class Explorer extends IDEComponent {
     public Explorer(int x, int y, int width, int height) {
         super(x, y, width, height, null);
         
+        tabs = new ArrayList<>();
+        
+        addTabs();
+        
         files = new ArrayList<>();
         toRemove = new ArrayList<>();
+    }
+    
+    private void addTabs() {
+    	int x = 1;
+    	
+    	tabs.add(new ExplorerTab(x, Main.explorerTab, ExplorerMode.EXPLORER));
+    	x += ExplorerTab.SIZE;	
     }
     
     public static String getScopePath() {
@@ -385,6 +398,9 @@ public class Explorer extends IDEComponent {
 		        	f.tick();
 	    	} catch (Exception e) { return; }
 	    }
+	    
+	    for (ExplorerTab t : tabs)
+	    	t.tick();
     }
 
     public synchronized void render(Graphics g) {
@@ -395,16 +411,16 @@ public class Explorer extends IDEComponent {
         g.setColor(Colors.explorer);
         g.fillRect(x, y, width, height); 
         
-        if (explorerMode == ExplorerMode.EXPLORER) {
-	        int xd = Main.lang == Language.PORT ? x + 40 : x + 60;
-	        //int x2d = Main.lang == Language.PORT ? xd + 14 : xd + 16; // dar uma arrumada
-	        
-	        Fonts.drawString(Texts.explorerText, (width / 2 - xd) - (Main.lang == Language.PORT ? 40 : 0), y + 30, new IDEFont(Fonts.lightGrayNormal, 23), g);
-	        g.setColor(Colors.textLight);
-	        
-	        /*g2.setStroke(new BasicStroke(2f));
-	        g.drawLine(width / 2 - xd, y + 60, width / 2 + x2d, y + 60);*/
-        }
+//        if (explorerMode == ExplorerMode.EXPLORER) {
+//	        int xd = Main.lang == Language.PORT ? x + 40 : x + 60;
+//	        //int x2d = Main.lang == Language.PORT ? xd + 14 : xd + 16; // dar uma arrumada
+//	        
+//	        Fonts.drawString(Texts.explorerText, (width / 2 - xd) - (Main.lang == Language.PORT ? 40 : 0), y + 30, new IDEFont(Fonts.lightGrayNormal, 23), g);
+//	        g.setColor(Colors.textLight);
+//	        
+//	        /*g2.setStroke(new BasicStroke(2f));
+//	        g.drawLine(width / 2 - xd, y + 60, width / 2 + x2d, y + 60);*/
+//        }
 	    
         g.setColor(Colors.explorerLight);
 	    g2.setStroke(new BasicStroke(3f));
@@ -445,5 +461,13 @@ public class Explorer extends IDEComponent {
 	    		g.drawLine(Main.editor.getX(), Screen.DECORATION_HEIGHT + 3, Main.editor.getX(), CodeEditor.MIN_Y - 1);
 	        }
 	    }
+	    
+	    g.setColor(Colors.textLight);
+		g2.setStroke(new BasicStroke(3f));
+		
+		g2.drawLine(0, ExplorerTab.Y + ExplorerTab.SIZE, width, ExplorerTab.Y + ExplorerTab.SIZE);
+	    
+	    for (ExplorerTab t : tabs)
+	    	t.render(g); 
     }
 }

@@ -195,6 +195,11 @@ public class Main implements Runnable, Tickable {
     
     public static BufferedImage deactivatedMacButtons;
     
+    public static BufferedImage explorerTab;
+    public static BufferedImage searchReplaceTab;
+    public static BufferedImage gitTab;
+    public static BufferedImage terminalTab;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -266,6 +271,11 @@ public class Main implements Runnable, Tickable {
 	        minimizeWindowSpr = spritesheet.getSprite(279, 0, 7, 7);
 	        maximizeWindowSpr = spritesheet.getSprite(272, 7, 7, 7);
 	        maximizedWindowSpr = spritesheet.getSprite(279, 7, 7, 7);
+	        
+	        explorerTab = spritesheet.getSprite(320, 0, 16, 16);
+	        searchReplaceTab = spritesheet.getSprite(336, 0, 16, 16);
+	        gitTab = spritesheet.getSprite(352, 0, 16, 16);
+	        terminalTab = spritesheet.getSprite(368, 0, 16, 16);
 	        
 	        ///////
 	        
@@ -397,6 +407,11 @@ public class Main implements Runnable, Tickable {
         
         hexView = Colors.swapColor(hexView, Colors.textLightDefault, Colors.textLight);
         binView = Colors.swapColor(binView, Colors.textLightDefault, Colors.textLight);
+        
+        explorerTab = Colors.swapColor(explorerTab, Colors.textLightDefault, Colors.textLight);
+        searchReplaceTab = Colors.swapColor(searchReplaceTab, Colors.textLightDefault, Colors.textLight);
+        gitTab = Colors.swapColor(gitTab, Colors.textLightDefault, Colors.textLight);
+        terminalTab = Colors.swapColor(terminalTab, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         
@@ -608,7 +623,7 @@ public class Main implements Runnable, Tickable {
 		}
     }
     
-    // o settings file t�
+    // o settings file tá
     public static void readFile(File setFile) {
     	int lccx = 0, lccy = 0; // local cx (cursor x)
     	
