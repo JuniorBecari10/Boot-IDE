@@ -1,6 +1,7 @@
 package ide.explorer;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -89,10 +90,18 @@ public class Explorer extends IDEComponent {
     }
     
     private void addTabs() {
-    	int x = 1;
-    	
-    	tabs.add(new ExplorerTab(x, Main.explorerTab, ExplorerMode.EXPLORER));
-    	x += ExplorerTab.SIZE;	
+    	tabs.add(new ExplorerTab(1, Main.explorerTab, ExplorerMode.EXPLORER) {
+    		public void select() {
+    			SearchReplaceCore.dispose();
+    		}
+    	});
+    	tabs.add(new ExplorerTab(1 + 3 + ExplorerTab.SIZE, Main.searchReplaceTab, ExplorerMode.SEARCHREPLACE) {
+    		public void select() {
+    			Main.editor.execute("searchrep");
+    		}
+    	});
+    	tabs.add(new ExplorerTab(1 + 6 + (ExplorerTab.SIZE * 2), Main.gitTab, ExplorerMode.GIT));
+    	tabs.add(new ExplorerTab(1 + 9 + (ExplorerTab.SIZE * 3), Main.terminalTab, ExplorerMode.TERMINAL));
     }
     
     public static String getScopePath() {
@@ -462,12 +471,22 @@ public class Explorer extends IDEComponent {
 	        }
 	    }
 	    
+	    for (ExplorerTab t : tabs)
+	    	t.render(g);
+	    
+	    // linha encima do explorer
 	    g.setColor(Colors.textLight);
 		g2.setStroke(new BasicStroke(3f));
-		
-		g2.drawLine(0, ExplorerTab.Y + ExplorerTab.SIZE, width, ExplorerTab.Y + ExplorerTab.SIZE);
+	    g2.drawLine(0, ExplorerTab.Y + ExplorerTab.SIZE, width - 3, ExplorerTab.Y + ExplorerTab.SIZE);
 	    
-	    for (ExplorerTab t : tabs)
-	    	t.render(g); 
+	    // Desenhar encima da tab
+	    for (ExplorerTab t : tabs) {
+	    	if (Explorer.explorerMode == t.regent) {
+	    		Color bg = t.hovered() ? Colors.explorerLight : Colors.codeEditor;
+	    		
+				g.setColor(bg);
+				g.fillRect(t.getX() + 2, ExplorerTab.Y + ExplorerTab.SIZE - 3, ExplorerTab.SIZE - 3, 8);
+			}
+	    }
     }
 }

@@ -15,7 +15,7 @@ import ide.util.Colors;
 public class ExplorerTab extends IDEComponent {
 	
 	public static final int Y = Screen.DECORATION_HEIGHT + 3;
-	public static final int SIZE = 30;
+	public static final int SIZE = 35;
 	
 	public ExplorerMode regent;
 
@@ -26,15 +26,13 @@ public class ExplorerTab extends IDEComponent {
 	}
 	
 	public void select() {
-		Explorer.explorerMode = regent;
+		// it does nothing, you have to implement
+		//Explorer.explorerMode = regent;
 	}
 	
 	public void tick() {
 		if (leftClicked())
 			select();
-		
-		if (Explorer.tabs.indexOf(this) > 0)
-			x = Explorer.tabs.indexOf(this) - 1 + SIZE;
 	}
 	
 	public void render(Graphics g) {
@@ -50,12 +48,7 @@ public class ExplorerTab extends IDEComponent {
 		g.setColor(c);
 		g.drawRect(x, Y, SIZE, SIZE);
 		
-		if (Explorer.explorerMode == regent) {
-			g.setColor(bg);
-			g.fillRect(x + 2, Y + SIZE - 4, SIZE - 3, 8);
-		}
-		
-		final int imageSize = 24;
+		final int imageSize = 32;
 		g.drawImage(sprite, x + ((SIZE / 2) - (imageSize / 2)), Y + ((SIZE / 2) - (imageSize / 2)), imageSize, imageSize, null);
 	}
 }

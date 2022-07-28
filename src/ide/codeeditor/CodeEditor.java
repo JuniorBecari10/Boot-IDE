@@ -9334,6 +9334,8 @@ public class CodeEditor extends IDEComponent {
 				t.render(g);
 			}
 			
+			///////
+			
 			if (Tab.dragging != null)
 	        	Tab.dragging.render(g);
 			

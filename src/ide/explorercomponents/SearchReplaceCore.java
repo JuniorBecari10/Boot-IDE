@@ -25,7 +25,7 @@ public final class SearchReplaceCore {
 	public static synchronized void init() {
 		initComponents();
 		
-		IDEComponent.toAdd.add(new BackButton(20, Screen.DECORATION_HEIGHT + 20, 24, 24, Main.back));
+		//IDEComponent.toAdd.add(new BackButton(20, Screen.DECORATION_HEIGHT + 20, 24, 24, Main.back));
 		IDEComponent.toAdd.add(Explorer.search);
 		IDEComponent.toAdd.add(Explorer.replace);
 		
