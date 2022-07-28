@@ -323,6 +323,8 @@ public class Main implements Runnable, Tickable {
 	        if (!alreadyLoaded)
 	        	load(conffile);
 	        
+	        explorer.addTabs();
+	        
 	        if (forceMacButtons || os == OS.MAC) {
 	        	closeWindowSpr = spritesheet.getSprite(288, 0, 7, 7);
 	        	minimizeWindowSpr = spritesheet.getSprite(295, 0, 7, 7);
@@ -943,7 +945,7 @@ public class Main implements Runnable, Tickable {
     			g2.setStroke(new BasicStroke(2f));
     			g2.drawRect(xdr, MouseInput.getMouseY() - 15, wdr, hdr);
     			
-    			Fonts.drawString(Texts.actualFolder_, xdr + 10, ydr + 10, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+    			Fonts.drawString(Texts.currentFolder, xdr + 10, ydr + 10, new IDEFont(Fonts.lighterGrayNormal, 16), g);
     			Fonts.drawString(scopeStr, xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
         	}
         }

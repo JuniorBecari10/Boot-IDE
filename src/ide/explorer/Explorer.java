@@ -83,25 +83,23 @@ public class Explorer extends IDEComponent {
         
         tabs = new ArrayList<>();
         
-        addTabs();
-        
         files = new ArrayList<>();
         toRemove = new ArrayList<>();
     }
     
-    private void addTabs() {
-    	tabs.add(new ExplorerTab(1, Main.explorerTab, ExplorerMode.EXPLORER) {
+    public void addTabs() {
+    	tabs.add(new ExplorerTab(1, Main.explorerTab, ExplorerMode.EXPLORER, Texts.explorerText) {
     		public void select() {
     			SearchReplaceCore.dispose();
     		}
     	});
-    	tabs.add(new ExplorerTab(1 + 3 + ExplorerTab.SIZE, Main.searchReplaceTab, ExplorerMode.SEARCHREPLACE) {
+    	tabs.add(new ExplorerTab(1 + 3 + ExplorerTab.SIZE, Main.searchReplaceTab, ExplorerMode.SEARCHREPLACE, Texts.searchReplace) {
     		public void select() {
     			Main.editor.execute("searchrep");
     		}
     	});
-    	tabs.add(new ExplorerTab(1 + 6 + (ExplorerTab.SIZE * 2), Main.gitTab, ExplorerMode.GIT));
-    	tabs.add(new ExplorerTab(1 + 9 + (ExplorerTab.SIZE * 3), Main.terminalTab, ExplorerMode.TERMINAL));
+    	tabs.add(new ExplorerTab(1 + 6 + (ExplorerTab.SIZE * 2), Main.gitTab, ExplorerMode.GIT, "Git "));
+    	tabs.add(new ExplorerTab(1 + 9 + (ExplorerTab.SIZE * 3), Main.terminalTab, ExplorerMode.TERMINAL, "Terminal"));
     }
     
     public static String getScopePath() {

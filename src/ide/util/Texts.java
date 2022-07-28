@@ -36,7 +36,7 @@ public final class Texts {
 	public static String fileAsReadOnly;
 	
 	public static String baseFolder_; // _ � dois pontos :
-	public static String actualFolder_;
+	public static String currentFolder;
 	
 	public static String esc_Cancel;
 	public static String enter_Create;
@@ -227,7 +227,7 @@ public final class Texts {
 			fileAsReadOnly = "Esse arquivo está como somente leitura.";
 			
 			baseFolder_ = "Pasta Base:";
-			actualFolder_ = "Pasta Atual:";
+			currentFolder = "Pasta Atual:";
 			
 			esc_Cancel = "[Esc] Cancelar";
 			
@@ -418,7 +418,7 @@ public final class Texts {
 			fileAsReadOnly = "This file is as Read-Only.";
 			
 			baseFolder_ = "Base Folder:";
-			actualFolder_ = "Current Folder:";
+			currentFolder = "Current Folder:";
 			
 			esc_Cancel = "[Esc] Cancel";
 			
