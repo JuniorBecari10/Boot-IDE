@@ -6,12 +6,16 @@ RUNCD=cd bin
 RUN=java
 RUNARGS=ide.main.Start -cp .
 
+MANIFESTNAME=manifest.txt
+MANIFESTCONTENT=Main-Class: ide.main.Start
+
 JARCD=cd bin
-JAR=jar cf Boot-IDE.jar *
+JAR=jar cfm Boot-IDE.jar $(MANIFESTNAME) *
 LAUNCHJAR=java -jar Boot-IDE.jar
 
 build: compile
 all: compile
+jar: manifest createjar clean
 
 compile:
 	$(COMPCD) && \
@@ -21,10 +25,18 @@ run:
 	$(RUNCD) && \
 	$(RUN) $(RUNARGS)
 
-jar:
+createjar:
 	$(JARCD) && \
 	$(JAR)
 
 launchjar:
 	$(JARCD) && \
 	$(LAUNCHJAR)
+
+manifest:
+	$(JARCD) && \
+	echo $(MANIFESTCONTENT) >> $(MANIFESTNAME)
+
+clean:
+	$(JARCD) && \
+	del $(MANIFESTNAME)
