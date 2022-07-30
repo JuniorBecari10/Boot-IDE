@@ -24,6 +24,13 @@ public abstract class TopComponent extends IDEComponent {
 		super(x, y, width, height, sprite);
 	}
 	
+	public static boolean anyTopComponentHovered() {
+		for (TopComponent t : topComponents)
+			if (t.hovered()) return true;
+		
+		return false;
+	}
+	
 	public void render(Graphics g) {
 		if (hovered() && !(Main.forceMacButtons || Main.os == OS.MAC)) {
 			g.setColor(Colors.explorerLighter);

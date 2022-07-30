@@ -20,9 +20,9 @@ public class MinimizeWindow extends TopComponent {
 		else
 			x = Screen.DECORATION_HEIGHT;
 		
-		if ((Main.forceMacButtons || Main.os == OS.MAC) && hovered())
+		if ((Main.forceMacButtons || Main.os == OS.MAC) && anyTopComponentHovered())
 			sprite = Main.minimizeWindowHoverSpr;
-		else if ((Main.forceMacButtons || Main.os == OS.MAC) && !hovered())
+		else if ((Main.forceMacButtons || Main.os == OS.MAC) && !anyTopComponentHovered())
 			sprite = Main.minimizeWindowSpr;
 		
 		if (WindowInput.isDeactivated() && (Main.forceMacButtons || Main.os == OS.MAC))

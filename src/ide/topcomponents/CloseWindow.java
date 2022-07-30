@@ -19,9 +19,9 @@ public class CloseWindow extends TopComponent {
 		else
 			x = 0;
 		
-		if ((Main.forceMacButtons || Main.os == OS.MAC) && hovered())
+		if ((Main.forceMacButtons || Main.os == OS.MAC) && anyTopComponentHovered())
 			sprite = Main.closeWindowHoverSpr;
-		else if ((Main.forceMacButtons || Main.os == OS.MAC) && !hovered())
+		else if ((Main.forceMacButtons || Main.os == OS.MAC) && !anyTopComponentHovered())
 			sprite = Main.closeWindowSpr;
 		
 		if (WindowInput.isDeactivated() && (Main.forceMacButtons || Main.os == OS.MAC))

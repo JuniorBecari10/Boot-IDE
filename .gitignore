@@ -6,6 +6,7 @@ bin/*.conf
 bin/*.setconf
 bin/*.log
 bin/Resources
+bin/.gitignore
 Resources
 Resources/*
 *.txt
