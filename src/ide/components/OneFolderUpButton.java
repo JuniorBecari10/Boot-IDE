@@ -3,7 +3,6 @@ package ide.components;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
@@ -48,13 +47,7 @@ public class OneFolderUpButton extends IDEComponent {
 		if (Explorer.scope.getParent() == null) { // se for null � porque � a base folder
 			Explorer.scope = null; // coloca depois da verifica��o pra n dar exception
 			
-			int index = 0;
-			
-			for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
-				Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
-				
-				index++;
-			}
+			Explorer.files = ListableFile.loadFolder(ListableFile.newListableFile(Main.baseFolder));
 		}
 		else // se n�o for � porque tem pasta antes
 			Explorer.files = ListableFile.loadFolder(Explorer.scope.getParent());

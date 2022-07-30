@@ -434,7 +434,27 @@ public class Explorer extends IDEComponent {
 	    g2.drawLine(width - 1, Screen.DECORATION_HEIGHT, width - 1, height); // linha vertical que divide do codeeditor
 	        
 	    if (explorerMode == ExplorerMode.EXPLORER) {
-	        if (Main.baseFolder == null || baseFolderName == null) return;
+	        if (Main.baseFolder == null || baseFolderName == null) {
+	        	for (ExplorerTab t : tabs)
+	    	    	t.render(g);
+	    	    
+	    	    // linha encima do explorer
+	    	    g.setColor(Colors.textLight);
+	    		g2.setStroke(new BasicStroke(3f));
+	    	    g2.drawLine(0, ExplorerTab.Y + ExplorerTab.SIZE, width - 3, ExplorerTab.Y + ExplorerTab.SIZE);
+	    	    
+	    	    // Desenhar encima da tab
+	    	    for (ExplorerTab t : tabs) {
+	    	    	if (Explorer.explorerMode == t.regent) {
+	    	    		Color bg = t.hovered() ? Colors.explorerLight : Colors.codeEditor;
+	    	    		
+	    				g.setColor(bg);
+	    				g.fillRect(t.getX() + 2, ExplorerTab.Y + ExplorerTab.SIZE - 3, ExplorerTab.SIZE - 3, 8);
+	    			}
+	    	    }
+	        	
+	        	return;
+	        }
 	        
 	        Fonts.drawString(baseFolderName, x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 23), g);
         

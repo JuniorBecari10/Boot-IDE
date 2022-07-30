@@ -1061,120 +1061,47 @@ public class CodeEditor extends IDEComponent {
 		if (l.isEmpty())
 			l.add("");
 		
-		switch (editing.readMode) {
-			/*case ASSEMBLY: // ainda n�o
-				break;*/
-				
-			case BIN:
-			case BINARY:
-				/*List<String> newL = new ArrayList<>();
-				StringBuilder b;
-				
-				for (String s : l) {
-					b = new StringBuilder();
+		if (editing != null)
+			switch (editing.readMode) {
+				/*case ASSEMBLY: // ainda n�o
+					break;*/
 					
-					b.append(convertStringToBinary(s));
-					b.append(" | ");
-					b.append(s);
+				case BIN:
+				case BINARY:
+					l.clear();
 					
-					newL.add(b.toString());
-				}
-				
-				l = newL;*/
-				
-				/*byte[] bytes = Files.readAllBytes(p);
-				List<String> newL = new ArrayList<>();
-				StringBuilder b = new StringBuilder();
-				int count = 0;
-				int notResetCount = 0;
-				
-				for (byte by : bytes) {
-					if (count >= 4) {
-						b.append("| ");
-						
-						for (int i = 0; i < 4; i++) {
-							if (notResetCount + i > bytes.length) break;
-							
-							b.append((char) bytes[notResetCount + i]);
-						}
-						
-						newL.add(b.toString());
-						b = new StringBuilder();
-						count = 0;
+					String raw = convertFileToBinary(file.toPath());
+					String[] lines = splitByNCharacters(raw, 32);
+					
+					for (String s : lines) {
+						String[] parts = splitByNCharacters(s, 8);
+						l.add(String.join(" ", parts));
 					}
 					
-					String bin = Integer.toBinaryString(by & 0xFF).replace(' ', '0');
+					break;
 					
-					b.append(bin + " ");
+				case HEX:
+					l.clear();
 					
-					count++;
-					notResetCount++;
-				}
-				
-				l = newL;*/
-				
-				l.clear();
-				
-				String raw = convertFileToBinary(file.toPath());
-				String[] lines = splitByNCharacters(raw, 32);
-				
-				
-				/*for (int i = 0; i < lines.length; i++) {
-					String[] line = new String[32];
-					int index = 0;
+					raw = convertFileToHex(file.toPath());
+					lines = raw.split("\n");
 					
-					for (int j = 0; j < lines[i].length(); j++) {
-						char c = lines[i].charAt(j);
+					for (String s : lines) {
+						StringBuilder b = new StringBuilder(s);
+						b.delete(45, 59); // eliminar espaços que ficam depois
 						
-						line[index] += c;
+						s = b.toString();
 						
-						if (j % 8 == 0 && j != 0) index++;
+						l.add(s);
 					}
 					
-					StringBuilder bl = new StringBuilder();
+					break;
+				case NORMAL:
+					break;
 					
-					for (String s : line)
-						bl.append(s + " ");
-					
-					lines[i] = bl.toString();
-				}
-				
-				for (String s : lines) {
-					s = s.replace("null", "");
-					s = s.substring(0, s.length() - 29);
-					
-					l.add(s);
-				}*/
-				
-				for (String s : lines) {
-					String[] parts = splitByNCharacters(s, 8);
-					l.add(String.join(" ", parts));
-				}
-				
-				break;
-				
-			case HEX:
-				l.clear();
-				
-				raw = convertFileToHex(file.toPath());
-				lines = raw.split("\n");
-				
-				for (String s : lines) {
-					StringBuilder b = new StringBuilder(s);
-					b.delete(45, 59); // eliminar espaços que ficam depois
-					
-					s = b.toString();
-					
-					l.add(s);
-				}
-				
-				break;
-			case NORMAL:
-				break;
-				
-			default:
-				break;
-		}
+				default:
+					break;
+			}
 
 		List<IDELine> ls = new ArrayList<>();
 		
