@@ -238,7 +238,8 @@ public class CommandTerminal extends IDEComponent {
 				
 				Main.editor.selecting = false;
 				
-				Explorer.entireDocument.setState(true);
+				if (Explorer.entireDocument != null)
+					Explorer.entireDocument.setState(true);
 				break;
 				
 			case "resetundoredo":
