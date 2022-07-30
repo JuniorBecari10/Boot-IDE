@@ -55,13 +55,28 @@ java ide.main.Start -cp .
 
 ### How to generate a JAR file
 
-To generate a JAR file, you need to have the compiled program (i.e. the .class files), then execute:
+To generate a JAR file, you need to have the compiled program (i.e. the .class files), a manifest file (look below how to create one), then execute:
 
 You can use `make jar` to generate (requires make). It will run the following command:
 
+_The command `make createjar` also works, but you need to run `make manifest` first and `make clean` or delete the `manifest.txt` file._
+
 ```batch
 cd bin
-jar cf Boot-IDE.jar *
+jar cfm Boot-IDE.jar manifest.txt *
+```
+
+### How to generate a manifest file
+
+To generate a JAR file, you need to have the compiled program (i.e. the .class files) and a manifest file. Here's how to create one:
+
+You can use `make manifest` too (requires make). It will do the following steps: 
+
+- Create a .txt file (in folder bin, run `cd bin` to get into it);
+- Write this line in it:
+
+```
+Main-Class: ide.main.Start
 ```
 
 ### How to run a JAR file
@@ -139,9 +154,24 @@ Para gerar um arquivo JAR, você precisa ter o programa compilado (isto é, os a
 
 Você pode usar `make jar` para gerar (requer make instalado). Ele vai executar o seguinte comando:
 
+_O comando `make createjar` também funciona, mas você precisa executar `make manifest` primeiro e `make clean` depois ou deletar o arquivo `manifest.txt`._
+
 ```batch
 cd bin
-jar cf Boot-IDE.jar *
+jar cfm Boot-IDE.jar manifest.txt *
+```
+
+### Como gerar um arquivo de manifesto
+
+Para gerar um arquivo JAR, você precisa ter o programa compilado (isto é, os arquivos .class). Aqui está como criar um:
+
+Você pode usar `make manifest` também (requer make instalado). Ele vai executar os seguintes passos:
+
+- Crie um arquivo .txt (na pasta bin, execute `cd bin` para entrar nela);
+- Escreva essa linha nele:
+
+```
+Main-Class: ide.main.Start
 ```
 
 ### Como executar um arquivo JAR
