@@ -12,11 +12,8 @@ import ide.explorer.ExplorerMode;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.MouseInput;
-import ide.main.Main;
 import ide.screen.Screen;
 import ide.util.Colors;
-import ide.util.Language;
-import ide.util.Texts;
 
 public class ExplorerTab extends IDEComponent {
 	
