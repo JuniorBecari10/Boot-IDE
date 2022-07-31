@@ -79,7 +79,7 @@ public class CodeEditor extends IDEComponent {
 	public int index1, index2; // TODO fazer a verificação do CSS se está dentro do seletor, e se tiver, colore
 								// números
 	
-	public static final int MAX_UNDOS = 10;
+	//public static final int MAX_UNDOS = 10;
 	
 	// valor padrão de LF
 	public static LineEnding lineEnding = LineEnding.LF;
@@ -995,12 +995,11 @@ public class CodeEditor extends IDEComponent {
 		switch (mode) {
 		case BIN:
 		case BINARY:
-			return Main.lang == Language.PORT ? "Bin�rio" : "Binary";
+			return Main.lang == Language.PORT ? "Binário" : "Binary";
 		case HEX:
 			return "Hexadecimal";
 		default:
 			return "";
-		
 		}
 	}
 	
@@ -8745,11 +8744,11 @@ public class CodeEditor extends IDEComponent {
 				} catch (Exception e) {
 					//System.out.println("Exception: " + Main.getStackTrace(e));
 					return;
-				} finally {
+				}/* finally {
 					if (undo.size() > MAX_UNDOS) {
 						undo.remove(0);
 					}
-				}
+				}*/
 			}
 		}.start();
 	}

@@ -3,7 +3,6 @@ package ide.components;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
