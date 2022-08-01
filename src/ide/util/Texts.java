@@ -1,7 +1,5 @@
 package ide.util;
 
-import ide.main.Main;
-
 /**
  * Uma classe que lista todos os textos e palavras que est�o na Boot IDE. Somente n�o listam os nomes das linguagens que aparecem embaixo da tela. Temos em portugu�s e ingl�s aqui.
  * 
@@ -203,10 +201,7 @@ public final class Texts {
 	
 	public static String back;
 	
-	public static String closeApply;
-	
-	public static String programWillClose;
-	public static String thisWillCloseProgram;
+	public static String apply;
 	
 	public static String settings;
 	
@@ -397,9 +392,7 @@ public final class Texts {
 			
 			back = "Voltar";
 			
-			closeApply = "Fechar e aplicar";
-			programWillClose = Main.PROGRAM_NAME + " vai fechar!";
-			thisWillCloseProgram = "Isso vai fechar a " + Main.PROGRAM_NAME + ". Deseja continuar?";
+			apply = "Aplicar";
 			
 			settings = "Configurações";
 			
@@ -590,9 +583,7 @@ public final class Texts {
 			
 			back = "Back";
 			
-			closeApply = "Close and apply";
-			programWillClose = Main.PROGRAM_NAME + " will close!";
-			thisWillCloseProgram = "This will close " + Main.PROGRAM_NAME + ". Do you want to continue?";
+			apply = "Apply";
 			
 			settings = "Settings";
 			

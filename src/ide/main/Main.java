@@ -334,22 +334,6 @@ public class Main implements Runnable, Tickable {
 	        
 	        explorer.addTabs();
 	        
-	        if (forceMacButtons || os == OS.MAC) {
-	        	closeWindowSpr = spritesheet.getSprite(288, 0, 7, 7);
-	        	minimizeWindowSpr = spritesheet.getSprite(295, 0, 7, 7);
-	        	maximizeWindowSpr = spritesheet.getSprite(288, 7, 7, 7);
-	        	
-	        	closeWindowHoverSpr = spritesheet.getSprite(304, 0, 7, 7);
-	        	minimizeWindowHoverSpr = spritesheet.getSprite(311, 0, 7, 7);
-	        	maximizeWindowHoverSpr = spritesheet.getSprite(304, 7, 7, 7);
-	        	
-	        	deactivatedMacButtons = spritesheet.getSprite(295, 7, 7, 7);
-	        	
-	        	closeWindow = new CloseWindow(Screen.DECORATION_HEIGHT * 3, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, closeWindowSpr);
-		        maximizeWindow = new MaximizeWindow(Screen.DECORATION_HEIGHT * 2, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, maximizeWindowSpr);
-		        minimizeWindow = new MinimizeWindow(0, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, minimizeWindowSpr);
-	        }
-	        
 	        TopComponent.topComponents.add(closeWindow);
 	        TopComponent.topComponents.add(maximizeWindow);
 	        TopComponent.topComponents.add(minimizeWindow);
@@ -427,6 +411,22 @@ public class Main implements Runnable, Tickable {
         terminalTab = Colors.swapColor(terminalTab, Colors.textLightDefault, Colors.textLight);
         
         settingsButtonSpr = Colors.swapColor(settingsButtonSpr, Colors.textLightDefault, Colors.textLight);
+        
+        if (forceMacButtons || os == OS.MAC) {
+        	closeWindowSpr = spritesheet.getSprite(288, 0, 7, 7);
+        	minimizeWindowSpr = spritesheet.getSprite(295, 0, 7, 7);
+        	maximizeWindowSpr = spritesheet.getSprite(288, 7, 7, 7);
+        	
+        	closeWindowHoverSpr = spritesheet.getSprite(304, 0, 7, 7);
+        	minimizeWindowHoverSpr = spritesheet.getSprite(311, 0, 7, 7);
+        	maximizeWindowHoverSpr = spritesheet.getSprite(304, 7, 7, 7);
+        	
+        	deactivatedMacButtons = spritesheet.getSprite(295, 7, 7, 7);
+        	
+        	closeWindow = new CloseWindow(Screen.DECORATION_HEIGHT * 3, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, closeWindowSpr);
+	        maximizeWindow = new MaximizeWindow(Screen.DECORATION_HEIGHT * 2, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, maximizeWindowSpr);
+	        minimizeWindow = new MinimizeWindow(0, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, minimizeWindowSpr);
+        }
         
         /// Change some colors ///
         

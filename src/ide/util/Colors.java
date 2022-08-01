@@ -2,7 +2,10 @@ package ide.util;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import ide.codeeditor.CodeEditor;
+import ide.explorer.ListableFile;
 import ide.main.Main;
 
 /**
@@ -92,6 +95,17 @@ public class Colors {
          Main.notSavedTab = Colors.swapColor(Main.notSavedTab, textLightOld, Colors.textLight);
          
          Main.lock = Colors.swapColor(Main.lock, textLightOld, Colors.textLight);
+         
+         ListableFile.generateLocalConfigFile(Main.defaultConfigFile);
+         Main.load(Main.conffile);
+         
+         if (Main.editor.editing.getRegent().getRegent().equals(Main.defaultConfigFile)) {
+			try {
+				Main.editor.lines = Main.editor.readFile(Main.defaultConfigFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+         }
     }
     
     /**
