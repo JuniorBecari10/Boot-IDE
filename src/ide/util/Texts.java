@@ -208,6 +208,8 @@ public final class Texts {
 	public static String programWillClose;
 	public static String thisWillCloseProgram;
 	
+	public static String settings;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -399,6 +401,8 @@ public final class Texts {
 			programWillClose = Main.PROGRAM_NAME + " vai fechar!";
 			thisWillCloseProgram = "Isso vai fechar a " + Main.PROGRAM_NAME + ". Deseja continuar?";
 			
+			settings = "Configurações";
+			
 			break;
 		
 		case ENG:
@@ -589,6 +593,8 @@ public final class Texts {
 			closeApply = "Close and apply";
 			programWillClose = Main.PROGRAM_NAME + " will close!";
 			thisWillCloseProgram = "This will close " + Main.PROGRAM_NAME + ". Do you want to continue?";
+			
+			settings = "Settings";
 			
 			break;
 		}

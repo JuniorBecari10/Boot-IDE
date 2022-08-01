@@ -38,6 +38,7 @@ import ide.components.ReloadButton;
 import ide.components.RenameFile;
 import ide.components.ReturnToBaseFolderButton;
 import ide.components.SetFileName;
+import ide.components.SettingsButton;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorer.ListableFile;
@@ -112,6 +113,8 @@ public class Main implements Runnable, Tickable {
     public static CloseWindow closeWindow;
     public static MinimizeWindow minimizeWindow;
     public static MaximizeWindow maximizeWindow;
+    
+    public static SettingsButton settingsButton;
     
     public static String sprsh = "/spritesheet.png"; // sprsh - spritesheet
     public static String fntnr = "/font.png"; // fntnr - font normal
@@ -200,6 +203,8 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage gitTab;
     public static BufferedImage terminalTab;
     
+    public static BufferedImage settingsButtonSpr;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -277,6 +282,8 @@ public class Main implements Runnable, Tickable {
 	        gitTab = spritesheet.getSprite(352, 0, 16, 16);
 	        terminalTab = spritesheet.getSprite(368, 0, 16, 16);
 	        
+	        settingsButtonSpr = spritesheet.getSprite(272, 0, 16, 16);
+	        
 	        ///////
 	        
 	        explorer = new Explorer(0, Screen.DECORATION_HEIGHT, 280, Screen.HEIGHT);
@@ -296,6 +303,8 @@ public class Main implements Runnable, Tickable {
 	        closeWindow = new CloseWindow(screen.getWidth() - Screen.DECORATION_HEIGHT, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, closeWindowSpr);
 	        maximizeWindow = new MaximizeWindow(screen.getWidth() - Screen.DECORATION_HEIGHT * 2, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, maximizeWindowSpr);
 	        minimizeWindow = new MinimizeWindow(screen.getWidth() - Screen.DECORATION_HEIGHT * 3, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, minimizeWindowSpr);
+	        
+	        settingsButton = new SettingsButton(explorer.getWidth() - 34, Screen.DECORATION_HEIGHT, 32, 32, null);
 	        
 	        desktop = Desktop.getDesktop();
 	        
@@ -352,6 +361,8 @@ public class Main implements Runnable, Tickable {
 			IDEComponent.toAdd.add(Main.oneFolder);
 			IDEComponent.toAdd.add(Main.returnBase);
 			IDEComponent.toAdd.add(Main.reload);
+			
+			IDEComponent.toAdd.add(settingsButton);
     	} catch (Exception e) {
     		writeLog(e);
     		
@@ -414,6 +425,8 @@ public class Main implements Runnable, Tickable {
         searchReplaceTab = Colors.swapColor(searchReplaceTab, Colors.textLightDefault, Colors.textLight);
         gitTab = Colors.swapColor(gitTab, Colors.textLightDefault, Colors.textLight);
         terminalTab = Colors.swapColor(terminalTab, Colors.textLightDefault, Colors.textLight);
+        
+        settingsButtonSpr = Colors.swapColor(settingsButtonSpr, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         
@@ -822,7 +835,7 @@ public class Main implements Runnable, Tickable {
         if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))
 	        for (Tab t : Main.editor.tabs) {
 				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() && !t.button.hovered() && !Tab.isTabDragged()) { // por algum motivo � + e n�o -
-					int index = t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0;
+					int index = Main.baseFolder != null ? t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0 : 0;
 					
 					int width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
 					int height = 100;
@@ -890,7 +903,7 @@ public class Main implements Runnable, Tickable {
 				}
 	        }
         
-        if (explorer.hovered() && !CommandTerminal.expOff && Explorer.explorerMode == ExplorerMode.EXPLORER) {
+        if (explorer.hovered() && !CommandTerminal.expOff && Explorer.explorerMode == ExplorerMode.EXPLORER && baseFolder != null) {
         	if (MouseInput.hovered(explorer.getX() + 10, Screen.DECORATION_HEIGHT + 140, explorer.getWidth() - 10, 23) && Explorer.showBaseFolderCard && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
         		int xdr = MouseInput.getMouseX() + 10;
     			int ydr = MouseInput.getMouseY() - 10;

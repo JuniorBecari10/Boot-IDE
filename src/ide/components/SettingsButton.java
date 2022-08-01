@@ -9,7 +9,6 @@ import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
-import ide.util.Language;
 import ide.util.Texts;
 
 public class SettingsButton extends IDEComponent {
@@ -19,6 +18,8 @@ public class SettingsButton extends IDEComponent {
 	}
 	
 	public void tick() {
+		x = Main.explorer.getWidth() - 34;
+		
 		if (leftClicked())
 			CommandTerminal.runCommand("settings");
 	}
@@ -31,12 +32,11 @@ public class SettingsButton extends IDEComponent {
 		
 		super.render(g);
 		
-		// continuar
 		if (hovered()) {
 			g.setColor(new Color(0, 0, 0, 0.5f));
-			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, Main.lang == Language.PORT ? 285 : 240, 28);
+			g.fillRect(MouseInput.getMouseX() - 27, MouseInput.getMouseY() + 27, Texts.settings.length() * 16, 28);
 			
-			Fonts.drawString(Texts.createFile, MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString(Texts.settings, MouseInput.getMouseX() - 20, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
 		}
 	}
 }
