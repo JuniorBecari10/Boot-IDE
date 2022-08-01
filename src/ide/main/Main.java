@@ -707,11 +707,10 @@ public class Main implements Runnable, Tickable {
 						//if (!ListableFile.isPath(s)) continue;
 						
 						File reg = new File(s);
-						File par = reg.getParentFile();
 						
 						//if (!reg.exists()) continue;
 						
-						Tab t = new Tab((i - 4) * Tab.WIDTH, ListableFile.search(reg, par));
+						Tab t = new Tab((i - 4) * Tab.WIDTH, ListableFile.newListableFile(reg));
 						
 						Main.editor.tabs.add(t);
 					}

@@ -7100,9 +7100,6 @@ public class CodeEditor extends IDEComponent {
 
 		case "sysexp":
 			try {
-				if (Main.baseFolder == null)
-					return;
-
 				String path = null;
 
 				try {
@@ -8636,37 +8633,35 @@ public class CodeEditor extends IDEComponent {
 			
 			list.add(new RightClickOption(0, 0, width, Texts.openCmd, (s) -> execute(s), "cmd"));
 			list.add(new RightClickOption(0, 0, width, Texts.openTerminal, (s) -> execute(s), "term"));
-			
-			if (Main.baseFolder != null) {
-				list.add(new RightClickOption(0, 0, width, Texts.openExplorer, (s) -> execute(s), "sysexp"));
-				list.add(new RightClickOption(0, 0, width, Texts.setBaseFolder, (s) -> execute(s), "setbase"));
-				
-				if (editing != null) {
-					list.add(new RightClickOption(0, 0, width, Texts.openDefault, (s) -> execute(s), "opendef"));
-					
-					list.add(new RightClickOption(0, 0, width, Explorer.explorerMode == ExplorerMode.EXPLORER, Texts.open + " " + Texts.searchReplace, (s) -> execute(s), "searchrep"));
-					list.add(new RightClickOption(0, 0, width, Texts.selectLine, (s) -> CommandTerminal.runCommand(s), "selectline"));
-					list.add(new RightClickOption(0, 0, width, Texts.selectAll, (s) -> CommandTerminal.runCommand(s), "selectall"));
-					
-					if (!isReadOnly)
-						list.add(new RightClickOption(0, 0, width, Texts.save, (s) -> execute(s), "save"));
-					
+
+			list.add(new RightClickOption(0, 0, width, Texts.openExplorer, (s) -> execute(s), "sysexp"));
+			list.add(new RightClickOption(0, 0, width, Texts.setBaseFolder, (s) -> execute(s), "setbase"));
+
+			if (editing != null) {
+				list.add(new RightClickOption(0, 0, width, Texts.openDefault, (s) -> execute(s), "opendef"));
+
+				list.add(new RightClickOption(0, 0, width, Explorer.explorerMode == ExplorerMode.EXPLORER, Texts.open + " " + Texts.searchReplace, (s) -> execute(s), "searchrep"));
+				list.add(new RightClickOption(0, 0, width, Texts.selectLine, (s) -> CommandTerminal.runCommand(s), "selectline"));
+				list.add(new RightClickOption(0, 0, width, Texts.selectAll, (s) -> CommandTerminal.runCommand(s), "selectall"));
+
+				if (!isReadOnly)
+					list.add(new RightClickOption(0, 0, width, Texts.save, (s) -> execute(s), "save"));
+
+				if (selecting) {
+					list.add(new RightClickOption(0, 0, width, Texts.deselect, (s) -> CommandTerminal.runCommand(s), "deselect"));
+					list.add(new RightClickOption(0, 0, width, Texts.copy, (s) -> CommandTerminal.runCommand(s), "copy"));
+				}
+
+				if (!isReadOnly) {
+					list.add(new RightClickOption(0, 0, width, Texts.paste, (s) -> CommandTerminal.runCommand(s), "paste"));
+
 					if (selecting) {
-						list.add(new RightClickOption(0, 0, width, Texts.deselect, (s) -> CommandTerminal.runCommand(s), "deselect"));
-						list.add(new RightClickOption(0, 0, width, Texts.copy, (s) -> CommandTerminal.runCommand(s), "copy"));
-					}
-					
-					if (!isReadOnly) {
-						list.add(new RightClickOption(0, 0, width, Texts.paste, (s) -> CommandTerminal.runCommand(s), "paste"));
-						
-						if (selecting) {
-							list.add(new RightClickOption(0, 0, width, Texts.cut, (s) -> CommandTerminal.runCommand(s), "cut"));
-							list.add(new RightClickOption(0, 0, width, Texts.delete, (s) -> CommandTerminal.runCommand(s), "del"));
-						}
+						list.add(new RightClickOption(0, 0, width, Texts.cut, (s) -> CommandTerminal.runCommand(s), "cut"));
+						list.add(new RightClickOption(0, 0, width, Texts.delete, (s) -> CommandTerminal.runCommand(s), "del"));
 					}
 				}
 			}
-			
+
 			IDEComponent.addRightClickOptions(MouseInput.getMouseX(), MouseInput.getMouseY(), list.toArray(new RightClickOption[list.size()]));
 		}
 		
