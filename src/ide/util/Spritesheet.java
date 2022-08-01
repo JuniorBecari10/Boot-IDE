@@ -22,7 +22,7 @@ public class Spritesheet {
     	try {
 			spr = ImageIO.read(file);
 		} catch (IOException e) {
-			// não tem
+			// nï¿½o tem
 			
 			return;
 		}
@@ -35,8 +35,8 @@ public class Spritesheet {
     /**
      * Recorta a Spritesheet e retorna a parte recortada.
      * 
-     * @param x - A posição x do recorte
-     * @param y - A posição y do recorte
+     * @param x - A posiÃ§Ã£o x do recorte
+     * @param y - A posiÃ§Ã£o y do recorte
      * @param w - A largura do recorte
      * @param h - A altura do recorte
      * 

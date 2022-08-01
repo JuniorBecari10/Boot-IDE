@@ -8972,7 +8972,7 @@ public class CodeEditor extends IDEComponent {
 		try {
 			clipboard = (String) Main.toolkit.getSystemClipboard().getData(DataFlavor.stringFlavor);
 		} catch (HeadlessException | UnsupportedFlavorException | IOException | IllegalStateException e) {
-			// N�o � string. Resetando!
+			// Não é string. Resetando!
 
 			clipboard = "";
 		}

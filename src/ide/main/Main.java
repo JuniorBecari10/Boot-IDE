@@ -282,7 +282,7 @@ public class Main implements Runnable, Tickable {
 	        gitTab = spritesheet.getSprite(352, 0, 16, 16);
 	        terminalTab = spritesheet.getSprite(368, 0, 16, 16);
 	        
-	        settingsButtonSpr = spritesheet.getSprite(272, 0, 16, 16);
+	        settingsButtonSpr = spritesheet.getSprite(400, 0, 16, 16);
 	        
 	        ///////
 	        
@@ -304,7 +304,7 @@ public class Main implements Runnable, Tickable {
 	        maximizeWindow = new MaximizeWindow(screen.getWidth() - Screen.DECORATION_HEIGHT * 2, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, maximizeWindowSpr);
 	        minimizeWindow = new MinimizeWindow(screen.getWidth() - Screen.DECORATION_HEIGHT * 3, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, minimizeWindowSpr);
 	        
-	        settingsButton = new SettingsButton(explorer.getWidth() - 34, Screen.DECORATION_HEIGHT, 32, 32, null);
+	        settingsButton = new SettingsButton(explorer.getWidth() - 34, Screen.DECORATION_HEIGHT + 2, 32, 32, settingsButtonSpr);
 	        
 	        desktop = Desktop.getDesktop();
 	        

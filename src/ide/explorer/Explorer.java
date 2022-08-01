@@ -441,7 +441,7 @@ public class Explorer extends IDEComponent {
 	    	    // linha encima do explorer
 	    	    g.setColor(Colors.textLight);
 	    		g2.setStroke(new BasicStroke(3f));
-	    	    g2.drawLine(0, ExplorerTab.Y + ExplorerTab.SIZE, width - 3, ExplorerTab.Y + ExplorerTab.SIZE);
+	    	    g2.drawLine(0, ExplorerTab.Y + ExplorerTab.SIZE, width - 4, ExplorerTab.Y + ExplorerTab.SIZE);
 	    	    
 	    	    // Desenhar encima da tab
 	    	    for (ExplorerTab t : tabs) {
@@ -451,6 +451,16 @@ public class Explorer extends IDEComponent {
 	    				g.setColor(bg);
 	    				g.fillRect(t.getX() + 2, ExplorerTab.Y + ExplorerTab.SIZE - 3, ExplorerTab.SIZE - 3, 8);
 	    			}
+	    	    }
+	    	    
+	    	    for (Tab t : Main.editor.tabs) {
+	    	    	if (Main.editor.editing == t && Main.editor.editing.getX() + Main.editor.tabScr == Main.editor.getX()) {
+	    	    		g.setColor(Colors.textLight);
+	    	    		g2.setStroke(new BasicStroke(3f));
+	    	    		
+	    	    		// linha à esquerda da primeira tab
+	    	    		g.drawLine(Main.editor.getX(), Screen.DECORATION_HEIGHT + 3, Main.editor.getX(), CodeEditor.MIN_Y - 1);
+	    	        }
 	    	    }
 	        	
 	        	return;
@@ -495,7 +505,7 @@ public class Explorer extends IDEComponent {
 	    // linha encima do explorer
 	    g.setColor(Colors.textLight);
 		g2.setStroke(new BasicStroke(3f));
-	    g2.drawLine(0, ExplorerTab.Y + ExplorerTab.SIZE, width - 3, ExplorerTab.Y + ExplorerTab.SIZE);
+	    g2.drawLine(0, ExplorerTab.Y + ExplorerTab.SIZE, width - 4, ExplorerTab.Y + ExplorerTab.SIZE);
 	    
 	    // Desenhar encima da tab
 	    for (ExplorerTab t : tabs) {

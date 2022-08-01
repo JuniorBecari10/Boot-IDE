@@ -233,8 +233,8 @@ public class Tab extends IDEComponent implements Serializable {
 	public void close() {
 		closing = true;
 		
-		if (Main.editor.editing != null && save) { // n�o for nulo
-			if (!Main.editor.editing.isSaved()) { // n�o estiver salvo
+		if (Main.editor.editing != null && save) { // não for nulo
+			if (!Main.editor.editing.isSaved()) { // não estiver salvo
 				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
 				
 				CodeEditor.setSystemLook();
