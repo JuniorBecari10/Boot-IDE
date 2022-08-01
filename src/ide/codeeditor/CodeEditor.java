@@ -9100,7 +9100,7 @@ public class CodeEditor extends IDEComponent {
 				g.fillRect(x, MIN_Y, Main.screen.getWidth(), height);
 			}
 	
-	//		if (editing != null &&																	// n�o vamos mostrar imagens aqui, vai abrir o aplicativo do sistema
+	//		if (editing != null &&																	// não vamos mostrar imagens aqui, vai abrir o aplicativo do sistema
 	//			(ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".png") || // se for uma imagem
 	//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".jpg") ||
 	//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".jpeg")||
@@ -9117,7 +9117,7 @@ public class CodeEditor extends IDEComponent {
 	//			return; // pra n renderizar texto, aquele monte de coisa estranha
 	//		}
 	
-			g.setColor(Colors.backgroundLight); // TODO � essa aqui a linha que atravessa a tela no cursor
+			g.setColor(Colors.backgroundLight); // TODO é essa aqui a linha que atravessa a tela no cursor
 			g.fillRect(x, MIN_Y + ((cursorY - 1) * (LINE_HEIGHT)) - scrY, Main.screen.getWidth(),
 					LINE_HEIGHT);
 	
@@ -9132,8 +9132,8 @@ public class CodeEditor extends IDEComponent {
 					if (selecting) {
 						g.setColor(Colors.selection);
 						
-						if (i > line1 && i < line2) { // do meio
-							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do 0 at� o index2
+						if (i > line1 && i < line2) { // do meio (do 0 até o fim da linha)
+							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do 0 até o index2
 									// (i + 1) * (LINE_HEIGHT) - scrY,
 									MIN_Y + ((i - 1) * (LINE_HEIGHT)) - scrY,
 									// Main.screen.getWidth() + scrX,
@@ -9169,10 +9169,10 @@ public class CodeEditor extends IDEComponent {
 					if (selecting) {
 						g.setColor(Colors.selection);
 	
-						if (i == line1 - 1) { // - 1 porque a line1 � base 1
+						if (i == line1 - 1) { // - 1 porque a line1 é base 1
 							if (i == line2 - 1) {
 								g.fillRect(((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
-																										// index1 at� o
+																										// index1 até o
 																										// index2
 										MIN_Y + ((line1 - 1) * (LINE_HEIGHT)) - scrY,
 										(((x + (FONT_SIZE * 4)) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX)
@@ -9180,18 +9180,18 @@ public class CodeEditor extends IDEComponent {
 										LINE_HEIGHT);
 							} else {
 								g.fillRect(((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
-																										// index1 at� o fim
+																										// index1 até o fim
 																										// da linha
 										MIN_Y + ((line1 - 1) * (LINE_HEIGHT)) - scrY,
 										((((x + (FONT_SIZE * 4)) + (lines.get(line1 - 1).getChars().size() - index1)
-												* (FONT_SIZE - (FONT_SIZE / 4))) - scrX)
-												- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX)),
+												* (FONT_SIZE - (FONT_SIZE / 4))) - scrX) // mudar, pois n funciona em fontes menores
+												- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - ruleOf3(16, FONT_SIZE, FONT_SIZE)),
 										LINE_HEIGHT);
 							}
 						}
 						if (i == line2 - 1) {
 							if (i != line1 - 1) { // do 0 ao index2
-								g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher at� o index2
+								g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
 										MIN_Y + ((line2 - 1) * (LINE_HEIGHT)) - scrY,
 										((x + (FONT_SIZE * 4)) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX
 												- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
@@ -9226,8 +9226,7 @@ public class CodeEditor extends IDEComponent {
 	
 					Fonts.drawString(nums, nx, MIN_Y + (i * (LINE_HEIGHT)) - scrY, font, g);
 				}
-			} catch (Exception e) {
-			}
+			} catch (Exception e) {}
 	
 			if (keyTimeout)
 				showCursor = true;
