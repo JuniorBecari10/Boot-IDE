@@ -22,6 +22,8 @@ public class CloseWindow extends TopComponent {
 		if ((Main.forceMacButtons || Main.os == OS.MAC) && anyTopComponentHovered())
 			sprite = Main.closeWindowHoverSpr;
 		else if ((Main.forceMacButtons || Main.os == OS.MAC) && !anyTopComponentHovered())
+			sprite = Main.closeWindowMacSpr;
+		else
 			sprite = Main.closeWindowSpr;
 		
 		if (WindowInput.isDeactivated() && (Main.forceMacButtons || Main.os == OS.MAC))

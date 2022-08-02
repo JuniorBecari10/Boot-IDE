@@ -410,6 +410,63 @@ public class Explorer extends IDEComponent {
 	    	t.tick();
     }
 
+    private void renderSearchReplace(Graphics g) {
+		Fonts.drawString(Texts.search + ":", x + 20, y + 75, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	Fonts.drawString(Texts.replace + ":", x + 20, y + 145, new IDEFont(Fonts.lightGrayNormal, 16), g);
+	}
+    
+    private void renderExplorer(Graphics g) {
+    	Graphics2D g2 = (Graphics2D) g;
+    	
+    	if (Main.baseFolder == null || baseFolderName == null) {
+        	for (ExplorerTab t : tabs)
+    	    	t.render(g);
+    	    
+    	    // linha encima do explorer
+    	    g.setColor(Colors.textLight);
+    		g2.setStroke(new BasicStroke(3f));
+    	    g2.drawLine(0, ExplorerTab.Y + ExplorerTab.SIZE, width - 4, ExplorerTab.Y + ExplorerTab.SIZE);
+    	    
+    	    // Desenhar encima da tab
+    	    for (ExplorerTab t : tabs) {
+    	    	if (Explorer.explorerMode == t.regent) {
+    	    		Color bg = t.hovered() ? Colors.explorerLight : Colors.codeEditor;
+    	    		
+    				g.setColor(bg);
+    				g.fillRect(t.getX() + 2, ExplorerTab.Y + ExplorerTab.SIZE - 3, ExplorerTab.SIZE - 3, 8);
+    			}
+    	    }
+    	    
+    	    for (Tab t : Main.editor.tabs) {
+    	    	if (Main.editor.editing == t && Main.editor.editing.getX() + Main.editor.tabScr == Main.editor.getX()) {
+    	    		g.setColor(Colors.textLight);
+    	    		g2.setStroke(new BasicStroke(3f));
+    	    		
+    	    		// linha à esquerda da primeira tab
+    	    		g.drawLine(Main.editor.getX(), Screen.DECORATION_HEIGHT + 3, Main.editor.getX(), CodeEditor.MIN_Y - 1);
+    	        }
+    	    }
+        	
+        	return;
+        }
+        
+        Fonts.drawString(baseFolderName, x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 23), g);
+    
+    	g2.setStroke(new BasicStroke(4f));
+        g.setColor(Colors.explorerLight);
+        g2.drawLine(0, Screen.DECORATION_HEIGHT + 199, width - 1, Screen.DECORATION_HEIGHT + 199); // linha que divide os listablefiles
+        
+        Fonts.drawString(folderPath, x + 10, Screen.DECORATION_HEIGHT + 170, new IDEFont(Fonts.lighterGrayNormal, 15), g);
+        
+        try {
+	        for (ListableFile f : Explorer.files) {
+	        	if (f.getY() < MINIMUM_Y || f.getY() > Main.screen.getHeight()) continue;
+	        	
+	        	f.render(g);
+	        }
+        } catch (Exception e) { return; }
+    }
+
     public synchronized void render(Graphics g) {
     	if (CommandTerminal.expOff) return;
     	
@@ -433,61 +490,10 @@ public class Explorer extends IDEComponent {
 	    g2.setStroke(new BasicStroke(3f));
 	    g2.drawLine(width - 1, Screen.DECORATION_HEIGHT, width - 1, height); // linha vertical que divide do codeeditor
 	        
-	    if (explorerMode == ExplorerMode.EXPLORER) {
-	        if (Main.baseFolder == null || baseFolderName == null) {
-	        	for (ExplorerTab t : tabs)
-	    	    	t.render(g);
-	    	    
-	    	    // linha encima do explorer
-	    	    g.setColor(Colors.textLight);
-	    		g2.setStroke(new BasicStroke(3f));
-	    	    g2.drawLine(0, ExplorerTab.Y + ExplorerTab.SIZE, width - 4, ExplorerTab.Y + ExplorerTab.SIZE);
-	    	    
-	    	    // Desenhar encima da tab
-	    	    for (ExplorerTab t : tabs) {
-	    	    	if (Explorer.explorerMode == t.regent) {
-	    	    		Color bg = t.hovered() ? Colors.explorerLight : Colors.codeEditor;
-	    	    		
-	    				g.setColor(bg);
-	    				g.fillRect(t.getX() + 2, ExplorerTab.Y + ExplorerTab.SIZE - 3, ExplorerTab.SIZE - 3, 8);
-	    			}
-	    	    }
-	    	    
-	    	    for (Tab t : Main.editor.tabs) {
-	    	    	if (Main.editor.editing == t && Main.editor.editing.getX() + Main.editor.tabScr == Main.editor.getX()) {
-	    	    		g.setColor(Colors.textLight);
-	    	    		g2.setStroke(new BasicStroke(3f));
-	    	    		
-	    	    		// linha à esquerda da primeira tab
-	    	    		g.drawLine(Main.editor.getX(), Screen.DECORATION_HEIGHT + 3, Main.editor.getX(), CodeEditor.MIN_Y - 1);
-	    	        }
-	    	    }
-	        	
-	        	return;
-	        }
-	        
-	        Fonts.drawString(baseFolderName, x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 23), g);
-        
-	    	g2.setStroke(new BasicStroke(4f));
-	        g.setColor(Colors.explorerLight);
-	        g2.drawLine(0, Screen.DECORATION_HEIGHT + 199, width - 1, Screen.DECORATION_HEIGHT + 199); // linha que divide os listablefiles
-	        
-	        Fonts.drawString(folderPath, x + 10, Screen.DECORATION_HEIGHT + 170, new IDEFont(Fonts.lighterGrayNormal, 15), g);
-	        
-	        try {
-		        for (ListableFile f : Explorer.files) {
-		        	if (f.getY() < MINIMUM_Y || f.getY() > Main.screen.getHeight()) continue;
-		        	
-		        	f.render(g);
-		        }
-	        } catch (Exception e) { return; }
-	    }
-	    else if (explorerMode == ExplorerMode.SEARCHREPLACE) {
-	    	//Fonts.drawString(width < 270 ? Texts.searchReplaceMin : Texts.searchReplace, x + 60, y + 21, new IDEFont(Fonts.lightGrayNormal, 18), g);
-	    	
-	    	Fonts.drawString(Texts.search + ":", x + 20, y + 75, new IDEFont(Fonts.lightGrayNormal, 16), g);
-	    	Fonts.drawString(Texts.replace + ":", x + 20, y + 145, new IDEFont(Fonts.lightGrayNormal, 16), g);
-	    }
+	    if (explorerMode == ExplorerMode.EXPLORER)
+	        renderExplorer(g);
+	    else if (explorerMode == ExplorerMode.SEARCHREPLACE)
+	    	renderSearchReplace(g);
 	    
 	    for (Tab t : Main.editor.tabs) {
 	    	if (Main.editor.editing == t && Main.editor.editing.getX() + Main.editor.tabScr == Main.editor.getX()) {

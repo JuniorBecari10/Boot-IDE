@@ -34,16 +34,13 @@ public class MaximizeWindow extends TopComponent {
 		else
 			x = Screen.DECORATION_HEIGHT * 2;
 		
-		if (Main.screen.frame.getState() == JFrame.MAXIMIZED_BOTH)
-			sprite = Main.maximizedWindowSpr;
-		else
-			sprite = Main.maximizeWindowSpr;
-		
 		// click logic in MouseInput
 		
 		if ((Main.forceMacButtons || Main.os == OS.MAC) && anyTopComponentHovered())
 			sprite = Main.maximizeWindowHoverSpr;
 		else if ((Main.forceMacButtons || Main.os == OS.MAC) && !anyTopComponentHovered())
+			sprite = Main.maximizeWindowMacSpr;
+		else
 			sprite = Main.maximizeWindowSpr;
 		
 		if (WindowInput.isDeactivated() && (Main.forceMacButtons || Main.os == OS.MAC))

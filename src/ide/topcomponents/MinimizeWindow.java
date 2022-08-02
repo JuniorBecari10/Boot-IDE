@@ -23,6 +23,8 @@ public class MinimizeWindow extends TopComponent {
 		if ((Main.forceMacButtons || Main.os == OS.MAC) && anyTopComponentHovered())
 			sprite = Main.minimizeWindowHoverSpr;
 		else if ((Main.forceMacButtons || Main.os == OS.MAC) && !anyTopComponentHovered())
+			sprite = Main.minimizeWindowMacSpr;
+		else
 			sprite = Main.minimizeWindowSpr;
 		
 		if (WindowInput.isDeactivated() && (Main.forceMacButtons || Main.os == OS.MAC))

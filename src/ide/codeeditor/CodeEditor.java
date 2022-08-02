@@ -120,7 +120,7 @@ public class CodeEditor extends IDEComponent {
 
 	private int realcx, realcy; // c = cursor
 	public int drawcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX,
-			drawcy = MIN_Y + cursorY * (LINE_HEIGHT) - FONT_SIZE - scrY - 2;
+			drawcy = MIN_Y + cursorY * LINE_HEIGHT - FONT_SIZE - scrY - 2;
 
 	private PressedAccent prAcc;
 	private boolean pressedAccent = false;
@@ -853,8 +853,8 @@ public class CodeEditor extends IDEComponent {
 
 		int off = (FONT_SIZE * 3);
 
-		lcmy = (MouseInput.getMouseY() / (LINE_HEIGHT) - 1)
-				+ (scrY / (LINE_HEIGHT));
+		lcmy = (MouseInput.getMouseY() / LINE_HEIGHT - 1)
+				+ (scrY / LINE_HEIGHT);
 		lcmx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / FONT_SIZE)
 				+ (scrX / FONT_SIZE));
 
@@ -868,10 +868,10 @@ public class CodeEditor extends IDEComponent {
 			// adicionando enquanto for menor
 			lcmx--;
 
-		while (MIN_Y + lcmy * (LINE_HEIGHT) - FONT_SIZE - scrY - 2 < MouseInput.getMouseY()) // o mesmo para aqui, s� que com o y
+		while (MIN_Y + lcmy * LINE_HEIGHT - FONT_SIZE - scrY - 2 < MouseInput.getMouseY()) // o mesmo para aqui, s� que com o y
 			lcmy++;
 
-		while (MIN_Y + lcmy * (LINE_HEIGHT) - FONT_SIZE - scrY - 2 > MouseInput.getMouseY()) // o mesmo para aqui, s� que com o y
+		while (MIN_Y + lcmy * LINE_HEIGHT - FONT_SIZE - scrY - 2 > MouseInput.getMouseY()) // o mesmo para aqui, s� que com o y
 			lcmy--;
 
 		if (FONT_SIZE < 13)
@@ -887,8 +887,8 @@ public class CodeEditor extends IDEComponent {
 
 		//////////////
 
-		my = (MouseInput.getMouseY() / (LINE_HEIGHT) - 1)
-				+ (scrY / (LINE_HEIGHT));
+		my = (MouseInput.getMouseY() / LINE_HEIGHT - 1)
+				+ (scrY / LINE_HEIGHT);
 		mx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / FONT_SIZE) + (scrX / FONT_SIZE));
 
 		while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < MouseInput
@@ -901,11 +901,11 @@ public class CodeEditor extends IDEComponent {
 			// adicionando enquanto for menor
 			mx--;
 
-		while (MIN_Y + my * (LINE_HEIGHT) - FONT_SIZE - scrY - 2 < MouseInput
+		while (MIN_Y + my * LINE_HEIGHT - FONT_SIZE - scrY - 2 < MouseInput
 				.getMouseY()) // o mesmo para aqui, s� que com o y
 			my++;
 
-		while (MIN_Y + my * (LINE_HEIGHT) - FONT_SIZE - scrY - 2 > MouseInput
+		while (MIN_Y + my * LINE_HEIGHT - FONT_SIZE - scrY - 2 > MouseInput
 				.getMouseY()) // o mesmo para aqui, s� que com o y
 			my--;
 
@@ -923,7 +923,7 @@ public class CodeEditor extends IDEComponent {
 		/// another (one)
 		
 		realcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
-		realcy = MIN_Y + ((cursorY - 1) * (LINE_HEIGHT)) - scrY;
+		realcy = MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY;
 
 		/*
 		 * if (drawcx != realcx) { if (drawcx < realcx) drawcx += speed; if (drawcx >
@@ -1124,7 +1124,7 @@ public class CodeEditor extends IDEComponent {
 				if (editing != null && editing.getRegent() != null && editing.getRegent().getRegent() != null) {
 					int i = 0;
 					for (IDELine l : lines) {
-						int yr = MIN_Y + (i++ * (LINE_HEIGHT)) - scrY;
+						int yr = MIN_Y + (i++ * LINE_HEIGHT) - scrY;
 						
 						if (yr < 0 || yr > Main.screen.getHeight())
 							continue;
@@ -7330,7 +7330,7 @@ public class CodeEditor extends IDEComponent {
 						
 						int i = 0;
 						for (IDELine l : lines) {
-							int yr = MIN_Y + (i++ * (LINE_HEIGHT)) - scrY;
+							int yr = MIN_Y + (i++ * LINE_HEIGHT) - scrY;
 							
 							if (yr < 0 || yr > Main.screen.getHeight())
 								continue;
@@ -8541,26 +8541,26 @@ public class CodeEditor extends IDEComponent {
 								if (MouseInput.wheelUp() && scrY > 0) {
 									MouseInput.updateMouseRoll();
 									
-									scrY -= (LINE_HEIGHT) * 3;
+									scrY -= LINE_HEIGHT * 3;
 								}
-								else if (MouseInput.wheelDown() && scrY + (LINE_HEIGHT) * 3 < lines.size()
-										* (LINE_HEIGHT)) {
+								else if (MouseInput.wheelDown() && scrY + LINE_HEIGHT * 3 < lines.size()
+										* LINE_HEIGHT) {
 									MouseInput.updateMouseRoll();
 									
-									scrY += (LINE_HEIGHT) * 3;
+									scrY += LINE_HEIGHT * 3;
 								}
 							}
 							else {
 								if (MouseInput.wheelUp() && scrY > 0) {
 									MouseInput.updateMouseRoll();
 									
-									scrY -= (LINE_HEIGHT) * 6;
+									scrY -= LINE_HEIGHT * 6;
 								}
-								else if (MouseInput.wheelDown() && scrY + (LINE_HEIGHT) * 3 < lines.size() 
-										* (LINE_HEIGHT)) {
+								else if (MouseInput.wheelDown() && scrY + LINE_HEIGHT * 3 < lines.size() 
+										* LINE_HEIGHT) {
 									MouseInput.updateMouseRoll();
 									
-									scrY += (LINE_HEIGHT) * 6;
+									scrY += LINE_HEIGHT * 6;
 							}
 							}
 						}
@@ -8791,25 +8791,25 @@ public class CodeEditor extends IDEComponent {
 		if (KeyInput.isKeyPressed() && KeyInput.isControlDown()) {
 			if (!KeyInput.isShiftDown()) {
 				if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP && scrY > 0)
-					scrY -= (LINE_HEIGHT) * 3;
-				else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN && scrY + (LINE_HEIGHT) * 3 < lines.size() * (LINE_HEIGHT))
-					scrY += (LINE_HEIGHT) * 3;
+					scrY -= LINE_HEIGHT * 3;
+				else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN && scrY + LINE_HEIGHT * 3 < lines.size() * LINE_HEIGHT)
+					scrY += LINE_HEIGHT * 3;
 				
 				if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && scrX > 0)
-					scrX -= (LINE_HEIGHT) * 3;
+					scrX -= LINE_HEIGHT * 3;
 				else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT)
-					scrX += (LINE_HEIGHT) * 3;
+					scrX += LINE_HEIGHT * 3;
 			}
 			else {
 				if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP && scrY > 0)
-					scrY -= (LINE_HEIGHT) * 6;
-				else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN && scrY + (LINE_HEIGHT) * 6 < lines.size() * (LINE_HEIGHT))
-					scrY += (LINE_HEIGHT) * 6;
+					scrY -= LINE_HEIGHT * 6;
+				else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN && scrY + LINE_HEIGHT * 6 < lines.size() * LINE_HEIGHT)
+					scrY += LINE_HEIGHT * 6;
 				
 				if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && scrX > 0)
-					scrX -= (LINE_HEIGHT) * 6;
+					scrX -= LINE_HEIGHT * 6;
 				else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT)
-					scrX += (LINE_HEIGHT) * 6;
+					scrX += LINE_HEIGHT * 6;
 			}
 		}
 		
@@ -8898,7 +8898,7 @@ public class CodeEditor extends IDEComponent {
 		}
 
 		if (lines.size() > 0
-				&& scrY + (LINE_HEIGHT) * 3 > (lines.size() + 2) * (LINE_HEIGHT)) {
+				&& scrY + LINE_HEIGHT * 3 > (lines.size() + 2) * LINE_HEIGHT) {
 			scrY = (lines.size() * FONT_SIZE) - (FONT_SIZE * 3);
 
 			cursorX = lines.get(lines.size() - 1).getChars().size();
@@ -9000,7 +9000,7 @@ public class CodeEditor extends IDEComponent {
 						
 						int i = 0;
 						for (IDELine l : lines) {
-							int yr = MIN_Y + (i++ * (LINE_HEIGHT)) - scrY;
+							int yr = MIN_Y + (i++ * LINE_HEIGHT) - scrY;
 							
 							if (yr < 0 || yr > Main.screen.getHeight())
 								continue;
@@ -9118,12 +9118,12 @@ public class CodeEditor extends IDEComponent {
 	//		}
 	
 			g.setColor(Colors.backgroundLight); // TODO é essa aqui a linha que atravessa a tela no cursor
-			g.fillRect(x, MIN_Y + ((cursorY - 1) * (LINE_HEIGHT)) - scrY, Main.screen.getWidth(),
+			g.fillRect(x, MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY, Main.screen.getWidth(),
 					LINE_HEIGHT);
 	
 			/*
 			 * g.setColor(Colors.backgroundLight); g.fillRect(x, MIN_Y + ((cursorY - 1) *
-			 * (LINE_HEIGHT)) - scrY - 1, 49, LINE_HEIGHT +
+			 * LINE_HEIGHT) - scrY - 1, 49, LINE_HEIGHT +
 			 * 1);
 			 */
 	
@@ -9134,8 +9134,8 @@ public class CodeEditor extends IDEComponent {
 						
 						if (i > line1 && i < line2) { // do meio (do 0 até o fim da linha)
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do 0 até o index2
-									// (i + 1) * (LINE_HEIGHT) - scrY,
-									MIN_Y + ((i - 1) * (LINE_HEIGHT)) - scrY,
+									// (i + 1) * LINE_HEIGHT - scrY,
+									MIN_Y + ((i - 1) * LINE_HEIGHT) - scrY,
 									// Main.screen.getWidth() + scrX,
 									((x + (FONT_SIZE * 4)) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX
 											- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
@@ -9145,7 +9145,7 @@ public class CodeEditor extends IDEComponent {
 				}
 	
 				for (int i = 0; i < lines.size(); i++) {
-					int yr = MIN_Y + (i * (LINE_HEIGHT)) - scrY;
+					int yr = MIN_Y + (i * LINE_HEIGHT) - scrY;
 					
 					if (yr < 0 || yr > Main.screen.getHeight()) {
 						continue;
@@ -9157,12 +9157,12 @@ public class CodeEditor extends IDEComponent {
 					if (lines.get(i) == null)
 						break;
 	
-					if (MIN_Y + (i * (LINE_HEIGHT)) - scrY < MIN_Y - 15)
+					if (MIN_Y + (i * LINE_HEIGHT) - scrY < MIN_Y - 15)
 						continue;
 	
 					/*
 					 * if (i == cursorY - 1 && !isReadOnly) { g.setColor(Colors.backgroundLight);
-					 * g.fillRect(x, MIN_Y + (i * (LINE_HEIGHT)) - scrY - 1,
+					 * g.fillRect(x, MIN_Y + (i * LINE_HEIGHT) - scrY - 1,
 					 * Main.screen.getWidth(), LINE_HEIGHT + 1); }
 					 */
 	
@@ -9174,7 +9174,7 @@ public class CodeEditor extends IDEComponent {
 								g.fillRect(((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
 																										// index1 até o
 																										// index2
-										MIN_Y + ((line1 - 1) * (LINE_HEIGHT)) - scrY,
+										MIN_Y + ((line1 - 1) * LINE_HEIGHT) - scrY,
 										(((x + (FONT_SIZE * 4)) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX)
 												- (((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 										LINE_HEIGHT);
@@ -9182,17 +9182,18 @@ public class CodeEditor extends IDEComponent {
 								g.fillRect(((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
 																										// index1 até o fim
 																										// da linha
-										MIN_Y + ((line1 - 1) * (LINE_HEIGHT)) - scrY,
+										MIN_Y + ((line1 - 1) * LINE_HEIGHT) - scrY,
 										((((x + (FONT_SIZE * 4)) + (lines.get(line1 - 1).getChars().size() - index1)
 												* (FONT_SIZE - (FONT_SIZE / 4))) - scrX) // mudar, pois n funciona em fontes menores
-												- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - ruleOf3(16, FONT_SIZE, FONT_SIZE)),
+												- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX) - ruleOf3(16, FONT_SIZE + 1, FONT_SIZE)),
+										//(x + ((FONT_SIZE / 4) * lines.get(line1 - 1).getChars().size())),
 										LINE_HEIGHT);
 							}
 						}
 						if (i == line2 - 1) {
 							if (i != line1 - 1) { // do 0 ao index2
 								g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
-										MIN_Y + ((line2 - 1) * (LINE_HEIGHT)) - scrY,
+										MIN_Y + ((line2 - 1) * LINE_HEIGHT) - scrY,
 										((x + (FONT_SIZE * 4)) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX
 												- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 										LINE_HEIGHT);
@@ -9205,7 +9206,7 @@ public class CodeEditor extends IDEComponent {
 	
 					// if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 	
-					Fonts.drawChars(cs, (x + (FONT_SIZE * 4)) - scrX, MIN_Y + (i * (LINE_HEIGHT)) - scrY, fs, x + (FONT_SIZE * 4), Main.screen.getWidth(), g);
+					Fonts.drawChars(cs, (x + (FONT_SIZE * 4)) - scrX, MIN_Y + (i * LINE_HEIGHT) - scrY, fs, x + (FONT_SIZE * 4), Main.screen.getWidth(), g);
 	
 					String nums = String.valueOf(i + 1); // nums = num string
 					// int num = i + 1;
@@ -9221,10 +9222,9 @@ public class CodeEditor extends IDEComponent {
 					Color c = i != cursorY - 1 ? Colors.codeEditor : Colors.explorerLight;
 	
 					g.setColor(c);
-					
-					g.fillRect(x, MIN_Y + (i * (LINE_HEIGHT)) - scrY, FONT_SIZE * 4, LINE_HEIGHT); // linha do num da linha
+					g.fillRect(x, MIN_Y + (i * LINE_HEIGHT) - scrY, FONT_SIZE * 4, LINE_HEIGHT); // linha do num da linha
 	
-					Fonts.drawString(nums, nx, MIN_Y + (i * (LINE_HEIGHT)) - scrY, font, g);
+					Fonts.drawString(nums, nx, MIN_Y + (i * LINE_HEIGHT) - scrY, font, g);
 				}
 			} catch (Exception e) {}
 	
