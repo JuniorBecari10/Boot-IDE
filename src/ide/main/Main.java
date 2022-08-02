@@ -419,6 +419,9 @@ public class Main implements Runnable, Tickable {
         hexView = Colors.swapColor(hexView, Colors.textLightDefault, Colors.textLight);
         binView = Colors.swapColor(binView, Colors.textLightDefault, Colors.textLight);
         
+        closeWindowSpr = Colors.swapColor(closeWindowSpr, Colors.textLightDefault, Colors.textLight);
+        // terminar de colocar as cores aqui
+        
         explorerTab = Colors.swapColor(explorerTab, Colors.textLightDefault, Colors.textLight);
         searchReplaceTab = Colors.swapColor(searchReplaceTab, Colors.textLightDefault, Colors.textLight);
         gitTab = Colors.swapColor(gitTab, Colors.textLightDefault, Colors.textLight);
