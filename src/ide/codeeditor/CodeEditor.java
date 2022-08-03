@@ -86,6 +86,8 @@ public class CodeEditor extends IDEComponent {
 	public static LineEnding lineEnding = LineEnding.LF;
 	
 	public boolean shouldColor = true;
+	
+	public static final char BLACK_CIRCLE = 9679;
 
 	public boolean isCssPart;
 	public boolean isJSPart;
@@ -8958,6 +8960,9 @@ public class CodeEditor extends IDEComponent {
 				Main.screen.frame.setTitle(Main.baseFolder.getName() + " | " + editing.getRegent().getRegent().getName() + " - " + Main.PROGRAM_NAME);
 			else
 				Main.screen.frame.setTitle(editing.getRegent().getRegent().getName() + " - " + Main.PROGRAM_NAME);
+			
+			if (!editing.isSaved())
+				Main.screen.frame.setTitle("* " + Main.screen.frame.getTitle());
 		}
 		else if (Main.baseFolder != null)
 			Main.screen.frame.setTitle(Main.baseFolder.getName() + " - " + Main.PROGRAM_NAME);
