@@ -8305,7 +8305,7 @@ public class CodeEditor extends IDEComponent {
 					 * execute("closeother");
 					 * 
 					 * return; }
-					 */ // larga de m�o
+					 */ // larga de mão
 
 					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + T (Terminal)
 						KeyInput.updateKeys();
