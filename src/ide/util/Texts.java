@@ -200,10 +200,11 @@ public final class Texts {
 	public static String whitespaceIs;
 	
 	public static String back;
-	
 	public static String apply;
 	
 	public static String settings;
+	
+	public static String targetFile;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -391,10 +392,11 @@ public final class Texts {
 			whitespaceIs = "Os Espa�os em Branco estão";
 			
 			back = "Voltar";
-			
 			apply = "Aplicar";
 			
 			settings = "Configurações";
+			
+			targetFile = "Arquivo de Destino";
 			
 			break;
 		
@@ -582,10 +584,11 @@ public final class Texts {
 			whitespaceIs = "The whitespaces are";
 			
 			back = "Back";
-			
 			apply = "Apply";
 			
 			settings = "Settings";
+			
+			targetFile = "Target File";
 			
 			break;
 		}

@@ -413,8 +413,10 @@ public class Explorer extends IDEComponent {
     }
 
     private void renderSearchReplace(Graphics g) {
-		Fonts.drawString(Texts.search + ":", x + 20, y + 75, new IDEFont(Fonts.lightGrayNormal, 16), g);
-    	Fonts.drawString(Texts.replace + ":", x + 20, y + 145, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	Fonts.drawString(Texts.targetFile + ": " + (Main.editor.editing != null ? Main.editor.editing.getRegent().getRegent().getName() : ""), x + 20, y + 60, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	
+		Fonts.drawString(Texts.search + ":", x + 20, y + 95, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	Fonts.drawString(Texts.replace + ":", x + 20, y + 165, new IDEFont(Fonts.lightGrayNormal, 16), g);
 	}
     
     private void renderExplorer(Graphics g) {

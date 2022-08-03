@@ -43,28 +43,28 @@ public final class SearchReplaceCore {
 	
 	public static synchronized void initComponents() {
 		if (Explorer.search == null)
-			Explorer.search = new InputBox(20, Screen.DECORATION_HEIGHT +  100, Main.explorer.getWidth() - 40, 20);
+			Explorer.search = new InputBox(20, Screen.DECORATION_HEIGHT +  120, Main.explorer.getWidth() - 40, 20);
 		
 		if (Explorer.replace == null)
-			Explorer.replace = new InputBox(20, Screen.DECORATION_HEIGHT + 170, Main.explorer.getWidth() - 40, 20);
+			Explorer.replace = new InputBox(20, Screen.DECORATION_HEIGHT + 190, Main.explorer.getWidth() - 40, 20);
 		
 		if (Explorer.entireDocument == null)
-			Explorer.entireDocument = new SearchReplaceRadioButton(Main.explorer.getWidth() - 100, Screen.DECORATION_HEIGHT + 210, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true);
+			Explorer.entireDocument = new SearchReplaceRadioButton(Main.explorer.getWidth() - 100, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true);
 		
 		if (Explorer.selectedLines == null)
-			Explorer.selectedLines = new SearchReplaceRadioButton(Main.explorer.getWidth() - 62, Screen.DECORATION_HEIGHT + 210, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false);
+			Explorer.selectedLines = new SearchReplaceRadioButton(Main.explorer.getWidth() - 62, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false);
 		
 		if (Explorer.caseSensitive == null)
-			Explorer.caseSensitive = new ToggleButton(20, Screen.DECORATION_HEIGHT + 210, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430);
+			Explorer.caseSensitive = new ToggleButton(20, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430);
 		
 		if (Explorer.regex == null)
-			Explorer.regex = new ToggleButton(58, Screen.DECORATION_HEIGHT + 210, 32, 32, Main.regex, false, Texts.regex, 280, 270);
+			Explorer.regex = new ToggleButton(58, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.regex, false, Texts.regex, 280, 270);
 		
 		if (Explorer.searchNext == null)
-			Explorer.searchNext = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 260, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()));
+			Explorer.searchNext = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 280, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()));
 		
 		if (Explorer.replaceAll == null)
-			Explorer.replaceAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 300, Main.explorer.getWidth() - 40, 20, Texts.replaceAll, () -> replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()));
+			Explorer.replaceAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 320, Main.explorer.getWidth() - 40, 20, Texts.replaceAll, () -> replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()));
 	}
 	
 	public static synchronized void dispose() {
