@@ -221,7 +221,7 @@ public class Main implements Runnable, Tickable {
 	    	//System.getProperties().list(System.out);
 	    	
 	    	os = getOS();
-
+	    	
 	    	originalSpritesheet = new Spritesheet(sprsh);
 	        modifiedSpritesheet = new Spritesheet(spritesheetFile);
 	        spritesheet = spritesheetFile.exists() ? modifiedSpritesheet : originalSpritesheet;

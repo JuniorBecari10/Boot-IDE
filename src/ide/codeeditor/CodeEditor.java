@@ -49,6 +49,7 @@ import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
 import ide.main.Main;
+import ide.main.OS;
 import ide.screen.Screen;
 import ide.util.Animation;
 import ide.util.Colors;
@@ -8631,7 +8632,7 @@ public class CodeEditor extends IDEComponent {
 			int width = Main.lang == Language.PORT ? 550 : 510;
 			List<RightClickOption> list = new ArrayList<>();
 			
-			list.add(new RightClickOption(0, 0, width, Texts.openCmd, (s) -> execute(s), "cmd"));
+			list.add(new RightClickOption(0, 0, width, Main.os == OS.WINDOWS, Texts.openCmd, (s) -> execute(s), "cmd"));
 			list.add(new RightClickOption(0, 0, width, Texts.openTerminal, (s) -> execute(s), "term"));
 
 			list.add(new RightClickOption(0, 0, width, Texts.openExplorer, (s) -> execute(s), "sysexp"));

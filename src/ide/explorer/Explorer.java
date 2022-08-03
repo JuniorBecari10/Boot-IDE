@@ -413,7 +413,18 @@ public class Explorer extends IDEComponent {
     }
 
     private void renderSearchReplace(Graphics g) {
-    	Fonts.drawString(Texts.targetFile + ": " + (Main.editor.editing != null ? Main.editor.editing.getRegent().getRegent().getName() : ""), x + 20, y + 60, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	String text = Texts.targetFile + ": " + (Main.editor.editing != null ? Main.editor.editing.getRegent().getRegent().getName() : "");
+    	int cutLength = 0;
+    	
+    	if ((text.length() * 12) + 20 >= width) {
+    		while ((text.substring(0, text.length() - cutLength).length() * 12) + 20 >= width)
+    			cutLength++;
+    	}
+    	
+    	System.out.println(cutLength);
+    	text = text.substring(0, text.length() - cutLength);
+    	
+    	Fonts.drawString(text, x + 20, y + 60, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	
 		Fonts.drawString(Texts.search + ":", x + 20, y + 95, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	Fonts.drawString(Texts.replace + ":", x + 20, y + 165, new IDEFont(Fonts.lightGrayNormal, 16), g);
