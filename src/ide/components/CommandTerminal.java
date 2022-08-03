@@ -82,7 +82,7 @@ public class CommandTerminal extends IDEComponent {
 	
 	private static JFileChooser chooser;
 	
-	private static boolean typedFlag = false; // � necess�rio que exista, pelo menos por enquanto
+	//private static boolean typedFlag = false; // � necess�rio que exista, pelo menos por enquanto
 	
 	public CommandTerminal(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
@@ -511,13 +511,6 @@ public class CommandTerminal extends IDEComponent {
 						
 						runCommand("revertcolors");
 					}
-					
-					if (typedFlag) {
-						String[] options = {"  Ok  " };
-						
-						CodeEditor.setSystemLook();
-						JOptionPane.showOptionDialog(null, Texts.pleaseRestart, Texts.restartRequired, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-					}
 				}
 				
 				break;
@@ -738,22 +731,6 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "revertcolors":
 				Colors.revertColors();
-				
-				String[] options = { "Ok" };
-				
-				CodeEditor.setSystemLook();
-				JOptionPane.showOptionDialog(null, Texts.pleaseRestart, Texts.restartRequired, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-				
-				/*Fonts.initFonts(Main.fntnr, Main.fntbl);
-				Main.spritesheet = new Spritesheet(Main.sprsh);
-				
-				CodeEditor.FONT_SIZE = 16;
-				
-				Main.lang = Language.ENG;
-				Texts.setTexts(Main.lang);*/
-				
-				//Main.load(Main.conffile);
-				
 				break;
 				
 			case "togglecodehelpers":
@@ -1383,7 +1360,7 @@ public class CommandTerminal extends IDEComponent {
 		//Main.writeFile(Main.settingsFile);
 		Main.editor.setCursorWithinBounds();
 		
-		typedFlag = false;
+		//typedFlag = false;
 	}
 	
 	public void tick() {
@@ -1539,7 +1516,7 @@ public class CommandTerminal extends IDEComponent {
 				typedCommands.push(builder.toString());
 				tcIndex = typedCommands.size() - 1;
 				
-				typedFlag = true;
+				//typedFlag = true;
 				
 				runCommand(builder.toString());
 				

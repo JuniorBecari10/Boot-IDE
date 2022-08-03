@@ -319,6 +319,8 @@ public class Explorer extends IDEComponent {
 	    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_H) { // Ctrl + H (Uma Pasta Acima)
 	    			KeyInput.updateKeys();
 	    			
+	    			if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) return;
+	    			
 	    			OneFolderUpButton.oneFolderUp();
 	    			
 	    			return;

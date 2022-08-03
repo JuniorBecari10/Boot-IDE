@@ -95,10 +95,43 @@ public class Colors {
          
          Main.lock = Colors.swapColor(Main.lock, textLightOld, Colors.textLight);
          
+         Main.back = Colors.swapColor(Main.back, textLightOld, Colors.textLight);
+         
+         Main.caseSensitive = Colors.swapColor(Main.caseSensitive, textLightOld, Colors.textLight);
+         Main.regex = Colors.swapColor(Main.regex, textLightOld, Colors.textLight);
+         
+         Main.entireDocument = Colors.swapColor(Main.entireDocument, textLightOld, Colors.textLight);
+         Main.selectedLines = Colors.swapColor(Main.selectedLines, textLightOld, Colors.textLight);
+         
+         Main.hexView = Colors.swapColor(Main.hexView, textLightOld, Colors.textLight);
+         Main.binView = Colors.swapColor(Main.binView, textLightOld, Colors.textLight);
+         
+         Main.closeWindowSpr = Colors.swapColor(Main.closeWindowSpr, textLightOld, Colors.textLight);
+         Main.closeWindowMacSpr = Colors.swapColor(Main.closeWindowMacSpr, textLightOld, Colors.textLight);
+         Main.closeWindowHoverSpr = Colors.swapColor(Main.closeWindowHoverSpr, textLightOld, Colors.textLight);
+         
+         Main. minimizeWindowSpr = Colors.swapColor(Main.minimizeWindowSpr, textLightOld, Colors.textLight);
+         Main.minimizeWindowMacSpr = Colors.swapColor(Main.minimizeWindowMacSpr, textLightOld, Colors.textLight);
+         Main.minimizeWindowHoverSpr = Colors.swapColor(Main.minimizeWindowHoverSpr, textLightOld, Colors.textLight);
+         
+         Main.maximizeWindowSpr = Colors.swapColor(Main.maximizeWindowSpr, textLightOld, Colors.textLight);
+         Main.maximizeWindowMacSpr = Colors.swapColor(Main.maximizeWindowMacSpr, textLightOld, Colors.textLight);
+         Main.maximizeWindowHoverSpr = Colors.swapColor(Main.maximizeWindowHoverSpr, textLightOld, Colors.textLight);
+         
+         Main.maximizedWindowSpr = Colors.swapColor(Main.maximizedWindowSpr, textLightOld, Colors.textLight);
+         Main.deactivatedMacButtons = Colors.swapColor(Main.deactivatedMacButtons, textLightOld, Colors.textLight);
+         
+         Main.explorerTab = Colors.swapColor(Main.explorerTab, textLightOld, Colors.textLight);
+         Main.searchReplaceTab = Colors.swapColor(Main.searchReplaceTab, textLightOld, Colors.textLight);
+         Main.gitTab = Colors.swapColor(Main.gitTab, textLightOld, Colors.textLight);
+         Main.terminalTab = Colors.swapColor(Main.terminalTab, textLightOld, Colors.textLight);
+         
+         Main.settingsButtonSpr = Colors.swapColor(Main.settingsButtonSpr, textLightOld, Colors.textLight);
+         
          ListableFile.generateLocalConfigFile(Main.defaultConfigFile);
          Main.load(Main.conffile);
          
-         if (Main.editor.editing.getRegent().getRegent().equals(Main.defaultConfigFile)) {
+         if (Main.editor.editing != null && Main.editor.editing.getRegent().getRegent().equals(Main.defaultConfigFile)) {
 			try {
 				Main.editor.lines = Main.editor.readFile(Main.defaultConfigFile);
 			} catch (IOException e) {

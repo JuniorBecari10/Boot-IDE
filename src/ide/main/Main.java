@@ -420,7 +420,19 @@ public class Main implements Runnable, Tickable {
         binView = Colors.swapColor(binView, Colors.textLightDefault, Colors.textLight);
         
         closeWindowSpr = Colors.swapColor(closeWindowSpr, Colors.textLightDefault, Colors.textLight);
-        // terminar de colocar as cores aqui
+        closeWindowMacSpr = Colors.swapColor(closeWindowMacSpr, Colors.textLightDefault, Colors.textLight);
+        closeWindowHoverSpr = Colors.swapColor(closeWindowHoverSpr, Colors.textLightDefault, Colors.textLight);
+        
+        minimizeWindowSpr = Colors.swapColor(minimizeWindowSpr, Colors.textLightDefault, Colors.textLight);
+        minimizeWindowMacSpr = Colors.swapColor(minimizeWindowMacSpr, Colors.textLightDefault, Colors.textLight);
+        minimizeWindowHoverSpr = Colors.swapColor(minimizeWindowHoverSpr, Colors.textLightDefault, Colors.textLight);
+        
+        maximizeWindowSpr = Colors.swapColor(maximizeWindowSpr, Colors.textLightDefault, Colors.textLight);
+        maximizeWindowMacSpr = Colors.swapColor(maximizeWindowMacSpr, Colors.textLightDefault, Colors.textLight);
+        maximizeWindowHoverSpr = Colors.swapColor(maximizeWindowHoverSpr, Colors.textLightDefault, Colors.textLight);
+        
+        maximizedWindowSpr = Colors.swapColor(maximizedWindowSpr, Colors.textLightDefault, Colors.textLight);
+        deactivatedMacButtons = Colors.swapColor(deactivatedMacButtons, Colors.textLightDefault, Colors.textLight);
         
         explorerTab = Colors.swapColor(explorerTab, Colors.textLightDefault, Colors.textLight);
         searchReplaceTab = Colors.swapColor(searchReplaceTab, Colors.textLightDefault, Colors.textLight);
