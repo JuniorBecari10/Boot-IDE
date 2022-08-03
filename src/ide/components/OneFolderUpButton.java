@@ -44,13 +44,13 @@ public class OneFolderUpButton extends IDEComponent {
 		Explorer.files.clear();
 		ListableFile.files.clear();
 		
-		if (Explorer.scope == null ? Main.baseFolder.getParent() == null : Explorer.scope.getParent() == null) { // se for null e porque é a base folder
+		if (Explorer.scope == null ? true : Explorer.scope.getParent() == null) { // se for null e porque é a base folder
 			Explorer.scope = null; // coloca depois da verificação pra n dar exception
 			
 			Explorer.files = ListableFile.loadFolder(ListableFile.newListableFile(Main.baseFolder));
 		}
 		else // se não for é porque tem pasta antes
-			Explorer.files = ListableFile.loadFolder(Explorer.scope == null ? ListableFile.newListableFile(Main.baseFolder.getParentFile()) : Explorer.scope.getParent());
+			Explorer.files = ListableFile.loadFolder(Explorer.scope == null ? ListableFile.newListableFile(Main.baseFolder) : Explorer.scope.getParent());
 	}
 	
 	public void render(Graphics g) {
