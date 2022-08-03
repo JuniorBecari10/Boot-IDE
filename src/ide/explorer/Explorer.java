@@ -179,6 +179,16 @@ public class Explorer extends IDEComponent {
 	    	Main.editor.setWidth(Main.screen.getWidth());
 	    }
 	    
+	    // Atalho Universal
+	    if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + T (Terminal)
+			KeyInput.updateKeys();
+
+			Main.editor.execute("term");
+
+			return;
+		}
+
+	    
 	    if (hovered())
 	    	Main.screen.setCursor(Cursor.getDefaultCursor());
 			
@@ -199,10 +209,8 @@ public class Explorer extends IDEComponent {
 	    		return;
 	    	}
 	    	
-	    	if (hovered() && !ListableFile.isListableFileHovered() && !MouseInput.hovered(x + width - 5, y, 10, height)) {
-	    		//System.out.println("a");
+	    	if (hovered() && !ListableFile.isListableFileHovered() && !MouseInput.hovered(x + width - 5, y, 10, height))
 	    		Main.screen.setCursor(Cursor.getDefaultCursor());
-	    	}
 	    	
 	    	maxTitleWidth =  (width / 23) + 2;
 	    	maxFolderWidth = (width / 15);
@@ -326,7 +334,7 @@ public class Explorer extends IDEComponent {
 	    			return;
 	    		}
 	    		
-	    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_G) { // Ctrl + G (Retornar � Pasta Base)
+	    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_G) { // Ctrl + G (Retornar à Pasta Base)
 	    			KeyInput.updateKeys();
 	    			
 	    			ReturnToBaseFolderButton.returnToBaseFolder();
@@ -421,7 +429,6 @@ public class Explorer extends IDEComponent {
     			cutLength++;
     	}
     	
-    	System.out.println(cutLength);
     	text = text.substring(0, text.length() - cutLength);
     	
     	Fonts.drawString(text, x + 20, y + 60, new IDEFont(Fonts.lightGrayNormal, 16), g);

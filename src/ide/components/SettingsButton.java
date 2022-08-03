@@ -18,6 +18,8 @@ public class SettingsButton extends IDEComponent {
 	}
 	
 	public void tick() {
+		if (CommandTerminal.expOff) return;
+		
 		x = Main.explorer.getWidth() - 34;
 		
 		if (leftClicked())
@@ -25,6 +27,8 @@ public class SettingsButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
+		if (CommandTerminal.expOff) return;
+		
 		if (hovered()) {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x, y, width, height);

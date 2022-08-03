@@ -90,6 +90,7 @@ public class CommandTerminal extends IDEComponent {
 		originalWidth = width;
 		
 		commandHints.clear();
+		Explorer.selected = null;
 		
 		builder = new StringBuilder();
 		
