@@ -125,7 +125,6 @@ public class Main implements Runnable, Tickable {
     
     public static Spritesheet modifiedSpritesheet;
     public static Spritesheet modifiedFontNormal;
-    public static Spritesheet modifiedFontBold;
     public static Spritesheet modifiedIcons;
     
     public static int inheritCx, inheritCy;

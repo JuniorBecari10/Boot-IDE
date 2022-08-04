@@ -64,7 +64,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			t.add(new FileType("readme.md",Main.spritesheet.getSprite(752,32,16,16)));
 			t.add(new FileType("package.json",Main.spritesheet.getSprite(576,16,16,16)));
 			t.add(new FileType("package-lock.json",Main.spritesheet.getSprite(576,16,16,16)));
-			t.add(new FileType(".mod", Main.spritesheet.getSprite(688, 16, 16, 16)));
+			t.add(new FileType(".mod", Main.spritesheet.getSprite(848, 32, 16, 16))); // 688, 16
 			
 			t.add(new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16)));
 			t.add(new FileType(".class",Main.spritesheet.getSprite(272,32, 16, 16)));
@@ -510,6 +510,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("allow_tab_animation: " + Tab.allowAnimation + "\n");
 			w.write("force_mac_buttons: " + Main.forceMacButtons + "\n");
 			w.write("line_ending: " + CodeEditor.lineEnding + "\n");
+			w.write("show_unsaved_title_bar: " + CodeEditor.showUnsavedTitleBar + "\n");
 
 			w.close();
 
@@ -1085,6 +1086,18 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				} catch (IllegalArgumentException e) {
 					break;
 				}
+
+				hasAltered = true;
+
+				break;
+				
+			case "show_unsaved_title_bar:":
+				if (!readConfigs) break;
+				
+				if (split[1].equals("default"))
+					break;
+
+				CodeEditor.showUnsavedTitleBar = Boolean.valueOf(split[1]);
 
 				hasAltered = true;
 

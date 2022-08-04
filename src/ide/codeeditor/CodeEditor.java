@@ -86,6 +86,7 @@ public class CodeEditor extends IDEComponent {
 	public static LineEnding lineEnding = LineEnding.LF;
 	
 	public boolean shouldColor = true;
+	public static boolean showUnsavedTitleBar = true;
 	
 	public static final char BLACK_CIRCLE = 9679;
 
@@ -1366,7 +1367,7 @@ public class CodeEditor extends IDEComponent {
 		case ".v": return vKeys;
 		case ".vh": return vKeys;
 		case ".vsh": return vKeys;
-		case ".mod": return vKeys;
+		case ".mod": return goKeys;
 		
 		default: return null;
 		}
@@ -1576,7 +1577,7 @@ public class CodeEditor extends IDEComponent {
 		case ".v": return "V";
 		case ".vh": return "V";
 		case ".vsh": return "V";
-		case ".mod": return "V";
+		case ".mod": return minMode ? "Go Mod" : (Main.lang == Language.PORT ? "Arquivo de Módulo do Go" : "Go Module File");
 		case ".bas": return minMode ? "BASIC" : "Beginners' All-Purpose Symbolic Instruction Code - BASIC";
 		
 		case ".html": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
@@ -8961,7 +8962,7 @@ public class CodeEditor extends IDEComponent {
 			else
 				Main.screen.frame.setTitle(editing.getRegent().getRegent().getName() + " - " + Main.PROGRAM_NAME);
 			
-			if (!editing.isSaved())
+			if (!editing.isSaved() && showUnsavedTitleBar)
 				Main.screen.frame.setTitle("* " + Main.screen.frame.getTitle());
 		}
 		else if (Main.baseFolder != null)
