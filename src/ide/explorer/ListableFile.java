@@ -1421,6 +1421,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			Main.editor.isMultilineCommenting = false;
 			Main.editor.isAnotherIteration = false;
+			
+			if (!file.getRegent().canWrite()) {
+				Main.editor.isReadOnly = true;
+				toAdd.isReadOnly = true;
+			}
 
 			for (Tab t : Main.editor.tabs)
 				if (t.getRegent().getRegent().getPath().equals(file.getRegent().getPath())) {
