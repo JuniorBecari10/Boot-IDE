@@ -713,7 +713,7 @@ public class CodeEditor extends IDEComponent {
 			"@private", "@property", "@try", "@throw", "@catch", "@finally", "@synthesize", "@dynamic", "@selector",
 			"atomic", "nonatomic", "retain" };
 
-	public static final String[] ideConfKeys = { "Arquivo de Configurações da Boot IDE", "Boot IDE Configuration File",
+	public static final String[] ideConfKeys = { new String("Arquivo de Configurações da Boot IDE".getBytes(), StandardCharsets.UTF_8), "Boot IDE Configuration File",
 			"port", "eng", "PORT", "ENG", "Colors", "Files", "Settings", "default", "true", "false", "LF", "lf", "CR", "cr", "CRLF", "crlf" };
 
 	public static final String[] makeKeys = { "if", "else", "export" };
@@ -1586,7 +1586,7 @@ public class CodeEditor extends IDEComponent {
 		case ".svelte": return "Svelte";
 		case ".css": return minMode ? "CSS" : "Cascading Style Sheets - CSS";
 		case ".xml": return minMode ? "XML" : "Extensible Markup Language - XML";
-		case ".sln": return minMode ? (Main.lang == Language.PORT ? "Solu��o do VS" : "VS Solution") : (Main.lang == Language.PORT ? "Solu��o do Microsoft Visual Studio"
+		case ".sln": return minMode ? (Main.lang == Language.PORT ? "Solução do VS" : "VS Solution") : (Main.lang == Language.PORT ? "Solução do Microsoft Visual Studio"
 				: "Microsoft Visual Studio Solution");
 		case ".json": return minMode ? "JSON" : "JavaScript Object Notation - JSON";
 		case ".jsonc": return minMode ? "JSONC" : "JavaScript Object Notation with Comments - JSONC";
@@ -1596,7 +1596,7 @@ public class CodeEditor extends IDEComponent {
 		case ".log": return minMode ? "Log" : (Main.lang == Language.PORT ? "Arquivo de Log" : "Log File");
 		case ".pdf": return minMode ? "PDF" : "Portable Document Format - PDF";
 		case ".jar": return minMode ? "Jar" : (Main.lang == Language.PORT ? "Arquivo Jar" : "Jar File");
-		case ".exe": return minMode ? "EXE" : (Main.lang == Language.PORT ? "Execut�vel do Windows - EXE" : "Windows Executable - EXE");
+		case ".exe": return minMode ? "EXE" : (Main.lang == Language.PORT ? "Executável do Windows - EXE" : "Windows Executable - EXE");
 		case ".classpath": return (Main.lang == Language.PORT ? "Caminho da Classe" : "Class Path");
 		case ".csproj": return (Main.lang == Language.PORT ? "Projeto C# do Visual Studio" : "Visual Studio C# Project");
 		case ".project": return (Main.lang == Language.PORT ? "Arquivo de Projeto" : "Project File");
@@ -1605,7 +1605,7 @@ public class CodeEditor extends IDEComponent {
 				: "Saved Bollot Box from Criador de Urnas");
 		case ".save": return (Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2" // fazer desses tbm
 				: "Saved Game from World's Hardest Game Maker 2");
-		case ".conf": return (Main.lang == Language.PORT ? "Arquivo de Configura��es da Boot IDE"
+		case ".conf": return (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
 				: "Boot IDE Configuration File");
 		case Main.SETTINGS_FILE_EXTENSION: return (Main.lang == Language.PORT ? "Arquivo de Configura��es da Boot IDE"
 				: "Boot IDE Configuration File");
@@ -1617,12 +1617,12 @@ public class CodeEditor extends IDEComponent {
 		case ".gitignore": return "Git Ignore";
 		case ".dockerfile": return "Dockerfile";
 		case ".jsx": return minMode ? "JSX" : "JavaScript React";
-		case ".config": return (Main.lang == Language.PORT ? "Arquivo de Configura��es" : "Configuration File");
-		case ".cfg": return (Main.lang == Language.PORT ? "Arquivo de Configura��es" : "Configuration File");
+		case ".config": return (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
+		case ".cfg": return (Main.lang == Language.PORT ? "Arquivo de Configurações" : "Configuration File");
 		case ".ps1": return (Main.lang == Language.PORT ? "Arquivo do PowerShell" : "PowerShell File");
-		case ".license": return (Main.lang == Language.PORT ? "Arquivo de Licen�a" : "License File");
+		case ".license": return (Main.lang == Language.PORT ? "Arquivo de Licença" : "License File");
 		case ".docx": return (Main.lang == Language.PORT ? "Documento do Microsoft Word" : "Microsoft Word Document");
-		case ".pptx": return (Main.lang == Language.PORT ? "Apresenta��o do Microsoft PowerPoint"
+		case ".pptx": return (Main.lang == Language.PORT ? "Apresentação do Microsoft PowerPoint"
 				: "Microsoft PowerPoint Presentation");
 		case ".xlsx": return (Main.lang == Language.PORT ? "Planilha do Microsoft Excel" : "Microsoft Excel Spreadsheet");
 		case ".one": return (Main.lang == Language.PORT ? "Arquivo do Microsoft OneNote" : "Microsoft OneNote File");
@@ -1633,15 +1633,15 @@ public class CodeEditor extends IDEComponent {
 		case ".ejs": return "Embedded JavaScript - EJS";
 		case ".ld": return "LinkerScript";
 		case ".lock": return "Lock";
-		case ".ini": return (Main.lang == Language.PORT ? "Arquivo de Par�metros de Configura��es"
+		case ".ini": return (Main.lang == Language.PORT ? "Arquivo de Parâmetros de Configurações"
 				: "Configuration Parameters File");
 		case ".dll": return minMode ? "DLL" : "Dynamic Link Library - DLL";
 		case ".makefile": return "Makefile";
 		case ".url": return minMode ? "URL" : "Uniform Resource Locator - URL";
-		case ".prefs": return (Main.lang == Language.PORT ? "Arquivo de Prefer�ncias" : "Preferences File");
-		case ".bashrc": return minMode ? "Bashrc" : (Main.lang == Language.PORT ? "Arquivo de Configura��es Bash" : "Bash Configuration File");
+		case ".prefs": return (Main.lang == Language.PORT ? "Arquivo de Preferências" : "Preferences File");
+		case ".bashrc": return minMode ? "Bashrc" : (Main.lang == Language.PORT ? "Arquivo de Configurações Bash" : "Bash Configuration File");
 		case ".bash_profile": return (Main.lang == Language.PORT ? "Perfil Bash" : "Bash Profile");
-		case ".toml": return minMode ? "Toml" : (Main.lang == Language.PORT ? "Arquivo de Configura��es do Rust" : "Rust Configuration File");
+		case ".toml": return minMode ? "Toml" : (Main.lang == Language.PORT ? "Arquivo de Configurações do Rust" : "Rust Configuration File");
 		case ".tf": return "Terraform";
 		
 		case ".png": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
@@ -1649,16 +1649,16 @@ public class CodeEditor extends IDEComponent {
 		case ".jpeg": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		case ".gif": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		case ".bmp": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		case ".ico": return (Main.lang == Language.PORT ? "Arquivo de �cone" : "Icon File");
+		case ".ico": return (Main.lang == Language.PORT ? "Arquivo de Icone" : "Icon File");
 		case ".webp": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 
-		case ".mp4": return (Main.lang == Language.PORT ? "Arquivo de V�deo" : "Video File");
-		case ".wmv": return (Main.lang == Language.PORT ? "Arquivo de V�deo" : "Video File");
-		case ".avi": return (Main.lang == Language.PORT ? "Arquivo de V�deo" : "Video File");
+		case ".mp4": return (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
+		case ".wmv": return (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
+		case ".avi": return (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
 
-		case ".wav": return (Main.lang == Language.PORT ? "Arquivo de �udio" : "Audio File");
-		case ".mp3": return (Main.lang == Language.PORT ? "Arquivo de �udio" : "Audio File");
-		case ".ogg": return (Main.lang == Language.PORT ? "Arquivo de �udio" : "Audio File");
+		case ".wav": return (Main.lang == Language.PORT ? "Arquivo de Audio" : "Audio File");
+		case ".mp3": return (Main.lang == Language.PORT ? "Arquivo de Audio" : "Audio File");
+		case ".ogg": return (Main.lang == Language.PORT ? "Arquivo de Audio" : "Audio File");
 
 		case ".otf": return (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
 		case ".ttf": return (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
@@ -1670,12 +1670,12 @@ public class CodeEditor extends IDEComponent {
 		case ".rar": return (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
 		case ".7z": return (Main.lang == Language.PORT ? "Arquivo Compactado" : "Zipped File");
 
-		case ".bin": return (Main.lang == Language.PORT ? "Arquivo Bin�rio" : "Binary File");
+		case ".bin": return (Main.lang == Language.PORT ? "Arquivo Binário" : "Binary File");
 		case ".img": return (Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File");
 		case ".iso": return (Main.lang == Language.PORT ? "Arquivo de Imagem de Disco" : "Disc Image File");
 		case ".flp": return (Main.lang == Language.PORT ? "Arquivo de Disquete" : "Floppy Disk File");
 		case ".o": return (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
-		case ".out": return (Main.lang == Language.PORT ? "Arquivo de Sa�da" : "Output File");
+		case ".out": return (Main.lang == Language.PORT ? "Arquivo de Saída" : "Output File");
 		case ".obj": return (Main.lang == Language.PORT ? "Arquivo de Objeto" : "Object File");
 
 		default: return capitalizeFirstLetter(
@@ -1687,11 +1687,11 @@ public class CodeEditor extends IDEComponent {
 		switch (filename.toLowerCase()) {
 		case "makefile": return  "Makefile";
 		case "dockerfile": return  "Dockerfile";
-		case "license": return  (Main.lang == Language.PORT ? "Arquivo de Licen�a" : "License File");
+		case "license": return  (Main.lang == Language.PORT ? "Arquivo de Licença" : "License File");
 		case "authors": return  (Main.lang == Language.PORT ? "Nomes dos Autores" : "Authors' Names");
 		case "gitignore": return  "Git Ignore";
 
-		default: return  (Main.lang == Language.PORT ? "Sem Extens�o" : "No Extension");
+		default: return  (Main.lang == Language.PORT ? "Sem Extensão" : "No Extension");
 		}
 	}
 
@@ -1732,7 +1732,7 @@ public class CodeEditor extends IDEComponent {
 
 	public static char[] sliceCharArray(int s, int e, char[] array) {
 		if (e < s)
-			throw new RuntimeException("O index final n�o pode ser menor que o inicial!");
+			throw new RuntimeException("O index final não pode ser menor que o inicial!");
 		
 		return Arrays.copyOfRange(array, s, e);
 	}
@@ -4279,7 +4279,7 @@ public class CodeEditor extends IDEComponent {
 
 		// boolean toContinue = false;
 
-		for (String s : nums) { // colorir n�meros
+		for (String s : nums) { // colorir números
 			indxs = findWord(new String(chars), s); // TODO
 
 			for (Integer i : indxs) {
@@ -4295,47 +4295,19 @@ public class CodeEditor extends IDEComponent {
 						&& hasAfter(new String(chars), i, '{'))
 					continue;
 				
-				/*int len = 0;
-				
-				for (Integer j : indxs) {
-					while (j + len < chars.length && chars[j + len] != ' ' && chars[j + len] != '[' && chars[j + len] != ']'
-							&& chars[j + len] != '(' && chars[j + len] != ')' && chars[j + len] != ',' && chars[j + len] != ';'
-							&& chars[j + len] != '.' && chars[j + len] != ':')
-						len++;
-				}
-				
-				char[] chs = (" " + new String(chars)).toCharArray();
-				
 				int c = i;
-				
+				boolean cnt = false;
 				while (c > 0 && chars[c] != ' ') {
+					if (chars[c - 1] == ' ' && !isNumber(chars[c])) {
+						cnt = true;
+						break;
+					}
+					
 					c--;
 				}
 				
-				if (chs[c] == ' ') {
-					if (Character.isLetter(chars[c + 1])) break; // no index0 o problema ainda existe
-				}*/
-
-				/*
-				 * if (Character.isLetter(chars[i - 1])) for (int j = i; i > 1; i--) { if
-				 * (chars[j - 1] == ' ') { if (!isNumber(chars[j])) { toContinue = true; break;
-				 * } } }
-				 * 
-				 * if (toContinue) { toContinue = false;
-				 * 
-				 * continue; }
-				 */
-
-				// if ((i > 0 && (Character.isLetter(chars[i - 1]) && !fs.get(i -
-				// 1).getColor().equals(Colors.numbers))) && (ext.equalsIgnoreCase(".html") |
-				// ext.equalsIgnoreCase(".xhtml")) continue;
-				// if ((i + s.length() < chars.length && i - 1 > 0 &&
-				// (Character.isLetter(chars[i + s.length()]) || Character.isLetter(chars[i -
-				// 1]) || (chars[i - 1] == '_' || chars[i + s.length()] == '_'))) &&
-				// !(ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss"))) continue;
-				// if (Character.isLetter(chars[i - 1]) || Character.isLetter(chars[i +
-				// s.length()])) continue;
-
+				if (cnt) continue;
+				
 				fs = color(i, i + s.length(), new IDEFont(Fonts.numbersEditor, FONT_SIZE), fs);
 			}
 		}
@@ -9125,8 +9097,7 @@ public class CodeEditor extends IDEComponent {
 	//		}
 	
 			g.setColor(Colors.backgroundLight); // TODO é essa aqui a linha que atravessa a tela no cursor
-			g.fillRect(x, MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY, Main.screen.getWidth(),
-					LINE_HEIGHT);
+			g.fillRect(x, MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY, Main.screen.getWidth(), LINE_HEIGHT);
 	
 			/*
 			 * g.setColor(Colors.backgroundLight); g.fillRect(x, MIN_Y + ((cursorY - 1) *
