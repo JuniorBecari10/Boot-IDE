@@ -416,7 +416,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write(Main.lang == Language.PORT ? "Arquivo de Configura��es da Boot IDE"
 					: "Boot IDE Configuration File" + "\n");
 			w.write("\n");
-			w.write("- Colors\n");
+			w.write("Colors\n");
 			w.write("\n");
 			w.write("background: default\n");
 			w.write("background2: default\n");
@@ -471,7 +471,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write(Main.lang == Language.PORT ? "Arquivo de Configura��es da Boot IDE"
 					: "Boot IDE Configuration File" + "\n");
 			w.write("\n");
-			w.write("- Colors\n");
+			w.write("Colors\n");
 			w.write("\n");
 			w.write("background: " + Colors.toHex(Colors.background) + "\n");
 			w.write("background2: " + Colors.toHex(Colors.background2) + "\n");
@@ -498,7 +498,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("lineNumber: " + Colors.toHex(Colors.lineNumber) + "\n");
 			w.write("selectedLineNumber: " + Colors.toHex(Colors.selectedLineNumber) + "\n");
 			w.write("\n");
-			w.write("- Settings\n");
+			w.write("Settings\n");
 			w.write("\n");
 			w.write("font_size: " + CodeEditor.FONT_SIZE + "\n");
 			w.write("language: " + Main.lang + "\n");
