@@ -204,7 +204,7 @@ public final class Texts {
 	
 	public static String settings;
 	
-	public static String targetFile;
+	public static String file;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -396,7 +396,7 @@ public final class Texts {
 			
 			settings = "Configurações";
 			
-			targetFile = "Arquivo de Destino";
+			file = "Arquivo";
 			
 			break;
 		
@@ -588,7 +588,7 @@ public final class Texts {
 			
 			settings = "Settings";
 			
-			targetFile = "Target File";
+			file = "File";
 			
 			break;
 		}

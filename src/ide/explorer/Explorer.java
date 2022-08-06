@@ -421,7 +421,7 @@ public class Explorer extends IDEComponent {
     }
 
     private void renderSearchReplace(Graphics g) {
-    	String text = Texts.targetFile + ": " + (Main.editor.editing != null ? Main.editor.editing.getRegent().getRegent().getName() : "");
+    	String text = Texts.file + ": " + (Main.editor.editing != null ? Main.editor.editing.getRegent().getRegent().getName() : "");
     	int cutLength = 0;
     	
     	if ((text.length() * 12) + 20 >= width) {

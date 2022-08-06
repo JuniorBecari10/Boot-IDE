@@ -1226,6 +1226,13 @@ public class CodeEditor extends IDEComponent {
 				|| c == '0';
 	}
 	
+	public static boolean isSymbol(char c) {
+		for (String s : syms)
+			if (c == s.charAt(0)) return true;
+		
+		return false;
+	}
+	
 	public static <T> T[] removeDuplicates(T[] arr) { // talvez remover duplicadas de qqr array
 		Set<T> set = new LinkedHashSet<>();
 		
@@ -4295,18 +4302,11 @@ public class CodeEditor extends IDEComponent {
 						&& hasAfter(new String(chars), i, '{'))
 					continue;
 				
-				int c = i;
-				boolean cnt = false;
-				while (c > 0 && chars[c] != ' ') {
-					if (chars[c - 1] == ' ' && !isNumber(chars[c])) {
-						cnt = true;
-						break;
-					}
-					
-					c--;
-				}
+				boolean cont = true;
 				
-				if (cnt) continue;
+				if (chars[i - 1] == ' ' || isSymbol(chars[i - 1]) || isNumber(chars[i - 1]) || i == 0) cont = false;
+				
+				if (cont) continue;
 				
 				fs = color(i, i + s.length(), new IDEFont(Fonts.numbersEditor, FONT_SIZE), fs);
 			}
