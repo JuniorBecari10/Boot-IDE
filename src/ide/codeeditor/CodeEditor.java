@@ -4304,7 +4304,17 @@ public class CodeEditor extends IDEComponent {
 				
 				boolean cont = true;
 				
-				if (chars[i - 1] == ' ' || isSymbol(chars[i - 1]) || isNumber(chars[i - 1]) || i == 0) cont = false;
+				if (chars[i - 1] == ' ' || isSymbol(chars[i - 1]) || i == 0) cont = false;
+				
+				if (isNumber(chars[i - 1])) {
+					int c = i;
+					
+					while (c >= 0) {
+						if ((chars[c] == ' ' || isSymbol(chars[c])) && isNumber(chars[c + 1])) cont = false;
+						
+						c--;
+					}
+				}
 				
 				if (cont) continue;
 				
