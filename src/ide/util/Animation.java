@@ -1,7 +1,7 @@
 package ide.util;
 
 /**
- * Um jeito fácil de rodar as animações.
+ * Um jeito facil de rodar as animaaaes.
  * 
  * @author Juninho
  *

@@ -260,7 +260,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		return "ListableFile: [parent: " + parent + ", regent: " + regent + "]";
 	}
 	/*
-	 * Fazer n�o renderizar nem tickar ListableFiles nem Tabs fora da tela
+	 * Fazer nao renderizar nem tickar ListableFiles nem Tabs fora da tela
 	 * 
 	 * if (y < 200 || y > Main.screen.getHeight()) return;
 	 */
@@ -293,11 +293,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	}
 
 	/**
-	 * Retorna true ou false se o caminho especificado em path � um caminho v�lido,
+	 * Retorna true ou false se o caminho especificado em path a um caminho valido,
 	 * ou seja, se o arquivo existe.
 	 * 
 	 * @param path - O caminho
-	 * @return true, se � um caminho v�lido, false se n�o.
+	 * @return true, se a um caminho valido, false se nao.
 	 */
 	public static boolean isPath(String path) {
 		return new File(path).exists();
@@ -309,7 +309,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				return l;
 		}
 
-		// N�o achei nada
+		// Nao achei nada
 		return null;
 	}
 
@@ -319,7 +319,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				return l;
 		}
 
-		// N�o achei nada
+		// Nao achei nada
 		return null;
 	}
 
@@ -338,14 +338,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	}
 
 	public static ListableFile search(File regent, File folder) { // deu certo pq ficou pegando o parent sempre da pasta
-																	// que est� o scope, e vai indo at� a pasta base
+																	// que esta o scope, e vai indo ata a pasta base
 		ListableFile prdoprdoparent = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath())
 				? new ListableFile(0, 0, 0, 0, Main.baseFolder, null)
 				: new ListableFile(0, 0, 0, 0, folder.getParentFile().getParentFile(), null);
 		ListableFile prdoparent = folder.getParentFile().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath())
 				? new ListableFile(0, 0, 0, 0, Main.baseFolder, null)
 				: new ListableFile(0, 0, 0, 0, folder.getParentFile(), prdoprdoparent);
-		ListableFile parent = new ListableFile(0, 0, 0, 0, folder, prdoparent); // o parent n�o precisa ter outro
+		ListableFile parent = new ListableFile(0, 0, 0, 0, folder, prdoparent); // o parent nao precisa ter outro
 																				// parent, ou precisa?
 
 		if (folder.getAbsolutePath().equals(Main.baseFolder.getAbsolutePath())) // se o parent for a pasta base, defina
@@ -397,11 +397,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	 * - Settings
 	 * 
 	 * Lembrar de abas quando fechar a Boot IDE: true Lembrar do arquivo de
-	 * configura��es: true
+	 * configuraaaes: true
 	 * 
-	 * Colorir Objetos: true Colorir M�todos: true Colorir N�meros: true Colorir
-	 * Palavras-chave: true Colorir Vari�veis: true Colorir Coment�rios: true
-	 * Colorir Strings: true Colorir Gen�ricos: true
+	 * Colorir Objetos: true Colorir Matodos: true Colorir Nameros: true Colorir
+	 * Palavras-chave: true Colorir Variaveis: true Colorir Comentarios: true
+	 * Colorir Strings: true Colorir Genaricos: true
 	 */
 
 	public static void generateConfigFile(File file) {
@@ -413,7 +413,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		try {
 			BufferedWriter w = /* Files.newBufferedWriter(path, StandardCharsets.UTF_8); */ new BufferedWriter(new FileWriter(s));
 
-			w.write(Main.lang == Language.PORT ? "Arquivo de Configura��es da Boot IDE"
+			w.write(Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
 					: "Boot IDE Configuration File" + "\n");
 			w.write("\n");
 			w.write("Colors\n");
@@ -449,7 +449,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("language: default\n");
 			w.write("autocomplete_active: default\n");
 			w.write("automatically_open_tabs: default\n");
-			w.write("autocomplete_html_tags: default\n");*/ // isso ele n�o escreve
+			w.write("autocomplete_html_tags: default\n");*/ // isso ele nao escreve
 
 			w.close();
 
@@ -468,7 +468,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			BufferedWriter w = /* Files.newBufferedWriter(path, StandardCharsets.UTF_8); */ new BufferedWriter(
 					new FileWriter(s));
 
-			w.write(Main.lang == Language.PORT ? "Arquivo de Configura��es da Boot IDE"
+			w.write(Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
 					: "Boot IDE Configuration File" + "\n");
 			w.write("\n");
 			w.write("Colors\n");
@@ -1527,7 +1527,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					public void run() {
 						try {
 							Main.editor.lines = Main.editor.readFile(regent);
-						} catch (IOException e) { // n�o suportado, se caiu aqui
+						} catch (IOException e) { // nao suportado, se caiu aqui
 							return;
 						}
 					}

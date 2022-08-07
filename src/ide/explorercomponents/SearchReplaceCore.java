@@ -36,7 +36,7 @@ public final class SearchReplaceCore {
 		IDEComponent.toAdd.add(Explorer.selectedLines);
 		
 		IDEComponent.toAdd.add(Explorer.regex);
-		IDEComponent.toAdd.add(Explorer.caseSensitive); // fica por �ltimo
+		IDEComponent.toAdd.add(Explorer.caseSensitive); // fica por altimo
 		
 		Explorer.selected = Explorer.search;
 	}
@@ -83,7 +83,7 @@ public final class SearchReplaceCore {
 		List<Integer> linesfound = new ArrayList<>();
 		List<Integer> xPos = new ArrayList<>();
 		
-		if (isEntireDocument) { // se n�o � selectedlines...
+		if (isEntireDocument) { // se nao a selectedlines...
 			for (int i = 0; i < Main.editor.lines.size(); i++) { // tem que ser for normal mesmo pq preciso do numero
 				IDELine l = Main.editor.lines.get(i);
 				String s = new String(CodeEditor.toCharArray(l.getChars()));

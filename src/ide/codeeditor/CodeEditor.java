@@ -57,13 +57,13 @@ import ide.util.Language;
 import ide.util.Serialization;
 import ide.util.Texts;
 
-// Nota: para escrever em vermelho no console, ao inv�s de digitar System.out.println("texto"); use System.err.println("texto");
+// Nota: para escrever em vermelho no console, ao invas de digitar System.out.println("texto"); use System.err.println("texto");
 
 public class CodeEditor extends IDEComponent {
 	
 	public static final int TAB_ANIMATION_TIMEOUT = 300;
 
-	public static int FONT_SIZE = 16; // 18, 16 (Padr�o: 16)
+	public static int FONT_SIZE = 16; // 18, 16 (Padrao: 16)
 	public static int LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
 	
 	public static final int CURSOR_OPACITY = 127;
@@ -435,7 +435,7 @@ public class CodeEditor extends IDEComponent {
 	public static final String[] porKeys = { "programa", "funcao", "inteiro", "caracter", "real", "cadeia", "para", "se", "senao", "enquanto",
 			"faca", "inclua", "biblioteca", "retorne" };
 
-	// N�o vai ter aqui as extens�es do word, powerpoint, excel etc.
+	// Nao vai ter aqui as extensaes do word, powerpoint, excel etc.
 	/*public static final String[] extensions = { ".java", ".c", ".cpp", ".cc", ".cs", ".py", ".pyx", ".ipynb", ".js",
 			".mjs", ".bat", ".cmd", ".com", ".ps1", ".h", ".hh", ".hpp", ".hxx", ".asm", ".s", ".lua", ".sql", ".swift",
 			".rs", ".php", ".kt", ".vue", ".rb", ".ino", ".ts", ".tsx", ".go", ".r", ".pl", ".t", ".jl", ".has", ".hs",
@@ -489,7 +489,7 @@ public class CodeEditor extends IDEComponent {
 			"r9b", "r10b", "r11b", "r12b", "r13b", "r14b", "r15b", "ah", "bh", "ch", "dh", "edx", "ss", "sp", "ds",
 			"es" };
 
-	// n�o vai colorir keys de uma s� letra
+	// nao vai colorir keys de uma sa letra
 	public static final String[] asmKeys = { "global", "define", "db", "dw", "equ", "extern", "include", "times", "org", // ta faltando hein, "movzx", "mova"
 			"bits", "syscall", "aaa", "aad", "aam", "aas", "adc", "add", "addpd", "addps", "addressing", "addsd",
 			"addss", "jz", "align", "and", "andnpd", "andnps", "andpd", "andps", "arpl", "as", "commandline",
@@ -560,7 +560,7 @@ public class CodeEditor extends IDEComponent {
 			"stos", "stosb", "stosl", "stosw", "stringinstructions", "sub", "subpd", "subps", "subsd", "subss",
 			"symbolic", "sysenter", "sysexit", "tbss", "tcomm", "tdata", "test", "ucomisd", "ucomiss", "ud", "uleb",
 			"unpckhpd", "unpckhps", "unpcklpd", "unpcklps", "value", "verr", "verw", "wait", "wbinvd", "weak",
-			"whitespace", "wrmsr", "xadd", "xchg", "xchgA", "xlat", "xlatb", "xor", "xorpd", "xorps", "zero" }; // n�o
+			"whitespace", "wrmsr", "xadd", "xchg", "xchgA", "xlat", "xlatb", "xor", "xorpd", "xorps", "zero" }; // nao
 																												// vai
 																												// colorir
 																												// "str",
@@ -779,7 +779,7 @@ public class CodeEditor extends IDEComponent {
 		toAdd = new ArrayList<>();
 		toRemove = new ArrayList<>();
 
-		cursor = new Animation() { // d� exception por causa de stackoverflow
+		cursor = new Animation() { // da exception por causa de stackoverflow
 			private boolean flip = false;
 
 			public void play() {
@@ -804,7 +804,7 @@ public class CodeEditor extends IDEComponent {
 			public void run() {
 				try {
 					Thread.sleep(TAB_ANIMATION_TIMEOUT);
-				} catch (InterruptedException e) { // Esperar a anima��o acabar
+				} catch (InterruptedException e) { // Esperar a animaaao acabar
 					e.printStackTrace();
 				}
 				
@@ -825,9 +825,9 @@ public class CodeEditor extends IDEComponent {
 		try {
 			if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) return;
 			
-			// o problema � daqui pra baixo, ou � CIMA? cima pq se o loop continuar sem executar a parte de baixo continua alto o uso da cpu, e o break ou return abaixam, e a parte de cima que fica executando sempre, mas se tirar ela e deixar s� a de baixo continua alto mesmo assim
+			// o problema a daqui pra baixo, ou a CIMA? cima pq se o loop continuar sem executar a parte de baixo continua alto o uso da cpu, e o break ou return abaixam, e a parte de cima que fica executando sempre, mas se tirar ela e deixar sa a de baixo continua alto mesmo assim
 			
-			//if (true) break; // - � a presen�a do loop que enche a cpu | veja se usarmos return ou break ao inv�s de continue d� certo
+			//if (true) break; // - a a presenaa do loop que enche a cpu | veja se usarmos return ou break ao invas de continue da certo
 			
 			if (KeyInput.isKeyPressed()) {
 				if ((!SetFileName.added && !CommandTerminal.active) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown())) {
@@ -863,19 +863,19 @@ public class CodeEditor extends IDEComponent {
 				+ (scrX / FONT_SIZE));
 
 		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset < MouseInput
-				.getMouseX()) // detecta se a posi��o real do cursor for menor do que a do cursor e fica
+				.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica
 			// adicionando enquanto for menor
 			lcmx++;
 
 		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset > MouseInput
-				.getMouseX()) // detecta se a posi��o real do cursor for menor do que a do cursor e fica
+				.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica
 			// adicionando enquanto for menor
 			lcmx--;
 
-		while (MIN_Y + lcmy * LINE_HEIGHT - FONT_SIZE - scrY - 2 < MouseInput.getMouseY()) // o mesmo para aqui, s� que com o y
+		while (MIN_Y + lcmy * LINE_HEIGHT - FONT_SIZE - scrY - 2 < MouseInput.getMouseY()) // o mesmo para aqui, sa que com o y
 			lcmy++;
 
-		while (MIN_Y + lcmy * LINE_HEIGHT - FONT_SIZE - scrY - 2 > MouseInput.getMouseY()) // o mesmo para aqui, s� que com o y
+		while (MIN_Y + lcmy * LINE_HEIGHT - FONT_SIZE - scrY - 2 > MouseInput.getMouseY()) // o mesmo para aqui, sa que com o y
 			lcmy--;
 
 		if (FONT_SIZE < 13)
@@ -896,21 +896,21 @@ public class CodeEditor extends IDEComponent {
 		mx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / FONT_SIZE) + (scrX / FONT_SIZE));
 
 		while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < MouseInput
-				.getMouseX()) // detecta se a posi��o real do cursor for menor do que a do cursor e fica
+				.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica
 			// adicionando enquanto for menor
 			mx++;
 
 		while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX > MouseInput
-				.getMouseX()) // detecta se a posi��o real do cursor for menor do que a do cursor e fica
+				.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica
 			// adicionando enquanto for menor
 			mx--;
 
 		while (MIN_Y + my * LINE_HEIGHT - FONT_SIZE - scrY - 2 < MouseInput
-				.getMouseY()) // o mesmo para aqui, s� que com o y
+				.getMouseY()) // o mesmo para aqui, sa que com o y
 			my++;
 
 		while (MIN_Y + my * LINE_HEIGHT - FONT_SIZE - scrY - 2 > MouseInput
-				.getMouseY()) // o mesmo para aqui, s� que com o y
+				.getMouseY()) // o mesmo para aqui, sa que com o y
 			my--;
 
 		//if (FONT_SIZE < 13)
@@ -1066,7 +1066,7 @@ public class CodeEditor extends IDEComponent {
 		
 		if (editing != null)
 			switch (editing.readMode) {
-				/*case ASSEMBLY: // ainda n�o
+				/*case ASSEMBLY: // ainda nao
 					break;*/
 					
 				case BIN:
@@ -1284,7 +1284,7 @@ public class CodeEditor extends IDEComponent {
 		return false;
 	}
 
-	// Se for usar em arquivos que n�o t�m extens�o, use o m�todo debaixo desse, o
+	// Se for usar em arquivos que nao tam extensao, use o matodo debaixo desse, o
 	// getKeywordsSpecial().
 	public static String[] getKeywords(String ext) {
 		switch (ext.toLowerCase()) {
@@ -1351,7 +1351,7 @@ public class CodeEditor extends IDEComponent {
 		
 		case ".html": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
 		case ".svelte": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
-		case ".xhtml": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys))); // ser� que tira o phpkeys? TODO
+		case ".xhtml": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys))); // sera que tira o phpkeys? TODO
 		case ".htm": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
 		case ".css": return mergeStringArrays(cssTags, props);
 		case ".scss": return mergeStringArrays(cssTags, props);
@@ -1435,8 +1435,8 @@ public class CodeEditor extends IDEComponent {
 	public static List<Integer> findWord(String textString, String word) { // Fonte: baeldung.com
 		List<Integer> indexes = new ArrayList<Integer>();
 
-		String lowerCaseTextString = textString;// .toLowerCase(); // n�o vai ter lowercase,
-		String lowerCaseWord = word;// .toLowerCase(); //tem q ter diferen�a de letras capitais
+		String lowerCaseTextString = textString;// .toLowerCase(); // nao vai ter lowercase,
+		String lowerCaseWord = word;// .toLowerCase(); //tem q ter diferenaa de letras capitais
 
 		int index = 0;
 
@@ -1513,7 +1513,7 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public static String getLowerBarFileName(String ext) {
-		// casos espec�ficos
+		// casos especaficos
 		
 		if (Main.editor.editing.getRegent().getRegent().getName().equalsIgnoreCase("readme.md"))
 			return Main.lang == Language.PORT ? "Leia-Me (Markdown)" : "Read Me (Markdown)";
@@ -1614,7 +1614,7 @@ public class CodeEditor extends IDEComponent {
 				: "Saved Game from World's Hardest Game Maker 2");
 		case ".conf": return (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
 				: "Boot IDE Configuration File");
-		case Main.SETTINGS_FILE_EXTENSION: return (Main.lang == Language.PORT ? "Arquivo de Configura��es da Boot IDE"
+		case Main.SETTINGS_FILE_EXTENSION: return (Main.lang == Language.PORT ? "Arquivo de Configuraaaes da Boot IDE"
 				: "Boot IDE Configuration File");
 		case ".rtf": return "Rich Text Format";
 		case ".mk": return "Makefile";
@@ -1704,10 +1704,10 @@ public class CodeEditor extends IDEComponent {
 
 	public static List<IDEFont> color(int s, int e, IDEFont color, List<IDEFont> fs) {
 		if (e < s)
-			e = s;// throw new IllegalArgumentException("o start n�o pode ser maior que o
+			e = s;// throw new IllegalArgumentException("o start nao pode ser maior que o
 					// final!");
 		if (e > fs.size())
-			e = fs.size();// throw new IndexOutOfBoundsException("o final n�o pode ser maior que o final
+			e = fs.size();// throw new IndexOutOfBoundsException("o final nao pode ser maior que o final
 							// da fonte!");
 		
 		if (s < 0) s = 0;
@@ -1955,7 +1955,7 @@ public class CodeEditor extends IDEComponent {
 			for (Integer i : indxs) {
 				if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
 						|| ((i + s.length() < chars.length)
-								&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()])))) // ta como keyword, mas se for coloca s�mbolo
+								&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()])))) // ta como keyword, mas se for coloca sambolo
 					continue;
 
 				fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs); // tem q dar offset
@@ -2371,7 +2371,7 @@ public class CodeEditor extends IDEComponent {
 							len++;
 						}
 						
-						//if (isInside(i, '>', '<', str)) continue; // n�o vai funcionar
+						//if (isInside(i, '>', '<', str)) continue; // nao vai funcionar
 	
 						// if (i + len < chars.length) {
 						if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || ext.equalsIgnoreCase(".ld")
@@ -2566,7 +2566,7 @@ public class CodeEditor extends IDEComponent {
 		case ".html":
 		case ".svelte":
 			if (isCssPart || isJSPart || isPhpPart)
-				for (String s : nums) { // colorir n�meros
+				for (String s : nums) { // colorir nameros
 					indxs = findWord(new String(chars), s);
 
 					for (Integer i : indxs)
@@ -2647,7 +2647,7 @@ public class CodeEditor extends IDEComponent {
 
 			if (isJSPart) {
 				for (String s : cll) {
-					indxs = findWord(new String(chars), s); // se colocar const abelha = () => { return a }; o 'a' do return a n�o colore como vari�vel em html
+					indxs = findWord(new String(chars), s); // se colocar const abelha = () => { return a }; o 'a' do return a nao colore como variavel em html
 
 					len = 0;
 
@@ -2932,7 +2932,7 @@ public class CodeEditor extends IDEComponent {
 					}
 				}
 
-				for (String s : cssTags) { // colorir tags | "em" est� aqui
+				for (String s : cssTags) { // colorir tags | "em" esta aqui
 					indxs = findWord(new String(chars), s);
 
 					for (Integer i : indxs) {
@@ -3061,8 +3061,8 @@ public class CodeEditor extends IDEComponent {
 					fs = color(c, c + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 				}
 
-				// Eu sei que a linha de c�digo abaixo infringe a lei do Boot de C�digo-Fonte
-				// bem escrito n� 547, e pode accaretar problemas :/
+				// Eu sei que a linha de cadigo abaixo infringe a lei do Boot de Cadigo-Fonte
+				// bem escrito na 547, e pode accaretar problemas :/
 
 				fs = colorMethods(ext, chars, fs);
 
@@ -3241,8 +3241,8 @@ public class CodeEditor extends IDEComponent {
 				fs = color(c, c + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 			}
 
-			// Eu sei que a linha de c�digo abaixo infringe a lei do Boot de C�digo-Fonte
-			// bem escrito n� 547, e pode accaretar problemas :/
+			// Eu sei que a linha de cadigo abaixo infringe a lei do Boot de Cadigo-Fonte
+			// bem escrito na 547, e pode accaretar problemas :/
 
 			fs = colorMethods(ext, chars, fs);
 
@@ -3298,7 +3298,7 @@ public class CodeEditor extends IDEComponent {
 
 		case ".ld":
 			for (String s : ldKeys) { // colorir keywordss
-				indxs = findWord(new String(chars), s); // descobrir pq algumas coisas n�o colorem
+				indxs = findWord(new String(chars), s); // descobrir pq algumas coisas nao colorem
 
 				for (Integer i : indxs) {
 					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
@@ -3316,7 +3316,7 @@ public class CodeEditor extends IDEComponent {
 		case ".pas":
 		case ".lpr":
 			for (String s : pasKeys) { // colorir keywordss
-				indxs = findWord(new String(chars), s); // descobrir pq algumas coisas n�o colorem
+				indxs = findWord(new String(chars), s); // descobrir pq algumas coisas nao colorem
 
 				for (Integer i : indxs) {
 					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
@@ -3455,7 +3455,7 @@ public class CodeEditor extends IDEComponent {
 			 * IDEFont(Fonts.variablesEditor, FONT_SIZE), fs); }
 			 */
 
-			indxs = findWord(new String(chars), "%"); // se quiser fazer entre %% tem que fazer uma vari�vel boolean de
+			indxs = findWord(new String(chars), "%"); // se quiser fazer entre %% tem que fazer uma variavel boolean de
 														// controle, como o multilinecommenting.
 
 			len = 0;
@@ -4086,8 +4086,8 @@ public class CodeEditor extends IDEComponent {
 
 		case ".conf":
 			for (String s : ideConfKeys) { // colorir keywordss
-				indxs = findWord(new String(chars), s); // haha slk merm�o colorir coisas de at� pr�prio arquivo de
-														// configura��es
+				indxs = findWord(new String(chars), s); // haha slk mermao colorir coisas de ata praprio arquivo de
+														// configuraaaes
 
 				for (Integer i : indxs)
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs); // tem q dar offset
@@ -4226,7 +4226,7 @@ public class CodeEditor extends IDEComponent {
 						while (c < chars.length && c + len < chars.length && c > 0 && chars[c] != '[' && chars[c] != ']'
 								&& chars[c] != ')' && chars[c] != ',' && chars[c] != ';' && chars[c] != '.'
 								&& chars[c] != '=' && chars[c] != ':' && chars[c] != '#' && chars[c] != '$'
-								&& chars[c] != '/' && chars[c] != '>' && // creio que n�o precisa verificar < tbm
+								&& chars[c] != '/' && chars[c] != '>' && // creio que nao precisa verificar < tbm
 								chars[c] != '\\' && (chars[i - 1] != '+' && chars[i - 1] != '-' && chars[i - 1] != '*'
 										&& chars[i - 1] != '/')) {
 							c--;
@@ -4410,7 +4410,7 @@ public class CodeEditor extends IDEComponent {
 				// ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".classpath") ||
 				// ext.equalsIgnoreCase(".xhtml")) && (s == "-")) continue;
 
-				// Remover #, mas n�o da lista
+				// Remover #, mas nao da lista
 				if (s == "#")
 					continue; // talvez remover \
 
@@ -4486,10 +4486,10 @@ public class CodeEditor extends IDEComponent {
 					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.stringsEditor, FONT_SIZE), fs);
 
 				/*
-				 * indxs = findWord(new String(chars), "\""); // colorir coment�rios multi-linha
+				 * indxs = findWord(new String(chars), "\""); // colorir comentarios multi-linha
 				 * - caracteres iguais
 				 * 
-				 * if (indxs.size() > 0 && !isMultilineString) { // provavelmente esse � o
+				 * if (indxs.size() > 0 && !isMultilineString) { // provavelmente esse a o
 				 * abrimento fs = color(indxs.get(0), indxs.size() > 1 ? indxs.get(1) :
 				 * fs.size(), new IDEFont(Fonts.stringsEditor, FONT_SIZE), fs);
 				 * isMultilineString = true;
@@ -4497,7 +4497,7 @@ public class CodeEditor extends IDEComponent {
 				 * isAnotherIterationString = false; }
 				 * 
 				 * if (indxs.size() > 0 && isMultilineString && isAnotherIterationString) { //
-				 * provavelmente esse � o fechamento fs = color(0, indxs.get(0) + 2, new
+				 * provavelmente esse a o fechamento fs = color(0, indxs.get(0) + 2, new
 				 * IDEFont(Fonts.stringsEditor, FONT_SIZE), fs); isMultilineString = false; }
 				 * 
 				 * isAnotherIterationString = true;
@@ -4697,7 +4697,7 @@ public class CodeEditor extends IDEComponent {
 					|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
 					|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
 					|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
-					|| ext.equalsIgnoreCase(".project")) { // colorir tags din�micas
+					|| ext.equalsIgnoreCase(".project")) { // colorir tags dinamicas
 				indxs = findWord(new String(chars), ">"); // colorir final de tags
 
 				for (Integer i : indxs) {
@@ -4748,7 +4748,7 @@ public class CodeEditor extends IDEComponent {
 			return fs;
 
 		if (!foundExt) {// (!foundExt && editing != null) || (extType.equalsIgnoreCase("") || extType ==
-						// null)) { // TODO o culpado do gitignore estar assim � esse ARRUMAR DEPOIS
+						// null)) { // TODO o culpado do gitignore estar assim a esse ARRUMAR DEPOIS
 			for (FileType f : ListableFile.types) {
 				if (f.getExtension().equalsIgnoreCase(editing.getRegent().getRegent().getName())) { // tenta ver se tem
 																									// algum especial
@@ -4804,7 +4804,7 @@ public class CodeEditor extends IDEComponent {
 						String withSpace = " " + new String(chars);
 						char[] chs = withSpace.toCharArray();
 						
-						indxs = findWord(new String(chs), "#"); // colorir coment�rios de uma linha
+						indxs = findWord(new String(chs), "#"); // colorir comentarios de uma linha
 						
 						if (fs.size() == 0)
 							break;
@@ -4815,7 +4815,7 @@ public class CodeEditor extends IDEComponent {
 								
 								if (i >= indxs.size()) i = indxs.size() - 1;
 								
-								if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior � desfeito
+								if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
 									br = true;
 									
 									break;
@@ -4900,7 +4900,7 @@ public class CodeEditor extends IDEComponent {
 
 					if (editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile")
 							|| editing.getRegent().getRegent().getName().equalsIgnoreCase("dockerfile")) {
-						for (String s : nums) { // colorir n�meros
+						for (String s : nums) { // colorir nameros
 							indxs = findWord(new String(chars), s); // TODO
 
 							for (Integer i : indxs) {
@@ -4964,7 +4964,7 @@ public class CodeEditor extends IDEComponent {
 							indxs = findWord(new String(chars), s);
 
 							/*
-							 * // Remover #, mas n�o da lista if (s == "#") continue; // talvez remover \
+							 * // Remover #, mas nao da lista if (s == "#") continue; // talvez remover \
 							 */
 
 							for (Integer i : indxs)
@@ -5042,24 +5042,24 @@ public class CodeEditor extends IDEComponent {
 									fs);
 					}
 
-					// Coment�rios de uma linha
+					// Comentarios de uma linha
 
 					switch (st.toLowerCase()) {
 					case "dockerfile":
 					case "makefile":
 					case "gitignore":
-						indxs = findWord(new String(chars), "#"); // colorir coment�rios de uma linha
+						indxs = findWord(new String(chars), "#"); // colorir comentarios de uma linha
 
 						if (indxs.size() != 0)
 							fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
 						break;
 					}
 
-					// Coment�rios Multi-linha
+					// Comentarios Multi-linha
 
 					switch (st.toLowerCase()) {
 					case "makefile":
-						indxs = findWord(new String(chars), "/*"); // colorir coment�rios multi-linha - caracteres
+						indxs = findWord(new String(chars), "/*"); // colorir comentarios multi-linha - caracteres
 																	// diferentes
 						List<Integer> finals = findWord(new String(chars), "*/");
 
@@ -5087,9 +5087,9 @@ public class CodeEditor extends IDEComponent {
 			 * 
 			 * try { extn =
 			 * ListableFile.getFileExtension(editing.getRegent().getRegent()).substring(1);
-			 * // tenta retornar o nome da extens�o } catch (Exception e) { extn = Main.lang
-			 * == Language.PORT ? "Sem Extens�o" : "No Extension"; // se n�o der mesmo
-			 * assim, coloque "Sem Extens�o". }
+			 * // tenta retornar o nome da extensao } catch (Exception e) { extn = Main.lang
+			 * == Language.PORT ? "Sem Extensao" : "No Extension"; // se nao der mesmo
+			 * assim, coloque "Sem Extensao". }
 			 * 
 			 * extType = extn; foundExt = true; }
 			 */
@@ -5145,7 +5145,7 @@ public class CodeEditor extends IDEComponent {
 			String withSpace = " " + new String(chars);
 			char[] chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "//"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "//"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5156,7 +5156,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if (isInside(i, '\"', '\"', withSpace) && isInside(i, '\'', '\'', withSpace) && isInside(i, '`', '`', withSpace)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if (isInside(i, '\"', '\"', withSpace) && isInside(i, '\'', '\'', withSpace) && isInside(i, '`', '`', withSpace)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 					}
 					
@@ -5181,7 +5181,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "'"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "'"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5192,7 +5192,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 						
 						break;
@@ -5221,7 +5221,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "//"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "//"); // colorir comentarios de uma linha
 			List<Integer> indxs2 = findWord(new String(chs), "</script>");
 			
 			if (fs.size() == 0)
@@ -5263,7 +5263,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "REM"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "REM"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5274,7 +5274,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 						
 						break;
@@ -5295,7 +5295,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "rem"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "rem"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5306,7 +5306,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 						
 						break;
@@ -5329,7 +5329,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), ";"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), ";"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5340,7 +5340,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 						
 						break;
@@ -5359,7 +5359,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "//"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "//"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5370,7 +5370,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if (isInside(i, '\"', '\"', withSpace) && isInside(i, '\'', '\'', withSpace) && isInside(i, '`', '`', withSpace)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if (isInside(i, '\"', '\"', withSpace) && isInside(i, '\'', '\'', withSpace) && isInside(i, '`', '`', withSpace)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 						//System.out.println(br);
 						
@@ -5398,7 +5398,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "--"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "--"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5409,7 +5409,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 						
 						break;
@@ -5431,7 +5431,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "//"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "//"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5442,7 +5442,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if (isInside(i, '\"', '\"', withSpace) && isInside(i, '\'', '\'', withSpace) && isInside(i, '`', '`', withSpace)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if (isInside(i, '\"', '\"', withSpace) && isInside(i, '\'', '\'', withSpace) && isInside(i, '`', '`', withSpace)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 						//System.out.println(br);
 						
@@ -5464,7 +5464,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "#"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "#"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5475,7 +5475,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 						
 						break;
@@ -5520,7 +5520,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "#"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "#"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5531,7 +5531,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 						
 						break;
@@ -5553,7 +5553,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "//"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "//"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5564,7 +5564,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 						
 						break;
@@ -5585,7 +5585,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "#"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "#"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5596,7 +5596,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 						
 						break;
@@ -5619,7 +5619,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "[//]: #"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "[//]: #"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5630,7 +5630,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 						
 						break;
@@ -5652,7 +5652,7 @@ public class CodeEditor extends IDEComponent {
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
-			indxs = findWord(new String(chs), "[]: #"); // colorir coment�rios de uma linha
+			indxs = findWord(new String(chs), "[]: #"); // colorir comentarios de uma linha
 			
 			if (fs.size() == 0)
 				break;
@@ -5663,7 +5663,7 @@ public class CodeEditor extends IDEComponent {
 					
 					if (i >= indxs.size()) i = indxs.size() - 1;
 					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior � desfeito
+					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
 						br = true;
 						
 						break;
@@ -5722,7 +5722,7 @@ public class CodeEditor extends IDEComponent {
 		case ".vh":
 		case ".vsh":
 		case ".mod":
-			indxs = findWord(new String(chars), "/*"); // colorir coment�rios multi-linha - caracteres diferentes
+			indxs = findWord(new String(chars), "/*"); // colorir comentarios multi-linha - caracteres diferentes
 			List<Integer> finals = findWord(new String(chars), "*/");
 			
 			List<Integer> rm = new ArrayList<>();
@@ -5776,7 +5776,7 @@ public class CodeEditor extends IDEComponent {
 //			String withSpace = " " + new String(chars);
 //			char[] chs = withSpace.toCharArray();
 //			
-//			indxs = findWord(new String(chs), "/*"); // colorir coment�rios multilinha - caracteres diferentes
+//			indxs = findWord(new String(chs), "/*"); // colorir comentarios multilinha - caracteres diferentes
 //			List<Integer> finals = findWord(new String(chs), "*/");
 //			
 //			if (fs.size() == 0)
@@ -5789,7 +5789,7 @@ public class CodeEditor extends IDEComponent {
 //					
 //					if (i >= indxs.size()) i = indxs.size() - 1;
 //					
-//					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior � desfeito
+//					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
 //						br = true;
 //						
 //						break;
@@ -5820,7 +5820,7 @@ public class CodeEditor extends IDEComponent {
 			
 		/*case ".md":
 		case ".markdown":
-			indxs = findWord(new String(chars), "["); // colorir coment�rios multi-linha - caracteres diferentes
+			indxs = findWord(new String(chars), "["); // colorir comentarios multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "]");
 
 			if (indxs.size() > 0) {
@@ -5840,7 +5840,7 @@ public class CodeEditor extends IDEComponent {
 			break;*/
 
 		case ".lua": // Lua
-			indxs = findWord(new String(chars), "--[["); // colorir coment�rios multi-linha - caracteres diferentes
+			indxs = findWord(new String(chars), "--[["); // colorir comentarios multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "--]]");
 
 			/*
@@ -5885,7 +5885,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 
 		case ".rb": // Ruby
-			indxs = findWord(new String(chars), "=begin"); // colorir coment�rios multi-linha - caracteres diferentes
+			indxs = findWord(new String(chars), "=begin"); // colorir comentarios multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "=end");
 
 			/*
@@ -5930,7 +5930,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 
 		case ".jl": // Julia
-			indxs = findWord(new String(chars), "#="); // colorir coment�rios multi-linha - caracteres diferentes
+			indxs = findWord(new String(chars), "#="); // colorir comentarios multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "=#");
 
 			for (Integer i : indxs)
@@ -5974,7 +5974,7 @@ public class CodeEditor extends IDEComponent {
 
 		case ".has": // Haskell
 		case ".hs":
-			indxs = findWord(new String(chars), "{-"); // colorir coment�rios multi-linha - caracteres diferentes
+			indxs = findWord(new String(chars), "{-"); // colorir comentarios multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "-}");
 
 			/*
@@ -6026,7 +6026,7 @@ public class CodeEditor extends IDEComponent {
 		case ".mli":
 		case ".mly":
 		case ".clt":
-			indxs = findWord(new String(chars), "(*"); // colorir coment�rios multi-linha - caracteres diferentes
+			indxs = findWord(new String(chars), "(*"); // colorir comentarios multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "*)");
 
 			/*
@@ -6073,13 +6073,13 @@ public class CodeEditor extends IDEComponent {
 		case ".pyx":
 		case ".ipynb":
 		case ".pyd":
-			indxs = findWord(new String(chars), "\'\'\'"); // colorir coment�rios multi-linha - caracteres iguais
+			indxs = findWord(new String(chars), "\'\'\'"); // colorir comentarios multi-linha - caracteres iguais
 
 			/*
 			 * for (Integer i : indxs) if (isBetween(new String(chars), i, '"', '"')) return
 			 * fs;
 			 */
-			if (indxs.size() > 0 && !isMultilineCommenting) { // provavelmente esse � o abrimento
+			if (indxs.size() > 0 && !isMultilineCommenting) { // provavelmente esse a o abrimento
 				fs = color(indxs.get(0), indxs.size() > 1 ? indxs.get(1) : fs.size(),
 						new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
 				isMultilineCommenting = true;
@@ -6087,7 +6087,7 @@ public class CodeEditor extends IDEComponent {
 				isAnotherIteration = false;
 			}
 
-			if (indxs.size() > 0 && isMultilineCommenting && isAnotherIteration) { // provavelmente esse � o fechamento
+			if (indxs.size() > 0 && isMultilineCommenting && isAnotherIteration) { // provavelmente esse a o fechamento
 				fs = color(0, indxs.get(0) + 2, new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
 				isMultilineCommenting = false;
 			}
@@ -6109,7 +6109,7 @@ public class CodeEditor extends IDEComponent {
 		case ".html":
 		case ".svelte":
 		case ".svg":
-			indxs = findWord(new String(chars), "<!--"); // colorir coment�rios multi-linha - caracteres diferentes
+			indxs = findWord(new String(chars), "<!--"); // colorir comentarios multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "-->");
 
 			/*
@@ -6133,7 +6133,7 @@ public class CodeEditor extends IDEComponent {
 				fs = color(0, fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
 
 			if (isCssPart || isJSPart || isPhpPart) {
-				indxs = findWord(new String(chars), "/*"); // colorir coment�rios multi-linha - caracteres diferentes
+				indxs = findWord(new String(chars), "/*"); // colorir comentarios multi-linha - caracteres diferentes
 				finals = findWord(new String(chars), "*/");
 
 				for (Integer i : indxs)
@@ -6191,7 +6191,7 @@ public class CodeEditor extends IDEComponent {
 
 		case ".md":
 		case ".markdown":
-			indxs = findWord(new String(chars), "<!--"); // colorir coment�rios multi-linha - caracteres diferentes
+			indxs = findWord(new String(chars), "<!--"); // colorir comentarios multi-linha - caracteres diferentes
 			finals = findWord(new String(chars), "-->");
 
 			/*
@@ -6263,7 +6263,7 @@ public class CodeEditor extends IDEComponent {
 			fs = color(indxs.get(0), indxs.get(0) + 1, new IDEFont(Fonts.symbolsEditor, FONT_SIZE), fs);
 			break;
 			
-		case NORMAL: // n�o deve cair aqui
+		case NORMAL: // nao deve cair aqui
 			break;
 			
 		default:
@@ -6277,7 +6277,7 @@ public class CodeEditor extends IDEComponent {
 	public List<IDEFont> colorWhitespaces(String ext, char[] chars, List<IDEFont> fs) {
 		List<Integer> indxs = new ArrayList<>();
 		
-		indxs = findWord(new String(chars), " "); // colorir espa�os
+		indxs = findWord(new String(chars), " "); // colorir espaaos
 
 		for (Integer i : indxs) {
 			fs = color(i, i + 1, new IDEFont(Fonts.symbolsEditor, FONT_SIZE), fs);
@@ -6493,11 +6493,11 @@ public class CodeEditor extends IDEComponent {
 
 	/**
 	 * Conta quantos caracteres {@code c} tem na String {@code str}. Adicional:
-	 * conta desde o come�o at� n�o ter mais daquele char
+	 * conta desde o comeao ata nao ter mais daquele char
 	 * 
 	 * @param str - A String que vai contar
 	 * @param c   - O caractere que vai ser contado
-	 * @return O n�mero de vezes que o caractere {@code c} aparece na String
+	 * @return O namero de vezes que o caractere {@code c} aparece na String
 	 *         {@code str}.
 	 */
 	public static int countChar(String str, char c) { // Fonte: StackOverflow, de novo :/
@@ -6559,12 +6559,12 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	/**
-	 * Esse m�todo faz a fun��o que muitos editores de c�digo fazem: adicionar
-	 * caracteres inteligentes. Se voc� digita '{', ele completa com '}', o mesmo
+	 * Esse matodo faz a funaao que muitos editores de cadigo fazem: adicionar
+	 * caracteres inteligentes. Se voca digita '{', ele completa com '}', o mesmo
 	 * vale para '[', '<', '"' (aspas duplas) e ' ' ' (aspas simples).
 	 * 
 	 * @param pre - O {@code StringBuilder} anterior, a base.
-	 * @return O {@code StringBuilder} anterior com as modifica��es.
+	 * @return O {@code StringBuilder} anterior com as modificaaaes.
 	 */
 	private StringBuilder addCodeHelps(StringBuilder pre) {
 		switch (KeyInput.getCharPressed()) {
@@ -6680,7 +6680,7 @@ public class CodeEditor extends IDEComponent {
 
 	private StringBuilder write(StringBuilder cY, char c) {
 		if (c < 32 || c > 1000) {
-			cursorX--; // esse � o m�todo gambiarrento, mas depois pode arrumar (ou n�o kkkkk)
+			cursorX--; // esse a o matodo gambiarrento, mas depois pode arrumar (ou nao kkkkk)
 
 			return cY;
 		}
@@ -6688,9 +6688,9 @@ public class CodeEditor extends IDEComponent {
 		if (cY.length() == 0)
 			cY.append(c);
 		else if (cursorX <= cY.length())
-			cY.insert(cursorX, c); // use <= pq se digitar no �ltimo n digita pq n bate
-									// com a condi��o mas mesmo assim aumenta o cursorX e quando d�
-									// o backspace excede o tamanho da linha e d� no que d� n�
+			cY.insert(cursorX, c); // use <= pq se digitar no altimo n digita pq n bate
+									// com a condiaao mas mesmo assim aumenta o cursorX e quando da
+									// o backspace excede o tamanho da linha e da no que da na
 		return cY;
 	}
 
@@ -6698,8 +6698,8 @@ public class CodeEditor extends IDEComponent {
 		String gs = cY.toString(); // gen string
 		char[] ca = gs.toCharArray(); // char array
 
-		List<Character> lc = toCharList(ca); // list char (Esses coment�rios s�o para especificar os nomes das
-												// vari�veis)
+		List<Character> lc = toCharList(ca); // list char (Esses comentarios sao para especificar os nomes das
+												// variaveis)
 
 		lines.get(y).getChars().clear();
 		lines.get(y).getFonts().clear();
@@ -6724,7 +6724,7 @@ public class CodeEditor extends IDEComponent {
 				pressedAccent = true;
 
 				return ch;
-			} else if (keyCode == KeyEvent.VK_DEAD_ACUTE) { // � Acento Agudo
+			} else if (keyCode == KeyEvent.VK_DEAD_ACUTE) { // a Acento Agudo
 				prAcc = PressedAccent.ACUTE;
 				pressedAccent = true;
 
@@ -6736,7 +6736,7 @@ public class CodeEditor extends IDEComponent {
 				return ch;
 			}
 
-			else if (keyCode == 168) { // � Trema
+			else if (keyCode == 168) { // a Trema
 				prAcc = PressedAccent.UMLAUT;
 				pressedAccent = true;
 
@@ -6862,7 +6862,7 @@ public class CodeEditor extends IDEComponent {
 					return 214;
 				if (ch == 'U' || (capsLock && ch == 'u'))
 					return 220;
-				// if (ch == 'Y' || (capsLock && ch == 'y')) return '�Y';
+				// if (ch == 'Y' || (capsLock && ch == 'y')) return 'aY';
 
 				if (ch == 'a')
 					return 228;
@@ -6899,13 +6899,13 @@ public class CodeEditor extends IDEComponent {
 		if (editing == null)
 			return;
 
-		CommandTerminal.runCommand("del"); // se colar deleta o que t� selecionado
+		CommandTerminal.runCommand("del"); // se colar deleta o que ta selecionado
 
 		String[] sp = clipboard.split("\n");
 
 		int index = 0;
 
-		if (sp.length == 1) { // se � s� uma linha
+		if (sp.length == 1) { // se a sa uma linha
 			for (String s : sp) {
 				StringBuilder b = new StringBuilder(new String(toCharArray(lines.get((cursorY - 1)).getChars())));
 				StringBuilder c = b;
@@ -6919,7 +6919,7 @@ public class CodeEditor extends IDEComponent {
 
 				cursorX += s.length();
 			}
-		} else { // se n�o � s� uma linha
+		} else { // se nao a sa uma linha
 			for (String s : sp) {
 				if (s != sp[0])
 					lines.add((cursorY - 1) + index, new IDELine(new ArrayList<>(), new ArrayList<>()));
@@ -6930,7 +6930,7 @@ public class CodeEditor extends IDEComponent {
 
 				int x = cursorX > lines.get((cursorY - 1) + index).getChars().size()
 						? lines.get((cursorY - 1) + index).getChars().size()
-						: cursorX; // n�o pode exceder o index
+						: cursorX; // nao pode exceder o index
 
 				b.insert(x, s);
 
@@ -7091,7 +7091,7 @@ public class CodeEditor extends IDEComponent {
 				try {
 					path = editing == null ? Explorer.files.get(0).getRegent().getPath()
 							: editing.getRegent().getRegent().getPath();
-				} catch (Exception e) { // caiu aqui mt provavelmente � pq n�o tem itens no explorer
+				} catch (Exception e) { // caiu aqui mt provavelmente a pq nao tem itens no explorer
 					if (editing != null)
 						path = editing.getRegent().getRegent().getPath();
 					else
@@ -7138,9 +7138,9 @@ public class CodeEditor extends IDEComponent {
 
 		case "searchrep":
 			if (editing == null || CommandTerminal.expOff)
-				return; // Vai modificar o que n�o existe?
+				return; // Vai modificar o que nao existe?
 
-			RightClickOption.removeAllRightClickOptions(); // arrumar o neg�cio
+			RightClickOption.removeAllRightClickOptions(); // arrumar o negacio
 			
 			Explorer.explorerMode = ExplorerMode.SEARCHREPLACE;
 			SearchReplaceCore.init();
@@ -7181,17 +7181,17 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	/**
-	 * Faz a conta de Regra de Tr�s, com os n�meros dados no argumento.
+	 * Faz a conta de Regra de Tras, com os nameros dados no argumento.
 	 * 
 	 * <br />
 	 * 
-	 * Pode-se pensar nessa conta da seguinte maneira: se o n�mero em a equivale, na
-	 * mesma propor��o, ao n�mero em b, se der um n�mero em c, quantos ser� o n�mero
+	 * Pode-se pensar nessa conta da seguinte maneira: se o namero em a equivale, na
+	 * mesma proporaao, ao namero em b, se der um namero em c, quantos sera o namero
 	 * em d?
 	 * 
-	 * @param a - o n�mero 1
-	 * @param b - o n�mero 2
-	 * @param c - o n�mero 3
+	 * @param a - o namero 1
+	 * @param b - o namero 2
+	 * @param c - o namero 3
 	 * @return O resultado, como se fosse a letra d dos argumentos
 	 */
 	public static int ruleOf3(int a, int b, int c) {
@@ -7199,17 +7199,17 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	/**
-	 * Faz a conta de Regra de Tr�s Inversa, com os n�meros dados no argumento.
+	 * Faz a conta de Regra de Tras Inversa, com os nameros dados no argumento.
 	 * 
 	 * <br />
 	 * 
-	 * Pode-se pensar nessa conta da seguinte maneira: se o n�mero em a equivale, na
-	 * propor��o inversa, ao n�mero em b, se der um n�mero em c, quantos ser� o
-	 * n�mero em d?
+	 * Pode-se pensar nessa conta da seguinte maneira: se o namero em a equivale, na
+	 * proporaao inversa, ao namero em b, se der um namero em c, quantos sera o
+	 * namero em d?
 	 * 
-	 * @param a - o n�mero 1
-	 * @param b - o n�mero 2
-	 * @param c - o n�mero 3
+	 * @param a - o namero 1
+	 * @param b - o namero 2
+	 * @param c - o namero 3
 	 * @return O resultado, como se fosse a letra d dos argumentos
 	 */
 	public static int inverseRuleOf3(int a, int b, int c) {
@@ -7338,15 +7338,15 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	/*
-	 * Pseudo-C�digo -- FUNCIONOU!
+	 * Pseudo-Cadigo -- FUNCIONOU!
 	 * 
-	 * deletar os chars atr�s do cursor, at� o tamanho da palavra digitada ex: cx =
+	 * deletar os chars atras do cursor, ata o tamanho da palavra digitada ex: cx =
 	 * 7, pld = 3 | cx = 7 - 3. // cx = cursorx, pld = palavra digitada
 	 * 
-	 * depois d� um insert na string e
+	 * depois da um insert na string e
 	 * 
 	 */
-	public void makeChanges(String e) { // [e] � a palavra que vai colocar
+	public void makeChanges(String e) { // [e] a a palavra que vai colocar
 		String s = new String(toCharArray(lines.get(cursorY - 1).getChars()));
 		StringBuilder sb = new StringBuilder(s);
 
@@ -7363,7 +7363,7 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	/**
-	 * Hardcoded no cursor (de texto, n�o � do mouse n�o)
+	 * Hardcoded no cursor (de texto, nao a do mouse nao)
 	 */
 	public void addAutoCompleteOptions() {
 		addSpecificAutoCompletes(editing.getRegent().getRegent().getName());
@@ -7690,7 +7690,7 @@ public class CodeEditor extends IDEComponent {
 				for (int i = 0; i < countChar(cY.toString(), ' '); i++)
 					spaces.append(' ');
 
-				for (int i = 0; i < countChar(cY.toString(), (char) 9); i++) // char 9 � o tab
+				for (int i = 0; i < countChar(cY.toString(), (char) 9); i++) // char 9 a o tab
 					spaces.append('\t');
 
 				int nSpaces = spaces.length();
@@ -7780,8 +7780,8 @@ public class CodeEditor extends IDEComponent {
 				// Add AutoComplete
 
 				if ((Character.isLetter(c) || isNumber(c) || KeyInput.getCharPressed() == 46) && !isReadOnly
-					&& editing != null) { // adicionar esse c�digo no backspace, e se
-																	// tiver espa�os na frente, a keyword vai no
+					&& editing != null) { // adicionar esse cadigo no backspace, e se
+																	// tiver espaaos na frente, a keyword vai no
 																	// lugar errado
 					String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent())
 							? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent()))
@@ -7809,7 +7809,7 @@ public class CodeEditor extends IDEComponent {
 				if (!Character.isLetter(c) && KeyInput.getKeyCodePressed() != KeyEvent.VK_TAB && KeyInput.getKeyCodePressed() != KeyEvent.VK_UP && KeyInput.getKeyCodePressed() != KeyEvent.VK_DOWN/* && KeyInput.getKeyCodePressed() != KeyEvent.VK_LEFT && KeyInput.getKeyCodePressed() != KeyEvent.VK_RIGHT*/
 						&& KeyInput.getKeyCodePressed() != KeyEvent.VK_SPACE && KeyInput.getCharPressed() != 46
 						&& !KeyInput.isShiftDown())
-					RightClickOption.removeAllRightClickOptions(); // 46 � o ponto (.) // aqui
+					RightClickOption.removeAllRightClickOptions(); // 46 a o ponto (.) // aqui
 				// if (KeyInput.getKeyCodePressed() == KeyEvent.)
 
 				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256
@@ -7826,7 +7826,7 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public void detectArrows() {
-		if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown())) { // se ctrl, alt N�O est�o pressionados, ou se alt gr est� pressionado
+		if ((!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown())) { // se ctrl, alt NaO estao pressionados, ou se alt gr esta pressionado
 			try {
 				if (!RightClickOption.isRightClickActive()) {
 					showCursor = true;
@@ -7954,8 +7954,8 @@ public class CodeEditor extends IDEComponent {
 							if (noneSelected())
 								directionStarted = Direction.UP;
 
-							if (directionStarted != Direction.DOWN) // n�o verificar se foi up, verificar se n�o foi
-																	// down, ou colocar um else e repetir a condi��o
+							if (directionStarted != Direction.DOWN) // nao verificar se foi up, verificar se nao foi
+																	// down, ou colocar um else e repetir a condiaao
 																	// do if
 								line1--;
 							else// if (directionStarted == Direction.DOWN)
@@ -8093,7 +8093,7 @@ public class CodeEditor extends IDEComponent {
 																																// +
 																																// Home
 																																// -
-																																// Come�o
+																																// Comeao
 																																// do
 																																// Documento
 						KeyInput.updateKeys();
@@ -8113,7 +8113,7 @@ public class CodeEditor extends IDEComponent {
 						KeyInput.updateKeys();
 
 						// scrX = (lines.get(lines.size() - 1).getChars().size() * FONT_SIZE) -
-						// FONT_SIZE * 10; // esse - FONT_SIZE * 5 � pra dar um offset para tr�s e ficar
+						// FONT_SIZE * 10; // esse - FONT_SIZE * 5 a pra dar um offset para tras e ficar
 						// no meio da tela.
 
 						cursorX = lines.get(lines.size() - 1).getChars().size();
@@ -8126,7 +8126,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) { // Home - Come�o da Linha
+					else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) { // Home - Comeao da Linha
 						KeyInput.updateKeys();
 
 						scrX = 0;
@@ -8395,7 +8395,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					// Lembrando que isso aqui s� ativa quando o que vc digitou est� dentro dos
+					// Lembrando que isso aqui sa ativa quando o que vc digitou esta dentro dos
 					// conformes
 					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_SPACE && !isReadOnly
 							) { // Ctrl + Space (Trigger Auto Complete)
@@ -8509,7 +8509,7 @@ public class CodeEditor extends IDEComponent {
 							}
 						}
 
-						if (KeyInput.isShiftDown() && !KeyInput.isControlDown()) { // isso n�o pode acontecer com o x por causa dos autocompletes
+						if (KeyInput.isShiftDown() && !KeyInput.isControlDown()) { // isso nao pode acontecer com o x por causa dos autocompletes
 							if (MouseInput.wheelUp() && scrX > 0) {
 								MouseInput.updateMouseRoll();
 								
@@ -8709,7 +8709,7 @@ public class CodeEditor extends IDEComponent {
 		new Thread() {
 			public void run() {
 				try {
-					// converter os objetos da lista em strings e colocar numa lista de strings, que s�o os objetos
+					// converter os objetos da lista em strings e colocar numa lista de strings, que sao os objetos
 					List<String> objs = new ArrayList<>();
 					
 					for (IDELine l : lines) {
@@ -8739,7 +8739,7 @@ public class CodeEditor extends IDEComponent {
 			return;
 		
 		if (tabs == null)
-			tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necess�rio
+			tabs = new ArrayList<>(); // fazer isso com os autocompletes, se necessario
 		
 		if (editing != null)
 			isReadOnly = editing.isReadOnly;
@@ -8804,7 +8804,7 @@ public class CodeEditor extends IDEComponent {
 			switch (editing.readMode) {
 			case BIN:
 			case BINARY:
-				codeType = minMode ? "Bin" : (Main.lang == Language.PORT ? "Bin�rio" : "Binary");
+				codeType = minMode ? "Bin" : (Main.lang == Language.PORT ? "Binario" : "Binary");
 				break;
 				
 			case HEX:
@@ -8896,8 +8896,8 @@ public class CodeEditor extends IDEComponent {
 		// int speed = 10;
 
 		/*
-		 * if (drawcx < realcx) drawcx += speed; // talvez quando for adicionar anima��o
-		 * t� aqui pronto if (drawcx > realcx) drawcx -= speed;
+		 * if (drawcx < realcx) drawcx += speed; // talvez quando for adicionar animaaao
+		 * ta aqui pronto if (drawcx > realcx) drawcx -= speed;
 		 * 
 		 * if (drawcy < realcy) drawcy += speed; if (drawcy > realcy) drawcy -= speed;
 		 */
@@ -9008,7 +9008,7 @@ public class CodeEditor extends IDEComponent {
 		if (tabs != null) {
 			for (Tab t : tabs) {
 				// if (t.getX() + tabScr < x || t.getX() + tabScr > Main.screen.getWidth())
-				// continue; // infelizmente vai ter que fazer o tick mesmo assim, bom que n�o
+				// continue; // infelizmente vai ter que fazer o tick mesmo assim, bom que nao
 				// pesa muito
 
 				t.tick();
@@ -9096,7 +9096,7 @@ public class CodeEditor extends IDEComponent {
 	//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".gif") ||
 	//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".bmp"))) {
 	//			try {
-	//				BufferedImage get = ImageIO.read(getClass().getResource(editing.getRegent().getRegent().getAbsolutePath())); // esse get t� null
+	//				BufferedImage get = ImageIO.read(getClass().getResource(editing.getRegent().getRegent().getAbsolutePath())); // esse get ta null
 	//				
 	//				g.drawImage(get, (x + (width / 2)) - get.getWidth(), (y + (height / 2)) - get.getHeight(), get.getWidth() * 2, get.getHeight() * 2, null);
 	//			} catch (Exception e) {
@@ -9203,7 +9203,7 @@ public class CodeEditor extends IDEComponent {
 	
 					/*
 					 * if (num < 10) nx = x + 1 + (2 * FONT_SIZE) + 3; if (num >= 10 && num < 100)
-					 * nx = x + 1 + FONT_SIZE + 3 + 3; // n�o ser� feito, pelo menos por enquanto if
+					 * nx = x + 1 + FONT_SIZE + 3 + 3; // nao sera feito, pelo menos por enquanto if
 					 * (num >= 100 && num < 1000) nx = x + 1 + 6;
 					 */
 	

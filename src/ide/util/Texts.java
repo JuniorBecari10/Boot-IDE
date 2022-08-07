@@ -1,20 +1,20 @@
 package ide.util;
 
 /**
- * Uma classe que lista todos os textos e palavras que est�o na Boot IDE. Somente n�o listam os nomes das linguagens que aparecem embaixo da tela. Temos em portugu�s e ingl�s aqui.
+ * Uma classe que lista todos os textos e palavras que estao na Boot IDE. Somente nao listam os nomes das linguagens que aparecem embaixo da tela. Temos em portuguas e inglas aqui.
  * 
  * Linguagens:
- * 	Portugu�s
- * 	Ingl�s
+ * 	Portuguas
+ * 	Inglas
  * 
- * Tradutores de Ingl�s: Boot (eu hehe) e <a href="https://www.deepl.com/translator">DeepL</a>.
+ * Tradutores de Inglas: Boot (eu hehe) e <a href="https://www.deepl.com/translator">DeepL</a>.
  * 
  * @author junio
  *
  */
 public final class Texts {
 	
-	private Texts() {} // n�o vai instanciar n�o viu
+	private Texts() {} // nao vai instanciar nao viu
 
 	// --------------------------------------
 	
@@ -33,7 +33,7 @@ public final class Texts {
 	
 	public static String fileAsReadOnly;
 	
-	public static String baseFolder_; // _ � dois pontos :
+	public static String baseFolder_; // _ a dois pontos :
 	public static String currentFolder;
 	
 	public static String esc_Cancel;
@@ -254,7 +254,7 @@ public final class Texts {
 			openTerminal = "Abrir Terminal de Comando";
 			openExplorer = "Abrir no Explorador de Arquivos";
 			setBaseFolder = "Definir pasta atual como Pasta Base";
-			openDefault = "Abrir arquivo com o programa padr�o";
+			openDefault = "Abrir arquivo com o programa padrao";
 			
 			execute = "Executar";
 			executeBash = "Executar com Bash";
@@ -290,7 +290,7 @@ public final class Texts {
 			sureDelete = "Tem certeza de que deseja deletar o arquivo";
 			confirmDelete = "Confirmar Exclusão";
 			
-			delError = "Ocorreu um erro ao deletar. Lembre-se de que pastas n�o podem ser exclu�das se n�o estiverem vazias!";
+			delError = "Ocorreu um erro ao deletar. Lembre-se de que pastas nao podem ser excluadas se nao estiverem vazias!";
 			cantDelete = "Não foi possível deletar.";
 			
 			cantFindDefault = "O sistema não encontrou um programa padrão para abrir esse arquivo.";
@@ -301,8 +301,8 @@ public final class Texts {
 			theFile = "O arquivo";
 			isNotSaved = "não está salvo. Deseja salvá-lo antes de fechar?";
 			
-			fileNameIllegal = "O nome do arquivo contém caracteres n�o permitidos.";
-			cannotBeOnlySpaces = "O nome do arquivo não pode ser somente espa�os!";
+			fileNameIllegal = "O nome do arquivo contém caracteres nao permitidos.";
+			cannotBeOnlySpaces = "O nome do arquivo não pode ser somente espaaos!";
 			
 			confirmSave = "Confirmar Salvamento do Arquivo";
 			
@@ -357,12 +357,12 @@ public final class Texts {
 			
 			openInEditor = "Abrir no Editor";
 			
-			cannotEndDot = "O nome do arquivo n�o pode terminar com um ponto!";
+			cannotEndDot = "O nome do arquivo nao pode terminar com um ponto!";
 			
 			anErrorOccurred = "Um erro ocorreu.";
 			errorCreatingFile = "Um erro ocorreu ao criar o arquivo.";
 			
-			fontBelowMinimum = "O tamanho da fonte est� abaixo do mínimo! (Mínimo: 8)";
+			fontBelowMinimum = "O tamanho da fonte esta abaixo do mínimo! (Mínimo: 8)";
 			belowMinimum = "Abaixo do mínimo!";
 			
 			version = "Versão";
@@ -388,8 +388,8 @@ public final class Texts {
 			getLang = "Obter Idioma";
 			langIs = "O idioma é";
 			
-			getWhitespaceOn = "Obter Espa�os em Branco Ligado/Desligado";
-			whitespaceIs = "Os Espa�os em Branco estão";
+			getWhitespaceOn = "Obter Espaaos em Branco Ligado/Desligado";
+			whitespaceIs = "Os Espaaos em Branco estão";
 			
 			back = "Voltar";
 			apply = "Aplicar";

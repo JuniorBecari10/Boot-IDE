@@ -8,7 +8,7 @@ import ide.explorer.ListableFile;
 import ide.main.Main;
 
 /**
- * Uma classe para organizar as cores. Como se fosse uma paleta. Tamb�m tem outras coisas �teis.
+ * Uma classe para organizar as cores. Como se fosse uma paleta. Tambam tem outras coisas ateis.
  */
 public class Colors {
     

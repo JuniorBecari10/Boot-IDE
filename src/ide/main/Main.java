@@ -76,7 +76,7 @@ public class Main implements Runnable, Tickable {
     public static final String PROGRAM_NAME = "Boot IDE";
     public static final String VERSION = "Beta 1 v4.5";
     
-    public static final String userDir = System.getProperty("user.dir"); 
+    public static final String userDir = System.getProperty("user.dir");
     
     public static boolean forceMacButtons = false;
     
@@ -470,7 +470,7 @@ public class Main implements Runnable, Tickable {
      * 
      * <br />
      * 
-     * C�digo de: <a href="https://dzone.com/articles/programmatically-restart-java">https://dzone.com/articles/programmatically-restart-java</a>
+     * Cadigo de: <a href="https://dzone.com/articles/programmatically-restart-java">https://dzone.com/articles/programmatically-restart-java</a>
      * 
      * @param runBeforeRestart some custom code to be run before restarting
      * @throws IOException
@@ -597,7 +597,7 @@ public class Main implements Runnable, Tickable {
 						public void run() {
 							try {
 								Main.editor.lines = Main.editor.readFile(file);
-							} catch (IOException e) { // n�o suportado, se caiu aqui
+							} catch (IOException e) { // nao suportado, se caiu aqui
 								return;
 							}
 						}
@@ -672,7 +672,7 @@ public class Main implements Runnable, Tickable {
 					
 					if (i == 0) {
 						Fonts.initFonts(fntnr, fnted);
-						spritesheet = spritesheetFile.exists() ? modifiedSpritesheet : originalSpritesheet; // fazer o closebasefolder n�o descarregar o config file
+						spritesheet = spritesheetFile.exists() ? modifiedSpritesheet : originalSpritesheet; // fazer o closebasefolder nao descarregar o config file
 						
 				        if (s.equals("none")) baseFolder = null;
 				        else {
@@ -845,7 +845,7 @@ public class Main implements Runnable, Tickable {
         
         if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))
 	        for (Tab t : Main.editor.tabs) {
-				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() && !t.button.hovered() && !Tab.isTabDragged()) { // por algum motivo � + e n�o -
+				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() && !t.button.hovered() && !Tab.isTabDragged()) { // por algum motivo a + e nao -
 					int index = Main.baseFolder != null ? t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0 : 0;
 					
 					int width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
@@ -1039,8 +1039,8 @@ public class Main implements Runnable, Tickable {
         		writeFile(settingsFile);
         		ListableFile.generateLocalConfigFile(defaultConfigFile);
         		
-	    		if (Main.editor.editing != null) { // n�o for nulo
-	    			if (!Main.editor.editing.isSaved()) { // n�o estiver salvo
+	    		if (Main.editor.editing != null) { // nao for nulo
+	    			if (!Main.editor.editing.isSaved()) { // nao estiver salvo
 	    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
 	    				
 	    				CodeEditor.setSystemLook();
@@ -1063,8 +1063,8 @@ public class Main implements Runnable, Tickable {
     	writeFile(settingsFile);
     	ListableFile.generateLocalConfigFile(defaultConfigFile);
 
-    	if (Main.editor.editing != null) { // n�o for nulo
-    		if (!Main.editor.editing.isSaved()) { // n�o estiver salvo
+    	if (Main.editor.editing != null) { // nao for nulo
+    		if (!Main.editor.editing.isSaved()) { // nao estiver salvo
     			String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
 
     			CodeEditor.setSystemLook();

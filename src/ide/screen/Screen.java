@@ -75,7 +75,7 @@ public class Screen extends Canvas {
         
         frame.add(this);
 		frame.setFocusTraversalKeysEnabled(false);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);			// pra fazer a tela de confirma��o o fechamento deve ser feito por c�digo		
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);			// pra fazer a tela de confirmaaao o fechamento deve ser feito por cadigo		
 		frame.setUndecorated(true);
 		
         frame.pack();

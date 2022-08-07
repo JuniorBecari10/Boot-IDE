@@ -15,7 +15,7 @@ import ide.util.Tickable;
 /**
  * A superclasse de todo componente da IDE.
  */
-public abstract class IDEComponent implements Tickable, Renderable, Clickable { // uma classe abstrata não pode ser instanciada, é boa para superclasses.
+public abstract class IDEComponent implements Tickable, Renderable, Clickable { // uma classe abstrata nao pode ser instanciada, a boa para superclasses.
 
     public static transient List<IDEComponent> components = new ArrayList<>();
     
@@ -109,12 +109,12 @@ public abstract class IDEComponent implements Tickable, Renderable, Clickable { 
     }
 
     @Override
-    public final boolean leftClicked() { // um método final não pode ser sobrescrito. Bom para quem quer que o único método seja esse.
+    public final boolean leftClicked() { // um matodo final nao pode ser sobrescrito. Bom para quem quer que o anico matodo seja esse.
     	return hovered() && MouseInput.isLeftPressed();
     }
     
     @Override
-    public final boolean rightClicked() { // um método final não pode ser sobrescrito. Bom para quem quer que o único método seja esse.
+    public final boolean rightClicked() { // um matodo final nao pode ser sobrescrito. Bom para quem quer que o anico matodo seja esse.
     	return hovered() && MouseInput.isRightPressed();
     }
 

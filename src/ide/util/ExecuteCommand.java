@@ -1,7 +1,7 @@
 package ide.util;
 
 /**
- * Uma interface no qual o método {@code execute()} vai ser executado em algum evento.
+ * Uma interface no qual o matodo {@code execute()} vai ser executado em algum evento.
  * 
  * @author Juninho
  *

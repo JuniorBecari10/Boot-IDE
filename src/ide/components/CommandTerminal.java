@@ -35,7 +35,7 @@ import ide.util.Language;
 import ide.util.Texts;
 
 /**
- * Um terminal onde voc� coloca os comandos nele e ele executa de acordo com que voc� mandar. Simples, n�o?
+ * Um terminal onde voca coloca os comandos nele e ele executa de acordo com que voca mandar. Simples, nao?
  * 
  * @author Juninho
  *
@@ -82,7 +82,7 @@ public class CommandTerminal extends IDEComponent {
 	
 	private static JFileChooser chooser;
 	
-	//private static boolean typedFlag = false; // � necess�rio que exista, pelo menos por enquanto
+	//private static boolean typedFlag = false; // a necessario que exista, pelo menos por enquanto
 	
 	public CommandTerminal(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
@@ -124,7 +124,7 @@ public class CommandTerminal extends IDEComponent {
 	}
 	
 	/**
-	 * Esse � o meu primeiro lexer/parser custom!
+	 * Esse a o meu primeiro lexer/parser custom!
 	 * 
 	 * @param command - o comando, oras
 	 */
@@ -134,7 +134,7 @@ public class CommandTerminal extends IDEComponent {
 		String com = tokens[0];
 		String[] args = new String[tokens.length - 1];
 		
-		for (int i = 1; i < tokens.length; i++) // � 1 mesmo viu
+		for (int i = 1; i < tokens.length; i++) // a 1 mesmo viu
 			args[i - 1] = tokens[i];
 		
 		if (args.length == 0) {
@@ -203,7 +203,7 @@ public class CommandTerminal extends IDEComponent {
 			case "getlang":
 				CodeEditor.setSystemLook();
 				
-				JOptionPane.showMessageDialog(null, Texts.langIs + " " + (Main.lang == Language.PORT ? "Portugu�s." : "English."), Texts.getLang, JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, Texts.langIs + " " + (Main.lang == Language.PORT ? "Portuguas." : "English."), Texts.getLang, JOptionPane.INFORMATION_MESSAGE);
 				break;
 				
 			case "getfontsize":
@@ -247,7 +247,7 @@ public class CommandTerminal extends IDEComponent {
 				/*if (Main.editor.cursorThread.isAlive() || Main.editor.cursorThread.getState() != State.TERMINATED) {
 					try {
 						Main.editor.cursorThread.interrupt();
-					} catch (Exception e) {} // usar somente quando necess�rio
+					} catch (Exception e) {} // usar somente quando necessario
 				}
 				
 				Main.editor.cursorThread = new Thread() {
@@ -271,7 +271,7 @@ public class CommandTerminal extends IDEComponent {
 					List<String> lines = new ArrayList<>();
 					String str = "";
 					
-					if (Main.editor.line1 != Main.editor.line2) { // se n�o selecionou uma linha s� (selecionou v�rias)
+					if (Main.editor.line1 != Main.editor.line2) { // se nao selecionou uma linha sa (selecionou varias)
 						for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) {
 							if (i == Main.editor.line1 - 1) {
 								if (Main.editor.index1 > Main.editor.lines.get(i).getChars().size())
@@ -294,12 +294,12 @@ public class CommandTerminal extends IDEComponent {
 						for (String s : lines) {
 							str += s;
 							
-							if (s != lines.get(lines.size() - 1)) // se n�o for a �ltima linha (para n�o adicionar quebras de linha adicionais desnecess�rias)
+							if (s != lines.get(lines.size() - 1)) // se nao for a altima linha (para nao adicionar quebras de linha adicionais desnecessarias)
 								str += "\n";
 						}
 					}
 					else {
-						if (Main.editor.index2 < Main.editor.index1) { // que coisa n�o? (provavelmente isso nunca vai acontecer)
+						if (Main.editor.index2 < Main.editor.index1) { // que coisa nao? (provavelmente isso nunca vai acontecer)
 							runCommand("deselect");
 							
 							break;
@@ -326,7 +326,7 @@ public class CommandTerminal extends IDEComponent {
 				try {
 					StringBuilder s = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.line1 - 1).getChars())));
 					
-					if (Main.editor.line1 != Main.editor.line2) { // se n�o selecionou uma linha s� (selecionou v�rias)
+					if (Main.editor.line1 != Main.editor.line2) { // se nao selecionou uma linha sa (selecionou varias)
 						for (int i = Main.editor.line1 - 1; i < Main.editor.line2; i++) {
 							if (i == Main.editor.line1 - 1) {
 								Main.editor.lines.get(i).setChars(Main.editor.lines.get(i).getChars().subList(0, Main.editor.index1));
@@ -375,7 +375,7 @@ public class CommandTerminal extends IDEComponent {
 					Main.editor.editing.setSaved(false);
 				
 				} catch (Exception e) {
-					//runCommand("deselect"); // TODO talvez n�o desselecionar, deletar com algum index no 0, n�?
+					//runCommand("deselect"); // TODO talvez nao desselecionar, deletar com algum index no 0, na?
 					
 					if (Main.editor.index1 >= Main.editor.lines.get(Main.editor.line1 - 1).getChars().size())
 						Main.editor.index1 = Main.editor.lines.get(Main.editor.line1 - 1).getChars().size();
@@ -737,7 +737,7 @@ public class CommandTerminal extends IDEComponent {
 			case "togglecodehelpers":
 				if (Main.editor.editing == null) break;
 				
-				Main.editor.codeHelpersOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor codehelperson, true (l�gico que o nome da vari�vel n seria esse n� :/)
+				Main.editor.codeHelpersOn ^= true; // método prático de inverter boolean, porque em Assembly mais ou menos seria assim: xor codehelperson, true (lagico que o nome da variavel n seria esse na :/)
 				break;
 				
 			case "gotocursor":
@@ -747,14 +747,14 @@ public class CommandTerminal extends IDEComponent {
 				//Main.editor.scrY = (Main.editor.cursorY * (CodeEditor.FONT_SIZE + (CodeEditor.FONT_SIZE / 3)));
 				
 				//Main.editor.scrX = CodeEditor.ruleOf3(100, 840, Main.editor.cursorX);
-				//Main.editor.scrY = CodeEditor.ruleOf3(1000, 16791, Main.editor.cursorY - 1); // se o cursor y for 1000, o scroll y � 16791, agora, se o cursor y for x, quantos ser� o scroll y? Esse m�todo faz isso.
+				//Main.editor.scrY = CodeEditor.ruleOf3(1000, 16791, Main.editor.cursorY - 1); // se o cursor y for 1000, o scroll y a 16791, agora, se o cursor y for x, quantos sera o scroll y? Esse matodo faz isso.
 				
 				//if (Main.editor.cursorY <= 7) Main.editor.scrY = 0;
 				
 				int drawcx = Main.editor.drawcx;
 				int drawcy = Main.editor.drawcy;
 				
-				while (drawcx < Main.editor.getX() + (CodeEditor.FONT_SIZE * 10)) { // * 6 pra dar um espa�o
+				while (drawcx < Main.editor.getX() + (CodeEditor.FONT_SIZE * 10)) { // * 6 pra dar um espaao
 					Main.editor.scrX -= CodeEditor.FONT_SIZE;
 					drawcx += CodeEditor.FONT_SIZE;
 				}
@@ -911,7 +911,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				char c = (char) ascii;
 				
-				//if (!Character.isLetterOrDigit(c)) break; // n�o vai verificar mais, pode colocar o que quiser aqui :\
+				//if (!Character.isLetterOrDigit(c)) break; // nao vai verificar mais, pode colocar o que quiser aqui :\
 				
 				StringBuilder sb = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())));
 				
@@ -1512,7 +1512,7 @@ public class CommandTerminal extends IDEComponent {
 			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
-				//lastCommand = builder.toString(); // tem que ser o �ltimo que voc� digitou, n�o o �ltimo que executou (pq o sistema executa)
+				//lastCommand = builder.toString(); // tem que ser o altimo que voca digitou, nao o altimo que executou (pq o sistema executa)
 				
 				typedCommands.push(builder.toString());
 				tcIndex = typedCommands.size() - 1;
@@ -1559,7 +1559,7 @@ public class CommandTerminal extends IDEComponent {
 			if (KeyInput.getCharPressed() < 33 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
 			if (builder.length() == 0 || cursorIndex == builder.length()) builder.append(c);
-			else builder.insert(cursorIndex, c); // o erro era ordem de par�metros, pois usar um char como int tbm vale
+			else builder.insert(cursorIndex, c); // o erro era ordem de parametros, pois usar um char como int tbm vale
 			
 			cursorIndex++;
 		}

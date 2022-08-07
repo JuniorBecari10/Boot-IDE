@@ -82,9 +82,9 @@ public class RightClickOption extends IDEComponent {
 	}
 	
 	/**
-	 * Detecta se tem alguma opção de RightClick aberta.
+	 * Detecta se tem alguma opaao de RightClick aberta.
 	 * 
-	 * @return <tt>true</tt> se sim, <tt>false</tt> se não.
+	 * @return <tt>true</tt> se sim, <tt>false</tt> se nao.
 	 */
 	public static boolean isRightClickActive() {
 		for (IDEComponent i : IDEComponent.components)
@@ -160,7 +160,7 @@ public class RightClickOption extends IDEComponent {
 				Main.screen.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		}
 		
-		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE || (MouseInput.isMousePressed() && !(leftClicked() || rightClicked()) && (RightClickOption.anyRightClickOptionHovered() ? (RightClickOption.getRightClickOptionHovered() != null && RightClickOption.getRightClickOptionHovered().isActive) : true))) // obs: o bug não é aqui
+		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE || (MouseInput.isMousePressed() && !(leftClicked() || rightClicked()) && (RightClickOption.anyRightClickOptionHovered() ? (RightClickOption.getRightClickOptionHovered() != null && RightClickOption.getRightClickOptionHovered().isActive) : true))) // obs: o bug nao a aqui
 			IDEComponent.toRemove.add(this);
 		
 		/*if (isAutoComplete)
@@ -169,7 +169,7 @@ public class RightClickOption extends IDEComponent {
 		//if (rightClicked()) removeAllRightClickOptions();
 		
 		if ((leftClicked() || rightClicked()) && isActive) {
-			MouseInput.updateMouse(); // resolver o bug de clicar com o botão direito e abrir e fechar as options
+			MouseInput.updateMouse(); // resolver o bug de clicar com o botao direito e abrir e fechar as options
 			
 			command.execute(clickArg);
 			

@@ -159,8 +159,8 @@ public class Tab extends IDEComponent implements Serializable {
 	public void closeWithoutAnimation() {
 		closing = true;
 
-		if (Main.editor.editing != null && save) { // n�o for nulo
-			if (!Main.editor.editing.isSaved()) { // n�o estiver salvo
+		if (Main.editor.editing != null && save) { // nao for nulo
+			if (!Main.editor.editing.isSaved()) { // nao estiver salvo
 				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
 
 				CodeEditor.setSystemLook();
@@ -198,7 +198,7 @@ public class Tab extends IDEComponent implements Serializable {
 
 			Tab next = Main.editor.tabs.indexOf(t) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(t) - 1);
 
-			if (Main.editor.toRemove != null && Main.editor.toRemove.get(0) != null && !Main.editor.toRemove.get(0).equals(t)) // aqui rola um nullpointerexception quando fecha uma tab | � o get(0) que � null
+			if (Main.editor.toRemove != null && Main.editor.toRemove.get(0) != null && !Main.editor.toRemove.get(0).equals(t)) // aqui rola um nullpointerexception quando fecha uma tab | a o get(0) que a null
 				next = t;
 
 			if (Main.editor.toRemove.get(0) == null)
@@ -336,7 +336,7 @@ public class Tab extends IDEComponent implements Serializable {
 					
 					Tab next = Main.editor.tabs.indexOf(t) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(t) - 1);
 					
-					if (Main.editor.toRemove != null && Main.editor.toRemove.get(0) != null && !Main.editor.toRemove.get(0).equals(t)) // aqui rola um nullpointerexception quando fecha uma tab | � o get(0) que � null
+					if (Main.editor.toRemove != null && Main.editor.toRemove.get(0) != null && !Main.editor.toRemove.get(0).equals(t)) // aqui rola um nullpointerexception quando fecha uma tab | a o get(0) que a null
 						next = t;
 					
 					if (Main.editor.toRemove.get(0) == null)
@@ -401,7 +401,7 @@ public class Tab extends IDEComponent implements Serializable {
 //			e.printStackTrace();
 //		}
 		
-		closing = false; // TODO talvez fazer uma variavel boolean e quando apertar o bot�o fechar, ativa ela, e se n�o fechar, verifica se ela � true e fecha, removendo da lista
+		closing = false; // TODO talvez fazer uma variavel boolean e quando apertar o botao fechar, ativa ela, e se nao fechar, verifica se ela a true e fecha, removendo da lista
 	}
 	
 	/**
@@ -547,7 +547,7 @@ public class Tab extends IDEComponent implements Serializable {
 			for (Tab t : Main.editor.tabs)
 				if (t != this) t.close();
 			
-			Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para voc�!
+			Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para voca!
 			
 			Main.editor.editing = this;
 			
@@ -587,7 +587,7 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	public void select() {
 		if (Main.editor.editing != null && !Main.editor.editing.isSaved())
-			Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para voc�!
+			Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para voca!
 		
 		Main.editor.wordSinceSpace = "";
 		RightClickOption.removeAllRightClickOptions();

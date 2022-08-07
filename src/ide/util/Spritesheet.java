@@ -22,7 +22,7 @@ public class Spritesheet {
     	try {
 			spr = ImageIO.read(file);
 		} catch (IOException e) {
-			// n�o tem
+			// nao tem
 			
 			return;
 		}

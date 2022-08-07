@@ -123,7 +123,7 @@ public class Fonts {
         
          variablesNormal = Fonts.initFont(normal, Color.white, Colors.variables);
          variablesEditor = Fonts.initFont(editor, Color.white, Colors.variables);
-        
+         
          normal = Fonts.initFont(font1);
          editor = Fonts.initFont(font2);
         
@@ -173,7 +173,7 @@ public class Fonts {
     }
     
     /**
-     * A gambiarra n„o foi totalmente resolvida. … sÛ uma forma de "escondÍ"-la.
+     * A gambiarra nao foi totalmente resolvida. √© s√≥ uma forma de "esconda"-la.
      * 
      * @param arg - A {@code String} para iniciar
      * @return - A fonte como um array de {@code BufferedImage}.
@@ -211,36 +211,246 @@ public class Fonts {
     	return base;
     }
     
+    public static BufferedImage accents(char c, IDEFont font) {
+    	BufferedImage text = null;
+    	
+    	if (c == '√Å') {
+			text = font.getFont()[190+2];
+		}
+		else if (c == '√â') {
+			text = font.getFont()[197+2];
+		}
+		else if (c == '√ç') {
+			text = font.getFont()[201+2];
+		}
+		else if (c == '√ì') {
+			text = font.getFont()[207+2];
+		}
+		else if (c == '√ö') {
+			text = font.getFont()[214+2];
+			
+			
+		}
+		else if (c == '√ù') {
+			text = font.getFont()[218+2];
+			
+			
+		}
+		else if (c == '√°') {
+			text = font.getFont()[222+2];
+			
+			
+		}
+		else if (c == '√©') {
+			text = font.getFont()[230+2];
+			
+			
+		}
+		else if (c == '√≠') {
+			text = font.getFont()[234+2];
+			
+			
+		}
+		else if (c == '√≥') {
+			text = font.getFont()[240+2];
+			
+			
+		}
+		else if (c == '√∫') {
+			text = font.getFont()[247+2];
+			
+			
+		}
+		else if (c == '√Ω') {
+			text = font.getFont()[250+2];
+			
+			
+		}
+		/////////
+		else if (c == '√Ä') {
+			text = font.getFont()[189+1];
+			
+			
+		}
+		else if (c == '√à') {
+			text = font.getFont()[196+2];
+			
+			
+		}
+		else if (c == '√å') {
+			text = font.getFont()[200+2];
+			
+			
+		}
+		else if (c == '√í') {
+			text = font.getFont()[206+2];
+			
+			
+		}
+		else if (c == '√ô') {
+			text = font.getFont()[213+2];
+			
+			
+		}
+		else if (c == '√†') {
+			text = font.getFont()[221+2];
+			
+			
+		}
+		else if (c == '√®') {
+			text = font.getFont()[229+2];
+			
+			
+		}
+		else if (c == '√¨') {
+			text = font.getFont()[233+2];
+			
+			
+		}
+		else if (c == '√≤') {
+			text = font.getFont()[239+2];
+			
+			
+		}
+		else if (c == '√π') {
+			text = font.getFont()[246+2];
+			
+			
+		}
+		//////
+		if (c == '√Ç') {
+			text = font.getFont()[191+2];
+			
+			
+		}
+		else if (c == '√ä') {
+			text = font.getFont()[198+2];
+			
+			
+		}
+		else if (c == '√é') {
+			text = font.getFont()[202+2];
+			
+			
+		}
+		else if (c == '√î') {
+			text = font.getFont()[208+2];
+			
+			
+		}
+		else if (c == '√õ') {
+			text = font.getFont()[216+2];
+			
+			
+		}
+		else if (c == '√¢') {
+			text = font.getFont()[223+2];
+			
+			
+		}
+		else if (c == '√™') {
+			text = font.getFont()[231+2];
+			
+			
+		}
+		else if (c == '√Æ') {
+			text = font.getFont()[235+2];
+			
+			
+		}
+		else if (c == '√¥') {
+			text = font.getFont()[241+2];
+			
+			
+		}
+		else if (c == '√ª') {
+			text = font.getFont()[248+2];
+			
+			
+		}
+		//////
+		else if (c == '√ï') {
+			text = font.getFont()[209+2];
+			
+			
+		}
+		else if (c == '√ë') {
+			text = font.getFont()[205+2];
+			
+			
+		}
+		else if (c == '√£') {
+			text = font.getFont()[224+2];
+			
+			
+		}
+		else if (c == '√É') {
+			text = font.getFont()[192+2];
+			
+			
+		}
+		else if (c == '√µ') {
+			text = font.getFont()[242+2];
+			
+			
+		}
+		else if (c == '√±') {
+			text = font.getFont()[238+2];
+			
+			
+		}
+		
+		else if (c == '√ß') {
+    		text = font.getFont()[228+2];
+    			
+    		
+		}
+		
+		else if (c == '√á') {
+    		text = font.getFont()[195+2];
+    			
+    		
+		}
+		
+		else if (c == '¬µ') {
+    		text = font.getFont()[180];
+    			
+    		
+		}
+		
+		return text;
+    }
+    
     /**
-     * Retorna true ou false se o char em c pertence ‡ tabela Ascii.
-     * Note que no return deveria ser 128, mas essa È a Ascii estendida.
+     * Retorna true ou false se o char em c pertence a tabela Ascii.
+     * Note que no return deveria ser 128, mas essa a a Ascii estendida.
      * 
      * @param c - O char
-     * @return true ou false se o char em c pertence ‡ tabela Ascii.
+     * @return true ou false se o char em c pertence a tabela Ascii.
      *
     public static boolean isAscii(char c) {
     	return c < 200;
     }*/
     
     /**
-     * Desenha um texto na tela de acordo com a posiÁ„o, o tamanho e a fonte especificados.
+     * Desenha um texto na tela de acordo com a posiaao, o tamanho e a fonte especificados.
      * 
      * <pre>Como foi feito?</pre>
      * 
-     * O mÈtodo dividiu a {@code String} em um array de {@code char}, depois criou outro array de {@code BufferedImage}
-     * e associa cada posiÁ„o ao valor da tabela ASCII definido pelo array, pois um {@code int} pode ser representado por um
-     * {@code char} no Java, depois roda um loop e desenha. Simples, ou n„o?
+     * O matodo dividiu a {@code String} em um array de {@code char}, depois criou outro array de {@code BufferedImage}
+     * e associa cada posiaao ao valor da tabela ASCII definido pelo array, pois um {@code int} pode ser representado por um
+     * {@code char} no Java, depois roda um loop e desenha. Simples, ou nao?
      * 
      * @param s - O texto.
-     * @param x - A posiÁ„o x.
-     * @param y - A posiÁ„o y.
+     * @param x - A posi√ß√£o x.
+     * @param y - A posi√ß√£o y.
      * @param font - A fonte.
      * @param g -  O objeto {@code Graphics} (use o g do render).
      * 
      * @author Boot
      */
 	public static void drawString(String s, int x, int y, IDEFont font, Graphics g) {
-		if (s == null) throw new NullPointerException("A String n„o pode ser nula!");
+		if (s == null) throw new NullPointerException("A String nao pode ser nula!");
 		
     	char[] ca = s.toCharArray(); // ca = char array								   converte a string em um char array
     	
@@ -256,219 +466,7 @@ public class Fonts {
     	}
     	
     	for (int i = 0; i < ca.length; i++) {
-    		char cah = ca[i];
-    		
-    		if (cah == '¡') {
-    			text[i] = font.getFont()[190+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '…') {
-    			text[i] = font.getFont()[197+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Õ') {
-    			text[i] = font.getFont()[201+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '”') {
-    			text[i] = font.getFont()[207+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '⁄') {
-    			text[i] = font.getFont()[214+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '›') {
-    			text[i] = font.getFont()[218+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '·') {
-    			text[i] = font.getFont()[222+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'È') {
-    			text[i] = font.getFont()[230+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ì') {
-    			text[i] = font.getFont()[234+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Û') {
-    			text[i] = font.getFont()[240+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '˙') {
-    			text[i] = font.getFont()[247+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '˝') {
-    			text[i] = font.getFont()[250+2];
-    			
-    			continue;
-    		}
-    		/////////
-    		else if (cah == '¿') {
-    			text[i] = font.getFont()[189+1];
-    			
-    			continue;
-    		}
-    		else if (cah == '»') {
-    			text[i] = font.getFont()[196+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ã') {
-    			text[i] = font.getFont()[200+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '“') {
-    			text[i] = font.getFont()[206+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ÿ') {
-    			text[i] = font.getFont()[213+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '‡') {
-    			text[i] = font.getFont()[221+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ë') {
-    			text[i] = font.getFont()[229+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ï') {
-    			text[i] = font.getFont()[233+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ú') {
-    			text[i] = font.getFont()[239+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '˘') {
-    			text[i] = font.getFont()[246+2];
-    			
-    			continue;
-    		}
-    		//////
-    		if (cah == '¬') {
-    			text[i] = font.getFont()[191+2];
-    			
-    			continue;
-    		}
-    		else if (cah == ' ') {
-    			text[i] = font.getFont()[198+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Œ') {
-    			text[i] = font.getFont()[202+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '‘') {
-    			text[i] = font.getFont()[208+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '€') {
-    			text[i] = font.getFont()[216+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '‚') {
-    			text[i] = font.getFont()[223+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Í') {
-    			text[i] = font.getFont()[231+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ó') {
-    			text[i] = font.getFont()[235+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ù') {
-    			text[i] = font.getFont()[241+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '˚') {
-    			text[i] = font.getFont()[248+2];
-    			
-    			continue;
-    		}
-    		//////
-    		else if (cah == '’') {
-    			text[i] = font.getFont()[209+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '—') {
-    			text[i] = font.getFont()[205+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '„') {
-    			text[i] = font.getFont()[224+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '√') {
-    			text[i] = font.getFont()[192+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'ı') {
-    			text[i] = font.getFont()[242+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ò') {
-    			text[i] = font.getFont()[238+2];
-    			
-    			continue;
-    		}
-    		
-    		else if (cah == 'Á') {
-        		text[i] = font.getFont()[228+2];
-        			
-        		continue;
-    		}
-    		
-    		else if (cah == '«') {
-        		text[i] = font.getFont()[195+2];
-        			
-        		continue;
-    		}
-    		
-    		else if (cah == 'µ') {
-        		text[i] = font.getFont()[180];
-        			
-        		continue;
-    		}
+    		text[i] = accents(ca[i], font);
 
     		int ind = ca[i]; 						// pega o valor na tabela ASCII
     		
@@ -481,14 +479,14 @@ public class Fonts {
     		char[] cha = s.toCharArray();
     		char ch = cha[i];
     		
-    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g' || ch == 'y' || ch == '˝' || ch == 'j' || ch == ',' || ch == ';' || ch == 'Á' || ch == '«' ? y + 2 : y;
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g' || ch == 'y' || ch == 'a' || ch == 'j' || ch == ',' || ch == ';' || ch == 'a' || ch == 'a' ? y + 2 : y;
     		
     		g.drawImage(text[i], (x + ((font.getSize() - (font.getSize() / 4)) * i)), ydraw, font.getSize(), font.getSize(), null);
     	}
     }
 	
 	public static void drawString(String s, int x, int y, IDEFont font, int maxPos, Graphics g) {
-		if (s == null) throw new NullPointerException("A String n„o pode ser nula!");
+		if (s == null) throw new NullPointerException("A String nao pode ser nula!");
 		
     	char[] ca = s.toCharArray(); // ca = char array								   converte a string em um char array
     	
@@ -501,214 +499,7 @@ public class Fonts {
     	}
     	
     	for (int i = 0; i < ca.length; i++) {
-    		char cah = ca[i];
-    		
-    		if (cah == '¡') {
-    			text[i] = font.getFont()[190+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '…') {
-    			text[i] = font.getFont()[197+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Õ') {
-    			text[i] = font.getFont()[201+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '”') {
-    			text[i] = font.getFont()[207+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '⁄') {
-    			text[i] = font.getFont()[214+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '›') {
-    			text[i] = font.getFont()[218+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '·') {
-    			text[i] = font.getFont()[222+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'È') {
-    			text[i] = font.getFont()[230+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ì') {
-    			text[i] = font.getFont()[234+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Û') {
-    			text[i] = font.getFont()[240+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '˙') {
-    			text[i] = font.getFont()[247+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '˝') {
-    			text[i] = font.getFont()[250+2];
-    			
-    			continue;
-    		}
-    		/////////
-    		else if (cah == '¿') {
-    			text[i] = font.getFont()[189+1];
-    			
-    			continue;
-    		}
-    		else if (cah == '»') {
-    			text[i] = font.getFont()[196+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ã') {
-    			text[i] = font.getFont()[200+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '“') {
-    			text[i] = font.getFont()[206+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ÿ') {
-    			text[i] = font.getFont()[213+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '‡') {
-    			text[i] = font.getFont()[221+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ë') {
-    			text[i] = font.getFont()[229+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ï') {
-    			text[i] = font.getFont()[233+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ú') {
-    			text[i] = font.getFont()[239+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '˘') {
-    			text[i] = font.getFont()[246+2];
-    			
-    			continue;
-    		}
-    		//////
-    		if (cah == '¬') {
-    			text[i] = font.getFont()[191+2];
-    			
-    			continue;
-    		}
-    		else if (cah == ' ') {
-    			text[i] = font.getFont()[198+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Œ') {
-    			text[i] = font.getFont()[202+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '‘') {
-    			text[i] = font.getFont()[208+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '€') {
-    			text[i] = font.getFont()[216+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '‚') {
-    			text[i] = font.getFont()[223+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Í') {
-    			text[i] = font.getFont()[231+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ó') {
-    			text[i] = font.getFont()[235+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ù') {
-    			text[i] = font.getFont()[241+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '˚') {
-    			text[i] = font.getFont()[248+2];
-    			
-    			continue;
-    		}
-    		//////
-    		else if (cah == '’') {
-    			text[i] = font.getFont()[209+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '—') {
-    			text[i] = font.getFont()[205+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '„') {
-    			text[i] = font.getFont()[224+2];
-    			
-    			continue;
-    		}
-    		else if (cah == '√') {
-    			text[i] = font.getFont()[192+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'ı') {
-    			text[i] = font.getFont()[242+2];
-    			
-    			continue;
-    		}
-    		else if (cah == 'Ò') {
-    			text[i] = font.getFont()[238+2];
-    			
-    			continue;
-    		}
-    		
-    		else if (cah == 'Á') {
-        		text[i] = font.getFont()[228+2];
-        			
-        		continue;
-    		}
-    		
-    		else if (cah == '«') {
-        		text[i] = font.getFont()[195+2];
-        			
-        		continue;
-    		}
-    		
+    		text[i] = accents(ca[i], font);
     		
     		int ind = ca[i]; 						// pega o valor na tabela ASCII
     		
@@ -718,12 +509,12 @@ public class Fonts {
     	}
     	
     	for (int i = 0; i < text.length; i++) {										// roda um loop para desenhar.
-    		char[] cha = s.toCharArray(); // fazer arrumaÁ„o de Á e acentos
+    		char[] cha = s.toCharArray(); // fazer arrumaaao de a e acentos
     		char ch = cha[i];
     		
     		if ((x + ((font.getSize() - (font.getSize() / 4)) * i)) > maxPos - font.getSize()) break;
     		
-    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g' || ch == 'y' || ch == '˝' || ch == 'j' || ch == ',' || ch == ';' || ch == 'Á' || ch == '«' ? y + 2 : y;
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g' || ch == 'y' || ch == 'a' || ch == 'j' || ch == ',' || ch == ';' || ch == 'a' || ch == 'a' ? y + 2 : y;
     		
     		g.drawImage(text[i], (x + ((font.getSize() - (font.getSize() / 4)) * i)), ydraw, font.getSize(), font.getSize(), null);
     	}
@@ -733,238 +524,22 @@ public class Fonts {
 	 * Desenha um array de {@code char} na tela.
 	 * 
 	 * @param c - O array
-	 * @param x - A posiÁ„o x inicial.
-	 * @param y - A posiÁ„o y inicial.
+	 * @param x - A posiaao x inicial.
+	 * @param y - A posiaao y inicial.
 	 * @param fonts - O array das fontes
-	 * @param g - O par‚metro {@code Graphics}.
+	 * @param g - O parametro {@code Graphics}.
 	 */
 	public static void drawChars(char[] c, int x, int y, IDEFont[] fonts, int minX, int maxX, Graphics g) {
-		if (c == null) throw new NullPointerException("O array de chars n„o pode ser nulo!");
+		if (c == null) throw new NullPointerException("O array de chars nao pode ser nulo!");
 		
     	BufferedImage[] text = new BufferedImage[c.length];
     	
     	for (int i = 0; i < c.length; i++) {
     		char ch = c[i];
     		
-    		if (ch == '¡') {
-    			text[i] = fonts[i].getFont()[190+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '…') {
-    			text[i] = fonts[i].getFont()[197+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'Õ') {
-    			text[i] = fonts[i].getFont()[201+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '”') {
-    			text[i] = fonts[i].getFont()[207+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '⁄') {
-    			text[i] = fonts[i].getFont()[214+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '›') {
-    			text[i] = fonts[i].getFont()[218+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '·') {
-    			text[i] = fonts[i].getFont()[222+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'È') {
-    			text[i] = fonts[i].getFont()[230+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'Ì') {
-    			text[i] = fonts[i].getFont()[234+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'Û') {
-    			text[i] = fonts[i].getFont()[240+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '˙') {
-    			text[i] = fonts[i].getFont()[247+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '˝') {
-    			text[i] = fonts[i].getFont()[250+2];
-    			
-    			continue;
-    		}
-    		/////////
-    		else if (ch == '¿') {
-    			text[i] = fonts[i].getFont()[189+1];
-    			
-    			continue;
-    		}
-    		else if (ch == '»') {
-    			text[i] = fonts[i].getFont()[196+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'Ã') {
-    			text[i] = fonts[i].getFont()[200+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '“') {
-    			text[i] = fonts[i].getFont()[206+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'Ÿ') {
-    			text[i] = fonts[i].getFont()[213+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '‡') {
-    			text[i] = fonts[i].getFont()[221+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'Ë') {
-    			text[i] = fonts[i].getFont()[229+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'Ï') {
-    			text[i] = fonts[i].getFont()[233+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'Ú') {
-    			text[i] = fonts[i].getFont()[239+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '˘') {
-    			text[i] = fonts[i].getFont()[246+2];
-    			
-    			continue;
-    		}
-    		//////
-    		if (ch == '¬') {
-    			text[i] = fonts[i].getFont()[191+2];
-    			
-    			continue;
-    		}
-    		else if (ch == ' ') {
-    			text[i] = fonts[i].getFont()[198+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'Œ') {
-    			text[i] = fonts[i].getFont()[202+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '‘') {
-    			text[i] = fonts[i].getFont()[208+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '€') {
-    			text[i] = fonts[i].getFont()[216+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '‚') {
-    			text[i] = fonts[i].getFont()[223+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'Í') {
-    			text[i] = fonts[i].getFont()[231+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'Ó') {
-    			text[i] = fonts[i].getFont()[235+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'Ù') {
-    			text[i] = fonts[i].getFont()[241+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '˚') {
-    			text[i] = fonts[i].getFont()[248+2];
-    			
-    			continue;
-    		}
-    		//////
-    		else if (ch == '’') {
-    			text[i] = fonts[i].getFont()[209+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '—') {
-    			text[i] = fonts[i].getFont()[205+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '„') {
-    			text[i] = fonts[i].getFont()[224+2];
-    			
-    			continue;
-    		}
-    		else if (ch == '√') {
-    			text[i] = fonts[i].getFont()[192+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'ı') {
-    			text[i] = fonts[i].getFont()[242+2];
-    			
-    			continue;
-    		}
-    		else if (ch == 'Ò') {
-    			text[i] = fonts[i].getFont()[238+2];
-    			
-    			continue;
-    		}
+    		text[i] = accents(ch, fonts[i]);
     		
-    		else if (ch == 'Á') {
-        		text[i] = fonts[i].getFont()[228+2];
-        			
-        		continue;
-    		}
-    		
-    		else if (ch == '«') {
-        		text[i] = fonts[i].getFont()[195+2];
-        			
-        		continue;
-    		}
-    		
-    		else if (ch == '¥') {
-        		text[i] = fonts[i].getFont()[39];
-        			
-        		continue;
-    		}
-    		
-    		else if (ch == 'µ') {
-        		text[i] = fonts[i].getFont()[180];
-        			
-        		continue;
-    		}
-    		
-    		else if (ch == 8721) {
+    		if (ch == 8721) {
         		text[i] = fonts[i].getFont()[255];
         			
         		continue;
@@ -999,10 +574,10 @@ public class Fonts {
     	for (int i = 0; i < text.length; i++) {
     		char ch = c[i];
     		
-    		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) < minX) continue; // TODO talvez aumentar ou diminuir o espaÁamento entre letras por parte do usu·rio, ou n„o sla
+    		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) < minX) continue; // TODO talvez aumentar ou diminuir o espaaamento entre letras por parte do usuario, ou nao sla
     		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) > maxX) break;
     		
-    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == '˝' || ch == 'j' || ch == ',' || ch == ';' || ch == 'Á' || ch == '«' ? y + (CodeEditor.FONT_SIZE < 14 ? 1 : 2) : y;
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'a' || ch == 'j' || ch == ',' || ch == ';' || ch == '√ß' || ch == '√á' ? y + (CodeEditor.FONT_SIZE < 14 ? 1 : 2) : y;
     		
     		BufferedImage chr = text[i];
     		//BufferedImage shadow = Fonts.otherNormal[i];

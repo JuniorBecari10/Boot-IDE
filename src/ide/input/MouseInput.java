@@ -69,7 +69,7 @@ public final class MouseInput extends MouseInputAdapter {
     	rightPressed = false;
     	
     	mouseRolled = false;
-    	//mouseMoved = false; // olha o coment�rio
+    	//mouseMoved = false; // olha o comentario
     }
     
     public static void updateMouseRoll() {
