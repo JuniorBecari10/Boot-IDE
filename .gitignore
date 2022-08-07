@@ -12,5 +12,3 @@ Resources/*
 *.txt
 *.log
 *.jar
-.classpath
-.project

@@ -479,7 +479,7 @@ public class Fonts {
     		char[] cha = s.toCharArray();
     		char ch = cha[i];
     		
-    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g' || ch == 'y' || ch == 'a' || ch == 'j' || ch == ',' || ch == ';' || ch == 'a' || ch == 'a' ? y + 2 : y;
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g' || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + 2 : y;
     		
     		g.drawImage(text[i], (x + ((font.getSize() - (font.getSize() / 4)) * i)), ydraw, font.getSize(), font.getSize(), null);
     	}
@@ -514,7 +514,7 @@ public class Fonts {
     		
     		if ((x + ((font.getSize() - (font.getSize() / 4)) * i)) > maxPos - font.getSize()) break;
     		
-    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g' || ch == 'y' || ch == 'a' || ch == 'j' || ch == ',' || ch == ';' || ch == 'a' || ch == 'a' ? y + 2 : y;
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g' || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + 2 : y;
     		
     		g.drawImage(text[i], (x + ((font.getSize() - (font.getSize() / 4)) * i)), ydraw, font.getSize(), font.getSize(), null);
     	}
@@ -577,7 +577,7 @@ public class Fonts {
     		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) < minX) continue; // TODO talvez aumentar ou diminuir o espaaamento entre letras por parte do usuario, ou nao sla
     		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) > maxX) break;
     		
-    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'a' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + (CodeEditor.FONT_SIZE < 14 ? 1 : 2) : y;
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + (CodeEditor.FONT_SIZE < 14 ? 1 : 2) : y;
     		
     		BufferedImage chr = text[i];
     		//BufferedImage shadow = Fonts.otherNormal[i];
