@@ -61,10 +61,16 @@ public final class SearchReplaceCore {
 			Explorer.regex = new ToggleButton(58, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.regex, false, Texts.regex, 280, 270);
 		
 		if (Explorer.searchNext == null)
-			Explorer.searchNext = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 280, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()));
+			Explorer.searchNext = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 280, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()), true);
 		
 		if (Explorer.replaceAll == null)
-			Explorer.replaceAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 320, Main.explorer.getWidth() - 40, 20, Texts.replaceAll, () -> replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()));
+			Explorer.replaceAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 320, Main.explorer.getWidth() - 40, 20, Texts.replaceAll, () -> replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()), true) {
+				public void tick() {
+					super.tick();
+					
+					enabled = !Main.editor.isReadOnly;
+				}
+		};
 	}
 	
 	public static synchronized void dispose() {

@@ -717,10 +717,8 @@ public class Main implements Runnable, Tickable {
 					
 					if (i > 6) {
 						//if (!ListableFile.isPath(s)) continue;
-						
 						File reg = new File(s);
-						
-						//if (!reg.exists()) continue;
+						if (!reg.exists()) continue;
 						
 						Tab t = new Tab((i - 4) * Tab.WIDTH, ListableFile.newListableFile(reg));
 						

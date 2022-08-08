@@ -509,7 +509,7 @@ public class Fonts {
     	}
     	
     	for (int i = 0; i < text.length; i++) {										// roda um loop para desenhar.
-    		char[] cha = s.toCharArray(); // fazer arrumaaao de a e acentos
+    		char[] cha = s.toCharArray();
     		char ch = cha[i];
     		
     		if ((x + ((font.getSize() - (font.getSize() / 4)) * i)) > maxPos - font.getSize()) break;
