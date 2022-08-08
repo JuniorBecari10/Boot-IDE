@@ -25,15 +25,15 @@ public class IDEFont implements Serializable {
 	}
 	
 	public Color getColor() {
-		if (font.equals(Fonts.keywordsNormal)) return Colors.keywords;
-		else if (font.equals(Fonts.objectsNormal)) return Colors.objects;
-		else if (font.equals(Fonts.methodsNormal)) return Colors.methods;
-		else if (font.equals(Fonts.numbersNormal)) return Colors.numbers;
-		else if (font.equals(Fonts.variablesNormal)) return Colors.variables;
+		if (font.equals(Fonts.keywordsEditor)) return Colors.keywords;
+		else if (font.equals(Fonts.objectsEditor)) return Colors.objects;
+		else if (font.equals(Fonts.methodsEditor)) return Colors.methods;
+		else if (font.equals(Fonts.numbersEditor)) return Colors.numbers;
+		else if (font.equals(Fonts.variablesEditor)) return Colors.variables;
 		
-		else if (font.equals(Fonts.commentsNormal)) return Colors.comments;
-		else if (font.equals(Fonts.stringsNormal)) return Colors.strings;
-		else if (font.equals(Fonts.symbolsNormal)) return Colors.symbols;
+		else if (font.equals(Fonts.commentsEditor)) return Colors.comments;
+		else if (font.equals(Fonts.stringsEditor)) return Colors.strings;
+		else if (font.equals(Fonts.symbolsEditor)) return Colors.symbols;
 		
 		return Colors.other;
 	}

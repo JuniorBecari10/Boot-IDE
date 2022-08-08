@@ -5149,31 +5149,14 @@ public class CodeEditor extends IDEComponent {
 			
 			if (fs.size() == 0)
 				break;
-
-			for (Integer i : indxs) {
-				if (!indxs.isEmpty()) {
-					boolean br = false;
-					
-					if (i >= indxs.size()) i = indxs.size() - 1;
-					
-					if (isInside(i, '\"', '\"', withSpace) && isInside(i, '\'', '\'', withSpace) && isInside(i, '`', '`', withSpace)) { // se colocar 2 // na mesma linha o anterior a desfeito
-						br = true;
-					}
-					
-					if (i > 1 && chars[i - 2] == ':') continue;
-					
-					if (br) continue;
-				}
-				
-				for (int j = 0; j < indxs.size(); j++) // para colorir o primeiro /
-					indxs.set(j, indxs.get(j) - 1);
-				
-				if (i < 0) i = 0;
-				
-				if (indxs.size() != 0)
-					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
-			}
 			
+			for (Integer i : indxs) {
+				if (indxs.isEmpty()) break;
+				if (i >= fs.size()) continue;
+				if (fs.get(i).getColor().equals(Colors.strings)) continue;
+				
+				fs = color(i - 1, fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
+			}
 			break;
 		
 		case ".vb":
@@ -5326,6 +5309,7 @@ public class CodeEditor extends IDEComponent {
 
 		case ".s":
 		case ".asm":
+
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
@@ -5333,62 +5317,14 @@ public class CodeEditor extends IDEComponent {
 			
 			if (fs.size() == 0)
 				break;
-
+			
 			for (Integer i : indxs) {
-				if (!indxs.isEmpty()) {
-					boolean br = false;
-					
-					if (i >= indxs.size()) i = indxs.size() - 1;
-					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
-						br = true;
-						
-						break;
-					}
-					
-					if (br) break;
-				}
+				if (indxs.isEmpty()) break;
+				if (i >= fs.size()) i = fs.size() - 1;
+				if (fs.get(i).getColor().equals(Colors.strings)) continue;
 				
-				for (int j = 0; j < indxs.size(); j++)
-					indxs.set(j, indxs.get(j) - 1);
-				
-				if (indxs.size() != 0)
-					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
+				fs = color(i - 1, fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
 			}
-			
-			withSpace = " " + new String(chars);
-			chs = withSpace.toCharArray();
-			
-			indxs = findWord(new String(chs), "//"); // colorir comentarios de uma linha
-			
-			if (fs.size() == 0)
-				break;
-
-			for (Integer i : indxs) {
-				if (!indxs.isEmpty()) {
-					boolean br = false;
-					
-					if (i >= indxs.size()) i = indxs.size() - 1;
-					
-					if (isInside(i, '\"', '\"', withSpace) && isInside(i, '\'', '\'', withSpace) && isInside(i, '`', '`', withSpace)) { // se colocar 2 // na mesma linha o anterior a desfeito
-						br = true;
-						//System.out.println(br);
-						
-						//continue;
-					}
-					
-					if (br) continue;
-				}
-				
-				for (int j = 0; j < indxs.size(); j++) // para colorir o primeiro /
-					indxs.set(j, indxs.get(j) - 1);
-				
-				if (i < 0) i = 0;
-				
-				if (indxs.size() != 0)
-					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
-			}
-			
 			break;
 
 		case ".lua":
@@ -5524,29 +5460,14 @@ public class CodeEditor extends IDEComponent {
 			
 			if (fs.size() == 0)
 				break;
-
-			for (Integer i : indxs) {
-				if (!indxs.isEmpty()) {
-					boolean br = false;
-					
-					if (i >= indxs.size()) i = indxs.size() - 1;
-					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
-						br = true;
-						
-						break;
-					}
-					
-					if (br) break;
-				}
-				
-				for (int j = 0; j < indxs.size(); j++)
-					indxs.set(j, indxs.get(j) - 1);
-				
-				if (indxs.size() != 0)
-					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
-			}
 			
+			for (Integer i : indxs) {
+				if (indxs.isEmpty()) break;
+				if (i >= fs.size()) i = fs.size() - 1;
+				if (fs.get(i).getColor().equals(Colors.strings)) continue;
+				
+				fs = color(i - 1, fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
+			}
 			break;
 
 		case ".php":

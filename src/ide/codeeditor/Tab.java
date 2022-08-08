@@ -526,13 +526,7 @@ public class Tab extends IDEComponent implements Serializable {
 			if (regent.getParent() == null) {
 				Explorer.scope = null;
 				
-				int index = 0;
-				
-				for (File f : Main.baseFolder.listFiles()) {
-					Explorer.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
-					
-					index++;
-				}
+				Explorer.files = ListableFile.loadFolder(ListableFile.newListableFile(Main.baseFolder));
 				
 				break;
 			}
