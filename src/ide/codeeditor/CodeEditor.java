@@ -5209,34 +5209,16 @@ public class CodeEditor extends IDEComponent {
 			
 			if (fs.size() == 0)
 				break;
-
+			
 			for (Integer i : indxs) {
-				if (!indxs.isEmpty()) {
-					boolean br = false;
-					
-					if (i >= indxs.size()) i = indxs.size() - 1;
-					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) {
-						br = true;
-						
-						break;
-					}
-					
-					if (br) break;
-				}
+				if (indxs.isEmpty()) break;
+				if (i >= fs.size()) continue;
+				if (fs.get(i).getColor().equals(Colors.strings) || fs.get(i - 1).getColor().equals(Colors.strings)) continue;
 				
-				for (int j = 0; j < indxs.size(); j++)
-					indxs.set(j, indxs.get(j) - 1);
+				int finalIndex = indxs2.isEmpty() ? fs.size() : indxs2.get(0) - 1;
 				
-				for (int j = 0; j < indxs2.size(); j++)
-					indxs2.set(j, indxs2.get(j) - 1);
-				
-				int finalIndex = indxs2.isEmpty() ? fs.size() : indxs2.get(0);
-				
-				if (indxs.size() != 0)
-					fs = color(indxs.get(i), finalIndex, new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
+				fs = color(i - 1, finalIndex, new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
 			}
-
 			break;
 
 		case ".ps1":
@@ -5250,30 +5232,16 @@ public class CodeEditor extends IDEComponent {
 			
 			if (fs.size() == 0)
 				break;
-
+			
 			for (Integer i : indxs) {
-				if (!indxs.isEmpty()) {
-					boolean br = false;
-					
-					if (i >= indxs.size()) i = indxs.size() - 1;
-					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
-						br = true;
-						
-						break;
-					}
-					
-					if (br) break;
-				}
+				if (indxs.isEmpty()) break;
+				if (i >= fs.size()) continue;
+				if (fs.get(i).getColor().equals(Colors.strings) || fs.get(i - 1).getColor().equals(Colors.strings)) continue;
 				
-				for (int j = 0; j < indxs.size(); j++)
-					indxs.set(j, indxs.get(j) - 1);
-				
-				if (indxs.size() != 0)
-					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
+				fs = color(i - 1, fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
 			}
 			
-			///////////////
+			// ---
 			
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
@@ -5282,27 +5250,13 @@ public class CodeEditor extends IDEComponent {
 			
 			if (fs.size() == 0)
 				break;
-
+			
 			for (Integer i : indxs) {
-				if (!indxs.isEmpty()) {
-					boolean br = false;
-					
-					if (i >= indxs.size()) i = indxs.size() - 1;
-					
-					if ((howManyBefore(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyBefore(new String(chs), indxs.get(i), '`') % 2 != 0) && (howManyAfter(new String(chs), indxs.get(i), '\"') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '\'') % 2 != 0 || howManyAfter(new String(chs), indxs.get(i), '`') % 2 != 0)) { // se colocar 2 // na mesma linha o anterior a desfeito
-						br = true;
-						
-						break;
-					}
-					
-					if (br) break;
-				}
+				if (indxs.isEmpty()) break;
+				if (i >= fs.size()) continue;
+				if (fs.get(i).getColor().equals(Colors.strings) || fs.get(i - 1).getColor().equals(Colors.strings)) continue;
 				
-				for (int j = 0; j < indxs.size(); j++)
-					indxs.set(j, indxs.get(j) - 1);
-				
-				if (indxs.size() != 0)
-					fs = color(indxs.get(i), fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
+				fs = color(i - 1, fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
 			}
 			
 			break;
@@ -5790,125 +5744,50 @@ public class CodeEditor extends IDEComponent {
 		case ".html":
 		case ".svelte":
 		case ".svg":
-			indxs = findWord(new String(chars), "<!--"); // colorir comentarios multi-linha - caracteres diferentes
-			finals = findWord(new String(chars), "-->");
-
-			/*
-			 * for (Integer i : indxs) if (isBetween(new String(chars), i, '"', '"')) return
-			 * fs;
-			 */
-
-			if (indxs.size() > 0) {
-				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(),
-						new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
-				isMultilineCommenting = true;
-			}
-
-			if (finals.size() > 0) {
-				fs = color(indxs.size() > 0 ? indxs.get(indxs.size() - 1) : 0, finals.get(0),
-						new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
-				isMultilineCommenting = false;
-			}
-
-			if (isMultilineCommenting)
-				fs = color(0, fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
-
-			if (isCssPart || isJSPart || isPhpPart) {
-				indxs = findWord(new String(chars), "/*"); // colorir comentarios multi-linha - caracteres diferentes
-				finals = findWord(new String(chars), "*/");
-
-				for (Integer i : indxs)
-					if (isBetween(new String(chars), i, '"', '"'))
-						return fs;
-
-				if (indxs.size() > 0) {
-					fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(),
-							new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
-					isMultilineCommenting = true;
-				}
-
-				if (finals.size() > 0) {
-					fs = color(indxs.size() > 0 ? indxs.get(indxs.size() - 1) : 0, finals.get(0),
-							new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
-					isMultilineCommenting = false;
-				}
-
-				if (isMultilineCommenting)
-					fs = color(0, fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
-
-				indxs = findWord(new String(chars), "*/");
-
-				/*
-				 * for (Integer i : indxs) if (isBetween(new String(chars), i, '"', '"')) return
-				 * fs;
-				 */
-
-				for (Integer i : indxs) {
-					if (i + "*/".length() < chars.length && i - 1 > 0
-							&& (Character.isLetter(chars[i + "*/".length()]) || Character.isLetter(chars[i - 1])
-									|| (chars[i - 1] == '_' || chars[i + "*/".length()] == '_')))
-						continue;
-
-					fs = color(i, i + "*/".length(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs); // tem q dar
-																										// offset
-				}
-			}
-
-			indxs = findWord(new String(chars), "-->");
-
-			for (Integer i : indxs)
-				if (isBetween(new String(chars), i, '"', '"'))
-					return fs;
-
-			for (Integer i : indxs) {
-				if (i + "-->".length() < chars.length && i - 1 > 0
-						&& (Character.isLetter(chars[i + "-->".length()]) || Character.isLetter(chars[i - 1])
-								|| (chars[i - 1] == '_' || chars[i + "-->".length()] == '_')))
-					continue;
-
-				fs = color(i, i + "-->".length(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs); // tem q dar offset
-			}
-			break;
-
 		case ".md":
 		case ".markdown":
 			indxs = findWord(new String(chars), "<!--"); // colorir comentarios multi-linha - caracteres diferentes
-			finals = findWord(new String(chars), "-->");
-
+			finalChar = "-->";
+			finals = findWord(new String(chars), finalChar);
+			
+			rm = new ArrayList<>();
+			
+			for (Integer i : indxs) {
+				if (fs.get(i).getColor().equals(Colors.strings))
+					rm.add(i);
+			}
+			
+			indxs.removeAll(rm);
+			
 			/*
 			 * for (Integer i : indxs) if (isBetween(new String(chars), i, '"', '"')) return
 			 * fs;
-			 */
-
+			*/
+			
 			if (indxs.size() > 0) {
 				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(),
 						new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
 				isMultilineCommenting = true;
 			}
-
-			if (finals.size() > 0) {
+			
+			if (finals.size() > 0 && isMultilineCommenting) {
 				fs = color(indxs.size() > 0 ? indxs.get(indxs.size() - 1) : 0, finals.get(0),
 						new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
 				isMultilineCommenting = false;
 			}
-
+			
 			if (isMultilineCommenting)
 				fs = color(0, fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
 
-			indxs = findWord(new String(chars), "-->");
-
-			/*
-			 * for (Integer i : indxs) if (isBetween(new String(chars), i, '"', '"')) return
-			 * fs;
-			 */
+			indxs = finals;
 
 			for (Integer i : indxs) {
-				if (i + "-->".length() < chars.length && i - 1 > 0
-						&& (Character.isLetter(chars[i + "-->".length()]) || Character.isLetter(chars[i - 1])
-								|| (chars[i - 1] == '_' || chars[i + "-->".length()] == '_')))
+				if (i + finalChar.length() < chars.length && i - 1 > 0
+						&& (Character.isLetter(chars[i + finalChar.length()]) || Character.isLetter(chars[i - 1])
+								|| (chars[i - 1] == '_' || chars[i + finalChar.length()] == '_')))
 					continue;
-
-				fs = color(i, i + "-->".length(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs); // tem q dar offset
+				
+				fs = color(i, i + finalChar.length(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs); // tem q dar offset
 			}
 			break;
 		}
