@@ -4440,14 +4440,14 @@ public class CodeEditor extends IDEComponent {
 
 			{
 				indxs = findWord(new String(chars), "\""); // colorir strings
-
+				
 				List<Integer> removeIndxs = new ArrayList<>();
 
 				for (Integer i : indxs) {
 					if (i <= 0)
 						continue;
 
-					if (new String(chars).charAt(i - 1) == '\\')
+					if (new String(chars).charAt(i - 1) == '\\' && new String(chars).charAt(i - 2) != '\\')
 						removeIndxs.add(i);
 				}
 
