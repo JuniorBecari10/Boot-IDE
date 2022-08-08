@@ -1757,12 +1757,19 @@ public class CodeEditor extends IDEComponent {
 				|| editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc")
 				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1"))
 			return fs;
+		
+		if (ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".mod") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".pyx")) {
+			fs = color(0, fs.size(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
+			
+			return fs;
+		}
 
 		if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
 				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
 				|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
 				|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
 				|| ext.equalsIgnoreCase(".project")) {
+			
 			indxs = findWord(new String(chars), "<");
 			List<Integer> finals = findWord(new String(chars), ">");
 
@@ -2071,142 +2078,6 @@ public class CodeEditor extends IDEComponent {
 						fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 					}
 				}
-
-			if (ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".pyx")
-					|| ext.equalsIgnoreCase(".ipynb")) {
-				indxs = findWord(new String(chars), "f\""); // antes de <palavra>
-
-				for (Integer i : indxs) {
-					int c = i;
-					int len = 0;
-
-					boolean hasSpace = false;
-
-					while (c < chars.length && c + len < chars.length && c > 0) {
-						c--;
-						len++;
-
-						if (chars[c] == ' ') {
-							if (hasSpace)
-								break;
-
-							if (!hasSpace)
-								hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
-						}
-					}
-
-					//addautocomplete.add(new AutoComplete(new String(sliceCharArray(c, c + len, chars)), AutoCompleteType.VARIABLE));
-					fs = color(c, c + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-				}
-
-				indxs = findWord(new String(chars), "f'"); // antes de <palavra>
-
-				for (Integer i : indxs) {
-					int c = i;
-					int len = 0;
-
-					boolean hasSpace = false;
-
-					while (c < chars.length && c + len < chars.length && c > 0) {
-						c--;
-						len++;
-
-						if (chars[c] == ' ') {
-							if (hasSpace)
-								break;
-
-							if (!hasSpace)
-								hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
-						}
-					}
-
-					// addautocomplete.add(new AutoComplete(new String(sliceCharArray(c, c + len,
-					// chars)), AutoCompleteType.VARIABLE));
-					fs = color(c, c + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-				}
-
-				indxs = findWord(new String(chars), "f`"); // antes de <palavra>
-
-				for (Integer i : indxs) {
-					int c = i;
-					int len = 0;
-
-					boolean hasSpace = false;
-
-					while (c < chars.length && c + len < chars.length && c > 0) {
-						c--;
-						len++;
-
-						if (chars[c] == ' ') {
-							if (hasSpace)
-								break;
-
-							if (!hasSpace)
-								hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
-						}
-					}
-
-					// addautocomplete.add(new AutoComplete(new String(sliceCharArray(c, c + len,
-					// chars)), AutoCompleteType.VARIABLE));
-					fs = color(c, c + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-				}
-				
-				indxs = findWord(new String(chars), "import"); // depois de <palavra>
-
-				int len = 0;
-
-				for (Integer i : indxs) {
-					len = 0;
-
-					while (i + len < chars.length)
-						len++;
-
-					// if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-				}
-				
-				indxs = findWord(new String(chars), "return"); // depois de <palavra>
-
-				len = 0;
-
-				for (Integer i : indxs) {
-					len = 0;
-
-					while (i + len < chars.length)
-						len++;
-
-					// if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-				}
-				
-				indxs = findWord(new String(chars), "global"); // depois de <palavra>
-
-				len = 0;
-
-				for (Integer i : indxs) {
-					len = 0;
-
-					while (i + len < chars.length)
-						len++;
-
-					// if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-				}
-				
-				indxs = findWord(new String(chars), "from"); // depois de <palavra>
-
-				len = 0;
-
-				for (Integer i : indxs) {
-					len = 0;
-
-					while (i + len < chars.length)
-						len++;
-
-					// if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-				}
-			}
 
 			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
 					|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
