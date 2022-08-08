@@ -17,6 +17,7 @@ import javax.swing.event.MouseInputAdapter;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.topcomponents.MaximizeWindow;
+import ide.topcomponents.TopComponent;
 
 public final class MouseInput extends MouseInputAdapter {
     
@@ -145,7 +146,7 @@ public final class MouseInput extends MouseInputAdapter {
         mouseX = e.getX();
         mouseY = e.getY();
         
-        if (mouseY < Screen.DECORATION_HEIGHT || ComponentInput.windowMoved()) {
+        if ((mouseY < Screen.DECORATION_HEIGHT || ComponentInput.windowMoved()) && !TopComponent.anyTopComponentHovered()) {
         	Main.screen.frame.setLocation(Main.screen.frame.getLocation().x + p.x - pX, Main.screen.frame.getLocation().y + p.y - pY);
         	Main.screen.frame.setExtendedState(JFrame.NORMAL);
         }
