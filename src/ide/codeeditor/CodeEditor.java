@@ -1744,7 +1744,7 @@ public class CodeEditor extends IDEComponent {
 		return Arrays.copyOfRange(array, s, e);
 	}
 
-	public List<IDEFont> colorVariablesAndObjects(String ext, char[] chars, List<IDEFont> fs) {
+	public List<IDEFont> colorVariables(String ext, char[] chars, List<IDEFont> fs) {
 		if (editing == null)
 			return fs;
 
@@ -1758,7 +1758,12 @@ public class CodeEditor extends IDEComponent {
 				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1"))
 			return fs;
 		
-		if (ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".mod") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".pyx")) {
+		if (ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".mod") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".py") ||
+				ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".pyx") || ext.equalsIgnoreCase(".por") || 
+				ext.equalsIgnoreCase(".bas") || ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || 
+				ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".mjs") || 
+				ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".tsx") || ext.equalsIgnoreCase(".vb") || ext.equalsIgnoreCase(".c") ||
+				ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".hpp")) {
 			fs = color(0, fs.size(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 			
 			return fs;
@@ -1795,91 +1800,6 @@ public class CodeEditor extends IDEComponent {
 					fs = color(i, i + len, new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs);
 				} catch (Exception e) {
 					continue;
-				}
-			}
-			/*
-			indxs = findWord(new String(chars), "="); // antes de <palavra>
-
-			for (Integer i : indxs) {
-				int c = i;
-				int len = 0;
-
-				boolean hasSpace = false;
-
-				while (c < chars.length && c + len < chars.length && c > 0) {
-					c--;
-					len++;
-
-					if (chars[c] == ' ') {
-						if (hasSpace)
-							break;
-
-						if (!hasSpace)
-							hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
-					}
-				}
-
-				fs = color(c, c + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-			}
-			*/
-		}
-		
-		if (ext.equalsIgnoreCase(".por")) {
-			for (String s : porKeys) {
-				indxs = findWord(new String(chars), s); // depois de <palavra>
-
-				int len = 0;
-
-				for (Integer i : indxs) {
-					while (i + len < chars.length)
-						len++;
-
-					fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-				}
-			}
-		}
-		
-		if (ext.equalsIgnoreCase(".go")) {
-			for (String s : porKeys) {
-				indxs = findWord(new String(chars), s); // depois de <palavra>
-
-				int len = 0;
-
-				for (Integer i : indxs) {
-					while (i + len < chars.length)
-						len++;
-
-					fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-				}
-			}
-		}
-		
-		if (ext.equalsIgnoreCase(".bas")) {
-			for (String s : basKeys) {
-				indxs = findWord(new String(chars), s); // depois de <palavra>
-
-				int len = 0;
-
-				for (Integer i : indxs) {
-					while (i + len < chars.length)
-						len++;
-
-					fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-				}
-			}
-		}
-		
-		if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s")) {
-			for (String s : asmKeys) {
-				indxs = findWord(new String(chars), s); // depois de <palavra>
-
-				int len = 0;
-
-				for (Integer i : indxs) {
-					while (i + len < chars.length)
-						len++;
-
-					fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 				}
 			}
 		}
@@ -2012,72 +1932,6 @@ public class CodeEditor extends IDEComponent {
 
 				return fs;
 			}
-			
-			if (ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".mjs")
-				|| ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".tsx") || ext.equalsIgnoreCase(".lua")) {
-				
-				indxs = findWord(new String(chars), "return"); // depois de <palavra>
-
-				int len = 0;
-
-				for (Integer i : indxs) {
-					len = 0;
-
-					while (i + len < chars.length)
-						len++;
-
-					// if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-				}
-			}
-			
-			if (ext.equalsIgnoreCase(".go")) {
-					indxs = findWord(new String(chars), "return"); // depois de <palavra>
-
-					int len = 0;
-
-					for (Integer i : indxs) {
-						len = 0;
-
-						while (i + len < chars.length)
-							len++;
-
-						// if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-					}
-					
-					///
-					
-					indxs = findWord(new String(chars), "package"); // depois de <palavra>
-
-					len = 0;
-
-					for (Integer i : indxs) {
-						len = 0;
-
-						while (i + len < chars.length)
-							len++;
-
-						// if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-					}
-					
-					///
-					
-					indxs = findWord(new String(chars), "var"); // depois de <palavra>
-
-					len = 0;
-
-					for (Integer i : indxs) {
-						len = 0;
-
-						while (i + len < chars.length)
-							len++;
-
-						// if (i + len < chars.length)
-						fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-					}
-				}
 
 			if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
 					|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
@@ -2127,67 +1981,6 @@ public class CodeEditor extends IDEComponent {
 
 						// if (i + len < chars.length)
 						fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-					}
-				}
-
-				if (ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyx") || ext.equalsIgnoreCase(".pyd")) { // TODO
-																													// fazer
-																													// para
-																													// outras
-																													// linguagens
-																													// tbm
-					indxs = findWord(new String(chars), "in"); // antes de <palavra>
-
-					for (Integer i : indxs) {
-						int c = i;
-						int len = 0;
-
-						boolean hasSpace = false;
-
-						while (c < chars.length && c + len < chars.length && c > 0) {
-							c--;
-							len++;
-
-							if (chars[c] == ' ') {
-								if (hasSpace)
-									break;
-
-								if (!hasSpace)
-									hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
-							}
-						}
-
-						// addautocomplete.add(new AutoComplete(new String(sliceCharArray(c, c + len,
-						// chars)), AutoCompleteType.VARIABLE));
-						fs = color(c, c + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-					}
-				}
-
-				if (ext.equalsIgnoreCase(".vb")) {
-					indxs = findWord(new String(chars), "As"); // antes de <palavra>
-
-					for (Integer i : indxs) {
-						int c = i;
-						int len = 0;
-
-						boolean hasSpace = false;
-
-						while (c < chars.length && c + len < chars.length && c > 0) {
-							c--;
-							len++;
-
-							if (chars[c] == ' ') {
-								if (hasSpace)
-									break;
-
-								if (!hasSpace)
-									hasSpace = true; // tem q ser invertido pq muda e dps detecta e da break
-							}
-						}
-
-						// addautocomplete.add(new AutoComplete(new String(sliceCharArray(c, c + len,
-						// chars)), AutoCompleteType.VARIABLE));
-						fs = color(c, c + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 					}
 				}
 			}
@@ -5840,7 +5633,7 @@ public class CodeEditor extends IDEComponent {
 
 		/////////////////////////////////////////////////////
 
-		fs = colorVariablesAndObjects(ext, chars, fs);
+		fs = colorVariables(ext, chars, fs);
 		fs = colorObjects(ext, chars, fs);
 		fs = colorMethods(ext, chars, fs);
 		fs = colorKeywords(ext, chars, fs);
