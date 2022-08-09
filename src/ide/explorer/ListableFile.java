@@ -411,10 +411,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		// Path path = Paths.get(s);
 
 		try {
-			BufferedWriter w = /* Files.newBufferedWriter(path, StandardCharsets.UTF_8); */ new BufferedWriter(new FileWriter(s));
+			BufferedWriter w = new BufferedWriter(new FileWriter(s));
 
-			w.write(Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
-					: "Boot IDE Configuration File" + "\n");
+			w.write("Boot IDE Configuration File\n");
 			w.write("\n");
 			w.write("Colors\n");
 			w.write("\n");
@@ -461,15 +460,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	public static void generateLocalConfigFile(File file) {
 		String pathStr = file.getAbsolutePath();
 		String s = pathStr.contains(Main.CONFIG_FILE_EXTENSION) ? pathStr + "" : pathStr + Main.CONFIG_FILE_EXTENSION;
-		
-		// Path path = Paths.get(s);
 
 		try {
-			BufferedWriter w = /* Files.newBufferedWriter(path, StandardCharsets.UTF_8); */ new BufferedWriter(
-					new FileWriter(s));
+			BufferedWriter w = new BufferedWriter(new FileWriter(s));
 
-			w.write(Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
-					: "Boot IDE Configuration File" + "\n");
+			w.write("Boot IDE Configuration File\n");
 			w.write("\n");
 			w.write("Colors\n");
 			w.write("\n");

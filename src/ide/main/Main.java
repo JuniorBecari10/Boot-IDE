@@ -345,8 +345,6 @@ public class Main implements Runnable, Tickable {
 	        if (!alreadyLoaded)
 	        	load(conffile);
 	        
-	        explorer.addTabs();
-	        
 	        TopComponent.topComponents.add(closeWindow);
 	        TopComponent.topComponents.add(maximizeWindow);
 	        TopComponent.topComponents.add(minimizeWindow);
@@ -463,6 +461,9 @@ public class Main implements Runnable, Tickable {
         
         if (!conffile.equals("none"))
         	hasConfigFile = true;
+        
+        Explorer.tabs.clear();
+        explorer.addTabs();
     }
     
     /**
