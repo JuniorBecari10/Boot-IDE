@@ -42,7 +42,7 @@ import ide.util.Texts;
  */
 public class CommandTerminal extends IDEComponent {
 	
-	public static final int MAX_CHARS = 49;
+	public static final int MAX_CHARS = 58; // 49, fonte 20
 	
 	public static boolean active = false;
 	private int cursorIndex = 0;
@@ -1374,8 +1374,8 @@ public class CommandTerminal extends IDEComponent {
 			x = 110;
 			width = Main.screen.getWidth() - 225;
 		} else {
-			x = Main.screen.getWidth() / 2 - 250;
 			width = originalWidth;
+			x = Main.screen.getWidth() / 2 - width / 2;
 		}
 		
 		if (x < 110) x = 110;
@@ -1591,30 +1591,29 @@ public class CommandTerminal extends IDEComponent {
 		g.setColor(Colors.explorerLight);
 		g2.drawRect(x - 100, y + 5, width + 200, height);
 		
-		Fonts.drawString(Texts.insertCommand, Main.screen.getWidth() / 2 - 100 > 10 ? Main.screen.getWidth() / 2 - 100 : 10, y - 25, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString(Texts.insertCommand, (Main.screen.frame.getWidth() / 2) - (Texts.insertCommand.length() * (CodeEditor.DEFAULT_FONT_SIZE - 4)) / 2, y - 25, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
-		Fonts.drawString(builder.toString(), (x - 100) + 4, y + 12, new IDEFont(Fonts.otherNormal, 18), g);
+		Fonts.drawString(builder.toString(), (x - 100) + 4, y + 12, new IDEFont(Fonts.otherNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
 		g2.setStroke(new BasicStroke(2f));
 		
 		if (showCursor) {
 			g.setColor(Colors.cursor);
-			g.drawLine(((x - 100) + 4) + (cursorIndex * 14), y + 12, (x - 100) + 4 + (cursorIndex * 14), y + 12 + 18);
+			g.drawLine(((x - 100) + 4) + (cursorIndex * (CodeEditor.DEFAULT_FONT_SIZE - 4)), y + 12, (x - 100) + 4 + (cursorIndex * (CodeEditor.DEFAULT_FONT_SIZE - 4)), y + 12 + 18);
 		}
 		
 		for (int i = 0; i < commandHints.size(); i++) {
 			String cmd = commandHints.get(i);
-			IDEFont font = (!changeHints && i == comIndex - 1) || (comIndex == commandHints.size() && i == comIndex) ? new IDEFont(Fonts.lightGrayNormal, 20) : new IDEFont(Fonts.otherNormal, 20);
-			
+			IDEFont font = (!changeHints && i == comIndex - 1) || (comIndex == commandHints.size() && i == comIndex) ? new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE) : new IDEFont(Fonts.otherNormal, CodeEditor.DEFAULT_FONT_SIZE);			
 			Fonts.drawString(cmd, x - 145 > 20 ? x - 145 : 20, y + height + 20 + (22 * i), font, g2);
 		}
 		
-		Fonts.drawString(Texts.esc_Cancel, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString(Texts.enter_Execute, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString(Texts.ctrl_del_Clear, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString(Texts.tab_Cycle, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 90, new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString("[Ctrl + C] " + Texts.copy, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 130, new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString("[Ctrl + V] " + Texts.paste, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 160, new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString("[Ctrl + X] " + Texts.cut, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 190, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString(Texts.esc_Cancel, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		Fonts.drawString(Texts.enter_Execute, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 25, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		Fonts.drawString(Texts.ctrl_del_Clear, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 50, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		Fonts.drawString(Texts.tab_Cycle, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 75, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		Fonts.drawString("[Ctrl + C] " + Texts.copy, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 110, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		Fonts.drawString("[Ctrl + V] " + Texts.paste, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 135, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		Fonts.drawString("[Ctrl + X] " + Texts.cut, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 160, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 	}
 }
