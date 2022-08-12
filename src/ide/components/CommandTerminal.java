@@ -29,6 +29,7 @@ import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.main.OS;
 import ide.util.Animation;
 import ide.util.Colors;
 import ide.util.Language;
@@ -140,7 +141,7 @@ public class CommandTerminal extends IDEComponent {
 		if (args.length == 0) {
 			switch (com) {
 			case "cmd":
-				// desabilitar se n for windows
+				if (Main.os != OS.WINDOWS) break;
 				
 				try {
 					ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start");
