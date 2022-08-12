@@ -1,11 +1,9 @@
 package ide.components;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import ide.fonts.Fonts;
-import ide.fonts.IDEFont;
+import ide.explorer.Explorer;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
@@ -37,10 +35,7 @@ public class SettingsButton extends IDEComponent {
 		super.render(g);
 		
 		if (hovered()) {
-			g.setColor(new Color(0, 0, 0, 0.5f));
-			g.fillRect(MouseInput.getMouseX() - 27, MouseInput.getMouseY() + 27, Texts.settings.length() * 16, 28);
-			
-			Fonts.drawString(Texts.settings, MouseInput.getMouseX() - 20, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Explorer.renderDescriptionText(Texts.settings, MouseInput.getMouseX() - 20, MouseInput.getMouseY() + 30, g);
 		}
 	}
 }

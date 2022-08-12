@@ -98,7 +98,7 @@ public class Explorer extends IDEComponent {
     			Main.editor.execute("searchrep");
     		}
     	});
-    	tabs.add(new ExplorerTab(1 + 6 + (ExplorerTab.SIZE * 2), Main.gitTab, ExplorerMode.GIT, "Git "));
+    	tabs.add(new ExplorerTab(1 + 6 + (ExplorerTab.SIZE * 2), Main.gitTab, ExplorerMode.GIT, "Git"));
     	tabs.add(new ExplorerTab(1 + 9 + (ExplorerTab.SIZE * 3), Main.terminalTab, ExplorerMode.TERMINAL, "Terminal"));
     }
     
@@ -487,6 +487,13 @@ public class Explorer extends IDEComponent {
 	        	f.render(g);
 	        }
         } catch (Exception e) { return; }
+    }
+    
+    public static void renderDescriptionText(String s, int x, int y, Graphics g) {
+    	g.setColor(Colors.setAlpha(Color.black, CodeEditor.CURSOR_OPACITY));
+    	g.fillRect(x, y, (s.length() * (CodeEditor.DEFAULT_FONT_SIZE - 4)) + 6, 27);
+    	
+    	Fonts.drawString(s, x + 4, y + 4, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
     }
 
     public synchronized void render(Graphics g) {

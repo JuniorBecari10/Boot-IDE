@@ -9,8 +9,6 @@ import java.awt.image.BufferedImage;
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
-import ide.fonts.Fonts;
-import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.screen.Screen;
 import ide.util.Colors;
@@ -59,10 +57,7 @@ public class ExplorerTab extends IDEComponent {
 		g.drawImage(sprite, x + ((SIZE / 2) - (imageSize / 2)), Y + ((SIZE / 2) - (imageSize / 2)), imageSize, imageSize, null);
 		
 		if (hovered()) {
-			g.setColor(new Color(0, 0, 0, 0.5f));
-			g.fillRect(MouseInput.getMouseX() - 27, MouseInput.getMouseY() + 27, name.length() * 16, 28);
-			
-			Fonts.drawString(name, MouseInput.getMouseX() - 20, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Explorer.renderDescriptionText(name, MouseInput.getMouseX() - 27, MouseInput.getMouseY() + 27, g);
 		}
 	}
 }

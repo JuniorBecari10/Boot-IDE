@@ -1,14 +1,11 @@
 package ide.components;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorer.ListableFile;
-import ide.fonts.Fonts;
-import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
@@ -57,10 +54,7 @@ public class ReturnToBaseFolderButton extends IDEComponent {
 		super.render(g);
 		
 		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
-			g.setColor(new Color(0, 0, 0, 0.5f));
-			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, 330, 28);
-			
-			Fonts.drawString(Texts.returnBaseFolder, MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Explorer.renderDescriptionText(Texts.returnBaseFolder, MouseInput.getMouseX() - 50, MouseInput.getMouseY() + 30, g);
 		}
 	}
 }

@@ -1,17 +1,13 @@
 package ide.components;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
-import ide.fonts.Fonts;
-import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
-import ide.util.Language;
 import ide.util.Texts;
 
 public class NewFileButton extends IDEComponent {
@@ -56,10 +52,7 @@ public class NewFileButton extends IDEComponent {
 		super.render(g);
 		
 		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
-			g.setColor(new Color(0, 0, 0, 0.5f));
-			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, Main.lang == Language.PORT ? 285 : 240, 28);
-			
-			Fonts.drawString(Texts.createFile, MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Explorer.renderDescriptionText(Texts.createFile, MouseInput.getMouseX() - 50, MouseInput.getMouseY() + 30, g);
 		}
 	}
 }

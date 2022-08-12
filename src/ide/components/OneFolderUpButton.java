@@ -1,18 +1,14 @@
 package ide.components;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorer.ListableFile;
-import ide.fonts.Fonts;
-import ide.fonts.IDEFont;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
-import ide.util.Language;
 import ide.util.Texts;
 
 public class OneFolderUpButton extends IDEComponent {
@@ -64,10 +60,7 @@ public class OneFolderUpButton extends IDEComponent {
 		super.render(g);
 		
 		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
-			g.setColor(new Color(0, 0, 0, 0.5f));
-			g.fillRect(MouseInput.getMouseX() - 47, MouseInput.getMouseY() + 27, Main.lang == Language.PORT ? 240 : 210, 28);
-			
-			Fonts.drawString(Texts.oneFolderUp, MouseInput.getMouseX() - 40, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Explorer.renderDescriptionText(Texts.oneFolderUp, MouseInput.getMouseX() - 50, MouseInput.getMouseY() + 30, g);
 		}
 	}
 }
