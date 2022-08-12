@@ -11,7 +11,7 @@ import ide.util.Colors;
 
 public class ExecuteButton extends IDEComponent {
 	
-	private String text;
+	protected String text;
 	private Execute execute;
 	protected boolean enabled;
 	

@@ -49,27 +49,58 @@ public final class SearchReplaceCore {
 			Explorer.replace = new InputBox(20, Screen.DECORATION_HEIGHT + 190, Main.explorer.getWidth() - 40, 20);
 		
 		if (Explorer.entireDocument == null)
-			Explorer.entireDocument = new SearchReplaceRadioButton(Main.explorer.getWidth() - 100, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true);
+			Explorer.entireDocument = new SearchReplaceRadioButton(Main.explorer.getWidth() - 100, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true) {
+			public void tick() {
+				super.tick();
+				
+				caption = Texts.entireDocument;
+			}
+		};
 		
 		if (Explorer.selectedLines == null)
-			Explorer.selectedLines = new SearchReplaceRadioButton(Main.explorer.getWidth() - 62, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false);
+			Explorer.selectedLines = new SearchReplaceRadioButton(Main.explorer.getWidth() - 62, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false) {
+			public void tick() {
+				super.tick();
+				
+				caption = Texts.selectedLines;
+			}
+		};
 		
 		if (Explorer.caseSensitive == null)
-			Explorer.caseSensitive = new ToggleButton(20, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430);
+			Explorer.caseSensitive = new ToggleButton(20, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430) {
+			public void tick() {
+				super.tick();
+				
+				caption = Texts.caseSensitive;
+			}
+		};
 		
 		if (Explorer.regex == null)
-			Explorer.regex = new ToggleButton(58, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.regex, false, Texts.regex, 280, 270);
+			Explorer.regex = new ToggleButton(58, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.regex, false, Texts.regex, 280, 270) {
+			public void tick() {
+				super.tick();
+				
+				caption = Texts.regex;
+			}
+		};
 		
 		if (Explorer.searchNext == null)
-			Explorer.searchNext = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 280, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()), true);
+			Explorer.searchNext = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 280, Main.explorer.getWidth() - 40, 20, Texts.searchNext, () -> searchNext(Explorer.search.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()), true) {
+			public void tick() {
+				super.tick();
+				
+				text = Texts.searchNext;
+			}
+		};
 		
 		if (Explorer.replaceAll == null)
 			Explorer.replaceAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 320, Main.explorer.getWidth() - 40, 20, Texts.replaceAll, () -> replaceAll(Explorer.search.getText(), Explorer.replace.getText(), Explorer.caseSensitive.getState(), Explorer.regex.getState(), Explorer.entireDocument.getState()), true) {
-				public void tick() {
-					super.tick();
-					
-					enabled = !Main.editor.isReadOnly;
-				}
+			public void tick() {
+				super.tick();
+				
+				enabled = !Main.editor.isReadOnly;
+				text = Texts.replaceAll;
+			}
 		};
 	}
 	

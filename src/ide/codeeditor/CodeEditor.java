@@ -62,10 +62,10 @@ import ide.util.Texts;
 public class CodeEditor extends IDEComponent {
 	
 	public static final int TAB_ANIMATION_TIMEOUT = 300;
-
-	public static int FONT_SIZE = 16; // 18, 16 (Padrao: 16)
-	public static int LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
+	public static final int DEFAULT_FONT_SIZE = 16;
 	
+	public static int FONT_SIZE = DEFAULT_FONT_SIZE; // 18, 16 (Padrao: 16)
+	public static int LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
 	public static final int CURSOR_OPACITY = 127;
 
 	final int originalEditorX = 280;

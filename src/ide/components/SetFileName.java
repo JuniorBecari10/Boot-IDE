@@ -244,29 +244,29 @@ public class SetFileName extends IDEComponent {
 			g.fillRect(cursorIndex * (16 - 2), y, 2, height);
 		
 		if (isFile)
-			Fonts.drawString(Texts.createFile + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 40, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString(Texts.createFile + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 35, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		else
-			Fonts.drawString(Texts.createFolder + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 40, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString(Texts.createFolder + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 35, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
-		Fonts.drawString(Texts.esc_Cancel, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString(Texts.enter_Create, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 30, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString(Texts.esc_Cancel, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		Fonts.drawString(Texts.enter_Create, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 25, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
 		if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath())))
-			Fonts.drawString(Texts.fileExists, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
+			Fonts.drawString(Texts.fileExists, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 50, new IDEFont(Fonts.errorNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
 		if (text.toString().equals("") && canShow)
-			Fonts.drawString(Texts.cannotBeEmpty, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
+			Fonts.drawString(Texts.cannotBeEmpty, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 50, new IDEFont(Fonts.errorNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
 		if (text.toString().endsWith("."))
-			Fonts.drawString(Texts.cannotEndDot, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
+			Fonts.drawString(Texts.cannotEndDot, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 50, new IDEFont(Fonts.errorNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
 		if (hasIllegalChars(text.toString()))
-			Fonts.drawString(Texts.fileNameIllegal, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
+			Fonts.drawString(Texts.fileNameIllegal, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 50, new IDEFont(Fonts.errorNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
-		Fonts.drawString("[Ctrl + C] " + Texts.copy, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 90, new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString("[Ctrl + V] " + Texts.paste, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 120, new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString("[Ctrl + X] " + Texts.cut, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 150, new IDEFont(Fonts.lightGrayNormal, 20), g);
-		Fonts.drawString("[Ctrl + Del] " + Texts.delete, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 180, new IDEFont(Fonts.lightGrayNormal, 20), g);
+		Fonts.drawString("[Ctrl + C] " + Texts.copy, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 75, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		Fonts.drawString("[Ctrl + V] " + Texts.paste, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 100, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		Fonts.drawString("[Ctrl + X] " + Texts.cut, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 125, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		Fonts.drawString("[Ctrl + Del] " + Texts.delete, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 150, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
 		if (!isFile) return;
 		
@@ -288,6 +288,6 @@ public class SetFileName extends IDEComponent {
 			g.drawImage(Main.UNKNOWN_FILE_ICON, MouseInput.getMouseX() - 45, MouseInput.getMouseY() - 16, 32, 32, null);
 		
 		//if (text.toString().trim().equals(""))
-		//	Fonts.drawString(Texts.cannotBeOnlySpaces, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, 20), g);
+		//	Fonts.drawString(Texts.cannotBeOnlySpaces, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 60, new IDEFont(Fonts.errorNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 	}
 }

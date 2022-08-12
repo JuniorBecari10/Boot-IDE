@@ -19,7 +19,7 @@ import ide.util.Language;
 public class SearchReplaceRadioButton extends IDEComponent {
 
 	private boolean state;
-	private String caption;
+	protected String caption;
 	
 	private int engLength, portLength;
 	
