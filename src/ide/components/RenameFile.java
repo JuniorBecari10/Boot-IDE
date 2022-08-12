@@ -234,14 +234,14 @@ public class RenameFile extends IDEComponent {
 		g.setColor(Colors.explorerLight);
 		g.fillRect(x, y, width, height);
 
-		Fonts.drawString(text.toString(), x, y + 5, new IDEFont(Fonts.otherNormal, 18), g); // depois colocar drawchars
+		Fonts.drawString(text.toString(), x, y + 5, new IDEFont(Fonts.otherNormal, 16), g); // depois colocar drawchars
 																							// e o sistema de fontes
 
 		g.setColor(Colors.other);
 		g2.setStroke(new BasicStroke(2f));
 
 		if (showCursor)
-			g.fillRect(cursorIndex * (16 - 2), y, 2, height);
+			g.fillRect(cursorIndex * 12, y, 2, height);
 
 		Fonts.drawString(Texts.renameFile + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 35, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		

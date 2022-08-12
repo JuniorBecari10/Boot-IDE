@@ -6333,7 +6333,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 
 		case "newfile":
-			int y = 200;
+			int y = 200 + Screen.DECORATION_HEIGHT;
 			
 			if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).getY() + 30;
 			
@@ -6347,7 +6347,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 
 		case "newfolder":
-			y = 200;
+			y = 200 + Screen.DECORATION_HEIGHT;
 			
 			if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).getY() + 30;
 			
