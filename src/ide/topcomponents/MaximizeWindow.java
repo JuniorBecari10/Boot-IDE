@@ -45,6 +45,10 @@ public class MaximizeWindow extends TopComponent {
 		
 		if (WindowInput.isDeactivated() && (Main.forceMacButtons || Main.os == OS.MAC))
 			sprite = Main.deactivatedMacButtons;
+		
+		if (leftClicked()) {
+			maximize();
+		}
 	}
 
 }

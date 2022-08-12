@@ -314,9 +314,6 @@ public final class MouseInput extends MouseInputAdapter {
         pX = e.getX();
 		pY = e.getY();
 		
-		if (Main.maximizeWindow.hovered() && SwingUtilities.isLeftMouseButton(e))
-			MaximizeWindow.maximize();
-		
 		screenBounds = Main.screen.frame.getBounds();
 		
         if (Main.main != null)
