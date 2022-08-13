@@ -74,7 +74,6 @@ public class Explorer extends IDEComponent {
 	public static int minDrag = 192;
 	
 	public int maxTitleWidth = width / 23;
-	public int maxFolderWidth = width / 15;
 	public int maxTextWidth = width / 16;
 	public int maxFileCreateWidth = width / 18;
 	
@@ -213,7 +212,6 @@ public class Explorer extends IDEComponent {
 	    		Main.screen.setCursor(Cursor.getDefaultCursor());
 	    	
 	    	maxTitleWidth =  (width / 23) + 2;
-	    	maxFolderWidth = (width / 15);
 	    	maxTextWidth =   (width / 16) + 2;
 	    	maxFileCreateWidth = width / 18 + 2;
 	    	
@@ -398,9 +396,14 @@ public class Explorer extends IDEComponent {
 	    	
 	    	hoveringListableFile = false;
 	    	
-	    	if (folderPath.length() > maxFolderWidth) {
-	        	folderPath = folderPath.substring(0, maxFolderWidth - 3) + "...";
+	    	if (folderPath.length() * (CodeEditor.DEFAULT_FONT_SIZE - 4) >= width) {
+	        	folderPath = folderPath.substring(0, maxTextWidth - 3) + "...";
 	        	showFolderPathCard = true;
+	    	}
+	    	
+	    	if (baseFolderName.length() * (23 - 4) >= width) {
+	        	baseFolderName = baseFolderName.substring(0, maxTextWidth - 3) + "...";
+	        	showBaseFolderCard = true;
 	    	}
 	    	
 	    	baseFolderName = Main.baseFolder.getName().length() > maxTitleWidth ? Main.baseFolder.getName().substring(0, maxTitleWidth - 3) + "..." : Main.baseFolder.getName();
@@ -478,7 +481,7 @@ public class Explorer extends IDEComponent {
         g.setColor(Colors.explorerLight);
         g2.drawLine(0, Screen.DECORATION_HEIGHT + 199, width - 1, Screen.DECORATION_HEIGHT + 199); // linha que divide os listablefiles
         
-        Fonts.drawString(folderPath, x + 10, Screen.DECORATION_HEIGHT + 170, new IDEFont(Fonts.lighterGrayNormal, 15), g);
+        Fonts.drawString(folderPath, x + 10, Screen.DECORATION_HEIGHT + 170, new IDEFont(Fonts.lighterGrayNormal, 16), g);
         
         try {
 	        for (ListableFile f : Explorer.files) {
@@ -502,19 +505,8 @@ public class Explorer extends IDEComponent {
     	Graphics2D g2 = (Graphics2D) g;
     	
         g.setColor(Colors.explorer);
-        g.fillRect(x, y, width, height); 
-        
-//        if (explorerMode == ExplorerMode.EXPLORER) {
-//	        int xd = Main.lang == Language.PORT ? x + 40 : x + 60;
-//	        //int x2d = Main.lang == Language.PORT ? xd + 14 : xd + 16; // dar uma arrumada
-//	        
-//	        Fonts.drawString(Texts.explorerText, (width / 2 - xd) - (Main.lang == Language.PORT ? 40 : 0), y + 30, new IDEFont(Fonts.lightGrayNormal, 23), g);
-//	        g.setColor(Colors.textLight);
-//	        
-//	        /*g2.setStroke(new BasicStroke(2f));
-//	        g.drawLine(width / 2 - xd, y + 60, width / 2 + x2d, y + 60);*/
-//        }
-	    
+        g.fillRect(x, y, width, height);
+
         g.setColor(Colors.explorerLight);
 	    g2.setStroke(new BasicStroke(3f));
 	    g2.drawLine(width - 1, Screen.DECORATION_HEIGHT, width - 1, height); // linha vertical que divide do codeeditor

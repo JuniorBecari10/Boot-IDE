@@ -6604,9 +6604,6 @@ public class CodeEditor extends IDEComponent {
 		RightClickOption.removeAllRightClickOptions();
 
 		int index = 0;
-
-		int height = 30;
-		// ruleOf3(16, 30, FONT_SIZE);
 		
 		autocomplete = removeDuplicates(autocomplete);
 
@@ -6616,9 +6613,15 @@ public class CodeEditor extends IDEComponent {
 
 			String change = a.text;
 			
-			toAddAutoCompletes.add(new RightClickOption(drawcx + (Main.editor.getX() - originalEditorX),
-					(drawcy + FONT_SIZE /* + 2 */) + index * height, 330, 32, 16, a.text, getAutoCompleteIcon(a.type),
-					(e) -> makeChanges(e), change));
+			toAddAutoCompletes.add(new RightClickOption(drawcx + (Main.editor.getX() - originalEditorX), // x
+					(drawcy + FONT_SIZE /* + 2 */) + index * RightClickOption.HEIGHT,  // y
+					330, // width
+					30, // height
+					16, // textSize
+					a.text, // text
+					getAutoCompleteIcon(a.type), // icon
+					(e) -> makeChanges(e), // command 
+					change)); // clickArg
 
 			index++;
 		}
@@ -7838,7 +7841,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered()))) {
-			int width = Main.lang == Language.PORT ? 550 : 510;
+			int width = Main.lang == Language.PORT ? 450 : 410;
 			List<RightClickOption> list = new ArrayList<>();
 			
 			list.add(new RightClickOption(0, 0, width, Main.os == OS.WINDOWS, Texts.openCmd, (s) -> execute(s), "cmd"));
@@ -8073,7 +8076,7 @@ public class CodeEditor extends IDEComponent {
 		int index = 0;
 
 		for (RightClickOption r : autocompletes) {
-			r.setY(((drawcy - autocompletescroll) + FONT_SIZE) + index * 30);
+			r.setY(((drawcy - autocompletescroll) + FONT_SIZE) + index * r.getHeight());
 
 			index++;
 		}

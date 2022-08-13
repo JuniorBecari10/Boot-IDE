@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
+import ide.codeeditor.CodeEditor;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
@@ -36,7 +37,7 @@ public class RightClickOption extends IDEComponent {
 		this.command = command;
 		this.clickArg = clickArg;
 		
-		this.textSize = 20;
+		this.textSize = CodeEditor.DEFAULT_FONT_SIZE;
 		
 		isAutoComplete = false;
 		isActive = true;
@@ -49,7 +50,7 @@ public class RightClickOption extends IDEComponent {
 		this.command = command;
 		this.clickArg = clickArg;
 		
-		this.textSize = 20;
+		this.textSize = CodeEditor.DEFAULT_FONT_SIZE;
 		
 		isAutoComplete = false;
 		this.isActive = isActive;
@@ -213,7 +214,7 @@ public class RightClickOption extends IDEComponent {
 		g.setColor(c);
 		g.fillRect(x, y, width, HEIGHT);
 		
-		Fonts.drawString(isAutoComplete ? (text.length() > 25 ? text.substring(0, 22) + "..." : text) : text, x + 2, y + 2, new IDEFont(Fonts.lighterGrayNormal, textSize), x + width, g);
+		Fonts.drawString(isAutoComplete ? (text.length() > 25 ? text.substring(0, 22) + "..." : text) : text, x + 4, y + 4, new IDEFont(Fonts.lighterGrayNormal, textSize), x + width, g);
 		
 		if (isAutoComplete) {
 			g.drawImage(sprite, (x + width) - 20, y + 4, 16, 16, null);
