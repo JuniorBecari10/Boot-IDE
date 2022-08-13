@@ -1598,7 +1598,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			list.add(new RightClickOption((x + width), 0, widthDraw, regent.isFile(), Texts.openInEditor, (s) -> execute(s), "openeditor"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.delete, (s) -> execute(s), "del"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.rename, (s) -> execute(s), "rename"));
-			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.duplicate, (s) -> execute(s), "duplicate"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, regent.isFile(), Texts.duplicate, (s) -> execute(s), "duplicate"));
 			//if (isWindows)
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openCmd, (s) -> Main.editor.execute(s), "cmd"));
 
