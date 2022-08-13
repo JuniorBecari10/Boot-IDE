@@ -206,6 +206,8 @@ public final class Texts {
 	
 	public static String file;
 	
+	public static String duplicate;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -398,6 +400,8 @@ public final class Texts {
 			
 			file = "Arquivo";
 			
+			duplicate = "Duplicar";
+			
 			break;
 		
 		case ENG:
@@ -589,6 +593,8 @@ public final class Texts {
 			settings = "Settings";
 			
 			file = "File";
+			
+			duplicate = "Duplicate";
 			
 			break;
 		}

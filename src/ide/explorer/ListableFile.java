@@ -23,6 +23,7 @@ import ide.codeeditor.LineEnding;
 import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.ReloadButton;
 import ide.components.RenameFile;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
@@ -1378,6 +1379,24 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		case "openeditor":
 			addTab(this, false);
 			break;
+			
+		case "duplicate":
+			try {
+				int index = 1;
+				File newFile = new File(regent.getParent() + File.separator + "(" + index + ")" + getFileNameWithoutExtension(regent) + getFileExtension(regent));
+				
+				while (newFile.exists()) {
+					newFile = new File(regent.getParent() + File.separator + "(" + ++index + ") " + getFileNameWithoutExtension(regent) + getFileExtension(regent));
+				}
+				
+				Files.copy(regent.toPath(), newFile.toPath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			ReloadButton.reloadExplorer();
+			
+			break;
 		}
 	}
 	
@@ -1568,41 +1587,30 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered()))) {
 			MouseInput.updateMouse();
 
-			int widthDraw = Main.lang == Language.PORT ? 540 : 520;
-
+			int widthDraw = Main.lang == Language.PORT ? 440 : 420;
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
+			
+			List<RightClickOption> list = new ArrayList<>();
 
-			IDEComponent.addRightClickOption((x + width), y - 60, widthDraw, Texts.createFile, (s) -> execute(s),
-					"newfile");
-			IDEComponent.addRightClickOption((x + width), y - 30, widthDraw, Texts.createFolder, (s) -> execute(s),
-					"newfolder");
+			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.createFile, (s) -> execute(s), "newfile"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.createFolder, (s) -> execute(s), "newfolder"));
 
-			IDEComponent.addRightClickOption((x + width), y, widthDraw, regent.isFile(), Texts.openInEditor, (s) -> execute(s),
-					"openeditor");
-			IDEComponent.addRightClickOption((x + width), y + 30, widthDraw, Texts.delete, (s) -> execute(s), "del");
-			IDEComponent.addRightClickOption((x + width), y + 60, widthDraw, Texts.rename, (s) -> execute(s), "rename");
-
+			list.add(new RightClickOption((x + width), 0, widthDraw, regent.isFile(), Texts.openInEditor, (s) -> execute(s), "openeditor"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.delete, (s) -> execute(s), "del"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.rename, (s) -> execute(s), "rename"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.duplicate, (s) -> execute(s), "duplicate"));
 			//if (isWindows)
-			IDEComponent.addRightClickOption((x + width), y + 90, widthDraw, Texts.openCmd, (s) -> Main.editor.execute(s),
-						"cmd");
-			// else
-			// IDEComponent.addRightClickOption((x + width), y + 90, widthDraw,
-			// Texts.openCmd, (s) -> execute(s), "cmdbash");
+			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openCmd, (s) -> Main.editor.execute(s), "cmd"));
 
-			IDEComponent.addRightClickOption((x + width), y + 120, widthDraw, Texts.openTerminal, (s) -> execute(s),
-					"term");
-			IDEComponent.addRightClickOption((x + width), y + 150, widthDraw, Texts.openExplorer, (s) -> execute(s),
-					"sysexp");
-			IDEComponent.addRightClickOption((x + width), y + 180, widthDraw, Texts.setBaseFolder, (s) -> execute(s),
-					"setbase");
-			IDEComponent.addRightClickOption((x + width), y + 210, widthDraw, Texts.openDefault, (s) -> execute(s),
-					"opendef");
+			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openTerminal, (s) -> execute(s), "term"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openExplorer, (s) -> execute(s), "sysexp"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.setBaseFolder, (s) -> execute(s), "setbase"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openDefault, (s) -> execute(s), "opendef"));
 
-			if ((getFileExtension(regent).equalsIgnoreCase(".bat") || getFileExtension(regent).equalsIgnoreCase(".cmd")
-					|| getFileExtension(regent).equalsIgnoreCase(".com")) && isWindows)
-				IDEComponent.addRightClickOption((x + width), y + 240, widthDraw, Texts.execute, (s) -> execute(s),
-						"run");
-
+			if ((getFileExtension(regent).equalsIgnoreCase(".bat") || getFileExtension(regent).equalsIgnoreCase(".cmd") || getFileExtension(regent).equalsIgnoreCase(".com")) && isWindows)
+				list.add(new RightClickOption((x + width), y + 240, widthDraw, Texts.execute, (s) -> execute(s), "run"));
+			
+			IDEComponent.addRightClickOptions((x + width), y, list.toArray(new RightClickOption[list.size()]));
 			// if (getFileExtension(regent).equalsIgnoreCase(".sh") && !isWindows)
 			// IDEComponent.addRightClickOption((x + width), y + 240, widthDraw,
 			// Texts.execute, (s) -> execute(s), "runbash");
