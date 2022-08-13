@@ -1383,7 +1383,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		case "duplicate":
 			try {
 				int index = 1;
-				File newFile = new File(regent.getParent() + File.separator + "(" + index + ")" + getFileNameWithoutExtension(regent) + getFileExtension(regent));
+				File newFile = new File(regent.getParent() + File.separator + "(" + index + ") " + getFileNameWithoutExtension(regent) + getFileExtension(regent));
 				
 				while (newFile.exists()) {
 					newFile = new File(regent.getParent() + File.separator + "(" + ++index + ") " + getFileNameWithoutExtension(regent) + getFileExtension(regent));

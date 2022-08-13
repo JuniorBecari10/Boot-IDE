@@ -80,7 +80,7 @@ public class CodeEditor extends IDEComponent {
 	public int index1, index2; // TODO fazer a verificação do CSS se está dentro do seletor, e se tiver, colore
 								// números
 	
-	//public static final int MAX_UNDOS = 10;
+	public static final int MAX_UNDOS = 50;
 	
 	// valor padrão de LF
 	public static LineEnding lineEnding = LineEnding.LF;
@@ -7949,8 +7949,19 @@ public class CodeEditor extends IDEComponent {
 					
 					// colocar a string no undo
 					undo.push(list);
-				} catch (Exception e) {
-					//System.out.println("Exception: " + Main.getStackTrace(e));
+				} catch (OutOfMemoryError e) {
+					// clean list, except last MAX_UNDOS
+					List<String> u = new ArrayList<>(undo.subList(undo.size() - MAX_UNDOS < 0 ? 0 : undo.size() - MAX_UNDOS, undo.size()));
+					List<String> r = new ArrayList<>(redo.subList(redo.size() - MAX_UNDOS < 0 ? 0 : redo.size() - MAX_UNDOS, redo.size()));
+					
+					undo = new Stack<>();
+					redo = new Stack<>();
+					
+					undo.addAll(u);
+					redo.addAll(r);
+					
+					return;
+				} catch (Exception a) {
 					return;
 				}/* finally {
 					if (undo.size() > MAX_UNDOS) {
@@ -7983,6 +7994,8 @@ public class CodeEditor extends IDEComponent {
 		
 		height = Main.screen.getHeight();
 		LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
+		
+		System.out.println(undo.size());
 		
 		// arrumar isso aqui pra n dar erro
 		/*if (editing != null && !tabs.isEmpty() && tabs.indexOf(editing) < 0)
