@@ -350,18 +350,22 @@ public class Explorer extends IDEComponent {
 	    	}
 	    	
 	    	if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered())) && !hoveringListableFile) {
-	    		int widthDraw = Main.lang == Language.PORT ? 540 : 520;
+	    		int widthDraw = Main.lang == Language.PORT ? 440 : 420;
 	    		
-	    		IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), widthDraw, Texts.createFile, (s) -> Main.editor.execute(s), "newfile");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, widthDraw, Texts.createFolder, (s) -> Main.editor.execute(s), "newfolder");
+	    		List<RightClickOption> list = new ArrayList<>();
 	    		
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, widthDraw, Texts.openCmd, (s) -> Main.editor.execute(s), "cmd");
-				IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, widthDraw, Texts.openTerminal, (s) -> Main.editor.execute(s), "term");
+	    		list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), widthDraw, Texts.createFile, (s) -> Main.editor.execute(s), "newfile"));
+				list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, widthDraw, Texts.createFolder, (s) -> Main.editor.execute(s), "newfolder"));
+	    		
+				list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, widthDraw, Texts.openCmd, (s) -> Main.editor.execute(s), "cmd"));
+				list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, widthDraw, Texts.openTerminal, (s) -> Main.editor.execute(s), "term"));
 				
 				if (Main.baseFolder != null) {
-					IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, widthDraw, Texts.openExplorer, (s) -> Main.editor.execute(s), "sysexp");
-					IDEComponent.addRightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 150, widthDraw, Texts.setBaseFolder, (s) -> Main.editor.execute(s), "setbase");
+					list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, widthDraw, Texts.openExplorer, (s) -> Main.editor.execute(s), "sysexp"));
+					list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 150, widthDraw, Texts.setBaseFolder, (s) -> Main.editor.execute(s), "setbase"));
 				}
+				
+				IDEComponent.addRightClickOptions(MouseInput.getMouseX(), MouseInput.getMouseY(), list.toArray(new RightClickOption[list.size()]));
 			}
 	    	
 	    	if (Explorer.scope == null) Explorer.folderPath = "";
