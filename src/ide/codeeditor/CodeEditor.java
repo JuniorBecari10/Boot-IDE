@@ -7091,8 +7091,7 @@ public class CodeEditor extends IDEComponent {
 								autocompleteindex++;
 								
 								if (autocompleteindex == autocompletes.size()) {
-									autocompleteindex = 0;
-									autocompletescroll = 0;
+									autocompleteindex = autocompletes.size() - 1;
 								}
 								
 								if (autocompletes.get(autocompleteindex).getY() >= height)
