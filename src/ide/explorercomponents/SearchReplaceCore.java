@@ -49,7 +49,7 @@ public final class SearchReplaceCore {
 			Explorer.replace = new InputBox(20, Screen.DECORATION_HEIGHT + 190, Main.explorer.getWidth() - 40, 20);
 		
 		if (Explorer.entireDocument == null)
-			Explorer.entireDocument = new SearchReplaceRadioButton(Main.explorer.getWidth() - 100, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.entireDocument, true, Texts.entireDocument, 240, 270, true) {
+			Explorer.entireDocument = new SearchReplaceRadioButton(Main.explorer.getWidth() - 100, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.entireDocument, true, Texts.entireDocument, true) {
 			public void tick() {
 				super.tick();
 				
@@ -58,7 +58,7 @@ public final class SearchReplaceCore {
 		};
 		
 		if (Explorer.selectedLines == null)
-			Explorer.selectedLines = new SearchReplaceRadioButton(Main.explorer.getWidth() - 62, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.selectedLines, false, Texts.selectedLines, 225, 300, false) {
+			Explorer.selectedLines = new SearchReplaceRadioButton(Main.explorer.getWidth() - 62, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.selectedLines, false, Texts.selectedLines, false) {
 			public void tick() {
 				super.tick();
 				
@@ -67,7 +67,7 @@ public final class SearchReplaceCore {
 		};
 		
 		if (Explorer.caseSensitive == null)
-			Explorer.caseSensitive = new ToggleButton(20, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.caseSensitive, false, Texts.caseSensitive, 220, 430) {
+			Explorer.caseSensitive = new ToggleButton(20, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.caseSensitive, false, Texts.caseSensitive) {
 			public void tick() {
 				super.tick();
 				
@@ -76,7 +76,7 @@ public final class SearchReplaceCore {
 		};
 		
 		if (Explorer.regex == null)
-			Explorer.regex = new ToggleButton(58, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.regex, false, Texts.regex, 280, 270) {
+			Explorer.regex = new ToggleButton(58, Screen.DECORATION_HEIGHT + 230, 32, 32, Main.regex, false, Texts.regex) {
 			public void tick() {
 				super.tick();
 				
