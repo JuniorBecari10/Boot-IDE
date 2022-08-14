@@ -46,9 +46,6 @@ public final class Texts {
 	
 	public static String readOnly;
 	
-	public static String readOnlyText1;
-	public static String readOnlyText2;
-	
 	public static String insertCommand;
 	
 	public static String enter_Execute;
@@ -218,7 +215,7 @@ public final class Texts {
 			createFile = "Criar Novo Arquivo";
 			createFolder = "Criar Nova Pasta";
 			oneFolderUp = "Uma Pasta Acima";
-			returnBaseFolder = "Retornar à Pasta Base";
+			returnBaseFolder = "Retornar para a Pasta Base";
 			reload = "Recarregar";
 			
 			codeHelpersOn = "Os CodeHelpers estão ativados.";
@@ -239,9 +236,6 @@ public final class Texts {
 			fileExists = "Já existe um arquivo nessa pasta com esse nome.";
 			
 			readOnly = "Somente Leitura";
-			
-			readOnlyText1 = "Para alternar os modos Somente Leitura, aperte";
-			readOnlyText2 = "Ctrl + Shift + H, ou digite togglereadonly no Terminal de Comando.";
 			
 			insertCommand = "Insira o comando";
 			
@@ -433,9 +427,6 @@ public final class Texts {
 			fileExists = "There is already a file in this folder with this name.";
 			
 			readOnly = "Read-Only";
-			
-			readOnlyText1 = "To toggle the Read-Only modes, press";
-			readOnlyText2 = "Ctrl + Shift + H, or type togglereadonly in the Command Terminal.";
 			
 			insertCommand = "Insert command:";
 			

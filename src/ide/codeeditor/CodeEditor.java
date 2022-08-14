@@ -8042,7 +8042,7 @@ public class CodeEditor extends IDEComponent {
 			switch (editing.readMode) {
 			case BIN:
 			case BINARY:
-				codeType = minMode ? "Bin" : (Main.lang == Language.PORT ? "Binario" : "Binary");
+				codeType = minMode ? "Bin" : (Main.lang == Language.PORT ? "Binário" : "Binary");
 				break;
 				
 			case HEX:

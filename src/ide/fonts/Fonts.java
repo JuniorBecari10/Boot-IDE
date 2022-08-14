@@ -215,7 +215,7 @@ public class Fonts {
     	BufferedImage text = null;
     	
     	if (c == 'Á') {
-			text = font.getFont()[190+2];
+			text = font.getFont()[190+2]; // 190 + 2
 		}
 		else if (c == 'É') {
 			text = font.getFont()[197+2];
@@ -450,7 +450,7 @@ public class Fonts {
      * @author Boot
      */
 	public static void drawString(String s, int x, int y, IDEFont font, Graphics g) {
-		if (s == null) throw new NullPointerException("A String nao pode ser nula!");
+		if (s == null) throw new NullPointerException("A String não pode ser nula!");
 		
     	char[] ca = s.toCharArray(); // ca = char array								   converte a string em um char array
     	
@@ -530,14 +530,19 @@ public class Fonts {
 	 * @param g - O parametro {@code Graphics}.
 	 */
 	public static void drawChars(char[] c, int x, int y, IDEFont[] fonts, int minX, int maxX, Graphics g) {
-		if (c == null) throw new NullPointerException("O array de chars nao pode ser nulo!");
+		if (c == null) throw new NullPointerException("O array de chars não pode ser nulo!");
 		
     	BufferedImage[] text = new BufferedImage[c.length];
     	
     	for (int i = 0; i < c.length; i++) {
     		char ch = c[i];
     		
-    		text[i] = accents(ch, fonts[i]);
+    		if (ch > 225) continue;
+    		
+    		if (ch < 127)
+    			text[i] = fonts[i].getFont()[ch];
+    		else
+    			text[i] = accents(ch, fonts[i]);
     		
     		if (ch == 8721) {
         		text[i] = fonts[i].getFont()[255];
@@ -563,12 +568,6 @@ public class Fonts {
         			continue;
     			}
     		}
-    		
-    		int ind = c[i]; 						// pega o valor na tabela ASCII
-    		
-    		if (ind > 225) continue;
-    		
-    		text[i] = fonts[i].getFont()[ind];
     	}
     	
     	for (int i = 0; i < text.length; i++) {
