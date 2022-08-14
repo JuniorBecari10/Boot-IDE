@@ -521,12 +521,12 @@ public class Explorer extends IDEComponent {
 	    	renderSearchReplace(g);
 	    
 	    for (Tab t : Main.editor.tabs) {
-	    	if (Main.editor.editing == t && Main.editor.editing.getX() + Main.editor.tabScr == Main.editor.getX()) {
+	    	if (Main.editor.editing == t && Main.editor.editing.getX() + Main.editor.tabScr == Main.editor.getX() - 1) {
 	    		g.setColor(Colors.textLight);
 	    		g2.setStroke(new BasicStroke(3f));
 	    		
 	    		// linha à esquerda da primeira tab
-	    		g.drawLine(Main.editor.getX(), Screen.DECORATION_HEIGHT + 3, Main.editor.getX(), CodeEditor.MIN_Y - 1);
+	    		g.drawLine(Main.editor.getX() - 1, Screen.DECORATION_HEIGHT + 3, Main.editor.getX() - 1, CodeEditor.MIN_Y + 3); // + 4
 	        }
 	    }
 	    
@@ -536,7 +536,7 @@ public class Explorer extends IDEComponent {
 	    // linha encima do explorer
 	    g.setColor(Colors.textLight);
 		g2.setStroke(new BasicStroke(3f));
-	    g2.drawLine(0, ExplorerTab.Y + ExplorerTab.SIZE, width - 4, ExplorerTab.Y + ExplorerTab.SIZE);
+	    g2.drawLine(0, ExplorerTab.Y + ExplorerTab.SIZE, Main.editor.tabs.isEmpty() ? width - 4 : width - 1, ExplorerTab.Y + ExplorerTab.SIZE); // width
 	    
 	    // Desenhar encima da tab
 	    for (ExplorerTab t : tabs) {

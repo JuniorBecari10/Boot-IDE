@@ -625,7 +625,7 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		// não está arrastando
 		if (!isTabDragged() || dragging == null) {
-			MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - (WIDTH + 3);	// -WIDTH é um macete kkk - 77
+			MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - (WIDTH + 4);	// -WIDTH é um macete kkk - 77
 			int targetX = Main.editor.getX();
 			
 			if (Main.editor.tabs.indexOf(this) > 0)

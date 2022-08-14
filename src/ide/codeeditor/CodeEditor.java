@@ -5589,14 +5589,6 @@ public class CodeEditor extends IDEComponent {
 
 	// my precious
 	public List<IDEFont> automaticColor(char[] chars, String ext) {
-		/*
-		 * isMultilineCommenting = false;
-		 * 
-		 * isCssPart = false; isJSPart = false; isPhpPart = false;
-		 * 
-		 * isMultilineString = false; isAnotherIterationString = false;
-		 */
-
 		List<IDEFont> fs = new ArrayList<>();
 
 		for (int i = 0; i < chars.length; i++)
@@ -5647,11 +5639,6 @@ public class CodeEditor extends IDEComponent {
 		/////////////////////////////////////////////////////
 
 		resetHTML(chars);
-
-		/*
-		 * for (AutoComplete c : autocomplete) { for (AutoComplete d : autocomplete) {
-		 * if (c.text.equals(d.text)) autocomplete.remove(c); } }
-		*/
 
 		return fs;
 	}
