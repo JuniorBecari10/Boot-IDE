@@ -214,7 +214,6 @@ public class Explorer extends IDEComponent {
 
 			return;
 		}
-
 	    
 	    if (hovered())
 	    	Main.screen.setCursor(Cursor.getDefaultCursor());
@@ -455,27 +454,6 @@ public class Explorer extends IDEComponent {
 	    	t.tick();
     }
     
-    private void renderGit(Graphics g) {
-    	Fonts.drawString("There's no Git repository in the Base Folder", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
-    }
-    
-    private void renderSearchReplace(Graphics g) {
-    	String text = Texts.file + ": " + (Main.editor.editing != null ? Main.editor.editing.getRegent().getRegent().getName() : "");
-    	int cutLength = 0;
-    	
-    	if ((text.length() * 12) + 20 >= width) {
-    		while ((text.substring(0, text.length() - cutLength).length() * 12) + 20 >= width)
-    			cutLength++;
-    	}
-    	
-    	text = text.substring(0, text.length() - cutLength);
-    	
-    	Fonts.drawString(text, x + 20, y + 60, new IDEFont(Fonts.lightGrayNormal, 16), g);
-    	
-		Fonts.drawString(Texts.search + ":", x + 20, y + 95, new IDEFont(Fonts.lightGrayNormal, 16), g);
-    	Fonts.drawString(Texts.replace + ":", x + 20, y + 165, new IDEFont(Fonts.lightGrayNormal, 16), g);
-	}
-    
     private void renderExplorer(Graphics g) {
     	Graphics2D g2 = (Graphics2D) g;
     	
@@ -526,6 +504,27 @@ public class Explorer extends IDEComponent {
 	        	f.render(g);
 	        }
         } catch (Exception e) { return; }
+    }
+    
+    private void renderSearchReplace(Graphics g) {
+    	String text = Texts.file + ": " + (Main.editor.editing != null ? Main.editor.editing.getRegent().getRegent().getName() : "");
+    	int cutLength = 0;
+    	
+    	if ((text.length() * 12) + 20 >= width) {
+    		while ((text.substring(0, text.length() - cutLength).length() * 12) + 20 >= width)
+    			cutLength++;
+    	}
+    	
+    	text = text.substring(0, text.length() - cutLength);
+    	
+    	Fonts.drawString(text, x + 20, y + 60, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	
+		Fonts.drawString(Texts.search + ":", x + 20, y + 95, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	Fonts.drawString(Texts.replace + ":", x + 20, y + 165, new IDEFont(Fonts.lightGrayNormal, 16), g);
+	}
+    
+    private void renderGit(Graphics g) {
+    	Fonts.drawString("There's no Git repository in the Base Folder.", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
     }
     
     public static void renderDescriptionText(String s, int x, int y, Graphics g) {
