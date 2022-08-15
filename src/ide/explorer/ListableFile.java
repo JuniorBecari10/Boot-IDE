@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -1211,10 +1212,19 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			if (selectedOption != 0)
 				break;
 
-			if (!regent.delete()) {
-				CodeEditor.setSystemLook();
-
-				JOptionPane.showMessageDialog(null, Texts.delError, Texts.cantDelete, JOptionPane.OK_OPTION);
+			if (regent.isFile()) {
+				if (!regent.delete()) {
+					CodeEditor.setSystemLook();
+	
+					JOptionPane.showMessageDialog(null, Texts.delError, Texts.cantDelete, JOptionPane.OK_OPTION);
+				}
+			}
+			else {
+				try {
+					deleteDirectory(regent);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 
 			for (Tab t : Main.editor.tabs)
@@ -1399,7 +1409,55 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			break;
 		}
 	}
+
+	// Fonte: Apache Commons
+	public static void deleteDirectory(final File directory) throws IOException {
+		if (!directory.exists()) {
+			return;
+		}
+
+		cleanDirectory(directory);
+
+		if (!directory.delete()) {
+			final String message =
+					"Unable to delete directory " + directory + ".";
+			throw new IOException(message);
+		}
+	}
+
+	public static void cleanDirectory(final File directory) throws IOException {
+		final File[] files = directory.listFiles();
+
+		IOException exception = null;
+		for (final File file : files) {
+			try {
+				forceDelete(file);
+			} catch (final IOException ioe) {
+				exception = ioe;
+			}
+		}
+
+		if (null != exception) {
+			throw exception;
+		}
+	}
 	
+	public static void forceDelete(final File file) throws IOException {
+		if (file.isDirectory()) {
+			deleteDirectory(file);
+		} else {
+			final boolean filePresent = file.exists();
+			if (!file.delete()) {
+				if (!filePresent) {
+					throw new FileNotFoundException("File does not exist: " + file);
+				}
+				final String message =
+						"Unable to delete file: " + file;
+				throw new IOException(message);
+			}
+		}
+	}
+
 	public static ListableFile newListableFile(File regent) {
 		return new ListableFile(0,0,0,0, regent, null);
 	}

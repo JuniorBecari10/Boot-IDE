@@ -286,7 +286,7 @@ public final class Texts {
 			sureDelete = "Tem certeza de que deseja deletar o arquivo";
 			confirmDelete = "Confirmar Exclusão";
 			
-			delError = "Ocorreu um erro ao deletar. Lembre-se de que pastas nao podem ser excluadas se nao estiverem vazias!";
+			delError = "Ocorreu um erro ao deletar.";
 			cantDelete = "Não foi possível deletar.";
 			
 			cantFindDefault = "O sistema não encontrou um programa padrão para abrir esse arquivo.";
@@ -477,7 +477,7 @@ public final class Texts {
 			sureDelete = "Are you sure you want to delete the file";
 			confirmDelete = "Confirm Deletion";
 			
-			delError = "An error has occurred while deleting. Remember that folders cannot be deleted if they are not empty!";
+			delError = "An error has occurred while deleting.";
 			cantDelete = "Could not delete.";
 			
 			cantFindDefault = "The system could not find a default program to open this file.";

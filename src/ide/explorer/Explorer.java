@@ -104,6 +104,12 @@ public class Explorer extends IDEComponent {
     		}
     	});
     	tabs.add(new ExplorerTab(1 + 3 + ExplorerTab.SIZE, Main.searchReplaceTab, ExplorerMode.SEARCHREPLACE, Texts.searchReplace) {
+    		public boolean hovered() {
+    			if (Main.editor.tabs.isEmpty()) return false;
+    			
+    			return super.hovered();
+    		}
+    		
     		public void select() {
     			if (Main.editor.tabs.isEmpty()) return;
     			
@@ -201,7 +207,7 @@ public class Explorer extends IDEComponent {
 	    }
 	    
 	    // Atalho Universal
-	    if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + T (Terminal)
+	    if (KeyInput.isControlDown() && !KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + T (Terminal)
 			KeyInput.updateKeys();
 
 			Main.editor.execute("term");
@@ -450,7 +456,7 @@ public class Explorer extends IDEComponent {
     }
     
     private void renderGit(Graphics g) {
-    	Fonts.drawString("There's no Git repository in the Base Folder", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+    	Fonts.drawString("There's no Git repository in the Base Folder", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
     }
     
     private void renderSearchReplace(Graphics g) {

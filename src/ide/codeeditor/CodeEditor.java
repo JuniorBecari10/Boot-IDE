@@ -7504,13 +7504,7 @@ public class CodeEditor extends IDEComponent {
 					 * return; }
 					 */ // larga de mão
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + T (Terminal)
-						KeyInput.updateKeys();
-
-						execute("term");
-
-						return;
-					}
+					
 
 					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_B
 							|| KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_WINDOWS) { // Ctrl + B OU
