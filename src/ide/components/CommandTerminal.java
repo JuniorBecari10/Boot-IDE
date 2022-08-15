@@ -513,6 +513,16 @@ public class CommandTerminal extends IDEComponent {
 						
 						runCommand("revertcolors");
 					}
+					
+					ListableFile.generateLocalConfigFile(Main.defaultConfigFile);
+					
+					if (Main.editor.editing != null && Main.editor.editing.getRegent().getRegent().equals(Main.defaultConfigFile)) {
+						try {
+							Main.editor.lines = Main.editor.readFile(Main.defaultConfigFile);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+			         }
 				}
 				
 				break;

@@ -110,7 +110,7 @@ public class Colors {
          Main.closeWindowMacSpr = Colors.swapColor(Main.closeWindowMacSpr, textLightOld, Colors.textLight);
          Main.closeWindowHoverSpr = Colors.swapColor(Main.closeWindowHoverSpr, textLightOld, Colors.textLight);
          
-         Main. minimizeWindowSpr = Colors.swapColor(Main.minimizeWindowSpr, textLightOld, Colors.textLight);
+         Main.minimizeWindowSpr = Colors.swapColor(Main.minimizeWindowSpr, textLightOld, Colors.textLight);
          Main.minimizeWindowMacSpr = Colors.swapColor(Main.minimizeWindowMacSpr, textLightOld, Colors.textLight);
          Main.minimizeWindowHoverSpr = Colors.swapColor(Main.minimizeWindowHoverSpr, textLightOld, Colors.textLight);
          
