@@ -17,6 +17,8 @@ public class InputBox extends IDEComponent {
 	private StringBuilder text;
 	private int cursorIndex = 0;
 	
+	private int scroll = 0;
+	
 	public InputBox(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
 		
@@ -114,7 +116,7 @@ public class InputBox extends IDEComponent {
 		g.setColor(hovered() ? Colors.explorerLighter : Colors.explorerLight);
 		g.fillRect(x, y, width, height);
 		
-		Fonts.drawString(getText(), x + 2, y + 2, new IDEFont(Fonts.otherNormal, 16), x + width, g);
+		Fonts.drawString(getText(), (x + 2) - scroll, y + 2, new IDEFont(Fonts.otherNormal, 16), x, x + width, g);
 		
 		g.setColor(Colors.other);
 		

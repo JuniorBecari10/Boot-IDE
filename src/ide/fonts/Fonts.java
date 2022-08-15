@@ -520,6 +520,42 @@ public class Fonts {
     	}
     }
 	
+	public static void drawString(String s, int x, int y, IDEFont font, int minPos, int maxPos, Graphics g) {
+		if (s == null) throw new NullPointerException("A String nao pode ser nula!");
+		
+    	char[] ca = s.toCharArray(); // ca = char array								   converte a string em um char array
+    	
+    	BufferedImage[] text = new BufferedImage[ca.length];						// declara o array das imagens
+    	
+    	for (int i = 0; i < ca.length; i++) {										// roda um loop for para associar as
+    		int ind = ca[i] > 126 ? ca[i] - 3 : ca[i];								// imagens ao array
+    		if (ind >= font.getFont().length) continue;    		
+    		text[i] = font.getFont()[ind];
+    	}
+    	
+    	for (int i = 0; i < ca.length; i++) {
+    		text[i] = accents(ca[i], font);
+    		
+    		int ind = ca[i]; 						// pega o valor na tabela ASCII
+    		
+    		if (ind > 225) continue;
+    		
+    		text[i] = font.getFont()[ind];
+    	}
+    	
+    	for (int i = 0; i < text.length; i++) {										// roda um loop para desenhar.
+    		char[] cha = s.toCharArray();
+    		char ch = cha[i];
+    		
+    		if ((x + ((font.getSize() - (font.getSize() / 4)) * i)) < minPos) break;
+    		if ((x + ((font.getSize() - (font.getSize() / 4)) * i)) > maxPos - font.getSize()) break;
+    		
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g' || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + 2 : y;
+    		
+    		g.drawImage(text[i], (x + ((font.getSize() - (font.getSize() / 4)) * i)), ydraw, font.getSize(), font.getSize(), null);
+    	}
+    }
+	
 	/**
 	 * Desenha um array de {@code char} na tela.
 	 * 

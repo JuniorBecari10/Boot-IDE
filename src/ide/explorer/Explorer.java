@@ -105,6 +105,8 @@ public class Explorer extends IDEComponent {
     	});
     	tabs.add(new ExplorerTab(1 + 3 + ExplorerTab.SIZE, Main.searchReplaceTab, ExplorerMode.SEARCHREPLACE, Texts.searchReplace) {
     		public void select() {
+    			if (Main.editor.tabs.isEmpty()) return;
+    			
     			Main.editor.execute("searchrep");
     			GitCore.dispose();
     		}
@@ -446,7 +448,11 @@ public class Explorer extends IDEComponent {
 	    for (ExplorerTab t : tabs)
 	    	t.tick();
     }
-
+    
+    private void renderGit(Graphics g) {
+    	Fonts.drawString("There's no Git repository in the Base Folder", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+    }
+    
     private void renderSearchReplace(Graphics g) {
     	String text = Texts.file + ": " + (Main.editor.editing != null ? Main.editor.editing.getRegent().getRegent().getName() : "");
     	int cutLength = 0;
@@ -539,6 +545,8 @@ public class Explorer extends IDEComponent {
 	        renderExplorer(g);
 	    else if (explorerMode == ExplorerMode.SEARCHREPLACE)
 	    	renderSearchReplace(g);
+	    else if (explorerMode == ExplorerMode.GIT)
+	    	renderGit(g);
 	    
 	    for (Tab t : Main.editor.tabs) {
 	    	if (Main.editor.editing == t && Main.editor.editing.getX() + Main.editor.tabScr == Main.editor.getX() - 1) {

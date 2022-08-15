@@ -6349,9 +6349,10 @@ public class CodeEditor extends IDEComponent {
 			if (editing == null || CommandTerminal.expOff)
 				return; // Vai modificar o que nao existe?
 
-			RightClickOption.removeAllRightClickOptions(); // arrumar o negacio
+			RightClickOption.removeAllRightClickOptions(); // arrumar o negócio
 			
 			Explorer.explorerMode = ExplorerMode.SEARCHREPLACE;
+			
 			SearchReplaceCore.init();
 			
 			/*if (!alreadyAddedFrame) {
@@ -7973,8 +7974,11 @@ public class CodeEditor extends IDEComponent {
 		if (tabs.size() == 0)
 			CommandTerminal.runCommand("resettabscroll");
 		
-		if (Main.editor.tabs.isEmpty())
+		if (Main.editor.tabs.isEmpty() && Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) {
+			Explorer.explorerMode = ExplorerMode.EXPLORER;
+			Explorer.selected = null;
 			SearchReplaceCore.dispose();
+		}
 		
 		height = Main.screen.getHeight();
 		LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
