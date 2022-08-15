@@ -28,6 +28,16 @@ public class InputBox extends IDEComponent {
 	public void tick() {
 		width = Main.explorer.getWidth() - 40;
 		
+		// mover pra frente (o texto vai pra trás)
+		while (x + 1 + (cursorIndex * (16 - 4)) - scroll > width)
+			scroll += 12;
+		// mover pra trás (o texto vai pra frente)
+		while (x + 1 + (cursorIndex * (16 - 4)) - scroll < x || (x + 1 + (cursorIndex * (16 - 4)) - scroll == x + 1 && text.length() > 0))
+			scroll -= 12;
+		
+		if (text.length() == 0)
+			scroll = 0;
+		
 		if (leftClicked())
 			Explorer.selected = this;
 	}
@@ -120,7 +130,7 @@ public class InputBox extends IDEComponent {
 		
 		g.setColor(Colors.other);
 		
-		if (Explorer.selected == this && Main.editor.showCursor && x + 1 + (cursorIndex * (16 - 4)) < x + width)
-			g.fillRect(x + 1 + (cursorIndex * (16 - 4)), y, 2, height);
+		if (Explorer.selected == this && Main.editor.showCursor && x + 1 + (cursorIndex * (16 - 4)) - scroll < width)
+			g.fillRect(x + 1 + (cursorIndex * (16 - 4)) - scroll, y, 2, height);
 	}
 }

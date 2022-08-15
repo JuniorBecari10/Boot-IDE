@@ -547,7 +547,7 @@ public class Fonts {
     		char[] cha = s.toCharArray();
     		char ch = cha[i];
     		
-    		if ((x + ((font.getSize() - (font.getSize() / 4)) * i)) < minPos) break;
+    		if ((x + ((font.getSize() - (font.getSize() / 4)) * i)) < minPos) continue;
     		if ((x + ((font.getSize() - (font.getSize() / 4)) * i)) > maxPos - font.getSize()) break;
     		
     		int ydraw = ch == 'p' || ch == 'q' || ch == 'g' || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + 2 : y;
