@@ -18,7 +18,7 @@ public class ReturnToBaseFolderButton extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (CommandTerminal.expOff || Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) return;
+		if (CommandTerminal.expOff || Explorer.explorerMode != ExplorerMode.EXPLORER) return;
 		
 		x = Main.explorer.getWidth() - 80;
 		
@@ -44,7 +44,7 @@ public class ReturnToBaseFolderButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		if (CommandTerminal.expOff || Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) return;
+		if (CommandTerminal.expOff || Explorer.explorerMode != ExplorerMode.EXPLORER) return;
 		
 		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
 			g.setColor(Colors.backgroundLight);

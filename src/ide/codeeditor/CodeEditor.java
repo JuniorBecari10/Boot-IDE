@@ -6234,8 +6234,6 @@ public class CodeEditor extends IDEComponent {
 
 				if (isWindows)
 					pb = new ProcessBuilder("cmd", "/c", "start");
-				else
-					pb = new ProcessBuilder("/usr/bin/xterm");
 
 				File dir = Explorer.scope != null ? Explorer.scope.getRegent() : Main.baseFolder; // eu tava fazendo o
 																									// equivalente a
@@ -6392,17 +6390,17 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	/**
-	 * Faz a conta de Regra de Tras, com os nameros dados no argumento.
+	 * Faz a conta de Regra de Três, com os 3 dados dos argumentos.
 	 * 
 	 * <br />
 	 * 
-	 * Pode-se pensar nessa conta da seguinte maneira: se o namero em a equivale, na
-	 * mesma proporaao, ao namero em b, se der um namero em c, quantos sera o namero
+	 * Pode-se pensar nessa conta da seguinte maneira: se o número em a equivale, na
+	 * mesma proporção, ao número em b, ao dar um número em c, quantos será o número
 	 * em d?
 	 * 
-	 * @param a - o namero 1
-	 * @param b - o namero 2
-	 * @param c - o namero 3
+	 * @param a - o número 1
+	 * @param b - o número 2
+	 * @param c - o número 3
 	 * @return O resultado, como se fosse a letra d dos argumentos
 	 */
 	public static int ruleOf3(int a, int b, int c) {

@@ -200,10 +200,10 @@ public final class Texts {
 	public static String apply;
 	
 	public static String settings;
-	
 	public static String file;
-	
 	public static String duplicate;
+	
+	public static String initRepository;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -391,10 +391,10 @@ public final class Texts {
 			apply = "Aplicar";
 			
 			settings = "Configurações";
-			
 			file = "Arquivo";
-			
 			duplicate = "Duplicar";
+			
+			initRepository = "Criar Repositório";
 			
 			break;
 		
@@ -582,10 +582,10 @@ public final class Texts {
 			apply = "Apply";
 			
 			settings = "Settings";
-			
 			file = "File";
-			
 			duplicate = "Duplicate";
+			
+			initRepository = "Init Repository";
 			
 			break;
 		}

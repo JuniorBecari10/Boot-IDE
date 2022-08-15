@@ -22,6 +22,7 @@ import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.explorercomponents.ExecuteButton;
 import ide.explorercomponents.ExplorerTab;
+import ide.explorercomponents.GitCore;
 import ide.explorercomponents.InputBox;
 import ide.explorercomponents.SearchReplaceCore;
 import ide.explorercomponents.SearchReplaceRadioButton;
@@ -53,10 +54,16 @@ public class Explorer extends IDEComponent {
 	
 	public static InputBox selected;
 	
+	// -- Search/ Replace --
+	
 	public static InputBox search, replace;
 	public static ToggleButton caseSensitive, regex;
 	public static SearchReplaceRadioButton entireDocument, selectedLines;
 	public static ExecuteButton searchNext, replaceAll;
+	
+	// -- Git --
+	
+	public static ExecuteButton initRepo;
 	
 	public static int MINIMUM_Y = 200 + Screen.DECORATION_HEIGHT;
 	
@@ -89,15 +96,25 @@ public class Explorer extends IDEComponent {
     public void addTabs() {
     	tabs.add(new ExplorerTab(1, Main.explorerTab, ExplorerMode.EXPLORER, Texts.explorerText) {
     		public void select() {
+    			explorerMode = ExplorerMode.EXPLORER;
+    			selected = null;
+    			
     			SearchReplaceCore.dispose();
+    			GitCore.dispose();
     		}
     	});
     	tabs.add(new ExplorerTab(1 + 3 + ExplorerTab.SIZE, Main.searchReplaceTab, ExplorerMode.SEARCHREPLACE, Texts.searchReplace) {
     		public void select() {
     			Main.editor.execute("searchrep");
+    			GitCore.dispose();
     		}
     	});
-    	tabs.add(new ExplorerTab(1 + 6 + (ExplorerTab.SIZE * 2), Main.gitTab, ExplorerMode.GIT, "Git"));
+    	tabs.add(new ExplorerTab(1 + 6 + (ExplorerTab.SIZE * 2), Main.gitTab, ExplorerMode.GIT, "Git") {
+    		public void select() {
+    			GitCore.init();
+    			SearchReplaceCore.dispose();
+    		}
+    	});
     	tabs.add(new ExplorerTab(1 + 9 + (ExplorerTab.SIZE * 3), Main.terminalTab, ExplorerMode.TERMINAL, "Terminal"));
     }
     
@@ -143,8 +160,11 @@ public class Explorer extends IDEComponent {
 	    /*if (WindowInput.isMaximized() || !WindowInput.isActivated())
 	    	ReloadButton.reloadExplorer();*/
 	    
-	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && explorerMode == ExplorerMode.SEARCHREPLACE) {
+	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && explorerMode != ExplorerMode.EXPLORER) {
+	    	Explorer.explorerMode = ExplorerMode.EXPLORER;
+			Explorer.selected = null;
 	    	SearchReplaceCore.dispose();
+	    	GitCore.dispose();
 	    }
 	    
 	   	// Drag

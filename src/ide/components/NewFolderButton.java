@@ -17,7 +17,7 @@ public class NewFolderButton extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (CommandTerminal.expOff || Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) return;
+		if (CommandTerminal.expOff || Explorer.explorerMode != ExplorerMode.EXPLORER) return;
 		if (Main.baseFolder == null) toRemove.add(this);
 		
 		x = Main.explorer.getWidth() - 160;
@@ -42,7 +42,7 @@ public class NewFolderButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		if (CommandTerminal.expOff || Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) return;
+		if (CommandTerminal.expOff || Explorer.explorerMode != ExplorerMode.EXPLORER) return;
 		
 		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
 			g.setColor(Colors.backgroundLight);

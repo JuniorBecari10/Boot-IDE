@@ -9,10 +9,12 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
@@ -611,6 +613,36 @@ public class Main implements Runnable, Tickable {
     		return;
     	}
     }*/
+    
+    public static List<String> runCommand(String... commands) {
+        List<String> lines = new ArrayList<>();
+        /*Runtime rt = Runtime.getRuntime();
+        Process p = rt.exec(commands);*/
+        try {
+	        ProcessBuilder builder = new ProcessBuilder(commands);
+	        builder.redirectErrorStream(true);
+	        builder.redirectInput(ProcessBuilder.Redirect.INHERIT);
+	        builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+	        Process p = builder.start();
+	        
+	        BufferedReader stdin = new BufferedReader(new InputStreamReader(p.getInputStream()));
+	        BufferedReader stderr = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+	        
+	        String s = null;
+	        while ((s = stdin.readLine()) != null) {
+	            lines.add(s);
+	        }
+	        
+	        // Maybe separate these two outputs?
+	        while ((s = stderr.readLine()) != null) {
+	            lines.add(s);
+	        }
+        } catch (Exception e) {
+        	return lines;
+        }
+        
+        return lines;
+    }
     
     public static void writeFile(File setFile) {
     	BufferedWriter wr = null;

@@ -12,7 +12,6 @@ import ide.codeeditor.IDELine;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
-import ide.explorer.ExplorerMode;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.util.Texts;
@@ -105,13 +104,17 @@ public final class SearchReplaceCore {
 	}
 	
 	public static synchronized void dispose() {
-		Explorer.explorerMode = ExplorerMode.EXPLORER;
-		Explorer.selected = null;
+		IDEComponent.toRemove.add(Explorer.search);
+		IDEComponent.toRemove.add(Explorer.replace);
 		
-		for (IDEComponent i : IDEComponent.components) {
-			if (i instanceof BackButton || i instanceof InputBox || i instanceof ToggleButton || i instanceof ExecuteButton || i instanceof SearchReplaceRadioButton)
-				IDEComponent.toRemove.add(i);
-		}
+		IDEComponent.toRemove.add(Explorer.searchNext);
+		IDEComponent.toRemove.add(Explorer.replaceAll);
+		
+		IDEComponent.toRemove.add(Explorer.entireDocument);
+		IDEComponent.toRemove.add(Explorer.selectedLines);
+		
+		IDEComponent.toRemove.add(Explorer.regex);
+		IDEComponent.toRemove.add(Explorer.caseSensitive);
 	}
 	
 	public static void searchNext(String searchText, boolean caseSensitive, boolean regex, boolean isEntireDocument) {
