@@ -13,7 +13,7 @@ public class GitCore {
 		Explorer.explorerMode = ExplorerMode.GIT;
 		
 		if (Explorer.initRepo == null)
-			Explorer.initRepo = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 50, Main.explorer.getWidth() - 40, 20, Texts.initRepository, () -> { Main.runCommand("cmd", "/c", "git init"); }, true);
+			Explorer.initRepo = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 50, Main.explorer.getWidth() - 40, 20, Texts.initRepository, () -> { Main.runCommand(Main.baseFolder, "cmd", "/c", "git init"); }, true);
 		
 		IDEComponent.toAdd.add(Explorer.initRepo);
 	}

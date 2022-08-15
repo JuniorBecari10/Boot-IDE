@@ -614,7 +614,26 @@ public class Main implements Runnable, Tickable {
     	}
     }*/
     
-    public static List<String> runCommand(String... commands) {
+    public static void runCommand(File directory, String... commands) {
+    	if (os == OS.WINDOWS) {
+    		String[] preCommands = { "cmd", "/c" };
+    		String[] arr = new String[preCommands.length + commands.length];
+    		
+    		int i;
+    		for (i = 0; i < preCommands.length; i++)
+    			arr[i] = preCommands[i];
+    		
+    		for (i = 0; i < commands.length; i++)
+    			arr[preCommands.length + i] = commands[i];
+    		
+    		run(directory, arr);
+    	}
+    	else {
+    		run(directory, commands);
+    	}
+    }
+    
+    public static List<String> run(File directory, String... commands) {
         List<String> lines = new ArrayList<>();
         /*Runtime rt = Runtime.getRuntime();
         Process p = rt.exec(commands);*/
@@ -623,6 +642,7 @@ public class Main implements Runnable, Tickable {
 	        builder.redirectErrorStream(true);
 	        builder.redirectInput(ProcessBuilder.Redirect.INHERIT);
 	        builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+	        builder.directory(directory);
 	        Process p = builder.start();
 	        
 	        BufferedReader stdin = new BufferedReader(new InputStreamReader(p.getInputStream()));
