@@ -21,8 +21,6 @@ public class OneFolderUpButton extends IDEComponent {
 		if (CommandTerminal.expOff || Explorer.explorerMode != ExplorerMode.EXPLORER) return;
 		if (Main.baseFolder == null) toRemove.add(this);
 		
-		x = Main.explorer.getWidth() - 120;
-		
 		if (x < (Main.newFolder.getX() + Main.newFolder.getWidth()) + 2) x = (Main.newFolder.getX() + Main.newFolder.getWidth()) + 2;
 		
 		if (Explorer.scope == null) return;

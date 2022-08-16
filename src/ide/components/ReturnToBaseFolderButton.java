@@ -20,8 +20,6 @@ public class ReturnToBaseFolderButton extends IDEComponent {
 	public void tick() {
 		if (CommandTerminal.expOff || Explorer.explorerMode != ExplorerMode.EXPLORER) return;
 		
-		x = Main.explorer.getWidth() - 80;
-		
 		if (x < (Main.oneFolder.getX() + Main.oneFolder.getWidth()) + 2) x = (Main.oneFolder.getX() + Main.oneFolder.getWidth()) + 2;
 		
 		if (Main.baseFolder == null) toRemove.add(this);

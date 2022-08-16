@@ -54,7 +54,7 @@ public class Explorer extends IDEComponent {
 	
 	public static InputBox selected;
 	
-	// -- Search/ Replace --
+	// -- Search / Replace --
 	
 	public static InputBox search, replace;
 	public static ToggleButton caseSensitive, regex;
@@ -244,7 +244,7 @@ public class Explorer extends IDEComponent {
 	    	
 	    	// Media Queries (só que em Java kkkk)
 	    	
-	    	if (width < 260) {
+	    	if (width < 280) {
 	    		Main.newFile.setWidth(24);
 	    		Main.newFile.setHeight(24);
 	    		
@@ -259,8 +259,14 @@ public class Explorer extends IDEComponent {
 	    		
 	    		Main.reload.setWidth(24);
 	    		Main.reload.setHeight(24);
+	    		
+	    		Main.newFile.setX(Main.openBase.getX() + Main.openBase.getWidth() + 4);
+	    		Main.newFolder.setX(Main.newFile.getX() + Main.newFile.getWidth() + 2);
+	    		Main.oneFolder.setX(Main.newFolder.getX() + Main.newFolder.getWidth() + 2);
+	    		Main.returnBase.setX(Main.oneFolder.getX() + Main.oneFolder.getWidth() + 2);
+	    		Main.reload.setX(Main.returnBase.getX() + Main.returnBase.getWidth() + 2);
 	    	}
-	    	else if (width > 260) {
+	    	else if (width >= 280) {
 	    		Main.newFile.setWidth(32);
 	    		Main.newFile.setHeight(32);
 	    		
@@ -275,6 +281,12 @@ public class Explorer extends IDEComponent {
 	    		
 	    		Main.reload.setWidth(32);
 	    		Main.reload.setHeight(32);
+	    		
+	    		Main.newFile.setX(80);
+	    		Main.newFolder.setX(120);
+	    		Main.oneFolder.setX(160);
+	    		Main.returnBase.setX(200);
+	    		Main.reload.setX(240);
 	    	}
 	    	
 	    	if (width < MINIMUM_Y) {
@@ -524,7 +536,7 @@ public class Explorer extends IDEComponent {
 	}
     
     private void renderGit(Graphics g) {
-    	Fonts.drawString("There's no Git repository in the Base Folder.", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	//Fonts.drawString("There's no Git repository in the Base Folder.", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
     }
     
     public static void renderDescriptionText(String s, int x, int y, Graphics g) {

@@ -20,8 +20,6 @@ public class NewFolderButton extends IDEComponent {
 		if (CommandTerminal.expOff || Explorer.explorerMode != ExplorerMode.EXPLORER) return;
 		if (Main.baseFolder == null) toRemove.add(this);
 		
-		x = Main.explorer.getWidth() - 160;
-		
 		if (x < (Main.newFile.getX() + Main.newFile.getWidth()) + 2) x = (Main.newFile.getX() + Main.newFile.getWidth()) + 2;
 		
 		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !RenameFile.added && Explorer.selected == null)) {

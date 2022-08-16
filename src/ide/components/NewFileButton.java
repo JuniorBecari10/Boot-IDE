@@ -20,10 +20,6 @@ public class NewFileButton extends IDEComponent {
 		if (CommandTerminal.expOff || Explorer.explorerMode != ExplorerMode.EXPLORER) return;
 		if (Main.baseFolder == null) toRemove.add(this);
 		
-		x = Main.explorer.getWidth() - 200;
-		
-		if (x < (Main.openBase.getX() + Main.openBase.getWidth()) + 2) x = (Main.openBase.getX() + Main.openBase.getWidth()) + 2;
-		
 		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !RenameFile.added && Explorer.selected == null)) {
 			MouseInput.updateMouse();
 			
