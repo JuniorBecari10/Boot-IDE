@@ -1754,11 +1754,12 @@ public class CodeEditor extends IDEComponent {
 				|| ext.equalsIgnoreCase(".log") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".bf")
 				|| ext.equalsIgnoreCase(".conf")
 				|| ext.equalsIgnoreCase(".gitignore")
-				|| editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc")
+				|| editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore") || ext.equalsIgnoreCase(".bat")
+				|| ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc")
 				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1"))
 			return fs;
 		
-		if (ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".mod") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".py") ||
+		if (ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".py") ||
 				ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".pyx") || ext.equalsIgnoreCase(".por") || 
 				ext.equalsIgnoreCase(".bas") || ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || 
 				ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".mjs") || 
@@ -1770,7 +1771,7 @@ public class CodeEditor extends IDEComponent {
 		}
 		
 		if (ext.equalsIgnoreCase(".mod")) {
-			indxs = findWord(new String(chars), "require"); // depois de <palavra>
+			indxs = findWord(new String(chars), "module"); // depois de <palavra>
 	
 			int len = 0;
 			for (Integer i : indxs) {
@@ -2166,9 +2167,7 @@ public class CodeEditor extends IDEComponent {
 														// s.length()).getFont().equals(Fonts.methodsEditor))
 
 				for (Integer i : indxs) {
-					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
-							|| ((i + s.length() < chars.length)
-									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
+					if (i > 0)
 						continue;
 
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs); // tem q dar offset
@@ -3986,7 +3985,12 @@ public class CodeEditor extends IDEComponent {
 			for (Integer i : indxs) {
 				if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))
 					continue;
-
+				
+				if (ext.equalsIgnoreCase(".mod")) {
+					List<Integer> idxs = findWord(new String(chars), "go");
+					if (idxs.isEmpty()) continue;
+				}
+				
 				if ((((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
 						|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
 						|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
