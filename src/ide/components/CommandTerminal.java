@@ -1616,7 +1616,7 @@ public class CommandTerminal extends IDEComponent {
 		for (int i = 0; i < commandHints.size(); i++) {
 			String cmd = commandHints.get(i);
 			IDEFont font = (!changeHints && i == comIndex - 1) || (comIndex == commandHints.size() && i == comIndex) ? new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE) : new IDEFont(Fonts.otherNormal, CodeEditor.DEFAULT_FONT_SIZE);			
-			Fonts.drawString(cmd, x - 145 > 20 ? x - 145 : 20, y + height + 20 + (22 * i), font, g2);
+			Fonts.drawString(cmd, x - 145 > 20 ? x - 145 : 20, y + height + 20 + (20 * i), font, g2);
 		}
 		
 		Fonts.drawString(Texts.esc_Cancel, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
