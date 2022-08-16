@@ -120,6 +120,12 @@ public class Explorer extends IDEComponent {
     		}
     	});
     	tabs.add(new ExplorerTab(1 + 6 + (ExplorerTab.SIZE * 2), Main.gitTab, ExplorerMode.GIT, "Git") {
+    		public boolean hovered() {
+    			if (Main.baseFolder == null) return false;
+    			
+    			return super.hovered();
+    		}
+    		
     		public void select() {
     			GitCore.init();
     			SearchReplaceCore.dispose();

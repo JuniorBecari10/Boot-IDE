@@ -8173,8 +8173,14 @@ public class CodeEditor extends IDEComponent {
 		if (tabs.isEmpty() && Main.baseFolder == null)
 			Main.screen.frame.setTitle(Main.PROGRAM_NAME);
 		
-		if (editing != null && (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(Main.CONFIG_FILE_EXTENSION) && editing.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir)))
-			Main.screen.frame.setTitle(Main.baseFolder.getName() + " | " + Texts.settings + " - " + Main.PROGRAM_NAME);
+		if (editing != null && (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(Main.CONFIG_FILE_EXTENSION) && editing.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir))) {
+			if (Main.baseFolder == null) {
+				Main.screen.frame.setTitle(Texts.settings + " - " + Main.PROGRAM_NAME);
+			}
+			else {
+				Main.screen.frame.setTitle(Main.baseFolder.getName() + " | " + Texts.settings + " - " + Main.PROGRAM_NAME);
+			}
+		}
 		
 		try {
 			clipboard = (String) Main.toolkit.getSystemClipboard().getData(DataFlavor.stringFlavor);
