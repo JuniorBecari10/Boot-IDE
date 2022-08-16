@@ -766,6 +766,8 @@ public class CodeEditor extends IDEComponent {
 			 "SQR", "TAN", "REM", "USR", "CALL", "TRON", "TROFF", "ASM", "SUB", "AS", "POKE", "PEEK", "SINGLE", "LONG", "INTEGER", "STRING",
 			 "AND", "OR", "XOR", "NOT" };
 	
+	public static final String[] modKeys = { "module", "go", "require", "replace", "exclude" };
+	
 	public Thread killAllTabs;
 	
 	public static CommandTerminal terminal;
@@ -1372,7 +1374,7 @@ public class CodeEditor extends IDEComponent {
 		case ".v": return vKeys;
 		case ".vh": return vKeys;
 		case ".vsh": return vKeys;
-		case ".mod": return goKeys;
+		case ".mod": return modKeys;
 		
 		default: return null;
 		}
@@ -1766,6 +1768,20 @@ public class CodeEditor extends IDEComponent {
 			
 			return fs;
 		}
+		
+		if (ext.equalsIgnoreCase(".mod")) {
+			indxs = findWord(new String(chars), "require"); // depois de <palavra>
+	
+			int len = 0;
+			for (Integer i : indxs) {
+				while (i + len < chars.length)
+					len++;
+	
+				fs = color(i, i + len + 1, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
+			}
+			
+			return fs;
+		}
 
 		if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
 				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
@@ -2128,8 +2144,24 @@ public class CodeEditor extends IDEComponent {
 		case ".v":
 		case ".vh":
 		case ".vsh":
-		case ".mod":
 			for (String s : vKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
+														// s.length()).getFont().equals(Fonts.methodsEditor))
+
+				for (Integer i : indxs) {
+					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
+							|| ((i + s.length() < chars.length)
+									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
+						continue;
+
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+
+			break;
+			
+		case ".mod":
+			for (String s : modKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
 														// s.length()).getFont().equals(Fonts.methodsEditor))
 
