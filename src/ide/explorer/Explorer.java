@@ -452,7 +452,7 @@ public class Explorer extends IDEComponent {
 	        	showFolderPathCard = true;
 	    	}
 	    	
-	    	if (baseFolderName.length() * (23 - 4) >= width) {
+	    	if (baseFolderName != null && baseFolderName.length() * (23 - 4) >= width) {
 	        	baseFolderName = baseFolderName.substring(0, maxTextWidth - 3) + "...";
 	        	showBaseFolderCard = true;
 	    	}

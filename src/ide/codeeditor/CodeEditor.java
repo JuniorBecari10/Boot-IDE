@@ -1008,7 +1008,6 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public static String prettyBinary(String binary, int blockSize, String separator) {
-
         List<String> result = new ArrayList<>();
         int index = 0;
         while (index < binary.length()) {
@@ -1222,8 +1221,7 @@ public class CodeEditor extends IDEComponent {
     }
 
 	public static boolean isNumber(char c) {
-		return c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9'
-				|| c == '0';
+		return c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9' || c == '0';
 	}
 	
 	public static boolean isSymbol(char c) {
@@ -6600,9 +6598,9 @@ public class CodeEditor extends IDEComponent {
 			String change = a.text;
 			
 			toAddAutoCompletes.add(new RightClickOption(drawcx + (Main.editor.getX() - originalEditorX), // x
-					(drawcy + FONT_SIZE /* + 2 */) + index * RightClickOption.HEIGHT,  // y
+					(drawcy + FONT_SIZE /* + 2 */) + index * RightClickOption.AUTOCOMPLETE_HEIGHT,  // y
 					330, // width
-					30, // height
+					RightClickOption.AUTOCOMPLETE_HEIGHT, // height
 					16, // textSize
 					a.text, // text
 					getAutoCompleteIcon(a.type), // icon

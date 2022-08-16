@@ -28,7 +28,8 @@ public class RightClickOption extends IDEComponent {
 	public boolean isAutoComplete;
 	public boolean isActive;
 	
-	public static final int HEIGHT = 30;
+	public static final int HEIGHT = 28;
+	public static final int AUTOCOMPLETE_HEIGHT = 30;
 
 	public RightClickOption(int x, int y, int width, String text, ExecuteCommand command, String clickArg) {
 		super(x, y, width, HEIGHT, null);
@@ -212,7 +213,7 @@ public class RightClickOption extends IDEComponent {
 		//if (!isActive) c = new Color(Colors.background2.getRed() - 5, Colors.background2.getGreen() - 5, Colors.background2.getBlue() - 5);
 		
 		g.setColor(c);
-		g.fillRect(x, y, width, HEIGHT);
+		g.fillRect(x, y, width, height);
 		
 		Fonts.drawString(isAutoComplete ? (text.length() > 25 ? text.substring(0, 22) + "..." : text) : text, x + 4, y + 4, new IDEFont(Fonts.lighterGrayNormal, textSize), x + width, g);
 		
