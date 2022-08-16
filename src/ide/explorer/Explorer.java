@@ -39,6 +39,8 @@ import ide.util.Texts;
 
 public class Explorer extends IDEComponent {
 	
+	public static final int DEFAULT_WIDTH = 280;
+	
 	public static List<ListableFile> files;
 	public static List<ListableFile> toRemove;
 	
@@ -244,7 +246,7 @@ public class Explorer extends IDEComponent {
 	    	
 	    	// Media Queries (só que em Java kkkk)
 	    	
-	    	if (width < 280) {
+	    	if (width < DEFAULT_WIDTH) {
 	    		Main.newFile.setWidth(24);
 	    		Main.newFile.setHeight(24);
 	    		
@@ -266,7 +268,7 @@ public class Explorer extends IDEComponent {
 	    		Main.returnBase.setX(Main.oneFolder.getX() + Main.oneFolder.getWidth() + 2);
 	    		Main.reload.setX(Main.returnBase.getX() + Main.returnBase.getWidth() + 2);
 	    	}
-	    	else if (width >= 280) {
+	    	else if (width >= DEFAULT_WIDTH) {
 	    		Main.newFile.setWidth(32);
 	    		Main.newFile.setHeight(32);
 	    		
@@ -282,11 +284,11 @@ public class Explorer extends IDEComponent {
 	    		Main.reload.setWidth(32);
 	    		Main.reload.setHeight(32);
 	    		
-	    		Main.newFile.setX(80);
-	    		Main.newFolder.setX(120);
-	    		Main.oneFolder.setX(160);
-	    		Main.returnBase.setX(200);
-	    		Main.reload.setX(240);
+	    		Main.newFile.setX(width - 200);
+	    		Main.newFolder.setX(Main.newFile.getX() + Main.newFile.getWidth() + 4);
+	    		Main.oneFolder.setX(Main.newFolder.getX() + Main.newFolder.getWidth() + 4);
+	    		Main.returnBase.setX(Main.oneFolder.getX() + Main.oneFolder.getWidth() + 4);
+	    		Main.reload.setX(Main.returnBase.getX() + Main.returnBase.getWidth() + 4);
 	    	}
 	    	
 	    	if (width < MINIMUM_Y) {
