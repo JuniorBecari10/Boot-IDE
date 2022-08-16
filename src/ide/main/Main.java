@@ -897,9 +897,11 @@ public class Main implements Runnable, Tickable {
         if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))
 	        for (Tab t : Main.editor.tabs) {
 				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() - 1 && !t.button.hovered() && !Tab.isTabDragged()) { // por algum motivo a + e nao -
-					int index = Main.baseFolder != null ? t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0 : 0;
+					int index = Main.baseFolder != null ? t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) && t.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0 : 0;
 					
-					int width = 20 + t.getRegent().getRegent().getPath().substring(index).length() * 12;
+					String text = ListableFile.getFileExtension(t.getRegent().getRegent()).equalsIgnoreCase(CONFIG_FILE_EXTENSION) && t.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir) ? Texts.seeingConfigFile : t.getRegent().getRegent().getPath().substring(index);
+					
+					int width = 20 + text.length() * 12;
 					int height = 100;
 					
 					int x = MouseInput.getMouseX() + 10;
@@ -947,7 +949,7 @@ public class Main implements Runnable, Tickable {
 					g2.setStroke(new BasicStroke(2f));
 					g2.drawRect(x, MouseInput.getMouseY(), width, height);
 					
-					Fonts.drawString(t.getRegent().getRegent().getPath().substring(index), (x - 10) + 20, (y - 10) + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					Fonts.drawString(text, (x - 10) + 20, (y - 10) + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
 					
 					if (Main.editor.codeHelpersOn)
 						Fonts.drawString(Texts.codeHelpersOn, (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);

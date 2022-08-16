@@ -205,6 +205,8 @@ public final class Texts {
 	
 	public static String initRepository;
 	
+	public static String seeingConfigFile;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -396,6 +398,8 @@ public final class Texts {
 			
 			initRepository = "Criar Repositório";
 			
+			seeingConfigFile = "Você está vendo um Arquivo de Configurações da Boot IDE.";
+			
 			break;
 		
 		case ENG:
@@ -586,6 +590,8 @@ public final class Texts {
 			duplicate = "Duplicate";
 			
 			initRepository = "Init Repository";
+			
+			seeingConfigFile = "You are seeing a Boot IDE Configuration File.";
 			
 			break;
 		}

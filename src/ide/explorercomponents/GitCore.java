@@ -14,7 +14,7 @@ public class GitCore {
 		
 		if (Explorer.initRepo == null) {
 			Explorer.initRepo = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 80, Main.explorer.getWidth() - 40, 20, Texts.initRepository, () -> {
-				Main.runCommand(Main.baseFolder, "cmd", "/c", "git init");
+				Main.runCommand(Main.baseFolder, "git init");
 			}, true);
 		}
 		
