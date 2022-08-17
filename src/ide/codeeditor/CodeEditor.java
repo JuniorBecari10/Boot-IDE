@@ -1652,6 +1652,8 @@ public class CodeEditor extends IDEComponent {
 		case ".toml": return minMode ? "Toml" : (Main.lang == Language.PORT ? "Arquivo de Configurações do Rust" : "Rust Configuration File");
 		case ".tf": return "Terraform";
 		case ".db": return Main.lang == Language.PORT ? "Banco de Dados" : "Database";
+		case ".yml": return "YAML Ain't Markup Language";
+		case ".yaml": return "YAML Ain't Markup Language";
 		
 		case ".png": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		case ".jpg": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
@@ -1781,6 +1783,26 @@ public class CodeEditor extends IDEComponent {
 					len++;
 	
 				fs = color(i, i + len + 1, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
+			}
+			
+			return fs;
+		}
+		
+		if (ext.equalsIgnoreCase(".yml") || ext.equalsIgnoreCase(".yaml")) {
+			fs = color(0, fs.size(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
+			
+			indxs = findWord(new String(chars), ":"); // antes de <palavra>
+
+			for (Integer i : indxs) {
+				int c = i;
+				int len = 0;
+
+				while (c < chars.length && c + len < chars.length && c > 0) {
+					c--;
+					len++;
+				}
+
+				fs = color(c, c + len, new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs);
 			}
 			
 			return fs;
@@ -5062,6 +5084,8 @@ public class CodeEditor extends IDEComponent {
 		case ".toml":
 		case ".gd":
 		case ".mcfunction":
+		case ".yml":
+		case ".yaml":
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			

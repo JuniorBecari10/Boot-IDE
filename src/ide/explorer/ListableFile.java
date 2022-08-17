@@ -122,7 +122,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			t.add(new FileType(".vb", Main.spritesheet.getSprite (528, 16, 16, 16)));
 			t.add(new FileType(".bf", Main.spritesheet.getSprite (560, 16, 16, 16)));
 			t.add(new FileType(".gd", Main.spritesheet.getSprite (608, 16, 16, 16)));
-			t.add(new FileType(".mcfunction", Main.spritesheet.getSprite(624, 16, 16, 16)));
+			t.add(new FileType(".mcfunction",Main.spritesheet.getSprite(624,16,16,16)));
 			t.add(new FileType(".por", Main.spritesheet.getSprite(640, 16, 16, 16)));
 			t.add(new FileType(".cmxa", Main.spritesheet.getSprite(656, 16, 16, 16)));
 			t.add(new FileType(".ml", Main.spritesheet.getSprite(656, 16, 16, 16)));
@@ -191,7 +191,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			t.add(new FileType(".toml",Main.spritesheet.getSprite(352, 32, 16, 16)));
 			t.add(new FileType(".svelte", Main.spritesheet.getSprite(816,32,16,16)));
 			t.add(new FileType(".tf", Main.spritesheet.getSprite (832, 32, 16, 16)));
-			t.add(new FileType(".db", Main.spritesheet.getSprite(160, 16, 16, 16)));
+			t.add(new FileType(".db",  Main.spritesheet.getSprite(160, 16, 16, 16)));
+			t.add(new FileType(".yml", Main.spritesheet.getSprite(864, 32, 16, 16)));
+			t.add(new FileType(".yaml",Main.spritesheet.getSprite(864, 32, 16, 16)));
 			
 			t.add(new FileType(".png", Main.spritesheet.getSprite  (0, 48, 16, 16)));
 			t.add(new FileType(".jpg", Main.spritesheet.getSprite  (0, 48, 16, 16)));
