@@ -714,7 +714,7 @@ public class CodeEditor extends IDEComponent {
 			"@private", "@property", "@try", "@throw", "@catch", "@finally", "@synthesize", "@dynamic", "@selector",
 			"atomic", "nonatomic", "retain" };
 
-	public static final String[] ideConfKeys = { new String("Arquivo de Configurações da Boot IDE".getBytes(), StandardCharsets.UTF_8), "Boot IDE Configuration File",
+	public static final String[] ideConfKeys = { "Arquivo de Configurações da " + Main.PROGRAM_NAME, Main.PROGRAM_NAME + " Configuration File",
 			"port", "eng", "PORT", "ENG", "Colors", "Files", "Settings", "default", "true", "false", "LF", "lf", "CR", "cr", "CRLF", "crlf" };
 
 	public static final String[] makeKeys = { "if", "else", "export" };
@@ -1613,7 +1613,7 @@ public class CodeEditor extends IDEComponent {
 				: "Saved Bollot Box from Criador de Urnas");
 		case ".save": return (Main.lang == Language.PORT ? "Jogo Salvo do World's Hardest Game Maker 2" // fazer desses tbm
 				: "Saved Game from World's Hardest Game Maker 2");
-		case ".conf": return (Main.lang == Language.PORT ? "Arquivo de Configurações da Boot IDE"
+		case ".conf": return (Main.lang == Language.PORT ? "Arquivo de Configurações da " + Main.PROGRAM_NAME
 				: "Boot IDE Configuration File");
 		case Main.SETTINGS_FILE_EXTENSION: return (Main.lang == Language.PORT ? "Arquivo de Configuraaaes da Boot IDE"
 				: "Boot IDE Configuration File");
