@@ -63,6 +63,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public static final int TAB_ANIMATION_TIMEOUT = 300;
 	public static final int DEFAULT_FONT_SIZE = 16;
+	public static final int LOWER_BAR_HEIGHT = 22;
 	
 	public static int FONT_SIZE = DEFAULT_FONT_SIZE; // 18, 16 (Padrao: 16)
 	public static int LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
@@ -3980,7 +3981,7 @@ public class CodeEditor extends IDEComponent {
 		// boolean toContinue = false;
 
 		for (String s : nums) { // colorir números
-			indxs = findWord(new String(chars), s); // TODO
+			indxs = findWord(new String(chars), s);
 
 			for (Integer i : indxs) {
 				if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))
@@ -6249,7 +6250,7 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public static void execTerminal() {
-		terminal = new CommandTerminal(Screen.WIDTH / 2 - 250, Screen.DECORATION_HEIGHT + 40 /*30*/, 500, 30); // 25
+		terminal = new CommandTerminal(Screen.WIDTH / 2 - 250, Screen.DECORATION_HEIGHT + 40, 500, 30); // 25
 
 		if (CommandTerminal.active)
 			return;
@@ -8352,32 +8353,9 @@ public class CodeEditor extends IDEComponent {
 				g.fillRect(x, MIN_Y, Main.screen.getWidth(), height);
 			}
 	
-	//		if (editing != null &&																	// não vamos mostrar imagens aqui, vai abrir o aplicativo do sistema
-	//			(ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".png") || // se for uma imagem
-	//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".jpg") ||
-	//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".jpeg")||
-	//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".gif") ||
-	//			 ListableFile.getFileExtension(editing.getRegent().getRegent()).equals(".bmp"))) {
-	//			try {
-	//				BufferedImage get = ImageIO.read(getClass().getResource(editing.getRegent().getRegent().getAbsolutePath())); // esse get ta null
-	//				
-	//				g.drawImage(get, (x + (width / 2)) - get.getWidth(), (y + (height / 2)) - get.getHeight(), get.getWidth() * 2, get.getHeight() * 2, null);
-	//			} catch (Exception e) {
-	//				e.printStackTrace();
-	//			}
-	//			
-	//			return; // pra n renderizar texto, aquele monte de coisa estranha
-	//		}
-	
 			g.setColor(Colors.backgroundLight); // TODO é essa aqui a linha que atravessa a tela no cursor
 			g.fillRect(x, MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY, Main.screen.getWidth(), LINE_HEIGHT);
-	
-			/*
-			 * g.setColor(Colors.backgroundLight); g.fillRect(x, MIN_Y + ((cursorY - 1) *
-			 * LINE_HEIGHT) - scrY - 1, 49, LINE_HEIGHT +
-			 * 1);
-			 */
-	
+			
 			try {
 				for (int i = 0; i < lines.size(); i++) {
 					if (selecting) {
@@ -8524,10 +8502,10 @@ public class CodeEditor extends IDEComponent {
 			g2.setStroke(new BasicStroke(3f));
 			g2.fillRect(editing.getX() + 2 + tabScr, Tab.Y + Tab.HEIGHT - 2, editing.drawW - 3, 4);
 	
-			// desenhar barra inferior
+			// desenhar barra inferior (lowerbar, lower bar)
 			if (editing != null) {
 				g.setColor(Colors.lowerBar);
-				g.fillRect(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22);
+				g.fillRect(x, Main.screen.getHeight() - LOWER_BAR_HEIGHT, Main.screen.getWidth(), LOWER_BAR_HEIGHT);
 				
 				String selectingText = selecting ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2) : "";
 							
