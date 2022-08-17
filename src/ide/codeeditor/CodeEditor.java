@@ -1405,7 +1405,7 @@ public class CodeEditor extends IDEComponent {
 				|| ext.equalsIgnoreCase(".ogg") || ext.equalsIgnoreCase(".otf") || ext.equalsIgnoreCase(".ttf")
 				|| ext.equalsIgnoreCase(".woff") || ext.equalsIgnoreCase(".woff2") || ext.equalsIgnoreCase(".zip")
 				|| ext.equalsIgnoreCase(".rar") || ext.equalsIgnoreCase(".7z") || ext.equalsIgnoreCase(".bin")
-				|| ext.equalsIgnoreCase(".gz") || ext.equalsIgnoreCase(".rtf");
+				|| ext.equalsIgnoreCase(".gz") || ext.equalsIgnoreCase(".rtf") || ext.equalsIgnoreCase(".db");
 	}
 
 	public static boolean isFormatSupported(String format) {
@@ -1651,6 +1651,7 @@ public class CodeEditor extends IDEComponent {
 		case ".bash_profile": return (Main.lang == Language.PORT ? "Perfil Bash" : "Bash Profile");
 		case ".toml": return minMode ? "Toml" : (Main.lang == Language.PORT ? "Arquivo de Configurações do Rust" : "Rust Configuration File");
 		case ".tf": return "Terraform";
+		case ".db": return Main.lang == Language.PORT ? "Banco de Dados" : "Database";
 		
 		case ".png": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		case ".jpg": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
@@ -8515,10 +8516,6 @@ public class CodeEditor extends IDEComponent {
 				Fonts.drawString(codeType + " - " + extType + " | " + (cursorX + 1) + ":" + cursorY
 						+ selectingText,
 						x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
-	
-				// Fonts.drawString("X: " + (cursorX + 1) + ", Y: " + cursorY,
-				// Main.screen.getWidth() - 170, Main.screen.getHeight() - 20, new
-				// IDEFont(Fonts.otherNormal, 16), g);
 			}
 		} catch (Exception e) {}
 	}
