@@ -392,7 +392,7 @@ public class CodeEditor extends IDEComponent {
 	public static final String[] cKeys = { "auto", "break", "case", "char", "const", "continue", "default", "do",
 			"double", "else", "enum", "extern", "float", "for", "goto", "if", "int", "long", "register", "return",
 			"short", "signed", "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", "void",
-			"volatile", "while", "true", "false", "null", "include", "#include", "restrict", "bool", "duint", "uint8_t", "uint16_t",
+			"volatile", "while", "true", "false", "null", "include", "#include", "#undef", "restrict", "bool", "duint", "uint8_t", "uint16_t",
 			"size_t", "NULL" };
 
 	public static final String[] cppKeys = { "auto", "break", "case", "char", "const", "continue", "default", "do",
@@ -401,7 +401,7 @@ public class CodeEditor extends IDEComponent {
 			"volatile", "while", "asm", "dynamic_cast", "namespace", "reinterpret_cast", "bool", "explicit", "new",
 			"static_cast", "false", "catch", "operator", "template", "friend", "private", "class", "this", "inline",
 			"public", "throw", "const_cast", "delete", "mutable", "protected", "true", "try", "typeid", "typename",
-			"using", "virtual", "wchar_t", "#include", "include", "#define", "string", "#ifdef", "#ifndef", "#error", "#pragma", "#endif",
+			"using", "virtual", "wchar_t", "#include", "include", "#define", "#undef", "string", "#ifdef", "#ifndef", "#error", "#pragma", "#endif",
 			"override", "std", "size_t", "duint", "uint8_t", "uint16_t", "comment", "lib", "NULL", "alignof", "nullptr" };
 
 	public static final String[] csKeys = { "abstract", "async", "const", "event", "extern", "new", "override",
@@ -1840,6 +1840,17 @@ public class CodeEditor extends IDEComponent {
 				} catch (Exception e) {
 					continue;
 				}
+			}
+			
+			indxs = findWord(new String(chars), "/>");
+			
+			for (Integer i : indxs) {
+				int len = 0;
+				
+				while (i + len < chars.length && chars[i + len] != '<')
+					len++;
+				
+				fs = color(i, i + len, new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs);
 			}
 		}
 		
