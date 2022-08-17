@@ -44,7 +44,7 @@ public class ExplorerTab extends IDEComponent {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		Color c = Explorer.explorerMode == regent ? Colors.textLight : Colors.explorerLight;
-		Color bg = hovered() ? Colors.explorerLight : Colors.codeEditor;
+		Color bg = hovered() ? Colors.explorerLight : Colors.explorer;
 
 		g.setColor(bg);
 		g2.setStroke(new BasicStroke(3f));

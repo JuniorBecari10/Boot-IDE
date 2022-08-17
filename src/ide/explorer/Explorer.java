@@ -515,7 +515,7 @@ public class Explorer extends IDEComponent {
         g.setColor(Colors.explorerLight);
         g2.drawLine(0, Screen.DECORATION_HEIGHT + 199, width - 1, Screen.DECORATION_HEIGHT + 199); // linha que divide os listablefiles
         
-        Fonts.drawString(folderPath, x + 10, Screen.DECORATION_HEIGHT + 170, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+        Fonts.drawString(folderPath, x + 10, Screen.DECORATION_HEIGHT + 170, new IDEFont(Fonts.lightGrayNormal, 16), g);
         
         try {
 	        for (ListableFile f : Explorer.files) {
@@ -594,7 +594,7 @@ public class Explorer extends IDEComponent {
 	    // Desenhar encima da tab
 	    for (ExplorerTab t : tabs) {
 	    	if (Explorer.explorerMode == t.regent) {
-	    		Color bg = t.hovered() ? Colors.explorerLight : Colors.codeEditor;
+	    		Color bg = t.hovered() ? Colors.explorerLight : Colors.explorer;
 	    		
 				g.setColor(bg);
 				g.fillRect(t.getX() + 2, ExplorerTab.Y + ExplorerTab.SIZE - 3, ExplorerTab.SIZE - 3, 8);
