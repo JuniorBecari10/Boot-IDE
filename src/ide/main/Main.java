@@ -897,8 +897,7 @@ public class Main implements Runnable, Tickable {
         if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))
 	        for (Tab t : Main.editor.tabs) {
 				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() - 1 && !t.button.hovered() && !Tab.isTabDragged()) { // por algum motivo a + e nao -
-					int index = Main.baseFolder != null ? t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) && t.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0 : 0;
-					
+					int index = Main.baseFolder != null ? t.getRegent().getRegent().getPath().contains(Main.baseFolder.getName()) && !t.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir) ? t.getRegent().getRegent().getPath().indexOf(Main.baseFolder.getName()) : 0 : 0;
 					String text = ListableFile.getFileExtension(t.getRegent().getRegent()).equalsIgnoreCase(CONFIG_FILE_EXTENSION) && t.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir) ? Texts.seeingConfigFile : t.getRegent().getRegent().getPath().substring(index);
 					
 					int width = 20 + text.length() * 12;

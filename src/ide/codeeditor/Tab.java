@@ -725,7 +725,6 @@ public class Tab extends IDEComponent implements Serializable {
 			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 120, width, Texts.save, (s) -> execute(s), "save"));
 			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 150, width, Main.baseFolder != null, Texts.openBootExplorer, (s) -> execute(s), "showexp"));
 			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, Texts.openExplorer, (s) -> execute(s), "sysexp"));
-			//list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.orderTabs, (s) -> execute(s), "alternate"));
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
@@ -811,7 +810,11 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		if (isReadOnly) limit = (x + drawW) - 30;
 		
-		Fonts.drawString(ListableFile.getFileExtension(Main.editor.editing.getRegent().getRegent()).equalsIgnoreCase(Main.CONFIG_FILE_EXTENSION) && Main.editor.editing.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir) ? Texts.settings : regent.getRegent().getName(), x + 35, Y + 5, font, limit, g);
+		Fonts.drawString(
+				ListableFile.getFileExtension(Main.editor.editing.getRegent().getRegent()).equalsIgnoreCase(Main.CONFIG_FILE_EXTENSION)
+				&& Main.editor.editing.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir)
+					? Texts.settings
+					: regent.getRegent().getName(), x + 35, Y + 5, font, limit, g);
 	
 		if (isReadOnly) {
 			if (readMode == FileReadMode.NORMAL)
