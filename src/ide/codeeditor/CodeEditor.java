@@ -1658,16 +1658,16 @@ public class CodeEditor extends IDEComponent {
 		case ".jpeg": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		case ".gif": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		case ".bmp": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
-		case ".ico": return (Main.lang == Language.PORT ? "Arquivo de Icone" : "Icon File");
+		case ".ico": return (Main.lang == Language.PORT ? "Arquivo de Ícone" : "Icon File");
 		case ".webp": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 
 		case ".mp4": return (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
 		case ".wmv": return (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
 		case ".avi": return (Main.lang == Language.PORT ? "Arquivo de Vídeo" : "Video File");
 
-		case ".wav": return (Main.lang == Language.PORT ? "Arquivo de Audio" : "Audio File");
-		case ".mp3": return (Main.lang == Language.PORT ? "Arquivo de Audio" : "Audio File");
-		case ".ogg": return (Main.lang == Language.PORT ? "Arquivo de Audio" : "Audio File");
+		case ".wav": return (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
+		case ".mp3": return (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
+		case ".ogg": return (Main.lang == Language.PORT ? "Arquivo de Áudio" : "Audio File");
 
 		case ".otf": return (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");
 		case ".ttf": return (Main.lang == Language.PORT ? "Arquivo de Fonte" : "Font File");

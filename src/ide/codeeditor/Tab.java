@@ -716,25 +716,29 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			int width = Main.lang == Language.PORT ? 485 : 330;
 			
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2, width, Texts.closeTab, (s) -> execute(s), "this");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 30, width, Texts.closeAllTabs, (s) -> execute(s), "all");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 60, width, Texts.closeWithoutSave, (s) -> execute(s), "nosave");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 90, width, Main.editor.tabs.size() > 1, Texts.closeOtherTabs, (s) -> execute(s), "closeother");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 120, width, Texts.save, (s) -> execute(s), "save");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 150, width, Main.baseFolder != null, Texts.openBootExplorer, (s) -> execute(s), "showexp");
-			IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, Texts.openExplorer, (s) -> execute(s), "sysexp");
-			//IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.orderTabs, (s) -> execute(s), "alternate");
+			List<RightClickOption> list = new ArrayList<>();
+			
+			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2, width, Texts.closeTab, (s) -> execute(s), "this"));
+			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 30, width, Texts.closeAllTabs, (s) -> execute(s), "all"));
+			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 60, width, Texts.closeWithoutSave, (s) -> execute(s), "nosave"));
+			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 90, width, Main.editor.tabs.size() > 1, Texts.closeOtherTabs, (s) -> execute(s), "closeother"));
+			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 120, width, Texts.save, (s) -> execute(s), "save"));
+			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 150, width, Main.baseFolder != null, Texts.openBootExplorer, (s) -> execute(s), "showexp"));
+			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, Texts.openExplorer, (s) -> execute(s), "sysexp"));
+			//list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.orderTabs, (s) -> execute(s), "alternate"));
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			if ((ListableFile.getFileExtension(regent.getRegent()).equals(".bat") || ListableFile.getFileExtension(regent.getRegent()).equals(".cmd") || ListableFile.getFileExtension(regent.getRegent()).equals(".com") || ListableFile.getFileExtension(regent.getRegent()).equals(".ps1")) && isWindows)
-				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.execute, (s) -> execute(s), "run");
+				list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.execute, (s) -> execute(s), "run"));
 			
 			if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && !isWindows)
-				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.execute, (s) -> execute(s), "runbash");
+				list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.execute, (s) -> execute(s), "runbash"));
 			
 			if (ListableFile.getFileExtension(regent.getRegent()).equals(".conf"))
-				IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.apply, (s) -> execute(s), "closeapply");
+				list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.apply, (s) -> execute(s), "closeapply"));
+			
+			IDEComponent.addRightClickOptions(x + Main.editor.tabScr, y + height + 2, list.toArray(new RightClickOption[list.size()]));
 			
 			//if (ListableFile.getFileExtension(regent.getRegent()).equals(".sh") && isWindows)
 			//	IDEComponent.addRightClickOption(x + Main.editor.tabScr, y + height + 2 + 210, width, Texts.executeBash, (s) -> execute(s), "runwithbash");
