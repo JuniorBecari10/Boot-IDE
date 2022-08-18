@@ -1462,29 +1462,61 @@ public class CommandTerminal extends IDEComponent {
 			if (KeyInput.isControlDown() || KeyInput.isAltDown() || KeyInput.isAltGrDown()) return;
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP) {
-				if (tcIndex < 0)
-					tcIndex = 0;
-				
-				builder = new StringBuilder(typedCommands.get(tcIndex));
-				
-				cursorIndex = typedCommands.get(tcIndex).length();
-				tcIndex--;
-				
-				commandHints.clear();
+				if (KeyInput.isShiftDown()) {
+					if (commandHints.isEmpty()) return;
+					
+					builder = new StringBuilder(commandHints.get(comIndex >= commandHints.size() ? commandHints.size() - 1 : comIndex).split(" ")[0]);
+					
+					cursorIndex = builder.length();
+					comIndex--;
+					
+					if (comIndex < 0) comIndex = commandHints.size();
+					
+					changeHints = false;
+					
+					return;
+				}
+				else {
+					if (tcIndex < 0)
+						tcIndex = 0;
+					
+					builder = new StringBuilder(typedCommands.get(tcIndex));
+					
+					cursorIndex = typedCommands.get(tcIndex).length();
+					tcIndex--;
+					
+					commandHints.clear();
+				}
 			}
 			
 			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN) {
-				tcIndex++;
-				
-				if (tcIndex >= typedCommands.size()) {
-					tcIndex = typedCommands.size() - 1;
+				if (KeyInput.isShiftDown()) {
+					if (commandHints.isEmpty()) return;
+					
+					builder = new StringBuilder(commandHints.get(comIndex >= commandHints.size() ? commandHints.size() - 1 : comIndex).split(" ")[0]);
+					
+					cursorIndex = builder.length();
+					comIndex++;
+					
+					if (comIndex > commandHints.size()) comIndex = 0;
+					
+					changeHints = false;
+					
+					return;
 				}
+				else {
+					tcIndex++;
+					
+					if (tcIndex >= typedCommands.size()) {
+						tcIndex = typedCommands.size() - 1;
+					}
+					
+					builder = new StringBuilder(typedCommands.get(tcIndex));
+					
+					cursorIndex = typedCommands.get(tcIndex).length();
 				
-				builder = new StringBuilder(typedCommands.get(tcIndex < 0 ? 0 : tcIndex));
-				
-				cursorIndex = typedCommands.get(tcIndex).length();
-			
-				commandHints.clear();
+					commandHints.clear();
+				}
 			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && cursorIndex > 0) {

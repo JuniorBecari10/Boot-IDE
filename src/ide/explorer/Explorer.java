@@ -242,7 +242,7 @@ public class Explorer extends IDEComponent {
 	    	
 	    	// Media Queries (só que em Java kkkk)
 	    	
-	    	if (width < DEFAULT_WIDTH) {
+	    	if (width < DEFAULT_WIDTH - 10) {
 	    		Main.newFile.setWidth(24);
 	    		Main.newFile.setHeight(24);
 	    		
@@ -264,7 +264,7 @@ public class Explorer extends IDEComponent {
 	    		Main.returnBase.setX(Main.oneFolder.getX() + Main.oneFolder.getWidth() + 2);
 	    		Main.reload.setX(Main.returnBase.getX() + Main.returnBase.getWidth() + 2);
 	    	}
-	    	else if (width >= DEFAULT_WIDTH) {
+	    	else if (width >= DEFAULT_WIDTH - 10) {
 	    		Main.newFile.setWidth(32);
 	    		Main.newFile.setHeight(32);
 	    		
@@ -281,10 +281,10 @@ public class Explorer extends IDEComponent {
 	    		Main.reload.setHeight(32);
 	    		
 	    		Main.newFile.setX(width - 200);
-	    		Main.newFolder.setX(Main.newFile.getX() + Main.newFile.getWidth() + 4);
-	    		Main.oneFolder.setX(Main.newFolder.getX() + Main.newFolder.getWidth() + 4);
-	    		Main.returnBase.setX(Main.oneFolder.getX() + Main.oneFolder.getWidth() + 4);
-	    		Main.reload.setX(Main.returnBase.getX() + Main.returnBase.getWidth() + 4);
+	    		Main.newFolder.setX(Main.newFile.getX() + Main.newFile.getWidth() + 6);
+	    		Main.oneFolder.setX(Main.newFolder.getX() + Main.newFolder.getWidth() + 6);
+	    		Main.returnBase.setX(Main.oneFolder.getX() + Main.oneFolder.getWidth() + 6);
+	    		Main.reload.setX(Main.returnBase.getX() + Main.returnBase.getWidth() + 6);
 	    	}
 	    	
 	    	if (width < MINIMUM_Y) {
