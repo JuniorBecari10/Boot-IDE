@@ -811,8 +811,8 @@ public class Tab extends IDEComponent implements Serializable {
 		if (isReadOnly) limit = (x + drawW) - 30;
 		
 		Fonts.drawString(
-				ListableFile.getFileExtension(Main.editor.editing.getRegent().getRegent()).equalsIgnoreCase(Main.CONFIG_FILE_EXTENSION)
-				&& Main.editor.editing.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir)
+				ListableFile.getFileExtension(regent.getRegent()).equalsIgnoreCase(Main.CONFIG_FILE_EXTENSION)
+				&& regent.getRegent().getParent().equalsIgnoreCase(Main.userDir)
 					? Texts.settings
 					: regent.getRegent().getName(), x + 35, Y + 5, font, limit, g);
 	
