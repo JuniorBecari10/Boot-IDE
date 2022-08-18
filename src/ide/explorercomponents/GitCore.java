@@ -7,7 +7,6 @@ import ide.components.IDEComponent;
 import ide.components.RightClickOption;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
-import ide.input.MouseInput;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.util.Texts;
@@ -35,8 +34,8 @@ public class GitCore {
 				
 				List<RightClickOption> list = new ArrayList<>();
 				
-				list.add(new RightClickOption(0, 0, widthDraw, Texts.inBaseFolder, (s) -> {}, ""));
-				list.add(new RightClickOption(0, 0, widthDraw, Texts.inCurrentFolder, (s) -> {}, ""));
+				list.add(new RightClickOption(0, 0, widthDraw, Texts.inBaseFolder, (s) -> { Main.runCommand(Main.baseFolder, "git clone " + Explorer.cloneURL.getText() ); }, ""));
+				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder + (Main.baseFolder != null ? Explorer.scope != null ? (" (" + Explorer.scope.getRegent().getName() + ")") : (" (" + Main.baseFolder.getName() + ")") : ""), (s) -> {}, ""));
 				
 				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 205, list.toArray(new RightClickOption[list.size()]));
 			}, true);

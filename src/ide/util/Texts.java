@@ -290,7 +290,7 @@ public final class Texts {
 			yes = "   Sim   ";
 			no = "   Não   ";
 			
-			sureDelete = "Tem certeza de que deseja deletar o arquivo";
+			sureDelete = "Tem certeza de que deseja deletar o arquivo/pasta";
 			confirmDelete = "Confirmar Exclusão";
 			
 			delError = "Ocorreu um erro ao deletar.";
@@ -488,7 +488,7 @@ public final class Texts {
 			yes = "   Yes   ";
 			no = "   No   ";
 			
-			sureDelete = "Are you sure you want to delete the file";
+			sureDelete = "Are you sure you want to delete the file/folder";
 			confirmDelete = "Confirm Deletion";
 			
 			delError = "An error has occurred while deleting.";
