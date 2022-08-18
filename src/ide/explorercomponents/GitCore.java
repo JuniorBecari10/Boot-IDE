@@ -1,8 +1,13 @@
 package ide.explorercomponents;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ide.components.IDEComponent;
+import ide.components.RightClickOption;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
+import ide.input.MouseInput;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.util.Texts;
@@ -18,10 +23,33 @@ public class GitCore {
 			}, true);
 		}
 		
+		if (Explorer.cloneURL == null) {
+			Explorer.cloneURL = new InputBox(20, Screen.DECORATION_HEIGHT + 150, Main.explorer.getWidth() - 40, 20);
+		}
+		
+		if (Explorer.clone == null) {
+			Explorer.clone = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 180, Main.explorer.getWidth() - 40, 20, Texts.clone, () -> {
+				if (Explorer.cloneURL.getText().length() == 0) return;
+				
+				int widthDraw = Main.explorer.getWidth() - 40;
+				
+				List<RightClickOption> list = new ArrayList<>();
+				
+				list.add(new RightClickOption(0, 0, widthDraw, "In Base Folder", (s) -> {}, ""));
+				list.add(new RightClickOption(0, 0, widthDraw, "In Current Folder", (s) -> {}, ""));
+				
+				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 205, list.toArray(new RightClickOption[list.size()]));
+			}, true);
+		}
+		
 		IDEComponent.toAdd.add(Explorer.initRepo);
+		IDEComponent.toAdd.add(Explorer.cloneURL);
+		IDEComponent.toAdd.add(Explorer.clone);
 	}
 	
 	public static synchronized void dispose() {
 		IDEComponent.toRemove.add(Explorer.initRepo);
+		IDEComponent.toRemove.add(Explorer.cloneURL);
+		IDEComponent.toRemove.add(Explorer.clone);
 	}
 }

@@ -80,7 +80,7 @@ public abstract class IDEComponent implements Tickable, Renderable, Clickable { 
     @Override
     public void tick() {}
     
-    protected static final void addRightClickOptions(int initialX, int initialY, RightClickOption... options) {
+    public static final void addRightClickOptions(int initialX, int initialY, RightClickOption... options) {
     	if (RightClickOption.isRightClickActive()) return;
     	
     	for (int i = 0; i < options.length; i++) {
@@ -91,13 +91,13 @@ public abstract class IDEComponent implements Tickable, Renderable, Clickable { 
     	}
     }
     
-    protected static final void addRightClickOption(int x, int y, int width, String text, ExecuteCommand command, String clickArg) {
+    public static final void addRightClickOption(int x, int y, int width, String text, ExecuteCommand command, String clickArg) {
     	if (RightClickOption.isRightClickActive()) return;
     	
     	toAdd.add(new RightClickOption(x, y, width, text, command, clickArg));
     }
     
-    protected static final void addRightClickOption(int x, int y, int width, boolean isActive, String text, ExecuteCommand command, String clickArg) {
+    public static final void addRightClickOption(int x, int y, int width, boolean isActive, String text, ExecuteCommand command, String clickArg) {
     	if (RightClickOption.isRightClickActive()) return;
     	
     	toAdd.add(new RightClickOption(x, y, width, isActive, text, command, clickArg));

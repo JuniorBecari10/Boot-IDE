@@ -66,6 +66,8 @@ public class Explorer extends IDEComponent {
 	// -- Git --
 	
 	public static ExecuteButton initRepo;
+	public static InputBox cloneURL;
+	public static ExecuteButton clone;
 	
 	public static int MINIMUM_Y = 200 + Screen.DECORATION_HEIGHT;
 	
@@ -534,13 +536,16 @@ public class Explorer extends IDEComponent {
 	}
     
     private void renderGit(Graphics g) {
-    	Graphics2D g2 = (Graphics2D) g;
+    	//Graphics2D g2 = (Graphics2D) g;
     	
     	Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	Fonts.drawString("URL:", 20, Screen.DECORATION_HEIGHT + 120, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	
-    	g.setColor(Colors.textLight);
+    	/*g.setColor(Colors.textLight);
     	g2.setStroke(new BasicStroke(3f));
-    	g2.drawLine(Texts.general.length() * 12 + 4, 24, width - 4, 24);
+    	g2.drawLine(Texts.general.length() * 12 + 4, 24, width - 4, 24);*/
+    	
+    	
     }
     
     public static void renderDescriptionText(String s, int x, int y, Graphics g) {

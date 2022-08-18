@@ -207,6 +207,7 @@ public final class Texts {
 	public static String seeingConfigFile;
 	
 	public static String general;
+	public static String clone;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -401,6 +402,7 @@ public final class Texts {
 			seeingConfigFile = "Você está vendo um Arquivo de Configurações da Boot IDE.";
 			
 			general = "Geral";
+			clone = "Clonar";
 			
 			break;
 		
@@ -595,6 +597,7 @@ public final class Texts {
 			seeingConfigFile = "You are seeing a Boot IDE Configuration File.";
 			
 			general = "General";
+			clone = "Clone";
 			
 			break;
 		}
