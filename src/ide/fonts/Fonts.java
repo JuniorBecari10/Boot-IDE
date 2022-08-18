@@ -478,13 +478,27 @@ public class Fonts {
     	}
     	
     	for (int i = 0; i < ca.length; i++) {
-    		text[i] = accents(ca[i], font);
-
-    		int ind = ca[i]; 						// pega o valor na tabela ASCII
+    		char ch = ca[i];
     		
-    		if (ind > 225) continue;
+    		if (ch > 255) continue;
     		
-    		text[i] = font.getFont()[ind];
+    		if (isAccent(ch))
+    			text[i] = accents(ch, font);
+    		else
+    			text[i] = font.getFont()[ch];
+    		
+    		// sigma
+    		if (ch == 8721) {
+        		text[i] = font.getFont()[255];
+        			
+        		continue;
+    		}
+    		
+    		else if (ch == CodeEditor.BLACK_CIRCLE) {
+    			text[i] = font.getFont()[128];
+    			
+    			continue;
+    		}
     	}
     	
     	for (int i = 0; i < text.length; i++) {										// roda um loop para desenhar.
@@ -511,13 +525,27 @@ public class Fonts {
     	}
     	
     	for (int i = 0; i < ca.length; i++) {
-    		text[i] = accents(ca[i], font);
+    		char ch = ca[i];
     		
-    		int ind = ca[i]; 						// pega o valor na tabela ASCII
+    		if (ch > 255) continue;
     		
-    		if (ind > 225) continue;
+    		if (isAccent(ch))
+    			text[i] = accents(ch, font);
+    		else
+    			text[i] = font.getFont()[ch];
     		
-    		text[i] = font.getFont()[ind];
+    		// sigma
+    		if (ch == 8721) {
+        		text[i] = font.getFont()[255];
+        			
+        		continue;
+    		}
+    		
+    		else if (ch == CodeEditor.BLACK_CIRCLE) {
+    			text[i] = font.getFont()[128];
+    			
+    			continue;
+    		}
     	}
     	
     	for (int i = 0; i < text.length; i++) {										// roda um loop para desenhar.
@@ -546,13 +574,27 @@ public class Fonts {
     	}
     	
     	for (int i = 0; i < ca.length; i++) {
-    		text[i] = accents(ca[i], font);
+    		char ch = ca[i];
     		
-    		int ind = ca[i]; 						// pega o valor na tabela ASCII
+    		if (ch > 255) continue;
     		
-    		if (ind > 225) continue;
+    		if (isAccent(ch))
+    			text[i] = accents(ch, font);
+    		else
+    			text[i] = font.getFont()[ch];
     		
-    		text[i] = font.getFont()[ind];
+    		// sigma
+    		if (ch == 8721) {
+        		text[i] = font.getFont()[255];
+        			
+        		continue;
+    		}
+    		
+    		else if (ch == CodeEditor.BLACK_CIRCLE) {
+    			text[i] = font.getFont()[128];
+    			
+    			continue;
+    		}
     	}
     	
     	for (int i = 0; i < text.length; i++) {										// roda um loop para desenhar.
@@ -585,18 +627,21 @@ public class Fonts {
     	for (int i = 0; i < c.length; i++) {
     		char ch = c[i];
     		
+    		if (ch > 255) continue;
+    		
     		if (isAccent(ch))
     			text[i] = accents(ch, fonts[i]);
     		else
     			text[i] = fonts[i].getFont()[ch];
     		
+    		// sigma
     		if (ch == 8721) {
         		text[i] = fonts[i].getFont()[255];
         			
         		continue;
     		}
     		
-    		else if (ch == 8226) {
+    		else if (ch == CodeEditor.BLACK_CIRCLE) {
     			text[i] = fonts[i].getFont()[128];
     			
     			continue;
