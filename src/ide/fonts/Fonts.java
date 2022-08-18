@@ -421,6 +421,18 @@ public class Fonts {
 		return text;
     }
     
+    public static boolean isAccent(char c) {
+    	return c == 'Á' || c == 'É' || c == 'Í' || c == 'Ó' || c == 'Ú' || c == 'Ý'
+    		|| c == 'á' || c == 'é' || c == 'í' || c == 'ó' || c == 'ú' || c == 'ý'
+    		|| c == 'À' || c == 'È' || c == 'Ì' || c == 'Ò' || c == 'Ù'
+    		|| c == 'à' || c == 'è' || c == 'ì' || c == 'ò' || c == 'ù'
+    		|| c == 'Â' || c == 'Ê' || c == 'Î' || c == 'Ô' || c == 'Û'
+    		|| c == 'â' || c == 'ê' || c == 'î' || c == 'ô' || c == 'û'
+    		|| c == 'Ã' || c == 'Õ' || c == 'Ñ'
+    		|| c == 'ã' || c == 'õ' || c == 'ñ'
+    		|| c == 'ç' || c == 'Ç';
+    }
+    
     /**
      * Retorna true ou false se o char em c pertence a tabela Ascii.
      * Note que no return deveria ser 128, mas essa a a Ascii estendida.
@@ -573,12 +585,10 @@ public class Fonts {
     	for (int i = 0; i < c.length; i++) {
     		char ch = c[i];
     		
-    		if (ch > 225) continue;
-    		
-    		if (ch < 127)
-    			text[i] = fonts[i].getFont()[ch];
-    		else
+    		if (isAccent(ch))
     			text[i] = accents(ch, fonts[i]);
+    		else
+    			text[i] = fonts[i].getFont()[ch];
     		
     		if (ch == 8721) {
         		text[i] = fonts[i].getFont()[255];
