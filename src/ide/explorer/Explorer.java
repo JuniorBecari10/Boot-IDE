@@ -538,7 +538,7 @@ public class Explorer extends IDEComponent {
     private void renderGit(Graphics g) {
     	//Graphics2D g2 = (Graphics2D) g;
     	
-    	Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	Fonts.drawString(Texts.general + " -----", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	Fonts.drawString("URL:", 20, Screen.DECORATION_HEIGHT + 120, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	
     	/*g.setColor(Colors.textLight);

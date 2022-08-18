@@ -35,7 +35,7 @@ public class GitCore {
 				List<RightClickOption> list = new ArrayList<>();
 				
 				list.add(new RightClickOption(0, 0, widthDraw, Texts.inBaseFolder, (s) -> { Main.runCommand(Main.baseFolder, "git clone " + Explorer.cloneURL.getText() ); }, ""));
-				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder + (Main.baseFolder != null ? Explorer.scope != null ? (" (" + Explorer.scope.getRegent().getName() + ")") : (" (" + Main.baseFolder.getName() + ")") : ""), (s) -> {}, ""));
+				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder/* + (Main.baseFolder != null ? Explorer.scope != null ? (" (" + Explorer.scope.getRegent().getName() + ")") : (" (" + Main.baseFolder.getName() + ")") : "")*/, (s) -> {}, ""));
 				
 				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 205, list.toArray(new RightClickOption[list.size()]));
 			}, true);
