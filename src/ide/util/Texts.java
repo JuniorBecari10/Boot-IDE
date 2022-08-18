@@ -209,6 +209,9 @@ public final class Texts {
 	public static String general;
 	public static String clone;
 	
+	public static String inBaseFolder;
+	public static String inCurrentFolder;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -404,6 +407,9 @@ public final class Texts {
 			general = "Geral";
 			clone = "Clonar";
 			
+			inBaseFolder = "Na Pasta Base";
+			inCurrentFolder = "Na Pasta Atual";
+			
 			break;
 		
 		case ENG:
@@ -598,6 +604,9 @@ public final class Texts {
 			
 			general = "General";
 			clone = "Clone";
+			
+			inBaseFolder = "In Base Folder";
+			inCurrentFolder = "In Current Folder";
 			
 			break;
 		}

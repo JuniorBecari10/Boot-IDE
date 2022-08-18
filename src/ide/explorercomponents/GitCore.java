@@ -35,8 +35,8 @@ public class GitCore {
 				
 				List<RightClickOption> list = new ArrayList<>();
 				
-				list.add(new RightClickOption(0, 0, widthDraw, "In Base Folder", (s) -> {}, ""));
-				list.add(new RightClickOption(0, 0, widthDraw, "In Current Folder", (s) -> {}, ""));
+				list.add(new RightClickOption(0, 0, widthDraw, Texts.inBaseFolder, (s) -> {}, ""));
+				list.add(new RightClickOption(0, 0, widthDraw, Texts.inCurrentFolder, (s) -> {}, ""));
 				
 				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 205, list.toArray(new RightClickOption[list.size()]));
 			}, true);

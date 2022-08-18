@@ -27,7 +27,7 @@ public class InputBox extends IDEComponent {
 	
 	public void tick() {
 		width = Main.explorer.getWidth() - 40;
-		
+		System.out.println(scroll);
 		// mover pra frente (o texto vai pra trás)
 		while (x + 1 + (cursorIndex * (16 - 4)) - scroll > width)
 			scroll += 12;
@@ -35,7 +35,7 @@ public class InputBox extends IDEComponent {
 		while (x + 1 + (cursorIndex * (16 - 4)) - scroll < x || (x + 1 + (cursorIndex * (16 - 4)) - scroll == x + 1 && text.length() > 0))
 			scroll -= 12;
 		
-		if (text.length() == 0)
+		if (text.length() == 0 || scroll < 0)
 			scroll = 0;
 		
 		if (leftClicked())
