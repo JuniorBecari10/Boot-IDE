@@ -714,7 +714,7 @@ public class Tab extends IDEComponent implements Serializable {
 		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered()))) {
 			MouseInput.updateMouse();
 			
-			int width = Main.lang == Language.PORT ? 485 : 330;
+			int width = Main.lang == Language.PORT ? 385 : 300;
 			
 			List<RightClickOption> list = new ArrayList<>();
 			

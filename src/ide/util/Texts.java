@@ -252,7 +252,7 @@ public final class Texts {
 			openTerminal = "Abrir Terminal de Comando";
 			openExplorer = "Abrir no Explorador de Arquivos";
 			setBaseFolder = "Definir pasta atual como Pasta Base";
-			openDefault = "Abrir arquivo com o programa padrao";
+			openDefault = "Abrir arquivo com o programa padrão";
 			
 			execute = "Executar";
 			executeBash = "Executar com Bash";
