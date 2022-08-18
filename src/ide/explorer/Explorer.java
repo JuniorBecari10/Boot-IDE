@@ -106,12 +106,6 @@ public class Explorer extends IDEComponent {
     		}
     	});
     	tabs.add(new ExplorerTab(1 + 3 + ExplorerTab.SIZE, Main.searchReplaceTab, ExplorerMode.SEARCHREPLACE, Texts.searchReplace) {
-    		public boolean hovered() {
-    			if (Main.editor.tabs.isEmpty()) return false;
-    			
-    			return super.hovered();
-    		}
-    		
     		public void select() {
     			if (Main.editor.tabs.isEmpty()) return;
     			
@@ -120,13 +114,9 @@ public class Explorer extends IDEComponent {
     		}
     	});
     	tabs.add(new ExplorerTab(1 + 6 + (ExplorerTab.SIZE * 2), Main.gitTab, ExplorerMode.GIT, "Git") {
-    		public boolean hovered() {
-    			if (Main.baseFolder == null) return false;
-    			
-    			return super.hovered();
-    		}
-    		
     		public void select() {
+    			if (Main.baseFolder == null) return;
+    			
     			GitCore.init();
     			SearchReplaceCore.dispose();
     		}

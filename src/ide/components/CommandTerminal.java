@@ -1480,7 +1480,7 @@ public class CommandTerminal extends IDEComponent {
 					tcIndex = typedCommands.size() - 1;
 				}
 				
-				builder = new StringBuilder(typedCommands.get(tcIndex));
+				builder = new StringBuilder(typedCommands.get(tcIndex < 0 ? 0 : tcIndex));
 				
 				cursorIndex = typedCommands.get(tcIndex).length();
 			

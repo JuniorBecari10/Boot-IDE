@@ -82,7 +82,7 @@ public final class Texts {
 	public static String openBootExplorer;
 	
 	public static String noFolderLoadedLogoText;
-	public static String clickOnButton;
+	public static String clickTheButton;
 	public static String loadOne;
 	
 	public static String ctrl_Win_Prompt;
@@ -275,7 +275,7 @@ public final class Texts {
 			openBootExplorer = "Abrir no Explorador";
 			
 			noFolderLoadedLogoText = "Não há nenhuma pasta carregada.";
-			clickOnButton = "Clique no botão [Selecionar Pasta Base]";
+			clickTheButton = "Clique no botão [Selecionar Pasta Base]";
 			loadOne = "para carregar uma.";
 			
 			ctrl_Win_Prompt = "[Ctrl + Windows / B] Prompt de Comando";
@@ -468,7 +468,7 @@ public final class Texts {
 			openBootExplorer = "Open in Explorer";
 			
 			noFolderLoadedLogoText = "There is no folder loaded.";
-			clickOnButton = "Click on button [Select Base Folder]";
+			clickTheButton = "Click the [Select Base Folder] button";
 			loadOne = "to load one.";
 			
 			ctrl_Win_Prompt = "[Ctrl + Windows / B] Command Prompt";

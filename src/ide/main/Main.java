@@ -1021,9 +1021,11 @@ public class Main implements Runnable, Tickable {
         }
         
         if (Explorer.dragging) {
+        	String text = explorer.getWidth() + "px";
+        	
         	int x = MouseInput.getMouseX() + 35;
         	int y = MouseInput.getMouseY();
-        	int w = explorer.getWidth() < 1000 ? 83 : 97;
+        	int w = text.length() * 14;
         	int h = 28;
         	
         	Rectangle intr = new Rectangle(x, y, w, h).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
@@ -1034,7 +1036,7 @@ public class Main implements Runnable, Tickable {
         	g.setColor(new Color(0, 0, 0, 0.3f));
 			g.fillRect(x, y, w, h);
 			
-			Fonts.drawString(explorer.getWidth() + "px", x + 5, y, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString(text, x + 5, y + 5, new IDEFont(Fonts.lightGrayNormal, 16), g);
         }
         
         // draw window top

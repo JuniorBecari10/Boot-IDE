@@ -74,22 +74,22 @@ public class Logo extends IDEComponent {
 		if (showMessage1) {
 			g.setColor(Colors.explorer);
 			
-			g.fillRect(x + 47, y + 218, Main.lang == Language.PORT ? 17 * 20 + 10 : 15 * 20 + 5, 27);
+			g.fillRect(Main.lang == Language.PORT ? x + 34 : x - 26, y + 216, Main.lang == Language.PORT ? 17 * 16 + 10 : 15 * 16 + 5, 27);
 			
-			Fonts.drawString(Texts.noFolderLoadedLogoText, Main.lang == Language.PORT ? x - 140 : x - 100, y + 170, new IDEFont(Fonts.lighterGrayNormal, 20), g);
-			Fonts.drawString(Texts.clickOnButton, x - 190, y + 220, new IDEFont(Fonts.lightGrayNormal, 20), g);
-			Fonts.drawString(Texts.loadOne, Main.lang == Language.PORT ? x - 50 : x - 10, y + 250, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString(Texts.noFolderLoadedLogoText, (x + width / 2) - ((Texts.noFolderLoadedLogoText.length() * 12) / 2), y + 180, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+			Fonts.drawString(Texts.clickTheButton, (x + width / 2) - ((Texts.clickTheButton.length() * 12) / 2), y + 220, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+			Fonts.drawString(Texts.loadOne, (x + width / 2) - ((Texts.loadOne.length() * 12) / 2), y + 250, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		}
 		else {
 			g.setColor(Colors.explorer);
 			
-			g.fillRect(x - 145, y + 189, 15 * 20 + 6, 25);
-			g.fillRect(x - 145, y + 219, 8 * 20 - 5, 25);
-			g.fillRect(x - 145, y + 249, Main.lang == Language.PORT ? 12 * 20 + 5 : 10 * 20, 25);
+			g.fillRect(x - 145, y + 189, 15 * 16 + 6, 25);
+			//g.fillRect(x - 145, y + 219, 8 * 16 - 5, 25);
+			//g.fillRect(x - 145, y + 249, Main.lang == Language.PORT ? 12 * 16 + 5 : 10 * 16, 25);
 			
-			Fonts.drawString(Texts.ctrl_Win_Prompt, x - 140, y + 190, new IDEFont(Fonts.lightGrayNormal, 20), g);
-			Fonts.drawString(Texts.ctrl_T_terminal, x - 140, y + 220, new IDEFont(Fonts.lightGrayNormal, 20), g);
-			Fonts.drawString(Texts.rightClick_Options, x - 140, y + 250, new IDEFont(Fonts.lightGrayNormal, 20), g);
+			Fonts.drawString(Texts.ctrl_Win_Prompt, (x + width / 2) - ((Texts.ctrl_Win_Prompt.length() * 12) / 2), y + 190, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+			Fonts.drawString(Texts.ctrl_T_terminal, (x + width / 2) - ((Texts.ctrl_Win_Prompt.length() * 12) / 2), y + 220, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+			Fonts.drawString(Texts.rightClick_Options, (x + width / 2) - ((Texts.ctrl_Win_Prompt.length() * 12) / 2), y + 250, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		}
 	}
 }
