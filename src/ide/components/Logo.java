@@ -83,9 +83,9 @@ public class Logo extends IDEComponent {
 		else {
 			g.setColor(Colors.explorer);
 			
-			g.fillRect(x - 145, y + 189, 15 * 16 + 6, 25);
-			//g.fillRect(x - 145, y + 219, 8 * 16 - 5, 25);
-			//g.fillRect(x - 145, y + 249, Main.lang == Language.PORT ? 12 * 16 + 5 : 10 * 16, 25);
+			g.fillRect(Main.lang == Language.PORT ? x - 154 : x - 136, y + 186, 15 * 16 + 8, 25);
+			g.fillRect(Main.lang == Language.PORT ? x - 154 : x - 136, y + 216, 7 * 16 + 18, 25);
+			g.fillRect(Main.lang == Language.PORT ? x - 154 : x - 136, y + 246, Main.lang == Language.PORT ? 12 * 16 + 8 : 10 * 16 + 4, 25);
 			
 			Fonts.drawString(Texts.ctrl_Win_Prompt, (x + width / 2) - ((Texts.ctrl_Win_Prompt.length() * 12) / 2), y + 190, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 			Fonts.drawString(Texts.ctrl_T_terminal, (x + width / 2) - ((Texts.ctrl_Win_Prompt.length() * 12) / 2), y + 220, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
