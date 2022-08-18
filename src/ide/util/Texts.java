@@ -33,7 +33,7 @@ public final class Texts {
 	
 	public static String fileAsReadOnly;
 	
-	public static String baseFolder_; // _ a dois pontos :
+	public static String baseFolder_; // _ é dois pontos :
 	public static String currentFolder;
 	
 	public static String esc_Cancel;
@@ -48,7 +48,7 @@ public final class Texts {
 	
 	public static String insertCommand;
 	
-	public static String enter_Execute;
+	public static String enter_Execute; // aqui n vale né :/
 	public static String ctrl_del_Clear;
 	
 	public static String open;
@@ -204,8 +204,9 @@ public final class Texts {
 	public static String duplicate;
 	
 	public static String initRepository;
-	
 	public static String seeingConfigFile;
+	
+	public static String general;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -397,8 +398,9 @@ public final class Texts {
 			duplicate = "Duplicar";
 			
 			initRepository = "Criar Repositório";
-			
 			seeingConfigFile = "Você está vendo um Arquivo de Configurações da Boot IDE.";
+			
+			general = "Geral";
 			
 			break;
 		
@@ -590,8 +592,9 @@ public final class Texts {
 			duplicate = "Duplicate";
 			
 			initRepository = "Init Repository";
-			
 			seeingConfigFile = "You are seeing a Boot IDE Configuration File.";
+			
+			general = "General";
 			
 			break;
 		}

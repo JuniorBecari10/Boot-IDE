@@ -534,7 +534,13 @@ public class Explorer extends IDEComponent {
 	}
     
     private void renderGit(Graphics g) {
-    	//Fonts.drawString("There's no Git repository in the Base Folder.", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	Graphics2D g2 = (Graphics2D) g;
+    	
+    	Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	
+    	g.setColor(Colors.textLight);
+    	g2.setStroke(new BasicStroke(3f));
+    	g2.drawLine(Texts.general.length() * 12 + 4, 24, width - 4, 24);
     }
     
     public static void renderDescriptionText(String s, int x, int y, Graphics g) {
