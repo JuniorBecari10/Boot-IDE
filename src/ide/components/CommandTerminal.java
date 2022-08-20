@@ -769,7 +769,7 @@ public class CommandTerminal extends IDEComponent {
 				int drawcx = Main.editor.drawcx;
 				int drawcy = Main.editor.drawcy;
 				
-				while (drawcx < Main.editor.getX() + (CodeEditor.FONT_SIZE * 10)) { // * 6 pra dar um espaao
+				while (drawcx < Main.editor.getX() + (CodeEditor.FONT_SIZE * 10)) { // * 6 pra dar um espaço
 					Main.editor.scrX -= CodeEditor.FONT_SIZE;
 					drawcx += CodeEditor.FONT_SIZE;
 				}
