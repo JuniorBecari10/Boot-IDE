@@ -551,7 +551,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			switch (split[0]) {
 			case "background:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#353b48";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
