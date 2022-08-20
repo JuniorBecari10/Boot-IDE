@@ -30,6 +30,7 @@ import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.main.OS;
+import ide.screen.Screen;
 import ide.util.Animation;
 import ide.util.Colors;
 import ide.util.Language;
@@ -753,7 +754,10 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "gotocursor":
 				if (Main.editor.editing == null) break;
-				if (!(Main.editor.drawcx < Main.editor.getX() + (CodeEditor.FONT_SIZE * 4) || Main.editor.drawcx > Main.screen.getWidth() || Main.editor.drawcy < Main.editor.getY() || Main.editor.drawcy > Main.screen.getHeight() - (CodeEditor.LOWER_BAR_HEIGHT * 2))) break;
+				if (!(Main.editor.drawcx < Main.editor.getX() + (CodeEditor.FONT_SIZE * 4) ||
+					  Main.editor.drawcx > Main.screen.getWidth() || Main.editor.drawcy < Main.editor.getY() ||
+					  Main.editor.drawcy < Screen.DECORATION_HEIGHT + 40 ||
+					  Main.editor.drawcy > Main.screen.getHeight() - (CodeEditor.LOWER_BAR_HEIGHT * 2))) break;
 				
 				//Main.editor.scrY = (Main.editor.cursorY * (CodeEditor.FONT_SIZE + (CodeEditor.FONT_SIZE / 3)));
 				

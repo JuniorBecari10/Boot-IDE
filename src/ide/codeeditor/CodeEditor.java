@@ -8515,7 +8515,7 @@ public class CodeEditor extends IDEComponent {
 	
 			// Desenhar background
 			g.setColor(Colors.background);
-			g.fillRect(x, 0, width, 35);
+			g.fillRect(x, Screen.DECORATION_HEIGHT, width, 35);
 	
 			for (Tab t : Main.editor.tabs) {
 				if (t.getX() + tabScr < x - 100 || t.getX() + tabScr > Main.screen.getWidth())

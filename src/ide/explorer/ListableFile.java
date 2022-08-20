@@ -512,7 +512,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("line_ending: " + CodeEditor.lineEnding + "\n");
 			w.write("show_unsaved_title_bar: " + CodeEditor.showUnsavedTitleBar + "\n");
 			w.write("use_antialiasing: " + Fonts.useAntiAliasing + "\n");
-			w.write("use_antialiasing_editor: " + Fonts.useAntiAliasingEditor + "\n");
 
 			w.close();
 
@@ -1112,18 +1111,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					Fonts.useAntiAliasing = false;
 
 				Fonts.useAntiAliasing = Boolean.valueOf(split[1]);
-
-				hasAltered = true;
-
-				break;
-				
-			case "use_antialiasing_editor:":
-				if (!readConfigs) break;
-				
-				if (split[1].equals("default"))
-					Fonts.useAntiAliasingEditor = true;
-
-				Fonts.useAntiAliasingEditor = Boolean.valueOf(split[1]);
 
 				hasAltered = true;
 
