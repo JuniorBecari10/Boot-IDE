@@ -567,7 +567,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "background2:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#29394a";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -583,7 +583,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "backgroundLight:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#28394d";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -599,7 +599,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "explorer:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#222f3e";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -615,7 +615,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				
 			case "codeEditor:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#222f3e";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -631,7 +631,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "explorerLight:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#2d3f54";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -647,7 +647,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "explorerLighter:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#354d69";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -663,7 +663,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "textLight:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#95afc0";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -679,7 +679,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "textLighter:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#a9c4c2";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -695,7 +695,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "objects:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#94fa92";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -711,7 +711,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "methods:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#e7d789";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -727,7 +727,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "numbers:":
 				if (split[1].equals("default"))
-					break;
+					split[1] ="#5485b6";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -743,7 +743,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "keywords:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#95bddc";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -759,7 +759,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "variables:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#80d1f2";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -775,7 +775,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "comments:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#a9c4c2";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -791,7 +791,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "strings:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#95afc0";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -807,7 +807,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "symbols:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#a9c4c2";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -823,7 +823,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "selection:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#8c8c8c";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -839,7 +839,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "cursor:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#ffffff";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -855,7 +855,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "other:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#ffffff";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -871,7 +871,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "lowerBar:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#28394d";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -887,7 +887,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "error:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#ff6961";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -903,7 +903,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "lineNumber:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#95afc0";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];
@@ -919,7 +919,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			case "selectedLineNumber:":
 				if (split[1].equals("default"))
-					break;
+					split[1] = "#c5d5ea";
 
 				if (!split[1].startsWith("#"))
 					split[1] = "#" + split[1];

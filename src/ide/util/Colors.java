@@ -23,7 +23,7 @@ public class Colors {
     public static Color explorerLight =   Color.decode("#2d3f54"); // #2d3f54 // #32475e
     public static Color explorerLighter = Color.decode("#354d69");
     public static Color textLight = 	  Color.decode("#95afc0");
-    public static Color textLighter =     Color.decode("#A9B4C2");
+    public static Color textLighter =     Color.decode("#a9c4c2");
     
     public static Color objects = 		  Color.decode("#94fa92");
     public static Color methods = 		  Color.decode("#e7d789");
