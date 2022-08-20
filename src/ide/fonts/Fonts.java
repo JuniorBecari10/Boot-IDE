@@ -18,7 +18,8 @@ import ide.util.Spritesheet;
  */
 public class Fonts {
 	
-	public static boolean useAntiAliasing = true;
+	public static boolean useAntiAliasing = false;
+	public static boolean useAntiAliasingEditor = true;
 	
     public static BufferedImage[] normal;
     public static BufferedImage[] editor;
@@ -706,7 +707,7 @@ public class Fonts {
     		
     		BufferedImage chr = text[i];
     		
-    		if (CodeEditor.FONT_SIZE % 16 != 0 && useAntiAliasing) {
+    		if (CodeEditor.FONT_SIZE % 16 != 0 && useAntiAliasingEditor) {
 	    		g2.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
 	    		g2.setRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
 	    		g2.drawImage(chr, (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw, fonts[i].getSize() + ((ch == 'i' || ch == ',' || ch == ';' || ch == '|') && (CodeEditor.FONT_SIZE == 14 || CodeEditor.FONT_SIZE == 13) ? 1 : 0), fonts[i].getSize(), null);
