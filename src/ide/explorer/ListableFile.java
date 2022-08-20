@@ -511,6 +511,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("force_mac_buttons: " + Main.forceMacButtons + "\n");
 			w.write("line_ending: " + CodeEditor.lineEnding + "\n");
 			w.write("show_unsaved_title_bar: " + CodeEditor.showUnsavedTitleBar + "\n");
+			w.write("use_antialiasing: " + Fonts.useAntiAliasing + "\n");
 
 			w.close();
 
@@ -959,7 +960,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default"))
-					break;
+					CodeEditor.FONT_SIZE = 16;
 
 				int size = 0;
 
@@ -979,7 +980,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default"))
-					break;
+					CodeEditor.isAutoCompleteActive = true;
 
 				CodeEditor.isAutoCompleteActive = Boolean.valueOf(split[1]);
 
@@ -991,7 +992,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default"))
-					break;
+					CodeEditor.automaticallyOpenTabs = true;
 
 				CodeEditor.automaticallyOpenTabs = Boolean.valueOf(split[1]);
 
@@ -1003,7 +1004,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default"))
-					break;
+					CodeEditor.indentSpaces = true;
 
 				CodeEditor.indentSpaces = Boolean.valueOf(split[1]);
 
@@ -1015,7 +1016,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default"))
-					break;
+					CodeEditor.indentLength = 4;
 
 				CodeEditor.indentLength = Integer.valueOf(split[1]);
 
@@ -1027,7 +1028,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default"))
-					break;
+					Main.lang = Language.ENG;
 
 				try {
 					Main.lang = Language.valueOf(split[1].toUpperCase());
@@ -1043,7 +1044,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default"))
-					break;
+					CodeEditor.showWhitespace = false;
 
 				CodeEditor.showWhitespace = Boolean.valueOf(split[1]);
 
@@ -1055,7 +1056,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default"))
-					break;
+					Tab.allowAnimation = true;
 
 				Tab.allowAnimation = Boolean.valueOf(split[1]);
 
@@ -1067,7 +1068,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default"))
-					break;
+					Main.forceMacButtons = false;
 
 				Main.forceMacButtons = Boolean.valueOf(split[1]);
 
@@ -1079,7 +1080,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default"))
-					break;
+					CodeEditor.lineEnding = LineEnding.LF;
 
 				try {
 					CodeEditor.lineEnding = LineEnding.valueOf(split[1].toUpperCase());
@@ -1095,9 +1096,21 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default"))
-					break;
+					CodeEditor.showUnsavedTitleBar = true;
 
 				CodeEditor.showUnsavedTitleBar = Boolean.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
+				
+			case "use_antialiasing:":
+				if (!readConfigs) break;
+				
+				if (split[1].equals("default"))
+					Fonts.useAntiAliasing = true;
+
+				Fonts.useAntiAliasing = Boolean.valueOf(split[1]);
 
 				hasAltered = true;
 

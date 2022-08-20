@@ -176,18 +176,4 @@ public class Colors {
     public static Color setAlpha(Color c, int alpha) {
     	return new Color(c.getRed(), c.getGreen(), c.getBlue(), alpha);
     }
-    
-    /*public static BufferedImage brightness(BufferedImage img, float scaleFactor) {
-    	RescaleOp op = new RescaleOp(scaleFactor, 0, null);
-    	
-    	return op.filter(img, null);
-    }*/
-    
-    /*public static BufferedImage darker(BufferedImage img) {
-    	for (int x = 0; x < img.getWidth(); x++)
-    		for (int y = 0; y < img.getHeight(); y++)
-    			img.setRGB(x, y, new Color(img.getRGB(x, y)).darker().getRGB());
-    	
-    	return img;
-    }*/
 }
