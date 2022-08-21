@@ -84,7 +84,7 @@ public class Explorer extends IDEComponent {
 	
 	public static int minDrag = 192;
 	
-	public int maxTitleWidth = width / 23;
+	public int maxTitleWidth = width / 24;
 	public int maxTextWidth = width / 16;
 	public int maxFileCreateWidth = width / 18;
 	
@@ -238,7 +238,7 @@ public class Explorer extends IDEComponent {
 	    	if (hovered() && !ListableFile.isListableFileHovered() && !MouseInput.hovered(x + width - 5, y, 10, height))
 	    		Main.screen.setCursor(Cursor.getDefaultCursor());
 	    	
-	    	maxTitleWidth =  (width / 23) + 2;
+	    	maxTitleWidth =  (width / 24) + 2;
 	    	maxTextWidth =   (width / 16) + 2;
 	    	maxFileCreateWidth = width / 18 + 2;
 	    	
@@ -444,10 +444,12 @@ public class Explorer extends IDEComponent {
 	        	showFolderPathCard = true;
 	    	}
 	    	
-	    	if (baseFolderName != null && baseFolderName.length() * (23 - 4) >= width) {
-	        	baseFolderName = baseFolderName.substring(0, maxTextWidth - 3) + "...";
-	        	showBaseFolderCard = true;
-	    	}
+//	    	if (baseFolderName != null && baseFolderName.length() * 20 /*24 - 4*/ >= width) {
+//	        	baseFolderName = baseFolderName.substring(0, maxTextWidth - 3 > baseFolderName.length() ? baseFolderName.length() : maxTextWidth - 3) + "...";
+//	        	showBaseFolderCard = true;
+//	    	}
+	    	
+	    	//System.out.println(Main.baseFolder.getName().substring(0, maxTitleWidth - 3));
 	    	
 	    	baseFolderName = Main.baseFolder.getName().length() > maxTitleWidth ? Main.baseFolder.getName().substring(0, maxTitleWidth - 3) + "..." : Main.baseFolder.getName();
 	    	
@@ -501,7 +503,7 @@ public class Explorer extends IDEComponent {
         	return;
         }
         
-        Fonts.drawString(baseFolderName, x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 23), g);
+        Fonts.drawString(baseFolderName, x + 10, y + 140, new IDEFont(Fonts.lightGrayNormal, 24), false, g);
     
     	g2.setStroke(new BasicStroke(4f));
         g.setColor(Colors.explorerLight);

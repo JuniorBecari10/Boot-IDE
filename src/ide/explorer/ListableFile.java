@@ -462,6 +462,49 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		}
 	}
 	
+	public static void generateConfigFileLoaded(File file) {
+		String pathStr = file.getAbsolutePath();
+		String s = pathStr.contains(Main.CONFIG_FILE_EXTENSION) ? pathStr + "" : pathStr + Main.CONFIG_FILE_EXTENSION;
+
+		try {
+			BufferedWriter w = new BufferedWriter(new FileWriter(s));
+
+			w.write("Boot IDE Configuration File\n");
+			w.write("\n");
+			w.write("Colors\n");
+			w.write("\n");
+			w.write("background: " + Colors.toHex(Colors.background) + "\n");
+			w.write("background2: " + Colors.toHex(Colors.background2) + "\n");
+			w.write("backgroundLight: " + Colors.toHex(Colors.backgroundLight) + "\n");
+			w.write("explorer: " + Colors.toHex(Colors.explorer) + "\n");
+			w.write("codeEditor: " + Colors.toHex(Colors.codeEditor) + "\n");
+			w.write("explorerLight: " + Colors.toHex(Colors.explorerLight) + "\n");
+			w.write("explorerLighter: " + Colors.toHex(Colors.explorerLighter) + "\n");
+			w.write("textLight: " + Colors.toHex(Colors.textLight) + "\n");
+			w.write("textLighter: " + Colors.toHex(Colors.textLighter) + "\n");
+			w.write("objects: " + Colors.toHex(Colors.objects) + "\n");
+			w.write("methods: " + Colors.toHex(Colors.methods) + "\n");
+			w.write("numbers: " + Colors.toHex(Colors.numbers) + "\n");
+			w.write("keywords: " + Colors.toHex(Colors.keywords) + "\n");
+			w.write("variables: " + Colors.toHex(Colors.variables) + "\n");
+			w.write("comments: " + Colors.toHex(Colors.comments) + "\n");
+			w.write("strings: " + Colors.toHex(Colors.strings) + "\n");
+			w.write("symbols: " + Colors.toHex(Colors.symbols) + "\n");
+			w.write("cursor: " + Colors.toHex(Colors.cursor) + "\n");
+			w.write("selection: " + Colors.toHex(Colors.selection) + "\n");
+			w.write("other: " + Colors.toHex(Colors.other) + "\n");
+			w.write("lowerBar: " + Colors.toHex(Colors.lowerBar) + "\n");
+			w.write("error: " + Colors.toHex(Colors.error) + "\n");
+			w.write("lineNumber: " + Colors.toHex(Colors.lineNumber) + "\n");
+			w.write("selectedLineNumber: " + Colors.toHex(Colors.selectedLineNumber) + "\n");
+
+			w.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void generateLocalConfigFile(File file) {
 		String pathStr = file.getAbsolutePath();
 		String s = pathStr.contains(Main.CONFIG_FILE_EXTENSION) ? pathStr + "" : pathStr + Main.CONFIG_FILE_EXTENSION;

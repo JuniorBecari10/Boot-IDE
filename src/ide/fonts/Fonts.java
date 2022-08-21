@@ -525,6 +525,66 @@ public class Fonts {
     	}
     }
 	
+	public static void drawString(String s, int x, int y, IDEFont font, boolean useAntiAliasing, Graphics g) {
+		if (s == null) throw new NullPointerException("A String não pode ser nula!");
+		Graphics2D g2 = (Graphics2D) g;
+		
+    	char[] ca = s.toCharArray(); // ca = char array								   converte a string em um char array
+    	
+    	BufferedImage[] text = new BufferedImage[ca.length];						// declara o array das imagens
+    	
+    	for (int i = 0; i < ca.length; i++) {										// roda um loop for para associar as
+    		int ind = ca[i] > 126 ? ca[i] - 3 : ca[i];								// imagens ao array
+    		
+    		if (ind >= font.getFont().length)
+    			continue;
+    				
+    		text[i] = font.getFont()[ind];
+    	}
+    	
+    	for (int i = 0; i < ca.length; i++) {
+    		char ch = ca[i];
+    		
+    		if (ch > 255) continue;
+    		
+    		if (isAccent(ch))
+    			text[i] = accents(ch, font);
+    		else
+    			text[i] = font.getFont()[ch];
+    		
+    		// sigma
+    		if (ch == 8721) {
+        		text[i] = font.getFont()[255];
+        			
+        		continue;
+    		}
+    		
+    		else if (ch == CodeEditor.BLACK_CIRCLE) {
+    			text[i] = font.getFont()[128];
+    			
+    			continue;
+    		}
+    	}
+    	
+    	for (int i = 0; i < text.length; i++) {										// roda um loop para desenhar.
+    		char[] cha = s.toCharArray();
+    		char ch = cha[i];
+    		
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g' || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + 2 : y;
+    		
+    		if (font.getSize() % 16 != 0 && useAntiAliasing) {
+	    		g2.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
+	    		g2.setRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+	    		g2.drawImage(text[i], (x + ((font.getSize() - (font.getSize() / 4)) * i)), ydraw, font.getSize(), font.getSize(), null);
+	    		g2.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF));
+	    		g2.setRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT));
+    		}
+    		else {
+    			g2.drawImage(text[i], (x + ((font.getSize() - (font.getSize() / 4)) * i)), ydraw, font.getSize(), font.getSize(), null);
+    		}
+    	}
+    }
+	
 	public static void drawString(String s, int x, int y, IDEFont font, int maxPos, Graphics g) {
 		if (s == null) throw new NullPointerException("A String nao pode ser nula!");
 		Graphics2D g2 = (Graphics2D) g;

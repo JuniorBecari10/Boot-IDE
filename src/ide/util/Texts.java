@@ -1,7 +1,7 @@
 package ide.util;
 
 /**
- * Uma classe que lista todos os textos e palavras que estao na Boot IDE. Somente nao listam os nomes das linguagens que aparecem embaixo da tela. Temos em portuguas e inglas aqui.
+ * Uma classe que lista todos os textos e palavras que estao na Boot IDE. Somente não listam os nomes das linguagens que aparecem embaixo da tela. Temos em portuguas e inglas aqui.
  * 
  * Linguagens:
  * 	Portuguas
@@ -14,7 +14,7 @@ package ide.util;
  */
 public final class Texts {
 	
-	private Texts() {} // nao vai instanciar nao viu
+	private Texts() {} // não vai instanciar não viu
 
 	// --------------------------------------
 	
@@ -222,7 +222,7 @@ public final class Texts {
 			createFile = "Criar Novo Arquivo";
 			createFolder = "Criar Nova Pasta";
 			oneFolderUp = "Uma Pasta Acima";
-			returnBaseFolder = "Retornar para a Pasta Base";
+			returnBaseFolder = "Retornar à Pasta Base";
 			reload = "Recarregar";
 			
 			codeHelpersOn = "Os CodeHelpers estão ativados.";
@@ -304,7 +304,7 @@ public final class Texts {
 			theFile = "O arquivo";
 			isNotSaved = "não está salvo. Deseja salvá-lo antes de fechar?";
 			
-			fileNameIllegal = "O nome do arquivo contém caracteres nao permitidos.";
+			fileNameIllegal = "O nome do arquivo contém caracteres não permitidos.";
 			cannotBeOnlySpaces = "O nome do arquivo não pode ser somente espaaos!";
 			
 			confirmSave = "Confirmar Salvamento do Arquivo";
@@ -353,14 +353,14 @@ public final class Texts {
 			openFolder = "Abrir Pasta";
 			openInDefaultEditor = "Abrir no Editor Padrão";
 			wouldEdit = "Gostaria de editar o arquivo?";
-			openInNewTab = "Abrir em uma nova aba";
+			openInNewTab = "Abrir em uma Nova Aba";
 			
 			in = "em";
 			lines = "linhas";
 			
 			openInEditor = "Abrir no Editor";
 			
-			cannotEndDot = "O nome do arquivo nao pode terminar com um ponto!";
+			cannotEndDot = "O nome do arquivo não pode terminar com um ponto!";
 			
 			anErrorOccurred = "Um erro ocorreu.";
 			errorCreatingFile = "Um erro ocorreu ao criar o arquivo.";
@@ -550,8 +550,8 @@ public final class Texts {
 			wantOpenFile = "Do you want to open the file to edit it?";
 			openFolder = "Open Folder";
 			openInDefaultEditor = "Open In Default Editor";
-			wouldEdit = "Would like to edit the file?";
-			openInNewTab = "Open in a new tab";
+			wouldEdit = "Would you like to edit the file?";
+			openInNewTab = "Open in a New Tab";
 			
 			in = "in";
 			lines = "lines";

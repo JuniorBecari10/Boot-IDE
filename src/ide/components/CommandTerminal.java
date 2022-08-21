@@ -64,7 +64,7 @@ public class CommandTerminal extends IDEComponent {
 	private static boolean changeHints = true;
 	private static int comIndex = 0;
 	
-	public static final String[] commands = { "cmd", "settings", "sysexp", "closealltabs", "resettabscroll", "generateconfigfile", "getlang", "getfontsize", "getwhitespaces",
+	public static final String[] commands = { "cmd", "settings", "sysexp", "closealltabs", "resettabscroll", "generateconfigfile", "generateconfigfileloaded", "getlang", "getfontsize", "getwhitespaces",
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "resetundoredo",
 			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode", "resetfontsize", "togglewhitespaces",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
@@ -441,12 +441,17 @@ public class CommandTerminal extends IDEComponent {
 				if (option == JFileChooser.APPROVE_OPTION) {
 					File fl = chooser.getSelectedFile();
 					
-					if (!fl.getName().contains(Main.CONFIG_FILE_EXTENSION)) fl = new File(fl.getName() + Main.CONFIG_FILE_EXTENSION);
+					if (!fl.getName().contains(Main.CONFIG_FILE_EXTENSION)) fl = new File(fl.getAbsolutePath() + Main.CONFIG_FILE_EXTENSION);
 					
 					ListableFile.generateConfigFile(fl);
 					
+					if (!fl.exists()) {
+						System.out.println("an error occurred");
+						return;
+					}
+					
 					CodeEditor.setSystemLook();
-					String[] options = { Texts.openFolder, Texts.cancel, /*Texts.openInNewTab*/ Texts.openInDefaultEditor };
+					String[] options = { Texts.openFolder, Texts.cancel, /*Texts.openInNewTab*/ Texts.openInNewTab };
     				
     				CodeEditor.setSystemLook();
     				int selectedOption = JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
@@ -460,19 +465,42 @@ public class CommandTerminal extends IDEComponent {
     				}
     				
     				if (selectedOption == 2) {
+    					ListableFile.addTab(ListableFile.newListableFile(fl), false);
+    				}
+				}
+				break;
+				
+			case "generateconfigfileloaded":
+				option = chooser.showSaveDialog(Main.screen.frame);
+				
+				if (option == JFileChooser.APPROVE_OPTION) {
+					File fl = chooser.getSelectedFile();
+					
+					if (!fl.getName().contains(Main.CONFIG_FILE_EXTENSION)) fl = new File(fl.getAbsolutePath() + Main.CONFIG_FILE_EXTENSION);
+					
+					ListableFile.generateConfigFileLoaded(fl);
+					
+					if (!fl.exists()) {
+						return;
+					}
+					
+					CodeEditor.setSystemLook();
+					String[] options = { Texts.openFolder, Texts.cancel, /*Texts.openInNewTab*/ Texts.openInNewTab };
+    				
+    				CodeEditor.setSystemLook();
+    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+    				
+    				if (selectedOption == 0) {
     					try {
-							Main.desktop.open(fl);
+							Main.desktop.open(fl.getParentFile());
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
     				}
     				
-    				/*if (selectedOption == 2) {
-    					if (!fl.exists())
-    						System.out.println("a");
-    					
-    					ListableFile.addTab(ListableFile.newListableFile(fl), true);
-    				}*/
+    				if (selectedOption == 2) {
+    					ListableFile.addTab(ListableFile.newListableFile(fl), false);
+    				}
 				}
 				break;
 				
