@@ -8450,7 +8450,7 @@ public class CodeEditor extends IDEComponent {
 																										// index1 até o fim
 																										// da linha
 										MIN_Y + ((line1 - 1) * LINE_HEIGHT) - scrY,
-										(lines.get(i).getChars().size() * (FONT_SIZE - (FONT_SIZE / 4))) - ((index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
+										(lines.get(line1 - 1).getChars().size() * (FONT_SIZE - (FONT_SIZE / 4))) - ((index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 										LINE_HEIGHT);
 							}
 						}
