@@ -2294,7 +2294,7 @@ public class CodeEditor extends IDEComponent {
 		case ".html":
 		case ".svelte":
 			if (isCssPart || isJSPart || isPhpPart)
-				for (String s : nums) { // colorir nameros
+				for (String s : nums) { // colorir números
 					indxs = findWord(new String(chars), s);
 
 					for (Integer i : indxs)
