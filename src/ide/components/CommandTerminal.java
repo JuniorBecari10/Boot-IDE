@@ -1509,6 +1509,7 @@ public class CommandTerminal extends IDEComponent {
 					return;
 				}
 				else {
+					if (typedCommands.isEmpty()) return;
 					if (tcIndex < 0)
 						tcIndex = 0;
 					
@@ -1518,6 +1519,8 @@ public class CommandTerminal extends IDEComponent {
 					tcIndex--;
 					
 					commandHints.clear();
+					
+					return;
 				}
 			}
 			
@@ -1537,6 +1540,7 @@ public class CommandTerminal extends IDEComponent {
 					return;
 				}
 				else {
+					if (typedCommands.isEmpty()) return;
 					tcIndex++;
 					
 					if (tcIndex >= typedCommands.size()) {
@@ -1548,6 +1552,7 @@ public class CommandTerminal extends IDEComponent {
 					cursorIndex = typedCommands.get(tcIndex).length();
 				
 					commandHints.clear();
+					return;
 				}
 			}
 			
@@ -1628,15 +1633,15 @@ public class CommandTerminal extends IDEComponent {
 			
 			c = Main.editor.addAccents(keyCode, c);
 			
-			comIndex = 0;
-			changeHints = true;
-			
 			if (KeyInput.getCharPressed() < 33 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) return;
 			
 			if (builder.length() == 0 || cursorIndex == builder.length()) builder.append(c);
 			else builder.insert(cursorIndex, c); // o erro era ordem de parametros, pois usar um char como int tbm vale
 			
 			cursorIndex++;
+			
+			comIndex = 0;
+			changeHints = true;
 		}
 	}
 	
