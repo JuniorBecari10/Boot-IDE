@@ -639,7 +639,7 @@ public class CodeEditor extends IDEComponent {
 			"false", "fn", "for", "if", "impl", "in", "let", "loop", "match", "mod", "move", "mut", "pub", "ref",
 			"return", "self", "Self", "static", "struct", "super", "trait", "true", "type", "unsafe", "use", "where",
 			"while", "async", "await", "dyn", "abstract", "become", "box", "do", "final", "macro", "override", "priv",
-			"typeof", "unsized", "virtual", "yield", "try", "union", "'static" };
+			"typeof", "unsized", "virtual", "yield", "try", "union", "static" };
 
 	public static final String[] shKeys = { "pwd", "cd", "ls", "cat", "cp", "mv", "mkdir", "rmdir", "rm", "touch", "case",
 			"locate", "find", "grep", "sudo", "su", "df", "du", "head", "tail", "diff", "tar", "chmod", "chown", "jobs",
