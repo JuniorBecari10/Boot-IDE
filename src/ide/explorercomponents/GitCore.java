@@ -26,7 +26,13 @@ public class GitCore {
 				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> { Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git init"); }, ""));
 				
 				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 102, list.toArray(new RightClickOption[list.size()]));
-			}, true);
+			}, true) {
+				public void tick() {
+					super.tick();
+					
+					text = Texts.initRepository;
+				}
+			};
 		}
 		
 		if (Explorer.cloneURL == null) {
@@ -45,7 +51,13 @@ public class GitCore {
 				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> { Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git clone " + Explorer.cloneURL.getText() ); }, ""));
 				
 				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 202, list.toArray(new RightClickOption[list.size()]));
-			}, true);
+			}, true) {
+				public void tick() {
+					super.tick();
+					
+					text = Texts.clone;
+				}
+			};
 		}
 		
 		IDEComponent.toAdd.add(Explorer.initRepo);
