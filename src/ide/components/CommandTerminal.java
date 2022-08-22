@@ -1129,6 +1129,13 @@ public class CommandTerminal extends IDEComponent {
 					strs = gostrs;
 					
 					break;
+					
+				case "py":
+					String[] pystrs = { "def main():", CodeEditor.getIndentation(1), "", "if __name__ == \"__main__\":", CodeEditor.getIndentation(1) + "main()" };
+					
+					strs = pystrs;
+					
+					break;
 				}
 				
 				if (strs.length == 0) return;
