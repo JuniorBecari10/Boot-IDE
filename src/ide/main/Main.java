@@ -3,6 +3,8 @@ package ide.main;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -384,6 +386,14 @@ public class Main implements Runnable, Tickable {
     	
         Texts.setTexts(lang);
         Fonts.initFonts(fntnr, fnted);
+        
+        Fonts.emojiStream = ClassLoader.getSystemClassLoader().getResourceAsStream("/emoji-font.ttf");
+        
+        try {
+			Fonts.emojiFont = Font.createFont(Font.TRUETYPE_FONT, Fonts.emojiStream);
+		} catch (FontFormatException | IOException e) {
+			e.printStackTrace();
+		}
         
         ////////
         

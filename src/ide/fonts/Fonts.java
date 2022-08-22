@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 
 import ide.codeeditor.CodeEditor;
 import ide.util.Colors;
@@ -18,6 +19,10 @@ import ide.util.Spritesheet;
  *
  */
 public class Fonts {
+	
+	public static InputStream emojiStream;
+	public static Font emojiFont;
+	
 	
 	public static boolean useAntiAliasing = false;
 	
@@ -773,7 +778,8 @@ public class Fonts {
     		
     		if (chr == null) {
     			g.setColor(fonts[i].getColor());
-    			g.setFont(new Font("Segoe UI", Font.PLAIN, CodeEditor.FONT_SIZE));
+    			emojiFont = emojiFont.deriveFont((float) CodeEditor.FONT_SIZE);
+    			g.setFont(emojiFont);
     			g.drawString(Character.toString(ch), (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw);
     		}
     		
