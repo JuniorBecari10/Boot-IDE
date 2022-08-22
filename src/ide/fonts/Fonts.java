@@ -1,6 +1,7 @@
 package ide.fonts;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -719,6 +720,7 @@ public class Fonts {
 		
     	BufferedImage[] text = new BufferedImage[c.length];
     	
+    	// Set images in array text
     	for (int i = 0; i < c.length; i++) {
     		char ch = c[i];
     		
@@ -742,6 +744,8 @@ public class Fonts {
     			continue;
     		}
     		
+    		//System.out.println(CodeEditor.findIndex(fonts[i].getFont(), text[i]));
+    		
     		if (CodeEditor.showWhitespace) {
     			if (ch == ' ') {
     				text[i] = fonts[i].getFont()[129];
@@ -756,6 +760,7 @@ public class Fonts {
     		}
     	}
     	
+    	// Render images
     	for (int i = 0; i < text.length; i++) {
     		char ch = c[i];
     		
@@ -765,6 +770,12 @@ public class Fonts {
     		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + CodeEditor.FONT_SIZE / 8 : y;
     		
     		BufferedImage chr = text[i];
+    		
+    		if (chr == null) {
+    			g.setColor(fonts[i].getColor());
+    			g.setFont(new Font("Segoe UI", Font.PLAIN, CodeEditor.FONT_SIZE));
+    			g.drawString(Character.toString(ch), (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw);
+    		}
     		
     		if (CodeEditor.FONT_SIZE % 8 != 0 && useAntiAliasing) {
 	    		g2.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
