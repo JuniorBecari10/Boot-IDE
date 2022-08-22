@@ -8347,7 +8347,7 @@ public class CodeEditor extends IDEComponent {
 
 		autocompletes.removeAll(toRemoveAutoCompletes);
 		toRemoveAutoCompletes.clear();
-
+		
 		if (index1 < 0)
 			index1 = 0;
 		if (line1 < 1)
