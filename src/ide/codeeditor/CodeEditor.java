@@ -8546,10 +8546,10 @@ public class CodeEditor extends IDEComponent {
 				g.setColor(Colors.lowerBar);
 				g.fillRect(x, Main.screen.getHeight() - LOWER_BAR_HEIGHT, Main.screen.getWidth(), LOWER_BAR_HEIGHT);
 				
-				String selectingText = selecting ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2) : "";
+				String selectingText = selecting && countIndexDistance(index1, index2, line1, line2) > 0 ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2) : "";
 							
 				if (minMode)
-					selectingText = selecting ? (" | " + countIndexDistance(index1, index2, line1, line2)) : "";
+					selectingText = selecting && countIndexDistance(index1, index2, line1, line2) > 0 ? (" | " + countIndexDistance(index1, index2, line1, line2)) : "";
 				
 				Fonts.drawString(codeType + " - " + extType + " | " + (cursorX + 1) + ":" + cursorY
 						+ selectingText,
