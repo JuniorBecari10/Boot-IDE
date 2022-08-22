@@ -18,7 +18,14 @@ public class GitCore {
 		
 		if (Explorer.initRepo == null) {
 			Explorer.initRepo = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 80, Main.explorer.getWidth() - 40, 20, Texts.initRepository, () -> {
-				Main.runCommand(Main.baseFolder, "git init");
+				int widthDraw = Main.explorer.getWidth() - 40;
+				
+				List<RightClickOption> list = new ArrayList<>();
+				
+				list.add(new RightClickOption(0, 0, widthDraw, Texts.inBaseFolder, (s) -> { Main.runCommand(Main.baseFolder, "git init"); }, ""));
+				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> { Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git init"); }, ""));
+				
+				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 102, list.toArray(new RightClickOption[list.size()]));
 			}, true);
 		}
 		
@@ -37,7 +44,7 @@ public class GitCore {
 				list.add(new RightClickOption(0, 0, widthDraw, Texts.inBaseFolder, (s) -> { Main.runCommand(Main.baseFolder, "git clone " + Explorer.cloneURL.getText() ); }, ""));
 				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> { Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git clone " + Explorer.cloneURL.getText() ); }, ""));
 				
-				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 205, list.toArray(new RightClickOption[list.size()]));
+				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 202, list.toArray(new RightClickOption[list.size()]));
 			}, true);
 		}
 		
