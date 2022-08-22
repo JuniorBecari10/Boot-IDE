@@ -762,7 +762,7 @@ public class Fonts {
     		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) < minX) continue; // TODO talvez aumentar ou diminuir o espaaamento entre letras por parte do usuario, ou nao sla
     		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) > maxX) break;
     		
-    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + (CodeEditor.FONT_SIZE < 14 ? 1 : 2) : y;
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + CodeEditor.FONT_SIZE / 8 : y;
     		
     		BufferedImage chr = text[i];
     		

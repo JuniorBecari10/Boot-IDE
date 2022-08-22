@@ -7,6 +7,7 @@ import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.screen.Screen;
 import ide.util.Colors;
 import ide.util.Texts;
 
@@ -25,7 +26,7 @@ public class NewFolderButton extends IDEComponent {
 		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !RenameFile.added && Explorer.selected == null)) {
 			MouseInput.updateMouse();
 			
-			int y = 200;
+			int y = 200 + Screen.DECORATION_HEIGHT;
 			
 			if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).y + 30;
 			
