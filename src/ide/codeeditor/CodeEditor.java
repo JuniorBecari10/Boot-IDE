@@ -4032,14 +4032,16 @@ public class CodeEditor extends IDEComponent {
 						|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
 						|| ext.equalsIgnoreCase(".project") && isCssPart))
 						|| (ext.equalsIgnoreCase(".css") | ext.equalsIgnoreCase(".scss")))
-						&& hasAfter(new String(chars), i, '{'))
+						&& (hasAfter(new String(chars), i, '{') || hasAfter(new String(chars), i, '%')))
 					continue;
 				
 				boolean cont = true;
 				
-				if (chars[i - 1] == ' ' || isSymbol(chars[i - 1]) || i == 0) cont = false;
+				int imo = i - 1; // i minus one (imo)
+				if (imo < 0) imo = 0;
+				if (chars[imo] == ' ' || isSymbol(chars[imo]) || i == 0) cont = false;
 				
-				if (isNumber(chars[i - 1])) {
+				if (isNumber(chars[imo])) {
 					int c = i;
 					
 					while (c >= 0) {
@@ -5724,6 +5726,8 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public boolean hasAfter(String s, int initialIndex, char target) {
+		if (initialIndex == s.length()) return false;
+		
 		for (int i = initialIndex; i < s.length(); i++) {
 			char c = s.charAt(i);
 
