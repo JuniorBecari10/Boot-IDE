@@ -1,12 +1,10 @@
 package ide.fonts;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
 
 import ide.codeeditor.CodeEditor;
 import ide.util.Colors;
