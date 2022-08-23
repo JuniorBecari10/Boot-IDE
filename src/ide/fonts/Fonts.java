@@ -20,9 +20,8 @@ import ide.util.Spritesheet;
  */
 public class Fonts {
 	
-	public static InputStream emojiStream;
-	public static Font emojiFont;
-	
+	/*public static InputStream emojiStream;
+	public static Font emojiFont;*/
 	
 	public static boolean useAntiAliasing = false;
 	
@@ -776,11 +775,14 @@ public class Fonts {
     		
     		BufferedImage chr = text[i];
     		
-    		if (chr == null) {
+    		/*if (chr == null) {
     			g.setColor(fonts[i].getColor());
     			emojiFont = emojiFont.deriveFont((float) CodeEditor.FONT_SIZE);
     			g.setFont(emojiFont);
     			g.drawString(Character.toString(ch), (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw);
+    		}*/
+    		if (chr == null) {
+    			chr = unknown;
     		}
     		
     		if (CodeEditor.FONT_SIZE % 8 != 0 && useAntiAliasing) {

@@ -74,6 +74,7 @@ public class Main implements Runnable, Tickable {
     public static final String FONT_FILE_NAME = "Resources/font.png";
     public static final String EDITORFONT_FILE_NAME = "Resources/editorfont.png";
     public static final String SPRITESHEET_FILE_NAME = "Resources/spritesheet.png";
+    //public static final String EMOJI_FONT_FILE_NAME = "emojifont.ttf";
     
     public static final String LOG_FILE_NAME = "Exception.log";
     
@@ -387,13 +388,13 @@ public class Main implements Runnable, Tickable {
         Texts.setTexts(lang);
         Fonts.initFonts(fntnr, fnted);
         
-        Fonts.emojiStream = ClassLoader.getSystemClassLoader().getResourceAsStream("/emoji-font.ttf");
+        /*Fonts.emojiStream = ClassLoader.getSystemClassLoader().getResourceAsStream(EMOJI_FONT_FILE_NAME);
         
         try {
 			Fonts.emojiFont = Font.createFont(Font.TRUETYPE_FONT, Fonts.emojiStream);
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
-		}
+		}*/
         
         ////////
         
