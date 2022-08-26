@@ -291,6 +291,8 @@ public class Tab extends IDEComponent implements Serializable {
 				Main.editor.scrY = next.scrY;
 				
 				Main.editor.lines.clear();
+				
+				CommandTerminal.runCommand("resetundoredo");
 			
 				try {
 					Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
@@ -591,6 +593,8 @@ public class Tab extends IDEComponent implements Serializable {
 		Main.editor.isAnotherIteration = false;
 		Main.editor.foundExt = false;
 		
+		CommandTerminal.runCommand("resetundoredo");
+		
 		try {
 			Main.editor.lines = Main.editor.readFile(regent.getRegent());
 		} catch (IOException e) {
@@ -607,8 +611,6 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		/*if (!isSaved())
 			save();*/
-		
-		CommandTerminal.runCommand("resetundoredo");
 		Main.editor.setCursorWithinBounds();
 	}
 	
