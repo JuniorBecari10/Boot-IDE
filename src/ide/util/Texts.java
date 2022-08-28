@@ -211,6 +211,8 @@ public final class Texts {
 	
 	public static String inBaseFolder;
 	public static String inCurrentFolder;
+
+	public static String capsLockOn;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -410,6 +412,8 @@ public final class Texts {
 			inBaseFolder = "Na Pasta Base";
 			inCurrentFolder = "Na Pasta Atual";
 			
+			capsLockOn = "Caps Lock Ativado";
+			
 			break;
 		
 		case ENG:
@@ -607,6 +611,8 @@ public final class Texts {
 			
 			inBaseFolder = "In Base Folder";
 			inCurrentFolder = "In Current Folder";
+			
+			capsLockOn = "Caps Lock On";
 			
 			break;
 		}

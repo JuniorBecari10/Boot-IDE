@@ -76,6 +76,9 @@ public class CodeEditor extends IDEComponent {
 	public boolean isMultilineCommenting = false;
 
 	public boolean selecting;
+	
+	public static boolean capsLock = Main.toolkit.getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
+	public static boolean showCapsLock = true;
 
 	public int line1, line2;
 	public int index1, index2; // TODO fazer a verificação do CSS se está dentro do seletor, e se tiver, colore
@@ -5999,8 +6002,6 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public char addAccents(int keyCode, char ch) {
-		boolean capsLock = Main.toolkit.getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
-
 		if (!pressedAccent) {
 			if (keyCode == KeyEvent.VK_DEAD_TILDE && KeyInput.isShiftDown()) { // ^ Circunflexo
 				prAcc = PressedAccent.CIRCUMFLEX;
@@ -8083,6 +8084,8 @@ public class CodeEditor extends IDEComponent {
 			SearchReplaceCore.dispose();
 		}
 		
+		capsLock = Main.toolkit.getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
+		
 		height = Main.screen.getHeight();
 		LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
 		
@@ -8579,12 +8582,13 @@ public class CodeEditor extends IDEComponent {
 				g.fillRect(x, Main.screen.getHeight() - LOWER_BAR_HEIGHT, Main.screen.getWidth(), LOWER_BAR_HEIGHT);
 				
 				String selectingText = selecting && countIndexDistance(index1, index2, line1, line2) > 0 ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2) : "";
-							
+				String capsLockText = showCapsLock && capsLock ? " | " + Texts.capsLockOn : "";
+				
 				if (minMode)
 					selectingText = selecting && countIndexDistance(index1, index2, line1, line2) > 0 ? (" | " + countIndexDistance(index1, index2, line1, line2)) : "";
 				
 				Fonts.drawString(codeType + " - " + extType + " | " + (cursorX + 1) + ":" + cursorY
-						+ selectingText,
+						+ selectingText + capsLockText,
 						x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 			}
 		} catch (Exception e) {}

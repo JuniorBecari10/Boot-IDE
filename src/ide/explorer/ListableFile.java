@@ -555,6 +555,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("line_ending: " + CodeEditor.lineEnding + "\n");
 			w.write("show_unsaved_title_bar: " + CodeEditor.showUnsavedTitleBar + "\n");
 			w.write("use_antialiasing: " + Fonts.useAntiAliasing + "\n");
+			w.write("show_caps_lock: " + CodeEditor.showCapsLock + "\n");
 
 			w.close();
 
@@ -1151,9 +1152,21 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default"))
-					Fonts.useAntiAliasing = false;
+					Fonts.useAntiAliasing = true;
 
 				Fonts.useAntiAliasing = Boolean.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
+				
+			case "show_caps_lock:":
+				if (!readConfigs) break;
+				
+				if (split[1].equals("default"))
+					CodeEditor.showCapsLock = true;
+
+				CodeEditor.showCapsLock = Boolean.valueOf(split[1]);
 
 				hasAltered = true;
 
