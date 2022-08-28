@@ -8131,9 +8131,6 @@ public class CodeEditor extends IDEComponent {
 		
 		width = Main.screen.getWidth() - x;
 		
-		// colocar isso numa variavel constante
-		minMode = width < 800; // 850 - original, (selecting ? 800 : 600)
-		
 		// Scroll by Keyboard
 		if (KeyInput.isKeyPressed() && KeyInput.isControlDown()) {
 			if (!KeyInput.isShiftDown()) {
@@ -8434,6 +8431,16 @@ public class CodeEditor extends IDEComponent {
 		
 		cursor();
 		//typeLogic();
+		/*
+		String selectingText = selecting && countIndexDistance(index1, index2, line1, line2) > 0 ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2) : "";
+		String capsLockText = showCapsLock && capsLock ? " | " + Texts.capsLockOn : "";
+		
+		String lowerBarText = codeType + " - " + extType + " | " + (cursorX + 1) + ":" + cursorY + selectingText + capsLockText;
+		
+		minMode = x + 10 + (lowerBarText.length() * 12) > width;
+		*/
+		
+		minMode = width < 800;
 	}
 
 	public synchronized void render(Graphics g) {
@@ -8613,11 +8620,12 @@ public class CodeEditor extends IDEComponent {
 				String selectingText = selecting && countIndexDistance(index1, index2, line1, line2) > 0 ? " | " + Texts.selecting + ": " + countIndexDistance(index1, index2, line1, line2) : "";
 				String capsLockText = showCapsLock && capsLock ? " | " + Texts.capsLockOn : "";
 				
+				String lowerBarText = codeType + " - " + extType + " | " + (cursorX + 1) + ":" + cursorY + selectingText + capsLockText;
+				
 				if (minMode)
 					selectingText = selecting && countIndexDistance(index1, index2, line1, line2) > 0 ? (" | " + countIndexDistance(index1, index2, line1, line2)) : "";
 				
-				Fonts.drawString(codeType + " - " + extType + " | " + (cursorX + 1) + ":" + cursorY
-						+ selectingText + capsLockText,
+				Fonts.drawString(lowerBarText,
 						x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 			}
 		} catch (Exception e) {}

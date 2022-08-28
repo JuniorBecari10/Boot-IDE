@@ -594,6 +594,13 @@ public class Explorer extends IDEComponent {
 	        }
 	    }
 	    
+	    // desenhar linha menor do mesmo jeito pra conectar as duas linhas
+	    if (!Main.editor.tabs.isEmpty()) {
+		    g.setColor(Colors.textLight);
+			g2.setStroke(new BasicStroke(3f));
+			g.drawLine(Main.editor.getX() - 1, CodeEditor.MIN_Y - 2, Main.editor.getX() - 1, CodeEditor.MIN_Y + 3);
+	    }
+	    
 	    for (ExplorerTab t : tabs)
 	    	t.render(g);
 	    
