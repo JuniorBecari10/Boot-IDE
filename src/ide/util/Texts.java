@@ -213,6 +213,7 @@ public final class Texts {
 	public static String inCurrentFolder;
 
 	public static String capsLockOn;
+	public static String thisIsTemporary;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -413,6 +414,7 @@ public final class Texts {
 			inCurrentFolder = "Na Pasta Atual";
 			
 			capsLockOn = "Caps Lock Ativado";
+			thisIsTemporary = "Esse arquivo é temporário.";
 			
 			break;
 		
@@ -613,6 +615,7 @@ public final class Texts {
 			inCurrentFolder = "In Current Folder";
 			
 			capsLockOn = "Caps Lock On";
+			thisIsTemporary = "This file is temporary.";
 			
 			break;
 		}

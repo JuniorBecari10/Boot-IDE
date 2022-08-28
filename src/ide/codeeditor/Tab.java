@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import ide.components.CloseTabButton;
@@ -73,6 +74,8 @@ public class Tab extends IDEComponent implements Serializable {
 	private boolean save = true;
 	public static Tab dragging;
 	
+	public boolean isTemporary;
+	
 	private final int animSpeed = 2;
 	
 	public boolean isReadOnly;
@@ -83,6 +86,47 @@ public class Tab extends IDEComponent implements Serializable {
 		super(x, Y, WIDTH, HEIGHT, null);
 		
 		this.regent = regent;
+		this.isTemporary = false;
+		
+		button = new CloseTabButton((x + WIDTH) - 20, Y + 8, 13, 13, Main.spritesheet.getSprite(16, 0, 5, 5), this);
+		
+		String ext = ListableFile.getFileExtension(regent.getRegent());
+		
+		if (CodeEditor.isBinary(ext) || readMode != FileReadMode.NORMAL) {
+			isReadOnly = true;
+			
+			Main.editor.isReadOnly = true;
+		}
+		
+		if (!allowAnimation) return;
+		
+		new Thread() {
+			public void run() {
+				drawW = 0;
+				
+				while (drawW < WIDTH) {
+					drawW += animSpeed;
+					Main.canRunLoop = true;
+					
+					button.setX((x + Main.editor.tabScr + drawW) - 20);
+					
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
+		
+		Main.editor.setCursorWithinBounds();
+	}
+	
+	public Tab(int x, ListableFile regent, boolean isTemporary) {
+		super(x, Y, WIDTH, HEIGHT, null);
+		
+		this.regent = regent;
+		this.isTemporary = isTemporary;
 		
 		button = new CloseTabButton((x + WIDTH) - 20, Y + 8, 13, 13, Main.spritesheet.getSprite(16, 0, 5, 5), this);
 		
@@ -234,7 +278,7 @@ public class Tab extends IDEComponent implements Serializable {
 		closing = true;
 		
 		if (Main.editor.editing != null && save) { // não for nulo
-			if (!Main.editor.editing.isSaved()) { // não estiver salvo
+			if (((!Main.editor.editing.isSaved()) || isTemporary) && !(Main.editor.lines.get(0).getChars().isEmpty() && Main.editor.lines.size() == 1)) { // não estiver salvo
 				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
 				
 				CodeEditor.setSystemLook();
@@ -336,7 +380,12 @@ public class Tab extends IDEComponent implements Serializable {
 				if (!Main.editor.tabs.isEmpty()) {
 					Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() > 0 ? Main.editor.tabs.size() - 1 : 0).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
 					
-					Tab next = Main.editor.tabs.indexOf(t) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(t) - 1);
+					int indexOfT = Main.editor.tabs.indexOf(t);
+					if (indexOfT < 0) {
+						indexOfT = 0;
+					}
+					
+					Tab next = indexOfT == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(indexOfT - 1);
 					
 					if (Main.editor.toRemove != null && Main.editor.toRemove.get(0) != null && !Main.editor.toRemove.get(0).equals(t)) // aqui rola um nullpointerexception quando fecha uma tab | a o get(0) que a null
 						next = t;
@@ -406,10 +455,7 @@ public class Tab extends IDEComponent implements Serializable {
 		closing = false; // TODO talvez fazer uma variavel boolean e quando apertar o botao fechar, ativa ela, e se nao fechar, verifica se ela a true e fecha, removendo da lista
 	}
 	
-	/**
-	 * Salvar Arquivo
-	 */
-	public void save() {
+	public void saveForced() {
 		if (isReadOnly || Main.editor.lines.isEmpty() || Main.editor.lines == null || readMode != FileReadMode.NORMAL) return;
 		
 		try {
@@ -440,6 +486,58 @@ public class Tab extends IDEComponent implements Serializable {
 			save = true;
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Salvar Arquivo
+	 */
+	public void save() {
+		if (!isTemporary) {
+			if (isReadOnly || Main.editor.lines.isEmpty() || Main.editor.lines == null || readMode != FileReadMode.NORMAL) return;
+			
+			try {
+				Charset ch = Main.editor.codeType.equalsIgnoreCase("UTF-8") ? StandardCharsets.UTF_8 : StandardCharsets.ISO_8859_1;
+				
+				BufferedWriter w = Files.newBufferedWriter(regent.getRegent().toPath(), ch); // precisa escrever em utf-8 tbm!!
+				
+				for (IDELine i : Main.editor.lines) {
+					if (i == null) continue;
+					
+					StringBuilder sb = new StringBuilder();
+					
+					for (char c : i.getChars())
+						sb.append(c);
+					
+					String s = sb.toString();
+					
+					if (s == null) break;
+					
+					w.write(s + CodeEditor.lineEnding.getCh());
+				}
+	
+				w.close();
+				
+				Main.editor.addToUndo();
+				
+				setSaved(true);
+				save = true;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			JFileChooser chooser = new JFileChooser(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent());
+			int option = chooser.showSaveDialog(Main.screen.frame);
+			
+			File oldFile = regent.getRegent();
+			
+			if (option == JFileChooser.APPROVE_OPTION) {
+				regent = ListableFile.newListableFile(chooser.getSelectedFile());
+				
+				oldFile.delete();
+				isTemporary = false;
+				save();
+			}
 		}
 	}
 	
@@ -582,7 +680,7 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	public void select() {
 		if (Main.editor.editing != null && !Main.editor.editing.isSaved())
-			Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para voca!
+			Main.editor.editing.saveForced(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para voca!
 		
 		Main.editor.wordSinceSpace = "";
 		RightClickOption.removeAllRightClickOptions();

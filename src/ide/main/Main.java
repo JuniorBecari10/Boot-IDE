@@ -361,6 +361,12 @@ public class Main implements Runnable, Tickable {
 			IDEComponent.toAdd.add(Main.reload);
 			
 			IDEComponent.toAdd.add(settingsButton);
+			
+			// -------
+			
+			if (!editor.tabs.isEmpty() && editor.editing == null)
+				editor.tabs.get(0).select();
+			
     	} catch (Exception e) {
     		writeLog(e);
     		
@@ -908,6 +914,9 @@ public class Main implements Runnable, Tickable {
 				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() - 1 && !t.button.hovered() && !Tab.isTabDragged()) { // por algum motivo a + e nao -
 					int index = Main.baseFolder != null ? t.getRegent().getRegent().getPath().contains(File.separator + Main.baseFolder.getName()) && !t.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir) ? t.getRegent().getRegent().getPath().indexOf(File.separator + Main.baseFolder.getName()) + 1 : 0 : 0;
 					String text = ListableFile.getFileExtension(t.getRegent().getRegent()).equalsIgnoreCase(CONFIG_FILE_EXTENSION) && t.getRegent().getRegent().getParent() != null && t.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir) ? Texts.seeingConfigFile : t.getRegent().getRegent().getPath().substring(index);
+					
+					if (editor.editing.isTemporary)
+						text = Texts.thisIsTemporary;
 					
 					int width = 20 + text.length() * 12;
 					int height = 100;

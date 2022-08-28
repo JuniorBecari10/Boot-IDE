@@ -1583,6 +1583,56 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		}
 	}
 	
+	public static void addTab(ListableFile file, boolean isAutomatic, boolean isTemporary) {
+		if ((!CodeEditor.automaticallyOpenTabs && isAutomatic) || file == null)
+			return;
+
+		if (file.getRegent().isFile() && Main.editor.tabs != null) {
+			int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX()
+					: Tab.MIN_X;
+
+			new Thread() {
+				public void run() {
+					try {
+						Main.editor.lines = Main.editor.readFile(file.getRegent());
+					} catch (IOException e) { // não suportado, se caiu aqui
+						return;
+					}
+				}
+			}.start();
+
+			Tab toAdd = new Tab((lastX + Tab.WIDTH) + 3, file);
+
+			if (Main.editor.tabs.size() == 0)
+				Main.editor.tabScr = 0;
+
+			Main.editor.cursorX = 0;
+			Main.editor.cursorY = 1;
+
+			Main.editor.scrX = 0;
+			Main.editor.scrY = 0;
+
+			Main.editor.isMultilineCommenting = false;
+			Main.editor.isAnotherIteration = false;
+			toAdd.isTemporary = isTemporary;
+			
+			if (!file.getRegent().canWrite()) {
+				Main.editor.isReadOnly = true;
+				toAdd.isReadOnly = true;
+			}
+
+			for (Tab t : Main.editor.tabs)
+				if (t.getRegent().getRegent().getPath().equals(file.getRegent().getPath())) {
+					Main.editor.editing = t;
+
+					return;
+				}
+
+			Main.editor.toAdd.add(toAdd);
+			Main.editor.editing = toAdd;
+		}
+	}
+	
 	public static boolean isListableFileHovered() {
 		if (Explorer.files == null) return false;
 		
@@ -1626,7 +1676,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			MouseInput.updateMouse();
 			
 			if (Main.editor.editing != null && regent.isFile())
-				Main.editor.editing.save();
+				Main.editor.editing.saveForced();
 			
 			for (Tab t : Main.editor.tabs) {
 				if (t.regent.getRegent().equals(regent)) {

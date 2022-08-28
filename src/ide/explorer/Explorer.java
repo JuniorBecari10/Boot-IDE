@@ -353,7 +353,7 @@ public class Explorer extends IDEComponent {
 	    			return;
 	    		}
 	    		
-	    		if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + Shift + N (Criar Nova Pasta)
+	    		if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.isAltDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + Shift + Alt + N (Criar Nova Pasta)
 	    			KeyInput.updateKeys();
 	    			
 	    			Main.editor.execute("newfolder");
@@ -361,7 +361,7 @@ public class Explorer extends IDEComponent {
 	    			return;
 	    		}
 	    		
-	    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + N (Criar Novo Arquivo)
+	    		if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + Shift + N (Criar Novo Arquivo)
 	    			KeyInput.updateKeys();
 	    			
 	    			Main.editor.execute("newfile");

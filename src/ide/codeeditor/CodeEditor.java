@@ -6474,6 +6474,22 @@ public class CodeEditor extends IDEComponent {
 			}*/
 
 			break;
+			
+		case "newfiletab":
+			File create = new File(Main.userDir + File.separator + "Untitled");
+			
+			if (!create.exists())
+				try {
+					create.createNewFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			
+			create.deleteOnExit();
+			
+			ListableFile.addTab(ListableFile.newListableFile(create), false, true);
+			
+			break;
 		}
 	}
 
@@ -7442,6 +7458,14 @@ public class CodeEditor extends IDEComponent {
 						setCursorWithinBounds();
 						
 						CommandTerminal.runCommand("gotocursor");
+
+						return;
+					}
+					
+					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + N - Criar Novo Arquivo Na Tab
+						KeyInput.updateKeys();
+
+						execute("newfiletab");
 
 						return;
 					}
