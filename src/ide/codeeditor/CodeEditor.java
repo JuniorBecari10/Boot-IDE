@@ -1922,6 +1922,11 @@ public class CodeEditor extends IDEComponent {
 			for (int i = 0; i < indxs.size() - 1; i += 2)
 				fs = color(indxs.get(i), indxs.get(i + 1) + 2, new IDEFont(Fonts.stringsEditor, FONT_SIZE), fs);
 			
+			indxs = findWord(new String(chars), "_");
+
+			for (int i = 0; i < indxs.size() - 1; i += 2)
+				fs = color(indxs.get(i), indxs.get(i + 1) + 2, new IDEFont(Fonts.stringsEditor, FONT_SIZE), fs);
+			
 			indxs = findWord(new String(chars), "__");
 
 			for (int i = 0; i < indxs.size() - 1; i += 2)
