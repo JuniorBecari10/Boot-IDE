@@ -721,6 +721,9 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		if (width < 10) closeWithoutAnimation();
 		
+		if (Main.editor.lines.get(0).getChars().isEmpty() && Main.editor.lines.size() == 1 && isTemporary)
+			isSaved = true;
+		
 		int x = dragging == null ? this.x + Main.editor.tabScr : this.x;
 		
 		// não está arrastando
