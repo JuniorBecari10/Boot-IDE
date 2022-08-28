@@ -4816,7 +4816,7 @@ public class CodeEditor extends IDEComponent {
 						}
 
 						if (isMultilineCommenting)
-							fs = color(0, fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
+							fs = color(indxs.get(0), fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
 						break;
 					}
 				}
@@ -5193,7 +5193,7 @@ public class CodeEditor extends IDEComponent {
 			}
 			
 			if (isMultilineCommenting)
-				fs = color(0, fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
+				fs = color(indxs.isEmpty() ? 0 : indxs.get(0), fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
 
 			indxs = finals;
 
