@@ -215,6 +215,14 @@ public class Explorer extends IDEComponent {
 			return;
 		}
 	    
+	    else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_M ) { // Ctrl + M (Go to Cursor)
+	    	KeyInput.updateKeys();
+
+	    	CommandTerminal.runCommand("gotocursor");
+
+	    	return;
+	    }
+	    
 	    if (hovered())
 	    	Main.screen.setCursor(Cursor.getDefaultCursor());
 			
