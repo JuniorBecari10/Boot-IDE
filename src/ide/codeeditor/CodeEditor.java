@@ -1408,7 +1408,8 @@ public class CodeEditor extends IDEComponent {
 				|| ext.equalsIgnoreCase(".ogg") || ext.equalsIgnoreCase(".otf") || ext.equalsIgnoreCase(".ttf")
 				|| ext.equalsIgnoreCase(".woff") || ext.equalsIgnoreCase(".woff2") || ext.equalsIgnoreCase(".zip")
 				|| ext.equalsIgnoreCase(".rar") || ext.equalsIgnoreCase(".7z") || ext.equalsIgnoreCase(".bin")
-				|| ext.equalsIgnoreCase(".gz") || ext.equalsIgnoreCase(".rtf") || ext.equalsIgnoreCase(".db");
+				|| ext.equalsIgnoreCase(".gz") || ext.equalsIgnoreCase(".rtf") || ext.equalsIgnoreCase(".db")
+				|| ext.equalsIgnoreCase(".hex");
 	}
 
 	public static boolean isFormatSupported(String format) {
@@ -1552,7 +1553,7 @@ public class CodeEditor extends IDEComponent {
 		case ".kt": return minMode ? "Kt" : "Kotlin";
 		case ".vue": return minMode ? "Vue" : "Vue.js";
 		case ".rb": return "Ruby";
-		case ".ino": return "Arduino";
+		case ".ino": return "Arduino (C++)";
 		case ".ts": return minMode ? "TS" : "TypeScript";
 		case ".tsx": return minMode ? "TSX" : "TypeScript React";
 		case ".go": return "Go";
@@ -1657,6 +1658,7 @@ public class CodeEditor extends IDEComponent {
 		case ".db": return Main.lang == Language.PORT ? "Banco de Dados" : "Database";
 		case ".yml": return "YAML Ain't Markup Language";
 		case ".yaml": return "YAML Ain't Markup Language";
+		case ".hex": return Main.lang == Language.PORT ? "Arquivo Hexadecimal" : "Hexadecimal File";
 		
 		case ".png": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
 		case ".jpg": return (Main.lang == Language.PORT ? "Arquivo de Imagem" : "Image File");
