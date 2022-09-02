@@ -211,6 +211,10 @@ public class Main implements Runnable, Tickable {
     
     public static BufferedImage settingsButtonSpr;
     
+    public static BufferedImage gitError;
+    public static BufferedImage gitProgress;
+    public static BufferedImage gitDone;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -298,7 +302,11 @@ public class Main implements Runnable, Tickable {
 	        gitTab = spritesheet.getSprite(352, 0, 16, 16);
 	        terminalTab = spritesheet.getSprite(368, 0, 16, 16);
 	        
-	        settingsButtonSpr = spritesheet.getSprite(400, 0, 16, 16);
+	        settingsButtonSpr = spritesheet.getSprite(384, 0, 16, 16);
+	        
+	        gitError = spritesheet.getSprite(400, 0, 5, 5);
+	        gitProgress = spritesheet.getSprite(400, 5, 5, 5);
+	        gitDone = spritesheet.getSprite(400, 10, 5, 5);
 	        
 	        ///////
 	        
@@ -454,6 +462,10 @@ public class Main implements Runnable, Tickable {
         terminalTab = Colors.swapColor(terminalTab, Colors.textLightDefault, Colors.textLight);
         
         settingsButtonSpr = Colors.swapColor(settingsButtonSpr, Colors.textLightDefault, Colors.textLight);
+        
+        gitError = Colors.swapColor(gitError, Colors.textLightDefault, Colors.textLight);
+        gitProgress = Colors.swapColor(gitProgress, Colors.textLightDefault, Colors.textLight);
+        gitDone = Colors.swapColor(gitDone, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         
