@@ -559,6 +559,8 @@ public class Main implements Runnable, Tickable {
         	return lines;
         }
         
+        System.out.println(lines);
+        
         return lines;
     }
     
