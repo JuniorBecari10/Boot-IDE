@@ -24,6 +24,7 @@ import ide.explorercomponents.ExecuteButton;
 import ide.explorercomponents.ExplorerTab;
 import ide.explorercomponents.GitCore;
 import ide.explorercomponents.InputBox;
+import ide.explorercomponents.LastAction;
 import ide.explorercomponents.SearchReplaceCore;
 import ide.explorercomponents.SearchReplaceRadioButton;
 import ide.explorercomponents.ToggleButton;
@@ -68,6 +69,7 @@ public class Explorer extends IDEComponent {
 	public static ExecuteButton initRepo;
 	public static InputBox cloneURL;
 	public static ExecuteButton clone;
+	public static LastAction lastAction;
 	
 	public static int MINIMUM_Y = 200 + Screen.DECORATION_HEIGHT;
 	

@@ -215,6 +215,12 @@ public final class Texts {
 	public static String capsLockOn;
 	public static String thisIsTemporary;
 	
+	public static String gitError;
+	public static String gitProgress;
+	public static String gitDone;
+	
+	public static String noActionsDone;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -416,6 +422,12 @@ public final class Texts {
 			capsLockOn = "Caps Lock Ativado";
 			thisIsTemporary = "Esse arquivo é temporário.";
 			
+			gitError = "Erro";
+			gitProgress = "Em Progresso";
+			gitDone = "Pronto";
+			
+			noActionsDone = "Nenhuma ação feita.";
+			
 			break;
 		
 		case ENG:
@@ -616,6 +628,12 @@ public final class Texts {
 			
 			capsLockOn = "Caps Lock On";
 			thisIsTemporary = "This file is temporary.";
+			
+			gitError = "Error";
+			gitProgress = "In Progress";
+			gitDone = "Done";
+			
+			noActionsDone = "No actions done.";
 			
 			break;
 		}
