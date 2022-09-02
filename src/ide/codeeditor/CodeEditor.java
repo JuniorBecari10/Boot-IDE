@@ -7517,8 +7517,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_L && !isReadOnly
-							) { // Ctrl + L - Deletar Linha
+					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_L && !isReadOnly) { // Ctrl + L - Deletar Linha
 						KeyInput.updateKeys();
 
 						CommandTerminal.runCommand("selectline");

@@ -158,7 +158,7 @@ public class Main implements Runnable, Tickable {
     
     public static final File logFile = new File(System.getProperty("user.dir") + File.separator + LOG_FILE_NAME);
     
-    public static final String[] errorKeywords = { "fatal", "error", "exist" };
+    public static final String[] errorKeywords = { "fatal", "error" };
     
     // Sprites
     
@@ -306,9 +306,9 @@ public class Main implements Runnable, Tickable {
 	        
 	        settingsButtonSpr = spritesheet.getSprite(384, 0, 16, 16);
 	        
-	        gitError = spritesheet.getSprite(400, 0, 5, 5);
-	        gitProgress = spritesheet.getSprite(400, 5, 5, 5);
-	        gitDone = spritesheet.getSprite(400, 10, 5, 5);
+	        gitError = spritesheet.getSprite(160, 0, 5, 5);
+	        gitProgress = spritesheet.getSprite(160, 5, 5, 5);
+	        gitDone = spritesheet.getSprite(160, 10, 5, 5);
 	        
 	        ///////
 	        
@@ -501,7 +501,6 @@ public class Main implements Runnable, Tickable {
     public static boolean isError(List<String> output) {
     	for (String s : output) {
     		for (String k : errorKeywords) {
-    			System.out.println(s + " | " + k);
     			if (s.contains(k)) return true;
     		}
     	}
@@ -535,8 +534,8 @@ public class Main implements Runnable, Tickable {
         try {
 	        ProcessBuilder builder = new ProcessBuilder(commands);
 	        builder.redirectErrorStream(true);
-	        builder.redirectInput(ProcessBuilder.Redirect.INHERIT);
-	        builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+	        //builder.redirectInput(ProcessBuilder.Redirect.INHERIT);
+	        //builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 	        builder.directory(directory);
 	        Process p = builder.start();
 	        
@@ -558,8 +557,6 @@ public class Main implements Runnable, Tickable {
         } catch (Exception e) {
         	return lines;
         }
-        
-        System.out.println(lines);
         
         return lines;
     }
