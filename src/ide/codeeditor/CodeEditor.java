@@ -1379,6 +1379,7 @@ public class CodeEditor extends IDEComponent {
 		case ".vh": return vKeys;
 		case ".vsh": return vKeys;
 		case ".mod": return modKeys;
+		case ".sum": return modKeys;
 		
 		default: return null;
 		}
@@ -1590,6 +1591,7 @@ public class CodeEditor extends IDEComponent {
 		case ".vh": return "V";
 		case ".vsh": return "V";
 		case ".mod": return minMode ? "Go Mod" : (Main.lang == Language.PORT ? "Arquivo de Módulo do Go" : "Go Module File");
+		case ".sum": return minMode ? "Go Mod" : (Main.lang == Language.PORT ? "Arquivo de Módulo do Go" : "Go Module File");
 		case ".bas": return minMode ? "BASIC" : "Beginners' All-Purpose Symbolic Instruction Code - BASIC";
 		
 		case ".html": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
@@ -1779,7 +1781,7 @@ public class CodeEditor extends IDEComponent {
 			return fs;
 		}
 		
-		if (ext.equalsIgnoreCase(".mod")) {
+		if (ext.equalsIgnoreCase(".mod") || ext.equalsIgnoreCase(".sum")) {
 			indxs = findWord(new String(chars), "module"); // depois de <palavra>
 	
 			int len = 0;
@@ -2207,6 +2209,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case ".mod":
+		case ".sum":
 			for (String s : modKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
 														// s.length()).getFont().equals(Fonts.methodsEditor))
@@ -4031,7 +4034,7 @@ public class CodeEditor extends IDEComponent {
 				if (ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))
 					continue;
 				
-				if (ext.equalsIgnoreCase(".mod")) {
+				if (ext.equalsIgnoreCase(".mod") || ext.equalsIgnoreCase(".sum")) {
 					List<Integer> idxs = findWord(new String(chars), "go");
 					if (idxs.isEmpty()) continue;
 				}
@@ -4889,6 +4892,7 @@ public class CodeEditor extends IDEComponent {
 		case ".vh":
 		case ".vsh":
 		case ".mod":
+		case ".sum":
 			String withSpace = " " + new String(chars);
 			char[] chs = withSpace.toCharArray();
 			
@@ -5169,6 +5173,7 @@ public class CodeEditor extends IDEComponent {
 		case ".vh":
 		case ".vsh":
 		case ".mod":
+		case ".sum":
 			indxs = findWord(new String(chars), "/*"); // colorir comentarios multi-linha - caracteres diferentes
 			String finalChar = "*/";
 			List<Integer> finals = findWord(new String(chars), finalChar);
@@ -7464,7 +7469,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 					
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + N - Criar Novo Arquivo Na Tab
+					else if (KeyInput.isControlDown() && !KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + N - Criar Novo Arquivo Na Tab
 						KeyInput.updateKeys();
 
 						execute("newfiletab");

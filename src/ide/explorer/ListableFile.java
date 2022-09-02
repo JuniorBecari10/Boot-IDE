@@ -66,7 +66,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			t.add(new FileType("readme.md",Main.spritesheet.getSprite(752,32,16,16)));
 			t.add(new FileType("package.json",Main.spritesheet.getSprite(576,16,16,16)));
 			t.add(new FileType("package-lock.json",Main.spritesheet.getSprite(576,16,16,16)));
-			t.add(new FileType(".mod", Main.spritesheet.getSprite(848, 32, 16, 16))); // 688, 16
 			
 			t.add(new FileType(".java", Main.spritesheet.getSprite (0, 16, 16, 16)));
 			t.add(new FileType(".class",Main.spritesheet.getSprite(272,32, 16, 16)));
@@ -191,10 +190,12 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			t.add(new FileType(".toml",Main.spritesheet.getSprite(352, 32, 16, 16)));
 			t.add(new FileType(".svelte", Main.spritesheet.getSprite(816,32,16,16)));
 			t.add(new FileType(".tf", Main.spritesheet.getSprite (832, 32, 16, 16)));
+			t.add(new FileType(".mod", Main.spritesheet.getSprite(848, 32, 16, 16)));
 			t.add(new FileType(".db",  Main.spritesheet.getSprite(160, 16, 16, 16)));
 			t.add(new FileType(".yml", Main.spritesheet.getSprite(864, 32, 16, 16)));
 			t.add(new FileType(".yaml",Main.spritesheet.getSprite(864, 32, 16, 16)));
-			t.add(new FileType(".hex",Main.spritesheet.getSprite(880, 32, 16, 16)));
+			t.add(new FileType(".hex", Main.spritesheet.getSprite(880, 32, 16, 16)));
+			t.add(new FileType(".sum", Main.spritesheet.getSprite(848, 32, 16, 16))); 
 			
 			t.add(new FileType(".png", Main.spritesheet.getSprite  (0, 48, 16, 16)));
 			t.add(new FileType(".jpg", Main.spritesheet.getSprite  (0, 48, 16, 16)));
