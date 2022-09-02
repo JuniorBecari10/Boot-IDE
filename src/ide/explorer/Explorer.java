@@ -552,12 +552,27 @@ public class Explorer extends IDEComponent {
     	
     	Fonts.drawString(Texts.general + " -----", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	Fonts.drawString("URL:", 20, Screen.DECORATION_HEIGHT + 120, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    }
+    
+    public static int getHighestNumber(int... arr) {
+    	int highest = arr[0];
     	
-    	/*g.setColor(Colors.textLight);
-    	g2.setStroke(new BasicStroke(3f));
-    	g2.drawLine(Texts.general.length() * 12 + 4, 24, width - 4, 24);*/
+    	for (int i = 0; i < arr.length; i++) {
+    		if (arr[i] > highest)
+    			highest = arr[i];
+    	}
     	
+    	return highest;
+    }
+    
+    public static int[] arrayOfLengths(String... arr) {
+    	int[] ret = new int[arr.length];
     	
+    	for (int i = 0; i < arr.length; i++) {
+    		ret[i] = arr[i].length();
+    	}
+    	
+    	return ret;
     }
     
     public static void renderDescriptionText(String s, int x, int y, Graphics g) {
@@ -565,6 +580,18 @@ public class Explorer extends IDEComponent {
     	g.fillRect(x, y, (s.length() * (CodeEditor.DEFAULT_FONT_SIZE - 4)) + 6, 27);
     	
     	Fonts.drawString(s, x + 4, y + 4, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+    }
+    
+    public static void renderCardText(String[] s, int x, int y, Graphics g) {
+    	g.setColor(Colors.explorerLight);
+    	g.fillRect(x, y, (getHighestNumber(arrayOfLengths(s)) * (CodeEditor.DEFAULT_FONT_SIZE - 4)) + 6, 27);
+    	g.setColor(Colors.textLight);
+    	g.drawRect(x, y, (getHighestNumber(arrayOfLengths(s)) * (CodeEditor.DEFAULT_FONT_SIZE - 4)) + 6, 27);
+    	
+    	int i = 0;
+    	for (String ss : s) {
+    		Fonts.drawString(ss, x + 4, y + 4 + (20 * i++), new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+    	}
     }
 
     public synchronized void render(Graphics g) {
