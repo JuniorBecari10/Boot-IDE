@@ -355,7 +355,7 @@ public class Explorer extends IDEComponent {
 	    			return;
 	    		}
 	    		
-	    		if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.isAltDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + Shift + Alt + N (Criar Nova Pasta)
+	    		if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_F) { // Ctrl + Shift + F (Criar Nova Pasta)
 	    			KeyInput.updateKeys();
 	    			
 	    			Main.editor.execute("newfolder");

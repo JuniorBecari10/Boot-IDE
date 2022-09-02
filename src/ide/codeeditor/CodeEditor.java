@@ -7501,13 +7501,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_F) { // Ctrl
-																																// +
-																																// F
-																																// -
-																																// Abrir
-																																// janela
-																																// Localizar/Substituir
+					else if (KeyInput.isControlDown() && !KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_F) { // Ctrl + F - Abrir Search/Replace
 						KeyInput.updateKeys();
 
 						execute("searchrep");
@@ -7533,11 +7527,7 @@ public class CodeEditor extends IDEComponent {
 						return;
 					}
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_J) { // Ctrl
-																																// +
-																																// J
-																																// -
-																																// Executar
+					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_J) { // Ctrl + J - Executar
 						KeyInput.updateKeys();
 
 						if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".bat")
