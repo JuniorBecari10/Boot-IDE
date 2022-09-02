@@ -158,6 +158,8 @@ public class Main implements Runnable, Tickable {
     
     public static final File logFile = new File(System.getProperty("user.dir") + File.separator + LOG_FILE_NAME);
     
+    public static final String[] errorKeywords = { "fatal", "error", "exist" };
+    
     // Sprites
     
     public static BufferedImage baseFolderSpr;
@@ -495,153 +497,19 @@ public class Main implements Runnable, Tickable {
         explorer.addTabs();
     }
     
-    /**
-     * Restart the current Java application
-     * 
-     * <br />
-     * 
-     * Cadigo de: <a href="https://dzone.com/articles/programmatically-restart-java">https://dzone.com/articles/programmatically-restart-java</a>
-     * 
-     * @param runBeforeRestart some custom code to be run before restarting
-     * @throws IOException
-     *
-    public static void restartApplication(Runnable runBeforeRestart) throws IOException {
-    try {
-	    // java binary
-	    String java = System.getProperty("java.home") + "/bin/java";
-	    // vm arguments
-	    List<String> vmArguments = ManagementFactory.getRuntimeMXBean().getInputArguments();
-	    StringBuffer vmArgsOneLine = new StringBuffer();
-	    for (String arg : vmArguments) {
-		    // if it's the agent argument : we ignore it otherwise the
-		    // address of the old application and the new one will be in conflict
-		    if (!arg.contains("-agentlib")) {
-			    vmArgsOneLine.append(arg);
-			    vmArgsOneLine.append(" ");
-		    }
-	    }
-	    // init the command to execute, add the vm args
-	    final StringBuffer cmd = new StringBuffer("\"" + java + "\" " + vmArgsOneLine);
-	
-	    // program main and program arguments
-	    String[] mainCommand = System.getProperty(SUN_JAVA_COMMAND).split(" ");
-	    // program main is a jar
-	    if (mainCommand[0].endsWith(".jar")) {
-		    // if it's a jar, add -jar mainJar
-		    cmd.append("-jar " + new File(mainCommand[0]).getPath());
-	    } else {
-		    // else it's a .class, add the classpath and mainClass
-		    cmd.append("-cp \"" + System.getProperty("java.class.path") + "\" " + mainCommand[0]);
-	    }
-	    // finally add program arguments
-	    for (int i = 1; i < mainCommand.length; i++) {
-		    cmd.append(" ");
-		    cmd.append(mainCommand[i]);
-	    }
-	    // execute the command in a shutdown hook, to be sure that all the
-	    // resources have been disposed before restarting the application
-	    Runtime.getRuntime().addShutdownHook(new Thread() {
-	    @Override
-	    public void run() {
-	    try {
-	    	Runtime.getRuntime().exec(cmd.toString());
-	    } catch (IOException e) {
-	    	e.printStackTrace();
-	    }
-	    }
-	    });
-	    // execute some custom code before restarting
-	    if (runBeforeRestart!= null) {
-	    runBeforeRestart.run();
-	    }
-	    // exit
-	    System.exit(0);
-	    } catch (Exception e) {
-	    // something went wrong
-	    throw new IOException("Error while trying to restart the application", e);
-	    }
-    }*/
-    
-   /*private void openWith(String locale) {
-    	if (locale == null) return;
-    	
-    	try {
-    		File file = new File(locale);
-			
-			if (Main.baseFolder == null) {
-				IDEComponent.toAdd.add(Main.newFile);
-				IDEComponent.toAdd.add(Main.newFolder);
-				IDEComponent.toAdd.add(Main.oneFolder);
-				IDEComponent.toAdd.add(Main.returnBase);
-				IDEComponent.toAdd.add(Main.reload);
-			}
-			
-			 ListableFile.files.clear();
-			  Explorer.files.clear();
-	          
-	          		if (file.isDirectory()) {
-	          			Main.baseFolder = file;
-						
-						Explorer.scope = null;
-		        	  	
-		        	  	int index = 0;
-						
-						for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
-							ListableFile.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
-							
-							index++;
-						}
-	          			return;
-	          		}
-	          
-	        	  	Main.baseFolder = file.getParentFile();
-	        	  	
-	        	  	Explorer.files.clear();
-					ListableFile.files.clear();
-					
-					Explorer.scope = null;
-	        	    
-	        	  	int index = 0;
-					
-					for (File f : ListableFile.listFilesOrdered(Main.baseFolder)) {
-						ListableFile.files.add(new ListableFile(0, 200 + (index * 30), Main.explorer.getWidth(), 30, f, null));
-						
-						index++;
-					}
-	          
-			int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX() : Tab.MIN_X;
-       	
-			if (!(file.getName().equalsIgnoreCase(".pdf") || file.getName().equalsIgnoreCase(".jar") || file.getName().equalsIgnoreCase(".iso") || file.getName().equalsIgnoreCase(".img") || file.getName().equalsIgnoreCase(".flp") || file.getName().equalsIgnoreCase(".class") || file.getName().equalsIgnoreCase(".exe") || file.getName().equalsIgnoreCase(".urna") || file.getName().equalsIgnoreCase(".save") || file.getName().equalsIgnoreCase(".docx") || file.getName().equalsIgnoreCase(".pptx") || file.getName().equalsIgnoreCase(".one") || file.getName().equalsIgnoreCase(".psd") || file.getName().equalsIgnoreCase(".aed") || file.getName().equalsIgnoreCase(".ai") || file.getName().equalsIgnoreCase(".indd") || file.getName().equalsIgnoreCase(".ini") || file.getName().equalsIgnoreCase(".dll") || file.getName().equalsIgnoreCase(".png") || file.getName().equalsIgnoreCase(".jpg") || file.getName().equalsIgnoreCase(".jpeg") || file.getName().equalsIgnoreCase(".gif") || file.getName().equalsIgnoreCase(".bmp") || file.getName().equalsIgnoreCase(".ico") || file.getName().equalsIgnoreCase(".webp") || file.getName().equalsIgnoreCase(".mp4") || file.getName().equalsIgnoreCase(".wmv") || file.getName().equalsIgnoreCase(".avi") || file.getName().equalsIgnoreCase(".wav") || file.getName().equalsIgnoreCase(".mp3") || file.getName().equalsIgnoreCase(".ogg") || file.getName().equalsIgnoreCase(".otf") || file.getName().equalsIgnoreCase(".ttf") || file.getName().equalsIgnoreCase(".woff") || file.getName().equalsIgnoreCase(".woff2") || file.getName().equalsIgnoreCase(".zip") || file.getName().equalsIgnoreCase(".rar") || file.getName().equalsIgnoreCase(".7z") || file.getName().equalsIgnoreCase(".bin"))) {
-	        	Tab toAdd = new Tab(Main.editor.tabs.size() > 0 ? (lastX + Tab.WIDTH) + 3 : Tab.MIN_X - Tab.WIDTH, ListableFile.searchListableFiles(file));
-	        	
- 				Main.editor.cursorX = 0;
- 				Main.editor.cursorY = 1;
- 				
- 				Main.editor.scrX = 0;
- 				Main.editor.scrY = 0;
- 				
-	        	  	Main.editor.editing = toAdd;
-	        	  	Main.editor.tabs.add(toAdd);
-					
-	        	  	new Thread() {
-						public void run() {
-							try {
-								Main.editor.lines = Main.editor.readFile(file);
-							} catch (IOException e) { // nao suportado, se caiu aqui
-								return;
-							}
-						}
-					}.start();
-	        	  	
-					Main.screen.frame.setTitle(Main.baseFolder.getName() + " - Boot IDE");
-			}
-			
-    	} catch (NullPointerException e) {
-    		return;
+    // Checks whether a command's output is an error or not through parsing.
+    public static boolean isError(List<String> output) {
+    	for (String s : output) {
+    		for (String k : errorKeywords) {
+    			System.out.println(s + " | " + k);
+    			if (s.contains(k)) return true;
+    		}
     	}
-    }*/
+    	
+    	return false;
+    }
     
-    public static void runCommand(File directory, String... commands) {
+    public static List<String> runCommand(File directory, String... commands) {
     	if (os == OS.WINDOWS) {
     		String[] preCommands = { "cmd", "/c" };
     		String[] arr = new String[preCommands.length + commands.length];
@@ -653,10 +521,10 @@ public class Main implements Runnable, Tickable {
     		for (i = 0; i < commands.length; i++)
     			arr[preCommands.length + i] = commands[i];
     		
-    		run(directory, arr);
+    		return run(directory, arr);
     	}
     	else {
-    		run(directory, commands);
+    		return run(directory, commands);
     	}
     }
     
@@ -671,6 +539,9 @@ public class Main implements Runnable, Tickable {
 	        builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 	        builder.directory(directory);
 	        Process p = builder.start();
+	        
+	        // check if the value's non zero
+	        p.waitFor();
 	        
 	        BufferedReader stdin = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	        BufferedReader stderr = new BufferedReader(new InputStreamReader(p.getErrorStream()));
