@@ -31,8 +31,6 @@ public class LastAction extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(sprite, x, y, 15, 15, null);
-		
 		String text = Texts.noActionsDone;
 		
 		if (action != null) {
@@ -42,7 +40,9 @@ public class LastAction extends IDEComponent {
 			
 			text = action.name + " | " + text + ".";
 		}
+		
+		g.drawImage(sprite, (Main.explorer.getWidth() / 2 - (text.length() * 12) / 2) - 15, y, 15, 15, null);
 	
-		Fonts.drawString(text, text.equals(Texts.noActionsDone) ? x + 20 : x + 30, y, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		Fonts.drawString(text, (Main.explorer.getWidth() / 2 - (text.length() * 12) / 2) + (action == null ? 0 : 15), y, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 	}
 }

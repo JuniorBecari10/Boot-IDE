@@ -535,7 +535,7 @@ public class Main implements Runnable, Tickable {
 	        ProcessBuilder builder = new ProcessBuilder(commands);
 	        builder.redirectErrorStream(true);
 	        //builder.redirectInput(ProcessBuilder.Redirect.INHERIT);
-	        //builder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+	        //builder.redirectOutput(ProcessBuilder.Redirect.INHERIT); // esse faz com que printa na tela os comandos
 	        builder.directory(directory);
 	        Process p = builder.start();
 	        

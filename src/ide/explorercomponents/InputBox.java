@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
+import ide.components.RightClickOption;
 import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -23,6 +24,12 @@ public class InputBox extends IDEComponent {
 		super(x, y, width, height, null);
 		
 		text = new StringBuilder();
+	}
+	
+	public boolean hovered() {
+		if (RightClickOption.isRightClickActive()) return false;
+		
+		return super.hovered();
 	}
 	
 	public void tick() {
