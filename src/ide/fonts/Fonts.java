@@ -74,8 +74,6 @@ public class Fonts {
     public static BufferedImage[] selectedLineNumberNormal;
     public static BufferedImage[] selectedLineNumberEditor;
     
-    public static BufferedImage unknown;
-    
     public static void initFonts(String font1, String font2) {
     	 normal = Fonts.initFont(font1);
          editor = Fonts.initFont(font2);
@@ -175,8 +173,6 @@ public class Fonts {
          
          normal = Fonts.initFont(font1);
          editor = Fonts.initFont(font2);
-         
-         unknown = normal[127];
     }
     
     /**
@@ -780,7 +776,7 @@ public class Fonts {
     			g.drawString(Character.toString(ch), (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw);
     		}*/
     		if (chr == null) {
-    			chr = unknown;
+    			chr = fonts[i].getFont()[127];
     		}
     		
     		if (CodeEditor.FONT_SIZE % 8 != 0 && useAntiAliasing) {
