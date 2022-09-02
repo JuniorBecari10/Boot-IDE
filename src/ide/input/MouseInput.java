@@ -47,9 +47,12 @@ public final class MouseInput extends MouseInputAdapter {
     
     public static boolean hovered(int x, int y, int w, int h) {
     	Rectangle bs = new Rectangle(x, y, w, h);
-    	Rectangle ms = new Rectangle(mouseX, mouseY, 1, 1);
     	
-    	return bs.intersects(ms);
+    	return bs.intersects(getMouseBounds());
+    }
+    
+    public static Rectangle getMouseBounds() {
+    	return new Rectangle(mouseX, mouseY, 1, 1);
     }
 
     public static int getMouseX() {
