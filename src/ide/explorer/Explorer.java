@@ -6,6 +6,7 @@ import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +72,11 @@ public class Explorer extends IDEComponent {
 	public static ExecuteButton initRepo;
 	public static InputBox cloneURL;
 	public static ExecuteButton clone;
+	
+	public static ExecuteButton stageAll;
+	public static ExecuteButton unstageAll;
+	public static ExecuteButton seeStaged;
+	
 	public static LastAction lastAction;
 	
 	public static int MINIMUM_Y = 200 + Screen.DECORATION_HEIGHT;
@@ -128,6 +134,17 @@ public class Explorer extends IDEComponent {
     		}
     	});
     	tabs.add(new ExplorerTab(1 + 9 + (ExplorerTab.SIZE * 3), Main.terminalTab, ExplorerMode.TERMINAL, "Terminal"));
+    }
+    
+    public static boolean isBaseFolderRepository() {
+    	if (Main.baseFolder == null) return false;
+    	
+    	for (File f : Main.baseFolder.listFiles()) {
+    		if (f.getName().equals(".git") && f.isDirectory())
+    			return true;
+    	}
+    	
+    	return false;
     }
     
     public static String getScopePath() {
@@ -658,10 +675,12 @@ public class Explorer extends IDEComponent {
     	
     	Fonts.drawString("URL:", 20, Screen.DECORATION_HEIGHT + 120, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	
-    	Fonts.drawString("Staging", 20, Screen.DECORATION_HEIGHT + 220, new IDEFont(Fonts.lightGrayNormal, 16), g);
-    	g2.setColor(Colors.textLight);
-    	g2.setStroke(new BasicStroke(2f));
-    	g2.drawLine(20 + ("Staging".length() * 12) + 10, Screen.DECORATION_HEIGHT + 230, width - 20, Screen.DECORATION_HEIGHT + 230);
+    	if (isBaseFolderRepository()) {
+	    	Fonts.drawString("Staging", 20, Screen.DECORATION_HEIGHT + 220, new IDEFont(Fonts.lightGrayNormal, 16), g);
+	    	g2.setColor(Colors.textLight);
+	    	g2.setStroke(new BasicStroke(2f));
+	    	g2.drawLine(20 + ("Staging".length() * 12) + 10, Screen.DECORATION_HEIGHT + 230, width - 20, Screen.DECORATION_HEIGHT + 230);
+    	}
     }
     
     public static int getHighestNumber(int... arr) {

@@ -71,6 +71,17 @@ public class GitCore {
 		IDEComponent.toAdd.add(Explorer.cloneURL);
 		IDEComponent.toAdd.add(Explorer.clone);
 		IDEComponent.toAdd.add(Explorer.lastAction);
+		
+		if (Explorer.isBaseFolderRepository())
+			initRepoComponents();
+	}
+	
+	public static synchronized void initRepoComponents() {
+		if (Explorer.stageAll == null) {
+			Explorer.stageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 250, Main.explorer.getWidth() - 40, 20, Texts.stageAll, () -> { boolean error = Main.isError(Main.runCommand(Main.baseFolder, "git add .")); actions.add(new GitAction("git add", error ? ActionState.ERROR : ActionState.DONE)); }, true);
+		}
+		
+		IDEComponent.toAdd.add(Explorer.stageAll);
 	}
 	
 	public static synchronized void dispose() {
@@ -78,5 +89,7 @@ public class GitCore {
 		IDEComponent.toRemove.add(Explorer.cloneURL);
 		IDEComponent.toRemove.add(Explorer.clone);
 		IDEComponent.toRemove.add(Explorer.lastAction);
+		
+		IDEComponent.toRemove.add(Explorer.stageAll);
 	}
 }

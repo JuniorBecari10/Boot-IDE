@@ -221,6 +221,8 @@ public final class Texts {
 	
 	public static String noActionsDone;
 	
+	public static String stageAll;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -345,7 +347,7 @@ public final class Texts {
 			cannotFindWord = "O Localizar/Substituir não encontrou nesse documento as palavras solicitadas, usando as configurações atuais.";
 			
 			didNotFindAfterThat = "Não foram mais encontradas palavras correspondentes.";
-			itsTheEnd = "é o fim!";
+			itsTheEnd = "É o fim!";
 			
 			replaced = "Substituídas";
 			occurences = "ocorrência(s)";
@@ -427,6 +429,8 @@ public final class Texts {
 			gitDone = "Pronto";
 			
 			noActionsDone = "Nenhuma ação feita.";
+			
+			stageAll = "Adicionar todos";
 			
 			break;
 		
@@ -634,6 +638,8 @@ public final class Texts {
 			gitDone = "Done";
 			
 			noActionsDone = "No actions done.";
+			
+			stageAll = "Stage All";
 			
 			break;
 		}
