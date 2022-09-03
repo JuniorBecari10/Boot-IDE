@@ -498,7 +498,7 @@ public class Main implements Runnable, Tickable {
     }
     
     // Checks whether a command's output is an error or not through parsing.
-    public static boolean isError(List<String> output) {
+    public static boolean isError(String[] output) {
     	for (String s : output) {
     		for (String k : errorKeywords) {
     			if (s.contains(k)) return true;
@@ -508,7 +508,17 @@ public class Main implements Runnable, Tickable {
     	return false;
     }
     
-    public static List<String> runCommand(File directory, String... commands) {
+    public static String[] listToString(List<String> list) {
+    	String[] ret = new String[list.size()];
+    	
+    	for (int i = 0, n = list.size(); i < n; i++) {
+    		ret[i] = list.get(i);
+    	}
+    	
+    	return ret;
+    }
+    
+    public static String[] runCommand(File directory, String... commands) {
     	if (os == OS.WINDOWS) {
     		String[] preCommands = { "cmd", "/c" };
     		String[] arr = new String[preCommands.length + commands.length];
@@ -520,10 +530,10 @@ public class Main implements Runnable, Tickable {
     		for (i = 0; i < commands.length; i++)
     			arr[preCommands.length + i] = commands[i];
     		
-    		return run(directory, arr);
+    		return listToString(run(directory, arr));
     	}
     	else {
-    		return run(directory, commands);
+    		return listToString(run(directory, commands));
     	}
     }
     

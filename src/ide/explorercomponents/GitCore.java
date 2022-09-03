@@ -25,8 +25,16 @@ public class GitCore {
 				
 				List<RightClickOption> list = new ArrayList<>();
 				
-				list.add(new RightClickOption(0, 0, widthDraw, Texts.inBaseFolder, (s) -> { boolean error = Main.isError(Main.runCommand(Main.baseFolder, "git init")); actions.add(new GitAction("git init", error ? ActionState.ERROR : ActionState.DONE)); }, ""));
-				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> { boolean error = Main.isError(Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git init")); actions.add(new GitAction("git init", error ? ActionState.ERROR : ActionState.DONE)); }, ""));
+				list.add(new RightClickOption(0, 0, widthDraw, Texts.inBaseFolder, (s) -> {
+					String[] output = Main.runCommand(Main.baseFolder, "git init");
+					boolean error = Main.isError(output);
+					actions.add(new GitAction("git init", error ? ActionState.ERROR : ActionState.DONE, output));
+					}, ""));
+				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> {
+					String[] output = Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git init");
+					boolean error = Main.isError(output);
+					actions.add(new GitAction("git init", error ? ActionState.ERROR : ActionState.DONE, output));
+					}, ""));
 				
 				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 102, list.toArray(new RightClickOption[list.size()]));
 			}, true) {
@@ -50,8 +58,16 @@ public class GitCore {
 				
 				List<RightClickOption> list = new ArrayList<>();
 				
-				list.add(new RightClickOption(0, 0, widthDraw, Texts.inBaseFolder, (s) -> { boolean error = Main.isError(Main.runCommand(Main.baseFolder, "git clone " + Explorer.cloneURL.getText())); actions.add(new GitAction("git clone", error ? ActionState.ERROR : ActionState.DONE)); }, ""));
-				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> { boolean error = Main.isError(Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git clone " + Explorer.cloneURL.getText())); actions.add(new GitAction("git clone", error ? ActionState.ERROR : ActionState.DONE)); }, ""));
+				list.add(new RightClickOption(0, 0, widthDraw, Texts.inBaseFolder, (s) -> {
+					String[] output = Main.runCommand(Main.baseFolder, "git clone " + Explorer.cloneURL.getText());
+					boolean error = Main.isError(output);
+					actions.add(new GitAction("git clone", error ? ActionState.ERROR : ActionState.DONE, output));
+					}, ""));
+				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> {
+					String[] output = Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git clone " + Explorer.cloneURL.getText());
+					boolean error = Main.isError(output);
+					actions.add(new GitAction("git clone", error ? ActionState.ERROR : ActionState.DONE, output));
+					}, ""));
 				
 				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 202, list.toArray(new RightClickOption[list.size()]));
 			}, true) {
@@ -78,7 +94,10 @@ public class GitCore {
 	
 	public static synchronized void initRepoComponents() {
 		if (Explorer.stageAll == null) {
-			Explorer.stageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 250, Main.explorer.getWidth() - 40, 20, Texts.stageAll, () -> { boolean error = Main.isError(Main.runCommand(Main.baseFolder, "git add .")); actions.add(new GitAction("git add", error ? ActionState.ERROR : ActionState.DONE)); }, true);
+			Explorer.stageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 250, Main.explorer.getWidth() - 40, 20, Texts.stageAll, () -> {
+				String[] output = Main.runCommand(Main.baseFolder, "git add .");
+				boolean error = Main.isError(output);
+				actions.add(new GitAction("git add", error ? ActionState.ERROR : ActionState.DONE, output)); }, true);
 		}
 		
 		IDEComponent.toAdd.add(Explorer.stageAll);
