@@ -684,6 +684,8 @@ public class Explorer extends IDEComponent {
     }
     
     public static int getHighestNumber(int... arr) {
+    	if (arr.length == 0) return -1;
+    	
     	int highest = arr[0];
     	
     	for (int i = 0; i < arr.length; i++) {

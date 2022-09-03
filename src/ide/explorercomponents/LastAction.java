@@ -63,7 +63,7 @@ public class LastAction extends IDEComponent {
 				builder.append(s);
 			}
 			
-			if (hovered())
+			if (hovered() && !builder.toString().isEmpty())
 				Explorer.renderCardText(CodeEditor.splitByNCharacters(builder.toString(), 30), MouseInput.getMouseX(), MouseInput.getMouseY() - 100, g);
 		}
 	}
