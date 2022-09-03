@@ -712,10 +712,14 @@ public class Explorer extends IDEComponent {
     }
     
     public static void renderCardText(String[] s, int x, int y, Graphics g) {
+    	Graphics2D g2 = (Graphics2D) g;
+    	
+    	g2.setStroke(new BasicStroke(2));
+    	
     	g.setColor(Colors.explorerLight);
-    	g.fillRect(x, y, (getHighestNumber(arrayOfLengths(s)) * (CodeEditor.DEFAULT_FONT_SIZE - 4)) + 6, 27);
+    	g.fillRect(x - 5, y - 5, (getHighestNumber(arrayOfLengths(s)) * (CodeEditor.DEFAULT_FONT_SIZE - 4)) + 6 + 10, (s.length * 20) + 15);
     	g.setColor(Colors.textLight);
-    	g.drawRect(x, y, (getHighestNumber(arrayOfLengths(s)) * (CodeEditor.DEFAULT_FONT_SIZE - 4)) + 6, 27);
+    	g.drawRect(x - 5, y - 5, (getHighestNumber(arrayOfLengths(s)) * (CodeEditor.DEFAULT_FONT_SIZE - 4)) + 6 + 10, (s.length * 20) + 15);
     	
     	int i = 0;
     	for (String ss : s) {

@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
+import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.MouseInput;
@@ -54,5 +55,16 @@ public class LastAction extends IDEComponent {
 		g.drawImage(sprite, (Main.explorer.getWidth() / 2 - (text.length() * 12) / 2) - 15, y, 15, 15, null);
 	
 		Fonts.drawString(text, (Main.explorer.getWidth() / 2 - (text.length() * 12) / 2) + (action == null ? 0 : 15), y, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		
+		StringBuilder builder = new StringBuilder();
+		
+		if (action != null) {
+			for (String s : action.output) {
+				builder.append(s);
+			}
+			
+			if (hovered())
+				Explorer.renderCardText(CodeEditor.splitByNCharacters(builder.toString(), 30), MouseInput.getMouseX(), MouseInput.getMouseY() - 100, g);
+		}
 	}
 }
