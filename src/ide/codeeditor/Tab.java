@@ -55,8 +55,6 @@ public class Tab extends IDEComponent implements Serializable {
 	public static final int WIDTH = 200;
 	public static final int HEIGHT = 30;
 	
-	public static boolean allowAnimation = true;
-	
 	public int drawW = WIDTH;
 	
 	public int scrX = 0, scrY = 0;
@@ -98,7 +96,7 @@ public class Tab extends IDEComponent implements Serializable {
 			Main.editor.isReadOnly = true;
 		}
 		
-		if (!allowAnimation) return;
+		if (!Explorer.allowAnimations) return;
 		
 		new Thread() {
 			public void run() {
@@ -138,7 +136,7 @@ public class Tab extends IDEComponent implements Serializable {
 			Main.editor.isReadOnly = true;
 		}
 		
-		if (!allowAnimation) return;
+		if (!Explorer.allowAnimations) return;
 		
 		new Thread() {
 			public void run() {
@@ -297,7 +295,7 @@ public class Tab extends IDEComponent implements Serializable {
 		// por causa da thread
 		Tab t = this;
 		
-		if (!allowAnimation) {
+		if (!Explorer.allowAnimations) {
 			Main.editor.isMultilineCommenting = false; // TODO closeother reseta o cursor
 			Main.editor.isAnotherIteration = false;
 			Main.editor.foundExt = false;
@@ -721,7 +719,7 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		if (width < 10) closeWithoutAnimation();
 		
-		if (Main.editor.lines.get(0).getChars().isEmpty() && Main.editor.lines.size() == 1 && isTemporary)
+		if (Main.editor.lines.size() == 1 && Main.editor.lines.get(0).getChars().isEmpty() && isTemporary)
 			isSaved = true;
 		
 		int x = dragging == null ? this.x + Main.editor.tabScr : this.x;

@@ -552,7 +552,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("indent_length: " + CodeEditor.indentLength + "\n");
 			w.write("automatically_open_tabs: " + CodeEditor.automaticallyOpenTabs + "\n");
 			w.write("show_whitespace: " + CodeEditor.showWhitespace + "\n");
-			w.write("allow_tab_animation: " + Tab.allowAnimation + "\n");
+			w.write("allow_animations: " + Explorer.allowAnimations + "\n");
 			w.write("force_mac_buttons: " + Main.forceMacButtons + "\n");
 			w.write("line_ending: " + CodeEditor.lineEnding + "\n");
 			w.write("show_unsaved_title_bar: " + CodeEditor.showUnsavedTitleBar + "\n");
@@ -1098,13 +1098,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				break;
 			
-			case "allow_tab_animation:":
+			case "allow_animations:":
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default"))
-					Tab.allowAnimation = true;
+					Explorer.allowAnimations = true;
 
-				Tab.allowAnimation = Boolean.valueOf(split[1]);
+				Explorer.allowAnimations = Boolean.valueOf(split[1]);
 
 				hasAltered = true;
 

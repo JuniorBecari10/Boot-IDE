@@ -48,6 +48,8 @@ public class Explorer extends IDEComponent {
 	public static List<ExplorerTab> tabs;
 	
 	public static ListableFile scope;
+	
+	public static boolean allowAnimations = true;
 
 	public static String folderPath = "";
 	public static String folderPathFull = "";
@@ -255,20 +257,57 @@ public class Explorer extends IDEComponent {
 	    	// Media Queries (só que em Java kkkk)
 	    	
 	    	if (width < DEFAULT_WIDTH - 10) {
-	    		Main.newFile.setWidth(24);
-	    		Main.newFile.setHeight(24);
+//	    		Main.newFile.setWidth(24);
+//	    		Main.newFile.setHeight(24);
+//	    		
+//	    		
+//	    		
+//	    		Main.newFolder.setWidth(24);
+//	    		Main.newFolder.setHeight(24);
+//	    		
+//	    		Main.oneFolder.setWidth(24);
+//	    		Main.oneFolder.setHeight(24);
+//	    		
+//	    		Main.returnBase.setWidth(24);
+//	    		Main.returnBase.setHeight(24);
+//	    		
+//	    		Main.reload.setWidth(24);
+//	    		Main.reload.setHeight(24);
 	    		
-	    		Main.newFolder.setWidth(24);
-	    		Main.newFolder.setHeight(24);
+	    		if (Main.newFile.getWidth() > 24) {
+	    			Main.newFile.setWidth(Main.newFile.getWidth() - 1);
+	    			Main.newFile.setHeight(Main.newFile.getHeight() - 1);
+	    			
+	    			Main.canRunLoop = true;
+	    		}
 	    		
-	    		Main.oneFolder.setWidth(24);
-	    		Main.oneFolder.setHeight(24);
+	    		if (Main.newFolder.getWidth() > 24) {
+	    			Main.newFolder.setWidth(Main.newFolder.getWidth() - 1);
+	    			Main.newFolder.setHeight(Main.newFolder.getHeight() - 1);
+	    			
+	    			Main.canRunLoop = true;
+	    		}
 	    		
-	    		Main.returnBase.setWidth(24);
-	    		Main.returnBase.setHeight(24);
+	    		if (Main.oneFolder.getWidth() > 24) {
+	    			Main.oneFolder.setWidth(Main.oneFolder.getWidth() - 1);
+	    			Main.oneFolder.setHeight(Main.oneFolder.getHeight() - 1);
+	    			
+	    			Main.canRunLoop = true;
+	    		}
 	    		
-	    		Main.reload.setWidth(24);
-	    		Main.reload.setHeight(24);
+	    		if (Main.returnBase.getWidth() > 24) {
+	    			Main.returnBase.setWidth(Main.returnBase.getWidth() - 1);
+	    			Main.returnBase.setHeight(Main.returnBase.getHeight() - 1);
+	    			
+	    			Main.canRunLoop = true;
+	    		}
+	    		
+	    		if (Main.reload.getWidth() > 24) {
+	    			Main.reload.setWidth(Main.reload.getWidth() - 1);
+	    			Main.reload.setHeight(Main.reload.getHeight() - 1);
+	    			
+	    			Main.canRunLoop = true;
+	    		}
 	    		
 	    		Main.newFile.setX(Main.openBase.getX() + Main.openBase.getWidth() + 4);
 	    		Main.newFolder.setX(Main.newFile.getX() + Main.newFile.getWidth() + 2);
@@ -277,20 +316,55 @@ public class Explorer extends IDEComponent {
 	    		Main.reload.setX(Main.returnBase.getX() + Main.returnBase.getWidth() + 2);
 	    	}
 	    	else if (width >= DEFAULT_WIDTH - 10) {
-	    		Main.newFile.setWidth(32);
-	    		Main.newFile.setHeight(32);
+//	    		Main.newFile.setWidth(32);
+//	    		Main.newFile.setHeight(32);
+//	    		
+//	    		Main.newFolder.setWidth(32);
+//	    		Main.newFolder.setHeight(32);
+//	    		
+//	    		Main.oneFolder.setWidth(32);
+//	    		Main.oneFolder.setHeight(32);
+//	    		
+//	    		Main.returnBase.setWidth(32);
+//	    		Main.returnBase.setHeight(32);
+//	    		
+//	    		Main.reload.setWidth(32);
+//	    		Main.reload.setHeight(32);
 	    		
-	    		Main.newFolder.setWidth(32);
-	    		Main.newFolder.setHeight(32);
+	    		if (Main.newFile.getWidth() < 32) {
+	    			Main.newFile.setWidth(Main.newFile.getWidth() + 1);
+	    			Main.newFile.setHeight(Main.newFile.getHeight() + 1);
+	    			
+	    			Main.canRunLoop = true;
+	    		}
 	    		
-	    		Main.oneFolder.setWidth(32);
-	    		Main.oneFolder.setHeight(32);
+	    		if (Main.newFolder.getWidth() < 32) {
+	    			Main.newFolder.setWidth(Main.newFolder.getWidth() + 1);
+	    			Main.newFolder.setHeight(Main.newFolder.getHeight() + 1);
+	    			
+	    			Main.canRunLoop = true;
+	    		}
 	    		
-	    		Main.returnBase.setWidth(32);
-	    		Main.returnBase.setHeight(32);
+	    		if (Main.oneFolder.getWidth() < 32) {
+	    			Main.oneFolder.setWidth(Main.oneFolder.getWidth() + 1);
+	    			Main.oneFolder.setHeight(Main.oneFolder.getHeight() + 1);
+	    			
+	    			Main.canRunLoop = true;
+	    		}
 	    		
-	    		Main.reload.setWidth(32);
-	    		Main.reload.setHeight(32);
+	    		if (Main.returnBase.getWidth() < 32) {
+	    			Main.returnBase.setWidth(Main.returnBase.getWidth() + 1);
+	    			Main.returnBase.setHeight(Main.returnBase.getHeight() + 1);
+	    			
+	    			Main.canRunLoop = true;
+	    		}
+	    		
+	    		if (Main.reload.getWidth() < 32) {
+	    			Main.reload.setWidth(Main.reload.getWidth() + 1);
+	    			Main.reload.setHeight(Main.reload.getHeight() + 1);
+	    			
+	    			Main.canRunLoop = true;
+	    		}
 	    		
 	    		Main.newFile.setX(width - 200);
 	    		Main.newFolder.setX(Main.newFile.getX() + Main.newFile.getWidth() + 6);
@@ -302,14 +376,32 @@ public class Explorer extends IDEComponent {
 	    	if (width < MINIMUM_Y) {
 	    		Main.openBase.setY(Screen.DECORATION_HEIGHT + 75);
 	    		
-	    		Main.openBase.setWidth(36);
-	    		Main.openBase.setHeight(36);
+//	    		Main.openBase.setWidth(36);
+//	    		Main.openBase.setHeight(36);
+	    		
+	    		if (Main.openBase.getWidth() < 36) {
+	    			Main.openBase.setWidth(Main.openBase.getWidth() + 1);
+	    			Main.openBase.setHeight(Main.openBase.getHeight() + 1);
+	    		}
+	    		else if (Main.openBase.getWidth() > 36) {
+	    			Main.openBase.setWidth(Main.openBase.getWidth() - 1);
+	    			Main.openBase.setHeight(Main.openBase.getHeight() - 1);
+	    		}
 	    	}
 	    	if (width > MINIMUM_Y) {
 	    		Main.openBase.setY(Screen.DECORATION_HEIGHT + 70);
 	    		
-	    		Main.openBase.setWidth(48);
-	    		Main.openBase.setHeight(48);
+//	    		Main.openBase.setWidth(48);
+//	    		Main.openBase.setHeight(48);
+	    		
+	    		if (Main.openBase.getWidth() < 48) {
+	    			Main.openBase.setWidth(Main.openBase.getWidth() + 1);
+	    			Main.openBase.setHeight(Main.openBase.getHeight() + 1);
+	    		}
+	    		else if (Main.openBase.getWidth() > 48) {
+	    			Main.openBase.setWidth(Main.openBase.getWidth() - 1);
+	    			Main.openBase.setHeight(Main.openBase.getHeight() - 1);
+	    		}
 	    	}
 	    	
 	    	files.forEach((l) -> l.setWidth(width));
