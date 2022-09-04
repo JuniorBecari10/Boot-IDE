@@ -29,11 +29,13 @@ public class GitStatus {
 		String currentBranchStr = currentBranch >= 0 ? branches[currentBranch] : "None";
 		bl.append("| Current Branch: " + currentBranchStr + " (index: " + currentBranch + ") ");
 		
-		bl.append("| Changed Files: ");
+		bl.append("| Changed Files:");
 		
 		for (String f : changedFiles) {
-			bl.append(f + ", ");
+			bl.append(" " + f + ",");
 		}
+		
+		bl.deleteCharAt(bl.length() - 1);
 		
 		return bl.toString();
 	}
@@ -45,11 +47,11 @@ public class GitStatus {
 		String[] branches = new String[branchesFetch.length];
 		int currentBranch = -1;
 		
-		/*if (files.length > 0) {
+		if (files.length > 0) {
 			for (int i = 0; i < files.length; i++) {
 				files[i] = files[i].substring(1);
 			}
-		}*/
+		}
 		
 		if (branchesFetch.length > 0) {
 			for (int i = 0; i < branchesFetch.length; i++) {

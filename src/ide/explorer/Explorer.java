@@ -129,6 +129,8 @@ public class Explorer extends IDEComponent {
     			
     			SearchReplaceCore.dispose();
     			GitCore.dispose();
+    			
+    			ReloadButton.reloadExplorer();
     		}
     	});
     	tabs.add(new ExplorerTab(1 + 3 + ExplorerTab.SIZE, Main.searchReplaceTab, ExplorerMode.SEARCHREPLACE, Texts.searchReplace) {
@@ -690,6 +692,10 @@ public class Explorer extends IDEComponent {
     	Fonts.drawString("URL:", 20, Screen.DECORATION_HEIGHT + 220, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	
     	if (isBaseFolderRepository()) {
+    		if (components.indexOf(stageAll) < 0) {
+    			GitCore.init();
+    		}
+    		
 	    	Fonts.drawString("Staging", 20, Screen.DECORATION_HEIGHT + 320, new IDEFont(Fonts.lightGrayNormal, 16), g);
 	    	g2.setColor(Colors.textLight);
 	    	g2.setStroke(new BasicStroke(2f));
