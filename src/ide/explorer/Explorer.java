@@ -669,18 +669,18 @@ public class Explorer extends IDEComponent {
     private void renderGit(Graphics g) {
     	Graphics2D g2 = (Graphics2D) g;
     	
-    	Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 150, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	g2.setColor(Colors.textLight);
     	g2.setStroke(new BasicStroke(2f));
-    	g2.drawLine(20 + (Texts.general.length() * 12) + 10, Screen.DECORATION_HEIGHT + 60, width - 20, Screen.DECORATION_HEIGHT + 60);
+    	g2.drawLine(20 + (Texts.general.length() * 12) + 10, Screen.DECORATION_HEIGHT + 160, width - 20, Screen.DECORATION_HEIGHT + 160);
     	
-    	Fonts.drawString("URL:", 20, Screen.DECORATION_HEIGHT + 120, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	Fonts.drawString("URL:", 20, Screen.DECORATION_HEIGHT + 220, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	
     	if (isBaseFolderRepository()) {
-	    	Fonts.drawString("Staging", 20, Screen.DECORATION_HEIGHT + 220, new IDEFont(Fonts.lightGrayNormal, 16), g);
+	    	Fonts.drawString("Staging", 20, Screen.DECORATION_HEIGHT + 320, new IDEFont(Fonts.lightGrayNormal, 16), g);
 	    	g2.setColor(Colors.textLight);
 	    	g2.setStroke(new BasicStroke(2f));
-	    	g2.drawLine(20 + ("Staging".length() * 12) + 10, Screen.DECORATION_HEIGHT + 230, width - 20, Screen.DECORATION_HEIGHT + 230);
+	    	g2.drawLine(20 + ("Staging".length() * 12) + 10, Screen.DECORATION_HEIGHT + 330, width - 20, Screen.DECORATION_HEIGHT + 330);
     	}
     }
     

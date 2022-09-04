@@ -223,6 +223,7 @@ public final class Texts {
 	public static String noActionsDone;
 	
 	public static String stageAll;
+	public static String unstageAll;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -433,6 +434,7 @@ public final class Texts {
 			noActionsDone = "Nenhuma ação feita.";
 			
 			stageAll = "Adicionar todos";
+			unstageAll = "Remover todos";
 			
 			break;
 		
@@ -643,6 +645,7 @@ public final class Texts {
 			noActionsDone = "No actions done.";
 			
 			stageAll = "Stage All";
+			unstageAll = "Unstage All";
 			
 			break;
 		}

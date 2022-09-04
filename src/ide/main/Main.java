@@ -219,6 +219,8 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage gitWarning;
     public static BufferedImage gitDone;
     
+    public static BufferedImage branch;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -312,6 +314,8 @@ public class Main implements Runnable, Tickable {
 	        gitProgress = spritesheet.getSprite(160, 5, 5, 5);
 	        gitWarning = spritesheet.getSprite(165, 0, 5, 5);
 	        gitDone = spritesheet.getSprite(160, 10, 5, 5);
+	        
+	        branch = spritesheet.getSprite(400, 0, 7, 9);
 	        
 	        ///////
 	        
@@ -472,6 +476,8 @@ public class Main implements Runnable, Tickable {
         gitProgress = Colors.swapColor(gitProgress, Colors.textLightDefault, Colors.textLight);
         gitWarning = Colors.swapColor(gitWarning, Colors.textLightDefault, Colors.textLight);
         gitDone = Colors.swapColor(gitDone, Colors.textLightDefault, Colors.textLight);
+        
+        branch = Colors.swapColor(branch, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         
