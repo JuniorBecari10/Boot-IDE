@@ -112,6 +112,11 @@ public class Explorer extends IDEComponent {
     }
     
     public static void fetchStatus() {
+    	StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        StackTraceElement element = stackTrace[2];
+        System.out.println("I was called by a method named: " + element.getMethodName());
+        System.out.println("That method is in class: " + element.getClassName());
+    	
     	if (isBaseFolderRepository()) {
 	    	gitStatus = GitStatus.fetch();
 	    	System.out.println(gitStatus);
@@ -683,6 +688,9 @@ public class Explorer extends IDEComponent {
     
     private void renderGit(Graphics g) {
     	Graphics2D g2 = (Graphics2D) g;
+    	
+    	g.drawImage(Main.branch, 20, Screen.DECORATION_HEIGHT + 60, 32, 32, null);
+    	Fonts.drawString("| " + gitStatus.branches[gitStatus.currentBranch], 60, Screen.DECORATION_HEIGHT + 65, new IDEFont(Fonts.lightGrayEditor, CodeEditor.DEFAULT_FONT_SIZE), g);
     	
     	Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 150, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	g2.setColor(Colors.textLight);

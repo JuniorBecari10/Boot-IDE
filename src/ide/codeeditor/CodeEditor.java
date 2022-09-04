@@ -828,8 +828,6 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public synchronized void typeLogic() {
-		Explorer.fetchStatus();
-		
 		try {
 			if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) return;
 			

@@ -315,7 +315,7 @@ public class Main implements Runnable, Tickable {
 	        gitWarning = spritesheet.getSprite(165, 0, 5, 5);
 	        gitDone = spritesheet.getSprite(160, 10, 5, 5);
 	        
-	        branch = spritesheet.getSprite(400, 0, 7, 9);
+	        branch = spritesheet.getSprite(400, 0, 16, 16);
 	        
 	        ///////
 	        

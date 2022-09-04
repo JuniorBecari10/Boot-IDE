@@ -32,8 +32,6 @@ public class GitCore {
 					boolean warn = Main.isWarning(output);
 					
 					actions.add(new GitAction("git init", error ? ActionState.ERROR : warn ? ActionState.WARNING : ActionState.DONE, output));
-					
-					Explorer.fetchStatus();
 					}, ""));
 				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> {
 					String[] output = Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git init");
@@ -42,11 +40,9 @@ public class GitCore {
 					boolean warn = Main.isWarning(output);
 					
 					actions.add(new GitAction("git init", error ? ActionState.ERROR : warn ? ActionState.WARNING : ActionState.DONE, output));
-					
-					Explorer.fetchStatus();
 					}, ""));
 				
-				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 102, list.toArray(new RightClickOption[list.size()]));
+				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 202, list.toArray(new RightClickOption[list.size()]));
 			}, true) {
 				public void tick() {
 					super.tick();
@@ -85,11 +81,9 @@ public class GitCore {
 					boolean warn = Main.isWarning(output);
 					
 					actions.add(new GitAction("git clone", error ? ActionState.ERROR : warn ? ActionState.WARNING : ActionState.DONE, output));
-					
-					Explorer.fetchStatus();
 					}, ""));
 				
-				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 302, list.toArray(new RightClickOption[list.size()]));
+				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 402, list.toArray(new RightClickOption[list.size()]));
 			}, true) {
 				public void tick() {
 					super.tick();
@@ -97,8 +91,6 @@ public class GitCore {
 					text = Texts.clone;
 				}
 			};
-			
-			Explorer.fetchStatus();
 		}
 		
 		if (Explorer.lastAction == null) {
@@ -108,10 +100,11 @@ public class GitCore {
 		IDEComponent.toAdd.add(Explorer.initRepo);
 		IDEComponent.toAdd.add(Explorer.cloneURL);
 		IDEComponent.toAdd.add(Explorer.clone);
-		IDEComponent.toAdd.add(Explorer.lastAction);
 		
 		if (Explorer.isBaseFolderRepository())
 			initRepoComponents();
+		
+		IDEComponent.toAdd.add(Explorer.lastAction);
 	}
 	
 	public static synchronized void initRepoComponents() {
@@ -129,8 +122,6 @@ public class GitCore {
 					text = Texts.stageAll;
 				}
 			};
-			
-			Explorer.fetchStatus();
 		}
 		
 		if (Explorer.unstageAll == null) {
@@ -145,8 +136,6 @@ public class GitCore {
 					text = Texts.unstageAll;
 				}
 			};
-			
-			Explorer.fetchStatus();
 		}
 		
 		IDEComponent.toAdd.add(Explorer.stageAll);
