@@ -217,6 +217,7 @@ public final class Texts {
 	
 	public static String gitError;
 	public static String gitProgress;
+	public static String gitWarning;
 	public static String gitDone;
 	
 	public static String noActionsDone;
@@ -426,6 +427,7 @@ public final class Texts {
 			
 			gitError = "Erro";
 			gitProgress = "Em Progresso";
+			gitWarning = "Aviso";
 			gitDone = "Pronto";
 			
 			noActionsDone = "Nenhuma ação feita.";
@@ -635,6 +637,7 @@ public final class Texts {
 			
 			gitError = "Error";
 			gitProgress = "In Progress";
+			gitWarning = "Warning";
 			gitDone = "Done";
 			
 			noActionsDone = "No actions done.";

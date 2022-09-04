@@ -159,6 +159,7 @@ public class Main implements Runnable, Tickable {
     public static final File logFile = new File(System.getProperty("user.dir") + File.separator + LOG_FILE_NAME);
     
     public static final String[] errorKeywords = { "fatal", "error" };
+    public static final String[] warningKeywords = { "warning" };
     
     // Sprites
     
@@ -215,6 +216,7 @@ public class Main implements Runnable, Tickable {
     
     public static BufferedImage gitError;
     public static BufferedImage gitProgress;
+    public static BufferedImage gitWarning;
     public static BufferedImage gitDone;
     
     ///
@@ -308,6 +310,7 @@ public class Main implements Runnable, Tickable {
 	        
 	        gitError = spritesheet.getSprite(160, 0, 5, 5);
 	        gitProgress = spritesheet.getSprite(160, 5, 5, 5);
+	        gitWarning = spritesheet.getSprite(165, 0, 5, 5);
 	        gitDone = spritesheet.getSprite(160, 10, 5, 5);
 	        
 	        ///////
@@ -467,6 +470,7 @@ public class Main implements Runnable, Tickable {
         
         gitError = Colors.swapColor(gitError, Colors.textLightDefault, Colors.textLight);
         gitProgress = Colors.swapColor(gitProgress, Colors.textLightDefault, Colors.textLight);
+        gitWarning = Colors.swapColor(gitWarning, Colors.textLightDefault, Colors.textLight);
         gitDone = Colors.swapColor(gitDone, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
@@ -501,7 +505,17 @@ public class Main implements Runnable, Tickable {
     public static boolean isError(String[] output) {
     	for (String s : output) {
     		for (String k : errorKeywords) {
-    			if (s.contains(k)) return true;
+    			if (s.toLowerCase().contains(k.toLowerCase())) return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    public static boolean isWarning(String[] output) {
+    	for (String s : output) {
+    		for (String k : warningKeywords) {
+    			if (s.toLowerCase().contains(k.toLowerCase())) return true;
     		}
     	}
     	

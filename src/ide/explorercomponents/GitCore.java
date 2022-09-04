@@ -97,7 +97,8 @@ public class GitCore {
 			Explorer.stageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 250, Main.explorer.getWidth() - 40, 20, Texts.stageAll, () -> {
 				String[] output = Main.runCommand(Main.baseFolder, "git add .");
 				boolean error = Main.isError(output);
-				actions.add(new GitAction("git add", error ? ActionState.ERROR : ActionState.DONE, output)); }, true);
+				boolean warn = Main.isWarning(output);
+				actions.add(new GitAction("git add", error ? ActionState.ERROR : warn ? ActionState.WARNING : ActionState.DONE, output)); }, true);
 		}
 		
 		IDEComponent.toAdd.add(Explorer.stageAll);
