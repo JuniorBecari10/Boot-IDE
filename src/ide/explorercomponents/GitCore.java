@@ -83,7 +83,7 @@ public class GitCore {
 					actions.add(new GitAction("git clone", error ? ActionState.ERROR : warn ? ActionState.WARNING : ActionState.DONE, output));
 					}, ""));
 				
-				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 402, list.toArray(new RightClickOption[list.size()])); // todo
+				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 352, list.toArray(new RightClickOption[list.size()]));
 			}, true) {
 				public void tick() {
 					super.tick();
