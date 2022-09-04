@@ -21,6 +21,12 @@ public class GitStatus {
 		String[] branches = new String[branchesFetch.length];
 		int currentBranch = -1;
 		
+		if (files.length > 0) {
+			for (int i = 0; i < files.length; i++) {
+				files[i] = files[i].substring(1);
+			}
+		}
+		
 		if (branchesFetch.length > 0) {
 			for (int i = 0; i < branchesFetch.length; i++) {
 				String s = branchesFetch[i];

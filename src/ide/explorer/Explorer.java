@@ -25,6 +25,7 @@ import ide.components.SetFileName;
 import ide.explorercomponents.ExecuteButton;
 import ide.explorercomponents.ExplorerTab;
 import ide.explorercomponents.GitCore;
+import ide.explorercomponents.GitStatus;
 import ide.explorercomponents.InputBox;
 import ide.explorercomponents.LastAction;
 import ide.explorercomponents.SearchReplaceCore;
@@ -60,6 +61,8 @@ public class Explorer extends IDEComponent {
 	public static RenameFile renameFile;
 	
 	public static InputBox selected;
+	
+	public static GitStatus gitStatus;
 	
 	// -- Search / Replace --
 	
@@ -189,6 +192,13 @@ public class Explorer extends IDEComponent {
 	    
 	    /*if (WindowInput.isMaximized() || !WindowInput.isActivated())
 	    	ReloadButton.reloadExplorer();*/
+	    
+	    if (isBaseFolderRepository()) {
+	    	gitStatus = GitStatus.fetch();
+	    }
+	    else {
+	    	gitStatus = null;
+	    }
 	    
 	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && explorerMode != ExplorerMode.EXPLORER) {
 	    	Explorer.explorerMode = ExplorerMode.EXPLORER;
