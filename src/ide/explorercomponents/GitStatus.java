@@ -14,6 +14,30 @@ public class GitStatus {
 		this.changedFiles = changedFiles;
 	}
 	
+	public String toString() {
+		StringBuilder bl = new StringBuilder();
+		
+		bl.append("GitStatus | Branches:");
+		
+		for (String b : branches) {
+			bl.append(" " + b + ",");
+		}
+		
+		bl.deleteCharAt(bl.length() - 1);
+		bl.append(" ");
+		
+		String currentBranchStr = currentBranch >= 0 ? branches[currentBranch] : "None";
+		bl.append("| Current Branch: " + currentBranchStr + " (index: " + currentBranch + ") ");
+		
+		bl.append("| Changed Files: ");
+		
+		for (String f : changedFiles) {
+			bl.append(f + ", ");
+		}
+		
+		return bl.toString();
+	}
+	
 	public static GitStatus fetch() {
 		String[] files = Main.runCommand(Main.baseFolder, "git status --porcelain");
 		String[] branchesFetch = Main.runCommand(Main.baseFolder, "git branch");
@@ -21,11 +45,11 @@ public class GitStatus {
 		String[] branches = new String[branchesFetch.length];
 		int currentBranch = -1;
 		
-		if (files.length > 0) {
+		/*if (files.length > 0) {
 			for (int i = 0; i < files.length; i++) {
 				files[i] = files[i].substring(1);
 			}
-		}
+		}*/
 		
 		if (branchesFetch.length > 0) {
 			for (int i = 0; i < branchesFetch.length; i++) {
@@ -44,8 +68,12 @@ public class GitStatus {
 			
 			String[] split = status[0].split(" ");
 			
-			branches = new String[0];
-			branches[0] = split[split.length - 1];
+			if (split.length > 0) {
+				branches = new String[1];
+				branches[0] = split[split.length - 1];
+				
+				currentBranch = 0;
+			}
 		}
 		
 		return new GitStatus(branches, currentBranch, files);

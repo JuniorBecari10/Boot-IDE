@@ -111,6 +111,16 @@ public class Explorer extends IDEComponent {
         toRemove = new ArrayList<>();
     }
     
+    public static void fetchStatus() {
+    	if (isBaseFolderRepository()) {
+	    	gitStatus = GitStatus.fetch();
+	    	System.out.println(gitStatus);
+	    }
+	    else {
+	    	gitStatus = null;
+	    }
+    }
+    
     public void addTabs() {
     	tabs.add(new ExplorerTab(1, Main.explorerTab, ExplorerMode.EXPLORER, Texts.explorerText) {
     		public void select() {
@@ -192,13 +202,6 @@ public class Explorer extends IDEComponent {
 	    
 	    /*if (WindowInput.isMaximized() || !WindowInput.isActivated())
 	    	ReloadButton.reloadExplorer();*/
-	    
-	    if (isBaseFolderRepository()) {
-	    	gitStatus = GitStatus.fetch();
-	    }
-	    else {
-	    	gitStatus = null;
-	    }
 	    
 	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && explorerMode != ExplorerMode.EXPLORER) {
 	    	Explorer.explorerMode = ExplorerMode.EXPLORER;

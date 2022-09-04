@@ -379,6 +379,8 @@ public class Main implements Runnable, Tickable {
 			
 			IDEComponent.toAdd.add(settingsButton);
 			
+			Explorer.fetchStatus();
+			
 			// -------
 			
 			if (!editor.tabs.isEmpty() && editor.editing == null)
