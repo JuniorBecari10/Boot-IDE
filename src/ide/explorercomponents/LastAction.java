@@ -1,7 +1,6 @@
 package ide.explorercomponents;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
@@ -24,10 +23,7 @@ public class LastAction extends IDEComponent {
 	}
 	
 	public boolean hovered() {
-		Rectangle bounds = new Rectangle((Main.explorer.getWidth() / 2 - (text.length() * 12) / 2) - (action == null ? 0 : 15), y, text.length() * 12, height);
-		Rectangle mouse = MouseInput.getMouseBounds();
-		
-		return bounds.intersects(mouse);
+		return Main.explorer.hovered() && MouseInput.getMouseY() >= y - 5;
 	}
 	
 	public void tick() {
@@ -36,7 +32,7 @@ public class LastAction extends IDEComponent {
 		
 		if (action != null) {
 			if (action.state == ActionState.ERROR) sprite = Main.gitError;
-			else if (action.state == ActionState.PROGRESS) sprite = Main.gitProgress;
+			//else if (action.state == ActionState.PROGRESS) sprite = Main.gitProgress;
 			else if (action.state == ActionState.DONE) sprite = Main.gitDone;
 		}
 		
@@ -44,10 +40,10 @@ public class LastAction extends IDEComponent {
 		
 		if (action != null) {
 			if (action.state == ActionState.ERROR) text = Texts.gitError;
-			else if (action.state == ActionState.PROGRESS) text = Texts.gitProgress;
+			//else if (action.state == ActionState.PROGRESS) text = Texts.gitProgress;
 			else if (action.state == ActionState.DONE) text = Texts.gitDone;
 			
-			text = action.name + " | " + text + ".";
+			text = action.name + " | " + text + " ";
 		}
 	}
 	
@@ -64,7 +60,7 @@ public class LastAction extends IDEComponent {
 			}
 			
 			if (hovered() && !builder.toString().isEmpty())
-				Explorer.renderCardText(CodeEditor.splitByNCharacters(builder.toString(), 30), MouseInput.getMouseX(), MouseInput.getMouseY() - 100, g);
+				Explorer.renderCardText(CodeEditor.splitByNCharacters(builder.toString(), 50), MouseInput.getMouseX() + 30, MouseInput.getMouseY(), g);
 		}
 	}
 }
