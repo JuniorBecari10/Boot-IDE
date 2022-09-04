@@ -20,7 +20,7 @@ public class GitCore {
 		Explorer.explorerMode = ExplorerMode.GIT;
 		
 		if (Explorer.initRepo == null) {
-			Explorer.initRepo = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 180, Main.explorer.getWidth() - 40, 20, Texts.initRepository, () -> {
+			Explorer.initRepo = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 230, Main.explorer.getWidth() - 40, 20, Texts.initRepository, () -> {
 				int widthDraw = Main.explorer.getWidth() - 40;
 				
 				List<RightClickOption> list = new ArrayList<>();
@@ -42,7 +42,7 @@ public class GitCore {
 					actions.add(new GitAction("git init", error ? ActionState.ERROR : warn ? ActionState.WARNING : ActionState.DONE, output));
 					}, ""));
 				
-				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 202, list.toArray(new RightClickOption[list.size()]));
+				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 252, list.toArray(new RightClickOption[list.size()]));
 			}, true) {
 				public void tick() {
 					super.tick();
@@ -53,11 +53,11 @@ public class GitCore {
 		}
 		
 		if (Explorer.cloneURL == null) {
-			Explorer.cloneURL = new InputBox(20, Screen.DECORATION_HEIGHT + 250, Main.explorer.getWidth() - 40, 20);
+			Explorer.cloneURL = new InputBox(20, Screen.DECORATION_HEIGHT + 300, Main.explorer.getWidth() - 40, 20);
 		}
 		
 		if (Explorer.clone == null) {
-			Explorer.clone = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 280, Main.explorer.getWidth() - 40, 20, Texts.clone, () -> {
+			Explorer.clone = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 330, Main.explorer.getWidth() - 40, 20, Texts.clone, () -> {
 				if (Explorer.cloneURL.getText().length() == 0) return;
 				
 				int widthDraw = Main.explorer.getWidth() - 40;
@@ -83,7 +83,7 @@ public class GitCore {
 					actions.add(new GitAction("git clone", error ? ActionState.ERROR : warn ? ActionState.WARNING : ActionState.DONE, output));
 					}, ""));
 				
-				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 402, list.toArray(new RightClickOption[list.size()]));
+				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 402, list.toArray(new RightClickOption[list.size()])); // todo
 			}, true) {
 				public void tick() {
 					super.tick();
@@ -109,7 +109,7 @@ public class GitCore {
 	
 	public static synchronized void initRepoComponents() {
 		if (Explorer.stageAll == null) {
-			Explorer.stageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 350, Main.explorer.getWidth() - 40, 20, Texts.stageAll, () -> {
+			Explorer.stageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 400, Main.explorer.getWidth() - 40, 20, Texts.stageAll, () -> {
 				String[] output = Main.runCommand(Main.baseFolder, "git add .");
 				
 				boolean error = Main.isError(output);
@@ -125,7 +125,7 @@ public class GitCore {
 		}
 		
 		if (Explorer.unstageAll == null) {
-			Explorer.unstageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 380, Main.explorer.getWidth() - 40, 20, Texts.unstageAll, () -> {
+			Explorer.unstageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 430, Main.explorer.getWidth() - 40, 20, Texts.unstageAll, () -> {
 				String[] output = Main.runCommand(Main.baseFolder, "git reset");
 				boolean error = Main.isError(output);
 				boolean warn = Main.isWarning(output);

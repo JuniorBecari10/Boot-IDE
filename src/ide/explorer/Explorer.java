@@ -112,11 +112,6 @@ public class Explorer extends IDEComponent {
     }
     
     public static void fetchStatus() {
-    	StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        StackTraceElement element = stackTrace[2];
-        System.out.println("I was called by a method named: " + element.getMethodName());
-        System.out.println("That method is in class: " + element.getClassName());
-    	
     	if (isBaseFolderRepository()) {
 	    	gitStatus = GitStatus.fetch();
 	    	System.out.println(gitStatus);
@@ -689,25 +684,30 @@ public class Explorer extends IDEComponent {
     private void renderGit(Graphics g) {
     	Graphics2D g2 = (Graphics2D) g;
     	
-    	g.drawImage(Main.branch, 20, Screen.DECORATION_HEIGHT + 60, 32, 32, null);
-    	Fonts.drawString("| " + gitStatus.branches[gitStatus.currentBranch], 60, Screen.DECORATION_HEIGHT + 65, new IDEFont(Fonts.lightGrayEditor, CodeEditor.DEFAULT_FONT_SIZE), g);
-    	
-    	Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 150, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	Fonts.drawString("Branches", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	g2.setColor(Colors.textLight);
     	g2.setStroke(new BasicStroke(2f));
-    	g2.drawLine(20 + (Texts.general.length() * 12) + 10, Screen.DECORATION_HEIGHT + 160, width - 20, Screen.DECORATION_HEIGHT + 160);
+    	g2.drawLine(20 + ("Branches".length() * 12) + 10, Screen.DECORATION_HEIGHT + 60, width - 20, Screen.DECORATION_HEIGHT + 60);
     	
-    	Fonts.drawString("URL:", 20, Screen.DECORATION_HEIGHT + 220, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	g.drawImage(Main.branch, 15, Screen.DECORATION_HEIGHT + 80, 32, 32, null);
+    	Fonts.drawString("| " + gitStatus.branches[gitStatus.currentBranch], 55, Screen.DECORATION_HEIGHT + 85, new IDEFont(Fonts.lightGrayEditor, CodeEditor.DEFAULT_FONT_SIZE), g);
+    	
+    	Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 200, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	g2.setColor(Colors.textLight);
+    	g2.setStroke(new BasicStroke(2f));
+    	g2.drawLine(20 + (Texts.general.length() * 12) + 10, Screen.DECORATION_HEIGHT + 210, width - 20, Screen.DECORATION_HEIGHT + 210);
+    	
+    	Fonts.drawString("URL:", 20, Screen.DECORATION_HEIGHT + 270, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	
     	if (isBaseFolderRepository()) {
     		if (components.indexOf(stageAll) < 0) {
     			GitCore.init();
     		}
     		
-	    	Fonts.drawString("Staging", 20, Screen.DECORATION_HEIGHT + 320, new IDEFont(Fonts.lightGrayNormal, 16), g);
+	    	Fonts.drawString("Staging", 20, Screen.DECORATION_HEIGHT + 370, new IDEFont(Fonts.lightGrayNormal, 16), g);
 	    	g2.setColor(Colors.textLight);
 	    	g2.setStroke(new BasicStroke(2f));
-	    	g2.drawLine(20 + ("Staging".length() * 12) + 10, Screen.DECORATION_HEIGHT + 330, width - 20, Screen.DECORATION_HEIGHT + 330);
+	    	g2.drawLine(20 + ("Staging".length() * 12) + 10, Screen.DECORATION_HEIGHT + 380, width - 20, Screen.DECORATION_HEIGHT + 380);
     	}
     }
     
