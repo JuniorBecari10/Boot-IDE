@@ -1305,8 +1305,9 @@ public class CodeEditor extends IDEComponent {
 		case ".cs": return csKeys;
 		case ".ipynb": return pyKeys;
 		case ".py": return pyKeys;
-		case ".pyx": return pyKeys;
+		case ".pyi": return pyKeys;
 		case ".pyd": return pyKeys;
+		case ".pyx": return pyKeys;
 		case ".js": return jsKeys;
 		case ".mjs": return jsKeys;
 		case ".bat": return batCom;
@@ -1533,8 +1534,9 @@ public class CodeEditor extends IDEComponent {
 		case ".cxx": return "C++";
 		case ".cs": return "C#";
 		case ".py": return "Python";
-		case ".pyx": return "Python";
+		case ".pyi": return "Python";
 		case ".pyd": return "Python";
+		case ".pyx": return "Python";
 		case ".js": return minMode ? "JS" : "JavaScript";
 		case ".mjs": return minMode ? "JS" : "JavaScript";
 		case ".bat": return minMode ? "Bat" : "Batch";
@@ -1770,7 +1772,7 @@ public class CodeEditor extends IDEComponent {
 				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1"))
 			return fs;
 		
-		if (ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".py") ||
+		if (ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyi") ||
 				ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".pyx") || ext.equalsIgnoreCase(".por") || 
 				ext.equalsIgnoreCase(".bas") || ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || 
 				ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".mjs") || 
@@ -3004,6 +3006,7 @@ public class CodeEditor extends IDEComponent {
 
 		case ".ipynb":
 		case ".py":
+		case ".pyi":
 		case ".pyx":
 		case ".pyd":
 			for (String s : pyKeys) { // colorir keywordss
@@ -4422,7 +4425,7 @@ public class CodeEditor extends IDEComponent {
 				}
 			}
 
-			if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyx")
+			if (ext.equalsIgnoreCase(".java") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyi") || ext.equalsIgnoreCase(".pyx")
 					|| ext.equalsIgnoreCase(".ipynb") || ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".zig")) {
 				indxs = findWord(new String(chars), "@");
 
@@ -5091,6 +5094,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 
 		case ".py":
+		case ".pyi":
 		case ".pyx":
 		case ".ipynb":
 		case ".pyd":
@@ -5459,6 +5463,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 
 		case ".py":
+		case ".pyi":
 		case ".pyx":
 		case ".ipynb":
 		case ".pyd":

@@ -114,7 +114,6 @@ public class Explorer extends IDEComponent {
     public static void fetchStatus() {
     	if (isBaseFolderRepository()) {
 	    	gitStatus = GitStatus.fetch();
-	    	System.out.println(gitStatus);
 	    }
 	    else {
 	    	gitStatus = null;
@@ -147,18 +146,20 @@ public class Explorer extends IDEComponent {
     			
     			GitCore.init();
     			SearchReplaceCore.dispose();
+    			fetchStatus();
     		}
     	});
     	tabs.add(new ExplorerTab(1 + 9 + (ExplorerTab.SIZE * 3), Main.terminalTab, ExplorerMode.TERMINAL, "Terminal"));
     }
     
     public static boolean isBaseFolderRepository() {
-    	if (Main.baseFolder == null) return false;
+    	if (Main.baseFolder == null || !Main.baseFolder.exists())
+    		return false;
     	
-    	for (File f : Main.baseFolder.listFiles()) {
+    	// verificar se é oculto (f.isHidden())
+    	for (File f : Main.baseFolder.listFiles())
     		if (f.getName().equals(".git") && f.isDirectory())
     			return true;
-    	}
     	
     	return false;
     }
@@ -684,26 +685,25 @@ public class Explorer extends IDEComponent {
     private void renderGit(Graphics g) {
     	Graphics2D g2 = (Graphics2D) g;
     	
-    	Fonts.drawString("Branches", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
-    	g2.setColor(Colors.textLight);
-    	g2.setStroke(new BasicStroke(2f));
-    	g2.drawLine(20 + ("Branches".length() * 12) + 10, Screen.DECORATION_HEIGHT + 60, width - 20, Screen.DECORATION_HEIGHT + 60);
-    	
-    	g.drawImage(Main.branch, 15, Screen.DECORATION_HEIGHT + 80, 32, 32, null);
-    	Fonts.drawString("| " + gitStatus.branches[gitStatus.currentBranch], 55, Screen.DECORATION_HEIGHT + 85, new IDEFont(Fonts.lightGrayEditor, CodeEditor.DEFAULT_FONT_SIZE), g);
-    	
-    	Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 200, new IDEFont(Fonts.lightGrayNormal, 16), g);
-    	g2.setColor(Colors.textLight);
-    	g2.setStroke(new BasicStroke(2f));
-    	g2.drawLine(20 + (Texts.general.length() * 12) + 10, Screen.DECORATION_HEIGHT + 210, width - 20, Screen.DECORATION_HEIGHT + 210);
-    	
-    	Fonts.drawString("URL:", 20, Screen.DECORATION_HEIGHT + 270, new IDEFont(Fonts.lightGrayNormal, 16), g);
-    	
     	if (isBaseFolderRepository()) {
-    		if (components.indexOf(stageAll) < 0) {
-    			GitCore.init();
-    		}
-    		
+	    	Fonts.drawString("Branches", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
+	    	g2.setColor(Colors.textLight);
+	    	g2.setStroke(new BasicStroke(2f));
+	    	g2.drawLine(20 + ("Branches".length() * 12) + 10, Screen.DECORATION_HEIGHT + 60, width - 20, Screen.DECORATION_HEIGHT + 60);
+	
+	    	g.drawImage(Main.branch, 15, Screen.DECORATION_HEIGHT + 80, 32, 32, null);
+	    	Fonts.drawString("| " + gitStatus.branches[gitStatus.currentBranch], 55, Screen.DECORATION_HEIGHT + 85, new IDEFont(Fonts.lightGrayEditor, CodeEditor.DEFAULT_FONT_SIZE), g);
+	
+	    	Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 200, new IDEFont(Fonts.lightGrayNormal, 16), g);
+	    	g2.setColor(Colors.textLight);
+	    	g2.setStroke(new BasicStroke(2f));
+	    	g2.drawLine(20 + (Texts.general.length() * 12) + 10, Screen.DECORATION_HEIGHT + 210, width - 20, Screen.DECORATION_HEIGHT + 210);
+	
+	    	Fonts.drawString("URL:", 20, Screen.DECORATION_HEIGHT + 270, new IDEFont(Fonts.lightGrayNormal, 16), g);
+	    	if (components.indexOf(stageAll) < 0) {
+	    		GitCore.init();
+	    	}
+	
 	    	Fonts.drawString("Staging", 20, Screen.DECORATION_HEIGHT + 370, new IDEFont(Fonts.lightGrayNormal, 16), g);
 	    	g2.setColor(Colors.textLight);
 	    	g2.setStroke(new BasicStroke(2f));
@@ -771,6 +771,8 @@ public class Explorer extends IDEComponent {
     	if (CommandTerminal.expOff) return;
     	
     	Graphics2D g2 = (Graphics2D) g;
+    	
+    	System.out.println(gitStatus);
     	
         g.setColor(Colors.explorer);
         g.fillRect(x, y, width, height);

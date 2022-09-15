@@ -65,6 +65,7 @@ public class OpenBaseFolderButton extends IDEComponent {
 			
 			Explorer.scope = null;
 			Explorer.files = ListableFile.loadFolder(ListableFile.newListableFile(Main.baseFolder));
+			Explorer.gitStatus = null;
 			
 			Main.screen.frame.setTitle(Main.baseFolder.getName() + " - " + Main.PROGRAM_NAME);
 			

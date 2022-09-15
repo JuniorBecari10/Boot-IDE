@@ -1016,6 +1016,8 @@ public class Main implements Runnable, Tickable {
 			wr.write("Stack Trace:\n" + st);
 			
 			wr.close();
+			
+			//System.exit(1);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
