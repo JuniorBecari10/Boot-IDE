@@ -1042,6 +1042,19 @@ public class CodeEditor extends IDEComponent {
         }
         return prettyBinary(result.toString(), 8, "");
     }
+	
+	public static String binaryToString(String bin) {
+		String[] parts = bin.split(" ");
+		StringBuilder sb = new StringBuilder();
+
+		for (String part : parts) {
+		    int val = Integer.parseInt(part, 2);
+		    String c = Character.toString((char) val);
+		    sb.append(c);
+		}
+		
+		return sb.toString();
+	}
 
 	public List<IDELine> readFile(File file) throws IOException {
 		Main.editor.line1 = 0;
@@ -1083,7 +1096,9 @@ public class CodeEditor extends IDEComponent {
 					
 					for (String s : lines) {
 						String[] parts = splitByNCharacters(s, 8);
-						l.add(String.join(" ", parts));
+						
+						String join = String.join(" ", parts);
+						l.add(join + " | " + binaryToString(join));
 					}
 					
 					break;
@@ -1096,7 +1111,9 @@ public class CodeEditor extends IDEComponent {
 					
 					for (String s : lines) {
 						StringBuilder b = new StringBuilder(s);
-						b.delete(45, 59); // eliminar espaços que ficam depois
+						
+						if (b.length() >= 59)
+							b.delete(45, 59); // eliminar espaços que ficam depois
 						
 						s = b.toString();
 						

@@ -922,9 +922,9 @@ public class Tab extends IDEComponent implements Serializable {
 				g.drawImage(Main.lock, /*Main.editor.editing == this ? */(x + drawW) - 40 /*: (x + drawW) - 20*/, y + 7, 15, 15, null);
 			else {
 				if (readMode == FileReadMode.HEX)
-					g.drawImage(Main.hexView, (x + drawW) - 40, y + 7, 15, 15, null);
+					g.drawImage(Main.hexView, (x + drawW) - 40, y + 7, 16, 16, null);
 				else if (readMode == FileReadMode.BIN || readMode == FileReadMode.BINARY)
-					g.drawImage(Main.binView, (x + drawW) - 40, y + 7, 15, 15, null);
+					g.drawImage(Main.binView, (x + drawW) - 40, y + 7, 16, 16, null);
 			}
 		}
 		
