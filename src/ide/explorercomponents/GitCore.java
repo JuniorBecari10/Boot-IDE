@@ -142,6 +142,14 @@ public class GitCore {
 	}
 	
 	public static synchronized void initRepoComponents() {
+		if (Explorer.createBranch == null) {
+			Explorer.createBranch = new ExecuteButtonIcon(20, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.createBranchSpr, null, Texts.createBranch);
+		}
+		
+		if (Explorer.checkout == null) {
+			Explorer.checkout = new ExecuteButtonIcon(58, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.checkoutSpr, null, "Checkout");
+		}
+		
 		if (Explorer.stageAll == null) {
 			Explorer.stageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 400, Main.explorer.getWidth() - 40, 20, Texts.stageAll, () -> {
 				String[] output = Main.runCommand(Main.baseFolder, "git add .");
@@ -172,6 +180,8 @@ public class GitCore {
 			};
 		}
 		
+		IDEComponent.toAdd.add(Explorer.createBranch);
+		IDEComponent.toAdd.add(Explorer.checkout);
 		IDEComponent.toAdd.add(Explorer.stageAll);
 		IDEComponent.toAdd.add(Explorer.unstageAll);
 	}
@@ -182,6 +192,8 @@ public class GitCore {
 		IDEComponent.toRemove.add(Explorer.clone);
 		IDEComponent.toRemove.add(Explorer.lastAction);
 		
+		IDEComponent.toRemove.add(Explorer.createBranch);
+		IDEComponent.toRemove.add(Explorer.checkout);
 		IDEComponent.toRemove.add(Explorer.stageAll);
 		IDEComponent.toRemove.add(Explorer.unstageAll);
 	}

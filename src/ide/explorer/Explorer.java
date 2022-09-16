@@ -23,6 +23,7 @@ import ide.components.ReturnToBaseFolderButton;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.explorercomponents.ExecuteButton;
+import ide.explorercomponents.ExecuteButtonIcon;
 import ide.explorercomponents.ExplorerTab;
 import ide.explorercomponents.GitCore;
 import ide.explorercomponents.GitStatus;
@@ -72,6 +73,9 @@ public class Explorer extends IDEComponent {
 	public static ExecuteButton searchNext, replaceAll;
 	
 	// -- Git --
+	
+	public static ExecuteButtonIcon createBranch;
+	public static ExecuteButtonIcon checkout;
 	
 	public static ExecuteButton initRepo;
 	public static InputBox cloneURL;

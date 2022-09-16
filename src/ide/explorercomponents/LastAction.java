@@ -1,6 +1,9 @@
 package ide.explorercomponents;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
@@ -55,13 +58,21 @@ public class LastAction extends IDEComponent {
 		Fonts.drawString(text, (Main.explorer.getWidth() / 2 - (text.length() * 12) / 2) + (action == null ? 0 : 15), y, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
 		if (action != null) {
+			List<String> output = new ArrayList<>();
+			
 			if (action.output.length == 0) {
 				action.output = new String[1];
 				action.output[0] = Texts.noOutput;
 			}
+			else if (!action.output[0].contains(Texts.noOutput)) {
+				output.add(Texts.lastCommandOutput);
+				output.add("");
+			}
+			
+			output.addAll(Arrays.asList(action.output));
 			
 			if (hovered())
-				Explorer.renderCardText(action.output, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), g);
+				Explorer.renderCardText(output.toArray(new String[0]), MouseInput.getMouseX() + 30, MouseInput.getMouseY(), g);
 		}
 	}
 }

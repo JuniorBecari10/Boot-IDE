@@ -1049,7 +1049,8 @@ public class CodeEditor extends IDEComponent {
 
 		for (String part : parts) {
 		    int val = Integer.parseInt(part, 2);
-		    String c = Character.toString((char) val);
+		    
+		    String c = new String(new char[] { (char) val });
 		    sb.append(c);
 		}
 		
@@ -7785,6 +7786,8 @@ public class CodeEditor extends IDEComponent {
 					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
 						KeyInput.updateKeys();
 						
+						if (editing.readMode != FileReadMode.NORMAL) return;
+						
 						RightClickOption.removeAllRightClickOptions();
 						
 						if (undo.isEmpty()) return;
@@ -7806,6 +7809,8 @@ public class CodeEditor extends IDEComponent {
 
 					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Y (Refazer)
 						KeyInput.updateKeys();
+						
+						if (editing.readMode != FileReadMode.NORMAL) return;
 						
 						RightClickOption.removeAllRightClickOptions();
 						

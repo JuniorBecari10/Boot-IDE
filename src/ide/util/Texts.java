@@ -225,7 +225,10 @@ public final class Texts {
 	public static String stageAll;
 	public static String unstageAll;
 	
+	public static String lastCommandOutput;
 	public static String noOutput;
+	
+	public static String createBranch;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -438,7 +441,10 @@ public final class Texts {
 			stageAll = "Adicionar todos";
 			unstageAll = "Remover todos";
 			
+			lastCommandOutput = "Última saída de comando:";
 			noOutput = "Sem saída de comando.";
+			
+			createBranch = "Criar Branch";
 			
 			break;
 		
@@ -651,7 +657,10 @@ public final class Texts {
 			stageAll = "Stage All";
 			unstageAll = "Unstage All";
 			
+			lastCommandOutput = "Last command output:";
 			noOutput = "No command output.";
+			
+			createBranch = "Create Branch";
 			
 			break;
 		}

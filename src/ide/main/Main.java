@@ -221,6 +221,9 @@ public class Main implements Runnable, Tickable {
     
     public static BufferedImage branch;
     
+    public static BufferedImage createBranchSpr;
+    public static BufferedImage checkoutSpr;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -316,6 +319,9 @@ public class Main implements Runnable, Tickable {
 	        gitDone = spritesheet.getSprite(160, 10, 5, 5);
 	        
 	        branch = spritesheet.getSprite(400, 0, 16, 16);
+	        
+	        createBranchSpr = spritesheet.getSprite(416, 0, 16, 16);
+	        checkoutSpr = spritesheet.getSprite(432, 0, 16, 16);
 	        
 	        ///////
 	        
