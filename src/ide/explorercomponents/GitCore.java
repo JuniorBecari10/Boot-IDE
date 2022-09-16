@@ -16,6 +16,15 @@ public class GitCore {
 	
 	public static Stack<GitAction> actions = new Stack<>();
 
+	public static ActionState getState(boolean error, boolean warn) {
+		if (warn)
+			return ActionState.WARNING;
+		else if (error)
+			return ActionState.ERROR;
+		
+		return ActionState.DONE;
+	}
+	
 	public static void init() {
 		Explorer.explorerMode = ExplorerMode.GIT;
 		
@@ -31,7 +40,7 @@ public class GitCore {
 					boolean error = Main.isError(output);
 					boolean warn = Main.isWarning(output);
 					
-					actions.add(new GitAction("git init", error ? ActionState.ERROR : warn ? ActionState.WARNING : ActionState.DONE, output));
+					actions.add(new GitAction("git init", getState(error, warn), output));
 					}, ""));
 				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> {
 					String[] output = Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git init");
@@ -39,22 +48,38 @@ public class GitCore {
 					boolean error = Main.isError(output);
 					boolean warn = Main.isWarning(output);
 					
-					actions.add(new GitAction("git init", error ? ActionState.ERROR : warn ? ActionState.WARNING : ActionState.DONE, output));
+					actions.add(new GitAction("git init", getState(error, warn), output));
 					}, ""));
 				
-				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 252, list.toArray(new RightClickOption[list.size()]));
+				IDEComponent.addRightClickOptions(20, Explorer.isBaseFolderRepository() ? Screen.DECORATION_HEIGHT + 252 : Screen.DECORATION_HEIGHT + 112, list.toArray(new RightClickOption[list.size()]));
 			}, true) {
 				public void tick() {
 					super.tick();
 					
 					text = Texts.initRepository;
+					
+					if (Explorer.isBaseFolderRepository())
+						y = Screen.DECORATION_HEIGHT + 220;
+					else
+						y = Screen.DECORATION_HEIGHT + 90;
 				}
 			};
 		}
 		
 		if (Explorer.cloneURL == null) {
-			Explorer.cloneURL = new InputBox(20, Screen.DECORATION_HEIGHT + 300, Main.explorer.getWidth() - 40, 20);
+			Explorer.cloneURL = new InputBox(20, Screen.DECORATION_HEIGHT + 300, Main.explorer.getWidth() - 40, 20) {
+				public void tick() {
+					super.tick();
+					
+					if (Explorer.isBaseFolderRepository())
+						y = Screen.DECORATION_HEIGHT + 300;
+					else
+						y = Screen.DECORATION_HEIGHT + 160;
+				}
+			};
 		}
+		
+		Explorer.selected = Explorer.cloneURL;
 		
 		if (Explorer.clone == null) {
 			Explorer.clone = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 330, Main.explorer.getWidth() - 40, 20, Texts.clone, () -> {
@@ -70,7 +95,7 @@ public class GitCore {
 					boolean error = Main.isError(output);
 					boolean warn = Main.isWarning(output);
 					
-					actions.add(new GitAction("git clone", error ? ActionState.ERROR : warn ? ActionState.WARNING : ActionState.DONE, output));
+					actions.add(new GitAction("git clone", getState(error, warn), output));
 					
 					Explorer.fetchStatus();
 					}, ""));
@@ -80,15 +105,20 @@ public class GitCore {
 					boolean error = Main.isError(output);
 					boolean warn = Main.isWarning(output);
 					
-					actions.add(new GitAction("git clone", error ? ActionState.ERROR : warn ? ActionState.WARNING : ActionState.DONE, output));
+					actions.add(new GitAction("git clone", getState(error, warn), output));
 					}, ""));
 				
-				IDEComponent.addRightClickOptions(20, Screen.DECORATION_HEIGHT + 352, list.toArray(new RightClickOption[list.size()]));
+				IDEComponent.addRightClickOptions(20, Explorer.isBaseFolderRepository() ? Screen.DECORATION_HEIGHT + 352 : Screen.DECORATION_HEIGHT + 212, list.toArray(new RightClickOption[list.size()]));
 			}, true) {
 				public void tick() {
 					super.tick();
 					
 					text = Texts.clone;
+					
+					if (Explorer.isBaseFolderRepository())
+						y = Screen.DECORATION_HEIGHT + 330;
+					else
+						y = Screen.DECORATION_HEIGHT + 190;
 				}
 			};
 		}
@@ -115,7 +145,7 @@ public class GitCore {
 				boolean error = Main.isError(output);
 				boolean warn = Main.isWarning(output);
 				
-				actions.add(new GitAction("git add", error ? ActionState.ERROR : warn ? ActionState.WARNING : ActionState.DONE, output)); }, true) {
+				actions.add(new GitAction("git add", getState(error, warn), output)); }, true) {
 				public void tick() {
 					super.tick();
 					
@@ -129,7 +159,7 @@ public class GitCore {
 				String[] output = Main.runCommand(Main.baseFolder, "git reset");
 				boolean error = Main.isError(output);
 				boolean warn = Main.isWarning(output);
-				actions.add(new GitAction("git reset", error ? ActionState.ERROR : warn ? ActionState.WARNING : ActionState.DONE, output)); }, true) {
+				actions.add(new GitAction("git reset", getState(error, warn), output)); }, true) {
 				public void tick() {
 					super.tick();
 					

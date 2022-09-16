@@ -225,6 +225,8 @@ public final class Texts {
 	public static String stageAll;
 	public static String unstageAll;
 	
+	public static String noOutput;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -436,6 +438,8 @@ public final class Texts {
 			stageAll = "Adicionar todos";
 			unstageAll = "Remover todos";
 			
+			noOutput = "Sem saída de comando.";
+			
 			break;
 		
 		case ENG:
@@ -646,6 +650,8 @@ public final class Texts {
 			
 			stageAll = "Stage All";
 			unstageAll = "Unstage All";
+			
+			noOutput = "No command output.";
 			
 			break;
 		}

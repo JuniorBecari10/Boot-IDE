@@ -709,6 +709,14 @@ public class Explorer extends IDEComponent {
 	    	g2.setStroke(new BasicStroke(2f));
 	    	g2.drawLine(20 + ("Staging".length() * 12) + 10, Screen.DECORATION_HEIGHT + 380, width - 20, Screen.DECORATION_HEIGHT + 380);
     	}
+    	else {
+    		Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
+	    	g2.setColor(Colors.textLight);
+	    	g2.setStroke(new BasicStroke(2f));
+	    	g2.drawLine(20 + (Texts.general.length() * 12) + 10, Screen.DECORATION_HEIGHT + 60, width - 20, Screen.DECORATION_HEIGHT + 60);
+	
+	    	Fonts.drawString("URL:", 20, Screen.DECORATION_HEIGHT + 130, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	}
     }
     
     public static int getHighestNumber(int... arr) {
@@ -771,8 +779,6 @@ public class Explorer extends IDEComponent {
     	if (CommandTerminal.expOff) return;
     	
     	Graphics2D g2 = (Graphics2D) g;
-    	
-    	System.out.println(gitStatus);
     	
         g.setColor(Colors.explorer);
         g.fillRect(x, y, width, height);

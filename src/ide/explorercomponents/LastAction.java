@@ -54,14 +54,13 @@ public class LastAction extends IDEComponent {
 	
 		Fonts.drawString(text, (Main.explorer.getWidth() / 2 - (text.length() * 12) / 2) + (action == null ? 0 : 15), y, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
-		StringBuilder builder = new StringBuilder();
-		
 		if (action != null) {
-			for (String s : action.output) {
-				builder.append(s);
+			if (action.output.length == 0) {
+				action.output = new String[1];
+				action.output[0] = Texts.noOutput;
 			}
 			
-			if (hovered() && !builder.toString().isEmpty())
+			if (hovered())
 				Explorer.renderCardText(action.output, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), g);
 		}
 	}
