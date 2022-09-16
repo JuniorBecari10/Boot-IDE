@@ -25,6 +25,17 @@ public class GitCore {
 		return ActionState.DONE;
 	}
 	
+	public static void checkout(String branch) {
+		String[] output = Main.runCommand(Main.baseFolder, "git checkout " + branch);
+		
+		Explorer.fetchStatus();
+		
+		boolean error = Main.isError(output);
+		boolean warn = Main.isWarning(output);
+		
+		actions.add(new GitAction("git checkout", getState(error, warn), output));
+	}
+	
 	public static void init() {
 		Explorer.explorerMode = ExplorerMode.GIT;
 		
@@ -147,11 +158,22 @@ public class GitCore {
 		}
 		
 		if (Explorer.checkout == null) {
-			Explorer.checkout = new ExecuteButtonIcon(58, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.checkoutSpr, null, "Checkout");
+			Explorer.checkout = new ExecuteButtonIcon(58, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.checkoutSpr, () -> {
+				List<RightClickOption> list = new ArrayList<>();
+				int width = Texts.selectABranch.length() * 14;
+				
+				list.add(new RightClickOption(0, 0, width, 30, false, Texts.selectABranch, (a) -> {  }, ""));
+				
+				for (String s : Explorer.gitStatus.branches) {
+					list.add(new RightClickOption(0, 0, width, 30, s, (a) -> { checkout(s); }, ""));
+				}
+				
+				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.checkout.getY(), list.toArray(new RightClickOption[list.size()]));
+			}, "Checkout");
 		}
 		
 		if (Explorer.stageAll == null) {
-			Explorer.stageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 400, Main.explorer.getWidth() - 40, 20, Texts.stageAll, () -> {
+			Explorer.stageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 440, Main.explorer.getWidth() - 40, 20, Texts.stageAll, () -> {
 				String[] output = Main.runCommand(Main.baseFolder, "git add .");
 				
 				boolean error = Main.isError(output);
@@ -167,7 +189,7 @@ public class GitCore {
 		}
 		
 		if (Explorer.unstageAll == null) {
-			Explorer.unstageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 430, Main.explorer.getWidth() - 40, 20, Texts.unstageAll, () -> {
+			Explorer.unstageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 470, Main.explorer.getWidth() - 40, 20, Texts.unstageAll, () -> {
 				String[] output = Main.runCommand(Main.baseFolder, "git reset");
 				boolean error = Main.isError(output);
 				boolean warn = Main.isWarning(output);

@@ -5,9 +5,9 @@ package ide.util;
  * 
  * Linguagens:
  * 	Portuguas
- * 	Inglas
+ * 	Inglês
  * 
- * Tradutores de Inglas: Boot (eu hehe) e <a href="https://www.deepl.com/translator">DeepL</a>.
+ * Tradutores de Inglês: Boot (eu hehe) e <a href="https://www.deepl.com/translator">DeepL</a>.
  * 
  * @author junio
  *
@@ -230,6 +230,8 @@ public final class Texts {
 	
 	public static String createBranch;
 	
+	public static String selectABranch;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -446,6 +448,8 @@ public final class Texts {
 			
 			createBranch = "Criar Branch";
 			
+			selectABranch = "Selecione uma Branch:";
+			
 			break;
 		
 		case ENG:
@@ -661,6 +665,8 @@ public final class Texts {
 			noOutput = "No command output.";
 			
 			createBranch = "Create Branch";
+			
+			selectABranch = "Select a Branch:";
 			
 			break;
 		}
