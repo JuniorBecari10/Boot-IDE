@@ -29,13 +29,15 @@ public class GitCore {
 		Explorer.explorerMode = ExplorerMode.GIT;
 		
 		if (Explorer.initRepo == null) {
-			Explorer.initRepo = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 230, Main.explorer.getWidth() - 40, 20, Texts.initRepository, () -> {
+			Explorer.initRepo = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 235, Main.explorer.getWidth() - 40, 20, Texts.initRepository, () -> {
 				int widthDraw = Main.explorer.getWidth() - 40;
 				
 				List<RightClickOption> list = new ArrayList<>();
 				
 				list.add(new RightClickOption(0, 0, widthDraw, Texts.inBaseFolder, (s) -> {
 					String[] output = Main.runCommand(Main.baseFolder, "git init");
+					
+					Explorer.fetchStatus();
 					
 					boolean error = Main.isError(output);
 					boolean warn = Main.isWarning(output);
@@ -45,13 +47,15 @@ public class GitCore {
 				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> {
 					String[] output = Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git init");
 					
+					Explorer.fetchStatus();
+					
 					boolean error = Main.isError(output);
 					boolean warn = Main.isWarning(output);
 					
 					actions.add(new GitAction("git init", getState(error, warn), output));
 					}, ""));
 				
-				IDEComponent.addRightClickOptions(20, Explorer.isBaseFolderRepository() ? Screen.DECORATION_HEIGHT + 252 : Screen.DECORATION_HEIGHT + 112, list.toArray(new RightClickOption[list.size()]));
+				IDEComponent.addRightClickOptions(20, Explorer.isBaseFolderRepository() ? Screen.DECORATION_HEIGHT + 257 : Screen.DECORATION_HEIGHT + 112, list.toArray(new RightClickOption[list.size()]));
 			}, true) {
 				public void tick() {
 					super.tick();
@@ -59,7 +63,7 @@ public class GitCore {
 					text = Texts.initRepository;
 					
 					if (Explorer.isBaseFolderRepository())
-						y = Screen.DECORATION_HEIGHT + 220;
+						y = Screen.DECORATION_HEIGHT + 235;
 					else
 						y = Screen.DECORATION_HEIGHT + 90;
 				}
