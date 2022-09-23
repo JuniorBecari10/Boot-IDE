@@ -650,13 +650,13 @@ public class CodeEditor extends IDEComponent {
 			"userdel", "clear", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc",
 			"node", "nasm", "qemu", "gcc", "g++", "python", "lua", "if", "then", "else", "fi", "date", "eject", "tsc",
 			"pip", "pip3", "pipwin", "read", "export", "as", "ld", "7z", "rename", "bash", "vi", "vim", "nano", "clang", "qemu", "qemu-system-x86-64",
-			"setlocal", "endlocal", "make", "yarn", "color", "for", "ifeq", "PWD", "CD", "LS", "CAT ", "CP", "MV", "MKDIR",
+			"setlocal", "endlocal", "make", "yarn", "color", "for", "ifeq", "elif", "PWD", "CD", "LS", "CAT ", "CP", "MV", "MKDIR",
 			"RMDIR", "RM", "TOUCH", "LOCATE", "FIND", "GREP", "SUDO", "SU", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR",
 			"CHMOD", "CHOWN", "JOBS", "KILL", "PING", "WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP",
 			"HOSTNAME", "USERADD", "EXPORT", "USERDEL", "CLEAR", "GIT", "NPM", "CALL", "EXIST", "END", "EJECT", "SETLOCAL",
 			"ENDLOCAL", "FOR", "JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA",
 			"PIP", "PIP3", "PIPWIN", "READ", "AS", "LD", "7Z", "RENAME", "BASH", "VI", "VIM", "NANO", "CLANG", "QEMU", "QEMU-SYSTEM-x86-64", "QEMU-SYSTEM-X86-64",
-			"JAVAW", "IF", "THEN", "ELSE", "FI", "DATE", "YARN", "COLOR", "TSC", "MAKE", "IFEQ" };
+			"JAVAW", "IF", "THEN", "ELSE", "FI", "DATE", "YARN", "COLOR", "TSC", "MAKE", "IFEQ", "ELIF" };
 
 	public static final String[] tsKeys = { "type", "number", "protected", "else", "let", "catch", "if", "case", "in",
 			"byte", "double", "var", "module", "enum", "as", "transient", "document", "long", "undefined", "default",
@@ -2089,25 +2089,24 @@ public class CodeEditor extends IDEComponent {
 					|| ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
 					|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock") || ext.equalsIgnoreCase(".toml"))) {
 				for (String s : cll) {
-					indxs = findWord(new String(chars), s);
+					indxs.addAll(findWord(new String(chars), s));
 	
 					int len = 0;
 	
-					String str = new String(chars);
-	
 					for (Integer i : indxs) {
+						// Não colorir se começar com número
 						if (i > 0 && isNumber(chars[i - 1]))
 							continue;
 	
-						if (i - 1 > 0 && (str.charAt(i - 1) == 'a' || str.charAt(i - 1) == 'b' || str.charAt(i - 1) == 'c'
-								|| str.charAt(i - 1) == 'd' || str.charAt(i - 1) == 'e' || str.charAt(i - 1) == 'f'
-								|| str.charAt(i - 1) == 'g' || str.charAt(i - 1) == 'h' || str.charAt(i - 1) == 'i'
-								|| str.charAt(i - 1) == 'j' || str.charAt(i - 1) == 'k' || str.charAt(i - 1) == 'l'
-								|| str.charAt(i - 1) == 'm' || str.charAt(i - 1) == 'n' || str.charAt(i - 1) == 'o'
-								|| str.charAt(i - 1) == 'p' || str.charAt(i - 1) == 'q' || str.charAt(i - 1) == 'r'
-								|| str.charAt(i - 1) == 's' || str.charAt(i - 1) == 't' || str.charAt(i - 1) == 'u'
-								|| str.charAt(i - 1) == 'v' || str.charAt(i - 1) == 'w' || str.charAt(i - 1) == 'x'
-								|| str.charAt(i - 1) == 'y' || str.charAt(i - 1) == 'z'))
+						if (i - 1 > 0 && (chars[i - 1] == 'a' || chars[i - 1] == 'b' || chars[i - 1] == 'c'
+								|| chars[i - 1] == 'd' || chars[i - 1] == 'e' || chars[i - 1] == 'f'
+								|| chars[i - 1] == 'g' || chars[i - 1] == 'h' || chars[i - 1] == 'i'
+								|| chars[i - 1] == 'j' || chars[i - 1] == 'k' || chars[i - 1] == 'l'
+								|| chars[i - 1] == 'm' || chars[i - 1] == 'n' || chars[i - 1] == 'o'
+								|| chars[i - 1] == 'p' || chars[i - 1] == 'q' || chars[i - 1] == 'r'
+								|| chars[i - 1] == 's' || chars[i - 1] == 't' || chars[i - 1] == 'u'
+								|| chars[i - 1] == 'v' || chars[i - 1] == 'w' || chars[i - 1] == 'x'
+								|| chars[i - 1] == 'y' || chars[i - 1] == 'z'))
 							continue;
 	
 						while (i + len < chars.length && !isCharsEqual(chars[i + len], ' ')
@@ -2139,8 +2138,9 @@ public class CodeEditor extends IDEComponent {
 								|| ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".json")
 								|| ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".mcfunction"))
 							fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
+							
 						else {
-							if (i - 1 > 0 && Character.isLetter(chars[i - 1]))
+							if (i > 1 && Character.isLetter(chars[i - 1]))
 								continue;
 							
 							//addautocomplete.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));
