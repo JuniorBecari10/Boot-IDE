@@ -395,8 +395,8 @@ public class CodeEditor extends IDEComponent {
 	public static final String[] cKeys = { "auto", "break", "case", "char", "const", "continue", "default", "do",
 			"double", "else", "enum", "extern", "float", "for", "goto", "if", "int", "long", "register", "return",
 			"short", "signed", "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", "void",
-			"volatile", "while", "true", "false", "null", "#include", "#undef", "#define", "restrict", "bool",
-			"duint", "uint8_t", "uint16_t", "size_t", "NULL" };
+			"volatile", "while", "true", "false", "null", "#include",  "#if", "#ifdef", "#ifndef", "#error", "#pragma", "#endif", "#else",
+			"#undef", "#define", "restrict", "bool", "duint", "uint8_t", "uint16_t", "size_t", "NULL" };
 
 	public static final String[] cppKeys = { "auto", "break", "case", "char", "const", "continue", "default", "do",
 			"double", "else", "enum", "extern", "float", "for", "goto", "if", "int", "long", "register", "return",
@@ -404,8 +404,8 @@ public class CodeEditor extends IDEComponent {
 			"volatile", "while", "asm", "dynamic_cast", "namespace", "reinterpret_cast", "bool", "explicit", "new",
 			"static_cast", "false", "catch", "operator", "template", "friend", "private", "class", "this", "inline",
 			"public", "throw", "const_cast", "delete", "mutable", "protected", "true", "try", "typeid", "typename",
-			"using", "virtual", "wchar_t", "#include", "#define", "#undef", "string", "#ifdef", "#ifndef", "#error", "#pragma", "#endif",
-			"override", "std", "size_t", "duint", "uint8_t", "uint16_t", "comment", "lib", "NULL", "alignof", "nullptr" };
+			"using", "virtual", "wchar_t", "#include", "#define", "#undef", "string", "#if", "#ifdef", "#ifndef", "#error", "#pragma",
+			"#endif", "#else", "override", "std", "size_t", "duint", "uint8_t", "uint16_t", "comment", "lib", "NULL", "alignof", "nullptr" };
 
 	public static final String[] csKeys = { "abstract", "async", "const", "event", "extern", "new", "override",
 			"partial", "readonly", "sealed", "static", "unsafe", "virtual", "volatile", "public", "private", "internal",
@@ -650,13 +650,13 @@ public class CodeEditor extends IDEComponent {
 			"userdel", "clear", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc",
 			"node", "nasm", "qemu", "gcc", "g++", "python", "lua", "if", "then", "else", "fi", "date", "eject", "tsc",
 			"pip", "pip3", "pipwin", "read", "export", "as", "ld", "7z", "rename", "bash", "vi", "vim", "nano", "clang", "qemu", "qemu-system-x86-64",
-			"setlocal", "endlocal", "make", "yarn", "color", "for", "PWD", "CD", "LS", "CAT ", "CP", "MV", "MKDIR",
+			"setlocal", "endlocal", "make", "yarn", "color", "for", "ifeq", "PWD", "CD", "LS", "CAT ", "CP", "MV", "MKDIR",
 			"RMDIR", "RM", "TOUCH", "LOCATE", "FIND", "GREP", "SUDO", "SU", "DF", "DU", "HEAD", "TAIL", "DIFF", "TAR",
 			"CHMOD", "CHOWN", "JOBS", "KILL", "PING", "WGET", "UNAME", "TOP", "HISTORY", "MAN", "ECHO", "ZIP", "UNZIP",
 			"HOSTNAME", "USERADD", "EXPORT", "USERDEL", "CLEAR", "GIT", "NPM", "CALL", "EXIST", "END", "EJECT", "SETLOCAL",
 			"ENDLOCAL", "FOR", "JAVA", "JAVAC", "NODEMON", "CSC", "NODE", "QEMU", "GCC", "G++", "PYTHON", "LUA",
 			"PIP", "PIP3", "PIPWIN", "READ", "AS", "LD", "7Z", "RENAME", "BASH", "VI", "VIM", "NANO", "CLANG", "QEMU", "QEMU-SYSTEM-x86-64", "QEMU-SYSTEM-X86-64",
-			"JAVAW", "IF", "THEN", "ELSE", "FI", "DATE", "YARN", "COLOR", "TSC", "MAKE" };
+			"JAVAW", "IF", "THEN", "ELSE", "FI", "DATE", "YARN", "COLOR", "TSC", "MAKE", "IFEQ" };
 
 	public static final String[] tsKeys = { "type", "number", "protected", "else", "let", "catch", "if", "case", "in",
 			"byte", "double", "var", "module", "enum", "as", "transient", "document", "long", "undefined", "default",
@@ -1785,9 +1785,7 @@ public class CodeEditor extends IDEComponent {
 				|| ext.equalsIgnoreCase(".log") || ext.equalsIgnoreCase(".obj") || ext.equalsIgnoreCase(".bf")
 				|| ext.equalsIgnoreCase(".conf")
 				|| ext.equalsIgnoreCase(".gitignore")
-				|| editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore") || ext.equalsIgnoreCase(".bat")
-				|| ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc")
-				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1"))
+				|| editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore"))
 			return fs;
 		
 		if (ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyi") ||
@@ -1799,6 +1797,13 @@ public class CodeEditor extends IDEComponent {
 			fs = color(0, fs.size(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 			
 			return fs;
+		}
+		
+		if (ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile")
+				|| ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1")
+				|| ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".make") || ext.equalsIgnoreCase(".makefile")
+				|| editing.getRegent().getRegent().getName().equalsIgnoreCase("Makefile")) {
+			fs = color(0, fs.size(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 		}
 		
 		if (ext.equalsIgnoreCase(".mod") || ext.equalsIgnoreCase(".sum")) {
