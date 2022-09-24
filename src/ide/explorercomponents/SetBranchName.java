@@ -10,6 +10,8 @@ import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.git.GitAction;
+import ide.git.GitCore;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;

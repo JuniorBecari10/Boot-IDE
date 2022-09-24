@@ -1,4 +1,4 @@
-package ide.explorercomponents;
+package ide.git;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,11 @@ import ide.components.IDEComponent;
 import ide.components.RightClickOption;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
+import ide.explorercomponents.ExecuteButton;
+import ide.explorercomponents.ExecuteButtonIcon;
+import ide.explorercomponents.InputBox;
+import ide.explorercomponents.LastAction;
+import ide.explorercomponents.SetBranchName;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.util.Texts;
@@ -155,9 +160,7 @@ public class GitCore {
 	public static synchronized void initRepoComponents() {
 		if (Explorer.createBranch == null) {
 			Explorer.createBranch = new ExecuteButtonIcon(20, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.createBranchSpr, () -> {
-				if (Explorer.setBranchName == null) {
-					Explorer.setBranchName = new SetBranchName(0, Screen.DECORATION_HEIGHT + 155, 0, 30);
-				}
+				Explorer.setBranchName = new SetBranchName(0, Screen.DECORATION_HEIGHT + 155, 0, 30);
 				
 				IDEComponent.toAdd.add(Explorer.setBranchName);
 				SetBranchName.added = true;

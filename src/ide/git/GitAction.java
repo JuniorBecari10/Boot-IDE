@@ -1,4 +1,4 @@
-package ide.explorercomponents;
+package ide.git;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package ide.explorercomponents;
+package ide.git;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +48,15 @@ public class GitStatus {
 	public static GitStatus fetch() {
 		String[] files = Main.runCommand(Main.baseFolder, "git status --porcelain");
 		String[] branchesFetch = Main.runCommand(Main.baseFolder, "git branch");
+		
+		/*String[] commitsNames = Main.runCommand(Main.baseFolder, "git log --pretty=oneline");
+		String[] commitsDates = Main.runCommand(Main.baseFolder, "git log --pretty=format:\"%h %an %ad\"");*/
+		
+		/*Commit[] comm = new Commit[commitsNames.length];
+		
+		for (int i = 0; i < comm.length; i++) {
+			comm[i] = new Commit();
+		}*/
 		
 		List<String> stagedFilesList = new ArrayList<>();
 		

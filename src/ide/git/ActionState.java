@@ -1,4 +1,4 @@
-package ide.explorercomponents;
+package ide.git;
 
 public enum ActionState {
 	ERROR,
