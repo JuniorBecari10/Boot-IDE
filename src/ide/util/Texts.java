@@ -229,8 +229,8 @@ public final class Texts {
 	public static String noOutput;
 	
 	public static String createBranch;
-	
 	public static String selectABranch;
+	public static String createNewBranch;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -447,8 +447,8 @@ public final class Texts {
 			noOutput = "Sem saída de comando.";
 			
 			createBranch = "Criar Branch";
-			
 			selectABranch = "Selecione uma Branch:";
+			createNewBranch = "Criar Nova Branch";
 			
 			break;
 		
@@ -665,8 +665,8 @@ public final class Texts {
 			noOutput = "No command output.";
 			
 			createBranch = "Create Branch";
-			
 			selectABranch = "Select a Branch:";
+			createNewBranch = "Create New Branch";
 			
 			break;
 		}

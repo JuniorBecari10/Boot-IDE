@@ -42,6 +42,7 @@ import ide.explorer.ExplorerMode;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
 import ide.explorercomponents.SearchReplaceCore;
+import ide.explorercomponents.SetBranchName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.ComponentInput;
@@ -836,7 +837,7 @@ public class CodeEditor extends IDEComponent {
 			//if (true) break; // - a a presenaa do loop que enche a cpu | veja se usarmos return ou break ao invas de continue da certo
 			
 			if (KeyInput.isKeyPressed()) {
-				if ((!SetFileName.added && !CommandTerminal.active) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown())) {
+				if ((!SetFileName.added && !CommandTerminal.active && !SetBranchName.added) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown())) {
 	    			Main.editor.type();
 	    			Main.editor.detectArrows();
 				}
@@ -8119,7 +8120,7 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public void tick() {
-		if (SetFileName.added || CommandTerminal.active || RenameFile.added)
+		if (SetFileName.added || CommandTerminal.active || RenameFile.added || SetBranchName.added)
 			return;
 		
 		if (tabs == null)

@@ -5,24 +5,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
-
-import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
-import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
-import ide.components.RenameFile;
-import ide.explorer.Explorer;
-import ide.explorer.FileType;
-import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
-import ide.util.Animation;
 import ide.util.Colors;
 import ide.util.Texts;
 
@@ -32,8 +22,6 @@ public class SetBranchName extends IDEComponent {
 	
 	private StringBuilder text = new StringBuilder();
 	private int cursorIndex = 0;
-	
-	private boolean canShow = false;
 
 	public SetBranchName(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
@@ -48,6 +36,8 @@ public class SetBranchName extends IDEComponent {
 		else width = Main.explorer.getWidth() - 3;
 		
 		if ((MouseInput.isLeftPressed() && !leftClicked()) || KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
+			KeyInput.updateKeys();
+			
 			IDEComponent.toRemove.add(this);
 			added = false;
 		}
@@ -84,7 +74,7 @@ public class SetBranchName extends IDEComponent {
 				cursorIndex = 0;
 			}
 			
-			if (KeyInput.isKeyPressed() && Character.isLetter(KeyInput.getCharPressed()) || KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) canShow = true;
+			//if (KeyInput.isKeyPressed() && Character.isLetter(KeyInput.getCharPressed()) || KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) canShow = true;
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
 				IDEComponent.toRemove.add(this);
@@ -121,7 +111,12 @@ public class SetBranchName extends IDEComponent {
 				if (text.length() == 0 || text.toString().startsWith("/")) return;
 				if (hasIllegalChars(text.toString())) return;
 				
+				String[] output = Main.runCommand(Main.baseFolder, "git branch", text.toString());
 				
+				boolean error = Main.isError(output);
+				boolean warn = Main.isWarning(output);
+				
+				GitCore.actions.add(new GitAction("git branch", GitCore.getState(error, warn), output));
 				
 				IDEComponent.toRemove.add(this);
 				added = false;
@@ -160,7 +155,7 @@ public class SetBranchName extends IDEComponent {
 		if (Main.editor.showCursor)
 			g.fillRect(cursorIndex * (CodeEditor.DEFAULT_FONT_SIZE - 4), y, 2, height);
 		
-		Fonts.drawString("Create new Branch" + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 35, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		Fonts.drawString(Texts.createNewBranch + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 35, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
 		Fonts.drawString(Texts.esc_Cancel, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		Fonts.drawString(Texts.enter_Create, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 25, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);

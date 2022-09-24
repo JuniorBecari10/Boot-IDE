@@ -88,8 +88,6 @@ public class SetFileName extends IDEComponent {
 			IDEComponent.toRemove.add(this);
 			added = false;
 		}
-		
-		
 	}
 	
 	public synchronized void type() {

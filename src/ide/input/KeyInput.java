@@ -155,6 +155,9 @@ public final class KeyInput extends KeyAdapter {
         if (Explorer.selected != null)
         	Explorer.selected.type();
         
+        if (Explorer.setBranchName != null)
+        	Explorer.setBranchName.type();
+        
         /*if (Character.isLetterOrDigit(charPressed)) {
 	        keyCodes.add(keyCodePressed);
 	        chars.add(charPressed);

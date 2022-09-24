@@ -155,8 +155,15 @@ public class GitCore {
 	public static synchronized void initRepoComponents() {
 		if (Explorer.createBranch == null) {
 			Explorer.createBranch = new ExecuteButtonIcon(20, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.createBranchSpr, () -> {
-				IDEComponent.toAdd.add(new SetBranchName(0, Screen.DECORATION_HEIGHT + 155, 0, 30));
+				if (Explorer.setBranchName == null) {
+					Explorer.setBranchName = new SetBranchName(0, Screen.DECORATION_HEIGHT + 155, 0, 30);
+				}
+				
+				IDEComponent.toAdd.add(Explorer.setBranchName);
+				SetBranchName.added = true;
 				Explorer.selected = null;
+				
+				Explorer.fetchStatus();
 			}, Texts.createBranch);
 		}
 		

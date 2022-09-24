@@ -31,6 +31,7 @@ import ide.explorercomponents.InputBox;
 import ide.explorercomponents.LastAction;
 import ide.explorercomponents.SearchReplaceCore;
 import ide.explorercomponents.SearchReplaceRadioButton;
+import ide.explorercomponents.SetBranchName;
 import ide.explorercomponents.ToggleButton;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -73,6 +74,8 @@ public class Explorer extends IDEComponent {
 	public static ExecuteButton searchNext, replaceAll;
 	
 	// -- Git --
+	
+	public static SetBranchName setBranchName;
 	
 	public static ExecuteButtonIcon createBranch;
 	public static ExecuteButtonIcon checkout;
@@ -210,7 +213,7 @@ public class Explorer extends IDEComponent {
 	    /*if (WindowInput.isMaximized() || !WindowInput.isActivated())
 	    	ReloadButton.reloadExplorer();*/
 	    
-	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && explorerMode != ExplorerMode.EXPLORER) {
+	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && explorerMode != ExplorerMode.EXPLORER && !RightClickOption.isRightClickActive() && !SetBranchName.added) {
 	    	Explorer.explorerMode = ExplorerMode.EXPLORER;
 			Explorer.selected = null;
 	    	SearchReplaceCore.dispose();
