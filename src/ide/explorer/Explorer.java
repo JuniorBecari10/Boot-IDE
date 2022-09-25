@@ -546,7 +546,7 @@ public class Explorer extends IDEComponent {
 	    		
 	    		List<RightClickOption> list = new ArrayList<>();
 	    		
-	    		list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), widthDraw, Texts.createFile, (s) -> Main.editor.execute(s), "newfile"));
+	    		list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), widthDraw, Texts.createFile, (s) -> Main.editor.execute(s), "newfile", true));
 				list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, widthDraw, Texts.createFolder, (s) -> Main.editor.execute(s), "newfolder"));
 	    		
 				list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, widthDraw, Texts.openCmd, (s) -> Main.editor.execute(s), "cmd"));

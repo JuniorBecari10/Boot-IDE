@@ -718,7 +718,7 @@ public class CodeEditor extends IDEComponent {
 			"@private", "@property", "@try", "@throw", "@catch", "@finally", "@synthesize", "@dynamic", "@selector",
 			"atomic", "nonatomic", "retain" };
 
-	public static final String[] ideConfKeys = { "Arquivo de Configurações da " + Main.PROGRAM_NAME, Main.PROGRAM_NAME + " Configuration File",
+	public static final String[] ideConfKeys = { Main.PROGRAM_NAME + " Configuration File",
 			"port", "eng", "PORT", "ENG", "Colors", "Files", "Settings", "default", "true", "false", "LF", "lf", "CR", "cr", "CRLF", "crlf" };
 
 	public static final String[] makeKeys = { "if", "else", "export" };
@@ -729,7 +729,7 @@ public class CodeEditor extends IDEComponent {
 
 	public static final String[] specialHtmlVariables = { "html" };
 
-	public static final String[] jsonKeys = { "true", "false", "True", "False", "null" };
+	public static final String[] jsonKeys = { "true", "false", "True", "False", "null", "Null", "NULL" };
 
 	public static final String[] bfKeys = { "+", "-", ">", "<", ".", ",", "[", "]" };
 
@@ -1279,6 +1279,7 @@ public class CodeEditor extends IDEComponent {
 		clip.setContents(sel, sel);
 	}
 	
+	// '0' is 48, then return 0.
 	public static int getNumberKey(int keyCode) {
 		return keyCode - 48;
 	}
@@ -7984,7 +7985,7 @@ public class CodeEditor extends IDEComponent {
 			int width = Main.lang == Language.PORT ? 450 : 410;
 			List<RightClickOption> list = new ArrayList<>();
 			
-			list.add(new RightClickOption(0, 0, width, Main.os == OS.WINDOWS, Texts.openCmd, (s) -> execute(s), "cmd"));
+			list.add(new RightClickOption(0, 0, width, Main.os == OS.WINDOWS, Texts.openCmd, (s) -> execute(s), "cmd", true));
 			list.add(new RightClickOption(0, 0, width, Texts.openTerminal, (s) -> execute(s), "term"));
 
 			list.add(new RightClickOption(0, 0, width, Texts.openExplorer, (s) -> execute(s), "sysexp"));

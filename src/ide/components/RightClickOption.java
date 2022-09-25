@@ -30,6 +30,8 @@ public class RightClickOption extends IDEComponent {
 	
 	public static final int HEIGHT = 28;
 	public static final int AUTOCOMPLETE_HEIGHT = 30;
+	
+	private boolean isTop = false;
 
 	public RightClickOption(int x, int y, int width, String text, ExecuteCommand command, String clickArg) {
 		super(x, y, width, HEIGHT, null);
@@ -42,6 +44,20 @@ public class RightClickOption extends IDEComponent {
 		
 		isAutoComplete = false;
 		isActive = true;
+	}
+	
+	public RightClickOption(int x, int y, int width, String text, ExecuteCommand command, String clickArg, boolean isTop) {
+		super(x, y, width, HEIGHT, null);
+
+		this.text = text;
+		this.command = command;
+		this.clickArg = clickArg;
+		
+		this.textSize = CodeEditor.DEFAULT_FONT_SIZE;
+		
+		isAutoComplete = false;
+		isActive = true;
+		this.isTop = isTop;
 	}
 	
 	public RightClickOption(int x, int y, int width, int height, String text, ExecuteCommand command, String clickArg) {
@@ -68,6 +84,20 @@ public class RightClickOption extends IDEComponent {
 		
 		isAutoComplete = false;
 		this.isActive = isActive;
+	}
+	
+	public RightClickOption(int x, int y, int width, boolean isActive, String text, ExecuteCommand command, String clickArg, boolean isTop) {
+		super(x, y, width, HEIGHT, null);
+
+		this.text = text;
+		this.command = command;
+		this.clickArg = clickArg;
+		
+		this.textSize = CodeEditor.DEFAULT_FONT_SIZE;
+		
+		isAutoComplete = false;
+		this.isActive = isActive;
+		this.isTop = isTop;
 	}
 	
 	public RightClickOption(int x, int y, int width, int height, boolean isActive, String text, ExecuteCommand command, String clickArg) {
@@ -243,12 +273,21 @@ public class RightClickOption extends IDEComponent {
 		
 		Fonts.drawString(isAutoComplete ? (text.length() > 25 ? text.substring(0, 22) + "..." : text) : text, x + 4, y + 4, new IDEFont(Fonts.lighterGrayNormal, textSize), x + width, g);
 		
-		if (isAutoComplete) {
+		/*if (isAutoComplete) {
 			g.drawImage(sprite, (x + width) - 20, y + 4, 16, 16, null);
 			
 			g.setColor(Colors.explorer);
 			g2.setStroke(new BasicStroke(1f));
 			g2.drawLine(x, y, x + width, y);
+		}*/
+		
+		g.setColor(Colors.explorerLight);
+		g2.setStroke(new BasicStroke(2f));
+		g.drawRect(x - 1, y - 1, width + 1, height + 1);
+		
+		if (!isTop) {
+			g.setColor(Colors.background2);
+			g.fillRect(x + 1, y - 2, width - 1, 2);
 		}
 		
 		if (!isActive) {

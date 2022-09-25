@@ -827,7 +827,7 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			List<RightClickOption> list = new ArrayList<>();
 			
-			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2, width, Texts.closeTab, (s) -> execute(s), "this"));
+			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2, width, Texts.closeTab, (s) -> execute(s), "this", true));
 			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 30, width, Texts.closeAllTabs, (s) -> execute(s), "all"));
 			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 60, width, Texts.closeWithoutSave, (s) -> execute(s), "nosave"));
 			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 90, width, Main.editor.tabs.size() > 1, Texts.closeOtherTabs, (s) -> execute(s), "closeother"));
