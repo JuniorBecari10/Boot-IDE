@@ -1801,13 +1801,6 @@ public class CodeEditor extends IDEComponent {
 			return fs;
 		}
 		
-		if (ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile")
-				|| ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".ps1")
-				|| ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".make") || ext.equalsIgnoreCase(".makefile")
-				|| editing.getRegent().getRegent().getName().equalsIgnoreCase("Makefile")) {
-			fs = color(0, fs.size(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-		}
-		
 		if (ext.equalsIgnoreCase(".mod") || ext.equalsIgnoreCase(".sum")) {
 			indxs = findWord(new String(chars), "module"); // depois de <palavra>
 	
@@ -2088,8 +2081,7 @@ public class CodeEditor extends IDEComponent {
 					|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
 					|| ext.equalsIgnoreCase(".project")
 					|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")
-					|| ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
-					|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock") || ext.equalsIgnoreCase(".toml"))) {
+					|| ext.equalsIgnoreCase(".lock") || ext.equalsIgnoreCase(".toml"))) {
 				for (String s : cll) {
 					indxs.addAll(findWord(new String(chars), s));
 	
@@ -2547,7 +2539,7 @@ public class CodeEditor extends IDEComponent {
 						c--;
 						len++;
 					}
-
+					
 					fs = color(c, c + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 				}
 
