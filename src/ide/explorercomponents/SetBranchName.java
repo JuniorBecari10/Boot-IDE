@@ -125,6 +125,7 @@ public class SetBranchName extends IDEComponent {
 				
 				GitCore.actions.add(new GitAction("git branch", GitCore.getState(error, warn), output));
 				
+				// Faz o checkout para a branch que foi criada, se a opção checkout_to_create_branch estiver ativada
 				if (!rename && GitCore.checkoutToCreatedBranch)
 					Main.runCommand(Main.baseFolder, "git checkout " + text.toString());
 				

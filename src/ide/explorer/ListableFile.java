@@ -417,8 +417,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		String pathStr = file.getAbsolutePath();
 		String s = pathStr.contains(Main.CONFIG_FILE_EXTENSION) ? pathStr + "" : pathStr + Main.CONFIG_FILE_EXTENSION;
 
-		// Path path = Paths.get(s);
-
 		try {
 			BufferedWriter w = new BufferedWriter(new FileWriter(s));
 
@@ -426,38 +424,30 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("\n");
 			w.write("Colors\n");
 			w.write("\n");
-			w.write("background: default\n");
-			w.write("background2: default\n");
-			w.write("backgroundLight: default\n");
-			w.write("explorer: default\n");
-			w.write("codeEditor: default\n");
-			w.write("explorerLight: default\n");
-			w.write("explorerLighter: default\n");
-			w.write("textLight: default\n");
-			w.write("textLighter: default\n");
-			w.write("objects: default\n");
-			w.write("methods: default\n");
-			w.write("numbers: default\n");
-			w.write("keywords: default\n");
-			w.write("variables: default\n");
-			w.write("comments: default\n");
-			w.write("strings: default\n");
-			w.write("symbols: default\n");
-			w.write("cursor: default\n");
-			w.write("selection: default\n");
-			w.write("other: default\n");
-			w.write("lowerBar: default\n");
-			w.write("error: default\n");
-			w.write("lineNumber: default\n");
-			w.write("selectedLineNumber: default");
-			/*w.write("\n");
-			w.write("- Settings\n");
-			w.write("\n");
-			w.write("font_size: default\n");
-			w.write("language: default\n");
-			w.write("autocomplete_active: default\n");
-			w.write("automatically_open_tabs: default\n");
-			w.write("autocomplete_html_tags: default\n");*/ // isso ele nao escreve
+			w.write("background: " + Colors.toHex(Colors.background) + "\n");
+			w.write("background2: " + Colors.toHex(Colors.background2) + "\n");
+			w.write("background_light: " + Colors.toHex(Colors.backgroundLight) + "\n");
+			w.write("explorer: " + Colors.toHex(Colors.explorer) + "\n");
+			w.write("code_editor: " + Colors.toHex(Colors.codeEditor) + "\n");
+			w.write("explorer_light: " + Colors.toHex(Colors.explorerLight) + "\n");
+			w.write("explorer_lighter: " + Colors.toHex(Colors.explorerLighter) + "\n");
+			w.write("text_light: " + Colors.toHex(Colors.textLight) + "\n");
+			w.write("text_lighter: " + Colors.toHex(Colors.textLighter) + "\n");
+			w.write("objects: " + Colors.toHex(Colors.objects) + "\n");
+			w.write("methods: " + Colors.toHex(Colors.methods) + "\n");
+			w.write("numbers: " + Colors.toHex(Colors.numbers) + "\n");
+			w.write("keywords: " + Colors.toHex(Colors.keywords) + "\n");
+			w.write("variables: " + Colors.toHex(Colors.variables) + "\n");
+			w.write("comments: " + Colors.toHex(Colors.comments) + "\n");
+			w.write("strings: " + Colors.toHex(Colors.strings) + "\n");
+			w.write("symbols: " + Colors.toHex(Colors.symbols) + "\n");
+			w.write("cursor: " + Colors.toHex(Colors.cursor) + "\n");
+			w.write("selection: " + Colors.toHex(Colors.selection) + "\n");
+			w.write("other: " + Colors.toHex(Colors.other) + "\n");
+			w.write("lower_bar: " + Colors.toHex(Colors.lowerBar) + "\n");
+			w.write("error: " + Colors.toHex(Colors.error) + "\n");
+			w.write("line_number: " + Colors.toHex(Colors.lineNumber) + "\n");
+			w.write("selected_line_number: " + Colors.toHex(Colors.selectedLineNumber) + "\n");
 
 			w.close();
 
@@ -479,13 +469,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("\n");
 			w.write("background: " + Colors.toHex(Colors.background) + "\n");
 			w.write("background2: " + Colors.toHex(Colors.background2) + "\n");
-			w.write("backgroundLight: " + Colors.toHex(Colors.backgroundLight) + "\n");
+			w.write("background_light: " + Colors.toHex(Colors.backgroundLight) + "\n");
 			w.write("explorer: " + Colors.toHex(Colors.explorer) + "\n");
-			w.write("codeEditor: " + Colors.toHex(Colors.codeEditor) + "\n");
-			w.write("explorerLight: " + Colors.toHex(Colors.explorerLight) + "\n");
-			w.write("explorerLighter: " + Colors.toHex(Colors.explorerLighter) + "\n");
-			w.write("textLight: " + Colors.toHex(Colors.textLight) + "\n");
-			w.write("textLighter: " + Colors.toHex(Colors.textLighter) + "\n");
+			w.write("code_editor: " + Colors.toHex(Colors.codeEditor) + "\n");
+			w.write("explorer_light: " + Colors.toHex(Colors.explorerLight) + "\n");
+			w.write("explorer_lighter: " + Colors.toHex(Colors.explorerLighter) + "\n");
+			w.write("text_light: " + Colors.toHex(Colors.textLight) + "\n");
+			w.write("text_lighter: " + Colors.toHex(Colors.textLighter) + "\n");
 			w.write("objects: " + Colors.toHex(Colors.objects) + "\n");
 			w.write("methods: " + Colors.toHex(Colors.methods) + "\n");
 			w.write("numbers: " + Colors.toHex(Colors.numbers) + "\n");
@@ -497,10 +487,10 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("cursor: " + Colors.toHex(Colors.cursor) + "\n");
 			w.write("selection: " + Colors.toHex(Colors.selection) + "\n");
 			w.write("other: " + Colors.toHex(Colors.other) + "\n");
-			w.write("lowerBar: " + Colors.toHex(Colors.lowerBar) + "\n");
+			w.write("lower_bar: " + Colors.toHex(Colors.lowerBar) + "\n");
 			w.write("error: " + Colors.toHex(Colors.error) + "\n");
-			w.write("lineNumber: " + Colors.toHex(Colors.lineNumber) + "\n");
-			w.write("selectedLineNumber: " + Colors.toHex(Colors.selectedLineNumber) + "\n");
+			w.write("line_number: " + Colors.toHex(Colors.lineNumber) + "\n");
+			w.write("selected_line_number: " + Colors.toHex(Colors.selectedLineNumber) + "\n");
 
 			w.close();
 
@@ -522,13 +512,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("\n");
 			w.write("background: " + Colors.toHex(Colors.background) + "\n");
 			w.write("background2: " + Colors.toHex(Colors.background2) + "\n");
-			w.write("backgroundLight: " + Colors.toHex(Colors.backgroundLight) + "\n");
+			w.write("background_light: " + Colors.toHex(Colors.backgroundLight) + "\n");
 			w.write("explorer: " + Colors.toHex(Colors.explorer) + "\n");
-			w.write("codeEditor: " + Colors.toHex(Colors.codeEditor) + "\n");
-			w.write("explorerLight: " + Colors.toHex(Colors.explorerLight) + "\n");
-			w.write("explorerLighter: " + Colors.toHex(Colors.explorerLighter) + "\n");
-			w.write("textLight: " + Colors.toHex(Colors.textLight) + "\n");
-			w.write("textLighter: " + Colors.toHex(Colors.textLighter) + "\n");
+			w.write("code_editor: " + Colors.toHex(Colors.codeEditor) + "\n");
+			w.write("explorer_light: " + Colors.toHex(Colors.explorerLight) + "\n");
+			w.write("explorer_lighter: " + Colors.toHex(Colors.explorerLighter) + "\n");
+			w.write("text_light: " + Colors.toHex(Colors.textLight) + "\n");
+			w.write("text_lighter: " + Colors.toHex(Colors.textLighter) + "\n");
 			w.write("objects: " + Colors.toHex(Colors.objects) + "\n");
 			w.write("methods: " + Colors.toHex(Colors.methods) + "\n");
 			w.write("numbers: " + Colors.toHex(Colors.numbers) + "\n");
@@ -540,10 +530,10 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("cursor: " + Colors.toHex(Colors.cursor) + "\n");
 			w.write("selection: " + Colors.toHex(Colors.selection) + "\n");
 			w.write("other: " + Colors.toHex(Colors.other) + "\n");
-			w.write("lowerBar: " + Colors.toHex(Colors.lowerBar) + "\n");
+			w.write("lower_bar: " + Colors.toHex(Colors.lowerBar) + "\n");
 			w.write("error: " + Colors.toHex(Colors.error) + "\n");
-			w.write("lineNumber: " + Colors.toHex(Colors.lineNumber) + "\n");
-			w.write("selectedLineNumber: " + Colors.toHex(Colors.selectedLineNumber) + "\n");
+			w.write("line_number: " + Colors.toHex(Colors.lineNumber) + "\n");
+			w.write("selected_line_number: " + Colors.toHex(Colors.selectedLineNumber) + "\n");
 			w.write("\n");
 			w.write("Settings\n");
 			w.write("\n");
@@ -631,7 +621,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				break;
 
-			case "backgroundLight:":
+			case "background_light:":
 				if (split[1].equals("default"))
 					split[1] = "#28394d";
 
@@ -663,7 +653,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				break;
 				
-			case "codeEditor:":
+			case "code_editor:":
 				if (split[1].equals("default"))
 					split[1] = "#222f3e";
 
@@ -679,7 +669,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				break;
 
-			case "explorerLight:":
+			case "explorer_light:":
 				if (split[1].equals("default"))
 					split[1] = "#2d3f54";
 
@@ -695,7 +685,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				break;
 
-			case "explorerLighter:":
+			case "explorer_lighter:":
 				if (split[1].equals("default"))
 					split[1] = "#354d69";
 
@@ -711,7 +701,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				break;
 
-			case "textLight:":
+			case "text_light:":
 				if (split[1].equals("default"))
 					split[1] = "#95afc0";
 
@@ -727,7 +717,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				break;
 
-			case "textLighter:":
+			case "text_lighter:":
 				if (split[1].equals("default"))
 					split[1] = "#a9c4c2";
 
@@ -919,7 +909,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				break;
 
-			case "lowerBar:":
+			case "lower_bar:":
 				if (split[1].equals("default"))
 					split[1] = "#28394d";
 
@@ -951,7 +941,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				break;
 
-			case "lineNumber:":
+			case "line_number:":
 				if (split[1].equals("default"))
 					split[1] = "#95afc0";
 
@@ -967,7 +957,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				break;
 
-			case "selectedLineNumber:":
+			case "selected_line_number:":
 				if (split[1].equals("default"))
 					split[1] = "#c5d5ea";
 
