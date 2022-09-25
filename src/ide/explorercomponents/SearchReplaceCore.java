@@ -148,7 +148,10 @@ public final class SearchReplaceCore {
 					
 					if (m.find()) {
 						linesfound.add(i);
-						xPos.add(s.indexOf(m.group(occurnum)));
+						
+						try {
+							xPos.add(s.indexOf(m.group(occurnum).length() >= s.length() ? "" : m.group(occurnum)));
+						} catch (Exception e) { continue; }
 					}
 				}
 			}
