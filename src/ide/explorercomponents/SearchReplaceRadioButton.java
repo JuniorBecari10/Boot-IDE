@@ -28,6 +28,12 @@ public class SearchReplaceRadioButton extends IDEComponent {
 		this.isEntireDoc = isEntireDoc;
 	}
 	
+	public boolean hovered() {
+		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added) return false;
+		
+		return super.hovered();
+	}
+	
 	public boolean getState() {
 		return state;
 	}

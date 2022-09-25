@@ -700,7 +700,7 @@ public class Explorer extends IDEComponent {
 	    	g2.drawLine(20 + ("Branches".length() * 12) + 10, Screen.DECORATION_HEIGHT + 60, width - 20, Screen.DECORATION_HEIGHT + 60);
 	
 	    	g.drawImage(Main.branch, 15, Screen.DECORATION_HEIGHT + 80, 32, 32, null);
-	    	Fonts.drawString("| " + gitStatus.branches[gitStatus.currentBranch], 55, Screen.DECORATION_HEIGHT + 85, new IDEFont(Fonts.lightGrayEditor, CodeEditor.DEFAULT_FONT_SIZE), g);
+	    	Fonts.drawString("| " + gitStatus.branches[gitStatus.currentBranch], 55, Screen.DECORATION_HEIGHT + 85, new IDEFont(Fonts.lightGrayEditor, CodeEditor.DEFAULT_FONT_SIZE), width, g);
 	
 	    	Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 200, new IDEFont(Fonts.lightGrayNormal, 16), g);
 	    	g2.setColor(Colors.textLight);
@@ -712,7 +712,7 @@ public class Explorer extends IDEComponent {
 	    		GitCore.init();
 	    	}
 	
-	    	Fonts.drawString(gitStatus.changedFiles.length + " file(s) changed.", 20, Screen.DECORATION_HEIGHT + 400, new IDEFont(Fonts.lightGrayNormal, 16), g);
+	    	Fonts.drawString(gitStatus.changedFiles.length + " " + (gitStatus.changedFiles.length == 1 ? Texts.fileChanged : Texts.filesChanged), 20, Screen.DECORATION_HEIGHT + 400, new IDEFont(Fonts.lightGrayNormal, 16), g);
 	    	
 	    	Fonts.drawString("Staging", 20, Screen.DECORATION_HEIGHT + 370, new IDEFont(Fonts.lightGrayNormal, 16), g);
 	    	g2.setColor(Colors.textLight);

@@ -3,7 +3,9 @@ package ide.explorercomponents;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.SetFileName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.main.Main;
@@ -21,6 +23,12 @@ public class ExecuteButton extends IDEComponent {
 		this.text = text;
 		this.execute = execute;
 		this.enabled = enabled;
+	}
+	
+	public boolean hovered() {
+		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added) return false;
+		
+		return super.hovered();
 	}
 	
 	public void tick() {

@@ -167,7 +167,13 @@ public class GitCore {
 				Explorer.selected = null;
 				
 				Explorer.fetchStatus();
-			}, Texts.createBranch);
+			}, Texts.createBranch) {
+				public void tick() {
+					super.tick();
+					
+					caption = Texts.createBranch;
+				}
+			};
 		}
 		
 		if (Explorer.checkout == null) {
@@ -194,7 +200,13 @@ public class GitCore {
 				Explorer.selected = null;
 				
 				Explorer.fetchStatus();
-			}, Texts.renameBranch);
+			}, Texts.renameBranch) {
+				public void tick() {
+					super.tick();
+					
+					caption = Texts.renameBranch;
+				}
+			};
 		}
 		
 		if (Explorer.stageAll == null) {

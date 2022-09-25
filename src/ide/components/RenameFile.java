@@ -83,7 +83,7 @@ public class RenameFile extends IDEComponent {
 		if (text.length() > Main.explorer.maxFileCreateWidth)
 			width = Main.screen.getWidth();
 		else
-			width = Main.explorer.width - 3;
+			width = Main.explorer.width - 2;
 
 		if (MouseInput.isLeftPressed() && !leftClicked()) {
 			IDEComponent.toRemove.add(this);

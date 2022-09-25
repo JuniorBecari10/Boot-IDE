@@ -24,6 +24,12 @@ public class ExecuteButtonIcon extends IDEComponent {
 		this.caption = caption;
 	}
 	
+	public boolean hovered() {
+		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added) return false;
+		
+		return super.hovered();
+	}
+	
 	public void tick() {
 		if (leftClicked()) {
 			KeyInput.updateKeys();

@@ -233,7 +233,12 @@ public final class Texts {
 	public static String createNewBranch;
 	public static String renameBranch;
 	
+	public static String currentBranch;
+	
 	public static String branchNameIllegal;
+
+	public static String fileChanged;
+	public static String filesChanged;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -453,8 +458,12 @@ public final class Texts {
 			selectABranch = "Selecione uma Branch:";
 			createNewBranch = "Criar Nova Branch";
 			renameBranch = "Renomear Branch";
+			currentBranch = "Branch Atual";
 			
 			branchNameIllegal = "O nome da Branch contém caracteres não permitidos.";
+			
+			fileChanged = "arquivo alterado.";
+			filesChanged = "arquivos alterados.";
 			
 			break;
 		
@@ -674,8 +683,12 @@ public final class Texts {
 			selectABranch = "Select a Branch:";
 			createNewBranch = "Create New Branch";
 			renameBranch = "Rename Branch";
+			currentBranch = "Current Branch";
 			
 			branchNameIllegal = "The Branch name contains non-permitted characters.";
+			
+			fileChanged = "file changed.";
+			filesChanged = "files changed.";
 			
 			break;
 		}

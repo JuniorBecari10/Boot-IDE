@@ -35,12 +35,12 @@ public class SetBranchName extends IDEComponent {
 	}
 	
 	private boolean hasIllegalChars(String s) {
-		return s.contains("\\") || s.contains("@{") || (s.length() == 1 && s.contains("@"));
+		return s.contains("\\") || s.contains("@{") || (s.length() == 1 && s.contains("@")) || s.contains(" ");
 	}
 	
 	public void tick() {
 		if (text.length() > Main.explorer.maxFileCreateWidth) width = Main.screen.getWidth();
-		else width = Main.explorer.getWidth() - 3;
+		else width = Main.explorer.getWidth() - 2;
 		
 		if ((MouseInput.isLeftPressed() && !leftClicked()) || KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
 			KeyInput.updateKeys();

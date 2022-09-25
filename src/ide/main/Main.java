@@ -938,7 +938,7 @@ public class Main implements Runnable, Tickable {
         	}
         	
         	if (MouseInput.hovered(explorer.getX() + 10, Screen.DECORATION_HEIGHT + 170, explorer.getWidth() - 10, 23) && !Explorer.folderPathFull.isEmpty() && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
-        		String scopeStr = Explorer.getScopePath().contains(baseFolder.getName()) ? Explorer.getScopePath().substring(Explorer.getScopePath().indexOf(baseFolder.getName())) : Explorer.getScopePath();
+        		String scopeStr = Explorer.getScopePath().contains(File.separator + baseFolder.getName() + File.separator) ? Explorer.getScopePath().substring(Explorer.getScopePath().indexOf(baseFolder.getName())) : Explorer.getScopePath();
         		scopeStr = scopeStr.replace('\\', '/');
         		
         		int xdr = MouseInput.getMouseX() + 10;
@@ -997,6 +997,9 @@ public class Main implements Runnable, Tickable {
         String text = screen.frame.getTitle();
 		Fonts.drawString(text, (screen.frame.getWidth() / 2) - ((text.length() * 12) / 2), Screen.DECORATION_HEIGHT / 2 - (16 / 2), new IDEFont(Fonts.lighterGrayNormal, 16), g);
         
+		if (Explorer.explorerMode == ExplorerMode.GIT && Explorer.isBaseFolderRepository() && MouseInput.hovered(0, Screen.DECORATION_HEIGHT + 70, explorer.getWidth(), 40))
+	    	Explorer.renderCardText(new String[] { Texts.currentBranch + ":", Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch] }, MouseInput.getMouseX() + 20, MouseInput.getMouseY(), g);
+		
 		for (TopComponent t : TopComponent.topComponents)
 			t.render(g);
 		
