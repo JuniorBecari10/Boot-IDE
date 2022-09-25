@@ -30,6 +30,7 @@ import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.git.GitCore;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
@@ -559,6 +560,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("show_unsaved_title_bar: " + CodeEditor.showUnsavedTitleBar + "\n");
 			w.write("use_antialiasing: " + Fonts.useAntiAliasing + "\n");
 			w.write("show_caps_lock: " + CodeEditor.showCapsLock + "\n");
+			w.write("checkout_to_created_branch: " + GitCore.checkoutToCreatedBranch + "\n");
 
 			w.close();
 
@@ -1170,6 +1172,18 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					CodeEditor.showCapsLock = true;
 
 				CodeEditor.showCapsLock = Boolean.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
+				
+			case "checkout_to_created_branch:":
+				if (!readConfigs) break;
+				
+				if (split[1].equals("default"))
+					GitCore.checkoutToCreatedBranch = true;
+
+				GitCore.checkoutToCreatedBranch = Boolean.valueOf(split[1]);
 
 				hasAltered = true;
 

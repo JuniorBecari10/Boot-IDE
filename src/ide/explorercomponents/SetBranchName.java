@@ -125,6 +125,9 @@ public class SetBranchName extends IDEComponent {
 				
 				GitCore.actions.add(new GitAction("git branch", GitCore.getState(error, warn), output));
 				
+				if (!rename && GitCore.checkoutToCreatedBranch)
+					Main.runCommand(Main.baseFolder, "git checkout " + text.toString());
+				
 				Explorer.fetchStatus();
 				
 				IDEComponent.toRemove.add(this);

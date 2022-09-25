@@ -20,6 +20,8 @@ import ide.util.Texts;
 public class GitCore {
 	
 	public static Stack<GitAction> actions = new Stack<>();
+	
+	public static boolean checkoutToCreatedBranch = true;
 
 	public static ActionState getState(boolean error, boolean warn) {
 		if (warn)

@@ -51,7 +51,11 @@ public class ExplorerTab extends IDEComponent {
 		g2.fillRect(x, Y, SIZE, SIZE);
 
 		g.setColor(c);
-		g.drawRect(x, Y, SIZE, SIZE);
+		
+		if (Explorer.explorerMode == regent)
+			g.drawRect(x, Y, SIZE, SIZE);
+		else
+			g.drawLine(x + SIZE, Y, x + SIZE, Screen.DECORATION_HEIGHT + SIZE);
 		
 		final int imageSize = 32;
 		g.drawImage(sprite, x + ((SIZE / 2) - (imageSize / 2)), Y + ((SIZE / 2) - (imageSize / 2)), imageSize, imageSize, null);
