@@ -231,6 +231,9 @@ public final class Texts {
 	public static String createBranch;
 	public static String selectABranch;
 	public static String createNewBranch;
+	public static String renameBranch;
+	
+	public static String branchNameIllegal;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -449,6 +452,9 @@ public final class Texts {
 			createBranch = "Criar Branch";
 			selectABranch = "Selecione uma Branch:";
 			createNewBranch = "Criar Nova Branch";
+			renameBranch = "Renomear Branch";
+			
+			branchNameIllegal = "O nome da Branch contém caracteres não permitidos.";
 			
 			break;
 		
@@ -667,6 +673,9 @@ public final class Texts {
 			createBranch = "Create Branch";
 			selectABranch = "Select a Branch:";
 			createNewBranch = "Create New Branch";
+			renameBranch = "Rename Branch";
+			
+			branchNameIllegal = "The Branch name contains non-permitted characters.";
 			
 			break;
 		}

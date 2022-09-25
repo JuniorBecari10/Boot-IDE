@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
+import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.git.GitAction;
@@ -22,15 +23,19 @@ public class SetBranchName extends IDEComponent {
 	
 	public static boolean added = false;
 	
+	private boolean rename;
+	
 	private StringBuilder text = new StringBuilder();
 	private int cursorIndex = 0;
 
-	public SetBranchName(int x, int y, int width, int height) {
+	public SetBranchName(int x, int y, int width, int height, boolean rename) {
 		super(x, y, width, height, null);
+		
+		this.rename = rename;
 	}
 	
 	private boolean hasIllegalChars(String s) {
-		return s.contains("\\") || s.contains("/") || s.contains(":") || s.contains("*") || s.contains("?") || s.contains("<") || s.contains(">") || s.contains("|");
+		return s.contains("\\") || s.contains("@{") || (s.length() == 1 && s.contains("@"));
 	}
 	
 	public void tick() {
@@ -113,12 +118,14 @@ public class SetBranchName extends IDEComponent {
 				if (text.length() == 0 || text.toString().startsWith("/")) return;
 				if (hasIllegalChars(text.toString())) return;
 				
-				String[] output = Main.runCommand(Main.baseFolder, "git branch", text.toString());
+				String[] output = Main.runCommand(Main.baseFolder, rename ? "git branch -M" : "git branch", text.toString());
 				
 				boolean error = Main.isError(output);
 				boolean warn = Main.isWarning(output);
 				
 				GitCore.actions.add(new GitAction("git branch", GitCore.getState(error, warn), output));
+				
+				Explorer.fetchStatus();
 				
 				IDEComponent.toRemove.add(this);
 				added = false;
@@ -157,16 +164,22 @@ public class SetBranchName extends IDEComponent {
 		if (Main.editor.showCursor)
 			g.fillRect(cursorIndex * (CodeEditor.DEFAULT_FONT_SIZE - 4), y, 2, height);
 		
-		Fonts.drawString(Texts.createNewBranch + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 35, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		Fonts.drawString((rename ? Texts.renameBranch : Texts.createNewBranch) + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 35, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
 		Fonts.drawString(Texts.esc_Cancel, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		Fonts.drawString(Texts.enter_Create, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 25, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
 		// Fonts.drawString(Texts.fileExists, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 50, new IDEFont(Fonts.errorNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
+		if (hasIllegalChars(text.toString()))
+			Fonts.drawString(Texts.branchNameIllegal, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 50, new IDEFont(Fonts.errorNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		
 		Fonts.drawString("[Ctrl + C] " + Texts.copy, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 75, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		Fonts.drawString("[Ctrl + V] " + Texts.paste, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 100, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		Fonts.drawString("[Ctrl + X] " + Texts.cut, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 125, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		Fonts.drawString("[Ctrl + Del] " + Texts.delete, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 150, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		
+		if (rename)
+			Fonts.drawString("Branch: " + Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch], MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 195, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 	}
 }

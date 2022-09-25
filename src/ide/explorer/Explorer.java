@@ -79,6 +79,7 @@ public class Explorer extends IDEComponent {
 	
 	public static ExecuteButtonIcon createBranch;
 	public static ExecuteButtonIcon checkout;
+	public static ExecuteButtonIcon renameBranch;
 	
 	public static ExecuteButton initRepo;
 	public static InputBox cloneURL;
@@ -212,14 +213,14 @@ public class Explorer extends IDEComponent {
 	    
 	    /*if (WindowInput.isMaximized() || !WindowInput.isActivated())
 	    	ReloadButton.reloadExplorer();*/
-	    
+	    /*
 	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && explorerMode != ExplorerMode.EXPLORER && !RightClickOption.isRightClickActive() && !SetBranchName.added) {
 	    	Explorer.explorerMode = ExplorerMode.EXPLORER;
 			Explorer.selected = null;
 	    	SearchReplaceCore.dispose();
 	    	GitCore.dispose();
 	    }
-	    
+	    */
 	   	// Drag
 	   	
 	    if (MouseInput.hovered(x + width - 5, y, 10, height) && !ListableFile.isListableFileHovered()) {

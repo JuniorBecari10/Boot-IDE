@@ -160,7 +160,7 @@ public class GitCore {
 	public static synchronized void initRepoComponents() {
 		if (Explorer.createBranch == null) {
 			Explorer.createBranch = new ExecuteButtonIcon(20, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.createBranchSpr, () -> {
-				Explorer.setBranchName = new SetBranchName(0, Screen.DECORATION_HEIGHT + 155, 0, 30);
+				Explorer.setBranchName = new SetBranchName(0, Screen.DECORATION_HEIGHT + 165, 0, 30, false);
 				
 				IDEComponent.toAdd.add(Explorer.setBranchName);
 				SetBranchName.added = true;
@@ -183,6 +183,18 @@ public class GitCore {
 				
 				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.checkout.getY(), list.toArray(new RightClickOption[list.size()]));
 			}, "Checkout");
+		}
+		
+		if (Explorer.renameBranch == null) {
+			Explorer.renameBranch = new ExecuteButtonIcon(96, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.renameBranchSpr, () -> {
+				Explorer.setBranchName = new SetBranchName(0, Screen.DECORATION_HEIGHT + 165, 0, 30, true);
+				
+				IDEComponent.toAdd.add(Explorer.setBranchName);
+				SetBranchName.added = true;
+				Explorer.selected = null;
+				
+				Explorer.fetchStatus();
+			}, Texts.renameBranch);
 		}
 		
 		if (Explorer.stageAll == null) {
@@ -217,6 +229,7 @@ public class GitCore {
 		
 		IDEComponent.toAdd.add(Explorer.createBranch);
 		IDEComponent.toAdd.add(Explorer.checkout);
+		IDEComponent.toAdd.add(Explorer.renameBranch);
 		IDEComponent.toAdd.add(Explorer.stageAll);
 		IDEComponent.toAdd.add(Explorer.unstageAll);
 	}
@@ -229,6 +242,7 @@ public class GitCore {
 		
 		IDEComponent.toRemove.add(Explorer.createBranch);
 		IDEComponent.toRemove.add(Explorer.checkout);
+		IDEComponent.toRemove.add(Explorer.renameBranch);
 		IDEComponent.toRemove.add(Explorer.stageAll);
 		IDEComponent.toRemove.add(Explorer.unstageAll);
 	}

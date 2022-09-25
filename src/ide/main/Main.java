@@ -223,6 +223,7 @@ public class Main implements Runnable, Tickable {
     
     public static BufferedImage createBranchSpr;
     public static BufferedImage checkoutSpr;
+    public static BufferedImage renameBranchSpr;
     
     ///
     
@@ -322,6 +323,7 @@ public class Main implements Runnable, Tickable {
 	        
 	        createBranchSpr = spritesheet.getSprite(416, 0, 16, 16);
 	        checkoutSpr = spritesheet.getSprite(432, 0, 16, 16);
+	        renameBranchSpr = spritesheet.getSprite(448, 0, 16, 16);
 	        
 	        ///////
 	        
@@ -486,6 +488,10 @@ public class Main implements Runnable, Tickable {
         gitDone = Colors.swapColor(gitDone, Colors.textLightDefault, Colors.textLight);
         
         branch = Colors.swapColor(branch, Colors.textLightDefault, Colors.textLight);
+        
+        createBranchSpr = Colors.swapColor(createBranchSpr, Colors.textLightDefault, Colors.textLight);
+        checkoutSpr = Colors.swapColor(checkoutSpr, Colors.textLightDefault, Colors.textLight);
+        renameBranchSpr = Colors.swapColor(renameBranchSpr, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         
