@@ -285,6 +285,7 @@ public class RightClickOption extends IDEComponent {
 		g2.setStroke(new BasicStroke(2f));
 		g.drawRect(x - 1, y - 1, width + 1, height + 1);
 		
+		// Cobrir a parte de cima da borda, só não fazer isso se esse right click for o primeiro
 		if (!isTop) {
 			g.setColor(Colors.background2);
 			g.fillRect(x + 1, y - 2, width - 1, 2);

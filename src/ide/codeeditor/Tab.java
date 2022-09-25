@@ -886,38 +886,23 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		Color c = Main.editor.editing == this ? Colors.textLight : Colors.explorerLight;
 		Color bg = hovered() ? Colors.explorerLight : Colors.codeEditor;
-
+		
 		g.setColor(bg);
 		g2.setStroke(new BasicStroke(3f));
 		g2.fillRect(x, Y, drawW, HEIGHT);
-
-		g.setColor(c);
-		g.drawRect(x, Y, drawW, HEIGHT);
-
-		/*if (Main.editor.editing == this || (Main.editor.editing != this && hovered() && !Main.editor.editing.equals(Main.editor.tabs.get(Main.editor.tabs.indexOf(this) + 1)))) {
-			g.setColor(bg);
-			g2.setStroke(new BasicStroke(3f));
-			g2.fillRect(x, Y, drawW, HEIGHT);
-			
-			g.setColor(c);
-			g.drawRect(x, Y, drawW, HEIGHT);
-		}
 		
-		if (Main.editor.editing != this && !hovered()) {
-			g.setColor(Colors.textLight);
-			g2.setStroke(new BasicStroke(2f));
-			g2.drawLine(x + width, y + 5, x + width, y + height - 5);
-		}*/
+		g.setColor(c);
+		
+		if (Main.editor.editing == this)
+			g.drawRect(x, Y, drawW, HEIGHT);
+		else if (Main.editor.tabs.indexOf(Main.editor.editing) - 1 != Main.editor.tabs.indexOf(this))
+			g.drawLine(x + drawW, Y/* + 2*/, x + drawW, Screen.DECORATION_HEIGHT + HEIGHT/* - 2*/);
 		
 		String extension = ListableFile.getFileExtension(regent.getRegent());
 		
 		IDEFont font = new IDEFont(Fonts.lighterGrayNormal, 16);
 		
 		int limit = (x + drawW) - 15;
-		
-		/*if (Main.editor.editing == this && isReadOnly) limit = (x + drawW) - 30;
-		else if (Main.editor.editing != this && isReadOnly) limit = (x + drawW) - 15;
-		else if (Main.editor.editing != this && !isReadOnly) limit = x + drawW;*/
 		
 		if (isReadOnly) limit = (x + drawW) - 30;
 		
