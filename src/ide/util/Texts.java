@@ -239,6 +239,9 @@ public final class Texts {
 
 	public static String fileChanged;
 	public static String filesChanged;
+
+	public static String copyRelativePath;
+	public static String copyAbsolutePath;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -465,6 +468,9 @@ public final class Texts {
 			fileChanged = "arquivo alterado.";
 			filesChanged = "arquivos alterados.";
 			
+			copyRelativePath = "Copiar Caminho Relativo";
+			copyAbsolutePath = "Copiar Caminho Absoluto";
+			
 			break;
 		
 		case ENG:
@@ -689,6 +695,9 @@ public final class Texts {
 			
 			fileChanged = "file changed.";
 			filesChanged = "files changed.";
+			
+			copyRelativePath = "Copy Relative Path";
+			copyAbsolutePath = "Copy Absolute Path";
 			
 			break;
 		}
