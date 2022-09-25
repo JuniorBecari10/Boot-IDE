@@ -551,7 +551,7 @@ public class CommandTerminal extends IDEComponent {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-			         }
+			        }
 				}
 				
 				break;
