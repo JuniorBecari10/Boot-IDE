@@ -3215,20 +3215,6 @@ public class CodeEditor extends IDEComponent {
 			 * if (i + len < chars.length) fs = color(i, i + len, new
 			 * IDEFont(Fonts.variablesEditor, FONT_SIZE), fs); }
 			 */
-
-			indxs = findWord(new String(chars), "%"); // se quiser fazer entre %% tem que fazer uma variavel boolean de
-														// controle, como o multilinecommenting.
-
-			len = 0;
-
-			for (Integer i : indxs) {
-				while (i + len < chars.length && chars[i + len] != ' ')
-					len++;
-
-				if (i + len < chars.length)
-					fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-			}
-
 			break;
 
 		case ".jsx":
@@ -4036,6 +4022,7 @@ public class CodeEditor extends IDEComponent {
 			return fs;
 
 		List<Integer> indxs = new ArrayList<>();
+		chars = (" " + new String(chars)).toCharArray();
 
 		if ((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
 				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
@@ -4059,15 +4046,6 @@ public class CodeEditor extends IDEComponent {
 					if (idxs.isEmpty()) continue;
 				}
 				
-				if ((((ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
-						|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
-						|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
-						|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
-						|| ext.equalsIgnoreCase(".project") && isCssPart))
-						|| (ext.equalsIgnoreCase(".css") | ext.equalsIgnoreCase(".scss")))
-						&& (hasAfter(new String(chars), i, '{') || hasAfter(new String(chars), i, '%')))
-					continue;
-				
 				boolean cont = true;
 				
 				int imo = i - 1; // i minus one (imo)
@@ -4086,7 +4064,7 @@ public class CodeEditor extends IDEComponent {
 				
 				if (cont) continue;
 				
-				fs = color(i, i + s.length(), new IDEFont(Fonts.numbersEditor, FONT_SIZE), fs);
+				fs = color(i - 1, i - 1 + s.length(), new IDEFont(Fonts.numbersEditor, FONT_SIZE), fs);
 			}
 		}
 
@@ -4100,7 +4078,7 @@ public class CodeEditor extends IDEComponent {
 					&& chars[i + len] != '.' && chars[i + len] != ':')
 				len++;
 
-			fs = color(i, i + len, new IDEFont(Fonts.numbersEditor, FONT_SIZE), fs);
+			fs = color(i - 1, i - 1 + len, new IDEFont(Fonts.numbersEditor, FONT_SIZE), fs);
 		}
 
 		indxs = findWord(new String(chars), "#");
@@ -4115,7 +4093,7 @@ public class CodeEditor extends IDEComponent {
 			
 			if (fs.get(i).getColor().equals(Colors.keywords)) continue;
 
-			fs = color(i, i + len, new IDEFont(Fonts.numbersEditor, FONT_SIZE), fs);
+			fs = color(i - 1, i - 1 + len, new IDEFont(Fonts.numbersEditor, FONT_SIZE), fs);
 		}
 
 		// fs = colorObjects(ext, chars, fs); // infelizmente esse bug ainda existe
