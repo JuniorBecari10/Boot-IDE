@@ -27,8 +27,6 @@ public class MessageBox extends IDEComponent {
 		this.type = type;
 		this.buttons = buttons;
 		
-		System.out.println(title);
-		
 		new Thread() {
 			public void run() {
 				while (y < 0) {
@@ -85,7 +83,14 @@ public class MessageBox extends IDEComponent {
 		g2.setStroke(new BasicStroke(2f));
 		g2.drawRect(x, y, width, height);
 		
-		Fonts.drawString(title, (Main.screen.frame.getWidth() / 2) - (title.length() * (CodeEditor.DEFAULT_FONT_SIZE - 4)) / 2, y + 10, new IDEFont(Fonts.lightGrayNormal, 16), x + width, g2);
+		System.out.println((Main.screen.frame.getWidth() / 2) - (title.length() * (CodeEditor.DEFAULT_FONT_SIZE - 4)) / 2);
+		
+		Fonts.drawString(title, (Main.screen.frame.getWidth() / 2) - (title.length() * (CodeEditor.DEFAULT_FONT_SIZE - 4)) / 2, y + 10, new IDEFont(Fonts.lightGrayNormal, 16), g);
+		
+		int i = 0;
+		for (String s : text) {
+			Fonts.drawString(s, x + 10, y + 10 + (i * 20), new IDEFont(Fonts.lightGrayNormal, 16), g);
+		}
 	}
 
 }
