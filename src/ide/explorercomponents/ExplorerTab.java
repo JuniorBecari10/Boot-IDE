@@ -6,7 +6,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.RenameFile;
+import ide.components.SetFileName;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.input.MouseInput;
@@ -44,11 +47,11 @@ public class ExplorerTab extends IDEComponent {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		Color c = Explorer.explorerMode == regent ? Colors.textLight : Colors.explorerLight;
-		Color bg = hovered() ? Colors.explorerLight : Colors.explorer;
+		Color bg = hovered() && !(SetFileName.added || CommandTerminal.active || RenameFile.added || SetBranchName.added) ? Colors.explorerLight : Colors.explorer;
 
 		g.setColor(bg);
 		g2.setStroke(new BasicStroke(3f));
-		g2.fillRect(x, Y, SIZE, SIZE);
+		g2.fillRect(x - 1, Y - 1, SIZE + 2, SIZE + 2);
 
 		g.setColor(c);
 		
@@ -60,7 +63,7 @@ public class ExplorerTab extends IDEComponent {
 		final int imageSize = 32;
 		g.drawImage(sprite, x + ((SIZE / 2) - (imageSize / 2)), Y + ((SIZE / 2) - (imageSize / 2)), imageSize, imageSize, null);
 		
-		if (hovered()) {
+		if (hovered() && !(SetFileName.added || CommandTerminal.active || RenameFile.added || SetBranchName.added)) {
 			Explorer.renderDescriptionText(name, MouseInput.getMouseX() - 27, MouseInput.getMouseY() + 27, g);
 		}
 	}

@@ -206,7 +206,10 @@ public class Explorer extends IDEComponent {
     }
     
     public void tick() {
-    	if (SetFileName.added || CommandTerminal.active || RenameFile.added) return;
+    	if (SetFileName.added || CommandTerminal.active || RenameFile.added) {
+    		Main.screen.setCursor(Cursor.getDefaultCursor());
+    		return;
+    	}
     	if (CommandTerminal.expOff) return;
     	
 	    height = Main.screen.getHeight();
@@ -223,7 +226,7 @@ public class Explorer extends IDEComponent {
 	    */
 	   	// Drag
 	   	
-	    if (MouseInput.hovered(x + width - 5, y, 10, height) && !ListableFile.isListableFileHovered()) {
+	    if (MouseInput.hovered(x + width - 5, y, 10, height) && !ListableFile.isListableFileHovered() && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
 			Main.screen.setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
 			
 			if (MouseInput.leftDragged() && (!Main.editor.selecting || Main.editor.editing == null) && Tab.dragging == null)
