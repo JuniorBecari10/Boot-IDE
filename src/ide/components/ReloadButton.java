@@ -22,7 +22,7 @@ public class ReloadButton extends IDEComponent {
 		
 		if (x < (Main.returnBase.getX() + Main.returnBase.getWidth()) + 2) x = (Main.returnBase.getX() + Main.returnBase.getWidth()) + 2;
 		
-		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !RenameFile.added && Explorer.selected == null)) {
+		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !MessageBox.active && !RenameFile.added && Explorer.selected == null)) {
 			MouseInput.updateMouse();
 			
 			reloadExplorer();
@@ -41,14 +41,14 @@ public class ReloadButton extends IDEComponent {
 		
 		if (Main.baseFolder == null) toRemove.add(this);
 		
-		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
+		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active || MessageBox.active)) {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x - 2, y - 2, width + 4, height + 4);
 		}
 		
 		super.render(g);
 		
-		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
+		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active || MessageBox.active)) {
 			Explorer.renderDescriptionText(Texts.reload, MouseInput.getMouseX() - 50, MouseInput.getMouseY() + 30, g);
 		}
 	}

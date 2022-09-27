@@ -24,7 +24,7 @@ public class ReturnToBaseFolderButton extends IDEComponent {
 		
 		if (Main.baseFolder == null) toRemove.add(this);
 		
-		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !RenameFile.added && Explorer.selected == null)) {
+		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !MessageBox.active && !RenameFile.added && Explorer.selected == null)) {
 			MouseInput.updateMouse();
 			
 			returnToBaseFolder();
@@ -44,14 +44,14 @@ public class ReturnToBaseFolderButton extends IDEComponent {
 	public void render(Graphics g) {
 		if (CommandTerminal.expOff || Explorer.explorerMode != ExplorerMode.EXPLORER) return;
 		
-		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
+		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active || MessageBox.active)) {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x - 2, y - 2, width + 4, height + 4);
 		}
 		
 		super.render(g);
 		
-		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
+		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active || MessageBox.active)) {
 			Explorer.renderDescriptionText(Texts.returnBaseFolder, MouseInput.getMouseX() - 50, MouseInput.getMouseY() + 30, g);
 		}
 	}

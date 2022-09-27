@@ -23,7 +23,7 @@ public class NewFolderButton extends IDEComponent {
 		
 		if (x < (Main.newFile.getX() + Main.newFile.getWidth()) + 2) x = (Main.newFile.getX() + Main.newFile.getWidth()) + 2;
 		
-		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !RenameFile.added && Explorer.selected == null)) {
+		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !MessageBox.active && !RenameFile.added && Explorer.selected == null)) {
 			MouseInput.updateMouse();
 			
 			int y = 200 + Screen.DECORATION_HEIGHT;
@@ -43,14 +43,14 @@ public class NewFolderButton extends IDEComponent {
 	public void render(Graphics g) {
 		if (CommandTerminal.expOff || Explorer.explorerMode != ExplorerMode.EXPLORER) return;
 		
-		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
+		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active || MessageBox.active)) {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x - 2, y - 2, width + 4, height + 4);
 		}
 		
 		super.render(g);
 		
-		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
+		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active || MessageBox.active)) {
 			Explorer.renderDescriptionText(Texts.createFolder, MouseInput.getMouseX() - 50, MouseInput.getMouseY() + 30, g);
 		}
 	}

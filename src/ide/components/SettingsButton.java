@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import ide.explorer.Explorer;
+import ide.explorercomponents.SetBranchName;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
@@ -13,6 +14,12 @@ public class SettingsButton extends IDEComponent {
 
 	public SettingsButton(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
+	}
+	
+	public boolean hovered() {
+		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added) return false;
+		
+		return super.hovered();
 	}
 	
 	public void tick() {

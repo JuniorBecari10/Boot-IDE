@@ -34,6 +34,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.MessageBox;
+import ide.components.MessageBoxType;
 import ide.components.RenameFile;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
@@ -830,14 +832,14 @@ public class CodeEditor extends IDEComponent {
 	
 	public synchronized void typeLogic() {
 		try {
-			if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) return;
+			if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || MessageBox.active || Explorer.selected != null) return;
 			
 			// o problema a daqui pra baixo, ou a CIMA? cima pq se o loop continuar sem executar a parte de baixo continua alto o uso da cpu, e o break ou return abaixam, e a parte de cima que fica executando sempre, mas se tirar ela e deixar sa a de baixo continua alto mesmo assim
 			
 			//if (true) break; // - a a presenaa do loop que enche a cpu | veja se usarmos return ou break ao invas de continue da certo
 			
 			if (KeyInput.isKeyPressed()) {
-				if ((!SetFileName.added && !CommandTerminal.active && !SetBranchName.added) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown())) {
+				if ((!SetFileName.added && !CommandTerminal.active && !MessageBox.active && !SetBranchName.added && !MessageBox.active) && (!(KeyInput.isAltDown() || KeyInput.isControlDown()) || KeyInput.isAltGrDown())) {
 	    			Main.editor.type();
 	    			Main.editor.detectArrows();
 				}
@@ -8091,7 +8093,7 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public void tick() {
-		if (SetFileName.added || CommandTerminal.active || RenameFile.added || SetBranchName.added)
+		if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added || MessageBox.active)
 			return;
 		
 		if (tabs == null)
@@ -8345,7 +8347,7 @@ public class CodeEditor extends IDEComponent {
 		if (!selecting)
 			directionStarted = Direction.NONE;
 
-		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active) { // TODO -- essa
+		if (KeyInput.isKeyPressed() && !SetFileName.added && !CommandTerminal.active && !MessageBox.active) { // TODO -- essa
 			setCursorWithinBounds();
 
 			new Thread("automaticcolor 2") {

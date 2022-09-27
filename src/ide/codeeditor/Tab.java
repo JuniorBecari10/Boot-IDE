@@ -24,10 +24,13 @@ import javax.swing.JOptionPane;
 import ide.components.CloseTabButton;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.MessageBox;
 import ide.components.RightClickOption;
+import ide.components.SetFileName;
 import ide.explorer.Explorer;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
+import ide.explorercomponents.SetBranchName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
@@ -162,6 +165,8 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	@Override
     public boolean hovered() {
+		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added) return false;
+		
 		int x = this.x + Main.editor.tabScr;
 		
         Rectangle mouse = new Rectangle(MouseInput.getMouseX(), MouseInput.getMouseY(), 1, 1);

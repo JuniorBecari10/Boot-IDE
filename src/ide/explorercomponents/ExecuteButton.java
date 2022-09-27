@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.MessageBox;
 import ide.components.SetFileName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -17,16 +18,34 @@ public class ExecuteButton extends IDEComponent {
 	protected Execute execute;
 	protected boolean enabled;
 	
+	protected boolean inMessageBox;
+	
 	public ExecuteButton(int x, int y, int width, int height, String text, Execute execute, boolean enabled) {
 		super(x, y, width, height, null);
 		
 		this.text = text;
 		this.execute = execute;
 		this.enabled = enabled;
+		
+		this.inMessageBox = false;
+	}
+	
+	public ExecuteButton(int x, int y, int width, int height, String text, Execute execute, boolean enabled, boolean inMessageBox) {
+		super(x, y, width, height, null);
+		
+		this.text = text;
+		this.execute = execute;
+		this.enabled = enabled;
+		
+		this.inMessageBox = inMessageBox;
 	}
 	
 	public boolean hovered() {
-		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added) return false;
+		if (inMessageBox) {
+			if (SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added) return false;
+		}
+		else
+			if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added) return false;
 		
 		return super.hovered();
 	}

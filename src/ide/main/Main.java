@@ -32,6 +32,7 @@ import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.Logo;
+import ide.components.MessageBox;
 import ide.components.NewFileButton;
 import ide.components.NewFolderButton;
 import ide.components.OneFolderUpButton;
@@ -836,7 +837,7 @@ public class Main implements Runnable, Tickable {
         for (IDEComponent c : IDEComponent.components)
         	c.render(g);
         
-        if (!(CommandTerminal.active || SetFileName.added || RenameFile.added))
+        if (!(CommandTerminal.active || SetFileName.added || RenameFile.added || MessageBox.active))
 	        for (Tab t : Main.editor.tabs) {
 				if (t.hovered() && Main.editor.editing == t && t.getX() + Main.editor.tabScr >= editor.getX() - 1 && !t.button.hovered() && !Tab.isTabDragged()) { // por algum motivo a + e nao -
 					int index = Main.baseFolder != null ? t.getRegent().getRegent().getPath().contains(File.separator + Main.baseFolder.getName()) && !t.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir) ? t.getRegent().getRegent().getPath().indexOf(File.separator + Main.baseFolder.getName()) + 1 : 0 : 0;
@@ -913,7 +914,7 @@ public class Main implements Runnable, Tickable {
 	        }
         
         if (explorer.hovered() && !CommandTerminal.expOff && Explorer.explorerMode == ExplorerMode.EXPLORER && baseFolder != null) {
-        	if (MouseInput.hovered(explorer.getX() + 10, Screen.DECORATION_HEIGHT + 140, explorer.getWidth() - 10, 23) && Explorer.showBaseFolderCard && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
+        	if (MouseInput.hovered(explorer.getX() + 10, Screen.DECORATION_HEIGHT + 140, explorer.getWidth() - 10, 23) && Explorer.showBaseFolderCard && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added)) {
         		int xdr = MouseInput.getMouseX() + 10;
     			int ydr = MouseInput.getMouseY() - 10;
     			
@@ -938,7 +939,7 @@ public class Main implements Runnable, Tickable {
     			Fonts.drawString(Main.baseFolder.getName(), xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
         	}
         	
-        	if (MouseInput.hovered(explorer.getX() + 10, Screen.DECORATION_HEIGHT + 170, explorer.getWidth() - 10, 23) && !Explorer.folderPathFull.isEmpty() && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
+        	if (MouseInput.hovered(explorer.getX() + 10, Screen.DECORATION_HEIGHT + 170, explorer.getWidth() - 10, 23) && !Explorer.folderPathFull.isEmpty() && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added)) {
         		String scopeStr = Explorer.getScopePath().contains(File.separator + baseFolder.getName() + File.separator) ? Explorer.getScopePath().substring(Explorer.getScopePath().indexOf(baseFolder.getName())) : Explorer.getScopePath();
         		scopeStr = scopeStr.replace('\\', '/');
         		
@@ -998,7 +999,7 @@ public class Main implements Runnable, Tickable {
         String text = screen.frame.getTitle();
 		Fonts.drawString(text, (screen.frame.getWidth() / 2) - ((text.length() * 12) / 2), Screen.DECORATION_HEIGHT / 2 - (16 / 2), new IDEFont(Fonts.lighterGrayNormal, 16), g);
         
-		if (Explorer.explorerMode == ExplorerMode.GIT && Explorer.isBaseFolderRepository() && MouseInput.hovered(0, Screen.DECORATION_HEIGHT + 70, explorer.getWidth(), 40) && !(SetFileName.added || CommandTerminal.active || RenameFile.added || SetBranchName.added))
+		if (Explorer.explorerMode == ExplorerMode.GIT && Explorer.isBaseFolderRepository() && MouseInput.hovered(0, Screen.DECORATION_HEIGHT + 70, explorer.getWidth(), 40) && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added))
 	    	Explorer.renderCardText(new String[] { Texts.currentBranch + ":", Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch] }, MouseInput.getMouseX() + 20, MouseInput.getMouseY(), g);
 		
 		for (TopComponent t : TopComponent.topComponents)

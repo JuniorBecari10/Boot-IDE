@@ -211,7 +211,7 @@ public class Explorer extends IDEComponent {
     }
     
     public void tick() {
-    	if (SetFileName.added || CommandTerminal.active || RenameFile.added) {
+    	if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added) {
     		Main.screen.setCursor(Cursor.getDefaultCursor());
     		return;
     	}
@@ -231,7 +231,7 @@ public class Explorer extends IDEComponent {
 	    */
 	   	// Drag
 	   	
-	    if (MouseInput.hovered(x + width - 5, y, 10, height) && !ListableFile.isListableFileHovered() && !(SetFileName.added || CommandTerminal.active || RenameFile.added)) {
+	    if (MouseInput.hovered(x + width - 5, y, 10, height) && !ListableFile.isListableFileHovered() && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added)) {
 			Main.screen.setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
 			
 			if (MouseInput.leftDragged() && (!Main.editor.selecting || Main.editor.editing == null) && Tab.dragging == null)
@@ -525,7 +525,7 @@ public class Explorer extends IDEComponent {
 	    		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_H) { // Ctrl + H (Uma Pasta Acima)
 	    			KeyInput.updateKeys();
 	    			
-	    			if (SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) return;
+	    			if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || Explorer.selected != null) return;
 	    			
 	    			OneFolderUpButton.oneFolderUp();
 	    			

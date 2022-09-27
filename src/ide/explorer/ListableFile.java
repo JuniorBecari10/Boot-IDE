@@ -24,6 +24,7 @@ import ide.codeeditor.LineEnding;
 import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.MessageBox;
 import ide.components.ReloadButton;
 import ide.components.RenameFile;
 import ide.components.RightClickOption;
@@ -1650,7 +1651,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	}
 	
 	public void tick() {
-		if (SetFileName.added || CommandTerminal.active || RenameFile.added
+		if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added
 				|| MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10,
 						Main.explorer.getHeight()))
 			return;
@@ -1825,7 +1826,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					return;
 		}
 
-		if (hovered() && !SetFileName.added && !CommandTerminal.active && !RenameFile.added
+		if (hovered() && !SetFileName.added && !CommandTerminal.active && !MessageBox.active && !RenameFile.added
 				&& !RightClickOption.isRightClickActive()) {
 			g.setColor(Colors.explorerLight);
 			g.fillRect(0, y, Main.explorer.getWidth(), height);

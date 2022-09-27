@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import ide.codeeditor.CodeEditor;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.MessageBox;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
@@ -29,7 +30,7 @@ public class InputBox extends IDEComponent {
 	}
 	
 	public boolean hovered() {
-		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added || RightClickOption.isRightClickActive()) return false;
+		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added || RightClickOption.isRightClickActive()) return false;
 		
 		return super.hovered();
 	}

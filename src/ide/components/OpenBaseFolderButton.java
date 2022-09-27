@@ -41,7 +41,7 @@ public class OpenBaseFolderButton extends IDEComponent {
 		
 		super.tick();
 		
-		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !RenameFile.added && Explorer.selected == null)) {
+		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !MessageBox.active && !RenameFile.added && Explorer.selected == null)) {
 			MouseInput.updateMouse();
 			
 			openBaseFolder();
@@ -86,14 +86,14 @@ public class OpenBaseFolderButton extends IDEComponent {
 	public void render(Graphics g) {
 		if (CommandTerminal.expOff || Explorer.explorerMode != ExplorerMode.EXPLORER) return;
 		
-		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
+		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active || MessageBox.active)) {
 			g.setColor(Colors.backgroundLight);
 			g.fillRect(x - 1, y - 1, width + 4, height + 4);
 		}
 		
 		super.render(g);
 		
-		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
+		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active || MessageBox.active)) {
 			Explorer.renderDescriptionText(Texts.selectBaseFolder, MouseInput.getMouseX() - 50, MouseInput.getMouseY() + 30, g);
 		}
 	}

@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.MessageBox;
 import ide.components.RenameFile;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
@@ -57,7 +58,7 @@ public class ToggleButton extends IDEComponent {
 			g.drawLine(x, y + height, x + width, y + height);
 		}
 		
-		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active)) {
+		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active || MessageBox.active)) {
 			Explorer.renderDescriptionText(caption, MouseInput.getMouseX() - 27, MouseInput.getMouseY() + 27, g);
 		}
 	}

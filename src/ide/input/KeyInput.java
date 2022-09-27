@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.CommandTerminal;
+import ide.components.MessageBox;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorercomponents.SearchReplaceCore;
@@ -80,7 +81,7 @@ public final class KeyInput extends KeyAdapter {
 	    	if (Explorer.entireDocument.getState() == false && Explorer.selectedLines.getState() == false)
 	    		Explorer.entireDocument.setState(true);
 	    	
-	    	if (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB && !CommandTerminal.active) {
+	    	if (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB && !CommandTerminal.active && !MessageBox.active) {
 	    		//KeyInput.updateKeys();
 	    		
 	    		if (Explorer.selected == Explorer.search) Explorer.selected = Explorer.replace;
