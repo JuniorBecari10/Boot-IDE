@@ -45,7 +45,7 @@ public class MessageBox extends IDEComponent {
 		
 		int i = 0;
 		for (String s : buttons) {
-			buttonsList.add(new ExecuteButton(x + 10, (HEIGHT - (buttons.length * 30)) + (30 * i), (Main.screen.getWidth() / 2) - 20, 20, s, actions[i], true, true) {
+			buttonsList.add(new ExecuteButton(x + 10, ((HEIGHT - 5 - (buttons.length * 30)) + (30 * i)) + 30, (Main.screen.getWidth() / 2) - 20, 20, s, actions[i], true, true) {
 				public void tick() {
 					if (leftClicked() && enabled) {
 						this.execute.execute();

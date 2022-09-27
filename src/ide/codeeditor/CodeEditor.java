@@ -35,7 +35,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
-import ide.components.MessageBoxType;
 import ide.components.RenameFile;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;

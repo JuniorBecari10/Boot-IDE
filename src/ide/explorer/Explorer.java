@@ -155,7 +155,7 @@ public class Explorer extends IDEComponent {
     		public void select() {
     			if (Main.baseFolder == null) return;
     			
-    			MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, MessageBoxType.WARN, new String[] { "Cancel", "OK" }, new Execute[] { () -> { return; }, () -> { System.out.println("a"); } });
+    			MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, MessageBoxType.WARN, new String[] { "Cancel", "OK", "Nevermind" }, new Execute[] { () -> { return; }, () -> { System.out.println("a"); }, () -> { System.out.println("nevermind"); } });
     			
     			GitCore.init();
     			SearchReplaceCore.dispose();
