@@ -454,9 +454,9 @@ public class CommandTerminal extends IDEComponent {
 					String[] options = { Texts.openFolder, Texts.cancel, /*Texts.openInNewTab*/ Texts.openInNewTab };
     				
     				CodeEditor.setSystemLook();
-    				int selectedOption = 2;// JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
     				
-    				MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, MessageBoxType.WARN, options);
+    				//MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, MessageBoxType.WARN, options);
     				
     				if (selectedOption == 0) {
     					try {

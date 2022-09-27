@@ -15,6 +15,8 @@ import ide.codeeditor.CodeEditor;
 import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.MessageBox;
+import ide.components.MessageBoxType;
 import ide.components.OneFolderUpButton;
 import ide.components.OpenBaseFolderButton;
 import ide.components.ReloadButton;
@@ -22,6 +24,7 @@ import ide.components.RenameFile;
 import ide.components.ReturnToBaseFolderButton;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
+import ide.explorercomponents.Execute;
 import ide.explorercomponents.ExecuteButton;
 import ide.explorercomponents.ExecuteButtonIcon;
 import ide.explorercomponents.ExplorerTab;
@@ -151,6 +154,8 @@ public class Explorer extends IDEComponent {
     	tabs.add(new ExplorerTab(1 + 6 + (ExplorerTab.SIZE * 2), Main.gitTab, ExplorerMode.GIT, "Git") {
     		public void select() {
     			if (Main.baseFolder == null) return;
+    			
+    			MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, MessageBoxType.WARN, new String[] { "Cancel", "OK" }, new Execute[] { () -> { return; }, () -> { System.out.println("a"); } });
     			
     			GitCore.init();
     			SearchReplaceCore.dispose();

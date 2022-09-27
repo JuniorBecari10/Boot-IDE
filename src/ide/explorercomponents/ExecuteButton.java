@@ -13,8 +13,8 @@ import ide.util.Colors;
 
 public class ExecuteButton extends IDEComponent {
 	
-	protected String text;
-	private Execute execute;
+	public String text;
+	protected Execute execute;
 	protected boolean enabled;
 	
 	public ExecuteButton(int x, int y, int width, int height, String text, Execute execute, boolean enabled) {
