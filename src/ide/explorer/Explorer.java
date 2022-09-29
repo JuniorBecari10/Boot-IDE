@@ -16,7 +16,6 @@ import ide.codeeditor.Tab;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
-import ide.components.MessageBoxType;
 import ide.components.OneFolderUpButton;
 import ide.components.OpenBaseFolderButton;
 import ide.components.ReloadButton;
@@ -155,7 +154,7 @@ public class Explorer extends IDEComponent {
     		public void select() {
     			if (Main.baseFolder == null) return;
     			
-    			MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, MessageBoxType.WARN, new String[] { "Cancel", "OK", "Nevermind" }, new Execute[] { () -> { return; }, () -> { System.out.println("a"); }, () -> { System.out.println("nevermind"); } });
+    			MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, new String[] { "Cancel", "OK", "Nevermind" }, new Execute[] { () -> { return; }, () -> { System.out.println("a"); }, () -> { System.out.println("nevermind"); } });
     			
     			GitCore.init();
     			SearchReplaceCore.dispose();

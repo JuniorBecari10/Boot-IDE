@@ -23,6 +23,7 @@ import ide.codeeditor.Tab;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorer.ListableFile;
+import ide.explorercomponents.Execute;
 import ide.explorercomponents.SearchReplaceCore;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -454,21 +455,22 @@ public class CommandTerminal extends IDEComponent {
 					String[] options = { Texts.openFolder, Texts.cancel, Texts.openInNewTab };
     				
     				CodeEditor.setSystemLook();
-    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+    				//int selectedOption = JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
     				
-    				//MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, MessageBoxType.WARN, options);
-    				
-    				if (selectedOption == 0) {
+    				MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, options, new Execute[] { () -> {
+    					File file = chooser.getSelectedFile();
+    					
     					try {
-							Main.desktop.open(fl.getParentFile());
+							Main.desktop.open(file.getParentFile());
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-    				}
-    				
-    				if (selectedOption == 2) {
-    					ListableFile.addTab(ListableFile.newListableFile(fl), false);
-    				}
+    				}, () -> {}, () -> {
+    					File file = chooser.getSelectedFile();
+    					System.out.println("a");
+    					
+    					ListableFile.addTab(ListableFile.newListableFile(file), false);
+    				} });
 				}
 				break;
 				

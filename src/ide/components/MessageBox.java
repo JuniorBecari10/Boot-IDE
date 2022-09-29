@@ -21,7 +21,6 @@ public class MessageBox extends IDEComponent {
 
 	public String title;
 	public String[] text;
-	public MessageBoxType type;
 	public Execute[] actions;
 	
 	public ExecuteButton clicked;
@@ -33,14 +32,13 @@ public class MessageBox extends IDEComponent {
 	
 	public static final int HEIGHT = 200;
 	
-	private MessageBox(String title, String[] text, MessageBoxType type, String[] buttons, Execute[] actions) {
+	private MessageBox(String title, String[] text, String[] buttons, Execute[] actions) {
 		super(Main.screen.getWidth() / 4, Screen.DECORATION_HEIGHT - Main.screen.getHeight() / 4, Main.screen.getWidth() / 2, HEIGHT, null);
 		
 		active = true;
 		
 		this.title = title;
 		this.text = text;
-		this.type = type;
 		this.actions = actions;
 		
 		int i = 0;
@@ -64,6 +62,11 @@ public class MessageBox extends IDEComponent {
 					y++;
 					Main.canRunLoop = true;
 					
+					int i = 0;
+					for (ExecuteButton b : buttonsList) {
+						b.y = (((HEIGHT - 5 - (buttonsList.size() * 30)) + (30 * i++))) + y;
+					}
+					
 					try {
 						Thread.sleep(1);
 					} catch (InterruptedException e) {
@@ -81,6 +84,11 @@ public class MessageBox extends IDEComponent {
 					y--;
 					Main.canRunLoop = true;
 					
+					int i = 0;
+					for (ExecuteButton b : buttonsList) {
+						b.y = (((HEIGHT - 5 - (buttonsList.size() * 30)) + (30 * i++))) + y;
+					}
+					
 					try {
 						Thread.sleep(1);
 					} catch (InterruptedException e) {
@@ -97,8 +105,8 @@ public class MessageBox extends IDEComponent {
 	}
 	
 	// Shows up a dialog and returns the name of the clicked button
-	public static void showDialog(String title, String[] text, MessageBoxType type, String[] buttons, Execute[] actions) {
-		MessageBox box = new MessageBox(title, text, type, buttons, actions);
+	public static void showDialog(String title, String[] text, String[] buttons, Execute[] actions) {
+		MessageBox box = new MessageBox(title, text, buttons, actions);
 		
 		IDEComponent.toAdd.add(box);
 		
