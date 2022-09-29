@@ -58,6 +58,14 @@ public class InputBox extends IDEComponent {
 			
 			// Shortcuts Area
 			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) {
+				cursorIndex = 0;
+			}
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END) {
+				cursorIndex = text.length();
+			}
+			
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C) { // Ctrl + C - Copiar (Tudo)
 				CodeEditor.copyText(text.toString());
 			}

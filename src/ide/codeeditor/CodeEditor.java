@@ -1058,6 +1058,17 @@ public class CodeEditor extends IDEComponent {
 		
 		return sb.toString();
 	}
+	
+	public void refreshText() {
+		if (editing == null) return;
+		if (!editing.isSaved()) editing.save();
+		
+		try {
+			Main.editor.lines = Main.editor.readFile(editing.getRegent().getRegent());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public List<IDELine> readFile(File file) throws IOException {
 		Main.editor.line1 = 0;

@@ -23,7 +23,6 @@ import ide.components.RenameFile;
 import ide.components.ReturnToBaseFolderButton;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
-import ide.explorercomponents.Execute;
 import ide.explorercomponents.ExecuteButton;
 import ide.explorercomponents.ExecuteButtonIcon;
 import ide.explorercomponents.ExplorerTab;
@@ -154,8 +153,6 @@ public class Explorer extends IDEComponent {
     		public void select() {
     			if (Main.baseFolder == null) return;
     			
-    			MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, new String[] { "Cancel", "OK", "Nevermind" }, new Execute[] { () -> { return; }, () -> { System.out.println("a"); }, () -> { System.out.println("nevermind"); } });
-    			
     			GitCore.init();
     			SearchReplaceCore.dispose();
     			fetchStatus();
@@ -232,7 +229,7 @@ public class Explorer extends IDEComponent {
 	   	
 	    if (MouseInput.hovered(x + width - 5, y, 10, height) && !ListableFile.isListableFileHovered() && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added)) {
 			Main.screen.setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
-			System.out.println("a");
+			
 			if (MouseInput.leftDragged() && (!Main.editor.selecting || Main.editor.editing == null) && Tab.dragging == null)
 				dragging = true;
 		}
