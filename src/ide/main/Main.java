@@ -226,6 +226,7 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage createBranchSpr;
     public static BufferedImage checkoutSpr;
     public static BufferedImage renameBranchSpr;
+    public static BufferedImage deleteBranchSpr;
     
     ///
     
@@ -326,6 +327,7 @@ public class Main implements Runnable, Tickable {
 	        createBranchSpr = spritesheet.getSprite(416, 0, 16, 16);
 	        checkoutSpr = spritesheet.getSprite(432, 0, 16, 16);
 	        renameBranchSpr = spritesheet.getSprite(448, 0, 16, 16);
+	        deleteBranchSpr = spritesheet.getSprite(480, 0, 16, 16);
 	        
 	        ///////
 	        
@@ -494,6 +496,7 @@ public class Main implements Runnable, Tickable {
         createBranchSpr = Colors.swapColor(createBranchSpr, Colors.textLightDefault, Colors.textLight);
         checkoutSpr = Colors.swapColor(checkoutSpr, Colors.textLightDefault, Colors.textLight);
         renameBranchSpr = Colors.swapColor(renameBranchSpr, Colors.textLightDefault, Colors.textLight);
+        deleteBranchSpr = Colors.swapColor(deleteBranchSpr, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         

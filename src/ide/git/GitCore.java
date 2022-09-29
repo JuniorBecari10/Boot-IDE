@@ -43,6 +43,17 @@ public class GitCore {
 		actions.add(new GitAction("git checkout", getState(error, warn), output));
 	}
 	
+	public static void delete(String branch) {
+		String[] output = Main.runCommand(Main.baseFolder, "git branch -d " + branch);
+		
+		Explorer.fetchStatus();
+		
+		boolean error = Main.isError(output);
+		boolean warn = Main.isWarning(output);
+		
+		actions.add(new GitAction("git branch", getState(error, warn), output));
+	}
+	
 	public static void init() {
 		Explorer.explorerMode = ExplorerMode.GIT;
 		
@@ -211,6 +222,29 @@ public class GitCore {
 			};
 		}
 		
+		if (Explorer.deleteBranch == null) {
+			Explorer.deleteBranch = new ExecuteButtonIcon(134, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.deleteBranchSpr, () -> {
+				Explorer.setBranchName = new SetBranchName(0, Screen.DECORATION_HEIGHT + 165, 0, 30, true);
+				
+				List<RightClickOption> list = new ArrayList<>();
+				int width = Texts.selectABranch.length() * 14;
+				
+				list.add(new RightClickOption(0, 0, width, 30, false, Texts.selectABranch, (a) -> {  }, ""));
+				
+				for (String s : Explorer.gitStatus.branches) {
+					list.add(new RightClickOption(0, 0, width, 30, s, (a) -> { delete(s); }, ""));
+				}
+				
+				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.checkout.getY(), list.toArray(new RightClickOption[list.size()]));
+			}, Texts.deleteBranch) {
+				public void tick() {
+					super.tick();
+					
+					caption = Texts.deleteBranch;
+				}
+			};
+		}
+		
 		if (Explorer.stageAll == null) {
 			Explorer.stageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 440, Main.explorer.getWidth() - 40, 20, Texts.stageAll, () -> {
 				String[] output = Main.runCommand(Main.baseFolder, "git add .");
@@ -244,6 +278,7 @@ public class GitCore {
 		IDEComponent.toAdd.add(Explorer.createBranch);
 		IDEComponent.toAdd.add(Explorer.checkout);
 		IDEComponent.toAdd.add(Explorer.renameBranch);
+		IDEComponent.toAdd.add(Explorer.deleteBranch);
 		IDEComponent.toAdd.add(Explorer.stageAll);
 		IDEComponent.toAdd.add(Explorer.unstageAll);
 	}
@@ -257,6 +292,7 @@ public class GitCore {
 		IDEComponent.toRemove.add(Explorer.createBranch);
 		IDEComponent.toRemove.add(Explorer.checkout);
 		IDEComponent.toRemove.add(Explorer.renameBranch);
+		IDEComponent.toRemove.add(Explorer.deleteBranch);
 		IDEComponent.toRemove.add(Explorer.stageAll);
 		IDEComponent.toRemove.add(Explorer.unstageAll);
 	}

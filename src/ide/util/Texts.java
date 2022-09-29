@@ -234,6 +234,7 @@ public final class Texts {
 	public static String selectABranch;
 	public static String createNewBranch;
 	public static String renameBranch;
+	public static String deleteBranch;
 	
 	public static String currentBranch;
 	
@@ -465,6 +466,7 @@ public final class Texts {
 			selectABranch = "Selecione uma Branch:";
 			createNewBranch = "Criar Nova Branch";
 			renameBranch = "Renomear Branch";
+			deleteBranch = "Deletar Branch";
 			currentBranch = "Branch Atual";
 			
 			branchNameIllegal = "O nome da Branch contém caracteres não permitidos.";
@@ -695,6 +697,7 @@ public final class Texts {
 			selectABranch = "Select a Branch:";
 			createNewBranch = "Create New Branch";
 			renameBranch = "Rename Branch";
+			deleteBranch = "Delete Branch";
 			currentBranch = "Current Branch";
 			
 			branchNameIllegal = "The Branch name contains non-permitted characters.";
