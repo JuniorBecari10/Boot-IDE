@@ -1065,10 +1065,12 @@ public class Main implements Runnable, Tickable {
 	        	    					}, () -> { } });
 	        				}
 	        			}.start();
-	    			}
+	    			} else {
+	        			System.exit(status);
+	        		}
+	    		} else {
+	    			System.exit(status);
 	    		}
-	    		
-	    		System.exit(status);
 	    	}
     }
 
@@ -1096,7 +1098,9 @@ public class Main implements Runnable, Tickable {
     		} else {
     			System.exit(status);
     		}
-    	}
+    	} else {
+			System.exit(status);
+		}
     }
 
     public synchronized void mainLogic() {

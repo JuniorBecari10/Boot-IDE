@@ -231,6 +231,7 @@ public class Tab extends IDEComponent implements Serializable {
 		Main.editor.isMultilineCommenting = false; // TODO closeother reseta o cursor
 		Main.editor.isAnotherIteration = false;
 		Main.editor.foundExt = false;
+		Main.editor.wordSinceSpace = "";
 
 		Main.editor.toRemove.add(t);
 
@@ -285,7 +286,6 @@ public class Tab extends IDEComponent implements Serializable {
 		if (Main.editor.editing != null && save) { // nao for nulo
 			if (!Main.editor.editing.isSaved()) { // nao estiver salvo
 				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
-				Tab t = this;
 				
 				new Thread() {
 					public void run() {
@@ -297,7 +297,8 @@ public class Tab extends IDEComponent implements Serializable {
 		    					() -> {
 		    						WindowInput.update();
 		    						
-		    						Main.editor.toRemove.add(t);
+		    						save = false;
+		    						close();
 		    					}, () -> { } });
 					}
 				}.start();
@@ -313,6 +314,7 @@ public class Tab extends IDEComponent implements Serializable {
 			Main.editor.isMultilineCommenting = false; // TODO closeother reseta o cursor
 			Main.editor.isAnotherIteration = false;
 			Main.editor.foundExt = false;
+			Main.editor.wordSinceSpace = "";
 			
 			Main.editor.toRemove.add(t);
 			
@@ -754,8 +756,9 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		if (width < 10) closeWithoutAnimation();
 		
-		if (Main.editor.lines.size() == 1 && Main.editor.lines.get(0).getChars().isEmpty() && isTemporary)
-			isSaved = true;
+		if (isTemporary)
+			if (Main.editor.lines.size() == 1 && Main.editor.lines.get(0).getChars().isEmpty())
+				isSaved = true;
 		
 		int x = dragging == null ? this.x + Main.editor.tabScr : this.x;
 		
@@ -893,6 +896,21 @@ public class Tab extends IDEComponent implements Serializable {
 			else
 				button.setSprite(Main.notSelectedNotSavedTab);
 		}
+		
+		/*if (isTemporary) {
+			if (Main.editor.lines.size() == 1 && Main.editor.lines.get(0).getChars().isEmpty()) {
+				if (Main.editor.editing == this)
+					button.setSprite(Main.closeTab);
+				else
+					button.setSprite(Main.notSelectedCloseTab);
+			}
+			else {
+				if (Main.editor.editing == this)
+					button.setSprite(Main.notSavedTab);
+				else
+					button.setSprite(Main.notSelectedNotSavedTab);
+			}
+		}*/
 		
 		if (!closing && dragging != this)
 			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
