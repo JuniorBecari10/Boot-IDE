@@ -45,6 +45,7 @@ import ide.components.SettingsButton;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorer.ListableFile;
+import ide.explorercomponents.Execute;
 import ide.explorercomponents.SetBranchName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -79,7 +80,7 @@ public class Main implements Runnable, Tickable {
     public static final String LOG_FILE_NAME = "Exception.log";
     
     public static final String PROGRAM_NAME = "Boot IDE";
-    public static final String VERSION = "Beta 3 v4.5";
+    public static final String VERSION = "Beta 3 v4.5 | Dev Test";
     
     public static final String userDir = System.getProperty("user.dir");
     
@@ -1044,27 +1045,28 @@ public class Main implements Runnable, Tickable {
     }
     
     public static void close(int status) {
-    	closing:
+    	//closing:
         	if (WindowInput.isClosing()) {
         		writeFile(settingsFile);
         		ListableFile.generateLocalConfigFile(defaultConfigFile);
         		
 	    		if (Main.editor.editing != null) { // nao for nulo
 	    			if (!Main.editor.editing.isSaved()) { // nao estiver salvo
-	    				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
-	    				
-	    				CodeEditor.setSystemLook();
-	    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-	    				
-	    				canRunLoop = true;
-	    				
-	    				// Clicar em Save no prompt quando a janela fecha e depois no cancelar fecha assim mesmo com arquivos temporários | TODO 
-	    				if (selectedOption == 0) Main.editor.editing.save();
-	    				else if (selectedOption == 2) {
-	    					WindowInput.update();
-	    					
-	    					break closing;
-	    				}
+	    				new Thread() {
+	        				public void run() {
+	        					String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
+
+	        	    			MessageBox.showDialog(Texts.confirmSave, new String[] { Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.doYouWantToSave }, options, new Execute[] {
+	        	    					() -> {
+	        	    						Main.editor.editing.save();
+	        	    						System.exit(status);
+	        	    					},
+	        	    					() -> {
+	        	    						WindowInput.update();
+	        	    						System.exit(status);
+	        	    					}, () -> { } });
+	        				}
+	        			}.start();
 	    			}
 	    		}
 	    		
@@ -1078,21 +1080,25 @@ public class Main implements Runnable, Tickable {
 
     	if (Main.editor.editing != null) { // nao for nulo
     		if (!Main.editor.editing.isSaved()) { // nao estiver salvo
-    			String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
+    			new Thread() {
+    				public void run() {
+    					String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
 
-    			CodeEditor.setSystemLook();
-    			int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-
-    			if (selectedOption == 0) Main.editor.editing.save();
-    			else if (selectedOption == 2) {
-    				WindowInput.update();
-    				
-    				return;
-    			}
+    	    			MessageBox.showDialog(Texts.confirmSave, new String[] { Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.doYouWantToSave }, options, new Execute[] {
+    	    					() -> {
+    	    						Main.editor.editing.save();
+    	    						System.exit(status);
+    	    					},
+    	    					() -> {
+    	    						WindowInput.update();
+    	    						System.exit(status);
+    	    					}, () -> { } });
+    				}
+    			}.start();
+    		} else {
+    			System.exit(status);
     		}
     	}
-
-    	System.exit(status);
     }
 
     public synchronized void mainLogic() {

@@ -35,6 +35,8 @@ public class MessageBox extends IDEComponent {
 	private MessageBox(String title, String[] text, String[] buttons, Execute[] actions) {
 		super(Main.screen.getWidth() / 4, Screen.DECORATION_HEIGHT - Main.screen.getHeight() / 4, Main.screen.getWidth() / 2, HEIGHT, null);
 		
+		if (buttons.length != actions.length) throw new RuntimeException("Array lengths don't match!");
+		
 		active = true;
 		
 		this.title = title;
@@ -144,7 +146,7 @@ public class MessageBox extends IDEComponent {
 		
 		int i = 0;
 		for (String s : text) {
-			Fonts.drawString(s, x + 10, y + 50 + (i * 20), new IDEFont(Fonts.lightGrayNormal, 16), g);
+			Fonts.drawString(s, x + 10, y + 50 + (i++ * 20), new IDEFont(Fonts.lightGrayNormal, 16), g);
 		}
 		
 		for (ExecuteButton b : buttonsList) {
