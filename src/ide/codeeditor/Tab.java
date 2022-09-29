@@ -66,8 +66,6 @@ public class Tab extends IDEComponent implements Serializable {
 	public boolean closing = false;
 	private boolean isSaved = true;
 	
-	//private Tab dragging = null;
-	
 	public CloseTabButton button;
 	
 	public ListableFile regent;
@@ -495,9 +493,9 @@ public class Tab extends IDEComponent implements Serializable {
 	/**
 	 * Salvar Arquivo
 	 */
-	public void save() {
+	public int save() {
 		if (!isTemporary) {
-			if (isReadOnly || Main.editor.lines.isEmpty() || Main.editor.lines == null || readMode != FileReadMode.NORMAL) return;
+			if (isReadOnly || Main.editor.lines.isEmpty() || Main.editor.lines == null || readMode != FileReadMode.NORMAL) return 1;
 			
 			try {
 				Charset ch = Main.editor.codeType.equalsIgnoreCase("UTF-8") ? StandardCharsets.UTF_8 : StandardCharsets.ISO_8859_1;
@@ -525,6 +523,8 @@ public class Tab extends IDEComponent implements Serializable {
 				
 				setSaved(true);
 				save = true;
+				
+				return 0;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -540,8 +540,15 @@ public class Tab extends IDEComponent implements Serializable {
 				oldFile.delete();
 				isTemporary = false;
 				save();
+				
+				return 0;
+			}
+			else {
+				return 1;
 			}
 		}
+		
+		return 0;
 	}
 	
 	public void execute(String arg) {
@@ -712,11 +719,7 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		CommandTerminal.runCommand("resetundoredo");
 		
-		try {
-			Main.editor.lines = Main.editor.readFile(regent.getRegent());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		Main.editor.refreshText();
 		
 		Main.editor.cursorX = cx;
 		Main.editor.cursorY = cy;

@@ -215,6 +215,8 @@ public final class Texts {
 	public static String capsLockOn;
 	public static String thisIsTemporary;
 	
+	public static String temporaryFile;
+	
 	public static String gitError;
 	public static String gitProgress;
 	public static String gitWarning;
@@ -444,6 +446,8 @@ public final class Texts {
 			capsLockOn = "Caps Lock Ativado";
 			thisIsTemporary = "Esse arquivo é temporário.";
 			
+			temporaryFile = "Arquivo Temporário";
+			
 			gitError = "Erro";
 			gitProgress = "Em Progresso";
 			gitWarning = "Aviso";
@@ -671,6 +675,8 @@ public final class Texts {
 			
 			capsLockOn = "Caps Lock On";
 			thisIsTemporary = "This file is temporary.";
+			
+			temporaryFile = "Temporary File";
 			
 			gitError = "Error";
 			gitProgress = "In Progress";

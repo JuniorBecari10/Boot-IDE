@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ide.input.MouseInput;
+import ide.main.Main;
 import ide.util.Clickable;
-import ide.util.ExecuteCommand;
 import ide.util.Renderable;
 import ide.util.Tickable;
 
@@ -83,24 +83,20 @@ public abstract class IDEComponent implements Tickable, Renderable, Clickable { 
     public static final void addRightClickOptions(int initialX, int initialY, RightClickOption... options) {
     	if (RightClickOption.isRightClickActive()) return;
     	
+    	int width = options[0].getWidth();
+    	
+    	while (initialX + width > Main.screen.getWidth() - 1)
+    		initialX--;
+    	
+    	while (initialY + (RightClickOption.HEIGHT * options.length) > Main.screen.getHeight() - 1)
+    		initialY--;
+    	
     	for (int i = 0; i < options.length; i++) {
     		options[i].setX(initialX);
     		options[i].setY(initialY + i * RightClickOption.HEIGHT);
     		
     		toAdd.add(options[i]);
     	}
-    }
-    
-    public static final void addRightClickOption(int x, int y, int width, String text, ExecuteCommand command, String clickArg) {
-    	if (RightClickOption.isRightClickActive()) return;
-    	
-    	toAdd.add(new RightClickOption(x, y, width, text, command, clickArg));
-    }
-    
-    public static final void addRightClickOption(int x, int y, int width, boolean isActive, String text, ExecuteCommand command, String clickArg) {
-    	if (RightClickOption.isRightClickActive()) return;
-    	
-    	toAdd.add(new RightClickOption(x, y, width, isActive, text, command, clickArg));
     }
 
     @Override

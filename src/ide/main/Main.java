@@ -1053,6 +1053,9 @@ public class Main implements Runnable, Tickable {
 	    				CodeEditor.setSystemLook();
 	    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 	    				
+	    				canRunLoop = true;
+	    				
+	    				// Clicar em Save no prompt quando a janela fecha e depois no cancelar fecha assim mesmo com arquivos temporários | TODO 
 	    				if (selectedOption == 0) Main.editor.editing.save();
 	    				else if (selectedOption == 2) {
 	    					WindowInput.update();
