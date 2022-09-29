@@ -463,8 +463,10 @@ public class CommandTerminal extends IDEComponent {
 							e.printStackTrace();
 						}
     				}, () -> {
-    					// arrumar
-    					ListableFile.addTab(ListableFile.newListableFile(chooser.getSelectedFile()), false);
+    					File file = chooser.getSelectedFile();
+    					if (!file.getName().contains(Main.CONFIG_FILE_EXTENSION)) file = new File(file.getAbsolutePath() + Main.CONFIG_FILE_EXTENSION);
+    					
+    					ListableFile.addTab(ListableFile.newListableFile(file), false);
     				}, () -> {} });
 				}
 				break;
