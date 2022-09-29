@@ -210,7 +210,7 @@ public class Explorer extends IDEComponent {
     }
     
     public void tick() {
-    	if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added) {
+    	if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added) {
     		Main.screen.setCursor(Cursor.getDefaultCursor());
     		return;
     	}
@@ -230,9 +230,9 @@ public class Explorer extends IDEComponent {
 	    */
 	   	// Drag
 	   	
-	    if (MouseInput.hovered(x + width - 5, y, 10, height) && !ListableFile.isListableFileHovered() && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added)) {
+	    if (MouseInput.hovered(x + width - 5, y, 10, height) && !ListableFile.isListableFileHovered() && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added)) {
 			Main.screen.setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
-			
+			System.out.println("a");
 			if (MouseInput.leftDragged() && (!Main.editor.selecting || Main.editor.editing == null) && Tab.dragging == null)
 				dragging = true;
 		}

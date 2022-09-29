@@ -7142,7 +7142,7 @@ public class CodeEditor extends IDEComponent {
 
 					if (autoc != null) {
 						for (String s : autoc)
-							if (s.contains(wordSinceSpace))
+							if (s.toLowerCase().contains(wordSinceSpace.toLowerCase()))
 								autocomplete.add(new AutoComplete(s, AutoCompleteType.KEYWORD));
 						
 						autocompleteindex = 0;
