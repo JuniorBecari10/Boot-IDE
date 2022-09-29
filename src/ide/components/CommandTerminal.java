@@ -452,7 +452,7 @@ public class CommandTerminal extends IDEComponent {
 					}
 					
 					CodeEditor.setSystemLook();
-					String[] options = { Texts.openFolder, Texts.cancel, Texts.openInNewTab };
+					String[] options = { Texts.openFolder, Texts.openInNewTab, Texts.cancel };
 					
     				MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, options, new Execute[] { () -> {
     					File file = chooser.getSelectedFile();
@@ -462,9 +462,10 @@ public class CommandTerminal extends IDEComponent {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-    				}, () -> {}, () -> {
+    				}, () -> {
+    					// arrumar
     					ListableFile.addTab(ListableFile.newListableFile(chooser.getSelectedFile()), false);
-    				} });
+    				}, () -> {} });
 				}
 				break;
 				

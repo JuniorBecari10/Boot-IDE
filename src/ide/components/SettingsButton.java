@@ -36,7 +36,7 @@ public class SettingsButton extends IDEComponent {
 		
 		if (hovered()) {
 			g.setColor(Colors.backgroundLight);
-			g.fillRect(x, y, width, height);
+			g.fillRect(x, y, width, height + 3);
 		}
 		
 		super.render(g);

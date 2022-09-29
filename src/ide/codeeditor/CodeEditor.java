@@ -1554,11 +1554,6 @@ public class CodeEditor extends IDEComponent {
 	public static String getLowerBarFileName(String ext) {
 		// casos específicos
 		
-		if (Main.editor.editing.isTemporary) {
-			System.out.println("a");
-			return Texts.temporaryFile;
-		}
-		
 		if (Main.editor.editing.getRegent().getRegent().getName().equalsIgnoreCase("readme.md"))
 			return Main.lang == Language.PORT ? "Leia-Me (Markdown)" : "Read Me (Markdown)";
 		
@@ -1741,6 +1736,9 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public static String getLowerBarFileNameWithoutExtension(String filename) {
+		if (Main.editor.editing.isTemporary)
+			return Texts.temporaryFile;
+		
 		switch (filename.toLowerCase()) {
 		case "makefile": return  "Makefile";
 		case "dockerfile": return  "Dockerfile";
