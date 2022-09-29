@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import ide.codeeditor.CodeEditor;
 import ide.codeeditor.FileReadMode;
 import ide.codeeditor.Tab;

@@ -19,7 +19,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
 import ide.components.CloseTabButton;
 import ide.components.CommandTerminal;
@@ -30,6 +29,7 @@ import ide.components.SetFileName;
 import ide.explorer.Explorer;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
+import ide.explorercomponents.Execute;
 import ide.explorercomponents.SetBranchName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -207,17 +207,21 @@ public class Tab extends IDEComponent implements Serializable {
 		if (Main.editor.editing != null && save) { // nao for nulo
 			if (!Main.editor.editing.isSaved()) { // nao estiver salvo
 				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
-
-				CodeEditor.setSystemLook();
-				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-
-				if (selectedOption == 0) save();
-				else if (selectedOption == 2) {
-					WindowInput.update();
-					closing = false;
-
-					return;
-				}
+				
+				new Thread() {
+					public void run() {
+		    			MessageBox.showDialog(Texts.confirmSave, new String[] { Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.doYouWantToSave }, options, new Execute[] {
+		    					() -> {
+		    						save();
+		    					},
+		    					() -> {
+		    						WindowInput.update();
+		    						closing = false;
+		    					}, () -> { } });
+					}
+				}.start();
+				
+				return;
 			}
 		}
 
@@ -278,20 +282,27 @@ public class Tab extends IDEComponent implements Serializable {
 	public void close() {
 		closing = true;
 		
-		if (Main.editor.editing != null && save) { // não for nulo
-			if (((!Main.editor.editing.isSaved()) || isTemporary) && !(Main.editor.lines.get(0).getChars().isEmpty() && Main.editor.lines.size() == 1)) { // não estiver salvo
+		if (Main.editor.editing != null && save) { // nao for nulo
+			if (!Main.editor.editing.isSaved()) { // nao estiver salvo
 				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
+				Tab t = this;
 				
-				CodeEditor.setSystemLook();
-				int selectedOption = JOptionPane.showOptionDialog(null, Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.confirmSave, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+				new Thread() {
+					public void run() {
+		    			MessageBox.showDialog(Texts.confirmSave, new String[] { Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.doYouWantToSave }, options, new Execute[] {
+		    					() -> {
+		    						save();
+		    						close();
+		    					},
+		    					() -> {
+		    						WindowInput.update();
+		    						
+		    						Main.editor.toRemove.add(t);
+		    					}, () -> { } });
+					}
+				}.start();
 				
-				if (selectedOption == 0) save();
-				else if (selectedOption == 2) {
-					WindowInput.update();
-					closing = false;
-					
-					return;
-				}
+				return;
 			}
 		}
 		
