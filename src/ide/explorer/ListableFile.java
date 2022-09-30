@@ -29,6 +29,7 @@ import ide.components.ReloadButton;
 import ide.components.RenameFile;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
+import ide.explorercomponents.Execute;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.git.GitCore;
@@ -1282,41 +1283,36 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		switch (arg) {
 		case "del":
 			String[] options = { Texts.yes, Texts.no };
-
-			CodeEditor.setSystemLook();
-			int selectedOption = JOptionPane.showOptionDialog(null,
-					Texts.sureDelete + " " + regent.getName() + "?",
-					Texts.confirmDelete, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options,
-					options[0]);
-
-			if (selectedOption != 0)
-				break;
-
-			if (regent.isFile()) {
-				if (!regent.delete()) {
-					CodeEditor.setSystemLook();
-	
-					JOptionPane.showMessageDialog(null, Texts.delError, Texts.cantDelete, JOptionPane.OK_OPTION);
+			
+			MessageBox.showDialog(Texts.confirmDelete, new String[] { Texts.sureDelete + " " + regent.getName() + "?" }, options, new Execute[] { () -> {
+				if (regent.isFile()) {
+					if (!regent.delete()) {
+						CodeEditor.setSystemLook();
+		
+						JOptionPane.showMessageDialog(null, Texts.delError, Texts.cantDelete, JOptionPane.OK_OPTION);
+					}
 				}
-			}
-			else {
-				try {
-					deleteDirectory(regent);
-				} catch (IOException e) {
-					e.printStackTrace();
+				else {
+					try {
+						deleteDirectory(regent);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
-			}
 
-			for (Tab t : Main.editor.tabs)
-				if (t.getRegent().equals(this))
-					t.close();
+				for (Tab t : Main.editor.tabs)
+					if (t.getRegent().equals(this))
+						t.close();
 
-			IDEComponent.toRemove.add(this);
+				IDEComponent.toRemove.add(this);
 
-			Explorer.files.clear();
-			ListableFile.files.clear();
+				Explorer.files.clear();
+				ListableFile.files.clear();
 
-			Explorer.files = ListableFile.loadFolder(Explorer.scope);
+				Explorer.files = ListableFile.loadFolder(Explorer.scope);
+			}, () -> {  } });
+
+			
 			break;
 
 		case "run":

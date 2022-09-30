@@ -322,8 +322,8 @@ public final class Texts {
 			ctrl_T_terminal = "[Ctrl + T] Terminal de Comando";
 			rightClick_Options = "[Clique Direito] Mais Opções";
 			
-			yes = "   Sim   ";
-			no = "   Não   ";
+			yes = "Sim";
+			no = "Não";
 			
 			sureDelete = "Tem certeza de que deseja deletar o arquivo/pasta";
 			confirmDelete = "Confirmar Exclusão";
@@ -554,8 +554,8 @@ public final class Texts {
 			ctrl_T_terminal = "[Ctrl + T] Command Terminal";
 			rightClick_Options = "[Right Click] More Options";
 			
-			yes = "   Yes   ";
-			no = "   No   ";
+			yes = "Yes";
+			no = "No";
 			
 			sureDelete = "Are you sure you want to delete the file/folder";
 			confirmDelete = "Confirm Deletion";
