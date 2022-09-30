@@ -247,6 +247,8 @@ public final class Texts {
 	public static String copyRelativePath;
 	public static String copyAbsolutePath;
 	
+	public static String copyText;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -479,6 +481,8 @@ public final class Texts {
 			copyRelativePath = "Copiar Caminho Relativo";
 			copyAbsolutePath = "Copiar Caminho Absoluto";
 			
+			copyText = "Copiar Texto";
+			
 			break;
 		
 		case ENG:
@@ -710,6 +714,8 @@ public final class Texts {
 			
 			copyRelativePath = "Copy Relative Path";
 			copyAbsolutePath = "Copy Absolute Path";
+			
+			copyText = "Copy Text";
 			
 			break;
 		}

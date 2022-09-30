@@ -450,7 +450,6 @@ public class CommandTerminal extends IDEComponent {
 						return;
 					}
 					
-					CodeEditor.setSystemLook();
 					String[] options = { Texts.openFolder, Texts.openInNewTab, Texts.cancel };
 					
     				MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, options, new Execute[] { () -> {
@@ -484,23 +483,22 @@ public class CommandTerminal extends IDEComponent {
 						return;
 					}
 					
-					CodeEditor.setSystemLook();
 					String[] options = { Texts.openFolder, Texts.cancel, /*Texts.openInNewTab*/ Texts.openInNewTab };
     				
-    				CodeEditor.setSystemLook();
-    				int selectedOption = JOptionPane.showOptionDialog(null, Texts.wantOpenFile, Texts.wouldEdit, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-    				
-    				if (selectedOption == 0) {
+					MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, options, new Execute[] { () -> {
+    					File file = chooser.getSelectedFile();
+    					
     					try {
-							Main.desktop.open(fl.getParentFile());
+							Main.desktop.open(file.getParentFile());
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-    				}
-    				
-    				if (selectedOption == 2) {
-    					ListableFile.addTab(ListableFile.newListableFile(fl), false);
-    				}
+    				}, () -> {
+    					File file = chooser.getSelectedFile();
+    					if (!file.getName().contains(Main.CONFIG_FILE_EXTENSION)) file = new File(file.getAbsolutePath() + Main.CONFIG_FILE_EXTENSION);
+    					
+    					ListableFile.addTab(ListableFile.newListableFile(file), false);
+    				}, () -> {} });
 				}
 				break;
 				
@@ -544,15 +542,12 @@ public class CommandTerminal extends IDEComponent {
 					if (!ListableFile.hasAltered) {
 						String[] options = { Texts.yes, Texts.no };
 						
-						CodeEditor.setSystemLook();
-						int selectedOption = JOptionPane.showOptionDialog(null, Texts.configFileNotChanged, Texts.didNothing, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-						
-						if (selectedOption != 1) break;
-						
-						Main.conffile = "none";
-						Main.hasConfigFile = false;
-						
-						runCommand("revertcolors");
+						MessageBox.showDialog(Texts.didNothing, new String[] { Texts.configFileNotChanged }, options, new Execute[] { () -> {
+							Main.conffile = "none";
+							Main.hasConfigFile = false;
+							
+							runCommand("revertcolors");
+						}, () -> { } });
 					}
 					
 					ListableFile.generateLocalConfigFile(Main.defaultConfigFile);
@@ -1187,20 +1182,14 @@ public class CommandTerminal extends IDEComponent {
 					String s = System.getProperty(args[0]);
 					
 					if (s == null || s == "null") {
-						CodeEditor.setSystemLook();
-						
-						JOptionPane.showMessageDialog(null, Texts.propertyDoesntExist, Texts.getProperty, JOptionPane.ERROR_MESSAGE);
+						MessageBox.showDialog(Texts.getProperty, new String[] { Texts.propertyDoesntExist }, new String[] { "Ok" }, new Execute[] { () -> { } });
 						
 						break;
 					}
 					
-					CodeEditor.setSystemLook();
-					
-					JOptionPane.showMessageDialog(null, Texts.valueOfTheProperty + " " + args[0] + " " + Texts.is + " " + s, Texts.getProperty, JOptionPane.INFORMATION_MESSAGE);
+					MessageBox.showDialog(Texts.getProperty, new String[] { Texts.valueOfTheProperty + " " + args[0] + " " + Texts.is, s }, new String[] { "Ok", Texts.copyText }, new Execute[] { () -> { }, () -> { CodeEditor.copyText(s); } });
 				} catch (Exception e) {
-					CodeEditor.setSystemLook();
-					
-					JOptionPane.showMessageDialog(null, Texts.propertyDoesntExist, Texts.getProperty, JOptionPane.ERROR_MESSAGE);
+					MessageBox.showDialog(Texts.getProperty, new String[] { Texts.propertyDoesntExist }, new String[] { "Ok" }, new Execute[] { () -> { } });
 				}
 				
 				break;
@@ -1265,21 +1254,17 @@ public class CommandTerminal extends IDEComponent {
 					String s = System.getProperty(args[0]);
 					
 					if (s == null || s == "null") {
-						CodeEditor.setSystemLook();
-						
-						JOptionPane.showMessageDialog(null, Texts.propertyDoesntExist, Texts.setProperty, JOptionPane.ERROR_MESSAGE);
+						MessageBox.showDialog(Texts.setProperty, new String[] { Texts.propertyDoesntExist }, new String[] { "Ok" }, new Execute[] { () -> { } });
 						
 						break;
 					}
 					
-					CodeEditor.setSystemLook();
-					
-					JOptionPane.showMessageDialog(null, Texts.newValueOfTheProperty + " " + args[0] + " " + Texts.is + " " + s + ".", Texts.setProperty, JOptionPane.INFORMATION_MESSAGE);
+					MessageBox.showDialog(Texts.setProperty, new String[] { Texts.newValueOfTheProperty + " " + args[0] + " " + Texts.is, s }, new String[] { "Ok", Texts.copyText }, new Execute[] { () -> { }, () -> { CodeEditor.copyText(s); } });
 				} catch (Exception e) {
 					CodeEditor.setSystemLook();
 					
-					JOptionPane.showMessageDialog(null, Texts.propertyDoesntExist, Texts.setProperty, JOptionPane.ERROR_MESSAGE);
-				}
+					MessageBox.showDialog(Texts.setProperty, new String[] { Texts.propertyDoesntExist }, new String[] { "Ok" }, new Execute[] { () -> { } });
+					}
 				
 				break;
 			}
