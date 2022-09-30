@@ -212,6 +212,15 @@ public class Explorer extends IDEComponent {
     		Main.screen.setCursor(Cursor.getDefaultCursor());
     		return;
     	}
+    	
+    	if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_K) { // Ctrl + K (Alternar Explorador)
+    		KeyInput.updateKeys();
+
+    		CommandTerminal.runCommand("toggleexplorer");
+
+    		return;
+    	}
+    	
     	if (CommandTerminal.expOff) return;
     	
 	    height = Main.screen.getHeight();

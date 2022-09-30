@@ -27,6 +27,7 @@ import ide.explorercomponents.Execute;
 import ide.explorercomponents.SearchReplaceCore;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.git.GitCore;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
@@ -511,10 +512,22 @@ public class CommandTerminal extends IDEComponent {
 				else
 					Main.editor.setX(0);
 				
-				expOff ^= true;	// uma forma de togglar boolean (^ é xor gate)
+				if (Explorer.explorerMode != ExplorerMode.EXPLORER) {
+					if (!expOff) {
+						SearchReplaceCore.dispose();
+						GitCore.dispose();
+					}
+					else {
+						if (Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) {
+							Main.editor.execute("searchrep");
+						}
+						else if (Explorer.explorerMode == ExplorerMode.GIT) {
+							GitCore.init();
+						}
+					}
+				}
 				
-				if (Explorer.explorerMode == ExplorerMode.EXPLORER)
-					SearchReplaceCore.dispose();
+				expOff ^= true;	// uma forma de togglar boolean (^ é xor gate)
 				
 				break;
 				
@@ -760,6 +773,13 @@ public class CommandTerminal extends IDEComponent {
 				//Main.editor.editing = null;
 				
 				//Main.screen.frame.setTitle("Boot IDE");
+				
+				if (Explorer.explorerMode == ExplorerMode.GIT) {
+					Explorer.explorerMode = ExplorerMode.EXPLORER;
+	    			Explorer.selected = null;
+	    			
+	    			GitCore.dispose();
+				}
 				
 				IDEComponent.toRemove.add(Main.oneFolder);
 				IDEComponent.toRemove.add(Main.returnBase);

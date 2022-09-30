@@ -4106,7 +4106,7 @@ public class CodeEditor extends IDEComponent {
 					&& chars[i + len] != '.' && chars[i + len] != ':')
 				len++;
 			
-			if (fs.get(i).getColor().equals(Colors.keywords)) continue;
+			if (fs.size() > 1 && fs.get(i).getColor().equals(Colors.keywords)) continue;
 
 			fs = color(i - 1, i - 1 + len, new IDEFont(Fonts.numbersEditor, FONT_SIZE), fs);
 		}
@@ -7605,15 +7605,6 @@ public class CodeEditor extends IDEComponent {
 						KeyInput.updateKeys();
 
 						CommandTerminal.runCommand("cut");
-
-						return;
-					}
-
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_K) { // Ctrl + K (Alternar
-																											// Explorador)
-						KeyInput.updateKeys();
-
-						CommandTerminal.runCommand("toggleexplorer");
 
 						return;
 					}
