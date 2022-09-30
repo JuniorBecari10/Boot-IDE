@@ -213,14 +213,6 @@ public class Explorer extends IDEComponent {
     		return;
     	}
     	
-    	if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_K) { // Ctrl + K (Alternar Explorador)
-    		KeyInput.updateKeys();
-
-    		CommandTerminal.runCommand("toggleexplorer");
-
-    		return;
-    	}
-    	
     	if (CommandTerminal.expOff) return;
     	
 	    height = Main.screen.getHeight();
@@ -267,21 +259,6 @@ public class Explorer extends IDEComponent {
 	    }
 	    
 	    // Atalho Universal
-	    if (KeyInput.isControlDown() && !KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + T (Terminal)
-			KeyInput.updateKeys();
-
-			Main.editor.execute("term");
-
-			return;
-		}
-	    
-	    else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_M ) { // Ctrl + M (Go to Cursor)
-	    	KeyInput.updateKeys();
-
-	    	CommandTerminal.runCommand("gotocursor");
-
-	    	return;
-	    }
 	    
 	    if (hovered())
 	    	Main.screen.setCursor(Cursor.getDefaultCursor());

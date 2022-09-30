@@ -72,6 +72,7 @@ public final class KeyInput extends KeyAdapter {
         altDown = e.isAltDown();
         altGrDown = e.isAltGraphDown();
         
+        Main.editor.detectGlobalShortcuts();
         Main.editor.typeLogic();
         
         if (Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) {

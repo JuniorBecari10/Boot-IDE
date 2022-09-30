@@ -519,7 +519,7 @@ public class CommandTerminal extends IDEComponent {
 					}
 					else {
 						if (Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) {
-							Main.editor.execute("searchrep");
+							SearchReplaceCore.init();
 						}
 						else if (Explorer.explorerMode == ExplorerMode.GIT) {
 							GitCore.init();

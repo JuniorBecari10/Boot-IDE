@@ -831,7 +831,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public synchronized void typeLogic() {
 		try {
-			if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || MessageBox.active || Explorer.selected != null) return;
+			if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || MessageBox.active || SetBranchName.added || Explorer.selected != null) return;
 			
 			// o problema a daqui pra baixo, ou a CIMA? cima pq se o loop continuar sem executar a parte de baixo continua alto o uso da cpu, e o break ou return abaixam, e a parte de cima que fica executando sempre, mas se tirar ela e deixar sa a de baixo continua alto mesmo assim
 			
@@ -7401,416 +7401,444 @@ public class CodeEditor extends IDEComponent {
 		}
 	}
 	
+	public void detectGlobalShortcuts() {
+		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_K) { // Ctrl + K (Alternar Explorador)
+    		KeyInput.updateKeys();
+
+    		CommandTerminal.runCommand("toggleexplorer");
+
+    		return;
+    	}
+		else if (KeyInput.isControlDown() && !KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + N - Criar Novo Arquivo Na Tab
+			KeyInput.updateKeys();
+
+			execute("newfiletab");
+
+			return;
+		}
+		else if (KeyInput.isControlDown() && !KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_F) { // Ctrl + F - Abrir Search/Replace
+			KeyInput.updateKeys();
+
+			execute("searchrep");
+
+			return;
+		}
+		
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_K) { // Ctrl + K (Alternar Explorador)
+    		KeyInput.updateKeys();
+
+    		CommandTerminal.runCommand("toggleexplorer");
+
+    		return;
+    	}
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_B
+				|| KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_WINDOWS) { // Ctrl + B OU
+			// Ctrl +
+			// Win (Cmd)
+			KeyInput.updateKeys();
+
+			execute("cmd");
+
+			return;
+		}
+		else if (KeyInput.isControlDown() && !KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + T (Terminal)
+			KeyInput.updateKeys();
+
+			Main.editor.execute("term");
+
+			return;
+		}
+	    
+	    else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_M ) { // Ctrl + M (Go to Cursor)
+	    	KeyInput.updateKeys();
+
+	    	CommandTerminal.runCommand("gotocursor");
+
+	    	return;
+	    }
+	}
+
 	public void detectShortcuts() {
 		// Detectar atalhos
-		
+
 		if (KeyInput.isAltDown()) { // BASE 1
 			KeyInput.updateKeys();
-			
+
 			int indexSelected = tabs.indexOf(editing);
-			
+
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && indexSelected > 0) {
 				KeyInput.updateKeys();
-				
+
 				CommandTerminal.runCommand("selecttab " + (indexSelected - 1));
 			}
-			
+
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT && indexSelected < tabs.size() - 1) {
 				KeyInput.updateKeys();
-				
+
 				CommandTerminal.runCommand("selecttab " + (indexSelected + 1));
 			}
 		}
-		
-					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
-						KeyInput.updateKeys();
 
-						RightClickOption.removeAllRightClickOptions();
-						CommandTerminal.runCommand("deselect");
-
-						return;
-					}
-					
-					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == 61 ) { // 61 = + | Ctrl + Increase Font Size
-						KeyInput.updateKeys();
-
-						CommandTerminal.runCommand("setfontsize " + (FONT_SIZE + 1));
-
-						return;
-					}
-					
-					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_MINUS ) { // Ctrl - Decrease Font Size
-						KeyInput.updateKeys();
-						
-						CommandTerminal.runCommand("setfontsize " + (FONT_SIZE - 1));
-
-						return;
-					}
-					
-					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME ) { // Ctrl
-																																// +
-																																// Home
-																																// -
-																																// Comeao
-																																// do
-																																// Documento
-						KeyInput.updateKeys();
-
-						scrX = 0;
-						scrY = 0;
-
-						cursorX = 0;
-						cursorY = 1;
+		else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
+			KeyInput.updateKeys();
 
-						setCursorWithinBounds();
+			RightClickOption.removeAllRightClickOptions();
+			CommandTerminal.runCommand("deselect");
 
-						return;
-					}
-
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_END) { // Ctrl + End - Fim do Documento
-						KeyInput.updateKeys();
+			return;
+		}
 
-						// scrX = (lines.get(lines.size() - 1).getChars().size() * FONT_SIZE) -
-						// FONT_SIZE * 10; // esse - FONT_SIZE * 5 a pra dar um offset para tras e ficar
-						// no meio da tela.
+		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == 61 ) { // 61 = + | Ctrl + Increase Font Size
+			KeyInput.updateKeys();
 
-						cursorX = lines.get(lines.size() - 1).getChars().size();
-						cursorY = lines.size();
+			CommandTerminal.runCommand("setfontsize " + (FONT_SIZE + 1));
 
-						setCursorWithinBounds();
-						
-						CommandTerminal.runCommand("gotocursor");
+			return;
+		}
 
-						return;
-					}
-					
-					else if (KeyInput.isControlDown() && !KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_N) { // Ctrl + N - Criar Novo Arquivo Na Tab
-						KeyInput.updateKeys();
+		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_MINUS ) { // Ctrl - Decrease Font Size
+			KeyInput.updateKeys();
 
-						execute("newfiletab");
+			CommandTerminal.runCommand("setfontsize " + (FONT_SIZE - 1));
 
-						return;
-					}
+			return;
+		}
 
-					else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) { // Home - Comeao da Linha
-						KeyInput.updateKeys();
-
-						scrX = 0;
-						cursorX = 0;
+		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME ) { // Ctrl
+			// +
+			// Home
+			// -
+			// Começo
+			// do
+			// Documento
+			KeyInput.updateKeys();
 
-						setCursorWithinBounds();
+			scrX = 0;
+			scrY = 0;
 
-						return;
-					}
+			cursorX = 0;
+			cursorY = 1;
 
-					else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END) { // End - Fim da Linha
-						KeyInput.updateKeys();
+			setCursorWithinBounds();
 
-						// scrX = (lines.get(cursorY - 1).getChars().size() * FONT_SIZE) - FONT_SIZE *
-						// 10;
-						cursorX = lines.get(cursorY - 1).getChars().size();
-						
-						setCursorWithinBounds();
-						CommandTerminal.runCommand("gotocursor");
+			return;
+		}
 
-						return;
-					}
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_END) { // Ctrl + End - Fim do Documento
+			KeyInput.updateKeys();
 
-					else if (KeyInput.isControlDown() && !KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_F) { // Ctrl + F - Abrir Search/Replace
-						KeyInput.updateKeys();
+			// scrX = (lines.get(lines.size() - 1).getChars().size() * FONT_SIZE) -
+			// FONT_SIZE * 10; // esse - FONT_SIZE * 5 a pra dar um offset para tras e ficar
+			// no meio da tela.
 
-						execute("searchrep");
+			cursorX = lines.get(lines.size() - 1).getChars().size();
+			cursorY = lines.size();
 
-						return;
-					}
-					
-					else if (Explorer.explorerMode == ExplorerMode.SEARCHREPLACE && Explorer.selected == null && KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Selecionar a caixa Search)
-						KeyInput.updateKeys();
-						
-						Explorer.selected = Explorer.search;
-						
-						return;
-					}
+			setCursorWithinBounds();
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_L && !isReadOnly) { // Ctrl + L - Deletar Linha
-						KeyInput.updateKeys();
-
-						CommandTerminal.runCommand("selectline");
-						CommandTerminal.runCommand("del");
-
-						return;
-					}
+			CommandTerminal.runCommand("gotocursor");
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_J) { // Ctrl + J - Executar
-						KeyInput.updateKeys();
-
-						if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".bat")
-								|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".com")
-								|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".cmd"))
-							editing.execute("run");
-						else if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".sh") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".bash_profile") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".bashrc"))
-							editing.execute("runbash");
-
-						return;
-					}
+			return;
+		}
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_R && !isReadOnly
-							) { // Ctrl + R - Refresh Auto Complete
-						KeyInput.updateKeys();
+		else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) { // Home - Comeao da Linha
+			KeyInput.updateKeys();
 
-						wordSinceSpace = "";
+			scrX = 0;
+			cursorX = 0;
 
-						return;
-					}
+			setCursorWithinBounds();
 
-					else if (KeyInput.isControlDown() && KeyInput.isShiftDown()
-							&& KeyInput.getKeyCodePressed() == KeyEvent.VK_H) { // Ctrl + Shift + H - Toggle Read Only
-						KeyInput.updateKeys();
+			return;
+		}
 
-						editing.save();
+		else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END) { // End - Fim da Linha
+			KeyInput.updateKeys();
 
-						CommandTerminal.runCommand("togglereadonly");
+			// scrX = (lines.get(cursorY - 1).getChars().size() * FONT_SIZE) - FONT_SIZE *
+			// 10;
+			cursorX = lines.get(cursorY - 1).getChars().size();
 
-						return;
-					}
+			setCursorWithinBounds();
+			CommandTerminal.runCommand("gotocursor");
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D ) { // Ctrl
-																																// +
-																																// D
-																																// ou
-																																// Esc
-																																// (Desselecionar)
-						KeyInput.updateKeys();
+			return;
+		}
 
-						CommandTerminal.runCommand("deselect");
+		else if (Explorer.explorerMode == ExplorerMode.SEARCHREPLACE && Explorer.selected == null && KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Selecionar a caixa Search)
+			KeyInput.updateKeys();
 
-						return;
-					}
+			Explorer.selected = Explorer.search;
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_M ) { // Ctrl
-																																// +
-																																// M
-																																// (Go
-																																// To
-																																// Cursor)
-						KeyInput.updateKeys();
+			return;
+		}
 
-						CommandTerminal.runCommand("gotocursor");
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_L && !isReadOnly) { // Ctrl + L - Deletar Linha
+			KeyInput.updateKeys();
 
-						return;
-					}
+			CommandTerminal.runCommand("selectline");
+			CommandTerminal.runCommand("del");
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_X && !isReadOnly
-							) { // Ctrl + X (Cortar)
-						KeyInput.updateKeys();
+			return;
+		}
 
-						CommandTerminal.runCommand("cut");
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_J) { // Ctrl + J - Executar
+			KeyInput.updateKeys();
 
-						return;
-					}
+			if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".bat")
+					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".com")
+					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".cmd"))
+				editing.execute("run");
+			else if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".sh") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".bash_profile") || ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".bashrc"))
+				editing.execute("runbash");
 
-					else if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.isAltDown()
-							&& KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + Shift + Alt + T (Fechar Todas as Abas)
-						KeyInput.updateKeys();
+			return;
+		}
 
-						tabs.clear();
-						editing = null;
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_R && !isReadOnly
+				) { // Ctrl + R - Refresh Auto Complete
+			KeyInput.updateKeys();
 
-						return;
-					}
+			wordSinceSpace = "";
 
-					else if (KeyInput.isControlDown() && KeyInput.isShiftDown()
-							&& KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + Shift + T (Fechar Aba)
-						KeyInput.updateKeys();
+			return;
+		}
 
-						editing.close();
+		else if (KeyInput.isControlDown() && KeyInput.isShiftDown()
+				&& KeyInput.getKeyCodePressed() == KeyEvent.VK_H) { // Ctrl + Shift + H - Toggle Read Only
+			KeyInput.updateKeys();
 
-						return;
-					}
-					
-					/*
-					 * else if (KeyInput.isControlDown() && KeyInput.isShiftDown() &&
-					 * KeyInput.getKeyCodePressed() == KeyEvent.VK_R) { // Ctrl + Shift + R (Close
-					 * Other Tabs) KeyInput.updateKeys();
-					 * 
-					 * execute("closeother");
-					 * 
-					 * return; }
-					 */ // larga de mão
+			editing.save();
 
-					
+			CommandTerminal.runCommand("togglereadonly");
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_B
-							|| KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_WINDOWS) { // Ctrl + B OU
-																													// Ctrl +
-																													// Win (Cmd)
-						KeyInput.updateKeys();
+			return;
+		}
 
-						execute("cmd");
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_D ) { // Ctrl
+			// +
+			// D
+			// ou
+			// Esc
+			// (Desselecionar)
+			KeyInput.updateKeys();
 
-						return;
-					}
+			CommandTerminal.runCommand("deselect");
 
-					else if (editing == null)
-						return;
+			return;
+		}
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_S && !isReadOnly
-							) { // Ctrl + S (Salvar)
-						KeyInput.updateKeys();
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_M ) { // Ctrl
+			// +
+			// M
+			// (Go
+			// To
+			// Cursor)
+			KeyInput.updateKeys();
 
-						editing.save();
+			CommandTerminal.runCommand("gotocursor");
 
-						return;
-					}
+			return;
+		}
 
-					else if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A
-							) { // Ctrl + Shift + A (Selecionar Tudo)
-						KeyInput.updateKeys();
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_X && !isReadOnly
+				) { // Ctrl + X (Cortar)
+			KeyInput.updateKeys();
 
-						cursorX = 0;
+			CommandTerminal.runCommand("cut");
 
-						CommandTerminal.runCommand("selectline");
+			return;
+		}
 
-						return;
-					}
+		else if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.isAltDown()
+				&& KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + Shift + Alt + T (Fechar Todas as Abas)
+			KeyInput.updateKeys();
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A ) { // Ctrl
-																																// +
-																																// A
-																																// (Selecionar
-																																// Linha)
-						KeyInput.updateKeys();
+			tabs.clear();
+			editing = null;
 
-						cursorX = 0;
-						cursorY = 1;
+			return;
+		}
 
-						CommandTerminal.runCommand("selectall");
+		else if (KeyInput.isControlDown() && KeyInput.isShiftDown()
+				&& KeyInput.getKeyCodePressed() == KeyEvent.VK_T) { // Ctrl + Shift + T (Fechar Aba)
+			KeyInput.updateKeys();
 
-						return;
-					}
+			editing.close();
 
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C ) { // Ctrl
-																																// +
-																																// C
-																																// (Copiar)
-						KeyInput.updateKeys();
-
-						CommandTerminal.runCommand("copy");
-
-						return;
-					}
-
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_V && !isReadOnly
-							) { // Ctrl + V (Colar)
-						KeyInput.updateKeys();
-
-						paste();
-
-						return;
-					}
-
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE && !isReadOnly
-							) { // Ctrl + Delete ou Backspace (Apenas Selecionando) (Deletar)
-						KeyInput.updateKeys();
-
-						CommandTerminal.runCommand("del");
-
-						return;
-					}
-					
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_O && !isReadOnly) { // Ctrl + O - Toggle Whitespaces
-						KeyInput.updateKeys();
-
-						CommandTerminal.runCommand("togglewhitespaces");
-
-						return;
-					}
-
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_P && !isReadOnly
-							) { // Ctrl + P (Toggle Code Helpers)
-						KeyInput.updateKeys();
-
-						CommandTerminal.runCommand("togglecodehelpers");
-
-						return;
-					}
-
-					// Lembrando que isso aqui sa ativa quando o que vc digitou esta dentro dos
-					// conformes
-					else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_SPACE && !isReadOnly
-							) { // Ctrl + Space (Trigger Auto Complete)
-						String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent())
-								? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent()))
-								: getKeywordsSpecial(editing.getRegent().getRegent().getName());
-						// Set<AutoComplete> autocc = autocomplete;
-
-						// autocomplete.clear();
-						autocomplete.clear();
-
-						for (String s : autoc)
-							if (s.contains(wordSinceSpace))
-								autocomplete.add(new AutoComplete(s, AutoCompleteType.KEYWORD));
-
-						/*
-						 * for (AutoComplete c : autocc) else if (c.text.contains(wordSinceSpace))
-						 * autocomplete.add(c);
-						 */
-
-						// autocomplete = removeDuplicates(autocomplete);
-						// autocomplete = removeDuplicates(autocomplete);
-
-						autocompleteindex = 0;
-
-						addAutoCompleteOptions();
-
-						return;
-					}
-
-					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
-						KeyInput.updateKeys();
-						
-						if (editing.readMode != FileReadMode.NORMAL) return;
-						
-						RightClickOption.removeAllRightClickOptions();
-						
-						if (undo.isEmpty()) return;
-						
-						List<IDELine> peek = peekUndo();
-						redo.push(undo.pop());
-						
-						// define lines
-						//System.out.println(peek.get(0).getFonts().isEmpty());
-						Main.editor.lines = defineLines(peek);
-						
-						//System.out.println(peek.get(0).getChars());
-						
-						setCursorWithinBounds();
-						editing.setSaved(false);
-						
-						return;
-					}
-
-					if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Y (Refazer)
-						KeyInput.updateKeys();
-						
-						if (editing.readMode != FileReadMode.NORMAL) return;
-						
-						RightClickOption.removeAllRightClickOptions();
-						
-						if (redo.isEmpty()) return;
-						
-						List<IDELine> peek = peekRedo();
-						undo.push(redo.pop());
-						
-						this.lines = defineLines(peek);
-						
-						setCursorWithinBounds();
-						editing.setSaved(false);
-						
-						return;
-					}
-				}
-	
+			return;
+		}
+
+		/*
+		 * else if (KeyInput.isControlDown() && KeyInput.isShiftDown() &&
+		 * KeyInput.getKeyCodePressed() == KeyEvent.VK_R) { // Ctrl + Shift + R (Close
+		 * Other Tabs) KeyInput.updateKeys();
+		 * 
+		 * execute("closeother");
+		 * 
+		 * return; }
+		 */ // larga de mão
+
+		else if (editing == null)
+			return;
+
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_S && !isReadOnly
+				) { // Ctrl + S (Salvar)
+			KeyInput.updateKeys();
+
+			editing.save();
+
+			return;
+		}
+
+		else if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A
+				) { // Ctrl + Shift + A (Selecionar Tudo)
+			KeyInput.updateKeys();
+
+			cursorX = 0;
+
+			CommandTerminal.runCommand("selectline");
+
+			return;
+		}
+
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_A ) { // Ctrl
+			// +
+			// A
+			// (Selecionar
+			// Linha)
+			KeyInput.updateKeys();
+
+			cursorX = 0;
+			cursorY = 1;
+
+			CommandTerminal.runCommand("selectall");
+
+			return;
+		}
+
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C ) { // Ctrl
+			// +
+			// C
+			// (Copiar)
+			KeyInput.updateKeys();
+
+			CommandTerminal.runCommand("copy");
+
+			return;
+		}
+
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_V && !isReadOnly
+				) { // Ctrl + V (Colar)
+			KeyInput.updateKeys();
+
+			paste();
+
+			return;
+		}
+
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE && !isReadOnly
+				) { // Ctrl + Delete ou Backspace (Apenas Selecionando) (Deletar)
+			KeyInput.updateKeys();
+
+			CommandTerminal.runCommand("del");
+
+			return;
+		}
+
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_O && !isReadOnly) { // Ctrl + O - Toggle Whitespaces
+			KeyInput.updateKeys();
+
+			CommandTerminal.runCommand("togglewhitespaces");
+
+			return;
+		}
+
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_P && !isReadOnly
+				) { // Ctrl + P (Toggle Code Helpers)
+			KeyInput.updateKeys();
+
+			CommandTerminal.runCommand("togglecodehelpers");
+
+			return;
+		}
+
+		// Lembrando que isso aqui sa ativa quando o que vc digitou esta dentro dos
+		// conformes
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_SPACE && !isReadOnly
+				) { // Ctrl + Space (Trigger Auto Complete)
+			String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent())
+					? getKeywords(ListableFile.getFileExtension(editing.getRegent().getRegent()))
+							: getKeywordsSpecial(editing.getRegent().getRegent().getName());
+			// Set<AutoComplete> autocc = autocomplete;
+
+			// autocomplete.clear();
+			autocomplete.clear();
+
+			for (String s : autoc)
+				if (s.toLowerCase().contains(wordSinceSpace.toLowerCase()))
+					autocomplete.add(new AutoComplete(s, AutoCompleteType.KEYWORD));
+
+			/*
+			 * for (AutoComplete c : autocc) else if (c.text.contains(wordSinceSpace))
+			 * autocomplete.add(c);
+			 */
+
+			// autocomplete = removeDuplicates(autocomplete);
+			// autocomplete = removeDuplicates(autocomplete);
+
+			autocompleteindex = 0;
+
+			addAutoCompleteOptions();
+
+			return;
+		}
+
+		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Z) { // Ctrl + Z (Desfazer)
+			KeyInput.updateKeys();
+
+			if (editing.readMode != FileReadMode.NORMAL) return;
+
+			RightClickOption.removeAllRightClickOptions();
+
+			if (undo.isEmpty()) return;
+
+			List<IDELine> peek = peekUndo();
+			redo.push(undo.pop());
+
+			// define lines
+			//System.out.println(peek.get(0).getFonts().isEmpty());
+			Main.editor.lines = defineLines(peek);
+
+			//System.out.println(peek.get(0).getChars());
+
+			setCursorWithinBounds();
+			editing.setSaved(false);
+
+			return;
+		}
+
+		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Y (Refazer)
+			KeyInput.updateKeys();
+
+			if (editing.readMode != FileReadMode.NORMAL) return;
+
+			RightClickOption.removeAllRightClickOptions();
+
+			if (redo.isEmpty()) return;
+
+			List<IDELine> peek = peekRedo();
+			undo.push(redo.pop());
+
+			this.lines = defineLines(peek);
+
+			setCursorWithinBounds();
+			editing.setSaved(false);
+
+			return;
+		}
+	}
+
 	public void scrollTabs() {
 		if (MouseInput.hovered(x, Screen.DECORATION_HEIGHT, Main.screen.getWidth(), Tab.HEIGHT) && tabs != null && tabs.size() > 0) {
 			if (MouseInput.isMouseRolling()) {
