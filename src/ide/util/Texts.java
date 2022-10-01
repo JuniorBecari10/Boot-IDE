@@ -251,6 +251,11 @@ public final class Texts {
 	public static String copyText;
 	
 	public static String createNewCommit;
+	public static String selectARepository;
+	public static String push;
+	
+	public static String allowEmpty;
+	public static String forcePush;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -488,6 +493,11 @@ public final class Texts {
 			copyText = "Copiar Texto";
 			
 			createNewCommit = "Criar Novo Commit";
+			selectARepository = "Selecione um Repositório Remoto:";
+			push = "Carregar";
+			
+			allowEmpty = "Permitir Commits Vazios";
+			forcePush = "Forçar Carregamento";
 			
 			break;
 		
@@ -725,6 +735,11 @@ public final class Texts {
 			copyText = "Copy Text";
 			
 			createNewCommit = "Create New Commit";
+			selectARepository = "Select a Remote Repository:";
+			push = "Push";
+			
+			allowEmpty = "Allow Empty Commits";
+			forcePush = "Force Push";
 			
 			break;
 		}

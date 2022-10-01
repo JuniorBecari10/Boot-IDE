@@ -14,6 +14,7 @@ import ide.explorercomponents.InputBox;
 import ide.explorercomponents.LastAction;
 import ide.explorercomponents.SetBranchName;
 import ide.explorercomponents.SetCommitName;
+import ide.explorercomponents.ToggleButton;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.util.Texts;
@@ -23,6 +24,8 @@ public class GitCore {
 	public static Stack<GitAction> actions = new Stack<>();
 	
 	public static boolean checkoutToCreatedBranch = true;
+	
+	public static boolean allowEmptyCommits;
 
 	public static ActionState getState(boolean error, boolean warn) {
 		if (warn)
@@ -53,6 +56,17 @@ public class GitCore {
 		boolean warn = Main.isWarning(output);
 		
 		actions.add(new GitAction("git branch", getState(error, warn), output));
+	}
+	
+	public static void push(String repo, boolean force) {
+		String[] output = Main.runCommand(Main.baseFolder, "git push " + (force ? "-f " : "-u ") + repo);
+		
+		Explorer.fetchStatus();
+		
+		boolean error = Main.isError(output);
+		boolean warn = Main.isWarning(output);
+		
+		actions.add(new GitAction("git push", getState(error, warn), output));
 	}
 	
 	public static void init() {
@@ -277,13 +291,66 @@ public class GitCore {
 		}
 		
 		if (Explorer.commit == null) {
-			Explorer.commit = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 540, Main.explorer.getWidth() - 40, 20, "Commit", () -> {
-				Explorer.setCommitName = new SetCommitName(0, Screen.DECORATION_HEIGHT + 570, 0, 30);
+			Explorer.commit = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 540, Main.explorer.getWidth() - 82, 20, "Commit", () -> {
+				Explorer.setCommitName = new SetCommitName(0, Screen.DECORATION_HEIGHT + 600, 0, 30);
 				
 				IDEComponent.toAdd.add(Explorer.setCommitName);
 				SetCommitName.added = true;
 				Explorer.selected = null;
-				}, true);
+				}, true) {
+				public void tick() {
+					width = Main.explorer.getWidth() - 82;
+				}
+			};
+		}
+		
+		if (Explorer.allowEmpty == null) {
+			Explorer.allowEmpty = new ToggleButton(Main.explorer.getWidth() - 52, Screen.DECORATION_HEIGHT + 533, 32, 32, Main.allowEmptySpr, false, Texts.allowEmpty) {
+				public void tick() {
+					super.tick();
+					
+					caption = Texts.allowEmpty;
+				}
+			};
+		}
+		
+		if (Explorer.push == null) {
+			Explorer.push = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 570, Main.explorer.getWidth() - 82, 20, Texts.push, () -> {
+				List<RightClickOption> list = new ArrayList<>();
+				int width = Texts.selectARepository.length() * 14;
+				
+				list.add(new RightClickOption(0, 0, width, 30, false, Texts.selectARepository, (a) -> {  }, ""));
+				list.add(new RightClickOption(0, 0, width, 30, false, "Branch: " + Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch], (a) -> {  }, ""));
+				
+				for (String s : Explorer.gitStatus.remoteRepos) {
+					list.add(new RightClickOption(0, 0, width, 30, s, (a) -> { push(s, false); }, ""));
+				}
+				
+				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.push.getY(), list.toArray(new RightClickOption[list.size()]));
+				}, true) {
+				public void tick() {
+					super.tick();
+					
+					width = Main.explorer.getWidth() - 82;
+					
+					text = Texts.push;
+					
+					if (Explorer.gitStatus.remoteRepos.length == 0)
+						enabled = false;
+					else
+						enabled = true;
+				}
+			};
+		}
+		
+		if (Explorer.forcePush == null) {
+			Explorer.forcePush = new ToggleButton(Main.explorer.getWidth() - 52, Screen.DECORATION_HEIGHT + 565, 32, 32, Main.forcePushSpr, false, Texts.forcePush) {
+				public void tick() {
+					super.tick();
+					
+					caption = Texts.forcePush;
+				}
+			};
 		}
 		
 		IDEComponent.toAdd.add(Explorer.createBranch);
@@ -293,6 +360,9 @@ public class GitCore {
 		IDEComponent.toAdd.add(Explorer.stageAll);
 		IDEComponent.toAdd.add(Explorer.unstageAll);
 		IDEComponent.toAdd.add(Explorer.commit);
+		IDEComponent.toAdd.add(Explorer.allowEmpty);
+		IDEComponent.toAdd.add(Explorer.push);
+		IDEComponent.toAdd.add(Explorer.forcePush);
 	}
 	
 	public static synchronized void dispose() {
@@ -308,5 +378,8 @@ public class GitCore {
 		IDEComponent.toRemove.add(Explorer.stageAll);
 		IDEComponent.toRemove.add(Explorer.unstageAll);
 		IDEComponent.toRemove.add(Explorer.commit);
+		IDEComponent.toRemove.add(Explorer.allowEmpty);
+		IDEComponent.toRemove.add(Explorer.push);
+		IDEComponent.toRemove.add(Explorer.forcePush);
 	}
 }

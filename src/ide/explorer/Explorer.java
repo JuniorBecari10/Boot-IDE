@@ -94,6 +94,10 @@ public class Explorer extends IDEComponent {
 	public static ExecuteButton seeStaged;
 	
 	public static ExecuteButton commit;
+	public static ToggleButton allowEmpty;
+	
+	public static ExecuteButton push;
+	public static ToggleButton forcePush;
 	
 	public static LastAction lastAction;
 	

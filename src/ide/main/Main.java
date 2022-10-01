@@ -228,6 +228,9 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage renameBranchSpr;
     public static BufferedImage deleteBranchSpr;
     
+    public static BufferedImage allowEmptySpr;
+    public static BufferedImage forcePushSpr;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -328,6 +331,9 @@ public class Main implements Runnable, Tickable {
 	        checkoutSpr = spritesheet.getSprite(432, 0, 16, 16);
 	        renameBranchSpr = spritesheet.getSprite(448, 0, 16, 16);
 	        deleteBranchSpr = spritesheet.getSprite(480, 0, 16, 16);
+	        
+	        allowEmptySpr = spritesheet.getSprite(496, 0, 16, 16);
+	        forcePushSpr = spritesheet.getSprite(512, 0, 16, 16);
 	        
 	        ///////
 	        
@@ -497,6 +503,9 @@ public class Main implements Runnable, Tickable {
         checkoutSpr = Colors.swapColor(checkoutSpr, Colors.textLightDefault, Colors.textLight);
         renameBranchSpr = Colors.swapColor(renameBranchSpr, Colors.textLightDefault, Colors.textLight);
         deleteBranchSpr = Colors.swapColor(deleteBranchSpr, Colors.textLightDefault, Colors.textLight);
+        
+        allowEmptySpr = Colors.swapColor(allowEmptySpr, Colors.textLightDefault, Colors.textLight);
+        forcePushSpr = Colors.swapColor(forcePushSpr, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         

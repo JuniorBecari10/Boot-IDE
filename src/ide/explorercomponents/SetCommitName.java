@@ -113,8 +113,6 @@ public class SetCommitName extends IDEComponent {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				if (text.length() == 0) return;
 				
-				System.out.println("git commit -m" + " " + "\"" + text.toString().replace("\"", "\\\"") + "\"");
-				
 				String[] output = Main.runCommand(Main.baseFolder, "git commit -m" + " " + "\"" + text.toString().replace("\"", "\\\"") + "\"");
 				
 				boolean error = Main.isError(output);

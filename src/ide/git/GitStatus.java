@@ -12,11 +12,14 @@ public class GitStatus {
 	public String[] changedFiles;
 	public String[] stagedFiles;
 	
-	private GitStatus(String[] branches, int currentBranch, String[] changedFiles, String[] stagedFiles) {
+	public String[] remoteRepos;
+	
+	private GitStatus(String[] branches, int currentBranch, String[] changedFiles, String[] stagedFiles, String[] remoteRepos) {
 		this.branches = branches;
 		this.currentBranch = currentBranch;
 		this.changedFiles = changedFiles;
 		this.stagedFiles = stagedFiles;
+		this.remoteRepos = remoteRepos;
 	}
 	
 	public String toString() {
@@ -48,6 +51,7 @@ public class GitStatus {
 	public static GitStatus fetch() {
 		String[] files = Main.runCommand(Main.baseFolder, "git status --porcelain");
 		String[] branchesFetch = Main.runCommand(Main.baseFolder, "git branch");
+		String[] reposFetch = Main.runCommand(Main.baseFolder, "git remote");
 		
 		/*String[] commitsNames = Main.runCommand(Main.baseFolder, "git log --pretty=oneline");
 		String[] commitsDates = Main.runCommand(Main.baseFolder, "git log --pretty=format:\"%h %an %ad\"");*/
@@ -103,6 +107,6 @@ public class GitStatus {
 			}
 		}
 		
-		return new GitStatus(branches, currentBranch, files, stagedFilesList.toArray(new String[0]));
+		return new GitStatus(branches, currentBranch, files, stagedFilesList.toArray(new String[0]), reposFetch);
 	}
 }
