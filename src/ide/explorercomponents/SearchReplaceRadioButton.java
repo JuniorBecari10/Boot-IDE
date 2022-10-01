@@ -30,7 +30,7 @@ public class SearchReplaceRadioButton extends IDEComponent {
 	}
 	
 	public boolean hovered() {
-		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added) return false;
+		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added || SetCommitName.added) return false;
 		
 		return super.hovered();
 	}

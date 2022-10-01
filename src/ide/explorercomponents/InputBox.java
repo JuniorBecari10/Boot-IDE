@@ -30,7 +30,7 @@ public class InputBox extends IDEComponent {
 	}
 	
 	public boolean hovered() {
-		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added || RightClickOption.isRightClickActive()) return false;
+		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added || SetCommitName.added || RightClickOption.isRightClickActive()) return false;
 		
 		return super.hovered();
 	}

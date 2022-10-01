@@ -9,6 +9,8 @@ import ide.components.MessageBox;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorercomponents.SearchReplaceCore;
+import ide.explorercomponents.SetBranchName;
+import ide.explorercomponents.SetCommitName;
 import ide.main.Main;
 
 public final class KeyInput extends KeyAdapter {
@@ -82,7 +84,7 @@ public final class KeyInput extends KeyAdapter {
 	    	if (Explorer.entireDocument.getState() == false && Explorer.selectedLines.getState() == false)
 	    		Explorer.entireDocument.setState(true);
 	    	
-	    	if (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB && !CommandTerminal.active && !MessageBox.active) {
+	    	if (KeyInput.isKeyPressed() && KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB && !CommandTerminal.active && !MessageBox.active && !SetBranchName.added && !SetCommitName.added) {
 	    		//KeyInput.updateKeys();
 	    		
 	    		if (Explorer.selected == Explorer.search) Explorer.selected = Explorer.replace;
@@ -159,6 +161,9 @@ public final class KeyInput extends KeyAdapter {
         
         if (Explorer.setBranchName != null)
         	Explorer.setBranchName.type();
+        
+        if (Explorer.setCommitName != null)
+        	Explorer.setCommitName.type();
         
         /*if (Character.isLetterOrDigit(charPressed)) {
 	        keyCodes.add(keyCodePressed);

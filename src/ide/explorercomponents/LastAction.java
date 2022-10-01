@@ -29,6 +29,8 @@ public class LastAction extends IDEComponent {
 	}
 	
 	public void tick() {
+		y = Main.screen.getHeight() - 30;
+		
 		if (!GitCore.actions.isEmpty())
 			action = GitCore.actions.peek();
 		

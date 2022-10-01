@@ -42,10 +42,10 @@ public class ExecuteButton extends IDEComponent {
 	
 	public boolean hovered() {
 		if (inMessageBox) {
-			if (SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added) return false;
+			if (SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added || SetCommitName.added) return false;
 		}
 		else
-			if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added) return false;
+			if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added || SetCommitName.added) return false;
 		
 		return super.hovered();
 	}

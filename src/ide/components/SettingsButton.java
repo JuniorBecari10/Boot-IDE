@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import ide.explorer.Explorer;
 import ide.explorercomponents.SetBranchName;
+import ide.explorercomponents.SetCommitName;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
@@ -17,7 +18,7 @@ public class SettingsButton extends IDEComponent {
 	}
 	
 	public boolean hovered() {
-		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added) return false;
+		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added || SetCommitName.added) return false;
 		
 		return super.hovered();
 	}

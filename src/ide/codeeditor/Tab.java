@@ -31,6 +31,7 @@ import ide.explorer.FileType;
 import ide.explorer.ListableFile;
 import ide.explorercomponents.Execute;
 import ide.explorercomponents.SetBranchName;
+import ide.explorercomponents.SetCommitName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
@@ -163,7 +164,7 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	@Override
     public boolean hovered() {
-		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added) return false;
+		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added || SetCommitName.added) return false;
 		
 		int x = this.x + Main.editor.tabScr;
 		

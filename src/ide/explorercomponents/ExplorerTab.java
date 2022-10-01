@@ -48,7 +48,7 @@ public class ExplorerTab extends IDEComponent {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		Color c = Explorer.explorerMode == regent ? Colors.textLight : Colors.explorerLight;
-		Color bg = hovered() && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added) ? Colors.explorerLight : Colors.explorer;
+		Color bg = hovered() && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added || SetCommitName.added) ? Colors.explorerLight : Colors.explorer;
 
 		g.setColor(bg);
 		g2.setStroke(new BasicStroke(3f));
@@ -64,7 +64,7 @@ public class ExplorerTab extends IDEComponent {
 		final int imageSize = 32;
 		g.drawImage(sprite, x + ((SIZE / 2) - (imageSize / 2)), Y + ((SIZE / 2) - (imageSize / 2)), imageSize, imageSize, null);
 		
-		if (hovered() && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added)) {
+		if (hovered() && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added || SetCommitName.added)) {
 			Explorer.renderDescriptionText(name, MouseInput.getMouseX() - 27, MouseInput.getMouseY() + 27, g);
 		}
 	}

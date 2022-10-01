@@ -13,6 +13,7 @@ import ide.explorercomponents.ExecuteButtonIcon;
 import ide.explorercomponents.InputBox;
 import ide.explorercomponents.LastAction;
 import ide.explorercomponents.SetBranchName;
+import ide.explorercomponents.SetCommitName;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.util.Texts;
@@ -275,12 +276,23 @@ public class GitCore {
 			};
 		}
 		
+		if (Explorer.commit == null) {
+			Explorer.commit = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 540, Main.explorer.getWidth() - 40, 20, "Commit", () -> {
+				Explorer.setCommitName = new SetCommitName(0, Screen.DECORATION_HEIGHT + 570, 0, 30);
+				
+				IDEComponent.toAdd.add(Explorer.setCommitName);
+				SetCommitName.added = true;
+				Explorer.selected = null;
+				}, true);
+		}
+		
 		IDEComponent.toAdd.add(Explorer.createBranch);
 		IDEComponent.toAdd.add(Explorer.checkout);
 		IDEComponent.toAdd.add(Explorer.renameBranch);
 		IDEComponent.toAdd.add(Explorer.deleteBranch);
 		IDEComponent.toAdd.add(Explorer.stageAll);
 		IDEComponent.toAdd.add(Explorer.unstageAll);
+		IDEComponent.toAdd.add(Explorer.commit);
 	}
 	
 	public static synchronized void dispose() {
@@ -295,5 +307,6 @@ public class GitCore {
 		IDEComponent.toRemove.add(Explorer.deleteBranch);
 		IDEComponent.toRemove.add(Explorer.stageAll);
 		IDEComponent.toRemove.add(Explorer.unstageAll);
+		IDEComponent.toRemove.add(Explorer.commit);
 	}
 }

@@ -240,6 +240,7 @@ public final class Texts {
 	public static String currentBranch;
 	
 	public static String branchNameIllegal;
+	public static String commitNameIllegal;
 
 	public static String fileChanged;
 	public static String filesChanged;
@@ -248,6 +249,8 @@ public final class Texts {
 	public static String copyAbsolutePath;
 	
 	public static String copyText;
+	
+	public static String createNewCommit;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -474,6 +477,7 @@ public final class Texts {
 			currentBranch = "Branch Atual";
 			
 			branchNameIllegal = "O nome da Branch contém caracteres não permitidos.";
+			commitNameIllegal = "O nome do Commit contém caracteres não permitidos.";
 			
 			fileChanged = "arquivo alterado.";
 			filesChanged = "arquivos alterados.";
@@ -482,6 +486,8 @@ public final class Texts {
 			copyAbsolutePath = "Copiar Caminho Absoluto";
 			
 			copyText = "Copiar Texto";
+			
+			createNewCommit = "Criar Novo Commit";
 			
 			break;
 		
@@ -708,6 +714,7 @@ public final class Texts {
 			currentBranch = "Current Branch";
 			
 			branchNameIllegal = "The Branch name contains non-permitted characters.";
+			commitNameIllegal = "The Commit name contains non-permitted characters.";
 			
 			fileChanged = "file changed.";
 			filesChanged = "files changed.";
@@ -716,6 +723,8 @@ public final class Texts {
 			copyAbsolutePath = "Copy Absolute Path";
 			
 			copyText = "Copy Text";
+			
+			createNewCommit = "Create New Commit";
 			
 			break;
 		}

@@ -30,6 +30,8 @@ import ide.components.RenameFile;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.explorercomponents.Execute;
+import ide.explorercomponents.SetBranchName;
+import ide.explorercomponents.SetCommitName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.git.GitCore;
@@ -1822,7 +1824,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					return;
 		}
 
-		if (hovered() && !SetFileName.added && !CommandTerminal.active && !MessageBox.active && !RenameFile.added
+		if (hovered() && !SetFileName.added && !CommandTerminal.active && !MessageBox.active && !SetBranchName.added && !SetCommitName.added && !RenameFile.added
 				&& !RightClickOption.isRightClickActive()) {
 			g.setColor(Colors.explorerLight);
 			g.fillRect(0, y, Main.explorer.getWidth(), height);

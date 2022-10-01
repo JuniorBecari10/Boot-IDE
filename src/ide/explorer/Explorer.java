@@ -31,6 +31,7 @@ import ide.explorercomponents.LastAction;
 import ide.explorercomponents.SearchReplaceCore;
 import ide.explorercomponents.SearchReplaceRadioButton;
 import ide.explorercomponents.SetBranchName;
+import ide.explorercomponents.SetCommitName;
 import ide.explorercomponents.ToggleButton;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -77,6 +78,7 @@ public class Explorer extends IDEComponent {
 	// -- Git --
 	
 	public static SetBranchName setBranchName;
+	public static SetCommitName setCommitName;
 	
 	public static ExecuteButtonIcon createBranch;
 	public static ExecuteButtonIcon checkout;
@@ -90,6 +92,8 @@ public class Explorer extends IDEComponent {
 	public static ExecuteButton stageAll;
 	public static ExecuteButton unstageAll;
 	public static ExecuteButton seeStaged;
+	
+	public static ExecuteButton commit;
 	
 	public static LastAction lastAction;
 	
@@ -208,7 +212,7 @@ public class Explorer extends IDEComponent {
     }
     
     public void tick() {
-    	if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added) {
+    	if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added || SetCommitName.added) {
     		Main.screen.setCursor(Cursor.getDefaultCursor());
     		return;
     	}
@@ -229,7 +233,7 @@ public class Explorer extends IDEComponent {
 	    */
 	   	// Drag
 	   	
-	    if (MouseInput.hovered(x + width - 5, y, 10, height) && !ListableFile.isListableFileHovered() && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added)) {
+	    if (MouseInput.hovered(x + width - 5, y, 10, height) && !ListableFile.isListableFileHovered() && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added || SetCommitName.added)) {
 			Main.screen.setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
 			
 			if (MouseInput.leftDragged() && (!Main.editor.selecting || Main.editor.editing == null) && Tab.dragging == null)
@@ -709,6 +713,11 @@ public class Explorer extends IDEComponent {
 	    	g2.setColor(Colors.textLight);
 	    	g2.setStroke(new BasicStroke(2f));
 	    	g2.drawLine(20 + ("Staging".length() * 12) + 10, Screen.DECORATION_HEIGHT + 380, width - 20, Screen.DECORATION_HEIGHT + 380);
+	    	
+	    	Fonts.drawString("Commit & Push", 20, Screen.DECORATION_HEIGHT + 510, new IDEFont(Fonts.lightGrayNormal, 16), g);
+	    	g2.setColor(Colors.textLight);
+	    	g2.setStroke(new BasicStroke(2f));
+	    	g2.drawLine(20 + ("Commit & Push".length() * 12) + 10, Screen.DECORATION_HEIGHT + 520, width - 20, Screen.DECORATION_HEIGHT + 520);
     	}
     	else {
     		Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);

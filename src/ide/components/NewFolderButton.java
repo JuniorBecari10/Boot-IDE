@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
+import ide.explorercomponents.SetBranchName;
+import ide.explorercomponents.SetCommitName;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.screen.Screen;
@@ -23,7 +25,7 @@ public class NewFolderButton extends IDEComponent {
 		
 		if (x < (Main.newFile.getX() + Main.newFile.getWidth()) + 2) x = (Main.newFile.getX() + Main.newFile.getWidth()) + 2;
 		
-		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !MessageBox.active && !RenameFile.added && Explorer.selected == null)) {
+		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !MessageBox.active && !SetBranchName.added && !SetCommitName.added && !RenameFile.added && Explorer.selected == null)) {
 			MouseInput.updateMouse();
 			
 			int y = 200 + Screen.DECORATION_HEIGHT;

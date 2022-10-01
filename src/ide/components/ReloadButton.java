@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorer.ListableFile;
+import ide.explorercomponents.SetBranchName;
+import ide.explorercomponents.SetCommitName;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;
@@ -22,7 +24,7 @@ public class ReloadButton extends IDEComponent {
 		
 		if (x < (Main.returnBase.getX() + Main.returnBase.getWidth()) + 2) x = (Main.returnBase.getX() + Main.returnBase.getWidth()) + 2;
 		
-		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !MessageBox.active && !RenameFile.added && Explorer.selected == null)) {
+		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !MessageBox.active && !SetBranchName.added && !SetCommitName.added && !RenameFile.added && Explorer.selected == null)) {
 			MouseInput.updateMouse();
 			
 			reloadExplorer();
