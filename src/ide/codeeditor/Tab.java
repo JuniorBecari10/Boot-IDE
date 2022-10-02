@@ -935,7 +935,7 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		g.setColor(bg);
 		g2.setStroke(new BasicStroke(3f));
-		g2.fillRect(x, Y, drawW, HEIGHT);
+		g2.fillRect(x, Y - 1, drawW, HEIGHT);
 		
 		g.setColor(c);
 		
