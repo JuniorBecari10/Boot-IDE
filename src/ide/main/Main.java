@@ -859,124 +859,34 @@ public class Main implements Runnable, Tickable {
 					if (editor.editing.isTemporary)
 						text = Texts.thisIsTemporary;
 					
-					int width = 20 + text.length() * 12;
-					int height = 100;
+					List<String> texts = new ArrayList<>();
 					
-					int x = MouseInput.getMouseX() + 10;
-					int y = MouseInput.getMouseY() + 10;
-					
-					if (!hasConfigFile) {
-						if (lang == Language.PORT)
-							if (width < 600)
-								width = 600;
-						
-						if (lang == Language.ENG)
-							if (width < 470)
-								width = 470;
-					}
-					else if (Main.editor.editing != null && Main.editor.editing.isReadOnly) {
-						if (lang == Language.PORT)
-							if (width < 480)
-								width = 480;
-						if (lang == Language.ENG)
-							if (width < 360)
-								width = 360;
-					}
-					else {
-						if (lang == Language.PORT)
-							if (width < 435)
-								width = 435;
-						if (lang == Language.ENG)
-							if (width < 360)
-								width = 360;
-					}
-					
-					if (Main.editor.editing.isReadOnly)
-						height = 130;
-					
-					Rectangle intersection = new Rectangle(x, y, width, height).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999, Main.screen.getHeight()));
-					
-					if (!intersection.isEmpty()) {
-						x -= intersection.getWidth();
-					}
-					
-					g.setColor(Colors.explorerLight);
-					g.fillRect(x, MouseInput.getMouseY(), width, height);
-					
-					g.setColor(Colors.textLighter);
-					g2.setStroke(new BasicStroke(2f));
-					g2.drawRect(x, MouseInput.getMouseY(), width, height);
-					
-					Fonts.drawString(text, (x - 10) + 20, (y - 10) + 10, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-					
-					if (Main.editor.codeHelpersOn)
-						Fonts.drawString(Texts.codeHelpersOn, (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-					else
-						Fonts.drawString(Texts.codeHelpersOff, (x - 10) + 20, MouseInput.getMouseY() + 40, new IDEFont(Fonts.lightGrayNormal, 16), g2);
-					
-					Fonts.drawString(Texts.fontSizeIs + " " + CodeEditor.FONT_SIZE + " pixels.", (x - 10) + 20, MouseInput.getMouseY() + 70, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+					texts.add(text);
+					texts.add(Main.editor.codeHelpersOn ? Texts.codeHelpersOn : Texts.codeHelpersOff);
+					texts.add(Texts.fontSizeIs + " " + CodeEditor.FONT_SIZE + " pixels.");
 					
 					if (Main.editor.editing != null && Main.editor.editing.isReadOnly) {
 						if (Main.editor.editing.readMode == FileReadMode.NORMAL)
-							Fonts.drawString(Texts.fileAsReadOnly, (x - 10) + 20, (y - 10) + 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+							texts.add(Texts.fileAsReadOnly);
 						else
-							Fonts.drawString(Texts.fileAsReadOnly.replace(Texts.readOnly, CodeEditor.getReadModeName(Main.editor.editing.readMode)), (x - 10) + 20, (y - 10) + 100, new IDEFont(Fonts.lightGrayNormal, 16), g2);
+							texts.add(Texts.fileAsReadOnly.replace(Texts.readOnly, CodeEditor.getReadModeName(Main.editor.editing.readMode)));
 					}
+					
+					
+					Explorer.renderCardText(texts.toArray(new String[0]), MouseInput.getMouseX() + 20, MouseInput.getMouseY(), 10, g);
 				}
 	        }
         
         if (explorer.hovered() && !CommandTerminal.expOff && Explorer.explorerMode == ExplorerMode.EXPLORER && baseFolder != null) {
         	if (MouseInput.hovered(explorer.getX() + 10, Screen.DECORATION_HEIGHT + 140, explorer.getWidth() - 10, 23) && Explorer.showBaseFolderCard && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added)) {
-        		int xdr = MouseInput.getMouseX() + 10;
-    			int ydr = MouseInput.getMouseY() - 10;
-    			
-    			int wdr = 15 + Main.baseFolder.getName().length() * 12;
-    			final int hdr = 70;
-    			
-    			if (wdr < 165) wdr = 165;
-    			
-    			Rectangle intersection = new Rectangle(xdr, ydr, wdr, hdr).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
-    			
-    			if (!intersection.isEmpty())
-    				xdr -= intersection.getWidth();
-    			
-    			g.setColor(Colors.explorerLight);
-    			g.fillRect(xdr, MouseInput.getMouseY() - 15, wdr, hdr);
-    			
-    			g.setColor(Colors.textLighter);
-    			g2.setStroke(new BasicStroke(2f));
-    			g2.drawRect(xdr, MouseInput.getMouseY() - 15, wdr, hdr);
-    			
-    			Fonts.drawString(Texts.baseFolder_, xdr + 10, ydr + 10, new IDEFont(Fonts.lighterGrayNormal, 16), g);
-    			Fonts.drawString(Main.baseFolder.getName(), xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+        		Explorer.renderCardText(new String[] { Texts.baseFolder_, Main.baseFolder.getName() }, MouseInput.getMouseX() + 10, MouseInput.getMouseY() - 15, 5, g);
         	}
         	
         	if (MouseInput.hovered(explorer.getX() + 10, Screen.DECORATION_HEIGHT + 170, explorer.getWidth() - 10, 23) && !Explorer.folderPathFull.isEmpty() && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added)) {
         		String scopeStr = Explorer.getScopePath().contains(File.separator + baseFolder.getName() + File.separator) ? Explorer.getScopePath().substring(Explorer.getScopePath().indexOf(baseFolder.getName())) : Explorer.getScopePath();
         		scopeStr = scopeStr.replace('\\', '/');
         		
-        		int xdr = MouseInput.getMouseX() + 10;
-    			int ydr = MouseInput.getMouseY() - 10;
-    			
-    			int wdr = 15 + scopeStr.length() * 12;
-    			final int hdr = 70;
-    			
-    			if (wdr < 193) wdr = 193;
-    			
-    			Rectangle intersection = new Rectangle(xdr, ydr, wdr, hdr).intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 999999, Main.screen.getHeight()));
-    			
-    			if (!intersection.isEmpty())
-    				xdr -= intersection.getWidth();
-    			
-    			g.setColor(Colors.explorerLight);
-    			g.fillRect(xdr, MouseInput.getMouseY() - 15, wdr, hdr);
-    			
-    			g.setColor(Colors.textLighter);
-    			g2.setStroke(new BasicStroke(2f));
-    			g2.drawRect(xdr, MouseInput.getMouseY() - 15, wdr, hdr);
-    			
-    			Fonts.drawString(Texts.currentFolder, xdr + 10, ydr + 10, new IDEFont(Fonts.lighterGrayNormal, 16), g);
-    			Fonts.drawString(scopeStr, xdr + 10, ydr + 30, new IDEFont(Fonts.lighterGrayNormal, 16), g);
+        		Explorer.renderCardText(new String[] { Texts.currentFolder, scopeStr }, MouseInput.getMouseX() + 20, MouseInput.getMouseY() - 15, 5, g);
         	}
         }
         

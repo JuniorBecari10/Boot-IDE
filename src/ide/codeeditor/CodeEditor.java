@@ -47,6 +47,7 @@ import ide.explorercomponents.SetBranchName;
 import ide.explorercomponents.SetCommitName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.git.GitCore;
 import ide.input.ComponentInput;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
@@ -6484,6 +6485,7 @@ public class CodeEditor extends IDEComponent {
 			
 			Explorer.explorerMode = ExplorerMode.SEARCHREPLACE;
 			
+			GitCore.dispose();
 			SearchReplaceCore.init();
 			
 			/*if (!alreadyAddedFrame) {
@@ -7999,7 +8001,7 @@ public class CodeEditor extends IDEComponent {
 			if (editing != null) {
 				list.add(new RightClickOption(0, 0, width, Texts.openDefault, (s) -> execute(s), "opendef"));
 
-				list.add(new RightClickOption(0, 0, width, Explorer.explorerMode == ExplorerMode.EXPLORER, Texts.open + " " + Texts.searchReplace, (s) -> execute(s), "searchrep"));
+				list.add(new RightClickOption(0, 0, width, Texts.open + " " + Texts.searchReplace, (s) -> execute(s), "searchrep"));
 				list.add(new RightClickOption(0, 0, width, Texts.selectLine, (s) -> CommandTerminal.runCommand(s), "selectline"));
 				list.add(new RightClickOption(0, 0, width, Texts.selectAll, (s) -> CommandTerminal.runCommand(s), "selectall"));
 

@@ -788,6 +788,34 @@ public class Explorer extends IDEComponent {
     		Fonts.drawString(ss, drawX + 5, drawY + 5 + (20 * i++), new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
     	}
     }
+    
+    public static void renderCardText(String[] s, int x, int y, int margin, Graphics g) {
+    	Graphics2D g2 = (Graphics2D) g;
+    	
+    	Rectangle bounds = new Rectangle(x - 5, y - 5, (getHighestNumber(arrayOfLengths(s)) * (CodeEditor.DEFAULT_FONT_SIZE - 4)) + 6 + 10, (s.length * 20) + 15);
+    	
+    	Rectangle intBottom = bounds.intersection(new Rectangle(0, Main.screen.getHeight() - 2, Main.screen.getWidth(), 9999));
+    	Rectangle intRight = bounds.intersection(new Rectangle(Main.screen.getWidth() - 2, 0, 9999, Main.screen.getHeight()));
+    	
+    	int drawX = bounds.x - (intRight.width > 0 ? intRight.width : 0);
+    	int drawY = bounds.y - (intBottom.height > 0 ? intBottom.height : 0);
+    	int drawW = (getHighestNumber(arrayOfLengths(s)) * (CodeEditor.DEFAULT_FONT_SIZE - 4)) + 6 + 10;
+    	int drawH = (s.length * (20 + margin)) + 15;
+    	
+    	drawH -= margin;
+    	
+    	g2.setStroke(new BasicStroke(2));
+    	
+    	g.setColor(Colors.explorerLight);
+    	g.fillRect(drawX, drawY, drawW, drawH);
+    	g.setColor(Colors.textLight);
+    	g.drawRect(drawX, drawY, drawW, drawH);
+    	
+    	int i = 0;
+    	for (String ss : s) {
+    		Fonts.drawString(ss, drawX + 5 + (margin / 4), drawY + 5 + (margin / 4) + ((20 + margin) * i++), new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+    	}
+    }
 
     public synchronized void render(Graphics g) {
     	if (CommandTerminal.expOff) return;

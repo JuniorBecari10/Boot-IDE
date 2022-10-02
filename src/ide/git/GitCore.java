@@ -293,6 +293,7 @@ public class GitCore {
 		if (Explorer.commit == null) {
 			Explorer.commit = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 540, Main.explorer.getWidth() - 82, 20, "Commit", () -> {
 				Explorer.setCommitName = new SetCommitName(0, Screen.DECORATION_HEIGHT + 600, 0, 30);
+				System.out.println("a");
 				
 				IDEComponent.toAdd.add(Explorer.setCommitName);
 				SetCommitName.added = true;
@@ -327,7 +328,7 @@ public class GitCore {
 				}
 				
 				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.push.getY(), list.toArray(new RightClickOption[list.size()]));
-				}, true) {
+				}, false) {
 				public void tick() {
 					super.tick();
 					
@@ -360,9 +361,9 @@ public class GitCore {
 		IDEComponent.toAdd.add(Explorer.stageAll);
 		IDEComponent.toAdd.add(Explorer.unstageAll);
 		IDEComponent.toAdd.add(Explorer.commit);
-		IDEComponent.toAdd.add(Explorer.allowEmpty);
 		IDEComponent.toAdd.add(Explorer.push);
 		IDEComponent.toAdd.add(Explorer.forcePush);
+		IDEComponent.toAdd.add(Explorer.allowEmpty); // coloca por cima por causa da caption
 	}
 	
 	public static synchronized void dispose() {
