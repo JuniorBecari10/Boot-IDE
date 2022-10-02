@@ -79,7 +79,7 @@ public class Main implements Runnable, Tickable {
     public static final String LOG_FILE_NAME = "Exception.log";
     
     public static final String PROGRAM_NAME = "Boot IDE";
-    public static final String VERSION = "Beta 3 v4.5 | Dev Test 2";
+    public static final String VERSION = "Beta 3 v4.5 | Dev Test 3";
     
     public static final String userDir = System.getProperty("user.dir");
     

@@ -301,6 +301,9 @@ public class GitCore {
 				}, true) {
 				public void tick() {
 					width = Main.explorer.getWidth() - 82;
+					
+					if (leftClicked() && enabled)
+						execute.execute();
 				}
 			};
 		}
@@ -320,8 +323,8 @@ public class GitCore {
 				List<RightClickOption> list = new ArrayList<>();
 				int width = Texts.selectARepository.length() * 14;
 				
-				list.add(new RightClickOption(0, 0, width, 30, false, Texts.selectARepository, (a) -> {  }, ""));
-				list.add(new RightClickOption(0, 0, width, 30, false, "Branch: " + Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch], (a) -> {  }, ""));
+				list.add(new RightClickOption(0, 0, width, 30, false, Texts.selectARepository, (a) -> {  }, "", true));
+				list.add(new RightClickOption(0, 0, width, 30, false, "Branch: " + Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch], (a) -> {  }, "", false));
 				
 				for (String s : Explorer.gitStatus.remoteRepos) {
 					list.add(new RightClickOption(0, 0, width, 30, s, (a) -> { push(s, false); }, ""));
@@ -330,9 +333,10 @@ public class GitCore {
 				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.push.getY(), list.toArray(new RightClickOption[list.size()]));
 				}, false) {
 				public void tick() {
-					super.tick();
-					
 					width = Main.explorer.getWidth() - 82;
+					
+					if (leftClicked() && enabled)
+						execute.execute();
 					
 					text = Texts.push;
 					

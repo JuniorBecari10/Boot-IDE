@@ -113,6 +113,20 @@ public class RightClickOption extends IDEComponent {
 		this.isActive = isActive;
 	}
 	
+	public RightClickOption(int x, int y, int width, int height, boolean isActive, String text, ExecuteCommand command, String clickArg, boolean isTop) {
+		super(x, y, width, height, null);
+
+		this.text = text;
+		this.command = command;
+		this.clickArg = clickArg;
+		
+		this.textSize = CodeEditor.DEFAULT_FONT_SIZE;
+		
+		isAutoComplete = false;
+		this.isActive = isActive;
+		this.isTop = isTop;
+	}
+	
 	public RightClickOption(int x, int y, int width, int height, int textSize, String text, ExecuteCommand command, String clickArg) {
 		super(x, y, width, height, null);
 
