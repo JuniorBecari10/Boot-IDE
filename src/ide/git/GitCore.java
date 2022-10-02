@@ -345,7 +345,7 @@ public class GitCore {
 		}
 		
 		if (Explorer.forcePush == null) {
-			Explorer.forcePush = new ToggleButton(Main.explorer.getWidth() - 52, Screen.DECORATION_HEIGHT + 565, 32, 32, Main.forcePushSpr, false, Texts.forcePush) {
+			Explorer.forcePush = new ToggleButton(Main.explorer.getWidth() - 52, Screen.DECORATION_HEIGHT + 567, 32, 32, Main.forcePushSpr, false, Texts.forcePush) {
 				public void tick() {
 					super.tick();
 					
