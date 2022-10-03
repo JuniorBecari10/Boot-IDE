@@ -711,7 +711,7 @@ public class Explorer extends IDEComponent {
 	    		GitCore.init();
 	    	}
 	
-	    	Fonts.drawString(gitStatus.changedFiles.length + " " + (gitStatus.changedFiles.length == 1 ? Texts.fileChanged : Texts.filesChanged), 20, Screen.DECORATION_HEIGHT + 400, new IDEFont(Fonts.lightGrayNormal, 16), g);
+	    	Fonts.drawString(gitStatus.changedFiles.length + " " + (gitStatus.changedFiles.length == 1 ? Texts.fileChanged : Texts.filesChanged), 20, Screen.DECORATION_HEIGHT + 400, new IDEFont(Fonts.lightGrayNormal, 16), Main.explorer.getWidth(), g);
 	    	
 	    	Fonts.drawString("Staging", 20, Screen.DECORATION_HEIGHT + 370, new IDEFont(Fonts.lightGrayNormal, 16), g);
 	    	g2.setColor(Colors.textLight);

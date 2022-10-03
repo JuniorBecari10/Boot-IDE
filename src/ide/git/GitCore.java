@@ -17,6 +17,7 @@ import ide.explorercomponents.SetCommitName;
 import ide.explorercomponents.ToggleButton;
 import ide.main.Main;
 import ide.screen.Screen;
+import ide.util.Language;
 import ide.util.Texts;
 
 public class GitCore {
@@ -291,9 +292,8 @@ public class GitCore {
 		}
 		
 		if (Explorer.commit == null) {
-			Explorer.commit = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 540, Main.explorer.getWidth() - 82, 20, "Commit", () -> {
+			Explorer.commit = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 540, Main.explorer.getWidth() - 82, 20, (Main.lang == Language.PORT ? Texts.create + " " : "") + "Commit", () -> {
 				Explorer.setCommitName = new SetCommitName(0, Screen.DECORATION_HEIGHT + 600, 0, 30);
-				System.out.println("a");
 				
 				IDEComponent.toAdd.add(Explorer.setCommitName);
 				SetCommitName.added = true;
@@ -301,6 +301,7 @@ public class GitCore {
 				}, true) {
 				public void tick() {
 					width = Main.explorer.getWidth() - 82;
+					text = (Main.lang == Language.PORT ? Texts.create + " " : "") + "Commit";
 					
 					if (leftClicked() && enabled)
 						execute.execute();
@@ -313,6 +314,7 @@ public class GitCore {
 				public void tick() {
 					super.tick();
 					
+					x = Main.explorer.getWidth() - 52;
 					caption = Texts.allowEmpty;
 				}
 			};
@@ -353,6 +355,7 @@ public class GitCore {
 				public void tick() {
 					super.tick();
 					
+					x = Main.explorer.getWidth() - 52;
 					caption = Texts.forcePush;
 				}
 			};

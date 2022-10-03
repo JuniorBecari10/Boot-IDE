@@ -223,7 +223,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "version":
-				MessageBox.showDialog(Texts.version, new String[] { Main.PROGRAM_NAME + " - " + Texts.version + " " + Main.VERSION + "." }, new String[] { "Ok" }, new Execute[] { () -> {  } } );
+				MessageBox.showDialog(Texts.version, new String[] { Main.PROGRAM_NAME + " - " + Texts.version + " " + Main.VERSION }, new String[] { "Ok" }, new Execute[] { () -> {  } } );
 				break;
 				
 			case "resetexplorerdrag":

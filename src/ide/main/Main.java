@@ -79,7 +79,7 @@ public class Main implements Runnable, Tickable {
     public static final String LOG_FILE_NAME = "Exception.log";
     
     public static final String PROGRAM_NAME = "Boot IDE";
-    public static final String VERSION = "Beta 3 v4.5 | Dev Test 3";
+    public static final String VERSION = "Beta 3 v4.5 | Dev Test 4";
     
     public static final String userDir = System.getProperty("user.dir");
     
@@ -879,7 +879,7 @@ public class Main implements Runnable, Tickable {
         
         if (explorer.hovered() && !CommandTerminal.expOff && Explorer.explorerMode == ExplorerMode.EXPLORER && baseFolder != null) {
         	if (MouseInput.hovered(explorer.getX() + 10, Screen.DECORATION_HEIGHT + 140, explorer.getWidth() - 10, 23) && Explorer.showBaseFolderCard && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added)) {
-        		Explorer.renderCardText(new String[] { Texts.baseFolder_, Main.baseFolder.getName() }, MouseInput.getMouseX() + 10, MouseInput.getMouseY() - 15, 5, g);
+        		Explorer.renderCardText(new String[] { Texts.baseFolder_, Main.baseFolder.getName() }, MouseInput.getMouseX() + 20, MouseInput.getMouseY() - 15, 5, g);
         	}
         	
         	if (MouseInput.hovered(explorer.getX() + 10, Screen.DECORATION_HEIGHT + 170, explorer.getWidth() - 10, 23) && !Explorer.folderPathFull.isEmpty() && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added)) {

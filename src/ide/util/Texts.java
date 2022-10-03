@@ -257,6 +257,8 @@ public final class Texts {
 	public static String allowEmpty;
 	public static String forcePush;
 	
+	public static String create;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -499,6 +501,8 @@ public final class Texts {
 			allowEmpty = "Permitir Commits Vazios";
 			forcePush = "Forçar Carregamento";
 			
+			create = "Criar";
+			
 			break;
 		
 		case ENG:
@@ -740,6 +744,8 @@ public final class Texts {
 			
 			allowEmpty = "Allow Empty Commits";
 			forcePush = "Force Push";
+			
+			create = "Create";
 			
 			break;
 		}
