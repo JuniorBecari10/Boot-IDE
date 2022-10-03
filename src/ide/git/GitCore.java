@@ -351,12 +351,17 @@ public class GitCore {
 		}
 		
 		if (Explorer.forcePush == null) {
-			Explorer.forcePush = new ToggleButton(Main.explorer.getWidth() - 52, Screen.DECORATION_HEIGHT + 567, 32, 32, Main.forcePushSpr, false, Texts.forcePush) {
+			Explorer.forcePush = new ToggleButton(Main.explorer.getWidth() - 52, Screen.DECORATION_HEIGHT + 567, 32, 32, Main.forcePushSpr, false, Texts.forcePush, false) {
 				public void tick() {
 					super.tick();
 					
 					x = Main.explorer.getWidth() - 52;
 					caption = Texts.forcePush;
+					
+					if (Explorer.gitStatus.remoteRepos.length == 0)
+						enabled = false;
+					else
+						enabled = true;
 				}
 			};
 		}

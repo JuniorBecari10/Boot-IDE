@@ -17,12 +17,22 @@ public class ToggleButton extends IDEComponent {
 
 	private boolean state;
 	protected String caption;
+	protected boolean enabled;
 	
 	public ToggleButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption) {
 		super(x, y, width, height, sprite);
 		
 		this.state = state;
 		this.caption = caption;
+		this.enabled = true;
+	}
+	
+	public ToggleButton(int x, int y, int width, int height, BufferedImage sprite, boolean state, String caption, boolean enabled) {
+		super(x, y, width, height, sprite);
+		
+		this.state = state;
+		this.caption = caption;
+		this.enabled = enabled;
 	}
 	
 	public boolean getState() {
@@ -38,7 +48,7 @@ public class ToggleButton extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (leftClicked()) {
+		if (leftClicked() && enabled) {
 			KeyInput.updateKeys();
 			
 			state = !state;
@@ -46,7 +56,7 @@ public class ToggleButton extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		if (hovered()) {
+		if (hovered() && enabled) {
 			g.setColor(Colors.explorerLight);
 			g.fillRect(x, y, width, height);
 		}
