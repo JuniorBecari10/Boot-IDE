@@ -430,7 +430,7 @@ public class CodeEditor extends IDEComponent {
 			"xcopy", "tree", "fc", "title", "set", "bash", "node", "off", "goto", "rmdir", "icacls", "takeown", "if",
 			"for", "else", "git", "npm", "call", "exist", "end", "java", "javac", "javaw", "nodemon", "csc", "nasm", "pip",
 			"pip3", "pipwin", "as", "ld", "7z", "rename", "bash", "export", "vi", "vim", "nano", "clang", "qemu", "qemu-system-x86-64",
-			"qemu", "gcc", "g++", "python", "lua", "eject", "tsc", "setlocal", "endlocal", "make", "yarn", "color",
+			"qemu", "gcc", "g++", "python", "lua", "eject", "tsc", "setlocal", "endlocal", "make", "yarn", "color", "function", "global",
 			"VER", "ASSOC", "CD", "CLS", "COPY", "DEL", "DIR", "DATE", "ECHO", "@ECHO", "MODE", "@MODE", "EXIT", "MD", "MOVE", "PATH", "PAUSE",
 			"PROMPT", "RD", "REM", "START", "TIME", "TYPE", "VOL", "ATTRIB", "CHKDSK", "CHOICE", "CMD", "COMP",
 			"CONVERT", "ON", "DRIVERQUERY", "EXPAND", "FIND", "FORMAT", "HELP", "IPCONFIG", "LABEL", "MORE", "NET",
@@ -438,7 +438,7 @@ public class CodeEditor extends IDEComponent {
 			"SET", "BASH", "NODE", "OFF", "GOTO", "RMDIR", "ICACLS", "TAKEOWN", "IF", "FOR", "ELSE", "GIT", "NPM",
 			"CALL", "EXIST", "END", "JAVA", "JAVAC", "JAVAW", "NODEMON", "CSC", "NASM", "QEMU", "GCC", "G++", "PYTHON",
 			"PIP", "PIP3", "PIPWIN", "AS", "LD", "7Z", "RENAME", "BASH", "EXPORT", "VI", "VIM", "NANO", "CLANG", "QEMU", "QEMU-SYSTEM-x86-64", "QEMU-SYSTEM-X86-64",
-			"LUA", "EJECT", "TSC", "SETLOCAL", "ENDLOCAL", "MAKE", "YARN", "COLOR" };
+			"LUA", "EJECT", "TSC", "SETLOCAL", "ENDLOCAL", "MAKE", "YARN", "COLOR", "FUNCTION", "GLOBAL" };
 	
 	public static final String[] porKeys = { "programa", "funcao", "inteiro", "caracter", "real", "cadeia", "para", "se", "senao", "enquanto",
 			"faca", "inclua", "biblioteca", "retorne" };
@@ -3966,7 +3966,7 @@ public class CodeEditor extends IDEComponent {
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
 
 			if (!(ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".cmd")
-					|| ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc"))) {
+					|| ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc"))) {
 
 				// primeira vez usando labels!
 				methods: if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
@@ -4108,7 +4108,7 @@ public class CodeEditor extends IDEComponent {
 					&& chars[i + len] != '.' && chars[i + len] != ':')
 				len++;
 			
-			if (fs.size() > 1 && fs.get(i).getColor().equals(Colors.keywords)) continue;
+			if (fs.size() > i && fs.get(i).getColor().equals(Colors.keywords)) continue;
 
 			fs = color(i - 1, i - 1 + len, new IDEFont(Fonts.numbersEditor, FONT_SIZE), fs);
 		}
@@ -4987,7 +4987,6 @@ public class CodeEditor extends IDEComponent {
 			}
 			break;
 
-		case ".ps1":
 		case ".com":
 		case ".bat":
 		case ".cmd":
@@ -5131,6 +5130,7 @@ public class CodeEditor extends IDEComponent {
 		case ".mcfunction":
 		case ".yml":
 		case ".yaml":
+		case ".ps1":
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
@@ -5195,6 +5195,52 @@ public class CodeEditor extends IDEComponent {
 			List<Integer> finals = findWord(new String(chars), finalChar);
 			
 			List<Integer> rm = new ArrayList<>();
+			
+			for (Integer i : indxs) {
+				if (fs.get(i).getColor().equals(Colors.strings))
+					rm.add(i);
+			}
+			
+			indxs.removeAll(rm);
+			
+			/*
+			 * for (Integer i : indxs) if (isBetween(new String(chars), i, '"', '"')) return
+			 * fs;
+			*/
+			
+			if (indxs.size() > 0) {
+				fs = color(indxs.get(0), finals.size() > 0 ? finals.get(0) : fs.size(),
+						new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
+				isMultilineCommenting = true;
+			}
+			
+			if (finals.size() > 0 && isMultilineCommenting) {
+				fs = color(indxs.size() > 0 ? indxs.get(indxs.size() - 1) : 0, finals.get(0),
+						new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
+				isMultilineCommenting = false;
+			}
+			
+			if (isMultilineCommenting)
+				fs = color(indxs.isEmpty() ? 0 : indxs.get(0), fs.size(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs);
+
+			indxs = finals;
+
+			for (Integer i : indxs) {
+				if (i + finalChar.length() < chars.length && i - 1 > 0
+						&& (Character.isLetter(chars[i + finalChar.length()]) || Character.isLetter(chars[i - 1])
+								|| (chars[i - 1] == '_' || chars[i + finalChar.length()] == '_')))
+					continue;
+				
+				fs = color(i, i + finalChar.length(), new IDEFont(Fonts.commentsEditor, FONT_SIZE), fs); // tem q dar offset
+			}
+			break;
+			
+		case ".ps1":
+			indxs = findWord(new String(chars), "<#"); // colorir comentarios multi-linha - caracteres diferentes
+			finalChar = "#>";
+			finals = findWord(new String(chars), finalChar);
+			
+			rm = new ArrayList<>();
 			
 			for (Integer i : indxs) {
 				if (fs.get(i).getColor().equals(Colors.strings))
