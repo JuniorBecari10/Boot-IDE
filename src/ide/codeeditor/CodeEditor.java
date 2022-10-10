@@ -409,7 +409,7 @@ public class CodeEditor extends IDEComponent {
 			"static_cast", "false", "catch", "operator", "template", "friend", "private", "class", "this", "inline",
 			"public", "throw", "const_cast", "delete", "mutable", "protected", "true", "try", "typeid", "typename",
 			"using", "virtual", "wchar_t", "#include", "#define", "#undef", "string", "#if", "#ifdef", "#ifndef", "#error", "#pragma",
-			"#endif", "#else", "override", "std", "size_t", "duint", "uint8_t", "uint16_t", "comment", "lib", "NULL", "alignof", "nullptr" };
+			"#endif", "#else", "override", "size_t", "duint", "uint8_t", "uint16_t", "comment", "lib", "NULL", "alignof", "nullptr" };
 
 	public static final String[] csKeys = { "abstract", "async", "const", "event", "extern", "new", "override",
 			"partial", "readonly", "sealed", "static", "unsafe", "virtual", "volatile", "public", "private", "internal",
@@ -6559,7 +6559,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case "newfiletab":
-			File create = new File(Main.userDir + File.separator + "Untitled " + getNextUntitledNumber());
+			File create = new File(Main.userDir + File.separator + "Untitled-" + getNextUntitledNumber());
 			
 			if (!create.exists())
 				try {
