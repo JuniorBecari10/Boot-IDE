@@ -1005,14 +1005,14 @@ public class CommandTerminal extends IDEComponent {
 				
 				switch (args[0].toLowerCase()) {
 				case "html":
-					String[] htmlstrs = { "<!DOCTYPE html>", "<html>", CodeEditor.getIndentation(1) + "<head>", CodeEditor.getIndentation(2) + "<title></title>", CodeEditor.getIndentation(2), CodeEditor.getIndentation(2) + "<meta charset=\"UTF-8\">", CodeEditor.getIndentation(1) + "</head>", CodeEditor.getIndentation(1) + "<body>", CodeEditor.getIndentation(1) + "</body>", "</html>" };
+					String[] htmlstrs = { "<!DOCTYPE html>", "<html lang=\"" + (Main.lang == Language.PORT ? "pt" : "en") + "\">", CodeEditor.getIndentation(1) + "<head>", CodeEditor.getIndentation(2) + "<title></title>", CodeEditor.getIndentation(2), CodeEditor.getIndentation(2) + "<meta charset=\"UTF-8\">", CodeEditor.getIndentation(1) + "</head>", CodeEditor.getIndentation(1) + "<body>", CodeEditor.getIndentation(1) + "</body>", "</html>" };
 					
 					strs = htmlstrs;
 					
 					break;
 					
 				case "html5":
-					String[] htmlnewstrs = { "<!DOCTYPE html>", "<html>", CodeEditor.getIndentation(1) + "<head>", CodeEditor.getIndentation(2) + "<title></title>", CodeEditor.getIndentation(2), CodeEditor.getIndentation(2) + "<meta charset=\"UTF-8\">", CodeEditor.getIndentation(2) + "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", CodeEditor.getIndentation(2) + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", CodeEditor.getIndentation(1) + "</head>", CodeEditor.getIndentation(1) + "<body>", CodeEditor.getIndentation(1) + "</body>", "</html>" };
+					String[] htmlnewstrs = { "<!DOCTYPE html>", "<html lang=\"" + (Main.lang == Language.PORT ? "pt" : "en") + "\">", CodeEditor.getIndentation(1) + "<head>", CodeEditor.getIndentation(2) + "<title></title>", CodeEditor.getIndentation(2), CodeEditor.getIndentation(2) + "<meta charset=\"UTF-8\">", CodeEditor.getIndentation(2) + "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", CodeEditor.getIndentation(2) + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", CodeEditor.getIndentation(1) + "</head>", CodeEditor.getIndentation(1) + "<body>", CodeEditor.getIndentation(1) + "</body>", "</html>" };
 					
 					strs = htmlnewstrs;
 					
