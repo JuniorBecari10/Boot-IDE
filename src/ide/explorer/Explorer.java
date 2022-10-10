@@ -137,6 +137,8 @@ public class Explorer extends IDEComponent {
 	    else {
 	    	gitStatus = null;
 	    }
+    	
+    	Main.editor.refreshText();
     }
     
     public void addTabs() {

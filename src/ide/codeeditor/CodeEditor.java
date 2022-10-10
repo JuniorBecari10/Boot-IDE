@@ -42,6 +42,7 @@ import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
+import ide.explorercomponents.Execute;
 import ide.explorercomponents.SearchReplaceCore;
 import ide.explorercomponents.SetBranchName;
 import ide.explorercomponents.SetCommitName;
@@ -1063,7 +1064,17 @@ public class CodeEditor extends IDEComponent {
 	
 	public void refreshText() {
 		if (editing == null) return;
-		if (!editing.isSaved()) editing.save();
+		if (!editing.isSaved()) {
+			String[] options = { "Yes, save changes.", "No, override changes.", Texts.cancel };
+			MessageBox.showDialog(Texts.confirmSave, new String[] { Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.doYouWantToSave }, options, new Execute[] {
+					() -> {
+						editing.save();
+						return; // retorna pq o texto do editor é o texto que vai ficar
+					},
+					() -> {}, // n faz nada
+					() -> { return; }
+					});;
+		}
 		
 		try {
 			Main.editor.lines = Main.editor.readFile(editing.getRegent().getRegent());
