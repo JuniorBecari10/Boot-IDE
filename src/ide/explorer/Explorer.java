@@ -83,6 +83,7 @@ public class Explorer extends IDEComponent {
 	public static ExecuteButtonIcon createBranch;
 	public static ExecuteButtonIcon checkout;
 	public static ExecuteButtonIcon renameBranch;
+	public static ExecuteButtonIcon mergeBranch;
 	public static ExecuteButtonIcon deleteBranch;
 	
 	public static ExecuteButton initRepo;

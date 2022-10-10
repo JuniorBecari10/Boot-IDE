@@ -39,6 +39,29 @@ public class GitCore {
 		return ActionState.DONE;
 	}
 	
+	public static ActionState getState(boolean error, boolean warn, boolean conflict) {
+		if (conflict)
+			return ActionState.CONFLICT;
+		else if (warn)
+			return ActionState.WARNING;
+		else if (error)
+			return ActionState.ERROR;
+		
+		return ActionState.DONE;
+	}
+	
+	public static void merge(String branch1, String branch2) {
+		String[] output = Main.runCommand(Main.baseFolder, "git merge " + branch1 + " " + branch2);
+		
+		Explorer.fetchStatus();
+		
+		boolean error = Main.isError(output);
+		boolean warn = Main.isWarning(output);
+		boolean conflict = Main.isConflict(output);
+		
+		actions.add(new GitAction("git merge", getState(error, warn, conflict), output));
+	}
+	
 	public static void checkout(String branch) {
 		String[] output = Main.runCommand(Main.baseFolder, "git checkout " + branch);
 		
@@ -240,16 +263,42 @@ public class GitCore {
 			};
 		}
 		
-		if (Explorer.deleteBranch == null) {
-			Explorer.deleteBranch = new ExecuteButtonIcon(134, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.deleteBranchSpr, () -> {
+		if (Explorer.mergeBranch == null) {
+			Explorer.mergeBranch = new ExecuteButtonIcon(134, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.mergeBranchSpr, () -> {
 				List<RightClickOption> list = new ArrayList<>();
 				int width = Texts.selectABranch.length() * 14;
 				
-				list.add(new RightClickOption(0, 0, width, 30, false, Texts.selectABranch, (a) -> {  }, ""));
+				list.add(new RightClickOption(0, 0, width, 30, false, Texts.selectABranch, (a) -> {  }, "", true));
+				list.add(new RightClickOption(0, 0, width, 30, false, "Branch: " + Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch], (a) -> {  }, ""));
+				
+				for (String s : Explorer.gitStatus.branches) {
+					if (s.equals(Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch])) continue;
+					
+					list.add(new RightClickOption(0, 0, width, 30, s, (a) -> {
+						MessageBox.showDialog(Texts.confirmMerge, new String[] { Texts.sureMerge, s + " -> " + Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch] }, new String[] { Texts.yes, Texts.no }, new Execute[] { () -> { merge(s, Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch]); }, () -> { } });
+					}, ""));
+				}
+				
+				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.checkout.getY(), list.toArray(new RightClickOption[list.size()]));
+			}, Texts.mergeBranches) {
+				public void tick() {
+					super.tick();
+					
+					caption = Texts.mergeBranches;
+				}
+			};
+		}
+		
+		if (Explorer.deleteBranch == null) {
+			Explorer.deleteBranch = new ExecuteButtonIcon(172, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.deleteBranchSpr, () -> {
+				List<RightClickOption> list = new ArrayList<>();
+				int width = Texts.selectABranch.length() * 14;
+				
+				list.add(new RightClickOption(0, 0, width, 30, false, Texts.selectABranch, (a) -> {  }, "", true));
 				
 				for (String s : Explorer.gitStatus.branches) {
 					list.add(new RightClickOption(0, 0, width, 30, s, (a) -> { 
-						MessageBox.showDialog(Texts.confirmDelete, new String[] { "Are you sure you want to delete the branch", s + "?" }, new String[] { Texts.yes, Texts.no }, new Execute[] { () -> { delete(s); }, () -> { } });
+						MessageBox.showDialog(Texts.confirmDelete, new String[] { Texts.sureDeleteBranch, s + "?" }, new String[] { Texts.yes, Texts.no }, new Execute[] { () -> { delete(s); }, () -> { } });
 					}, ""));
 				}
 				
@@ -371,6 +420,7 @@ public class GitCore {
 		IDEComponent.toAdd.add(Explorer.createBranch);
 		IDEComponent.toAdd.add(Explorer.checkout);
 		IDEComponent.toAdd.add(Explorer.renameBranch);
+		IDEComponent.toAdd.add(Explorer.mergeBranch);
 		IDEComponent.toAdd.add(Explorer.deleteBranch);
 		IDEComponent.toAdd.add(Explorer.stageAll);
 		IDEComponent.toAdd.add(Explorer.unstageAll);
@@ -389,6 +439,7 @@ public class GitCore {
 		IDEComponent.toRemove.add(Explorer.createBranch);
 		IDEComponent.toRemove.add(Explorer.checkout);
 		IDEComponent.toRemove.add(Explorer.renameBranch);
+		IDEComponent.toRemove.add(Explorer.mergeBranch);
 		IDEComponent.toRemove.add(Explorer.deleteBranch);
 		IDEComponent.toRemove.add(Explorer.stageAll);
 		IDEComponent.toRemove.add(Explorer.unstageAll);

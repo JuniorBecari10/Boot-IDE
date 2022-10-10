@@ -37,6 +37,7 @@ public class LastAction extends IDEComponent {
 		if (action != null) {
 			if (action.state == ActionState.ERROR) sprite = Main.gitError;
 			//else if (action.state == ActionState.PROGRESS) sprite = Main.gitProgress;
+			else if (action.state == ActionState.CONFLICT) sprite = Main.gitConflict;
 			else if (action.state == ActionState.WARNING) sprite = Main.gitWarning;
 			else if (action.state == ActionState.DONE) sprite = Main.gitDone;
 		}
@@ -46,6 +47,7 @@ public class LastAction extends IDEComponent {
 		if (action != null) {
 			if (action.state == ActionState.ERROR) text = Texts.gitError;
 			//else if (action.state == ActionState.PROGRESS) text = Texts.gitProgress;
+			else if (action.state == ActionState.CONFLICT) text = Texts.gitConflict;
 			else if (action.state == ActionState.WARNING) text = Texts.gitWarning;
 			else if (action.state == ActionState.DONE) text = Texts.gitDone;
 			

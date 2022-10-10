@@ -162,6 +162,7 @@ public class Main implements Runnable, Tickable {
     
     public static final String[] errorKeywords = { "fatal", "error" };
     public static final String[] warningKeywords = { "warning" };
+    public static final String[] conflictKeywords = { "conflict" };
     
     // Sprites
     
@@ -218,6 +219,7 @@ public class Main implements Runnable, Tickable {
     
     public static BufferedImage gitError;
     public static BufferedImage gitProgress;
+    public static BufferedImage gitConflict;
     public static BufferedImage gitWarning;
     public static BufferedImage gitDone;
     
@@ -226,6 +228,7 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage createBranchSpr;
     public static BufferedImage checkoutSpr;
     public static BufferedImage renameBranchSpr;
+    public static BufferedImage mergeBranchSpr;
     public static BufferedImage deleteBranchSpr;
     
     public static BufferedImage allowEmptySpr;
@@ -322,6 +325,7 @@ public class Main implements Runnable, Tickable {
 	        
 	        gitError = spritesheet.getSprite(160, 0, 5, 5);
 	        gitProgress = spritesheet.getSprite(160, 5, 5, 5);
+	        gitConflict = spritesheet.getSprite(170, 0, 5, 5);
 	        gitWarning = spritesheet.getSprite(165, 0, 5, 5);
 	        gitDone = spritesheet.getSprite(160, 10, 5, 5);
 	        
@@ -330,6 +334,7 @@ public class Main implements Runnable, Tickable {
 	        createBranchSpr = spritesheet.getSprite(416, 0, 16, 16);
 	        checkoutSpr = spritesheet.getSprite(432, 0, 16, 16);
 	        renameBranchSpr = spritesheet.getSprite(448, 0, 16, 16);
+	        mergeBranchSpr = spritesheet.getSprite(464, 0, 16, 16);
 	        deleteBranchSpr = spritesheet.getSprite(480, 0, 16, 16);
 	        
 	        allowEmptySpr = spritesheet.getSprite(496, 0, 16, 16);
@@ -456,7 +461,10 @@ public class Main implements Runnable, Tickable {
         folder = Colors.swapColor(folder, Colors.textLightDefault, Colors.textLight);
         
         closeTab = Colors.swapColor(closeTab, Colors.textLightDefault, Colors.textLight);
+        notSelectedCloseTab = Colors.swapColor(notSelectedCloseTab, Colors.textLightDefault, Colors.textLight);
+        
         notSavedTab = Colors.swapColor(notSavedTab, Colors.textLightDefault, Colors.textLight);
+        notSelectedNotSavedTab = Colors.swapColor(notSelectedNotSavedTab, Colors.textLightDefault, Colors.textLight);
         
         lock = Colors.swapColor(lock, Colors.textLightDefault, Colors.textLight);
         back = Colors.swapColor(back, Colors.textLightDefault, Colors.textLight);
@@ -494,6 +502,7 @@ public class Main implements Runnable, Tickable {
         
         gitError = Colors.swapColor(gitError, Colors.textLightDefault, Colors.textLight);
         gitProgress = Colors.swapColor(gitProgress, Colors.textLightDefault, Colors.textLight);
+        gitConflict = Colors.swapColor(gitConflict, Colors.textLightDefault, Colors.textLight);
         gitWarning = Colors.swapColor(gitWarning, Colors.textLightDefault, Colors.textLight);
         gitDone = Colors.swapColor(gitDone, Colors.textLightDefault, Colors.textLight);
         
@@ -502,6 +511,7 @@ public class Main implements Runnable, Tickable {
         createBranchSpr = Colors.swapColor(createBranchSpr, Colors.textLightDefault, Colors.textLight);
         checkoutSpr = Colors.swapColor(checkoutSpr, Colors.textLightDefault, Colors.textLight);
         renameBranchSpr = Colors.swapColor(renameBranchSpr, Colors.textLightDefault, Colors.textLight);
+        mergeBranchSpr = Colors.swapColor(mergeBranchSpr, Colors.textLightDefault, Colors.textLight);
         deleteBranchSpr = Colors.swapColor(deleteBranchSpr, Colors.textLightDefault, Colors.textLight);
         
         allowEmptySpr = Colors.swapColor(allowEmptySpr, Colors.textLightDefault, Colors.textLight);
@@ -549,6 +559,16 @@ public class Main implements Runnable, Tickable {
     public static boolean isWarning(String[] output) {
     	for (String s : output) {
     		for (String k : warningKeywords) {
+    			if (s.toLowerCase().contains(k.toLowerCase())) return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    public static boolean isConflict(String[] output) {
+    	for (String s : output) {
+    		for (String k : conflictKeywords) {
     			if (s.toLowerCase().contains(k.toLowerCase())) return true;
     		}
     	}

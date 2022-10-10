@@ -94,6 +94,10 @@ public final class Texts {
 	
 	public static String sureDelete;
 	public static String confirmDelete;
+	public static String confirmMerge;
+	
+	public static String sureDeleteBranch;
+	public static String sureMerge;
 	
 	public static String delError;
 	public static String cantDelete;
@@ -220,6 +224,7 @@ public final class Texts {
 	
 	public static String gitError;
 	public static String gitProgress;
+	public static String gitConflict;
 	public static String gitWarning;
 	public static String gitDone;
 	
@@ -235,6 +240,7 @@ public final class Texts {
 	public static String selectABranch;
 	public static String createNewBranch;
 	public static String renameBranch;
+	public static String mergeBranches;
 	public static String deleteBranch;
 	
 	public static String currentBranch;
@@ -341,6 +347,10 @@ public final class Texts {
 			
 			sureDelete = "Tem certeza de que deseja deletar o arquivo/pasta";
 			confirmDelete = "Confirmar Exclusão";
+			confirmMerge = "Confirmar Combinação";
+			
+			sureDeleteBranch = "Tem certeza de que deseja deletar a branch";
+			sureMerge = "Tem certeza de que deseja combinar essas branches?";
 			
 			delError = "Ocorreu um erro ao deletar.";
 			cantDelete = "Não foi possível deletar.";
@@ -467,6 +477,7 @@ public final class Texts {
 			
 			gitError = "Erro";
 			gitProgress = "Em Progresso";
+			gitConflict = "Conflito";
 			gitWarning = "Aviso";
 			gitDone = "Pronto";
 			
@@ -483,6 +494,7 @@ public final class Texts {
 			createNewBranch = "Criar Nova Branch";
 			renameBranch = "Renomear Branch";
 			deleteBranch = "Deletar Branch";
+			mergeBranches = "Combinar Branches";
 			currentBranch = "Branch Atual";
 			
 			branchNameIllegal = "O nome da Branch contém caracteres não permitidos.";
@@ -587,6 +599,10 @@ public final class Texts {
 			
 			sureDelete = "Are you sure you want to delete the file/folder";
 			confirmDelete = "Confirm Deletion";
+			confirmMerge = "Confirm Merge";
+			
+			sureDeleteBranch = "Are you sure you want to delete the branch";
+			sureMerge = "Are you sure you want to merge these branches?";
 			
 			delError = "An error has occurred while deleting.";
 			cantDelete = "Could not delete.";
@@ -713,6 +729,7 @@ public final class Texts {
 			
 			gitError = "Error";
 			gitProgress = "In Progress";
+			gitConflict = "Conflict";
 			gitWarning = "Warning";
 			gitDone = "Done";
 			
@@ -729,6 +746,7 @@ public final class Texts {
 			createNewBranch = "Create New Branch";
 			renameBranch = "Rename Branch";
 			deleteBranch = "Delete Branch";
+			mergeBranches = "Merge Branches";
 			currentBranch = "Current Branch";
 			
 			branchNameIllegal = "The Branch name contains non-permitted characters.";
