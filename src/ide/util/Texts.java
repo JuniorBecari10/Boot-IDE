@@ -244,6 +244,8 @@ public final class Texts {
 
 	public static String fileChanged;
 	public static String filesChanged;
+	
+	public static String filesChangedTitle;
 
 	public static String copyRelativePath;
 	public static String copyAbsolutePath;
@@ -489,6 +491,8 @@ public final class Texts {
 			fileChanged = "arquivo alterado.";
 			filesChanged = "arquivos alterados.";
 			
+			filesChangedTitle = "Arquivos Alterados:";
+			
 			copyRelativePath = "Copiar Caminho Relativo";
 			copyAbsolutePath = "Copiar Caminho Absoluto";
 			
@@ -732,6 +736,8 @@ public final class Texts {
 			
 			fileChanged = "file changed.";
 			filesChanged = "files changed.";
+			
+			filesChangedTitle = "Files Changed:";
 			
 			copyRelativePath = "Copy Relative Path";
 			copyAbsolutePath = "Copy Absolute Path";

@@ -270,13 +270,37 @@ public class Explorer extends IDEComponent {
 	    
 	    if (hovered())
 	    	Main.screen.setCursor(Cursor.getDefaultCursor());
-			
-			if (explorerMode == ExplorerMode.SEARCHREPLACE) {
-				if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_K) {
-					KeyInput.updateKeys();
-					
-					CommandTerminal.runCommand("toggleexplorer");
-				}
+	    
+	    if (explorerMode == ExplorerMode.GIT) {
+	    	if (MouseInput.hovered(0, Screen.DECORATION_HEIGHT + 380, width, 40) && leftClicked()) {
+	    		int widthDraw = getHighestNumber(arrayOfLengths(gitStatus.changedFiles)) * 16;
+	    		
+	    		if (widthDraw < Texts.filesChangedTitle.length() * 16)
+	    			widthDraw = Texts.filesChangedTitle.length() * 16;
+	    		
+	    		List<RightClickOption> list = new ArrayList<>();
+	    		
+	    		list.add(new RightClickOption(0, 0, widthDraw, false, Texts.filesChangedTitle, (a) -> { }, "", true));
+	    		
+	    		for (String s : gitStatus.changedFiles)
+	    			list.add(new RightClickOption(0, 0, widthDraw, s, (a) -> {
+	    				String[] split = s.split(" ");
+	    				String[] removeFirst = new String[split.length - 1];
+	    				
+	    				for (int i = 0; i < split.length - 1; i++) {
+	    					removeFirst[i] = split[i + 1];
+	    				}
+	    				
+	    				String fileName = String.join(" ", removeFirst);
+	    				
+	    				File file = new File(Main.baseFolder.getAbsolutePath() + File.separator + fileName);
+	    				
+	    				ListableFile.addTab(ListableFile.newListableFile(file), false);
+	    				
+	    			}, ""));
+				
+	    		IDEComponent.addRightClickOptions(width, Screen.DECORATION_HEIGHT + 400, list.toArray(new RightClickOption[list.size()]));
+	    	}
 	    }
 	    
 	    if (explorerMode == ExplorerMode.EXPLORER) {

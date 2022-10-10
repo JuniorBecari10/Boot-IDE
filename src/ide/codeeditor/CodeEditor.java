@@ -8038,12 +8038,14 @@ public class CodeEditor extends IDEComponent {
 		
 		if (!RightClickOption.isRightClickActive() && !RightClickOption.isAutoCompleteActive() // TODO se quiser alterar o select, altere de leftclicked para dragged, e o cursor vai te seguir
 				&& !MouseInput.hovered(x, Main.screen.getHeight() - 22, Main.screen.getWidth(), 22)) {
-			cursorX = mx;
-			cursorY = my;
-			
-			wordSinceSpace = ""; // se n funcionar corre aqui e nas setas e deleta ta
-
-			setCursorWithinBounds();
+			if (leftClicked()) {
+				cursorX = mx;
+				cursorY = my;
+				
+				wordSinceSpace = ""; // se n funcionar corre aqui e nas setas e deleta ta
+	
+				setCursorWithinBounds();
+			}
 		}
 		
 		if ((rightClicked() || (KeyInput.getKeyCodePressed() == 525 && hovered()))) {
