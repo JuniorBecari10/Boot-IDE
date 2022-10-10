@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import ide.codeeditor.CodeEditor;
 import ide.components.CommandTerminal;
 import ide.components.MessageBox;
+import ide.components.RenameFile;
+import ide.components.SetFileName;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorercomponents.SearchReplaceCore;
@@ -147,22 +149,22 @@ public final class KeyInput extends KeyAdapter {
 	    	}
 	    }
         
-        if (Explorer.setFileName != null)
+        if (Explorer.setFileName != null && SetFileName.added)
         	Explorer.setFileName.type();
         
-        if (Explorer.renameFile != null)
+        if (Explorer.renameFile != null && RenameFile.added)
         	Explorer.renameFile.type();
         
-        if (CodeEditor.terminal != null)
+        if (CodeEditor.terminal != null && CommandTerminal.active)
         	CodeEditor.terminal.type();
         
         if (Explorer.selected != null)
         	Explorer.selected.type();
         
-        if (Explorer.setBranchName != null)
+        if (Explorer.setBranchName != null && SetBranchName.added)
         	Explorer.setBranchName.type();
         
-        if (Explorer.setCommitName != null)
+        if (Explorer.setCommitName != null && SetCommitName.added)
         	Explorer.setCommitName.type();
         
         /*if (Character.isLetterOrDigit(charPressed)) {

@@ -24,6 +24,7 @@ import ide.components.CloseTabButton;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
+import ide.components.ReloadButton;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
@@ -537,6 +538,8 @@ public class Tab extends IDEComponent implements Serializable {
 				
 				setSaved(true);
 				save = true;
+				
+				ReloadButton.reloadExplorer();
 				
 				return 0;
 			} catch (IOException e) {

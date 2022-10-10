@@ -190,6 +190,7 @@ public class GitCore {
 		if (Explorer.createBranch == null) {
 			Explorer.createBranch = new ExecuteButtonIcon(20, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.createBranchSpr, () -> {
 				Explorer.setBranchName = new SetBranchName(0, Screen.DECORATION_HEIGHT + 165, 0, 30, false);
+				System.out.println("a");
 				
 				IDEComponent.toAdd.add(Explorer.setBranchName);
 				SetBranchName.added = true;
@@ -223,7 +224,7 @@ public class GitCore {
 		if (Explorer.renameBranch == null) {
 			Explorer.renameBranch = new ExecuteButtonIcon(96, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.renameBranchSpr, () -> {
 				Explorer.setBranchName = new SetBranchName(0, Screen.DECORATION_HEIGHT + 165, 0, 30, true);
-				
+				System.out.println("b");
 				IDEComponent.toAdd.add(Explorer.setBranchName);
 				SetBranchName.added = true;
 				Explorer.selected = null;
@@ -240,8 +241,8 @@ public class GitCore {
 		
 		if (Explorer.deleteBranch == null) {
 			Explorer.deleteBranch = new ExecuteButtonIcon(134, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.deleteBranchSpr, () -> {
-				Explorer.setBranchName = new SetBranchName(0, Screen.DECORATION_HEIGHT + 165, 0, 30, true);
-				
+				//Explorer.setBranchName = new SetBranchName(0, Screen.DECORATION_HEIGHT + 165, 0, 30, true);
+				System.out.println("c");
 				List<RightClickOption> list = new ArrayList<>();
 				int width = Texts.selectABranch.length() * 14;
 				
@@ -294,7 +295,7 @@ public class GitCore {
 		if (Explorer.commit == null) {
 			Explorer.commit = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 540, Main.explorer.getWidth() - 82, 20, (Main.lang == Language.PORT ? Texts.create + " " : "") + "Commit", () -> {
 				Explorer.setCommitName = new SetCommitName(0, Screen.DECORATION_HEIGHT + 600, 0, 30);
-				
+				System.out.println("d");
 				IDEComponent.toAdd.add(Explorer.setCommitName);
 				SetCommitName.added = true;
 				Explorer.selected = null;

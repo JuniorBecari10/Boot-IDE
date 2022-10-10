@@ -1286,7 +1286,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		case "del":
 			String[] options = { Texts.yes, Texts.no };
 			
-			MessageBox.showDialog(Texts.confirmDelete, new String[] { Texts.sureDelete + " " + regent.getName() + "?" }, options, new Execute[] { () -> {
+			MessageBox.showDialog(Texts.confirmDelete, new String[] { Texts.sureDelete, regent.getName() + "?" }, options, new Execute[] { () -> {
 				if (regent.isFile()) {
 					if (!regent.delete()) {
 						CodeEditor.setSystemLook();
