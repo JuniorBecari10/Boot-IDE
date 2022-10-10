@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Stack;
 
 import ide.components.IDEComponent;
+import ide.components.MessageBox;
 import ide.components.RightClickOption;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
+import ide.explorercomponents.Execute;
 import ide.explorercomponents.ExecuteButton;
 import ide.explorercomponents.ExecuteButtonIcon;
 import ide.explorercomponents.InputBox;
@@ -246,7 +248,9 @@ public class GitCore {
 				list.add(new RightClickOption(0, 0, width, 30, false, Texts.selectABranch, (a) -> {  }, ""));
 				
 				for (String s : Explorer.gitStatus.branches) {
-					list.add(new RightClickOption(0, 0, width, 30, s, (a) -> { delete(s); }, ""));
+					list.add(new RightClickOption(0, 0, width, 30, s, (a) -> { 
+						MessageBox.showDialog(Texts.confirmDelete, new String[] { "Are you sure you want to delete the branch", s + "?" }, new String[] { Texts.yes, Texts.no }, new Execute[] { () -> { delete(s); }, () -> { } });
+					}, ""));
 				}
 				
 				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.checkout.getY(), list.toArray(new RightClickOption[list.size()]));
