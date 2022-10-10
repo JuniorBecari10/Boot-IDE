@@ -1005,149 +1005,107 @@ public class CommandTerminal extends IDEComponent {
 				
 				switch (args[0].toLowerCase()) {
 				case "html":
-					String[] htmlstrs = { "<!DOCTYPE html>", "<html lang=\"" + (Main.lang == Language.PORT ? "pt" : "en") + "\">", CodeEditor.getIndentation(1) + "<head>", CodeEditor.getIndentation(2) + "<title></title>", CodeEditor.getIndentation(2), CodeEditor.getIndentation(2) + "<meta charset=\"UTF-8\">", CodeEditor.getIndentation(1) + "</head>", CodeEditor.getIndentation(1) + "<body>", CodeEditor.getIndentation(1) + "</body>", "</html>" };
-					
-					strs = htmlstrs;
+					strs = new String[] { "<!DOCTYPE html>", "<html lang=\"" + (Main.lang == Language.PORT ? "pt" : "en") + "\">", CodeEditor.getIndentation(1) + "<head>", CodeEditor.getIndentation(2) + "<title></title>", CodeEditor.getIndentation(2), CodeEditor.getIndentation(2) + "<meta charset=\"UTF-8\">", CodeEditor.getIndentation(1) + "</head>", CodeEditor.getIndentation(1) + "<body>", CodeEditor.getIndentation(1) + "</body>", "</html>" };
 					
 					break;
 					
 				case "html5":
-					String[] htmlnewstrs = { "<!DOCTYPE html>", "<html lang=\"" + (Main.lang == Language.PORT ? "pt" : "en") + "\">", CodeEditor.getIndentation(1) + "<head>", CodeEditor.getIndentation(2) + "<title></title>", CodeEditor.getIndentation(2), CodeEditor.getIndentation(2) + "<meta charset=\"UTF-8\">", CodeEditor.getIndentation(2) + "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", CodeEditor.getIndentation(2) + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", CodeEditor.getIndentation(1) + "</head>", CodeEditor.getIndentation(1) + "<body>", CodeEditor.getIndentation(1) + "</body>", "</html>" };
-					
-					strs = htmlnewstrs;
+					strs = new String[] { "<!DOCTYPE html>", "<html lang=\"" + (Main.lang == Language.PORT ? "pt" : "en") + "\">", CodeEditor.getIndentation(1) + "<head>", CodeEditor.getIndentation(2) + "<title></title>", CodeEditor.getIndentation(2), CodeEditor.getIndentation(2) + "<meta charset=\"UTF-8\">", CodeEditor.getIndentation(2) + "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">", CodeEditor.getIndentation(2) + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">", CodeEditor.getIndentation(1) + "</head>", CodeEditor.getIndentation(1) + "<body>", CodeEditor.getIndentation(1) + "</body>", "</html>" };
 					
 					break;
 					
 				case "css":
-					String[] cssstrs = { "* {", CodeEditor.getIndentation(1) + "margin: 0;", CodeEditor.getIndentation(1) + "padding: 0;", CodeEditor.getIndentation(1) + "box-sizing: border-box;", CodeEditor.getIndentation(1) + "font-family: sans-serif;", "}" };
-					
-					strs = cssstrs;
+					strs = new String[] { "* {", CodeEditor.getIndentation(1) + "margin: 0;", CodeEditor.getIndentation(1) + "padding: 0;", CodeEditor.getIndentation(1) + "box-sizing: border-box;", CodeEditor.getIndentation(1) + "font-family: sans-serif;", "}" };
 					
 					break;
 					
 				case "csssimple":
-					String[] csssstrs = { "* {", CodeEditor.getIndentation(1) + "margin: 0;", CodeEditor.getIndentation(1) + "padding: 0;", "}" };
-					
-					strs = csssstrs;
+					strs = new String[] { "* {", CodeEditor.getIndentation(1) + "margin: 0;", CodeEditor.getIndentation(1) + "padding: 0;", "}" };
 					
 					break;
 					
 				case "vbmain":
-					String[] vbmstrs = { "Imports System", "", "Module " + classname, "    ", CodeEditor.getIndentation(1) + "Sub Main()", CodeEditor.getIndentation(2), CodeEditor.getIndentation(1) + "End Sub", CodeEditor.getIndentation(1) , "End Module" };
-					
-					strs = vbmstrs;
+					strs = new String[] { "Imports System", "", "Module " + classname, "    ", CodeEditor.getIndentation(1) + "Sub Main()", CodeEditor.getIndentation(2), CodeEditor.getIndentation(1) + "End Sub", CodeEditor.getIndentation(1) , "End Module" };
 					
 					break;
 					
 				case "vb":
-					String[] vbstrs = { "Imports System", "", "Module " + classname, "    ", "End Module" };
-					
-					strs = vbstrs;
+					strs = new String[] { "Imports System", "", "Module " + classname, "    ", "End Module" };
 					
 					break;
 					
-				case "portugol":
-					String[] portstrs = { "programa {", CodeEditor.getIndentation(1), CodeEditor.getIndentation(1) + "funcao inicio() {", CodeEditor.getIndentation(2), CodeEditor.getIndentation(1) + "}", "}" };
-					
-					strs = portstrs;
+				case "por":
+					strs = new String[] { "programa {", CodeEditor.getIndentation(1), CodeEditor.getIndentation(1) + "funcao inicio() {", CodeEditor.getIndentation(2), CodeEditor.getIndentation(1) + "}", "}" };
 					
 					break;
 					
 				case "java":
-					String[] javastrs = { "public class " + classname + " {", CodeEditor.getIndentation(1), "}" };
-					
-					strs = javastrs;
+					strs = new String[] { "public class " + classname + " {", CodeEditor.getIndentation(1), "}" };
 					
 					break;
 					
 				case "javainterface":
-					String[] javaintstrs = { "public interface " + classname + " {", CodeEditor.getIndentation(1), "}" };
-					
-					strs = javaintstrs;
+					strs = new String[] { "public interface " + classname + " {", CodeEditor.getIndentation(1), "}" };
 					
 					break;
 					
 				case "javaenum":
-					String[] javaenstrs = { "public enum " + classname + " {", CodeEditor.getIndentation(1), "}" };
-					
-					strs = javaenstrs;
+					strs = new String[] { "public enum " + classname + " {", CodeEditor.getIndentation(1), "}" };
 					
 					break;
 					
 				case "javamain":
-					String[] javamstrs = { "public class " + classname + " {", CodeEditor.getIndentation(1), CodeEditor.getIndentation(1) + "public static void main(String[] args) {", CodeEditor.getIndentation(2), CodeEditor.getIndentation(1) + "}", "}" };
-					
-					strs = javamstrs;
+					strs = new String[] { "public class " + classname + " {", CodeEditor.getIndentation(1), CodeEditor.getIndentation(1) + "public static void main(String[] args) {", CodeEditor.getIndentation(2), CodeEditor.getIndentation(1) + "}", "}" };
 					
 					break;
 					
 				case "cpp":
-					String[] cppstrs = { "#include <iostream>", "", "using namespace std;" };
-					
-					strs = cppstrs;
+					strs = new String[] { "#include <iostream>", "", "using namespace std;" };
 					
 					break;
 					
 				case "cppmain":
-					String[] cppmstrs = { "#include <iostream>", "", "using namespace std;", "", "int main()", "{", CodeEditor.getIndentation(1) + "return 0;", "}" };
-					
-					strs = cppmstrs;
+					strs = new String[] { "#include <iostream>", "", "using namespace std;", "", "int main()", "{", CodeEditor.getIndentation(1) + "return 0;", "}" };
 					
 					break;
 					
 				case "cppmainargs":
-					String[] cppmastrs = { "#include <iostream>", "", "using namespace std;", "", "int main(int argc, char *argv[])", "{", CodeEditor.getIndentation(1) + "return 0;", "}" };
-					
-					strs = cppmastrs;
+					strs = new String[] { "#include <iostream>", "", "using namespace std;", "", "int main(int argc, char *argv[])", "{", CodeEditor.getIndentation(1) + "return 0;", "}" };
 					
 					break;
 					
 				case "c":
-					String[] cstrs = { "#include <stdio.h>" };
-					
-					strs = cstrs;
+					strs = new String[] { "#include <stdio.h>" };
 					
 					break;
 					
 				case "cmain":
-					String[] cmstrs = { "#include <stdio.h>", "", "int main()", "{", "    return 0;", "}" };
-					
-					strs = cmstrs;
+					strs = new String[] { "#include <stdio.h>", "", "int main()", "{", "    return 0;", "}" };
 					
 					break;
 					
 				case "cmainargs":
-					String[] cmastrs = { "#include <stdio.h>", "", "int main(int argc, char *argv[])", "{", CodeEditor.getIndentation(1) + "return 0;", "}" };
-					
-					strs = cmastrs;
+					strs = new String[] { "#include <stdio.h>", "", "int main(int argc, char *argv[])", "{", CodeEditor.getIndentation(1) + "return 0;", "}" };
 					
 					break;
 					
 				case "h":
-					String[] hstrs = { "#ifndef " + classname.toUpperCase() + "_H", "#define " + classname.toUpperCase() + "_H", "", "#endif" };
-					
-					strs = hstrs;
+					strs = new String[] { "#ifndef " + classname.toUpperCase() + "_H", "#define " + classname.toUpperCase() + "_H", "", "#endif" };
 					
 					break;
 					
 				case "ino":
-					String[] inostrs = { "void setup()", "{", CodeEditor.getIndentation(1), "}", "", "void loop()", "{", CodeEditor.getIndentation(1), "}" };
-					
-					strs = inostrs;
+					strs = new String[] { "void setup()", "{", CodeEditor.getIndentation(1), "}", "", "void loop()", "{", CodeEditor.getIndentation(1), "}" };
 					
 					break;
 					
 				case "go":
-					String[] gostrs = { "package main", "", "import (", CodeEditor.getIndentation(1) + "\"fmt\"", ")", "", "func main() {", CodeEditor.getIndentation(1), "}" };
-					
-					strs = gostrs;
+					strs = new String[] { "package main", "", "import (", CodeEditor.getIndentation(1) + "\"fmt\"", ")", "", "func main() {", CodeEditor.getIndentation(1), "}" };
 					
 					break;
 					
 				case "py":
-					String[] pystrs = { "def main():", CodeEditor.getIndentation(1), "", "if __name__ == \"__main__\":", CodeEditor.getIndentation(1) + "main()" };
-					
-					strs = pystrs;
+					strs = new String[] { "def main():", CodeEditor.getIndentation(1), "", "if __name__ == \"__main__\":", CodeEditor.getIndentation(1) + "main()" };
 					
 					break;
 				}
