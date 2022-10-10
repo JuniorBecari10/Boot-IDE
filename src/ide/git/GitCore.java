@@ -88,7 +88,7 @@ public class GitCore {
 					boolean warn = Main.isWarning(output);
 					
 					actions.add(new GitAction("git init", getState(error, warn), output));
-					}, ""));
+					}, "", true));
 				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> {
 					String[] output = Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git init");
 					
@@ -147,7 +147,7 @@ public class GitCore {
 					actions.add(new GitAction("git clone", getState(error, warn), output));
 					
 					Explorer.fetchStatus();
-					}, ""));
+					}, "", true));
 				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> {
 					String[] output = Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git clone " + Explorer.cloneURL.getText());
 					
