@@ -272,7 +272,7 @@ public class Explorer extends IDEComponent {
 	    	Main.screen.setCursor(Cursor.getDefaultCursor());
 	    
 	    if (explorerMode == ExplorerMode.GIT) {
-	    	if (MouseInput.hovered(0, Screen.DECORATION_HEIGHT + 380, width, 40) && leftClicked()) {
+	    	if (MouseInput.hovered(0, Screen.DECORATION_HEIGHT + 380, width, 40) && leftClicked() && gitStatus.changedFiles.length > 0) {
 	    		int widthDraw = getHighestNumber(arrayOfLengths(gitStatus.changedFiles)) * 16;
 	    		
 	    		if (widthDraw < Texts.filesChangedTitle.length() * 16)
@@ -282,7 +282,7 @@ public class Explorer extends IDEComponent {
 	    		
 	    		list.add(new RightClickOption(0, 0, widthDraw, false, Texts.filesChangedTitle, (a) -> { }, "", true));
 	    		
-	    		for (String s : gitStatus.changedFiles)
+	    		for (String s : gitStatus.changedFiles) {
 	    			list.add(new RightClickOption(0, 0, widthDraw, s, (a) -> {
 	    				String[] split = s.split(" ");
 	    				String[] removeFirst = new String[split.length - 1];
@@ -291,14 +291,27 @@ public class Explorer extends IDEComponent {
 	    					removeFirst[i] = split[i + 1];
 	    				}
 	    				
-	    				String fileName = String.join(" ", removeFirst);
+	    				String fileName = String.join(" ", s.startsWith(" ") ? split : removeFirst);
 	    				
 	    				File file = new File(Main.baseFolder.getAbsolutePath() + File.separator + fileName);
 	    				
-	    				ListableFile.addTab(ListableFile.newListableFile(file), false);
+	    				if (file.isFile())
+	    					ListableFile.addTab(ListableFile.newListableFile(file), false);
+	    				else {
+	    					Explorer.files = ListableFile.loadFolder(ListableFile.newListableFile(file));
+	    					
+	    					explorerMode = ExplorerMode.EXPLORER;
+	    	    			selected = null;
+	    	    			
+	    	    			SearchReplaceCore.dispose();
+	    	    			GitCore.dispose();
+	    	    			
+	    	    			ReloadButton.reloadExplorer();
+	    				}
 	    				
 	    			}, ""));
-				
+	    		}
+	    		
 	    		IDEComponent.addRightClickOptions(width, Screen.DECORATION_HEIGHT + 400, list.toArray(new RightClickOption[list.size()]));
 	    	}
 	    }
@@ -746,6 +759,10 @@ public class Explorer extends IDEComponent {
 	    	g2.setColor(Colors.textLight);
 	    	g2.setStroke(new BasicStroke(2f));
 	    	g2.drawLine(20 + ("Commit & Push".length() * 12) + 10, Screen.DECORATION_HEIGHT + 520, width - 20, Screen.DECORATION_HEIGHT + 520);
+	    	
+	    	/*if (MouseInput.hovered(0, Screen.DECORATION_HEIGHT + 380, width, 40)) {
+	    		Explorer.renderCardText(new String[] { "Click to see changed files" }, MouseInput.getMouseX() + 30, MouseInput.getMouseY(), g);
+	    	}*/
     	}
     	else {
     		Fonts.drawString(Texts.general, 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
