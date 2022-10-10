@@ -6391,6 +6391,18 @@ public class CodeEditor extends IDEComponent {
 		
 		return b.toString();
 	}
+	
+	public int getNextUntitledNumber() {
+		int num = 0;
+		
+		for (Tab t : tabs) {
+			String name;
+			if ((name = t.getRegent().getRegent().getName()).contains("Untitled"))
+				num = Integer.parseInt(String.valueOf(name.charAt(name.length() - 1))) + 1;
+		}
+		
+		return num;
+	}
 
 	public static void execTerminal() {
 		terminal = new CommandTerminal(Screen.WIDTH / 2 - 250, Screen.DECORATION_HEIGHT + 40, 500, 30); // 25
@@ -6547,7 +6559,7 @@ public class CodeEditor extends IDEComponent {
 			break;
 			
 		case "newfiletab":
-			File create = new File(Main.userDir + File.separator + "Untitled");
+			File create = new File(Main.userDir + File.separator + "Untitled " + getNextUntitledNumber());
 			
 			if (!create.exists())
 				try {
