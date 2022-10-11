@@ -25,6 +25,8 @@ public class SetCommitName extends IDEComponent {
 	
 	private StringBuilder text = new StringBuilder();
 	private int cursorIndex = 0;
+	
+	private boolean canShowError = false;
 
 	public SetCommitName(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
@@ -139,6 +141,8 @@ public class SetCommitName extends IDEComponent {
 			
 			if (text.length() == 0) text.append(c);
 			else text.insert(cursorIndex - 1, c);
+			
+			canShowError = true;
 		}
 	}
 	
@@ -169,6 +173,10 @@ public class SetCommitName extends IDEComponent {
 		/*if (hasIllegalChars(text.toString()))
 			Fonts.drawString(Texts.commitNameIllegal, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 50, new IDEFont(Fonts.errorNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		*/
+		
+		if (text.length() == 0 && canShowError)
+			Fonts.drawString(Texts.commitNameEmpty, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 50, new IDEFont(Fonts.errorNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		
 		Fonts.drawString("[Ctrl + C] " + Texts.copy, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 75, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		Fonts.drawString("[Ctrl + V] " + Texts.paste, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 100, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		Fonts.drawString("[Ctrl + X] " + Texts.cut, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 125, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);

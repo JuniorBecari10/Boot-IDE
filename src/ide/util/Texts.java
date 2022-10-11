@@ -247,6 +247,9 @@ public final class Texts {
 	
 	public static String branchNameIllegal;
 	public static String commitNameIllegal;
+	
+	public static String branchNameEmpty;
+	public static String commitNameEmpty;
 
 	public static String fileChanged;
 	public static String filesChanged;
@@ -500,6 +503,9 @@ public final class Texts {
 			branchNameIllegal = "O nome da Branch contém caracteres não permitidos.";
 			commitNameIllegal = "O nome do Commit contém caracteres não permitidos.";
 			
+			branchNameEmpty = "O nome da Branch não pode ser vazio!";
+			commitNameEmpty = "O nome do Commit não pode ser vazio!";
+			
 			fileChanged = "arquivo alterado.";
 			filesChanged = "arquivos alterados.";
 			
@@ -751,6 +757,9 @@ public final class Texts {
 			
 			branchNameIllegal = "The Branch name contains non-permitted characters.";
 			commitNameIllegal = "The Commit name contains non-permitted characters.";
+			
+			branchNameEmpty = "The Branch name cannot be empty!";
+			commitNameEmpty = "The Commit name cannot be empty!";
 			
 			fileChanged = "file changed.";
 			filesChanged = "files changed.";

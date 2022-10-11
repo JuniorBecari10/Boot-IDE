@@ -25,6 +25,8 @@ public class SetBranchName extends IDEComponent {
 	
 	private boolean rename;
 	
+	private boolean canShowError = false;
+	
 	private StringBuilder text = new StringBuilder();
 	private int cursorIndex = 0;
 
@@ -148,6 +150,8 @@ public class SetBranchName extends IDEComponent {
 			
 			if (text.length() == 0) text.append(c);
 			else text.insert(cursorIndex - 1, c);
+			
+			canShowError = true;
 		}
 	}
 	
@@ -177,6 +181,9 @@ public class SetBranchName extends IDEComponent {
 		
 		if (hasIllegalChars(text.toString()))
 			Fonts.drawString(Texts.branchNameIllegal, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 50, new IDEFont(Fonts.errorNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
+		
+		if (text.length() == 0 && canShowError)
+			Fonts.drawString(Texts.branchNameEmpty, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 50, new IDEFont(Fonts.errorNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		
 		Fonts.drawString("[Ctrl + C] " + Texts.copy, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 75, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
 		Fonts.drawString("[Ctrl + V] " + Texts.paste, MouseInput.getMouseX() + 30, MouseInput.getMouseY() + 100, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
