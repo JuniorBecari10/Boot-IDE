@@ -84,8 +84,8 @@ public class GitCore {
 		actions.add(new GitAction("git branch", getState(error, warn), output));
 	}
 	
-	public static void push(String repo, boolean force) {
-		String[] output = Main.runCommand(Main.baseFolder, "git push " + (force ? "-f " : "-u ") + repo);
+	public static void push(String repo, String branch, boolean force) {
+		String[] output = Main.runCommand(Main.baseFolder, "git push " + (force ? "-f " : "-u ") + repo + " " + branch);
 		
 		Explorer.fetchStatus();
 		
@@ -380,7 +380,7 @@ public class GitCore {
 				list.add(new RightClickOption(0, 0, width, 30, false, "Branch: " + Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch], (a) -> {  }, "", false));
 				
 				for (String s : Explorer.gitStatus.remoteRepos) {
-					list.add(new RightClickOption(0, 0, width, 30, s, (a) -> { push(s, false); }, ""));
+					list.add(new RightClickOption(0, 0, width, 30, s, (a) -> { push(s, Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch], false); }, ""));
 				}
 				
 				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.push.getY(), list.toArray(new RightClickOption[list.size()]));

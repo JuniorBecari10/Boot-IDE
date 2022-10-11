@@ -1065,7 +1065,7 @@ public class CodeEditor extends IDEComponent {
 	public void refreshText() {
 		if (editing == null) return;
 		if (!editing.isSaved()) {
-			String[] options = { "Yes, save changes.", "No, override changes.", Texts.cancel };
+			String[] options = { Texts.yes, Texts.no, Texts.cancel };
 			MessageBox.showDialog(Texts.confirmSave, new String[] { Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.doYouWantToSave }, options, new Execute[] {
 					() -> {
 						editing.save();
@@ -1933,6 +1933,17 @@ public class CodeEditor extends IDEComponent {
 
 				fs = color(c, c + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 			}
+			
+			indxs = findWord(new String(chars), ":"); // depois de <palavra>
+
+			int len = 0;
+
+			for (Integer i : indxs) {
+				while (i + len < chars.length)
+					len++;
+
+				fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
+			}
 		}
 		
 		if (ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s")) {
@@ -2151,7 +2162,7 @@ public class CodeEditor extends IDEComponent {
 								|| ext.equalsIgnoreCase(".sql") || ext.equalsIgnoreCase(".makefile")
 								|| ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".mak")
 								|| ext.equalsIgnoreCase(".make")
-								|| editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile")
+								|| (editing != null && editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile"))
 								|| ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com")
 								|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1")
 								|| ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".project")
@@ -2474,7 +2485,7 @@ public class CodeEditor extends IDEComponent {
 								|| ext.equalsIgnoreCase(".sql") || ext.equalsIgnoreCase(".makefile")
 								|| ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".mak")
 								|| ext.equalsIgnoreCase(".make")
-								|| editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile")
+								|| (editing != null && editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile"))
 								|| ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com")
 								|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1")
 								|| ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".project")
@@ -4636,11 +4647,22 @@ public class CodeEditor extends IDEComponent {
 							fs = color(c, c + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 						}
 						
+						indxs = findWord(new String(chars), ":"); // depois de <palavra>
+
+						int len = 0;
+
+						for (Integer i : indxs) {
+							while (i + len < chars.length)
+								len++;
+
+							fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
+						}
+						
 						indxs = findWord(new String(chars), "="); // antes de <palavra>
 
 						for (Integer i : indxs) {
 							int c = i;
-							int len = 0;
+							len = 0;
 
 							boolean hasSpace = false;
 
@@ -4662,7 +4684,7 @@ public class CodeEditor extends IDEComponent {
 						
 						indxs = findWord(new String(chars), "("); // depois de <palavra>
 
-						int len = 0;
+						len = 0;
 
 						for (Integer i : indxs) {
 							while (i + len < chars.length && chars[i + len] != ')')
