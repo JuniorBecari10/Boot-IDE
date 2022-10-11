@@ -6832,14 +6832,14 @@ public class CodeEditor extends IDEComponent {
 		int index = 0;
 		
 		autocomplete = removeDuplicates(autocomplete);
-
+		
 		for (AutoComplete a : autocomplete) {
 			if (a == null)
 				continue;
 
 			String change = a.text;
 			
-			toAddAutoCompletes.add(new RightClickOption(drawcx + (Main.editor.getX() - originalEditorX), // x
+			toAddAutoCompletes.add(new RightClickOption(drawcx + 10, // x
 					(drawcy + FONT_SIZE /* + 2 */) + index * RightClickOption.AUTOCOMPLETE_HEIGHT,  // y
 					330, // width
 					RightClickOption.AUTOCOMPLETE_HEIGHT, // height
@@ -6847,7 +6847,7 @@ public class CodeEditor extends IDEComponent {
 					a.text, // text
 					getAutoCompleteIcon(a.type), // icon
 					(e) -> makeChanges(e), // command 
-					change)); // clickArg
+					change, index == 0)); // clickArg
 
 			index++;
 		}

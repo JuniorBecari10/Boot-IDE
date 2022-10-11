@@ -153,6 +153,20 @@ public class RightClickOption extends IDEComponent {
 		isActive = true;
 	}
 	
+	public RightClickOption(int x, int y, int width, int height, int textSize, String text, BufferedImage icon, ExecuteCommand command, String clickArg, boolean isTop) {
+		super(x, y, width, height, icon);
+
+		this.text = text;
+		this.command = command;
+		this.clickArg = clickArg;
+		
+		this.textSize = textSize;
+		
+		isAutoComplete = true;
+		isActive = true;
+		this.isTop = isTop;
+	}
+	
 	/**
 	 * Detecta se tem alguma opaao de RightClick aberta.
 	 * 
