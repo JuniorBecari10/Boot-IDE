@@ -244,7 +244,13 @@ public class GitCore {
 				}
 				
 				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.checkout.getY(), list.toArray(new RightClickOption[list.size()]));
-			}, "Checkout");
+			}, "Checkout") {
+				public void tick() {
+					enabled = Explorer.gitStatus.branches.length > 1;
+					
+					super.tick();
+				}
+			};
 		}
 		
 		if (Explorer.renameBranch == null) {
@@ -284,6 +290,8 @@ public class GitCore {
 				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.checkout.getY(), list.toArray(new RightClickOption[list.size()]));
 			}, Texts.mergeBranches) {
 				public void tick() {
+					enabled = Explorer.gitStatus.branches.length > 1;
+					
 					super.tick();
 					
 					caption = Texts.mergeBranches;
@@ -307,6 +315,8 @@ public class GitCore {
 				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.checkout.getY(), list.toArray(new RightClickOption[list.size()]));
 			}, Texts.deleteBranch) {
 				public void tick() {
+					enabled = Explorer.gitStatus.branches.length > 1;
+					
 					super.tick();
 					
 					caption = Texts.deleteBranch;

@@ -18,12 +18,21 @@ public class ExecuteButtonIcon extends IDEComponent {
 
 	protected Execute execute;
 	protected String caption;
+	protected boolean enabled = true;
 	
 	public ExecuteButtonIcon(int x, int y, int width, int height, BufferedImage sprite, Execute execute, String caption) {
 		super(x, y, width, height, sprite);
 		
 		this.execute = execute;
 		this.caption = caption;
+	}
+	
+	public ExecuteButtonIcon(int x, int y, int width, int height, BufferedImage sprite, Execute execute, String caption, boolean enabled) {
+		super(x, y, width, height, sprite);
+		
+		this.execute = execute;
+		this.caption = caption;
+		this.enabled = enabled;
 	}
 	
 	public boolean hovered() {
@@ -33,7 +42,7 @@ public class ExecuteButtonIcon extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (leftClicked()) {
+		if (leftClicked() && enabled) {
 			KeyInput.updateKeys();
 			RightClickOption.removeAllRightClickOptions();
 			
@@ -42,7 +51,7 @@ public class ExecuteButtonIcon extends IDEComponent {
 	}
 	
 	public void render(Graphics g) {
-		if (hovered()) {
+		if (hovered() && enabled) {
 			g.setColor(Colors.explorerLight);
 			g.fillRect(x, y, width, height);
 		}
