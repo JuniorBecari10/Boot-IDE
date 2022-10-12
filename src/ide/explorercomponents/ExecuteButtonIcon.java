@@ -7,6 +7,7 @@ import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
 import ide.components.RenameFile;
+import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
 import ide.input.KeyInput;
@@ -34,6 +35,7 @@ public class ExecuteButtonIcon extends IDEComponent {
 	public void tick() {
 		if (leftClicked()) {
 			KeyInput.updateKeys();
+			RightClickOption.removeAllRightClickOptions();
 			
 			execute.execute();
 		}

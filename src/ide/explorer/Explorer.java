@@ -794,6 +794,15 @@ public class Explorer extends IDEComponent {
     	}
     }
     
+    private void renderTerminal(Graphics g) {
+    	Graphics2D g2 = (Graphics2D) g;
+    	
+    	Fonts.drawString(Texts.settings, 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	g2.setColor(Colors.textLight);
+    	g2.setStroke(new BasicStroke(2f));
+    	g2.drawLine(20 + (Texts.settings.length() * 12) + 10, Screen.DECORATION_HEIGHT + 60, width - 20, Screen.DECORATION_HEIGHT + 60);
+    }
+    
     public static int getHighestNumber(int... arr) {
     	if (arr.length == 0) return -1;
     	
@@ -929,6 +938,8 @@ public class Explorer extends IDEComponent {
 	    	renderSearchReplace(g);
 	    else if (explorerMode == ExplorerMode.GIT)
 	    	renderGit(g);
+	    else if (explorerMode == ExplorerMode.TERMINAL)
+	    	renderTerminal(g);
 	    
 	    for (Tab t : Main.editor.tabs) {
 	    	if (Main.editor.editing == t && Main.editor.editing.getX() + Main.editor.tabScr == Main.editor.getX() - 1) {

@@ -270,6 +270,9 @@ public final class Texts {
 	
 	public static String create;
 	
+	public static String breakLine;
+	public static String showOverlay;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -525,6 +528,9 @@ public final class Texts {
 			
 			create = "Criar";
 			
+			breakLine = "Quebrar Linha";
+			showOverlay = "Mostrar Sobreposição";
+			
 			break;
 		
 		case ENG:
@@ -779,6 +785,9 @@ public final class Texts {
 			forcePush = "Force Push";
 			
 			create = "Create";
+			
+			breakLine = "Break Line";
+			showOverlay = "Show Overlay";
 			
 			break;
 		}

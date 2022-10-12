@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
+import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -53,8 +54,10 @@ public class ExecuteButton extends IDEComponent {
 	public void tick() {
 		width = Main.explorer.getWidth() - 40;
 		
-		if (leftClicked() && enabled)
+		if (leftClicked() && enabled) {
+			RightClickOption.removeAllRightClickOptions();
 			execute.execute();
+		}
 	}
 	
 	public void render(Graphics g) {
