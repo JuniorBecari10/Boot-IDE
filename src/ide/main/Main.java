@@ -53,6 +53,8 @@ import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.input.WindowInput;
 import ide.screen.Screen;
+import ide.terminal.TerminalCore;
+import ide.terminal.TerminalTab;
 import ide.topcomponents.CloseWindow;
 import ide.topcomponents.MaximizeWindow;
 import ide.topcomponents.MinimizeWindow;
@@ -79,7 +81,7 @@ public class Main implements Runnable, Tickable {
     public static final String LOG_FILE_NAME = "Exception.log";
     
     public static final String PROGRAM_NAME = "Boot IDE";
-    public static final String VERSION = "Beta 4 v4.5 | Dev Test 1";
+    public static final String VERSION = "Beta 4 v4.5 | Dev Test 2";
     
     public static final String userDir = System.getProperty("user.dir");
     
@@ -418,6 +420,9 @@ public class Main implements Runnable, Tickable {
     		
     		System.exit(1);
     	}
+    	
+    	TerminalCore.tabs.add(new TerminalTab(0, Screen.DECORATION_HEIGHT + 210, 200, "Terminal-1"));
+    	TerminalCore.selected = TerminalCore.tabs.get(0);
     }
     
     public static OS getOS() {

@@ -42,6 +42,7 @@ import ide.input.MouseInput;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.terminal.TerminalCore;
+import ide.terminal.TerminalTab;
 import ide.util.Colors;
 import ide.util.Language;
 import ide.util.Texts;
@@ -335,8 +336,11 @@ public class Explorer extends IDEComponent {
 	    		IDEComponent.addRightClickOptions(width, Screen.DECORATION_HEIGHT + 400, list.toArray(new RightClickOption[list.size()]));
 	    	}
 	    }
-	    
-	    if (explorerMode == ExplorerMode.EXPLORER) {
+	    else if (explorerMode == ExplorerMode.TERMINAL) {
+	    	for (TerminalTab t : TerminalCore.tabs)
+	    		t.tick();
+	    }
+	    else if (explorerMode == ExplorerMode.EXPLORER) {
 	    	if (ListableFile.files.isEmpty() && files.isEmpty()) hoveringListableFile = false;
 	    	
 	    	if (Main.baseFolder == null || !Main.baseFolder.exists()) {
@@ -801,6 +805,14 @@ public class Explorer extends IDEComponent {
     	g2.setColor(Colors.textLight);
     	g2.setStroke(new BasicStroke(2f));
     	g2.drawLine(20 + (Texts.settings.length() * 12) + 10, Screen.DECORATION_HEIGHT + 60, width - 20, Screen.DECORATION_HEIGHT + 60);
+    	
+    	Fonts.drawString("Terminal", 20, Screen.DECORATION_HEIGHT + 170, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	g2.setColor(Colors.textLight);
+    	g2.setStroke(new BasicStroke(2f));
+    	g2.drawLine(20 + ("Terminal".length() * 12) + 10, Screen.DECORATION_HEIGHT + 180, width - 20, Screen.DECORATION_HEIGHT + 180);
+    	
+    	for (TerminalTab t : TerminalCore.tabs)
+    		t.render(g);
     }
     
     public static int getHighestNumber(int... arr) {

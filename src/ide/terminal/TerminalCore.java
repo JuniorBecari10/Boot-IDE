@@ -1,5 +1,8 @@
 package ide.terminal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
@@ -11,7 +14,18 @@ import ide.util.Texts;
 
 public class TerminalCore {
 	
+	/*
+	 * Shell Redirection
+	 * 
+	 * command > file  | write output to file
+	 * command >> file | append output to file
+	 */
+	
 	public static boolean breakLine = true;
+	public static char prompt = '$';
+	
+	public static List<TerminalTab> tabs = new ArrayList<>();
+	
 	public static TerminalTab selected;
 	
 	public static void init() {
