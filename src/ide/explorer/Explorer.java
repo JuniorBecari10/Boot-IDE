@@ -41,6 +41,7 @@ import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.screen.Screen;
+import ide.terminal.TerminalCore;
 import ide.util.Colors;
 import ide.util.Language;
 import ide.util.Texts;
@@ -102,6 +103,13 @@ public class Explorer extends IDEComponent {
 	
 	public static LastAction lastAction;
 	
+	// -- Terminal --
+	
+	public static ToggleButton breakLine;
+	public static ExecuteButton showOverlay;
+	
+	// textarea
+	
 	public static int MINIMUM_Y = 200 + Screen.DECORATION_HEIGHT;
 	
 	public static ExplorerMode explorerMode = ExplorerMode.EXPLORER;
@@ -149,6 +157,7 @@ public class Explorer extends IDEComponent {
     			
     			SearchReplaceCore.dispose();
     			GitCore.dispose();
+    			TerminalCore.dispose();
     			
     			ReloadButton.reloadExplorer();
     		}
@@ -159,6 +168,7 @@ public class Explorer extends IDEComponent {
     			
     			Main.editor.execute("searchrep");
     			GitCore.dispose();
+    			TerminalCore.dispose();
     		}
     	});
     	tabs.add(new ExplorerTab(1 + 6 + (ExplorerTab.SIZE * 2), Main.gitTab, ExplorerMode.GIT, "Git") {
@@ -167,10 +177,17 @@ public class Explorer extends IDEComponent {
     			
     			GitCore.init();
     			SearchReplaceCore.dispose();
+    			TerminalCore.dispose();
     			fetchStatus();
     		}
     	});
-    	tabs.add(new ExplorerTab(1 + 9 + (ExplorerTab.SIZE * 3), Main.terminalTab, ExplorerMode.TERMINAL, "Terminal"));
+    	tabs.add(new ExplorerTab(1 + 9 + (ExplorerTab.SIZE * 3), Main.terminalTab, ExplorerMode.TERMINAL, "Terminal") {
+    		public void select() {
+    			TerminalCore.init();
+    			GitCore.dispose();
+    			SearchReplaceCore.dispose();
+    		}
+    	});
     }
     
     public static boolean isBaseFolderRepository() {

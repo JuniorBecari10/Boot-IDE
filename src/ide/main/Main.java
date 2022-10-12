@@ -234,6 +234,8 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage allowEmptySpr;
     public static BufferedImage forcePushSpr;
     
+    public static BufferedImage breakLineSpr;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -339,6 +341,8 @@ public class Main implements Runnable, Tickable {
 	        
 	        allowEmptySpr = spritesheet.getSprite(496, 0, 16, 16);
 	        forcePushSpr = spritesheet.getSprite(512, 0, 16, 16);
+	        
+	        breakLineSpr = spritesheet.getSprite(528, 0, 16, 16);
 	        
 	        ///////
 	        
@@ -516,6 +520,8 @@ public class Main implements Runnable, Tickable {
         
         allowEmptySpr = Colors.swapColor(allowEmptySpr, Colors.textLightDefault, Colors.textLight);
         forcePushSpr = Colors.swapColor(forcePushSpr, Colors.textLightDefault, Colors.textLight);
+        
+        breakLineSpr = Colors.swapColor(breakLineSpr, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         

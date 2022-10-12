@@ -15,7 +15,7 @@ import ide.util.Colors;
 
 public class ToggleButton extends IDEComponent {
 
-	private boolean state;
+	protected boolean state;
 	protected String caption;
 	protected boolean enabled;
 	
