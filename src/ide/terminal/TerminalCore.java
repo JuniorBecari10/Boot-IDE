@@ -12,6 +12,7 @@ import ide.util.Texts;
 public class TerminalCore {
 	
 	public static boolean breakLine = true;
+	public static TerminalTab selected;
 	
 	public static void init() {
 		Explorer.explorerMode = ExplorerMode.TERMINAL;
