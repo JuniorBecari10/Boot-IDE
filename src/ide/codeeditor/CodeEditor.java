@@ -6846,7 +6846,7 @@ public class CodeEditor extends IDEComponent {
 					16, // textSize
 					a.text, // text
 					getAutoCompleteIcon(a.type), // icon
-					(e) -> makeChanges(e), // command 
+					(e) -> makeChanges(e), // command
 					change, index == 0)); // clickArg
 
 			index++;

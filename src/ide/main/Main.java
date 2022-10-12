@@ -586,6 +586,14 @@ public class Main implements Runnable, Tickable {
     	return ret;
     }
     
+    public static void newThread(Execute func) {
+		new Thread() {
+			public void run() {
+				func.execute();
+			}
+		}.start();
+	}
+    
     public static String[] runCommand(File directory, String... commands) {
     	if (os == OS.WINDOWS) {
     		String[] preCommands = { "cmd", "/c" };

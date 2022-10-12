@@ -4,6 +4,6 @@ public enum ActionState {
 	ERROR,
 	WARNING,
 	CONFLICT,
-	//PROGRESS,
+	PROGRESS,
 	DONE;
 }

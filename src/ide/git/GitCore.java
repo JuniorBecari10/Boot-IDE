@@ -29,7 +29,7 @@ public class GitCore {
 	public static boolean checkoutToCreatedBranch = true;
 	
 	public static boolean allowEmptyCommits;
-
+	
 	public static ActionState getState(boolean error, boolean warn) {
 		if (warn)
 			return ActionState.WARNING;
@@ -105,6 +105,7 @@ public class GitCore {
 				List<RightClickOption> list = new ArrayList<>();
 				
 				list.add(new RightClickOption(0, 0, widthDraw, Texts.inBaseFolder, (s) -> {
+					actions.add(new GitAction("git init", ActionState.PROGRESS, null));
 					String[] output = Main.runCommand(Main.baseFolder, "git init");
 					
 					Explorer.fetchStatus();
@@ -112,9 +113,10 @@ public class GitCore {
 					boolean error = Main.isError(output);
 					boolean warn = Main.isWarning(output);
 					
-					actions.add(new GitAction("git init", getState(error, warn), output));
+					actions.set(actions.size() - 1, new GitAction("git init", getState(error, warn), output));
 					}, "", true));
 				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> {
+					actions.add(new GitAction("git init", ActionState.PROGRESS, null));
 					String[] output = Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git init");
 					
 					Explorer.fetchStatus();
@@ -122,7 +124,7 @@ public class GitCore {
 					boolean error = Main.isError(output);
 					boolean warn = Main.isWarning(output);
 					
-					actions.add(new GitAction("git init", getState(error, warn), output));
+					actions.set(actions.size() - 1, new GitAction("git init", getState(error, warn), output));
 					}, ""));
 				
 				IDEComponent.addRightClickOptions(20, Explorer.isBaseFolderRepository() ? Screen.DECORATION_HEIGHT + 257 : Screen.DECORATION_HEIGHT + 112, list.toArray(new RightClickOption[list.size()]));
