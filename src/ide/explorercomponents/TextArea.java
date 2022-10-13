@@ -141,6 +141,7 @@ public class TextArea extends IDEComponent {
 					
 					for (String s : o) {
 						System.out.println(s);
+						Main.runCommand(new File(Main.userDir), "echo " + s + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
 					}
 					
 					Main.runCommand(new File(Main.userDir), "echo " + TerminalCore.prompt + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
