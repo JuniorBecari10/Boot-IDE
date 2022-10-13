@@ -8,6 +8,7 @@ import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
+import ide.main.Main;
 import ide.util.Colors;
 
 public class TextArea extends IDEComponent {
@@ -18,6 +19,9 @@ public class TextArea extends IDEComponent {
 	public boolean acceptInput = false;
 	
 	private int fontSize = 16;
+	
+	private int cursorX = 0;
+	private int cursorY = 0;
 
 	public TextArea(int x, int y, int width, int height, String[] lines) {
 		super(x, y, width, height, null);
@@ -43,6 +47,10 @@ public class TextArea extends IDEComponent {
 	public void tick() {
 		if (leftClicked())
 			Explorer.selected = this;
+		
+		cursorX = lines[lines.length - 1].length();
+		cursorY = lines.length - 1;
+		
 	}
 	
 	public void render(Graphics g) {
@@ -55,6 +63,11 @@ public class TextArea extends IDEComponent {
 		int i = 0;
 		for (String s : lines) {
 			Fonts.drawString(s, x + 5, y + 5 + (i++ * fontSize + MARGIN), new IDEFont(Fonts.otherNormal, fontSize), x + width, g);
+		}
+		
+		if (Main.editor.showCursor) {
+			g.setColor(Colors.other);
+			g.fillRect(x + 5 + ((fontSize - 4) * cursorX), y + (fontSize + MARGIN) * cursorY, fontSize < 13 ? 1 : 2, fontSize + MARGIN);
 		}
 	}
 }
