@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
@@ -224,6 +227,8 @@ public class TextArea extends IDEComponent {
 	}
 	
 	public void setCursorWithinBounds() {
+		if (TerminalCore.breakLine) return;
+		
 		// mover pra frente (o texto vai pra trás)
 		while (x + 1 + (cursorX * (fontSize - CodeEditor.ruleOf3(16, 4, fontSize))) - scrollX > width)
 			scrollX += fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
@@ -250,6 +255,32 @@ public class TextArea extends IDEComponent {
 		g.setColor(Colors.explorer);
 		g.fillRect(x, y, width, height);
 		
+		String[] lines = Arrays.copyOf(this.lines, this.lines.length);
+		
+		int maxChars = Math.floorDiv(width, fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) - 1;
+		List<String> linesList = new ArrayList<>();
+		
+		for (String s : lines) {
+			if (s.length() > maxChars) {
+				String s1 = s.substring(0, maxChars);
+				String s2 = s.substring(maxChars);
+				
+				linesList.add(s1);
+				
+				while (s2.length() > maxChars) {
+					linesList.add(s2);
+					s2 = s2.substring(maxChars);
+				}
+				
+				if (s2.length() <= maxChars)
+					linesList.add(s2);
+			}
+			else
+				linesList.add(s);
+		}
+		
+		lines = linesList.toArray(new String[0]);
+		
 		int i = 0;
 		for (String s : lines) {
 			if (y + 5 + (i * (fontSize + MARGIN)) - scrollY < y - fontSize + 4) {
@@ -259,6 +290,10 @@ public class TextArea extends IDEComponent {
 			
 			Fonts.drawString(s, x + 5 - scrollX, y + 5 + (i++ * (fontSize + MARGIN)) - scrollY, new IDEFont(Fonts.otherNormal, fontSize), x, x + width, g);
 		}
+		
+		int cursorX = this.cursorX;
+		
+		
 		
 		if (Main.editor.showCursor && Explorer.selected == this && !TerminalCore.selected.commandRunning 
 				&& y + 5 + ((lines.length - 1) * (fontSize + MARGIN)) - scrollY > y - fontSize + 4 
