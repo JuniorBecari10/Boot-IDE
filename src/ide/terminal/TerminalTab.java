@@ -31,7 +31,7 @@ public class TerminalTab extends IDEComponent {
 	public String name;
 	private File log;
 	
-	public String[] lines;
+	private String[] lines;
 	public Thread reader;
 	
 	public TerminalTab(int x, int y, int width, String name) {
@@ -56,6 +56,11 @@ public class TerminalTab extends IDEComponent {
 			e.printStackTrace();
 		}
 		
+		try {
+			lines = Files.readAllLines(log.toPath()).toArray(new String[0]);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		reader = new Thread() {
 			public void run() {
 				while (true) {
@@ -70,7 +75,11 @@ public class TerminalTab extends IDEComponent {
 			}
 		};
 		
-		reader.start();
+		//reader.start();
+	}
+	
+	public String[] getLines() {
+		return lines;
 	}
 	
 	public File getLog() {

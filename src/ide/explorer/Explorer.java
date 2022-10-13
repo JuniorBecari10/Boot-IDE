@@ -32,6 +32,7 @@ import ide.explorercomponents.SearchReplaceCore;
 import ide.explorercomponents.SearchReplaceRadioButton;
 import ide.explorercomponents.SetBranchName;
 import ide.explorercomponents.SetCommitName;
+import ide.explorercomponents.TextArea;
 import ide.explorercomponents.ToggleButton;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -66,7 +67,7 @@ public class Explorer extends IDEComponent {
 	public static SetFileName setFileName;
 	public static RenameFile renameFile;
 	
-	public static InputBox selected;
+	public static IDEComponent selected;
 	
 	public static GitStatus gitStatus;
 	
@@ -108,8 +109,7 @@ public class Explorer extends IDEComponent {
 	
 	public static ToggleButton breakLine;
 	public static ExecuteButton showOverlay;
-	
-	// textarea
+	public static TextArea textArea;
 	
 	public static int MINIMUM_Y = 200 + Screen.DECORATION_HEIGHT;
 	

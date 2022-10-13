@@ -7,6 +7,7 @@ import ide.components.IDEComponent;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorercomponents.ExecuteButton;
+import ide.explorercomponents.TextArea;
 import ide.explorercomponents.ToggleButton;
 import ide.main.Main;
 import ide.screen.Screen;
@@ -52,13 +53,28 @@ public class TerminalCore {
 			};
 		}
 		
+		if (Explorer.textArea == null) {
+			Explorer.textArea = new TextArea(10, Screen.DECORATION_HEIGHT + 260, Main.explorer.getWidth() - 20, (Main.screen.getHeight() - Screen.DECORATION_HEIGHT + 280) - 20, selected.getLines()) {
+				public void tick() {
+					super.tick();
+					
+					width = Main.explorer.getWidth() - 20;
+					height = (Main.screen.getHeight() - Screen.DECORATION_HEIGHT + 280) - 20;
+					lines = selected.getLines();
+					
+				}
+			};
+		}
+		
 		IDEComponent.toAdd.add(Explorer.showOverlay);
 		IDEComponent.toAdd.add(Explorer.breakLine); // por causa do texto
+		IDEComponent.toAdd.add(Explorer.textArea);
 	}
 	
 	public static synchronized void dispose() {
 		IDEComponent.toRemove.add(Explorer.breakLine);
 		IDEComponent.toRemove.add(Explorer.showOverlay);
+		IDEComponent.toRemove.add(Explorer.textArea);
 	}
 	
 	public static int getNextUntitledNumber() {

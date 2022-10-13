@@ -76,7 +76,9 @@ public abstract class IDEComponent implements Tickable, Renderable, Clickable { 
     public BufferedImage getSprite() {
         return sprite;
     }
-
+    
+    public void type() {}
+    
     @Override
     public void tick() {}
     
