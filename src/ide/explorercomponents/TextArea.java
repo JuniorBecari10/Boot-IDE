@@ -1,6 +1,8 @@
 package ide.explorercomponents;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
@@ -10,6 +12,7 @@ import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
+import ide.input.MouseInput;
 import ide.main.Main;
 import ide.terminal.TerminalCore;
 import ide.util.Colors;
@@ -25,7 +28,8 @@ public class TextArea extends IDEComponent {
 	
 	public int cursorX = 0;
 	
-	private int scrollX;
+	private int scrollX = 0;
+	private int scrollY = 0;
 
 	public TextArea(int x, int y, int width, int height, String[] lines) {
 		super(x, y, width, height, null);
@@ -33,20 +37,48 @@ public class TextArea extends IDEComponent {
 		this.lines = lines;
 	}
 	
+	public void scroll() {
+		if (MouseInput.wheelDown()) {
+			if (KeyInput.isShiftDown())
+				scrollX += fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
+			else {
+				scrollY += fontSize - CodeEditor.ruleOf3(16, 4, fontSize);;
+				
+				if (y + 5 + ((lines.length - 1) * (fontSize + MARGIN)) - scrollY < y - fontSize + 4)
+					scrollY -= fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
+			}
+		}
+		else if (MouseInput.wheelUp()) {
+			if (KeyInput.isShiftDown()) {
+				scrollX -= fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
+				
+				if (scrollX < 0) scrollX = 0;
+			}
+			else {
+				scrollY -= fontSize - CodeEditor.ruleOf3(16, 4, fontSize);;
+				
+				if (scrollY < 0) scrollY = 0;
+			}
+		}
+	}
+	
 	public void type() {
 		if (KeyInput.isKeyPressed() && Explorer.selected == this) {
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == 61) {
 				fontSize++;
+				return;
 			}
 			else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_MINUS) {
 				fontSize--;
 				
 				if (fontSize < 8) fontSize = 8;
+				
+				return;
 			}
 		}
-		
+
 		if (!acceptInput) return;
-		
+
 		StringBuilder text = new StringBuilder(lines[lines.length - 1]);
 		
 		KeyInput.updateKeys();
@@ -55,10 +87,14 @@ public class TextArea extends IDEComponent {
 		
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) {
 			cursorX = 2;
+			
+			setCursorWithinBounds();
 		}
 		
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END) {
 			cursorX = text.length();
+			
+			setCursorWithinBounds();
 		}
 		
 		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C) { // Ctrl + C - Copiar (Tudo)
@@ -81,16 +117,28 @@ public class TextArea extends IDEComponent {
 			
 			text = new StringBuilder();
 			cursorX = 0;
+			
+			setCursorWithinBounds();
 		}
 		
 		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) { // Ctrl + Del (Deletar Tudo)
 			text = new StringBuilder();
 			cursorX = 0;
+			
+			setCursorWithinBounds();
 		}
 		
 		// Por causa do prompt
-		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && cursorX > 2) cursorX--;
-		else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT && cursorX < text.length()) cursorX++;
+		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && cursorX > 2) {
+			cursorX--;
+			
+			setCursorWithinBounds();
+		}
+		else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT && cursorX < text.length()) {
+			cursorX++;
+			
+			setCursorWithinBounds();
+		}
 		
 		// Para não apagar o prompt
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE && cursorX > 2) {
@@ -98,6 +146,8 @@ public class TextArea extends IDEComponent {
 			cursorX--;
 			
 			lines[lines.length - 1] = new String(text.toString());
+			
+			setCursorWithinBounds();
 			return;
 		}
 		
@@ -108,6 +158,8 @@ public class TextArea extends IDEComponent {
 			cursorX++;
 			
 			lines[lines.length - 1] = new String(text.toString());
+			
+			setCursorWithinBounds();
 			return;
 		}
 		
@@ -117,6 +169,8 @@ public class TextArea extends IDEComponent {
 			text.deleteCharAt(cursorX);
 			
 			lines[lines.length - 1] = new String(text.toString());
+			
+			setCursorWithinBounds();
 			return;
 		}
 		
@@ -140,7 +194,6 @@ public class TextArea extends IDEComponent {
 					String[] o = Main.runCommand(new File(Explorer.getScopePath()), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
 					
 					for (String s : o) {
-						System.out.println(s);
 						Main.runCommand(new File(Main.userDir), "echo " + s + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
 					}
 					
@@ -167,6 +220,19 @@ public class TextArea extends IDEComponent {
 		else text.insert(cursorX - 1, c);
 		
 		lines[lines.length - 1] = new String(text.toString());
+		setCursorWithinBounds();
+	}
+	
+	public void setCursorWithinBounds() {
+		// mover pra frente (o texto vai pra trás)
+		while (x + 1 + (cursorX * (fontSize - CodeEditor.ruleOf3(16, 4, fontSize))) - scrollX > width)
+			scrollX += fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
+		// mover pra trás (o texto vai pra frente)
+		while (x + 1 + (cursorX * (fontSize - CodeEditor.ruleOf3(16, 4, fontSize))) - scrollX < x || (x + 1 + (cursorX * (fontSize - CodeEditor.ruleOf3(16, 4, fontSize))) - scrollX == x + 1 && lines[lines.length - 1].length() > 0))
+			scrollX -= fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
+
+		if (lines[lines.length - 1].length() == 0 || scrollX < 0 || cursorX <= 2)
+			scrollX = 0;
 	}
 	
 	public void tick() {
@@ -176,33 +242,35 @@ public class TextArea extends IDEComponent {
 		if (cursorX < 2) cursorX = 2;
 		
 		acceptInput = !TerminalCore.selected.commandRunning;
-
-		// mover pra frente (o texto vai pra trás)
-		while (x + 1 + (cursorX * (fontSize - 4)) - scrollX > width)
-			scrollX += fontSize - 4;
-		// mover pra trás (o texto vai pra frente)
-		while (x + 1 + (cursorX * (fontSize - 4)) - scrollX < x || (x + 1 + (cursorX * (fontSize - 4)) - scrollX == x + 1 && lines[lines.length - 1].length() > 0))
-			scrollX -= fontSize - 4;
-
-		if (lines[lines.length - 1].length() == 0 || scrollX < 0 || cursorX <= 2)
-			scrollX = 0;
 	}
 	
 	public void render(Graphics g) {
-		g.setColor(Colors.explorerLight);
-		g.fillRect(x - 2, y - 2, width + 4, height + 4);
+		Graphics2D g2 = (Graphics2D) g;
 		
 		g.setColor(Colors.explorer);
 		g.fillRect(x, y, width, height);
 		
 		int i = 0;
 		for (String s : lines) {
-			Fonts.drawString(s, x + 5 - scrollX, y + 5 + (i++ * (fontSize + MARGIN)), new IDEFont(Fonts.otherNormal, fontSize), x + width, g);
+			if (y + 5 + (i * (fontSize + MARGIN)) - scrollY < y - fontSize + 4) {
+				i++;
+				continue;
+			}
+			
+			Fonts.drawString(s, x + 5 - scrollX, y + 5 + (i++ * (fontSize + MARGIN)) - scrollY, new IDEFont(Fonts.otherNormal, fontSize), x, x + width, g);
 		}
 		
-		if (Main.editor.showCursor && Explorer.selected == this && !TerminalCore.selected.commandRunning) {
+		if (Main.editor.showCursor && Explorer.selected == this && !TerminalCore.selected.commandRunning 
+				&& y + 5 + ((lines.length - 1) * (fontSize + MARGIN)) - scrollY > y - fontSize + 4 
+				&& x + 5 + ((fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) * cursorX) - scrollX > x 
+				&& x + 5 + ((fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) * cursorX) - scrollX < width
+				&& y + 5 + ((lines.length - 1) * (fontSize + MARGIN)) - scrollY < height) {
 			g.setColor(Colors.other);
-			g.fillRect(x + 5 + ((fontSize - 4) * cursorX) - scrollX, y + 5 + (fontSize + MARGIN) * (lines.length - 1), fontSize < 13 ? 1 : 2, fontSize + MARGIN);
+			g.fillRect(x + 5 + ((fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) * cursorX) - scrollX, y + 5 + (fontSize + MARGIN) * (lines.length - 1) - scrollY, fontSize < 13 ? 1 : 2, fontSize + MARGIN);
 		}
+		
+		g.setColor(Colors.explorerLight);
+		g2.setStroke(new BasicStroke(2f));
+		g.drawRect(x - 2, y - 2, width + 4, height + 4);
 	}
 }

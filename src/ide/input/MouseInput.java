@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
+import ide.explorer.Explorer;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.topcomponents.MaximizeWindow;
@@ -359,6 +360,7 @@ public final class MouseInput extends MouseInputAdapter {
     	
     	Main.editor.scroll();
 		Main.editor.scrollTabs();
+		Explorer.textArea.scroll();
 		
 		if (Main.main != null)
 	        Main.main.mainLogic();

@@ -914,6 +914,11 @@ public class Main implements Runnable, Tickable {
         for (IDEComponent c : IDEComponent.components)
         	c.render(g);
         
+        if (Explorer.explorerMode == ExplorerMode.TERMINAL) {
+        	g.setColor(Colors.explorer);
+        	g.fillRect(0, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT + 2, explorer.getWidth() - 2, 15);
+        }
+        
         if (!(CommandTerminal.active || SetFileName.added || RenameFile.added || MessageBox.active))
 	        for (Tab t : Main.editor.tabs) {
 				if (t.hovered() && t.getX() + Main.editor.tabScr >= editor.getX() - 1 && !t.button.hovered() && !Tab.isTabDragged()) { // por algum motivo a + e nao -
