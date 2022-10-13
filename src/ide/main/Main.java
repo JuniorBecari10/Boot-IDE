@@ -162,6 +162,8 @@ public class Main implements Runnable, Tickable {
     
     public static final File logFile = new File(System.getProperty("user.dir") + File.separator + LOG_FILE_NAME);
     
+    public static File script = new File(userDir + File.separator + "terminal.py");
+    
     public static final String[] errorKeywords = { "fatal", "error" };
     public static final String[] warningKeywords = { "warning" };
     public static final String[] conflictKeywords = { "conflict" };
@@ -425,8 +427,26 @@ public class Main implements Runnable, Tickable {
     		System.exit(1);
     	}
     	
+    	writePython();
+    	
     	TerminalCore.tabs.add(new TerminalTab(1, TerminalTab.Y_EXPLORER, Main.explorer.getWidth() / 2, "Term-" + TerminalCore.getNextUntitledNumber()));
     	TerminalCore.selected = TerminalCore.tabs.get(0);
+    }
+    
+    public static void writePython() {
+    	try {
+    		script.deleteOnExit();
+    		
+			BufferedWriter wr = Files.newBufferedWriter(script.toPath(), StandardCharsets.UTF_8);
+			
+			for (String s : TerminalCore.pythonScript) {
+				wr.write(s + "\n");
+			}
+			
+			wr.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     public static OS getOS() {

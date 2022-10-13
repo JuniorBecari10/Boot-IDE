@@ -2,6 +2,7 @@ package ide.explorercomponents;
 
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
@@ -124,6 +125,28 @@ public class TextArea extends IDEComponent {
 			TerminalCore.selected.setLines(lines);
 			TerminalCore.selected.write();
 			
+			TerminalCore.selected.commandRunning = true;
+			
+			new Thread() {
+				public void run() {
+					String[] split = lines[cursorY].split(" ");
+					String[] c = new String[split.length - 1];
+					
+					for (int i = 0; i < c.length; i++) {
+						c[i] = split[i + 1];
+					}
+					
+					String command = String.join(" ", c);
+					
+					/*String[] o = */Main.runCommand(new File(Explorer.getScopePath()), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+					
+					Main.runCommand(new File(Main.userDir), "echo " + TerminalCore.prompt + " " + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+					
+					TerminalCore.selected.commandRunning = false;
+					TerminalCore.selected.read();
+				}
+			}.start();
+			
 			return;
 		}
 		
@@ -149,6 +172,7 @@ public class TextArea extends IDEComponent {
 		if (!acceptInput) {
 			cursorX = lines[lines.length - 1].length();
 			cursorY = lines.length - 1;
+			System.out.println("a");
 		}
 		
 		if (cursorX < 2) cursorX = 2;
@@ -178,7 +202,7 @@ public class TextArea extends IDEComponent {
 			Fonts.drawString(s, x + 5 - scrollX, y + 5 + (i++ * (fontSize + MARGIN)), new IDEFont(Fonts.otherNormal, fontSize), x + width, g);
 		}
 		
-		if (Main.editor.showCursor && Explorer.selected == this) {
+		if (Main.editor.showCursor && Explorer.selected == this && !TerminalCore.selected.commandRunning) {
 			g.setColor(Colors.other);
 			g.fillRect(x + 5 + ((fontSize - 4) * cursorX) - scrollX, y + 5 + (fontSize + MARGIN) * cursorY, fontSize < 13 ? 1 : 2, fontSize + MARGIN);
 		}

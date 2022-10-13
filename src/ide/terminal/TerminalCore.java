@@ -25,6 +25,20 @@ public class TerminalCore {
 	public static boolean breakLine = true;
 	public static char prompt = '$';
 	
+	public static final String[] pythonScript = {
+			"import sys",
+			"import os",
+			
+			"def main():",
+			"	if len(sys.argv) < 2:",
+			//"		print(\"Usage: python terminal.py <command>\")",
+			"		sys.exit(0)",
+			"	os.system(\" \".join(sys.argv[1:]))",
+			
+			"if __name__ == \"__main__\":",
+			"	main()"
+	};
+	
 	public static List<TerminalTab> tabs = new ArrayList<>();
 	
 	public static TerminalTab selected;

@@ -72,11 +72,7 @@ public class TerminalTab extends IDEComponent {
 					
 					if (!commandRunning) continue;
 					
-					try {
-						lines = Files.readAllLines(log.toPath()).toArray(new String[0]);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					read();
 				}
 			}
 		};
@@ -105,6 +101,14 @@ public class TerminalTab extends IDEComponent {
 			
 			wr.close();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void read() {
+		try {
+			lines = Files.readAllLines(log.toPath()).toArray(new String[0]);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
