@@ -23,8 +23,7 @@ public class TextArea extends IDEComponent {
 	
 	private int fontSize = 16;
 	
-	private int cursorX = 0;
-	private int cursorY = 0;
+	public int cursorX = 0;
 	
 	private int scrollX;
 
@@ -48,7 +47,7 @@ public class TextArea extends IDEComponent {
 		
 		if (!acceptInput) return;
 		
-		StringBuilder text = new StringBuilder(lines[cursorY]);
+		StringBuilder text = new StringBuilder(lines[lines.length - 1]);
 		
 		KeyInput.updateKeys();
 		
@@ -98,7 +97,7 @@ public class TextArea extends IDEComponent {
 			text.deleteCharAt(cursorX - 1);
 			cursorX--;
 			
-			lines[cursorY] = new String(text.toString());
+			lines[lines.length - 1] = new String(text.toString());
 			return;
 		}
 		
@@ -108,7 +107,7 @@ public class TextArea extends IDEComponent {
 			
 			cursorX++;
 			
-			lines[cursorY] = new String(text.toString());
+			lines[lines.length - 1] = new String(text.toString());
 			return;
 		}
 		
@@ -117,7 +116,7 @@ public class TextArea extends IDEComponent {
 			
 			text.deleteCharAt(cursorX);
 			
-			lines[cursorY] = new String(text.toString());
+			lines[lines.length - 1] = new String(text.toString());
 			return;
 		}
 		
@@ -129,7 +128,7 @@ public class TextArea extends IDEComponent {
 			
 			new Thread() {
 				public void run() {
-					String[] split = lines[cursorY].split(" ");
+					String[] split = lines[lines.length - 1].split(" ");
 					String[] c = new String[split.length - 1];
 					
 					for (int i = 0; i < c.length; i++) {
@@ -140,7 +139,7 @@ public class TextArea extends IDEComponent {
 					
 					/*String[] o = */Main.runCommand(new File(Explorer.getScopePath()), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
 					
-					Main.runCommand(new File(Main.userDir), "echo " + TerminalCore.prompt + " " + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+					Main.runCommand(new File(Main.userDir), "echo " + TerminalCore.prompt + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
 					
 					TerminalCore.selected.commandRunning = false;
 					TerminalCore.selected.read();
@@ -162,18 +161,12 @@ public class TextArea extends IDEComponent {
 		if (text.length() == 0) text.append(c);
 		else text.insert(cursorX - 1, c);
 		
-		lines[cursorY] = new String(text.toString());
+		lines[lines.length - 1] = new String(text.toString());
 	}
 	
 	public void tick() {
 		if (leftClicked())
 			Explorer.selected = this;
-		
-		if (!acceptInput) {
-			cursorX = lines[lines.length - 1].length();
-			cursorY = lines.length - 1;
-			System.out.println("a");
-		}
 		
 		if (cursorX < 2) cursorX = 2;
 		
@@ -183,10 +176,10 @@ public class TextArea extends IDEComponent {
 		while (x + 1 + (cursorX * (fontSize - 4)) - scrollX > width)
 			scrollX += fontSize - 4;
 		// mover pra trás (o texto vai pra frente)
-		while (x + 1 + (cursorX * (fontSize - 4)) - scrollX < x || (x + 1 + (cursorX * (fontSize - 4)) - scrollX == x + 1 && lines[cursorY].length() > 0))
+		while (x + 1 + (cursorX * (fontSize - 4)) - scrollX < x || (x + 1 + (cursorX * (fontSize - 4)) - scrollX == x + 1 && lines[lines.length - 1].length() > 0))
 			scrollX -= fontSize - 4;
 
-		if (lines[cursorY].length() == 0 || scrollX < 0 || cursorX <= 2)
+		if (lines[lines.length - 1].length() == 0 || scrollX < 0 || cursorX <= 2)
 			scrollX = 0;
 	}
 	
@@ -204,7 +197,7 @@ public class TextArea extends IDEComponent {
 		
 		if (Main.editor.showCursor && Explorer.selected == this && !TerminalCore.selected.commandRunning) {
 			g.setColor(Colors.other);
-			g.fillRect(x + 5 + ((fontSize - 4) * cursorX) - scrollX, y + 5 + (fontSize + MARGIN) * cursorY, fontSize < 13 ? 1 : 2, fontSize + MARGIN);
+			g.fillRect(x + 5 + ((fontSize - 4) * cursorX) - scrollX, y + 5 + (fontSize + MARGIN) * (lines.length - 1), fontSize < 13 ? 1 : 2, fontSize + MARGIN);
 		}
 	}
 }

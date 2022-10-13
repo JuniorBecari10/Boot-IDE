@@ -12,3 +12,5 @@ Resources/*
 *.txt
 *.log
 *.jar
+Term-*
+terminal.py

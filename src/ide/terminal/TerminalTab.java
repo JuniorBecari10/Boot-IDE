@@ -15,6 +15,7 @@ import ide.components.IDEComponent;
 import ide.components.MessageBox;
 import ide.components.RenameFile;
 import ide.components.SetFileName;
+import ide.explorer.Explorer;
 import ide.explorercomponents.SetBranchName;
 import ide.explorercomponents.SetCommitName;
 import ide.fonts.Fonts;
@@ -65,7 +66,7 @@ public class TerminalTab extends IDEComponent {
 			public void run() {
 				while (true) {
 					try {
-						Thread.sleep(1000);
+						Thread.sleep(500);
 					} catch (InterruptedException e1) {
 						e1.printStackTrace();
 					}
@@ -108,6 +109,8 @@ public class TerminalTab extends IDEComponent {
 	public void read() {
 		try {
 			lines = Files.readAllLines(log.toPath()).toArray(new String[0]);
+			
+			Explorer.textArea.cursorX = lines[lines.length - 1].length();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
