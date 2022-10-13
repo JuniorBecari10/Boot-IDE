@@ -293,8 +293,6 @@ public class TextArea extends IDEComponent {
 		
 		int cursorX = this.cursorX;
 		
-		
-		
 		if (Main.editor.showCursor && Explorer.selected == this && !TerminalCore.selected.commandRunning 
 				&& y + 5 + ((lines.length - 1) * (fontSize + MARGIN)) - scrollY > y - fontSize + 4 
 				&& x + 5 + ((fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) * cursorX) - scrollX > x 
