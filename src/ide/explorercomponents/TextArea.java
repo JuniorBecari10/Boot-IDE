@@ -54,7 +54,7 @@ public class TextArea extends IDEComponent {
 		// Shortcuts Area
 		
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) {
-			cursorX = 0;
+			cursorX = 2;
 		}
 		
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END) {
@@ -120,6 +120,13 @@ public class TextArea extends IDEComponent {
 			return;
 		}
 		
+		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+			TerminalCore.selected.setLines(lines);
+			TerminalCore.selected.write();
+			
+			return;
+		}
+		
 		int keyCode = KeyInput.getKeyCodePressed();
 		char c = KeyInput.getCharPressed();
 		
@@ -144,6 +151,8 @@ public class TextArea extends IDEComponent {
 			cursorY = lines.length - 1;
 		}
 		
+		if (cursorX < 2) cursorX = 2;
+		
 		acceptInput = !TerminalCore.selected.commandRunning;
 
 		// mover pra frente (o texto vai pra trás)
@@ -153,7 +162,7 @@ public class TextArea extends IDEComponent {
 		while (x + 1 + (cursorX * (fontSize - 4)) - scrollX < x || (x + 1 + (cursorX * (fontSize - 4)) - scrollX == x + 1 && lines[cursorY].length() > 0))
 			scrollX -= fontSize - 4;
 
-		if (lines[cursorY].length() == 0 || scrollX < 0)
+		if (lines[cursorY].length() == 0 || scrollX < 0 || cursorX <= 2)
 			scrollX = 0;
 	}
 	
@@ -171,7 +180,7 @@ public class TextArea extends IDEComponent {
 		
 		if (Main.editor.showCursor && Explorer.selected == this) {
 			g.setColor(Colors.other);
-			g.fillRect(x + 5 + ((fontSize - 4) * cursorX) - scrollX, y + (fontSize + MARGIN) * cursorY, fontSize < 13 ? 1 : 2, fontSize + MARGIN);
+			g.fillRect(x + 5 + ((fontSize - 4) * cursorX) - scrollX, y + 5 + (fontSize + MARGIN) * cursorY, fontSize < 13 ? 1 : 2, fontSize + MARGIN);
 		}
 	}
 }

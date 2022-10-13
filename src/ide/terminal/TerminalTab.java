@@ -6,8 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import ide.components.CommandTerminal;
@@ -48,7 +48,7 @@ public class TerminalTab extends IDEComponent {
 			
 			// Write header
 			
-			BufferedWriter w = new BufferedWriter(new FileWriter(log));
+			BufferedWriter w = Files.newBufferedWriter(log.toPath(), StandardCharsets.UTF_8);
 			
 			w.write(Main.PROGRAM_NAME + " Terminal\n\n");
 			w.write(TerminalCore.prompt + " ");
@@ -88,8 +88,25 @@ public class TerminalTab extends IDEComponent {
 		return lines;
 	}
 	
+	public void setLines(String[] lines) {
+		this.lines = lines;
+	}
+	
 	public File getLog() {
 		return log;
+	}
+	
+	public void write() {
+		try {
+			BufferedWriter wr = Files.newBufferedWriter(log.toPath(), StandardCharsets.UTF_8);
+			
+			for (String s : lines)
+				wr.write(s + "\n");
+			
+			wr.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void select() {
