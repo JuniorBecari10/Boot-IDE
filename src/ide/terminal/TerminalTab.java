@@ -108,11 +108,17 @@ public class TerminalTab extends IDEComponent {
 	
 	public void read() {
 		try {
-			lines = Files.readAllLines(log.toPath()).toArray(new String[0]);
+			lines = Files.readAllLines(log.toPath(), StandardCharsets.UTF_8).toArray(new String[0]);
 			
 			Explorer.textArea.cursorX = lines[lines.length - 1].length();
 		} catch (Exception e) {
-			e.printStackTrace();
+			try {
+				lines = Files.readAllLines(log.toPath(), StandardCharsets.ISO_8859_1).toArray(new String[0]);
+				
+				Explorer.textArea.cursorX = lines[lines.length - 1].length();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 	

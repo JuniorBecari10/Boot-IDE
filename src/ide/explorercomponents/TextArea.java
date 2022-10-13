@@ -137,7 +137,11 @@ public class TextArea extends IDEComponent {
 					
 					String command = String.join(" ", c);
 					
-					/*String[] o = */Main.runCommand(new File(Explorer.getScopePath()), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+					String[] o = Main.runCommand(new File(Explorer.getScopePath()), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+					
+					for (String s : o) {
+						System.out.println(s);
+					}
 					
 					Main.runCommand(new File(Main.userDir), "echo " + TerminalCore.prompt + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
 					
