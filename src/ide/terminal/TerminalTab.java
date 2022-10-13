@@ -64,12 +64,16 @@ public class TerminalTab extends IDEComponent {
 		reader = new Thread() {
 			public void run() {
 				while (true) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					
 					if (!canRead) continue;
 					
 					try {
 						lines = Files.readAllLines(log.toPath()).toArray(new String[0]);
-						
-						Thread.sleep(1000);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
