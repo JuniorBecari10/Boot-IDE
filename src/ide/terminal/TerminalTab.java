@@ -34,6 +34,8 @@ public class TerminalTab extends IDEComponent {
 	private String[] lines;
 	public Thread reader;
 	
+	public boolean canRead = false;
+	
 	public TerminalTab(int x, int y, int width, String name) {
 		super(x, y, width, HEIGHT, Main.term12Px);
 		
@@ -52,18 +54,18 @@ public class TerminalTab extends IDEComponent {
 			w.write(TerminalCore.prompt + " ");
 			
 			w.close();
+			
+			// read at least once
+			lines = Files.readAllLines(log.toPath()).toArray(new String[0]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		try {
-			lines = Files.readAllLines(log.toPath()).toArray(new String[0]);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 		reader = new Thread() {
 			public void run() {
 				while (true) {
+					if (!canRead) continue;
+					
 					try {
 						lines = Files.readAllLines(log.toPath()).toArray(new String[0]);
 						
@@ -75,7 +77,7 @@ public class TerminalTab extends IDEComponent {
 			}
 		};
 		
-		//reader.start();
+		reader.start();
 	}
 	
 	public String[] getLines() {
