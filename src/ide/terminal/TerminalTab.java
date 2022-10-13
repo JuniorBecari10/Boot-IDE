@@ -34,7 +34,7 @@ public class TerminalTab extends IDEComponent {
 	private String[] lines;
 	public Thread reader;
 	
-	public boolean canRead = false;
+	public boolean commandRunning = false;
 	
 	public TerminalTab(int x, int y, int width, String name) {
 		super(x, y, width, HEIGHT, Main.term12Px);
@@ -70,7 +70,7 @@ public class TerminalTab extends IDEComponent {
 						e1.printStackTrace();
 					}
 					
-					if (!canRead) continue;
+					if (!commandRunning) continue;
 					
 					try {
 						lines = Files.readAllLines(log.toPath()).toArray(new String[0]);

@@ -50,7 +50,6 @@ public class TextArea extends IDEComponent {
 		
 		cursorX = lines[lines.length - 1].length();
 		cursorY = lines.length - 1;
-		
 	}
 	
 	public void render(Graphics g) {
