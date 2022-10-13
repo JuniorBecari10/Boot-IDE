@@ -4,6 +4,8 @@ import java.awt.Graphics;
 
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
+import ide.fonts.Fonts;
+import ide.fonts.IDEFont;
 import ide.util.Colors;
 
 public class TextArea extends IDEComponent {
@@ -31,5 +33,10 @@ public class TextArea extends IDEComponent {
 		
 		g.setColor(Colors.explorer);
 		g.fillRect(x, y, width, height);
+		
+		int i = 0;
+		for (String s : lines) {
+			Fonts.drawString(s, x + 5, y + 5 + (i++ * 20), new IDEFont(Fonts.otherNormal, 16), x + width, g);
+		}
 	}
 }
