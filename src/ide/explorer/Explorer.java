@@ -107,7 +107,7 @@ public class Explorer extends IDEComponent {
 	
 	// -- Terminal --
 	
-	public static ToggleButton breakLine;
+	public static ToggleButton wordWrap;
 	public static ExecuteButton showOverlay;
 	public static TextArea textArea;
 	

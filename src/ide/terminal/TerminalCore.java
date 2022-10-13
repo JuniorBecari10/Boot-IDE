@@ -32,12 +32,12 @@ public class TerminalCore {
 	public static void init() {
 		Explorer.explorerMode = ExplorerMode.TERMINAL;
 		
-		if (Explorer.breakLine == null) {
-			Explorer.breakLine = new ToggleButton(20, Screen.DECORATION_HEIGHT + 80, 32, 32, Main.breakLineSpr, breakLine, Texts.breakLine) {
+		if (Explorer.wordWrap == null) {
+			Explorer.wordWrap = new ToggleButton(20, Screen.DECORATION_HEIGHT + 80, 32, 32, Main.wordWrapSpr, breakLine, Texts.wordWrap) {
 				public void tick() {
 					super.tick();
 					
-					caption = Texts.breakLine;
+					caption = Texts.wordWrap;
 					TerminalCore.breakLine = state;
 				}
 			};
@@ -67,12 +67,12 @@ public class TerminalCore {
 		}
 		
 		IDEComponent.toAdd.add(Explorer.showOverlay);
-		IDEComponent.toAdd.add(Explorer.breakLine); // por causa do texto
+		IDEComponent.toAdd.add(Explorer.wordWrap); // por causa do texto
 		IDEComponent.toAdd.add(Explorer.textArea);
 	}
 	
 	public static synchronized void dispose() {
-		IDEComponent.toRemove.add(Explorer.breakLine);
+		IDEComponent.toRemove.add(Explorer.wordWrap);
 		IDEComponent.toRemove.add(Explorer.showOverlay);
 		IDEComponent.toRemove.add(Explorer.textArea);
 	}

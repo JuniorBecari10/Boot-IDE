@@ -270,7 +270,7 @@ public final class Texts {
 	
 	public static String create;
 	
-	public static String breakLine;
+	public static String wordWrap;
 	public static String showOverlay;
 	
 	public static synchronized void setTexts(Language lang) {
@@ -528,7 +528,7 @@ public final class Texts {
 			
 			create = "Criar";
 			
-			breakLine = "Quebrar Linha";
+			wordWrap = "Quebrar Linha";
 			showOverlay = "Mostrar Sobreposição";
 			
 			break;
@@ -786,7 +786,7 @@ public final class Texts {
 			
 			create = "Create";
 			
-			breakLine = "Break Line";
+			wordWrap = "Word Wrap";
 			showOverlay = "Show Overlay";
 			
 			break;

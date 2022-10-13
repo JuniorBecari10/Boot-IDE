@@ -236,7 +236,7 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage allowEmptySpr;
     public static BufferedImage forcePushSpr;
     
-    public static BufferedImage breakLineSpr;
+    public static BufferedImage wordWrapSpr;
     
     public static BufferedImage term12Px;
     
@@ -346,7 +346,7 @@ public class Main implements Runnable, Tickable {
 	        allowEmptySpr = spritesheet.getSprite(496, 0, 16, 16);
 	        forcePushSpr = spritesheet.getSprite(512, 0, 16, 16);
 	        
-	        breakLineSpr = spritesheet.getSprite(528, 0, 16, 16);
+	        wordWrapSpr = spritesheet.getSprite(528, 0, 16, 16);
 	        
 	        term12Px = spritesheet.getSprite(370, 2, 12, 12);
 	        
@@ -425,7 +425,7 @@ public class Main implements Runnable, Tickable {
     		System.exit(1);
     	}
     	
-    	TerminalCore.tabs.add(new TerminalTab(1, TerminalTab.Y_EXPLORER, 200, "Term-" + TerminalCore.getNextUntitledNumber()));
+    	TerminalCore.tabs.add(new TerminalTab(1, TerminalTab.Y_EXPLORER, Main.explorer.getWidth() / 2, "Term-" + TerminalCore.getNextUntitledNumber()));
     	TerminalCore.selected = TerminalCore.tabs.get(0);
     }
     
@@ -530,7 +530,7 @@ public class Main implements Runnable, Tickable {
         allowEmptySpr = Colors.swapColor(allowEmptySpr, Colors.textLightDefault, Colors.textLight);
         forcePushSpr = Colors.swapColor(forcePushSpr, Colors.textLightDefault, Colors.textLight);
         
-        breakLineSpr = Colors.swapColor(breakLineSpr, Colors.textLightDefault, Colors.textLight);
+        wordWrapSpr = Colors.swapColor(wordWrapSpr, Colors.textLightDefault, Colors.textLight);
         
         term12Px = Colors.swapColor(term12Px, Colors.textLightDefault, Colors.textLight);
         

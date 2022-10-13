@@ -65,7 +65,7 @@ public class TextArea extends IDEComponent {
 			Fonts.drawString(s, x + 5, y + 5 + (i++ * fontSize + MARGIN), new IDEFont(Fonts.otherNormal, fontSize), x + width, g);
 		}
 		
-		if (Main.editor.showCursor) {
+		if (Main.editor.showCursor && Explorer.selected == this) {
 			g.setColor(Colors.other);
 			g.fillRect(x + 5 + ((fontSize - 4) * cursorX), y + (fontSize + MARGIN) * cursorY, fontSize < 13 ? 1 : 2, fontSize + MARGIN);
 		}
