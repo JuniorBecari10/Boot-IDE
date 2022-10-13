@@ -868,7 +868,7 @@ public class Tab extends IDEComponent implements Serializable {
 			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 120, width, Texts.save, (s) -> execute(s), "save"));
 			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 150, width, Main.baseFolder != null, Texts.openBootExplorer, (s) -> execute(s), "showexp"));
 			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, Texts.openExplorer, (s) -> execute(s), "sysexp"));
-			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, Texts.copyRelativePath, (s) -> execute(s), "copyrel"));
+			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, regent.getRegent().getPath().contains(File.separator + Main.baseFolder.getName()), Texts.copyRelativePath, (s) -> execute(s), "copyrel"));
 			list.add(new RightClickOption(x + Main.editor.tabScr, y + height + 2 + 180, width, Texts.copyAbsolutePath, (s) -> execute(s), "copyabs"));
 			
 			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");

@@ -73,7 +73,6 @@ public class TerminalTab extends IDEComponent {
 					
 					if (!commandRunning) continue;
 					
-					System.out.println("a");
 					read();
 				}
 			}

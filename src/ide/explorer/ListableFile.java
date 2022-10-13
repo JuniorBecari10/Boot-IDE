@@ -1485,6 +1485,14 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			ReloadButton.reloadExplorer();
 			
 			break;
+			
+		case "copyrel":
+			CodeEditor.copyText(regent.getAbsolutePath().contains(File.separator + Main.baseFolder.getName() + File.separator) ? regent.getAbsolutePath().substring(regent.getAbsolutePath().indexOf(Main.baseFolder.getName())) : regent.getAbsolutePath());
+			break;
+			
+		case "copyabs":
+			CodeEditor.copyText(regent.getAbsolutePath());
+			break;
 		}
 	}
 
@@ -1791,6 +1799,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openTerminal, (s) -> execute(s), "term"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openExplorer, (s) -> execute(s), "sysexp"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.setBaseFolder, (s) -> execute(s), "setbase"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.copyRelativePath, (s) -> execute(s), "copyrel"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.copyAbsolutePath, (s) -> execute(s), "copyabs"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openDefault, (s) -> execute(s), "opendef"));
 
 			if ((getFileExtension(regent).equalsIgnoreCase(".bat") || getFileExtension(regent).equalsIgnoreCase(".cmd") || getFileExtension(regent).equalsIgnoreCase(".com")) && isWindows)
