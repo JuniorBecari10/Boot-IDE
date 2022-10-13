@@ -24,17 +24,18 @@ import ide.screen.Screen;
 import ide.util.Colors;
 
 public class TerminalTab extends IDEComponent {
-
+	
+	public static final int Y_EXPLORER = Screen.DECORATION_HEIGHT + 210;
 	public static final int HEIGHT = 30;
 	
 	public String name;
-	public File log;
+	private File log;
 	
 	public String[] lines;
 	public Thread reader;
 	
 	public TerminalTab(int x, int y, int width, String name) {
-		super(x, y, width, HEIGHT, Main.terminalTab);
+		super(x, y, width, HEIGHT, Main.term12Px);
 		
 		this.name = name;
 		this.log = new File(Main.userDir + File.separator + name);
@@ -72,6 +73,10 @@ public class TerminalTab extends IDEComponent {
 		reader.start();
 	}
 	
+	public File getLog() {
+		return log;
+	}
+	
 	public void select() {
 		TerminalCore.selected = this;
 	}
@@ -103,7 +108,7 @@ public class TerminalTab extends IDEComponent {
 			g.drawLine(x + width, y, x + width, Screen.DECORATION_HEIGHT + HEIGHT);
 		
 		final int imageSize = 24;
-		g.drawImage(sprite, x + 10, y + ((HEIGHT / 2) - (imageSize / 2)), imageSize, imageSize, null);
+		g.drawImage(sprite, x + 10, y + ((HEIGHT / 2) - (imageSize / 2)) + 1, imageSize, imageSize, null);
 		
 		Fonts.drawString(name, x + 40, y + (HEIGHT / 2) - 9 /*16 / 2*/, new IDEFont(Fonts.lightGrayNormal, 16), x + width, g);
 	}

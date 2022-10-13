@@ -813,6 +813,13 @@ public class Explorer extends IDEComponent {
     	
     	for (TerminalTab t : TerminalCore.tabs)
     		t.render(g);
+    	
+    	// linha das terminaltabs
+    	g2.setStroke(new BasicStroke(3f));
+    	g.drawLine(0, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT, width - 4, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT);
+    	
+    	g.setColor(TerminalCore.selected.hovered() ? Colors.explorerLight : Colors.explorer);
+    	g.fillRect(TerminalCore.selected.getX() + 2, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT - 4, TerminalCore.selected.getWidth() - 3, 6);
     }
     
     public static int getHighestNumber(int... arr) {

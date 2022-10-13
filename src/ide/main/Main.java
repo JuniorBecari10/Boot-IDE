@@ -238,6 +238,8 @@ public class Main implements Runnable, Tickable {
     
     public static BufferedImage breakLineSpr;
     
+    public static BufferedImage term12Px;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -346,6 +348,8 @@ public class Main implements Runnable, Tickable {
 	        
 	        breakLineSpr = spritesheet.getSprite(528, 0, 16, 16);
 	        
+	        term12Px = spritesheet.getSprite(370, 2, 12, 12);
+	        
 	        ///////
 	        
 	        explorer = new Explorer(0, Screen.DECORATION_HEIGHT, 280, Screen.HEIGHT);
@@ -421,7 +425,7 @@ public class Main implements Runnable, Tickable {
     		System.exit(1);
     	}
     	
-    	TerminalCore.tabs.add(new TerminalTab(0, Screen.DECORATION_HEIGHT + 210, 200, "Terminal-1"));
+    	TerminalCore.tabs.add(new TerminalTab(1, TerminalTab.Y_EXPLORER, 200, "Term-" + TerminalCore.getNextUntitledNumber()));
     	TerminalCore.selected = TerminalCore.tabs.get(0);
     }
     
@@ -527,6 +531,8 @@ public class Main implements Runnable, Tickable {
         forcePushSpr = Colors.swapColor(forcePushSpr, Colors.textLightDefault, Colors.textLight);
         
         breakLineSpr = Colors.swapColor(breakLineSpr, Colors.textLightDefault, Colors.textLight);
+        
+        term12Px = Colors.swapColor(term12Px, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         

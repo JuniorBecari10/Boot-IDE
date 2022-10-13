@@ -60,4 +60,16 @@ public class TerminalCore {
 		IDEComponent.toRemove.add(Explorer.breakLine);
 		IDEComponent.toRemove.add(Explorer.showOverlay);
 	}
+	
+	public static int getNextUntitledNumber() {
+		int num = 0;
+		
+		for (TerminalTab t : tabs) {
+			String name;
+			if ((name = t.getLog().getName()).contains("Term"))
+				num = Integer.parseInt(String.valueOf(name.charAt(name.length() - 1))) + 1;
+		}
+		
+		return num;
+	}
 }
