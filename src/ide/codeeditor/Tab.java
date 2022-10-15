@@ -517,6 +517,7 @@ public class Tab extends IDEComponent implements Serializable {
 				
 				BufferedWriter w = Files.newBufferedWriter(regent.getRegent().toPath(), ch); // precisa escrever em utf-8 tbm!!
 				
+				int count = 0;
 				for (IDELine i : Main.editor.lines) {
 					if (i == null) continue;
 					
@@ -529,7 +530,8 @@ public class Tab extends IDEComponent implements Serializable {
 					
 					if (s == null) break;
 					
-					w.write(s + CodeEditor.lineEnding.getCh());
+					w.write(s + (count < Main.editor.lines.size() - 1 ? CodeEditor.lineEnding.getCh() : ""));
+					count++;
 				}
 	
 				w.close();
