@@ -77,7 +77,7 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	public boolean isTemporary;
 	
-	private final int animSpeed = 2;
+	private static final int animSpeed = 2;
 	
 	public boolean isReadOnly;
 	
@@ -89,7 +89,7 @@ public class Tab extends IDEComponent implements Serializable {
 		this.regent = regent;
 		this.isTemporary = false;
 		
-		button = new CloseTabButton((x + WIDTH) - 20, Y + 8, 13, 13, Main.spritesheet.getSprite(16, 0, 5, 5), this);
+		button = new CloseTabButton((x + WIDTH) - 20, Y + 8, 13, 13, Main.closeTab, this);
 		
 		String ext = ListableFile.getFileExtension(regent.getRegent());
 		

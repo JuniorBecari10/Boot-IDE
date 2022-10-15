@@ -16,6 +16,7 @@ import ide.components.MessageBox;
 import ide.components.RenameFile;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
+import ide.explorercomponents.Execute;
 import ide.explorercomponents.SetBranchName;
 import ide.explorercomponents.SetCommitName;
 import ide.fonts.Fonts;
@@ -23,12 +24,15 @@ import ide.fonts.IDEFont;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.util.Colors;
+import ide.util.Texts;
 
 public class TerminalTab extends IDEComponent {
 	
 	public static final int Y_EXPLORER = Screen.DECORATION_HEIGHT + 210;
-	public static final int WIDTH = 135;
+	public static final int WIDTH = 136;
 	public static final int HEIGHT = 30;
+	
+	private static final int animSpeed = 2;
 	
 	public String name;
 	private File log;
@@ -36,10 +40,35 @@ public class TerminalTab extends IDEComponent {
 	private String[] lines;
 	public Thread reader;
 	
+	private boolean alive = true;
+	
+	public CloseTerminalTabButton button;
+	
 	public boolean commandRunning = false;
 	
-	public TerminalTab(int x, int y, int width, String name) {
-		super(x, y, width, HEIGHT, Main.term12Px);
+	public TerminalTab(int x, int y, int widthh, String name) {
+		super(x, y, widthh, HEIGHT, Main.term12Px);
+		
+		button = new CloseTerminalTabButton((x + WIDTH) - 20, y + 8, 13, 13, Main.closeTab, this);
+		
+		this.width = 0;
+		
+		new Thread() {
+			public void run() {
+				while (width < WIDTH) {
+					width += animSpeed;
+					Main.canRunLoop = true;
+					
+					button.setX((x + Main.editor.tabScr + width) - 20);
+					
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
 		
 		this.name = name;
 		this.log = new File(Main.userDir + File.separator + name);
@@ -65,7 +94,7 @@ public class TerminalTab extends IDEComponent {
 		
 		reader = new Thread() {
 			public void run() {
-				while (true) {
+				while (alive) {
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e1) {
@@ -125,6 +154,51 @@ public class TerminalTab extends IDEComponent {
 		}
 	}
 	
+	public void close() {
+		if (commandRunning) {
+			MessageBox.showDialog("A command is running", new String[] { "A command is still running!", "Do you want to stop execution anyway?" }, new String[] { Texts.yes, Texts.no }, new Execute[] {() -> { commandRunning = false; close(); }, () -> {}});
+			return;
+		}
+		
+		alive = false;
+		TerminalTab t = this;
+
+		new Thread() {
+			public void run() {
+				while (width > 0) {
+					width -= animSpeed;
+					Main.canRunLoop = true;
+
+					button.setX((x + Main.editor.tabScr + width) - 20);
+
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+
+				try {
+					for (int i = TerminalCore.tabs.indexOf(t); i < TerminalCore.tabs.size(); i++) {
+						TerminalCore.tabs.get(i).setX(TerminalCore.tabs.get(i).getX() - TerminalCore.tabs.get(i).getWidth() - 3);
+					}
+					
+					TerminalCore.tabs.remove(t);
+					
+					if (TerminalCore.tabs.isEmpty())
+						TerminalCore.selected = null;
+					else
+						TerminalCore.selected = TerminalCore.tabs.get(TerminalCore.tabs.size() - 1);
+					
+					reader.join();
+					log.delete();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
+	}
+	
 	public void select() {
 		TerminalCore.selected = this;
 		
@@ -135,7 +209,11 @@ public class TerminalTab extends IDEComponent {
 		if (leftClicked())
 			select();
 		
+		button.setX((x + Main.editor.tabScr + width) - 20);
+		
 		// close thread if tab closed
+		
+		button.tick();
 	}
 	
 	public void render(Graphics g) {
@@ -156,6 +234,8 @@ public class TerminalTab extends IDEComponent {
 		final int imageSize = 24;
 		g.drawImage(sprite, x + 10, y + ((HEIGHT / 2) - (imageSize / 2)) + 1, imageSize, imageSize, null);
 		
-		Fonts.drawString(name, x + 40, y + (HEIGHT / 2) - 9 /*16 / 2*/, new IDEFont(Fonts.lightGrayNormal, 16), x + width, g);
+		Fonts.drawString(name, x + 37, y + (HEIGHT / 2) - 9 /*16 / 2*/, new IDEFont(Fonts.lightGrayNormal, 16), x + width, g);
+		
+		button.render(g);
 	}
 }

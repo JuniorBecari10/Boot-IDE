@@ -817,6 +817,7 @@ public class Explorer extends IDEComponent {
     	
     	if (TerminalCore.selected != null) {
 	    	// linha das terminaltabs
+    		g.setColor(Colors.textLight);
 	    	g2.setStroke(new BasicStroke(3f));
 	    	g.drawLine(0, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT, width - 4, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT);
 	    	
