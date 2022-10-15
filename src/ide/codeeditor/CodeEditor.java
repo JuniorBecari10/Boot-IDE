@@ -6097,8 +6097,7 @@ public class CodeEditor extends IDEComponent {
 		String gs = cY.toString(); // gen string
 		char[] ca = gs.toCharArray(); // char array
 
-		List<Character> lc = toCharList(ca); // list char (Esses comentarios sao para especificar os nomes das
-												// variaveis)
+		List<Character> lc = toCharList(ca); // list char (Esses comentarios sao para especificar os nomes das variaveis)
 
 		lines.get(y).getChars().clear();
 		lines.get(y).getFonts().clear();
@@ -7056,67 +7055,86 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
 				KeyInput.updateKeys();
-				 addToUndo();
-				 
-				 CommandTerminal.runCommand("gotocursor");
-				 
-				 if (!KeyInput.isShiftDown()) {
-					 if (!RightClickOption.isAutoCompleteActive()) {
-						wordSinceSpace = "";
-						
-						RightClickOption.removeAllRightClickOptions();
-						
-						String indentation = "\t";
-						
-						if (indentSpaces) {
-							indentation = "";
-							StringBuilder b = new StringBuilder();
+				
+				if (!selecting) {
+					 addToUndo();
+					 
+					 CommandTerminal.runCommand("gotocursor");
+					 
+					 if (!KeyInput.isShiftDown()) {
+						 if (!RightClickOption.isAutoCompleteActive()) {
+							wordSinceSpace = "";
 							
-							for (int i = 0; i < indentLength; i++) {
-								b.append(' ');
+							RightClickOption.removeAllRightClickOptions();
+							
+							String indentation = "\t";
+							
+							if (indentSpaces) {
+								indentation = "";
+								StringBuilder b = new StringBuilder();
+								
+								for (int i = 0; i < indentLength; i++) {
+									b.append(' ');
+								}
+								
+								indentation = b.toString();
 							}
 							
-							indentation = b.toString();
+							cY.insert(cursorX, indentation);
+		
+							cursorX += indentSpaces ? indentLength : 1;
+							editing.setSaved(false);
+						} else {
+							autocompleteindex++;
+		
+							if (autocompleteindex == autocompletes.size()) {
+								autocompleteindex = 0;
+								autocompletescroll = 0;
+							}
+							
+							if (autocompletes.get(autocompleteindex).getY() >= height)
+								autocompletescroll += 90;
 						}
-						
-						cY.insert(cursorX, indentation);
-	
-						cursorX += indentSpaces ? indentLength : 1;
-						editing.setSaved(false);
-					} else {
-						autocompleteindex++;
-	
-						if (autocompleteindex == autocompletes.size()) {
-							autocompleteindex = 0;
-							autocompletescroll = 0;
-						}
-						
-						if (autocompletes.get(autocompleteindex).getY() >= height)
-							autocompletescroll += 90;
+					 } else {
+						 wordSinceSpace = "";
+							RightClickOption.removeAllRightClickOptions();
+							
+							String indentation = "\t";
+							
+							if (!indentSpaces) {
+								indentation = "";
+								StringBuilder b = new StringBuilder();
+								
+								for (int i = 0; i < indentLength; i++) {
+									b.append(' ');
+								}
+								
+								indentation = b.toString();
+							}
+							
+							cY.insert(cursorX, indentation);
+		
+							cursorX += !indentSpaces ? indentLength : 1;
+							
+							editing.setSaved(false);
+					 }
+				} else {
+					addToUndo();
+					
+					for (int i = line1; i <= line2; i++) {
+						System.out.println(new String(toCharArray(lines.get(i - 1).getChars())));
+
+						StringBuilder bl = new StringBuilder(new String(toCharArray(lines.get(i - 1).getChars())));
+						bl.insert(0, getIndentation(1));
+
+						register(bl, i - 1);
+						System.out.println(new String(toCharArray(lines.get(i - 1).getChars())));
+						System.out.println("---------");
 					}
-				 } else {
-					 wordSinceSpace = "";
-						RightClickOption.removeAllRightClickOptions();
-						
-						String indentation = "\t";
-						
-						if (!indentSpaces) {
-							indentation = "";
-							StringBuilder b = new StringBuilder();
-							
-							for (int i = 0; i < indentLength; i++) {
-								b.append(' ');
-							}
-							
-							indentation = b.toString();
-						}
-						
-						cY.insert(cursorX, indentation);
-	
-						cursorX += !indentSpaces ? indentLength : 1;
-						
-						editing.setSaved(false);
-				 }
+					
+					editing.setSaved(false);
+					return;
+				}
 			}
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
