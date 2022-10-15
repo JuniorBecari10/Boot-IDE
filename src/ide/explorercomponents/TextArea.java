@@ -274,24 +274,28 @@ public class TextArea extends IDEComponent {
 		int maxChars = Math.floorDiv(width, fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) - 1;
 		List<String> linesList = new ArrayList<>();
 		
-		for (String s : lines) {
-			if (s.length() > maxChars) {
-				String s1 = s.substring(0, maxChars);
-				String s2 = s.substring(maxChars);
-				
-				linesList.add(s1);
-				
-				while (s2.length() > maxChars) {
-					linesList.add(s2);
-					s2 = s2.substring(maxChars);
+		if (TerminalCore.breakLine) {
+			for (String s : lines) {
+				if (s.length() > maxChars) {
+					String s1 = s.substring(0, maxChars);
+					String s2 = s.substring(maxChars);
+					
+					linesList.add(s1);
+					
+					while (s2.length() > maxChars) {
+						linesList.add(s2);
+						s2 = s2.substring(maxChars);
+					}
+					
+					if (s2.length() <= maxChars)
+						linesList.add(s2);
 				}
-				
-				if (s2.length() <= maxChars)
-					linesList.add(s2);
+				else
+					linesList.add(s);
 			}
-			else
-				linesList.add(s);
 		}
+		else
+			linesList = Arrays.asList(lines);
 		
 		lines = linesList.toArray(new String[0]);
 		
