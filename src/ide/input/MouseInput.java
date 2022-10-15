@@ -360,7 +360,9 @@ public final class MouseInput extends MouseInputAdapter {
     	
     	Main.editor.scroll();
 		Main.editor.scrollTabs();
-		Explorer.textArea.scroll();
+		
+		if (Explorer.textArea != null)
+			Explorer.textArea.scroll();
 		
 		if (Main.main != null)
 	        Main.main.mainLogic();

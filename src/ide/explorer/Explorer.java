@@ -141,14 +141,16 @@ public class Explorer extends IDEComponent {
     }
     
     public static void fetchStatus() {
-    	if (isBaseFolderRepository()) {
-	    	gitStatus = GitStatus.fetch();
-	    }
-	    else {
-	    	gitStatus = null;
-	    }
-    	
-    	Main.editor.refreshText();
+    	Main.newThread(() -> {
+	    	if (isBaseFolderRepository()) {
+		    	gitStatus = GitStatus.fetch();
+		    }
+		    else {
+		    	gitStatus = null;
+		    }
+	    	
+	    	Main.editor.refreshText();
+    	});
     }
     
     public void addTabs() {

@@ -2120,26 +2120,28 @@ public class CodeEditor extends IDEComponent {
 					|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
 					|| ext.equalsIgnoreCase(".project")
 					|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown")
-					|| ext.equalsIgnoreCase(".lock") || ext.equalsIgnoreCase(".toml"))) {
+					|| ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
+					|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1") || ext.equalsIgnoreCase(".lock") || ext.equalsIgnoreCase(".toml"))) {
 				for (String s : cll) {
-					indxs.addAll(findWord(new String(chars), s));
+					indxs = findWord(new String(chars), s);
 	
 					int len = 0;
 	
+					String str = new String(chars);
+	
 					for (Integer i : indxs) {
-						// Não colorir se começar com número
 						if (i > 0 && isNumber(chars[i - 1]))
 							continue;
 	
-						if (i - 1 > 0 && (chars[i - 1] == 'a' || chars[i - 1] == 'b' || chars[i - 1] == 'c'
-								|| chars[i - 1] == 'd' || chars[i - 1] == 'e' || chars[i - 1] == 'f'
-								|| chars[i - 1] == 'g' || chars[i - 1] == 'h' || chars[i - 1] == 'i'
-								|| chars[i - 1] == 'j' || chars[i - 1] == 'k' || chars[i - 1] == 'l'
-								|| chars[i - 1] == 'm' || chars[i - 1] == 'n' || chars[i - 1] == 'o'
-								|| chars[i - 1] == 'p' || chars[i - 1] == 'q' || chars[i - 1] == 'r'
-								|| chars[i - 1] == 's' || chars[i - 1] == 't' || chars[i - 1] == 'u'
-								|| chars[i - 1] == 'v' || chars[i - 1] == 'w' || chars[i - 1] == 'x'
-								|| chars[i - 1] == 'y' || chars[i - 1] == 'z'))
+						if (i - 1 > 0 && (str.charAt(i - 1) == 'a' || str.charAt(i - 1) == 'b' || str.charAt(i - 1) == 'c'
+								|| str.charAt(i - 1) == 'd' || str.charAt(i - 1) == 'e' || str.charAt(i - 1) == 'f'
+								|| str.charAt(i - 1) == 'g' || str.charAt(i - 1) == 'h' || str.charAt(i - 1) == 'i'
+								|| str.charAt(i - 1) == 'j' || str.charAt(i - 1) == 'k' || str.charAt(i - 1) == 'l'
+								|| str.charAt(i - 1) == 'm' || str.charAt(i - 1) == 'n' || str.charAt(i - 1) == 'o'
+								|| str.charAt(i - 1) == 'p' || str.charAt(i - 1) == 'q' || str.charAt(i - 1) == 'r'
+								|| str.charAt(i - 1) == 's' || str.charAt(i - 1) == 't' || str.charAt(i - 1) == 'u'
+								|| str.charAt(i - 1) == 'v' || str.charAt(i - 1) == 'w' || str.charAt(i - 1) == 'x'
+								|| str.charAt(i - 1) == 'y' || str.charAt(i - 1) == 'z'))
 							continue;
 	
 						while (i + len < chars.length && !isCharsEqual(chars[i + len], ' ')
@@ -2162,7 +2164,7 @@ public class CodeEditor extends IDEComponent {
 								|| ext.equalsIgnoreCase(".sql") || ext.equalsIgnoreCase(".makefile")
 								|| ext.equalsIgnoreCase(".mk") || ext.equalsIgnoreCase(".mak")
 								|| ext.equalsIgnoreCase(".make")
-								|| (editing != null && editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile"))
+								|| editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile")
 								|| ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".com")
 								|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1")
 								|| ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".project")
@@ -2171,9 +2173,8 @@ public class CodeEditor extends IDEComponent {
 								|| ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".json")
 								|| ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".mcfunction"))
 							fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-							
 						else {
-							if (i > 1 && Character.isLetter(chars[i - 1]))
+							if (i - 1 > 0 && Character.isLetter(chars[i - 1]))
 								continue;
 							
 							//addautocomplete.add(new AutoComplete(new String(sliceCharArray(i, i + len, chars)), AutoCompleteType.OBJECT));

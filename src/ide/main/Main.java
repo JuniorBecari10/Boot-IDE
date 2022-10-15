@@ -583,6 +583,8 @@ public class Main implements Runnable, Tickable {
         
         Explorer.tabs.clear();
         explorer.addTabs();
+        
+        Explorer.fetchStatus();
     }
     
     // Checks whether a command's output is an error or not through parsing.
