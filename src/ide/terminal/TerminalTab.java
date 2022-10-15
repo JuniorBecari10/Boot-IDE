@@ -27,6 +27,7 @@ import ide.util.Colors;
 public class TerminalTab extends IDEComponent {
 	
 	public static final int Y_EXPLORER = Screen.DECORATION_HEIGHT + 210;
+	public static final int WIDTH = 130;
 	public static final int HEIGHT = 30;
 	
 	public String name;
@@ -79,6 +80,8 @@ public class TerminalTab extends IDEComponent {
 		};
 		
 		reader.start();
+		
+		Explorer.textArea.cursorX = lines[lines.length - 1].length();
 	}
 	
 	public String[] getLines() {
@@ -124,6 +127,8 @@ public class TerminalTab extends IDEComponent {
 	
 	public void select() {
 		TerminalCore.selected = this;
+		
+		Explorer.textArea.cursorX = lines[lines.length - 1].length();
 	}
 	
 	public void tick() {
@@ -131,8 +136,6 @@ public class TerminalTab extends IDEComponent {
 			select();
 		
 		// close thread if tab closed
-		
-		width = Main.explorer.getWidth() / 2;
 	}
 	
 	public void render(Graphics g) {

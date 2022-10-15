@@ -7,6 +7,7 @@ import ide.components.IDEComponent;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorercomponents.ExecuteButton;
+import ide.explorercomponents.ExecuteButtonIcon;
 import ide.explorercomponents.TextArea;
 import ide.explorercomponents.ToggleButton;
 import ide.main.Main;
@@ -57,6 +58,18 @@ public class TerminalCore {
 			};
 		}
 		
+		if (Explorer.addTerminal == null) {
+			Explorer.addTerminal = new ExecuteButtonIcon(58, Screen.DECORATION_HEIGHT + 80, 32, 32, Main.add, () -> {
+				addTerminal();
+			}, Texts.addTerminal) {
+				public void tick() {
+					super.tick();
+					
+					caption = Texts.addTerminal;
+				}
+			};
+		}
+		
 		if (Explorer.showOverlay == null) {
 			Explorer.showOverlay = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 130, Main.explorer.getWidth() - 20, 20, Texts.showOverlay, () -> {}, true) {
 				public void tick() {
@@ -68,27 +81,41 @@ public class TerminalCore {
 		}
 		
 		if (Explorer.textArea == null) {
-			Explorer.textArea = new TextArea(10, Screen.DECORATION_HEIGHT + 260, Main.explorer.getWidth() - 20, (Main.screen.getHeight() - Screen.DECORATION_HEIGHT + 280) - 20, selected.getLines()) {
+			Explorer.textArea = new TextArea(10, Screen.DECORATION_HEIGHT + 260, Main.explorer.getWidth() - 20, (Main.screen.getHeight() - Screen.DECORATION_HEIGHT + 280) - 20, selected == null ? new String[0] : selected.getLines()) {
 				public void tick() {
 					super.tick();
 					
 					width = Main.explorer.getWidth() - 20;
 					height = (Main.screen.getHeight() - Screen.DECORATION_HEIGHT + 280) - 20;
-					lines = selected.getLines();
+					lines = selected == null ? new String[0] : selected.getLines();
 					
 				}
 			};
 		}
 		
 		IDEComponent.toAdd.add(Explorer.showOverlay);
+		IDEComponent.toAdd.add(Explorer.addTerminal);
 		IDEComponent.toAdd.add(Explorer.wordWrap); // por causa do texto
 		IDEComponent.toAdd.add(Explorer.textArea);
 	}
 	
 	public static synchronized void dispose() {
 		IDEComponent.toRemove.add(Explorer.wordWrap);
+		IDEComponent.toRemove.add(Explorer.addTerminal);
 		IDEComponent.toRemove.add(Explorer.showOverlay);
 		IDEComponent.toRemove.add(Explorer.textArea);
+	}
+	
+	public static void addTerminal() {
+		int x = 1;
+		
+		if (!tabs.isEmpty())
+			x = tabs.get(tabs.size() - 1).getX() + tabs.get(tabs.size() - 1).getWidth() + 3;
+		
+		TerminalTab term = new TerminalTab(x, TerminalTab.Y_EXPLORER, TerminalTab.WIDTH, "Term-" + TerminalCore.getNextUntitledNumber());
+		
+		TerminalCore.tabs.add(term);
+    	TerminalCore.selected = term;
 	}
 	
 	public static int getNextUntitledNumber() {

@@ -66,6 +66,8 @@ public class TextArea extends IDEComponent {
 	}
 	
 	public void type() {
+		if (TerminalCore.selected == null) return;
+		
 		if (KeyInput.isKeyPressed() && Explorer.selected == this) {
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == 61) {
 				fontSize++;
@@ -241,6 +243,8 @@ public class TextArea extends IDEComponent {
 	}
 	
 	public void tick() {
+		if (TerminalCore.selected == null) return;
+		
 		if (leftClicked())
 			Explorer.selected = this;
 		
@@ -254,6 +258,14 @@ public class TextArea extends IDEComponent {
 		
 		g.setColor(Colors.explorer);
 		g.fillRect(x, y, width, height);
+		
+		if (TerminalCore.selected == null) {
+			g.setColor(Colors.explorerLight);
+			g2.setStroke(new BasicStroke(2f));
+			g.drawRect(x - 2, y - 2, width + 4, height + 4);
+			
+			return;
+		}
 		
 		String[] lines = Arrays.copyOf(this.lines, this.lines.length);
 		

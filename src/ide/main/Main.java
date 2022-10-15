@@ -242,6 +242,8 @@ public class Main implements Runnable, Tickable {
     
     public static BufferedImage term12Px;
     
+    public static BufferedImage add;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -352,6 +354,8 @@ public class Main implements Runnable, Tickable {
 	        
 	        term12Px = spritesheet.getSprite(370, 2, 12, 12);
 	        
+	        add = spritesheet.getSprite(544, 0, 16, 16);
+	        
 	        ///////
 	        
 	        explorer = new Explorer(0, Screen.DECORATION_HEIGHT, 280, Screen.HEIGHT);
@@ -428,9 +432,6 @@ public class Main implements Runnable, Tickable {
     	}
     	
     	writePython();
-    	
-    	TerminalCore.tabs.add(new TerminalTab(1, TerminalTab.Y_EXPLORER, Main.explorer.getWidth() / 2, "Term-" + TerminalCore.getNextUntitledNumber()));
-    	TerminalCore.selected = TerminalCore.tabs.get(0);
     }
     
     public static void writePython() {
@@ -553,6 +554,8 @@ public class Main implements Runnable, Tickable {
         wordWrapSpr = Colors.swapColor(wordWrapSpr, Colors.textLightDefault, Colors.textLight);
         
         term12Px = Colors.swapColor(term12Px, Colors.textLightDefault, Colors.textLight);
+        
+        add = Colors.swapColor(add, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         

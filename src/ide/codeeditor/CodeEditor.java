@@ -6999,10 +6999,12 @@ public class CodeEditor extends IDEComponent {
 					wordSinceSpace = "";
 
 				if (selecting) {
+					addToUndo();
 					CommandTerminal.runCommand("del");
 
 					return;
 				} else {
+					addToUndo();
 					if (cursorX > 0) {
 						cY.deleteCharAt(cursorX - 1);
 
@@ -7014,6 +7016,7 @@ public class CodeEditor extends IDEComponent {
 
 						register(cY, cursorY - 1);
 					} else if (cursorY > 1) {
+						addToUndo();
 						String s = cY.toString();
 
 						cursorX = lines.get(cursorY - 2).getChars().size();
@@ -7122,17 +7125,16 @@ public class CodeEditor extends IDEComponent {
 					addToUndo();
 					
 					for (int i = line1; i <= line2; i++) {
-						System.out.println(new String(toCharArray(lines.get(i - 1).getChars())));
 
 						StringBuilder bl = new StringBuilder(new String(toCharArray(lines.get(i - 1).getChars())));
 						bl.insert(0, getIndentation(1));
 
 						register(bl, i - 1);
-						System.out.println(new String(toCharArray(lines.get(i - 1).getChars())));
-						System.out.println("---------");
 					}
 					
 					editing.setSaved(false);
+					
+					// Return pq n quero que o cY modifique
 					return;
 				}
 			}
@@ -8269,6 +8271,8 @@ public class CodeEditor extends IDEComponent {
 		// arrumar isso aqui pra n dar erro
 		/*if (editing != null && !tabs.isEmpty() && tabs.indexOf(editing) < 0)
 			tabs.get(0).select();*/
+		
+		// o undo n funciona pq n adiciona
 		
 		setCursorWithinBounds();
 		

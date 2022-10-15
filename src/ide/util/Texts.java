@@ -271,6 +271,7 @@ public final class Texts {
 	public static String create;
 	
 	public static String wordWrap;
+	public static String addTerminal;
 	public static String showOverlay;
 	
 	public static synchronized void setTexts(Language lang) {
@@ -529,6 +530,7 @@ public final class Texts {
 			create = "Criar";
 			
 			wordWrap = "Quebrar Linha";
+			addTerminal = "Adicionar Terminal";
 			showOverlay = "Mostrar Sobreposição";
 			
 			break;
@@ -787,6 +789,7 @@ public final class Texts {
 			create = "Create";
 			
 			wordWrap = "Word Wrap";
+			addTerminal = "Add Terminal";
 			showOverlay = "Show Overlay";
 			
 			break;
