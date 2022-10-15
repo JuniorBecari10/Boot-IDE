@@ -110,7 +110,10 @@ public class TerminalTab extends IDEComponent {
 		
 		reader.start();
 		
-		Explorer.textArea.cursorX = lines[lines.length - 1].length();
+		if (lines != null)
+			Explorer.textArea.cursorX = lines[lines.length - 1].length();
+		else
+			Explorer.textArea.cursorX = 2;
 	}
 	
 	public String[] getLines() {

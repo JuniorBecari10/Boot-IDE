@@ -4,7 +4,10 @@ import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -198,10 +201,12 @@ public class TextArea extends IDEComponent {
 					
 					String command = String.join(" ", c);
 					
-					String[] o = Main.runCommand(new File(Explorer.getScopePath()), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
-					
-					for (String s : o) {
-						Main.runCommand(new File(Main.userDir), "echo " + s + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+					if (!runInternalCommand(command)) {
+						String[] o = Main.runCommand(new File(Explorer.getScopePath()), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+						
+						for (String s : o) {
+							Main.runCommand(new File(Main.userDir), "echo " + s + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+						}
 					}
 					
 					Main.runCommand(new File(Main.userDir), "echo " + TerminalCore.prompt + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
@@ -228,6 +233,41 @@ public class TextArea extends IDEComponent {
 		
 		lines[lines.length - 1] = new String(text.toString());
 		setCursorWithinBounds();
+	}
+	
+	public boolean runInternalCommand(String command) {
+		// true - executou | false - não executou
+		
+		/*
+		 * Lista:
+		 * 
+		 * "" (Nada) - Nada
+		 * cls, clear - Limpa a tela
+		 * pwd - Mostrar Pasta Atual
+		 * cd - Alterar Pasta Atual
+		 * dir, ls - Listar Arquivos na Pasta Atual
+		 * boot - Abrir arquivo na Boot IDE (Em construção)
+		 * 
+		 * 
+		 */
+		
+		switch (command.toLowerCase()) {
+		case "":
+			return true;
+		
+		case "cls":
+		case "clear":
+			try {
+				BufferedWriter w = new BufferedWriter(new FileWriter(TerminalCore.selected.getLog()));
+				w.write("");
+				w.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public void setCursorWithinBounds() {
