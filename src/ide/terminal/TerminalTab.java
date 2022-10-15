@@ -27,7 +27,7 @@ import ide.util.Colors;
 public class TerminalTab extends IDEComponent {
 	
 	public static final int Y_EXPLORER = Screen.DECORATION_HEIGHT + 210;
-	public static final int WIDTH = 130;
+	public static final int WIDTH = 135;
 	public static final int HEIGHT = 30;
 	
 	public String name;
@@ -152,8 +152,6 @@ public class TerminalTab extends IDEComponent {
 		
 		if (TerminalCore.selected == this)
 			g.drawRect(x, y, width, HEIGHT);
-		else
-			g.drawLine(x + width, y, x + width, Screen.DECORATION_HEIGHT + HEIGHT);
 		
 		final int imageSize = 24;
 		g.drawImage(sprite, x + 10, y + ((HEIGHT / 2) - (imageSize / 2)) + 1, imageSize, imageSize, null);

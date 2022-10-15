@@ -41,6 +41,8 @@ public class TextArea extends IDEComponent {
 	}
 	
 	public void scroll() {
+		if (Explorer.selected != this) return;
+		
 		if (MouseInput.wheelDown()) {
 			if (KeyInput.isShiftDown())
 				scrollX += fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
@@ -82,7 +84,7 @@ public class TextArea extends IDEComponent {
 			}
 		}
 
-		if (!acceptInput) return;
+		if (!acceptInput || Explorer.selected != this) return;
 
 		StringBuilder text = new StringBuilder(lines[lines.length - 1]);
 		
