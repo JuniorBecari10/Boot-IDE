@@ -77,7 +77,7 @@ public class LastAction extends IDEComponent {
 			if (hovered())
 				Explorer.renderCardText(output.toArray(new String[0]), MouseInput.getMouseX() + 30, MouseInput.getMouseY(), g);*/
 			
-			if (action.output.length == 0) {
+			if (action == null || action.output == null || action.output.length == 0) {
 				action.output = new String[1];
 				action.output[0] = Texts.noOutput;
 			}
