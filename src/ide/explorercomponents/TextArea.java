@@ -8,6 +8,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -202,7 +203,7 @@ public class TextArea extends IDEComponent {
 					String command = String.join(" ", c);
 					
 					if (!runInternalCommand(command)) {
-						String[] o = Main.runCommand(new File(Explorer.getScopePath()), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+						String[] o = Main.runCommand(TerminalCore.selected.getScope(), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
 						
 						for (String s : o) {
 							Main.runCommand(new File(Main.userDir), "echo " + s + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
@@ -241,15 +242,17 @@ public class TextArea extends IDEComponent {
 		/*
 		 * Lista:
 		 * 
-		 * "" (Nada) - Nada
-		 * cls, clear - Limpa a tela
+		 * * "" (Nada) - Nada
+		 * * cls, clear - Limpa a tela
 		 * pwd - Mostrar Pasta Atual
 		 * cd - Alterar Pasta Atual
 		 * dir, ls - Listar Arquivos na Pasta Atual
 		 * boot - Abrir arquivo na Boot IDE (Em construção)
-		 * 
+		 * * exit - Fecha a tab
 		 * 
 		 */
+		
+		BufferedWriter w = null;
 		
 		switch (command.toLowerCase()) {
 		case "":
@@ -258,13 +261,28 @@ public class TextArea extends IDEComponent {
 		case "cls":
 		case "clear":
 			try {
-				BufferedWriter w = new BufferedWriter(new FileWriter(TerminalCore.selected.getLog()));
+				w = new BufferedWriter(new FileWriter(TerminalCore.selected.getLog()));
+				
 				w.write("");
 				w.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			return true;
+			
+		case "pwd":
+			try {
+				w = new BufferedWriter(new FileWriter(TerminalCore.selected.getLog(), true));
+				w.write(TerminalCore.selected.getScope() + "\n");
+				w.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return true;
+			
+		case "exit":
+			TerminalCore.selected.close();
 		}
 		
 		return false;

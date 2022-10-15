@@ -37,6 +37,8 @@ public class TerminalTab extends IDEComponent {
 	public String name;
 	private File log;
 	
+	private File scope;
+	
 	private String[] lines;
 	public Thread reader;
 	
@@ -50,6 +52,8 @@ public class TerminalTab extends IDEComponent {
 		super(x, y, widthh, HEIGHT, Main.term12Px);
 		
 		button = new CloseTerminalTabButton((x + WIDTH) - 20, y + 8, 13, 13, Main.closeTab, this);
+		
+		this.scope = new File(Explorer.getScopePath());
 		
 		this.width = 0;
 		
@@ -116,6 +120,14 @@ public class TerminalTab extends IDEComponent {
 			Explorer.textArea.cursorX = 2;
 	}
 	
+	public File getScope() {
+		return scope;
+	}
+	
+	public void setScope(File scope) {
+		this.scope = scope;
+	}
+
 	public String[] getLines() {
 		return lines;
 	}
@@ -150,7 +162,10 @@ public class TerminalTab extends IDEComponent {
 			try {
 				lines = Files.readAllLines(log.toPath(), StandardCharsets.ISO_8859_1).toArray(new String[0]);
 				
-				Explorer.textArea.cursorX = lines[lines.length - 1].length();
+				if (lines.length > 0)
+					Explorer.textArea.cursorX = lines[lines.length - 1].length();
+				else
+					Explorer.textArea.cursorX = 2;
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
