@@ -11,6 +11,7 @@ import ide.components.IDEComponent;
 import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.git.ActionState;
 import ide.git.GitAction;
 import ide.git.GitCore;
 import ide.input.KeyInput;
@@ -120,12 +121,13 @@ public class SetBranchName extends IDEComponent {
 				if (text.length() == 0 || text.toString().startsWith("/")) return;
 				if (hasIllegalChars(text.toString())) return;
 				
+				GitCore.actions.add(new GitAction("git branch", ActionState.PROGRESS, null));
 				String[] output = Main.runCommand(Main.baseFolder, rename ? "git branch -M" : "git branch", text.toString());
 				
 				boolean error = Main.isError(output);
 				boolean warn = Main.isWarning(output);
 				
-				GitCore.actions.add(new GitAction("git branch", GitCore.getState(error, warn), output));
+				GitCore.actions.set(GitCore.actions.size() - 1, new GitAction("git branch", GitCore.getState(error, warn), output));
 				
 				// Faz o checkout para a branch que foi criada, se a opção checkout_to_create_branch estiver ativada
 				if (!rename && GitCore.checkoutToCreatedBranch)

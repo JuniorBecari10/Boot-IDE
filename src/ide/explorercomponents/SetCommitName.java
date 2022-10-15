@@ -11,6 +11,7 @@ import ide.components.IDEComponent;
 import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.git.ActionState;
 import ide.git.GitAction;
 import ide.git.GitCore;
 import ide.input.KeyInput;
@@ -115,12 +116,13 @@ public class SetCommitName extends IDEComponent {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				if (text.length() == 0) return;
 				
+				GitCore.actions.add(new GitAction("git commit", ActionState.PROGRESS, null));
 				String[] output = Main.runCommand(Main.baseFolder, "git commit -m" + (Explorer.allowEmpty.getState() ? " --allow-empty" : "") + " " + "\"" + text.toString().replace("\"", "\\\"") + "\"");
 				
 				boolean error = Main.isError(output);
 				boolean warn = Main.isWarning(output);
 				
-				GitCore.actions.add(new GitAction("git commit", GitCore.getState(error, warn), output));
+				GitCore.actions.set(GitCore.actions.size() - 1, new GitAction("git commit", GitCore.getState(error, warn), output));
 				
 				Explorer.fetchStatus();
 				

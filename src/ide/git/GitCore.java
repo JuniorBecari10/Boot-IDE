@@ -51,6 +51,7 @@ public class GitCore {
 	}
 	
 	public static void merge(String branch1, String branch2) {
+		actions.add(new GitAction("git merge", ActionState.PROGRESS, null));
 		String[] output = Main.runCommand(Main.baseFolder, "git merge " + branch1 + " " + branch2);
 		
 		Explorer.fetchStatus();
@@ -59,10 +60,11 @@ public class GitCore {
 		boolean warn = Main.isWarning(output);
 		boolean conflict = Main.isConflict(output);
 		
-		actions.add(new GitAction("git merge", getState(error, warn, conflict), output));
+		actions.set(actions.size() - 1, new GitAction("git merge", getState(error, warn, conflict), output));
 	}
 	
 	public static void checkout(String branch) {
+		actions.add(new GitAction("git checkout", ActionState.PROGRESS, null));
 		String[] output = Main.runCommand(Main.baseFolder, "git checkout " + branch);
 		
 		Explorer.fetchStatus();
@@ -70,10 +72,11 @@ public class GitCore {
 		boolean error = Main.isError(output);
 		boolean warn = Main.isWarning(output);
 		
-		actions.add(new GitAction("git checkout", getState(error, warn), output));
+		actions.set(actions.size() - 1, new GitAction("git checkout", getState(error, warn), output));
 	}
 	
 	public static void delete(String branch) {
+		actions.add(new GitAction("git branch", ActionState.PROGRESS, null));
 		String[] output = Main.runCommand(Main.baseFolder, "git branch -d " + branch);
 		
 		Explorer.fetchStatus();
@@ -81,10 +84,11 @@ public class GitCore {
 		boolean error = Main.isError(output);
 		boolean warn = Main.isWarning(output);
 		
-		actions.add(new GitAction("git branch", getState(error, warn), output));
+		actions.set(actions.size() - 1, new GitAction("git branch", getState(error, warn), output));
 	}
 	
 	public static void push(String repo, String branch, boolean force) {
+		actions.add(new GitAction("git push", ActionState.PROGRESS, null));
 		String[] output = Main.runCommand(Main.baseFolder, "git push " + (force ? "-f " : "-u ") + repo + " " + branch);
 		
 		Explorer.fetchStatus();
@@ -92,7 +96,7 @@ public class GitCore {
 		boolean error = Main.isError(output);
 		boolean warn = Main.isWarning(output);
 		
-		actions.add(new GitAction("git push", getState(error, warn), output));
+		actions.set(actions.size() - 1, new GitAction("git push", getState(error, warn), output));
 	}
 	
 	public static void init() {
@@ -248,7 +252,7 @@ public class GitCore {
 				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.checkout.getY(), list.toArray(new RightClickOption[list.size()]));
 			}), "Checkout") {
 				public void tick() {
-					if (Explorer.gitStatus.branches != null)
+					if (Explorer.gitStatus != null)
 						enabled = Explorer.gitStatus.branches.length > 1;
 					else
 						enabled = false;	
@@ -295,7 +299,8 @@ public class GitCore {
 				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.checkout.getY(), list.toArray(new RightClickOption[list.size()]));
 			}), Texts.mergeBranches) {
 				public void tick() {
-					enabled = Explorer.gitStatus.branches.length > 1;
+					if (Explorer.gitStatus != null)
+						enabled = Explorer.gitStatus.branches.length > 1;
 					
 					super.tick();
 					
@@ -331,12 +336,13 @@ public class GitCore {
 		
 		if (Explorer.stageAll == null) {
 			Explorer.stageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 440, Main.explorer.getWidth() - 40, 20, Texts.stageAll, () -> Main.newThread(() -> {
+				actions.add(new GitAction("git add", ActionState.PROGRESS, null));
 				String[] output = Main.runCommand(Main.baseFolder, "git add .");
 				
 				boolean error = Main.isError(output);
 				boolean warn = Main.isWarning(output);
 				
-				actions.add(new GitAction("git add", getState(error, warn), output)); }), true) {
+				actions.set(actions.size() - 1, new GitAction("git add", getState(error, warn), output)); }), true) {
 				public void tick() {
 					super.tick();
 					
@@ -347,10 +353,12 @@ public class GitCore {
 		
 		if (Explorer.unstageAll == null) {
 			Explorer.unstageAll = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 470, Main.explorer.getWidth() - 40, 20, Texts.unstageAll, () -> Main.newThread(() -> {
+				actions.add(new GitAction("git reset", ActionState.PROGRESS, null));
 				String[] output = Main.runCommand(Main.baseFolder, "git reset");
+				
 				boolean error = Main.isError(output);
 				boolean warn = Main.isWarning(output);
-				actions.add(new GitAction("git reset", getState(error, warn), output)); }), true) {
+				actions.set(actions.size() - 1, new GitAction("git reset", getState(error, warn), output)); }), true) {
 				public void tick() {
 					super.tick();
 					
