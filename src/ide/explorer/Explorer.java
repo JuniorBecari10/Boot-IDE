@@ -307,7 +307,7 @@ public class Explorer extends IDEComponent {
 	    		list.add(new RightClickOption(0, 0, widthDraw, false, Texts.filesChangedTitle, (a) -> { }, "", true));
 	    		
 	    		for (String s : gitStatus.changedFiles) {
-	    			list.add(new RightClickOption(0, 0, widthDraw, s, (a) -> {
+	    			list.add(new RightClickOption(0, 0, widthDraw, s.startsWith(" ") ? s.trim() : s, (a) -> {
 	    				String[] split = s.split(" ");
 	    				String[] removeFirst = new String[split.length - 1];
 	    				
@@ -315,7 +315,12 @@ public class Explorer extends IDEComponent {
 	    					removeFirst[i] = split[i + 1];
 	    				}
 	    				
-	    				String fileName = String.join(" ", s.startsWith(" ") ? split : removeFirst);
+	    				String fileName = String.join(" ", removeFirst);
+	    				
+	    				if (s.startsWith(" ")) {
+	    					fileName = String.join(" ", split);
+	    					fileName = fileName.trim();
+	    				}
 	    				
 	    				File file = new File(Main.baseFolder.getAbsolutePath() + File.separator + fileName);
 	    				

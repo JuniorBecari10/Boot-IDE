@@ -108,23 +108,23 @@ public class GitCore {
 					actions.add(new GitAction("git init", ActionState.PROGRESS, null));
 					String[] output = Main.runCommand(Main.baseFolder, "git init");
 					
-					Explorer.fetchStatus();
-					
 					boolean error = Main.isError(output);
 					boolean warn = Main.isWarning(output);
 					
 					actions.set(actions.size() - 1, new GitAction("git init", getState(error, warn), output));
+					
+					Explorer.fetchStatus();
 					}, "", true));
 				list.add(new RightClickOption(0, 0, widthDraw, Main.baseFolder != null, Texts.inCurrentFolder, (s) -> {
 					actions.add(new GitAction("git init", ActionState.PROGRESS, null));
 					String[] output = Main.runCommand(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent(), "git init");
 					
-					Explorer.fetchStatus();
-					
 					boolean error = Main.isError(output);
 					boolean warn = Main.isWarning(output);
 					
 					actions.set(actions.size() - 1, new GitAction("git init", getState(error, warn), output));
+					
+					Explorer.fetchStatus();
 					}, ""));
 				
 				IDEComponent.addRightClickOptions(20, Explorer.isBaseFolderRepository() ? Screen.DECORATION_HEIGHT + 257 : Screen.DECORATION_HEIGHT + 112, list.toArray(new RightClickOption[list.size()]));
@@ -248,7 +248,10 @@ public class GitCore {
 				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.checkout.getY(), list.toArray(new RightClickOption[list.size()]));
 			}), "Checkout") {
 				public void tick() {
-					enabled = Explorer.gitStatus.branches.length > 1;
+					if (Explorer.gitStatus.branches != null)
+						enabled = Explorer.gitStatus.branches.length > 1;
+					else
+						enabled = false;	
 					
 					super.tick();
 				}
