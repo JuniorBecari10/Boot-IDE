@@ -209,7 +209,14 @@ public class TerminalTab extends IDEComponent {
 						TerminalCore.selected = TerminalCore.tabs.get(TerminalCore.tabs.size() - 1);
 					
 					reader.join();
-					log.delete();
+					
+					try {
+						log.delete();
+					} catch (Exception ee) {
+						
+					}
+					
+					Explorer.textArea.lines = new String[0];
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -230,6 +237,11 @@ public class TerminalTab extends IDEComponent {
 		button.setX((x + Main.editor.tabScr + width) - 20);
 		
 		// close thread if tab closed
+		
+		if (commandRunning)
+			button.setSprite(Main.notSavedTab);
+		else
+			button.setSprite(Main.closeTab);
 		
 		button.tick();
 	}

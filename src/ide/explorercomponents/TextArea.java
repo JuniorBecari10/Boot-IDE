@@ -8,7 +8,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +22,7 @@ import ide.input.MouseInput;
 import ide.main.Main;
 import ide.terminal.TerminalCore;
 import ide.util.Colors;
+import ide.util.Texts;
 
 public class TextArea extends IDEComponent {
 	
@@ -203,7 +203,7 @@ public class TextArea extends IDEComponent {
 					String command = String.join(" ", c);
 					
 					if (!runInternalCommand(command)) {
-						String[] o = Main.runCommand(TerminalCore.selected.getScope(), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+						String[] o = Main.runCommand(TerminalCore.selected.getScope(), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath() + " < " + Main.script.getParentFile().getAbsolutePath() + File.separator + "input");
 						
 						for (String s : o) {
 							Main.runCommand(new File(Main.userDir), "echo " + s + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
@@ -254,7 +254,13 @@ public class TextArea extends IDEComponent {
 		
 		BufferedWriter w = null;
 		
-		switch (command.toLowerCase()) {
+		String str = command;
+		String[] split = command.split(" ");
+		
+		if (split.length > 0)
+			str = split[0];
+		
+		switch (str.toLowerCase()) {
 		case "":
 			return true;
 		
@@ -268,6 +274,9 @@ public class TextArea extends IDEComponent {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
+			scrollX = 0;
+			scrollY = 0;
 			return true;
 			
 		case "pwd":
@@ -282,6 +291,7 @@ public class TextArea extends IDEComponent {
 			return true;
 			
 		case "exit":
+			TerminalCore.selected.commandRunning = false;
 			TerminalCore.selected.close();
 		}
 		
@@ -323,6 +333,12 @@ public class TextArea extends IDEComponent {
 			g.setColor(Colors.explorerLight);
 			g2.setStroke(new BasicStroke(2f));
 			g.drawRect(x - 2, y - 2, width + 4, height + 4);
+			
+			g.drawImage(Main.term12Px, x + (width / 2) - 24, y + 20, 48, 48, null);
+			
+			Fonts.drawString(Texts.clickOpenTerminal, x + 5 + (width / 2 - ((Texts.clickOpenTerminal.length() * 13) / 2)), y + 80, new IDEFont(Fonts.lightGrayNormal, 16), x + width, g);
+			Fonts.drawString(Texts.toOpenTerminal, x + 5 + (width / 2 - ((Texts.toOpenTerminal.length() * 13) / 2)), y + 100, new IDEFont(Fonts.lightGrayNormal, 16), x + width, g);
+			Fonts.drawString("Terminal!", x + 5 + (width / 2 - (("Terminal!".length() * 13) / 2)), y + 120, new IDEFont(Fonts.lightGrayNormal, 16), x + width, g);
 			
 			return;
 		}
