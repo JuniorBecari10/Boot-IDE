@@ -828,6 +828,7 @@ public class Explorer extends IDEComponent {
 	    	g2.setStroke(new BasicStroke(3f));
 	    	g.drawLine(0, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT, width - 4, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT);
 	    	
+	    	// Linha para cobrir a tab para parecer que está conectado igual o chrome
 	    	if (!TerminalCore.tabs.isEmpty()) {
 		    	g.setColor(TerminalCore.selected.hovered() ? Colors.explorerLight : Colors.explorer);
 		    	g.fillRect(TerminalCore.selected.getX() + 2, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT - 4, TerminalCore.selected.getWidth() - 3, 6);
@@ -963,7 +964,7 @@ public class Explorer extends IDEComponent {
         g.setColor(Colors.explorerLight);
 	    g2.setStroke(new BasicStroke(3f));
 	    g2.drawLine(width - 1, Screen.DECORATION_HEIGHT, width - 1, height); // linha vertical que divide do codeeditor
-	        
+	    
 	    if (explorerMode == ExplorerMode.EXPLORER)
 	        renderExplorer(g);
 	    else if (explorerMode == ExplorerMode.SEARCHREPLACE)

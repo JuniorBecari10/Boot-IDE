@@ -766,26 +766,6 @@ public class Tab extends IDEComponent implements Serializable {
 			if (Main.editor.lines.size() == 1 && Main.editor.lines.get(0).getChars().isEmpty())
 				isSaved = true;
 		
-		int x = dragging == null ? this.x + Main.editor.tabScr : this.x;
-		
-		// não está arrastando
-		if (!isTabDragged() || dragging == null) {
-			MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - (WIDTH + 4);	// -WIDTH é um macete kkk - 77
-			int targetX = Main.editor.getX();
-			
-			if (Main.editor.tabs.indexOf(this) > 0)
-				targetX = Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1).getX() + WIDTH + 3;
-			else
-				targetX = Tab.MIN_X + WIDTH + 3;
-			
-			/*if (x < targetX) x += 40;
-			if (x > targetX) x -= 40;
-			
-			if (x - targetX < 40) x = targetX;*/
-			
-			x = targetX;
-		}
-		
 		//System.out.println(dragging + ", " + MouseInput.isMouseDragged());
 		
 		if (!RightClickOption.isRightClickActive()) {
@@ -919,9 +899,18 @@ public class Tab extends IDEComponent implements Serializable {
 		}*/
 		
 		if (!closing && dragging != this)
-			button.setX(((this.x + WIDTH) - 20) + Main.editor.tabScr);
+			button.setX(((x + WIDTH) - 20) + Main.editor.tabScr);
 		
-		this.x = x;
+		x = dragging == null ? this.x + Main.editor.tabScr : this.x;
+		
+		// não está arrastando
+		if (!isTabDragged() || dragging == null) {
+			MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - (WIDTH + 4);	// -WIDTH é um macete kkk - 77
+			if (Main.editor.tabs.indexOf(this) > 0)
+				x = Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1).getX() + WIDTH + 3;
+			else
+				x = Tab.MIN_X + WIDTH + 3;
+		}
 	}
 	
 	public synchronized void render(Graphics g) {

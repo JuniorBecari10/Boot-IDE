@@ -919,7 +919,8 @@ public class Main implements Runnable, Tickable {
         for (IDEComponent c : IDEComponent.components)
         	c.render(g);
         
-        if (Explorer.explorerMode == ExplorerMode.TERMINAL) {
+        // overlay pro terminal (remover isso se possível)
+        if (Explorer.explorerMode == ExplorerMode.TERMINAL && !TerminalCore.tabs.isEmpty()) {
         	g.setColor(Colors.explorer);
         	g.fillRect(0, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT + 2, explorer.getWidth() - 2, 15);
         }

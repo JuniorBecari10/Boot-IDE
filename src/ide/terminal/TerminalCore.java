@@ -72,6 +72,7 @@ public class TerminalCore {
 					super.tick();
 					
 					caption = Texts.showOverlay;
+					showOverlay = state;
 				}
 			};
 		}
