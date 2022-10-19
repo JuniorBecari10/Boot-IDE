@@ -28,7 +28,7 @@ import ide.util.Texts;
 
 public class TerminalTab extends IDEComponent {
 	
-	public static final int Y_EXPLORER = Screen.DECORATION_HEIGHT + 210;
+	public static final int Y_EXPLORER = Screen.DECORATION_HEIGHT + 170;
 	public static final int WIDTH = 136;
 	public static final int HEIGHT = 30;
 	
@@ -174,7 +174,7 @@ public class TerminalTab extends IDEComponent {
 	
 	public void close() {
 		if (commandRunning) {
-			MessageBox.showDialog("A command is running!", new String[] { "Do you want to stop the command execution anyway?" }, new String[] { Texts.yes, Texts.no }, new Execute[] {() -> { commandRunning = false; close(); }, () -> {}});
+			MessageBox.showDialog(Texts.aCommandIsRunning, new String[] { "Do you want to stop the command execution anyway?" }, new String[] { Texts.yes, Texts.no }, new Execute[] {() -> { commandRunning = false; close(); }, () -> {}});
 			return;
 		}
 		
@@ -244,6 +244,9 @@ public class TerminalTab extends IDEComponent {
 			button.setSprite(Main.closeTab);
 		
 		button.tick();
+		
+		if (TerminalCore.tabs.indexOf(this) > 0)
+			x = TerminalCore.tabs.get(TerminalCore.tabs.indexOf(this) - 1).getX() + TerminalCore.tabs.get(TerminalCore.tabs.indexOf(this) - 1).getWidth() + 3;
 	}
 	
 	public void render(Graphics g) {

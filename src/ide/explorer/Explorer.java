@@ -109,7 +109,7 @@ public class Explorer extends IDEComponent {
 	
 	public static ToggleButton wordWrap;
 	public static ExecuteButtonIcon addTerminal;
-	public static ExecuteButton showOverlay;
+	public static ToggleButton showOverlay;
 	public static TextArea textArea;
 	
 	public static int MINIMUM_Y = 200 + Screen.DECORATION_HEIGHT;
@@ -814,10 +814,10 @@ public class Explorer extends IDEComponent {
     	g2.setStroke(new BasicStroke(2f));
     	g2.drawLine(20 + (Texts.settings.length() * 12) + 10, Screen.DECORATION_HEIGHT + 60, width - 20, Screen.DECORATION_HEIGHT + 60);
     	
-    	Fonts.drawString("Terminal", 20, Screen.DECORATION_HEIGHT + 170, new IDEFont(Fonts.lightGrayNormal, 16), g);
+    	Fonts.drawString("Terminal", 20, Screen.DECORATION_HEIGHT + 130, new IDEFont(Fonts.lightGrayNormal, 16), g);
     	g2.setColor(Colors.textLight);
     	g2.setStroke(new BasicStroke(2f));
-    	g2.drawLine(20 + ("Terminal".length() * 12) + 10, Screen.DECORATION_HEIGHT + 180, width - 20, Screen.DECORATION_HEIGHT + 180);
+    	g2.drawLine(20 + ("Terminal".length() * 12) + 10, Screen.DECORATION_HEIGHT + 140, width - 20, Screen.DECORATION_HEIGHT + 140);
     	
     	for (TerminalTab t : TerminalCore.tabs)
     		t.render(g);
@@ -828,8 +828,10 @@ public class Explorer extends IDEComponent {
 	    	g2.setStroke(new BasicStroke(3f));
 	    	g.drawLine(0, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT, width - 4, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT);
 	    	
-	    	g.setColor(TerminalCore.selected.hovered() ? Colors.explorerLight : Colors.explorer);
-	    	g.fillRect(TerminalCore.selected.getX() + 2, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT - 4, TerminalCore.selected.getWidth() - 3, 6);
+	    	if (!TerminalCore.tabs.isEmpty()) {
+		    	g.setColor(TerminalCore.selected.hovered() ? Colors.explorerLight : Colors.explorer);
+		    	g.fillRect(TerminalCore.selected.getX() + 2, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT - 4, TerminalCore.selected.getWidth() - 3, 6);
+	    	}
     	}
     }
     

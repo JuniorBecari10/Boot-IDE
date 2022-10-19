@@ -239,9 +239,9 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage forcePushSpr;
     
     public static BufferedImage wordWrapSpr;
+    public static BufferedImage showOverlaySpr;
     
     public static BufferedImage term12Px;
-    
     public static BufferedImage add;
     
     ///
@@ -351,9 +351,9 @@ public class Main implements Runnable, Tickable {
 	        forcePushSpr = spritesheet.getSprite(512, 0, 16, 16);
 	        
 	        wordWrapSpr = spritesheet.getSprite(528, 0, 16, 16);
+	        showOverlaySpr = spritesheet.getSprite(560, 0, 16, 16);
 	        
 	        term12Px = spritesheet.getSprite(370, 2, 12, 12);
-	        
 	        add = spritesheet.getSprite(544, 0, 16, 16);
 	        
 	        ///////
@@ -552,9 +552,9 @@ public class Main implements Runnable, Tickable {
         forcePushSpr = Colors.swapColor(forcePushSpr, Colors.textLightDefault, Colors.textLight);
         
         wordWrapSpr = Colors.swapColor(wordWrapSpr, Colors.textLightDefault, Colors.textLight);
+        showOverlaySpr = Colors.swapColor(showOverlaySpr, Colors.textLightDefault, Colors.textLight);
         
         term12Px = Colors.swapColor(term12Px, Colors.textLightDefault, Colors.textLight);
-        
         add = Colors.swapColor(add, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///

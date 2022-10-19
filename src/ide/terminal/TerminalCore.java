@@ -6,7 +6,6 @@ import java.util.List;
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
-import ide.explorercomponents.ExecuteButton;
 import ide.explorercomponents.ExecuteButtonIcon;
 import ide.explorercomponents.TextArea;
 import ide.explorercomponents.ToggleButton;
@@ -24,6 +23,8 @@ public class TerminalCore {
 	 */
 	
 	public static boolean breakLine = true;
+	public static boolean showOverlay = false;
+	
 	public static char prompt = '$';
 	
 	public static final String[] pythonScript = {
@@ -66,22 +67,24 @@ public class TerminalCore {
 		}
 		
 		if (Explorer.showOverlay == null) {
-			Explorer.showOverlay = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 130, Main.explorer.getWidth() - 20, 20, Texts.showOverlay, () -> {}, true) {
+			Explorer.showOverlay = new ToggleButton(96, Screen.DECORATION_HEIGHT + 80, 32, 32, Main.showOverlaySpr, showOverlay, Texts.showOverlay) {
 				public void tick() {
 					super.tick();
 					
-					text = Texts.showOverlay;
+					caption = Texts.showOverlay;
 				}
 			};
 		}
 		
 		if (Explorer.textArea == null) {
-			Explorer.textArea = new TextArea(10, Screen.DECORATION_HEIGHT + 260, Main.explorer.getWidth() - 20, (Main.screen.getHeight() - Screen.DECORATION_HEIGHT + 280) - 20, selected == null ? new String[0] : selected.getLines()) {
+			Explorer.textArea = new TextArea(10, TerminalTab.Y_EXPLORER + (TerminalTab.HEIGHT * 2) - 10, Main.explorer.getWidth() - 20, (Main.screen.getHeight() - Screen.DECORATION_HEIGHT + 280), selected == null ? new String[0] : selected.getLines()) {
 				public void tick() {
 					super.tick();
 					
+					y = TerminalCore.tabs.isEmpty() ? TerminalTab.Y_EXPLORER + 10 : TerminalTab.Y_EXPLORER + (TerminalTab.HEIGHT * 2) - 10;
+					
 					width = Main.explorer.getWidth() - 20;
-					height = (Main.screen.getHeight() - Screen.DECORATION_HEIGHT + 280) - 20;
+					height = (Main.screen.getHeight() - Screen.DECORATION_HEIGHT + 280);
 					lines = selected == null ? new String[0] : selected.getLines();
 					
 				}
@@ -98,6 +101,9 @@ public class TerminalCore {
 		IDEComponent.toRemove.add(Explorer.wordWrap);
 		IDEComponent.toRemove.add(Explorer.addTerminal);
 		IDEComponent.toRemove.add(Explorer.showOverlay);
+		
+		if (showOverlay) return;
+		
 		IDEComponent.toRemove.add(Explorer.textArea);
 	}
 	

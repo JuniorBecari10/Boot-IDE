@@ -277,6 +277,10 @@ public final class Texts {
 	public static String clickOpenTerminal;
 	public static String toOpenTerminal;
 	
+	public static String aCommandIsRunning;
+	
+	public static String openTempFile;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -539,6 +543,10 @@ public final class Texts {
 			clickOpenTerminal = "Clique no botão";
 			toOpenTerminal = "para abrir um novo";
 			
+			aCommandIsRunning = "Um Comando Está Sendo Executado!";
+			
+			openTempFile = "Abrir Novo Arquivo Temporário";
+			
 			break;
 		
 		case ENG:
@@ -800,6 +808,10 @@ public final class Texts {
 			
 			clickOpenTerminal = "Click on the button";
 			toOpenTerminal = "to open a new";
+			
+			aCommandIsRunning = "A Command Is Running!";
+			
+			openTempFile = "Open New Temporary File";
 			
 			break;
 		}

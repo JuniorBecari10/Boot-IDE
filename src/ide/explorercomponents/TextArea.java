@@ -203,7 +203,7 @@ public class TextArea extends IDEComponent {
 					String command = String.join(" ", c);
 					
 					if (!runInternalCommand(command)) {
-						String[] o = Main.runCommand(TerminalCore.selected.getScope(), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath() + " < " + Main.script.getParentFile().getAbsolutePath() + File.separator + "input");
+						String[] o = Main.runCommand(TerminalCore.selected.getScope(), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
 						
 						for (String s : o) {
 							Main.runCommand(new File(Main.userDir), "echo " + s + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
@@ -384,6 +384,7 @@ public class TextArea extends IDEComponent {
 		}
 		
 		int cursorX = this.cursorX;
+		// talvez calcular o cursory por um loop while pela posição x
 		
 		if (Main.editor.showCursor && Explorer.selected == this && !TerminalCore.selected.commandRunning 
 				&& y + 5 + ((lines.length - 1) * (fontSize + MARGIN)) - scrollY > y - fontSize + 4 
