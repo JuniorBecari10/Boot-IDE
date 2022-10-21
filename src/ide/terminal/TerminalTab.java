@@ -225,7 +225,10 @@ public class TerminalTab extends IDEComponent {
 	public void select() {
 		TerminalCore.selected = this;
 		
-		Explorer.textArea.cursorX = lines[lines.length - 1].length();
+		if (lines.length > 0)
+			Explorer.textArea.cursorX = lines[lines.length - 1].length();
+		else
+			Explorer.textArea.cursorX = 0;
 	}
 	
 	public void tick() {
