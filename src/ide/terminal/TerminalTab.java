@@ -174,7 +174,7 @@ public class TerminalTab extends IDEComponent {
 	
 	public void close() {
 		if (commandRunning) {
-			MessageBox.showDialog(Texts.aCommandIsRunning, new String[] { "Do you want to stop the command execution anyway?" }, new String[] { Texts.yes, Texts.no }, new Execute[] {() -> { commandRunning = false; close(); }, () -> {}});
+			MessageBox.showDialog(Texts.aCommandIsRunning, new String[] { Texts.doYouWantToStop }, new String[] { Texts.yes, Texts.no }, new Execute[] {() -> { commandRunning = false; close(); }, () -> {}});
 			return;
 		}
 		

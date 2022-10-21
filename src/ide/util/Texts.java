@@ -278,6 +278,7 @@ public final class Texts {
 	public static String toOpenTerminal;
 	
 	public static String aCommandIsRunning;
+	public static String doYouWantToStop;
 	
 	public static String openTempFile;
 	
@@ -543,7 +544,8 @@ public final class Texts {
 			clickOpenTerminal = "Clique no botão";
 			toOpenTerminal = "para abrir um novo";
 			
-			aCommandIsRunning = "Um Comando Está Sendo Executado!";
+			aCommandIsRunning = "Um comando está sendo executado!";
+			doYouWantToStop = "Deseja interromper a execução do comando mesmo assim?";
 			
 			openTempFile = "Abrir Novo Arquivo Temporário";
 			
@@ -809,7 +811,8 @@ public final class Texts {
 			clickOpenTerminal = "Click on the button";
 			toOpenTerminal = "to open a new";
 			
-			aCommandIsRunning = "A Command Is Running!";
+			aCommandIsRunning = "A command is running!";
+			doYouWantToStop = "Do you want to stop the command execution anyway?";
 			
 			openTempFile = "Open New Temporary File";
 			
