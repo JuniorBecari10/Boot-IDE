@@ -14,6 +14,7 @@ import java.util.List;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
+import ide.components.MessageBox;
 import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -37,6 +38,8 @@ public class TextArea extends IDEComponent {
 	
 	private int scrollX = 0;
 	private int scrollY = 0;
+	
+	private Thread runner;
 
 	public TextArea(int x, int y, int width, int height, String[] lines) {
 		super(x, y, width, height, null);
@@ -86,6 +89,14 @@ public class TextArea extends IDEComponent {
 				
 				return;
 			}
+		}
+		
+		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && TerminalCore.selected.commandRunning) {
+			MessageBox.showDialog(Texts.aCommandIsRunning, new String[] { Texts.doYouWantToStop }, new String[] { Texts.yes, Texts.no }, new Execute[] {() -> {
+				TerminalCore.selected.commandRunning = false;
+				
+				
+				}, () -> {}});
 		}
 
 		if (!acceptInput || Explorer.selected != this) return;
@@ -191,7 +202,7 @@ public class TextArea extends IDEComponent {
 			
 			TerminalCore.selected.commandRunning = true;
 			
-			new Thread() {
+			runner = new Thread() {
 				public void run() {
 					String[] split = lines[lines.length - 1].split(" ");
 					String[] c = new String[split.length - 1];
@@ -215,7 +226,9 @@ public class TextArea extends IDEComponent {
 					TerminalCore.selected.commandRunning = false;
 					TerminalCore.selected.read();
 				}
-			}.start();
+			};
+			
+			runner.start();
 			
 			return;
 		}

@@ -212,9 +212,7 @@ public class TerminalTab extends IDEComponent {
 					
 					try {
 						log.delete();
-					} catch (Exception ee) {
-						
-					}
+					} catch (Exception ee) {}
 					
 					Explorer.textArea.lines = new String[0];
 				} catch (Exception e) {
