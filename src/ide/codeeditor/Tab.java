@@ -812,7 +812,7 @@ public class Tab extends IDEComponent implements Serializable {
 			Collections.sort(ts, new Comparator<Tab>() {
 				@Override
 				public int compare(Tab t1, Tab t2) {
-					return new Integer(t1.getX() - (WIDTH / 2) + Main.editor.tabScr).compareTo(t2.getX() + Main.editor.tabScr);
+					return Integer.compare(t1.getX() - (WIDTH / 2) + Main.editor.tabScr, t2.getX() + Main.editor.tabScr);
 				}
 			});
 			
