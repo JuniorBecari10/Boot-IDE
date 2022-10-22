@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,7 +55,7 @@ public class TextArea extends IDEComponent {
 			if (KeyInput.isShiftDown())
 				scrollX += fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
 			else {
-				scrollY += fontSize - CodeEditor.ruleOf3(16, 4, fontSize);;
+				scrollY += fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
 				
 				if (y + 5 + ((lines.length - 1) * (fontSize + MARGIN)) - scrollY < y - fontSize + 4)
 					scrollY -= fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
@@ -344,9 +345,29 @@ public class TextArea extends IDEComponent {
 		case "dir":
 		case "ls":
 			try {
-				File[] files = TerminalCore.selected.getScope().listFiles();
+				File[] folders = TerminalCore.selected.getScope().listFiles(new FilenameFilter() {
+					@Override
+					public boolean accept(File dir, String name) {
+						File f = new File(dir, name);
+
+						return f.isDirectory();
+					}
+				});
+				
+				File[] files = TerminalCore.selected.getScope().listFiles(new FilenameFilter() {
+					@Override
+					public boolean accept(File dir, String name) {
+						File f = new File(dir, name);
+
+						return f.isFile();
+					}
+				});
 				
 				w = new BufferedWriter(new FileWriter(TerminalCore.selected.getLog(), true));
+				
+				for (File f : folders) {
+					w.write("* " + f.getName() + "\n");
+				}
 				
 				for (File f : files) {
 					w.write(f.getName() + "\n");
@@ -375,6 +396,15 @@ public class TextArea extends IDEComponent {
 
 		if (lines[lines.length - 1].length() == 0 || scrollX < 0 || cursorX <= 2)
 			scrollX = 0;
+		/*
+		while (y + 5 + (fontSize + MARGIN) * (lines.length - 1) - scrollY > height) {
+			scrollY -= fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
+		}
+		
+		while (y + 5 + (fontSize + MARGIN) * (lines.length - 1) - scrollY < y) {
+			scrollY += fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
+		}
+		*/
 	}
 	
 	public void tick() {
