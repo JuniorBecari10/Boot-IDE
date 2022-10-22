@@ -340,6 +340,24 @@ public class TextArea extends IDEComponent {
 			}
 			
 			return true;
+			
+		case "dir":
+		case "ls":
+			try {
+				File[] files = TerminalCore.selected.getScope().listFiles();
+				
+				w = new BufferedWriter(new FileWriter(TerminalCore.selected.getLog(), true));
+				
+				for (File f : files) {
+					w.write(f.getName() + "\n");
+				}
+				
+				w.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			return true;
 		}
 		
 		return false;
