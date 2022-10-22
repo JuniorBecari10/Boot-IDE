@@ -44,6 +44,7 @@ import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorer.ListableFile;
 import ide.explorercomponents.Execute;
+import ide.explorercomponents.ExecuteButtonIcon;
 import ide.explorercomponents.SetBranchName;
 import ide.explorercomponents.SetCommitName;
 import ide.fonts.Fonts;
@@ -122,6 +123,7 @@ public class Main implements Runnable, Tickable {
     public static MaximizeWindow maximizeWindow;
     
     public static SettingsButton settingsButton;
+    public static ExecuteButtonIcon moreOptions;
     
     public static String sprsh = "/spritesheet.png"; // sprsh - spritesheet
     public static String fntnr = "/font.png"; // fntnr - font normal
@@ -244,6 +246,8 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage term12Px;
     public static BufferedImage add;
     
+    public static BufferedImage moreOptionsSpr;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -356,6 +360,8 @@ public class Main implements Runnable, Tickable {
 	        term12Px = spritesheet.getSprite(370, 2, 12, 12);
 	        add = spritesheet.getSprite(544, 0, 16, 16);
 	        
+	        moreOptionsSpr = spritesheet.getSprite(170, 6, 1, 5);
+	        
 	        ///////
 	        
 	        explorer = new Explorer(0, Screen.DECORATION_HEIGHT, 280, Screen.HEIGHT);
@@ -376,7 +382,32 @@ public class Main implements Runnable, Tickable {
 	        maximizeWindow = new MaximizeWindow(screen.getWidth() - Screen.DECORATION_HEIGHT * 2, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, maximizeWindowSpr);
 	        minimizeWindow = new MinimizeWindow(screen.getWidth() - Screen.DECORATION_HEIGHT * 3, 0, Screen.DECORATION_HEIGHT, Screen.DECORATION_HEIGHT, minimizeWindowSpr);
 	        
-	        settingsButton = new SettingsButton(explorer.getWidth() - 34, Screen.DECORATION_HEIGHT + 2, 32, 32, settingsButtonSpr);
+	        settingsButton = new SettingsButton(explorer.getWidth() - 48 /*34*/, Screen.DECORATION_HEIGHT + 2, 32, 32, settingsButtonSpr);
+	        
+	        // Por enquanto é null mas o tick vai rolar e vai atualizar
+	        moreOptions = new ExecuteButtonIcon(explorer.getWidth() - 16, Screen.DECORATION_HEIGHT + 2, 14, 32, moreOptionsSpr, () -> {}, Texts.moreOptions) {
+	        	public void tick() {
+	        		super.tick();
+	        		
+	        		x = explorer.getWidth() - 16;
+	        		caption = Texts.moreOptions;
+	        	}
+	        	
+	        	public void render(Graphics g) {
+	        		if (hovered() && enabled) {
+	        			g.setColor(Colors.explorerLight);
+	        			g.fillRect(x, y, width, height);
+	        		}
+	        		
+	        		final int scale = 3;
+	        		
+	        		g.drawImage(sprite, x + ((sprite.getWidth() * scale) / 2) + 5, y + ((sprite.getHeight() * scale) / 2) + 1, sprite.getWidth() * scale, sprite.getHeight() * scale, null);
+	        		
+	        		if (hovered() && !(SetFileName.added || RenameFile.added || CommandTerminal.active || MessageBox.active)) {
+	        			Explorer.renderDescriptionText(caption, MouseInput.getMouseX() - 27, MouseInput.getMouseY() + 27, g);
+	        		}
+	        	}
+	        };
 	        
 	        desktop = Desktop.getDesktop();
 	        
@@ -417,6 +448,7 @@ public class Main implements Runnable, Tickable {
 			IDEComponent.toAdd.add(Main.reload);
 			
 			IDEComponent.toAdd.add(settingsButton);
+			IDEComponent.toAdd.add(moreOptions);
 			
 			Explorer.fetchStatus();
 			
@@ -556,6 +588,8 @@ public class Main implements Runnable, Tickable {
         
         term12Px = Colors.swapColor(term12Px, Colors.textLightDefault, Colors.textLight);
         add = Colors.swapColor(add, Colors.textLightDefault, Colors.textLight);
+        
+        moreOptionsSpr = Colors.swapColor(moreOptionsSpr, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         

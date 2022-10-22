@@ -125,7 +125,7 @@ public class Explorer extends IDEComponent {
 	
 	public static String baseFolderName;
 	
-	public static int minDrag = 192;
+	public static int minDrag = 200; // 192
 	
 	public int maxTitleWidth = width / 24;
 	public int maxTextWidth = width / 16;

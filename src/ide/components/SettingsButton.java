@@ -26,7 +26,7 @@ public class SettingsButton extends IDEComponent {
 	public void tick() {
 		if (CommandTerminal.expOff) return;
 		
-		x = Main.explorer.getWidth() - 34;
+		x = Main.explorer.getWidth() - 48; // 34
 		
 		if (leftClicked())
 			CommandTerminal.runCommand("settings");

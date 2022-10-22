@@ -282,6 +282,8 @@ public final class Texts {
 	
 	public static String openTempFile;
 	
+	public static String moreOptions;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -549,6 +551,8 @@ public final class Texts {
 			
 			openTempFile = "Abrir Novo Arquivo Temporário";
 			
+			moreOptions = "Mais Opções";
+			
 			break;
 		
 		case ENG:
@@ -815,6 +819,8 @@ public final class Texts {
 			doYouWantToStop = "Do you want to stop the command execution anyway?";
 			
 			openTempFile = "Open New Temporary File";
+			
+			moreOptions = "More Options";
 			
 			break;
 		}
