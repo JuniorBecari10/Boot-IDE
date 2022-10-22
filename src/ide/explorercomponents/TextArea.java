@@ -56,7 +56,7 @@ public class TextArea extends IDEComponent {
 			if (KeyInput.isShiftDown())
 				scrollX += fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
 			else {
-				scrollY += fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
+				scrollY += (fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) * 3;
 				
 				if (y + 5 + ((lines.length - 1) * (fontSize + MARGIN)) - scrollY < y - fontSize + 4)
 					scrollY -= fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
@@ -69,7 +69,7 @@ public class TextArea extends IDEComponent {
 				if (scrollX < 0) scrollX = 0;
 			}
 			else {
-				scrollY -= fontSize - CodeEditor.ruleOf3(16, 4, fontSize);;
+				scrollY -= (fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) * 3;
 				
 				if (scrollY < 0) scrollY = 0;
 			}
