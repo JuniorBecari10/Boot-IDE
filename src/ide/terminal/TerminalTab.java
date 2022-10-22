@@ -235,8 +235,6 @@ public class TerminalTab extends IDEComponent {
 		if (leftClicked())
 			select();
 		
-		button.setX((x + Main.editor.tabScr + width) - 20);
-		
 		// close thread if tab closed
 		
 		if (commandRunning)
@@ -248,6 +246,10 @@ public class TerminalTab extends IDEComponent {
 		
 		if (TerminalCore.tabs.indexOf(this) > 0)
 			x = TerminalCore.tabs.get(TerminalCore.tabs.indexOf(this) - 1).getX() + TerminalCore.tabs.get(TerminalCore.tabs.indexOf(this) - 1).getWidth() + 3;
+		
+		if (x < 1) x = 1;
+		
+		button.setX((x + Main.editor.tabScr + width) - 20);
 	}
 	
 	public void render(Graphics g) {
