@@ -306,6 +306,40 @@ public class TextArea extends IDEComponent {
 		case "exit":
 			TerminalCore.selected.commandRunning = false;
 			TerminalCore.selected.close();
+			
+		case "cd":
+			if (split.length == 1) {
+				// escreveu apenas "cd"
+				
+				// Retornar para a base folder
+				TerminalCore.selected.setScope(Main.baseFolder);
+			}
+			else {
+				// escreveu o nome da pasta
+				
+				if (split[1].equals("..")) {
+					// uma pasta acima
+					
+					// Não pode sair da base folder
+					if (TerminalCore.selected.getScope().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath())) {
+						
+						break;
+					}
+					
+					TerminalCore.selected.setScope(TerminalCore.selected.getScope().getParentFile());
+				}
+				else if (split[1].equals(".")) { /* mesma pasta, não faz nada */ }
+				else {
+					String path = String.join(" ", Arrays.copyOfRange(split, 1, split.length));
+					File pathFile = new File(TerminalCore.selected.getScope() + File.separator + path);
+					
+					if (!pathFile.exists()) break;
+					
+					TerminalCore.selected.setScope(pathFile);
+				}
+			}
+			
+			return true;
 		}
 		
 		return false;
