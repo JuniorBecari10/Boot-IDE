@@ -1017,11 +1017,11 @@ public class Explorer extends IDEComponent {
 	    
 	    if (IDEComponent.components.contains(Main.resetExplorerDrag)) {
         	g.setColor(Colors.explorer);
-        	g.fillRect(Main.explorer.getWidth() + 1, Screen.DECORATION_HEIGHT + 2, 32 * 4, 32);
+        	g.fillRect(Main.explorer.getWidth() + 1, Screen.DECORATION_HEIGHT + 2, 32 * Main.moreOptionsBtns.size(), 32);
         	
         	g.setColor(Colors.explorerLight);
         	g2.setStroke(new BasicStroke(2f));
-        	g.drawRect(Main.explorer.getWidth() + 1, Screen.DECORATION_HEIGHT + 2, 32 * 4, 32);
+        	g.drawRect(Main.explorer.getWidth() + 1, Screen.DECORATION_HEIGHT + 2, 32 * Main.moreOptionsBtns.size(), 32);
         }
     }
 }

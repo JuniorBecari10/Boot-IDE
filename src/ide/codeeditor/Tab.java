@@ -166,6 +166,7 @@ public class Tab extends IDEComponent implements Serializable {
 	@Override
     public boolean hovered() {
 		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added || SetCommitName.added) return false;
+		if (Main.anyMoreOptionsButtonHovered()) return false;
 		
 		int x = this.x + Main.editor.tabScr;
 		

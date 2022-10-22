@@ -283,6 +283,7 @@ public final class Texts {
 	public static String openTempFile;
 	
 	public static String moreOptions;
+	public static String resetExplorerWidth;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -552,6 +553,7 @@ public final class Texts {
 			openTempFile = "Abrir Novo Arquivo Temporário";
 			
 			moreOptions = "Mais Opções";
+			resetExplorerWidth = "Redefinir Largura do Explorador";
 			
 			break;
 		
@@ -821,6 +823,7 @@ public final class Texts {
 			openTempFile = "Open New Temporary File";
 			
 			moreOptions = "More Options";
+			resetExplorerWidth = "Reset Explorer Width";
 			
 			break;
 		}

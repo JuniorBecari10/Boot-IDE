@@ -396,11 +396,12 @@ public class Main implements Runnable, Tickable {
 	        resetExplorerDrag = new ExecuteButtonIcon(explorer.getWidth() + 2, Screen.DECORATION_HEIGHT + 2, 32, 32, resetExplorerDragSpr, () -> {
 	        	CommandTerminal.runCommand("resetexplorerdrag");
 	        	IDEComponent.toRemove.addAll(moreOptionsBtns);
-	        	}, "Reset Explorer Width") {
+	        	}, Texts.resetExplorerWidth) {
 	        	public void tick() {
 	        		super.tick();
 	        		
 	        		x = explorer.getWidth() + 2;
+	        		caption = Texts.resetExplorerWidth;
 	        	}
 	        };
 	        
@@ -643,6 +644,13 @@ public class Main implements Runnable, Tickable {
         explorer.addTabs();
         
         Explorer.fetchStatus();
+    }
+    
+    public static boolean anyMoreOptionsButtonHovered() {
+    	for (IDEComponent c : moreOptionsBtns)
+    		if (c.hovered()) return true;
+    	
+    	return false;
     }
     
     // Checks whether a command's output is an error or not through parsing.
@@ -990,7 +998,7 @@ public class Main implements Runnable, Tickable {
 					String text = ListableFile.getFileExtension(t.getRegent().getRegent()).equalsIgnoreCase(CONFIG_FILE_EXTENSION) && t.getRegent().getRegent().getParent() != null && t.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir) ? Texts.seeingConfigFile : t.getRegent().getRegent().getPath().substring(index);
 					text = text.replace('\\', '/');
 					
-					if (editor.editing.isTemporary)
+					if (editor.editing != null && editor.editing.isTemporary)
 						text = Texts.thisIsTemporary;
 					
 					List<String> texts = new ArrayList<>();
