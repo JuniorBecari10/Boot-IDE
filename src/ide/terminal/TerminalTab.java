@@ -232,6 +232,8 @@ public class TerminalTab extends IDEComponent {
 	}
 	
 	public void tick() {
+		if (x + width > Main.explorer.getWidth() && !TerminalCore.showOverlay) return;
+		
 		if (leftClicked())
 			select();
 		
@@ -247,12 +249,16 @@ public class TerminalTab extends IDEComponent {
 		if (TerminalCore.tabs.indexOf(this) > 0)
 			x = TerminalCore.tabs.get(TerminalCore.tabs.indexOf(this) - 1).getX() + TerminalCore.tabs.get(TerminalCore.tabs.indexOf(this) - 1).getWidth() + 3;
 		
-		if (x < 1) x = 1;
+		//if (x < 1) x = 1;
 		
 		button.setX((x + Main.editor.tabScr + width) - 20);
+		
+		x = x - TerminalCore.tabScroll;
 	}
 	
 	public void render(Graphics g) {
+		if (x + width > Main.explorer.getWidth() && !TerminalCore.showOverlay) return;
+		
 		Graphics2D g2 = (Graphics2D) g;
 		
 		Color c = TerminalCore.selected == this ? Colors.textLight : Colors.explorerLight;

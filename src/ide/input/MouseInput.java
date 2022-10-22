@@ -17,6 +17,8 @@ import javax.swing.event.MouseInputAdapter;
 import ide.explorer.Explorer;
 import ide.main.Main;
 import ide.screen.Screen;
+import ide.terminal.TerminalCore;
+import ide.terminal.TerminalTab;
 import ide.topcomponents.MaximizeWindow;
 import ide.topcomponents.TopComponent;
 
@@ -363,6 +365,9 @@ public final class MouseInput extends MouseInputAdapter {
 		
 		if (Explorer.textArea != null)
 			Explorer.textArea.scroll();
+		
+		if (hovered(0, TerminalTab.Y_EXPLORER, Main.explorer.getWidth(), TerminalTab.HEIGHT))
+			TerminalCore.scroll();
 		
 		if (Main.main != null)
 	        Main.main.mainLogic();

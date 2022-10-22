@@ -835,7 +835,7 @@ public class Explorer extends IDEComponent {
 	    	g.drawLine(0, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT, width - 4, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT);
 	    	
 	    	// Linha para cobrir a tab para parecer que está conectado igual o chrome
-	    	if (!TerminalCore.tabs.isEmpty()) {
+	    	if (!TerminalCore.tabs.isEmpty() && TerminalCore.selected.getX() + TerminalCore.selected.getWidth() < Main.explorer.getWidth()) {
 		    	g.setColor(TerminalCore.selected.hovered() ? Colors.explorerLight : Colors.explorer);
 		    	g.fillRect(TerminalCore.selected.getX() + 2, TerminalTab.Y_EXPLORER + TerminalTab.HEIGHT - 4, TerminalCore.selected.getWidth() - 3, 6);
 	    	}

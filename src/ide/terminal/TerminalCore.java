@@ -9,6 +9,8 @@ import ide.explorer.ExplorerMode;
 import ide.explorercomponents.ExecuteButtonIcon;
 import ide.explorercomponents.TextArea;
 import ide.explorercomponents.ToggleButton;
+import ide.input.MouseInput;
+import ide.input.MouseWheelRoll;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.util.Texts;
@@ -26,6 +28,7 @@ public class TerminalCore {
 	public static boolean showOverlay = false;
 	
 	public static char prompt = '$';
+	public static int tabScroll = 0;
 	
 	public static final String[] pythonScript = {
 			"import sys",
@@ -130,5 +133,12 @@ public class TerminalCore {
 		}
 		
 		return num;
+	}
+	
+	public static void scroll() {
+		if (MouseInput.getWheelRoll() == MouseWheelRoll.DOWN && tabs.get(tabs.size() - 1).getX() - (TerminalTab.WIDTH - 3) >= 1)
+			tabScroll += TerminalTab.WIDTH + 3;
+		else if (MouseInput.getWheelRoll() == MouseWheelRoll.UP && tabs.get(0).getX() + (TerminalTab.WIDTH - 3) <= 1)
+			tabScroll -= TerminalTab.WIDTH + 3;
 	}
 }
