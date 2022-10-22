@@ -325,7 +325,7 @@ public class TextArea extends IDEComponent {
 					// Não pode sair da base folder
 					if (TerminalCore.selected.getScope().getAbsolutePath().equals(Main.baseFolder.getAbsolutePath())) {
 						
-						break;
+						return true;
 					}
 					
 					TerminalCore.selected.setScope(TerminalCore.selected.getScope().getParentFile());
@@ -335,7 +335,7 @@ public class TextArea extends IDEComponent {
 					String path = String.join(" ", Arrays.copyOfRange(split, 1, split.length));
 					File pathFile = new File(TerminalCore.selected.getScope() + File.separator + path);
 					
-					if (!pathFile.exists()) break;
+					if (!pathFile.exists()) return true;
 					
 					TerminalCore.selected.setScope(pathFile);
 				}
@@ -385,7 +385,7 @@ public class TextArea extends IDEComponent {
 			String file = String.join(" ", Arrays.copyOfRange(split, 1, split.length));
 			File fileObj = new File(TerminalCore.selected.getScope() + File.separator + file);
 			
-			if (fileObj.isDirectory()) break;
+			if (fileObj.isDirectory()) return true;
 			
 			ListableFile.addTab(ListableFile.newListableFile(fileObj), false);
 			
