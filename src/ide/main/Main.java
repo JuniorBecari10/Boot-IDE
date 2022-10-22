@@ -123,6 +123,11 @@ public class Main implements Runnable, Tickable {
     public static MaximizeWindow maximizeWindow;
     
     public static SettingsButton settingsButton;
+    
+    public static List<IDEComponent> moreOptionsBtns = new ArrayList<>();
+    
+    public static ExecuteButtonIcon resetExplorerDrag;
+    
     public static ExecuteButtonIcon moreOptions;
     
     public static String sprsh = "/spritesheet.png"; // sprsh - spritesheet
@@ -248,6 +253,8 @@ public class Main implements Runnable, Tickable {
     
     public static BufferedImage moreOptionsSpr;
     
+    public static BufferedImage resetExplorerDragSpr;
+    
     ///
     
     // TODO verificar se o args 0 contém boot ou ide e pegar o args 1 e fazer o abrir com
@@ -362,6 +369,8 @@ public class Main implements Runnable, Tickable {
 	        
 	        moreOptionsSpr = spritesheet.getSprite(170, 6, 1, 5);
 	        
+	        resetExplorerDragSpr = spritesheet.getSprite(576, 0, 16, 16);
+	        
 	        ///////
 	        
 	        explorer = new Explorer(0, Screen.DECORATION_HEIGHT, 280, Screen.HEIGHT);
@@ -384,8 +393,21 @@ public class Main implements Runnable, Tickable {
 	        
 	        settingsButton = new SettingsButton(explorer.getWidth() - 48 /*34*/, Screen.DECORATION_HEIGHT + 2, 32, 32, settingsButtonSpr);
 	        
+	        resetExplorerDrag = new ExecuteButtonIcon(explorer.getWidth() + 2, Screen.DECORATION_HEIGHT + 2, 32, 32, resetExplorerDragSpr, () -> {
+	        	CommandTerminal.runCommand("resetexplorerdrag");
+	        	IDEComponent.toRemove.addAll(moreOptionsBtns);
+	        	}, "Reset Explorer Width") {
+	        	public void tick() {
+	        		super.tick();
+	        		
+	        		x = explorer.getWidth() + 2;
+	        	}
+	        };
+	        
+	        moreOptionsBtns.add(resetExplorerDrag);
+	        
 	        // Por enquanto é null mas o tick vai rolar e vai atualizar
-	        moreOptions = new ExecuteButtonIcon(explorer.getWidth() - 16, Screen.DECORATION_HEIGHT + 2, 14, 32, moreOptionsSpr, () -> {}, Texts.moreOptions) {
+	        moreOptions = new ExecuteButtonIcon(explorer.getWidth() - 16, Screen.DECORATION_HEIGHT + 2, 14, 32, moreOptionsSpr, () -> { IDEComponent.toAdd.addAll(moreOptionsBtns); }, Texts.moreOptions) {
 	        	public void tick() {
 	        		super.tick();
 	        		
@@ -590,6 +612,8 @@ public class Main implements Runnable, Tickable {
         add = Colors.swapColor(add, Colors.textLightDefault, Colors.textLight);
         
         moreOptionsSpr = Colors.swapColor(moreOptionsSpr, Colors.textLightDefault, Colors.textLight);
+        
+        resetExplorerDragSpr = Colors.swapColor(resetExplorerDragSpr, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         
@@ -949,7 +973,7 @@ public class Main implements Runnable, Tickable {
 
         g.setColor(Colors.background);
         g.fillRect(0, 0, Screen.WIDTH, Screen.HEIGHT);
-
+        
         for (IDEComponent c : IDEComponent.components)
         	c.render(g);
         

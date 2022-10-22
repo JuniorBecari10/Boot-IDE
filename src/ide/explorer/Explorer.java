@@ -292,6 +292,9 @@ public class Explorer extends IDEComponent {
 	    
 	    // Atalho Universal
 	    
+	    if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE)
+	    	IDEComponent.toRemove.addAll(Main.moreOptionsBtns);
+	    
 	    if (hovered())
 	    	Main.screen.setCursor(Cursor.getDefaultCursor());
 	    
@@ -687,6 +690,9 @@ public class Explorer extends IDEComponent {
 	    
 	    for (ExplorerTab t : tabs)
 	    	t.tick();
+	    
+	    for (IDEComponent c : Main.moreOptionsBtns)
+	    	c.tick();
     }
     
     private void renderExplorer(Graphics g) {
@@ -1008,5 +1014,14 @@ public class Explorer extends IDEComponent {
 				g.fillRect(t.getX() + 2, ExplorerTab.Y + ExplorerTab.SIZE - 3, ExplorerTab.SIZE - 3, 8);
 			}
 	    }
+	    
+	    if (IDEComponent.components.contains(Main.resetExplorerDrag)) {
+        	g.setColor(Colors.explorer);
+        	g.fillRect(Main.explorer.getWidth() + 1, Screen.DECORATION_HEIGHT + 2, 32 * 4, 32);
+        	
+        	g.setColor(Colors.explorerLight);
+        	g2.setStroke(new BasicStroke(2f));
+        	g.drawRect(Main.explorer.getWidth() + 1, Screen.DECORATION_HEIGHT + 2, 32 * 4, 32);
+        }
     }
 }
