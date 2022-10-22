@@ -17,6 +17,7 @@ import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
 import ide.explorer.Explorer;
+import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
@@ -377,6 +378,16 @@ public class TextArea extends IDEComponent {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
+			return true;
+			
+		case "boot":
+			String file = String.join(" ", Arrays.copyOfRange(split, 1, split.length));
+			File fileObj = new File(TerminalCore.selected.getScope() + File.separator + file);
+			
+			if (fileObj.isDirectory()) break;
+			
+			ListableFile.addTab(ListableFile.newListableFile(fileObj), false);
 			
 			return true;
 		}
