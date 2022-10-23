@@ -50,7 +50,7 @@ public class TextArea extends IDEComponent {
 	}
 	
 	public void scroll() {
-		if (Explorer.selected != this) return;
+		if (Explorer.selected != this || !hovered()) return;
 		
 		if (MouseInput.wheelDown()) {
 			if (KeyInput.isShiftDown())
@@ -139,15 +139,15 @@ public class TextArea extends IDEComponent {
 		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_X) { // Ctrl + X - Recortar (Tudo)
 			CodeEditor.copyText(text.toString().substring(2));
 			
-			text = new StringBuilder();
-			cursorX = 0;
+			text = new StringBuilder(TerminalCore.prompt + " ");
+			cursorX = 2;
 			
 			setCursorWithinBounds();
 		}
 		
 		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) { // Ctrl + Del (Deletar Tudo)
-			text = new StringBuilder();
-			cursorX = 0;
+			text = new StringBuilder(TerminalCore.prompt + " ");
+			cursorX = 2;
 			
 			setCursorWithinBounds();
 		}

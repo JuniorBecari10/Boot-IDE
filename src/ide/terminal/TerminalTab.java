@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,7 @@ import ide.explorercomponents.SetBranchName;
 import ide.explorercomponents.SetCommitName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.input.MouseInput;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.util.Colors;
@@ -120,6 +122,15 @@ public class TerminalTab extends IDEComponent {
 			Explorer.textArea.cursorX = 2;
 	}
 	
+	public boolean hovered() {
+		int x = this.x - TerminalCore.tabScroll;
+		
+		Rectangle mouse = new Rectangle(MouseInput.getMouseX(), MouseInput.getMouseY(), 1, 1);
+        Rectangle comp = new Rectangle(x, y, width, height);
+
+        return mouse.intersects(comp);
+	}
+	
 	public File getScope() {
 		return scope;
 	}
@@ -215,6 +226,8 @@ public class TerminalTab extends IDEComponent {
 					} catch (Exception ee) {}
 					
 					Explorer.textArea.lines = new String[0];
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -253,7 +266,7 @@ public class TerminalTab extends IDEComponent {
 		
 		//if (x < 1) x = 1;
 		
-		button.setX((x + width) - 20);
+		button.setX((x - TerminalCore.tabScroll + width) - 20);
 		
 		//x = x - TerminalCore.tabScroll;
 	}
