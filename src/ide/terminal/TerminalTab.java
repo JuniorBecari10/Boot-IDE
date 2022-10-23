@@ -230,7 +230,9 @@ public class TerminalTab extends IDEComponent {
 					if (process != null)
 						process.destroy();
 					
-					// mudar o scroll
+					// mudar de 0 para o x minimo (0 para o explorer e o codeeditor.x com o show overlay
+					while (TerminalCore.selected.getX() - TerminalCore.tabScroll <= 0)
+			    		TerminalCore.tabScroll -= TerminalTab.WIDTH + 3;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

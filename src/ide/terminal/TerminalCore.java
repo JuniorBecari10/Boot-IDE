@@ -121,6 +121,9 @@ public class TerminalCore {
 		
 		TerminalCore.tabs.add(term);
     	TerminalCore.selected = term;
+    	
+    	while (term.getX() - tabScroll >= Main.explorer.getWidth() - 1)
+    		tabScroll += TerminalTab.WIDTH + 3;
 	}
 	
 	public static int getNextUntitledNumber() {
