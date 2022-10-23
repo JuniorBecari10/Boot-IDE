@@ -1805,9 +1805,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.delete, (s) -> execute(s), "del"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.rename, (s) -> execute(s), "rename"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, regent.isFile(), Texts.duplicate, (s) -> execute(s), "duplicate"));
-			list.add(new RightClickOption((x + width), 0, widthDraw, regent.isFile(), "Copy File", (s) -> execute(s), "copyfile"));
-			list.add(new RightClickOption((x + width), 0, widthDraw, regent.isFile(), "Cut File", (s) -> execute(s), "cutfile"));
-			list.add(new RightClickOption((x + width), 0, widthDraw, ListableFile.copy != null, "Paste File", (s) -> Main.editor.execute(s), "pastefile"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, regent.isFile(), Texts.copy + " " + Texts.file, (s) -> execute(s), "copyfile"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, regent.isFile(), Texts.cut + " " + Texts.file, (s) -> execute(s), "cutfile"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, ListableFile.copy != null, Texts.paste + " " + Texts.file, (s) -> Main.editor.execute(s), "pastefile"));
 			
 			list.add(new RightClickOption((x + width), 0, widthDraw, Main.os == OS.WINDOWS, Texts.openCmd, (s) -> Main.editor.execute(s), "cmd"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openTerminal, (s) -> execute(s), "term"));
@@ -1885,7 +1885,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 5, y, height, height, null);
 		}
 		
-		if (regent.isHidden()) {
+		if (regent.isHidden()/* || (copy != null && copy.equals(regent) && cutFlag)*/) {
 			g.setColor(new Color(0, 0, 0, 30));
 			g.fillRect(x, y, width - 2, height);
 		}
