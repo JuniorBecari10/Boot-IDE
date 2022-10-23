@@ -138,7 +138,7 @@ public class TerminalCore {
 	public static void scroll() {
 		if (MouseInput.getWheelRoll() == MouseWheelRoll.DOWN && tabs.get(tabs.size() - 1).getX() - (TerminalTab.WIDTH - 3) >= 1)
 			tabScroll += TerminalTab.WIDTH + 3;
-		else if (MouseInput.getWheelRoll() == MouseWheelRoll.UP && tabs.get(0).getX() + (TerminalTab.WIDTH - 3) <= 1)
+		else if (MouseInput.getWheelRoll() == MouseWheelRoll.UP && tabScroll > 0)
 			tabScroll -= TerminalTab.WIDTH + 3;
 	}
 }

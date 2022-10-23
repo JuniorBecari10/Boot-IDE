@@ -232,6 +232,8 @@ public class TerminalTab extends IDEComponent {
 	}
 	
 	public void tick() {
+		int x = this.x - TerminalCore.tabScroll;
+		
 		if (x + width > Main.explorer.getWidth() && !TerminalCore.showOverlay) return;
 		
 		if (leftClicked())
@@ -251,12 +253,14 @@ public class TerminalTab extends IDEComponent {
 		
 		//if (x < 1) x = 1;
 		
-		button.setX((x + Main.editor.tabScr + width) - 20);
+		button.setX((x + width) - 20);
 		
-		x = x - TerminalCore.tabScroll;
+		//x = x - TerminalCore.tabScroll;
 	}
 	
 	public void render(Graphics g) {
+		int x = this.x - TerminalCore.tabScroll;
+		
 		if (x + width > Main.explorer.getWidth() && !TerminalCore.showOverlay) return;
 		
 		Graphics2D g2 = (Graphics2D) g;
