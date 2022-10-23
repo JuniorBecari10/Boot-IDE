@@ -623,6 +623,8 @@ public class Explorer extends IDEComponent {
 				list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, widthDraw, Texts.openCmd, (s) -> Main.editor.execute(s), "cmd"));
 				list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, widthDraw, Texts.openTerminal, (s) -> Main.editor.execute(s), "term"));
 				
+				list.add(new RightClickOption((x + width), 0, widthDraw, ListableFile.copy != null, "Paste File", (s) -> Main.editor.execute(s), "pastefile"));
+				
 				if (Main.baseFolder != null) {
 					list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 120, widthDraw, Texts.openExplorer, (s) -> Main.editor.execute(s), "sysexp"));
 					list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 150, widthDraw, Texts.setBaseFolder, (s) -> Main.editor.execute(s), "setbase"));

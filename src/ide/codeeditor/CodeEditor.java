@@ -35,6 +35,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
+import ide.components.ReloadButton;
 import ide.components.RenameFile;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
@@ -6604,6 +6605,33 @@ public class CodeEditor extends IDEComponent {
 			create.deleteOnExit();
 			
 			ListableFile.addTab(ListableFile.newListableFile(create), false, true);
+			
+			break;
+			
+		case "pastefile":
+			if (ListableFile.copy == null) break;
+			if (ListableFile.copy.getParentFile().equals(new File(Explorer.getScopePath())) && ListableFile.cutFlag) break;
+			
+			try {
+				if (ListableFile.copy.getParentFile().equals(new File(Explorer.getScopePath()))) {
+					ListableFile.newListableFile(ListableFile.copy).execute("duplicate");
+				}
+				else {
+					File oldCopy = new File(ListableFile.copy.getAbsolutePath());
+					Files.copy(ListableFile.copy.toPath(), new File(Explorer.getScopePath() + File.separator + ListableFile.copy.getName()).toPath());
+					
+					if (ListableFile.cutFlag) {
+						oldCopy.delete();
+						
+						ListableFile.cutFlag = false;
+						ListableFile.copy = null;
+					}
+				}
+				
+				ReloadButton.reloadExplorer();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 			break;
 		}

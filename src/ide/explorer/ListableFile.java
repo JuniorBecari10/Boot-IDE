@@ -47,11 +47,13 @@ import ide.util.Texts;
 public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 	public static boolean hasAltered = false;
-
+	
+	public static boolean cutFlag = false;
+	public static File copy;
+	
 	public static FileType[] types = new FileType[] {};
 
 	private ListableFile parent;
-
 	private File regent;
 
 	public static List<ListableFile> files = new ArrayList<ListableFile>(Explorer.files);
@@ -1486,6 +1488,16 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			
 			break;
 			
+		case "copyfile":
+			copy = regent;
+			cutFlag = false;
+			break;
+			
+		case "cutfile":
+			copy = regent;
+			cutFlag = true;
+			break;
+			
 		case "copyrel":
 			CodeEditor.copyText(regent.getAbsolutePath().contains(File.separator + Main.baseFolder.getName() + File.separator) ? regent.getAbsolutePath().substring(regent.getAbsolutePath().indexOf(Main.baseFolder.getName())) : regent.getAbsolutePath());
 			break;
@@ -1793,6 +1805,9 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.delete, (s) -> execute(s), "del"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.rename, (s) -> execute(s), "rename"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, regent.isFile(), Texts.duplicate, (s) -> execute(s), "duplicate"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, regent.isFile(), "Copy File", (s) -> execute(s), "copyfile"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, regent.isFile(), "Cut File", (s) -> execute(s), "cutfile"));
+			list.add(new RightClickOption((x + width), 0, widthDraw, ListableFile.copy != null, "Paste File", (s) -> Main.editor.execute(s), "pastefile"));
 			//if (isWindows)
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openCmd, (s) -> Main.editor.execute(s), "cmd"));
 
