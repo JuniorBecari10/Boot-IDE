@@ -38,6 +38,7 @@ import ide.git.GitCore;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.main.OS;
 import ide.screen.Screen;
 import ide.util.Colors;
 import ide.util.ExecuteCommand;
@@ -1794,7 +1795,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			MouseInput.updateMouse();
 
 			int widthDraw = Main.lang == Language.PORT ? 440 : 420;
-			boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
 			
 			List<RightClickOption> list = new ArrayList<>();
 
@@ -1808,17 +1808,17 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			list.add(new RightClickOption((x + width), 0, widthDraw, regent.isFile(), "Copy File", (s) -> execute(s), "copyfile"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, regent.isFile(), "Cut File", (s) -> execute(s), "cutfile"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, ListableFile.copy != null, "Paste File", (s) -> Main.editor.execute(s), "pastefile"));
-			//if (isWindows)
-			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openCmd, (s) -> Main.editor.execute(s), "cmd"));
-
+			
+			list.add(new RightClickOption((x + width), 0, widthDraw, Main.os == OS.WINDOWS, Texts.openCmd, (s) -> Main.editor.execute(s), "cmd"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openTerminal, (s) -> execute(s), "term"));
+			
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openExplorer, (s) -> execute(s), "sysexp"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.setBaseFolder, (s) -> execute(s), "setbase"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.copyRelativePath, (s) -> execute(s), "copyrel"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.copyAbsolutePath, (s) -> execute(s), "copyabs"));
 			list.add(new RightClickOption((x + width), 0, widthDraw, Texts.openDefault, (s) -> execute(s), "opendef"));
 
-			if ((getFileExtension(regent).equalsIgnoreCase(".bat") || getFileExtension(regent).equalsIgnoreCase(".cmd") || getFileExtension(regent).equalsIgnoreCase(".com")) && isWindows)
+			if ((getFileExtension(regent).equalsIgnoreCase(".bat") || getFileExtension(regent).equalsIgnoreCase(".cmd") || getFileExtension(regent).equalsIgnoreCase(".com")) && Main.os == OS.WINDOWS)
 				list.add(new RightClickOption((x + width), y + 240, widthDraw, Texts.execute, (s) -> execute(s), "run"));
 			
 			IDEComponent.addRightClickOptions((x + width), y, list.toArray(new RightClickOption[list.size()]));

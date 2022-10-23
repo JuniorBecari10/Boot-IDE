@@ -41,6 +41,7 @@ import ide.git.GitStatus;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.main.OS;
 import ide.screen.Screen;
 import ide.terminal.TerminalCore;
 import ide.terminal.TerminalTab;
@@ -620,7 +621,8 @@ public class Explorer extends IDEComponent {
 	    		list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY(), widthDraw, Texts.createFile, (s) -> Main.editor.execute(s), "newfile", true));
 				list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 30, widthDraw, Texts.createFolder, (s) -> Main.editor.execute(s), "newfolder"));
 	    		
-				list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, widthDraw, Texts.openCmd, (s) -> Main.editor.execute(s), "cmd"));
+				
+				list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 60, widthDraw, Main.os == OS.WINDOWS, Texts.openCmd, (s) -> Main.editor.execute(s), "cmd"));
 				list.add(new RightClickOption(MouseInput.getMouseX(), MouseInput.getMouseY() + 90, widthDraw, Texts.openTerminal, (s) -> Main.editor.execute(s), "term"));
 				
 				list.add(new RightClickOption((x + width), 0, widthDraw, ListableFile.copy != null, "Paste File", (s) -> Main.editor.execute(s), "pastefile"));
