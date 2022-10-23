@@ -216,7 +216,7 @@ public class TextArea extends IDEComponent {
 					String command = String.join(" ", c);
 					
 					if (!runInternalCommand(command)) {
-						String[] o = Main.runCommand(TerminalCore.selected.getScope(), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+						String[] o = Main.runCommand(TerminalCore.selected.getScope(), TerminalCore.selected.process, "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
 						
 						for (String s : o) {
 							Main.runCommand(new File(Main.userDir), "echo " + s + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
@@ -431,6 +431,8 @@ public class TextArea extends IDEComponent {
 	
 	public void render(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+		
+		if (this.lines == null) return;
 		
 		g.setColor(Colors.explorer);
 		g.fillRect(x, y, width, height);

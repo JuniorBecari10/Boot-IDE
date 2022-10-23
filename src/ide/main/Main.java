@@ -755,6 +755,59 @@ public class Main implements Runnable, Tickable {
         return lines;
     }
     
+    public static String[] runCommand(File directory, Process p, String... commands) {
+    	if (os == OS.WINDOWS) {
+    		String[] preCommands = { "cmd", "/c" };
+    		String[] arr = new String[preCommands.length + commands.length];
+    		
+    		int i;
+    		for (i = 0; i < preCommands.length; i++)
+    			arr[i] = preCommands[i];
+    		
+    		for (i = 0; i < commands.length; i++)
+    			arr[preCommands.length + i] = commands[i];
+    		
+    		return listToString(run(directory, p, arr));
+    	}
+    	else {
+    		return listToString(run(directory, p, commands));
+    	}
+    }
+    
+    public static List<String> run(File directory, Process p, String... commands) {
+        List<String> lines = new ArrayList<>();
+        /*Runtime rt = Runtime.getRuntime();
+        Process p = rt.exec(commands);*/
+        try {
+	        ProcessBuilder builder = new ProcessBuilder(commands);
+	        builder.redirectErrorStream(true);
+	        //builder.redirectInput(ProcessBuilder.Redirect.INHERIT);
+	        //builder.redirectOutput(ProcessBuilder.Redirect.INHERIT); // esse faz com que printa na tela os comandos
+	        builder.directory(directory);
+	        p = builder.start();
+	        
+	        // check if the value's non zero
+	        p.waitFor();
+	        
+	        BufferedReader stdin = new BufferedReader(new InputStreamReader(p.getInputStream()));
+	        BufferedReader stderr = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+	        
+	        String s = null;
+	        while ((s = stdin.readLine()) != null) {
+	            lines.add(s);
+	        }
+	        
+	        // Maybe separate these two outputs?
+	        while ((s = stderr.readLine()) != null) {
+	            lines.add(s);
+	        }
+        } catch (Exception e) {
+        	return lines;
+        }
+        
+        return lines;
+    }
+    
     public static void writeFile(File setFile) {
     	BufferedWriter wr = null;
     	

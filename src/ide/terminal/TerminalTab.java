@@ -48,6 +48,8 @@ public class TerminalTab extends IDEComponent {
 	
 	public CloseTerminalTabButton button;
 	
+	public Process process;
+	
 	public boolean commandRunning = false;
 	
 	public TerminalTab(int x, int y, int widthh, String name) {
@@ -219,15 +221,16 @@ public class TerminalTab extends IDEComponent {
 					else
 						TerminalCore.selected = TerminalCore.tabs.get(TerminalCore.tabs.size() - 1);
 					
-					reader.join();
-					
 					try {
 						log.delete();
 					} catch (Exception ee) {}
 					
 					Explorer.textArea.lines = new String[0];
 					
+					if (process != null)
+						process.destroy();
 					
+					// mudar o scroll
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
