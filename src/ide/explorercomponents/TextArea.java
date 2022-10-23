@@ -15,7 +15,6 @@ import java.util.List;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
-import ide.components.MessageBox;
 import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
@@ -93,12 +92,18 @@ public class TextArea extends IDEComponent {
 			}
 		}
 		
-		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && TerminalCore.selected.commandRunning) {
+		/*if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && TerminalCore.selected.commandRunning) {
 			MessageBox.showDialog(Texts.aCommandIsRunning, new String[] { Texts.doYouWantToStop }, new String[] { Texts.yes, Texts.no }, new Execute[] {() -> {
 				TerminalCore.selected.commandRunning = false;
 				
 				
 				}, () -> {}});
+		}*/
+		
+		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && TerminalCore.selected.commandRunning) { // Ctrl + C (Commando Rodando) - Terminar
+			TerminalCore.selected.terminate();
+			
+			System.out.println(TerminalCore.selected.process.isAlive());
 		}
 
 		if (!acceptInput || Explorer.selected != this) return;
@@ -216,17 +221,19 @@ public class TextArea extends IDEComponent {
 					String command = String.join(" ", c);
 					
 					if (!runInternalCommand(command)) {
-						String[] o = Main.runCommand(TerminalCore.selected.getScope(), TerminalCore.selected.process, "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+						String[] o = Main.runCommandTerm(TerminalCore.selected.getScope(), "python3 " + Main.script.getAbsolutePath() + " " + command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
 						
 						for (String s : o) {
 							Main.runCommand(new File(Main.userDir), "echo " + s + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
 						}
 					}
 					
-					Main.runCommand(new File(Main.userDir), "echo " + TerminalCore.prompt + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
-					
-					TerminalCore.selected.commandRunning = false;
-					TerminalCore.selected.read();
+					if (TerminalCore.selected != null) {
+						Main.runCommand(new File(Main.userDir), "echo " + TerminalCore.prompt + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+						
+						TerminalCore.selected.commandRunning = false;
+						TerminalCore.selected.read();
+					}
 				}
 			};
 			

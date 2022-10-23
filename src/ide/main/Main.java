@@ -755,7 +755,7 @@ public class Main implements Runnable, Tickable {
         return lines;
     }
     
-    public static String[] runCommand(File directory, Process p, String... commands) {
+    public static String[] runCommandTerm(File directory, String... commands) {
     	if (os == OS.WINDOWS) {
     		String[] preCommands = { "cmd", "/c" };
     		String[] arr = new String[preCommands.length + commands.length];
@@ -767,14 +767,14 @@ public class Main implements Runnable, Tickable {
     		for (i = 0; i < commands.length; i++)
     			arr[preCommands.length + i] = commands[i];
     		
-    		return listToString(run(directory, p, arr));
+    		return listToString(runTerm(directory, arr));
     	}
     	else {
-    		return listToString(run(directory, p, commands));
+    		return listToString(runTerm(directory, commands));
     	}
     }
     
-    public static List<String> run(File directory, Process p, String... commands) {
+    public static List<String> runTerm(File directory, String... commands) {
         List<String> lines = new ArrayList<>();
         /*Runtime rt = Runtime.getRuntime();
         Process p = rt.exec(commands);*/
@@ -784,13 +784,13 @@ public class Main implements Runnable, Tickable {
 	        //builder.redirectInput(ProcessBuilder.Redirect.INHERIT);
 	        //builder.redirectOutput(ProcessBuilder.Redirect.INHERIT); // esse faz com que printa na tela os comandos
 	        builder.directory(directory);
-	        p = builder.start();
+	        TerminalCore.selected.process = builder.start();
 	        
 	        // check if the value's non zero
-	        p.waitFor();
+	        TerminalCore.selected.process.waitFor();
 	        
-	        BufferedReader stdin = new BufferedReader(new InputStreamReader(p.getInputStream()));
-	        BufferedReader stderr = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+	        BufferedReader stdin = new BufferedReader(new InputStreamReader(TerminalCore.selected.process.getInputStream()));
+	        BufferedReader stderr = new BufferedReader(new InputStreamReader(TerminalCore.selected.process.getErrorStream()));
 	        
 	        String s = null;
 	        while ((s = stdin.readLine()) != null) {

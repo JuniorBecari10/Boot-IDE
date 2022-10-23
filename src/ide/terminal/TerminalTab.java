@@ -238,6 +238,10 @@ public class TerminalTab extends IDEComponent {
 		}.start();
 	}
 	
+	public synchronized void terminate() {
+		process.destroyForcibly();
+	}
+		
 	public void select() {
 		TerminalCore.selected = this;
 		
