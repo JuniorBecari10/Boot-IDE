@@ -131,12 +131,6 @@ public class Main implements Runnable, Tickable {
     public static String fnted = "/editorfont.png"; // fnted - font editor
     public static String conffile = "none"; // conffile - config(uration) file
     
-    public static Spritesheet originalSpritesheet;
-    
-    public static Spritesheet modifiedSpritesheet;
-    public static Spritesheet modifiedFontNormal;
-    public static Spritesheet modifiedIcons;
-    
     public static int inheritCx, inheritCy;
     public static int inheritScrX, inheritScrY;
     
@@ -258,8 +252,7 @@ public class Main implements Runnable, Tickable {
 	    	
 	    	os = getOS();
 	    	
-	    	originalSpritesheet = new Spritesheet(sprsh);
-	        spritesheet = originalSpritesheet;
+	        spritesheet = new Spritesheet(sprsh);
 	        
 	        
 	        //System.out.println(fntnr + " " + fnted);
@@ -853,7 +846,7 @@ public class Main implements Runnable, Tickable {
 					
 					if (i == 0) {
 						Fonts.initFonts(fntnr, fnted);
-						spritesheet = originalSpritesheet; // fazer o closebasefolder nao descarregar o config file
+						spritesheet = new Spritesheet(sprsh); // fazer o closebasefolder nao descarregar o config file
 						
 				        if (s.equals("none")) baseFolder = null;
 				        else {
