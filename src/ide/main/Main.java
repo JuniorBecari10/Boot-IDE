@@ -73,10 +73,6 @@ public class Main implements Runnable, Tickable {
     
     public static final String DEFAULT_CONFIG_FILE_NAME = "config" + CONFIG_FILE_EXTENSION;
     
-    public static final String RESOURCE_FOLDER_NAME = "Resources";
-    public static final String FONT_FILE_NAME = "Resources/font.png";
-    public static final String EDITORFONT_FILE_NAME = "Resources/editorfont.png";
-    public static final String SPRITESHEET_FILE_NAME = "Resources/spritesheet.png";
     //public static final String EMOJI_FONT_FILE_NAME = "emojifont.ttf";
     
     public static final String LOG_FILE_NAME = "Exception.log";
@@ -160,12 +156,6 @@ public class Main implements Runnable, Tickable {
     
     public static final File settingsFile = new File(System.getProperty("user.dir") + File.separator + "settings" + SETTINGS_FILE_EXTENSION);
     public static final File defaultConfigFile = new File(System.getProperty("user.dir") + File.separator + DEFAULT_CONFIG_FILE_NAME);
-    
-    public static final File resourcesFolder = new File(System.getProperty("user.dir") + File.separator + RESOURCE_FOLDER_NAME);
-    
-    public static final File fontFile = new File(System.getProperty("user.dir") + File.separator + FONT_FILE_NAME);
-    public static final File editorFontFile = new File(System.getProperty("user.dir") + File.separator + EDITORFONT_FILE_NAME);
-    public static final File spritesheetFile = new File(System.getProperty("user.dir") + File.separator + SPRITESHEET_FILE_NAME);
     
     public static final File logFile = new File(System.getProperty("user.dir") + File.separator + LOG_FILE_NAME);
     
@@ -269,14 +259,8 @@ public class Main implements Runnable, Tickable {
 	    	os = getOS();
 	    	
 	    	originalSpritesheet = new Spritesheet(sprsh);
-	        modifiedSpritesheet = new Spritesheet(spritesheetFile);
-	        spritesheet = spritesheetFile.exists() ? modifiedSpritesheet : originalSpritesheet;
+	        spritesheet = originalSpritesheet;
 	        
-	        if (fontFile.exists())
-	        	fntnr = FONT_FILE_NAME;
-	        
-	        if (editorFontFile.exists())
-	        	fnted = EDITORFONT_FILE_NAME;
 	        
 	        //System.out.println(fntnr + " " + fnted);
 	        
@@ -869,7 +853,7 @@ public class Main implements Runnable, Tickable {
 					
 					if (i == 0) {
 						Fonts.initFonts(fntnr, fnted);
-						spritesheet = spritesheetFile.exists() ? modifiedSpritesheet : originalSpritesheet; // fazer o closebasefolder nao descarregar o config file
+						spritesheet = originalSpritesheet; // fazer o closebasefolder nao descarregar o config file
 						
 				        if (s.equals("none")) baseFolder = null;
 				        else {
