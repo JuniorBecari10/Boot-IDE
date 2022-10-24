@@ -169,7 +169,7 @@ public class Main implements Runnable, Tickable {
     
     public static final File logFile = new File(System.getProperty("user.dir") + File.separator + LOG_FILE_NAME);
     
-    public static File script = new File(userDir + File.separator + "terminal.py");
+    //public static File script = new File(userDir + File.separator + "terminal.py");
     
     public static final String[] errorKeywords = { "fatal", "error" };
     public static final String[] warningKeywords = { "warning" };
@@ -486,10 +486,10 @@ public class Main implements Runnable, Tickable {
     		System.exit(1);
     	}
     	
-    	writePython();
+    	//writePython();
     }
     
-    public static void writePython() {
+    /*public static void writePython() {
     	try {
     		script.deleteOnExit();
     		
@@ -503,7 +503,7 @@ public class Main implements Runnable, Tickable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    }
+    }*/
     
     public static OS getOS() {
     	String name = System.getProperty("os.name").toLowerCase();

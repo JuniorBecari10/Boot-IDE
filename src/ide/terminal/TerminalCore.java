@@ -30,14 +30,14 @@ public class TerminalCore {
 	public static char prompt = '$';
 	public static int tabScroll = 0;
 	
-	public static final String[] pythonScript = {
+	/*public static final String[] pythonScript = {
 			"import sys",
 			"import os",
 			
 			"if len(sys.argv) < 2:",
 			"	sys.exit(0)",
 			"os.system(\" \".join(sys.argv[1:]))"
-	};
+	};*/
 	
 	public static List<TerminalTab> tabs = new ArrayList<>();
 	
