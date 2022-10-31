@@ -8282,8 +8282,6 @@ public class CodeEditor extends IDEComponent {
 			SearchReplaceCore.dispose();
 		}
 		
-		System.out.println(undo.size());
-		
 		capsLock = Main.toolkit.getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
 		
 		height = Main.screen.getHeight();

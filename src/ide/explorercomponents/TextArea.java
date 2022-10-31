@@ -33,6 +33,9 @@ public class TextArea extends IDEComponent {
 	public String[] lines;
 	public boolean acceptInput = false;
 	
+	public List<String> executedCommands;
+	public int selectIndex = 0;
+	
 	private int fontSize = 16;
 	
 	public int cursorX = 0;
@@ -46,6 +49,8 @@ public class TextArea extends IDEComponent {
 		super(x, y, width, height, null);
 		
 		this.lines = lines;
+		
+		executedCommands = new ArrayList<>();
 	}
 	
 	public void scroll() {
@@ -157,6 +162,26 @@ public class TextArea extends IDEComponent {
 			setCursorWithinBounds();
 		}
 		
+		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
+			lines[lines.length - 1] = TerminalCore.prompt + " ";
+			cursorX = 2;
+			
+		}
+		
+		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP && !executedCommands.isEmpty()) {
+			lines[lines.length - 1] = TerminalCore.prompt + " " + executedCommands.get(selectIndex);
+			
+			if (selectIndex > 0) selectIndex--;
+			
+		}
+		
+		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN && !executedCommands.isEmpty()) {
+			lines[lines.length - 1] = TerminalCore.prompt + " " + executedCommands.get(selectIndex);
+			
+			if (selectIndex < executedCommands.size() - 1) selectIndex++;
+			
+		}
+		
 		// Por causa do prompt
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && cursorX > 2) {
 			cursorX--;
@@ -206,6 +231,9 @@ public class TextArea extends IDEComponent {
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 			TerminalCore.selected.setLines(lines);
 			TerminalCore.selected.write();
+			
+			executedCommands.add(lines[lines.length - 1].substring(2));
+			selectIndex = executedCommands.size() - 1;
 			
 			TerminalCore.selected.commandRunning = true;
 			
