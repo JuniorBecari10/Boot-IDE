@@ -227,6 +227,8 @@ public class Tab extends IDEComponent implements Serializable {
 				return;
 			}
 		}
+		
+		CommandTerminal.runCommand("resetundoredo");
 
 		// por causa da thread
 		Tab t = this;
@@ -310,6 +312,8 @@ public class Tab extends IDEComponent implements Serializable {
 			}
 		}
 		
+		CommandTerminal.runCommand("resetundoredo");
+		
 		// por causa da thread
 		Tab t = this;
 		
@@ -352,8 +356,6 @@ public class Tab extends IDEComponent implements Serializable {
 				Main.editor.scrY = next.scrY;
 				
 				Main.editor.lines.clear();
-				
-				CommandTerminal.runCommand("resetundoredo");
 			
 				try {
 					Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
@@ -397,6 +399,7 @@ public class Tab extends IDEComponent implements Serializable {
 				if (!Main.editor.tabs.isEmpty()) {
 					Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() > 0 ? Main.editor.tabs.size() - 1 : 0).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
 					
+					// T = Tab
 					int indexOfT = Main.editor.tabs.indexOf(t);
 					if (indexOfT < 0) {
 						indexOfT = 0;
@@ -497,7 +500,7 @@ public class Tab extends IDEComponent implements Serializable {
 
 			w.close();
 			
-			Main.editor.addToUndo();
+			//Main.editor.addToUndo();
 			
 			setSaved(true);
 			save = true;
@@ -537,7 +540,7 @@ public class Tab extends IDEComponent implements Serializable {
 	
 				w.close();
 				
-				Main.editor.addToUndo();
+				//Main.editor.addToUndo();
 				
 				setSaved(true);
 				save = true;

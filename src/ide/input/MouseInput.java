@@ -152,6 +152,16 @@ public final class MouseInput extends MouseInputAdapter {
         mouseX = e.getX();
         mouseY = e.getY();
         
+        /*Rectangle bounds = Main.screen.frame.getBounds(); 
+        Dimension screenSize = Screen.getScreenSize();
+        
+        if (bounds.y > 0) {
+        	Main.screen.frame.setBounds(bounds.x, bounds.y, Screen.WIDTH, Screen.HEIGHT);
+        	System.out.println("a");
+        }
+        else
+        	Main.screen.frame.setBounds(bounds.x, bounds.y, screenSize.width, screenSize.height);
+        */
         if ((mouseY < Screen.DECORATION_HEIGHT || ComponentInput.windowMoved()) && !TopComponent.anyTopComponentHovered()) {
         	Main.screen.frame.setLocation(Main.screen.frame.getLocation().x + p.x - pX, Main.screen.frame.getLocation().y + p.y - pY);
         	Main.screen.frame.setExtendedState(JFrame.NORMAL);

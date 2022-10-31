@@ -1593,6 +1593,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			Main.editor.isMultilineCommenting = false;
 			Main.editor.isAnotherIteration = false;
 			
+			CommandTerminal.runCommand("resetundoredo");
+			
 			if (!file.getRegent().canWrite()) {
 				Main.editor.isReadOnly = true;
 				toAdd.isReadOnly = true;
@@ -1613,6 +1615,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 	public static void addTab(ListableFile file, boolean isAutomatic, boolean isTemporary) {
 		if ((!CodeEditor.automaticallyOpenTabs && isAutomatic) || file == null)
 			return;
+		
+		CommandTerminal.runCommand("resetundoredo");
 
 		if (file.getRegent().isFile() && Main.editor.tabs != null) {
 			int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX()

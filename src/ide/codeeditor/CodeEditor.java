@@ -1205,6 +1205,9 @@ public class CodeEditor extends IDEComponent {
 			isReadOnly = true;
 			editing.isReadOnly = true;
 		}
+		
+		// quando resolver o problema de passar conteudo de um arquivo pra outro descomenta aqui
+		//addToUndo();
 
 		return ls;
 	}
@@ -6096,6 +6099,8 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public void register(StringBuilder cY, int y) { // cY = cursorY
+		addToUndo();
+		
 		String gs = cY.toString(); // gen string
 		char[] ca = gs.toCharArray(); // char array
 
@@ -6328,7 +6333,7 @@ public class CodeEditor extends IDEComponent {
 
 		int index = 0;
 
-		if (sp.length == 1) { // se a sa uma linha
+		if (sp.length == 1) { // se e só uma linha
 			for (String s : sp) {
 				StringBuilder b = new StringBuilder(new String(toCharArray(lines.get((cursorY - 1)).getChars())));
 				StringBuilder c = b;
@@ -6342,7 +6347,7 @@ public class CodeEditor extends IDEComponent {
 
 				cursorX += s.length();
 			}
-		} else { // se nao a sa uma linha
+		} else { // se nao é só uma linha
 			for (String s : sp) {
 				if (s != sp[0])
 					lines.add((cursorY - 1) + index, new IDELine(new ArrayList<>(), new ArrayList<>()));
@@ -7016,7 +7021,6 @@ public class CodeEditor extends IDEComponent {
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) {
 				KeyInput.updateKeys();
-				addToUndo();
 				
 				CommandTerminal.runCommand("gotocursor");
 
@@ -7028,12 +7032,10 @@ public class CodeEditor extends IDEComponent {
 					wordSinceSpace = "";
 
 				if (selecting) {
-					addToUndo();
 					CommandTerminal.runCommand("del");
 
 					return;
 				} else {
-					addToUndo();
 					if (cursorX > 0) {
 						cY.deleteCharAt(cursorX - 1);
 
@@ -7045,7 +7047,6 @@ public class CodeEditor extends IDEComponent {
 
 						register(cY, cursorY - 1);
 					} else if (cursorY > 1) {
-						addToUndo();
 						String s = cY.toString();
 
 						cursorX = lines.get(cursorY - 2).getChars().size();
@@ -7068,7 +7069,6 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE) {
 				KeyInput.updateKeys();
-				 addToUndo();
 				 
 				 CommandTerminal.runCommand("gotocursor");
 
@@ -7089,8 +7089,6 @@ public class CodeEditor extends IDEComponent {
 				KeyInput.updateKeys();
 				
 				if (!selecting) {
-					 addToUndo();
-					 
 					 CommandTerminal.runCommand("gotocursor");
 					 
 					 if (!KeyInput.isShiftDown()) {
@@ -7151,8 +7149,6 @@ public class CodeEditor extends IDEComponent {
 							editing.setSaved(false);
 					 }
 				} else {
-					addToUndo();
-					
 					for (int i = line1; i <= line2; i++) {
 
 						StringBuilder bl = new StringBuilder(new String(toCharArray(lines.get(i - 1).getChars())));
@@ -7170,8 +7166,6 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
-				 addToUndo();
-				 
 				 CommandTerminal.runCommand("gotocursor");
 
 				if (RightClickOption.isAutoCompleteActive()) {
@@ -7217,13 +7211,16 @@ public class CodeEditor extends IDEComponent {
 				cursorY++;
 
 				return;
-			}
+			}// TODO veriifcar se não tem arquivos não salvos ao fechar todas as tabs (Close all tabs)
 
-			if (KeyInput.getKeyCodePressed() != KeyEvent.VK_SHIFT) {
+			if (!KeyInput.isShiftDown()) {
 				KeyInput.updateKeys();
 				
 				int keyCode = KeyInput.getKeyCodePressed();
 				char c = KeyInput.getCharPressed();
+				
+				// as setas
+				if (!Character.isJavaIdentifierPart(c) || keyCode == KeyEvent.VK_ESCAPE) return;
 				
 				c = addAccents(keyCode, c);
 				cY = write(cY, c);
@@ -7270,8 +7267,6 @@ public class CodeEditor extends IDEComponent {
 				if (codeHelpersOn)
 					cY = addCodeHelps(cY);
 				
-				register(cY, cursorY - 1);
-				
 				cY = addExtraCode(cY, c);
 				register(cY, cursorY - 1);
 
@@ -7314,11 +7309,7 @@ public class CodeEditor extends IDEComponent {
 					RightClickOption.removeAllRightClickOptions(); // 46 a o ponto (.) // aqui
 				// if (KeyInput.getKeyCodePressed() == KeyEvent.)
 
-				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256
-						|| KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
-					
-					 addToUndo();
-					 
+				if (!(KeyInput.getCharPressed() < 31 || KeyInput.getCharPressed() > 256 || KeyInput.getKeyCodePressed() == KeyEvent.VK_DELETE)) {
 					 CommandTerminal.runCommand("gotocursor");
 					if (editing != null)
 						editing.setSaved(false);
@@ -7539,8 +7530,6 @@ public class CodeEditor extends IDEComponent {
 			} catch (Exception e) {
 				CommandTerminal.runCommand("deselect");
 			}
-			
-			//type();
 		}
 	}
 	
@@ -7948,7 +7937,7 @@ public class CodeEditor extends IDEComponent {
 
 			List<IDELine> peek = peekUndo();
 			redo.push(undo.pop());
-
+			
 			// define lines
 			//System.out.println(peek.get(0).getFonts().isEmpty());
 			Main.editor.lines = defineLines(peek);
@@ -8194,7 +8183,7 @@ public class CodeEditor extends IDEComponent {
 			
 			return output;
 		} catch (Exception e) {
-			//System.out.println("Exception: " + Main.getStackTrace(e));
+			System.out.println("Exception: " + Main.getStackTrace(e));
 			return null;
 		}
 	}
@@ -8292,6 +8281,8 @@ public class CodeEditor extends IDEComponent {
 			Explorer.selected = null;
 			SearchReplaceCore.dispose();
 		}
+		
+		System.out.println(undo.size());
 		
 		capsLock = Main.toolkit.getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
 		
