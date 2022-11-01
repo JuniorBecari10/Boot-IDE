@@ -911,9 +911,9 @@ public class Tab extends IDEComponent implements Serializable {
 		if (!isTabDragged() || dragging == null) {
 			MIN_X = CommandTerminal.expOff ? -WIDTH : Main.editor.getX() - (WIDTH + 4);	// -WIDTH é um macete kkk - 77
 			if (Main.editor.tabs.indexOf(this) > 0)
-				x = Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1).getX() + WIDTH + 3;
+				x = Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1).getX() + WIDTH + 2;
 			else
-				x = Tab.MIN_X + WIDTH + 3;
+				x = Tab.MIN_X + WIDTH + 2;
 		}
 	}
 	
