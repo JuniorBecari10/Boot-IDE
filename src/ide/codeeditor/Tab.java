@@ -697,6 +697,9 @@ public class Tab extends IDEComponent implements Serializable {
 					e.printStackTrace();
 				}
 	        }
+			
+			ListableFile.generateLocalConfigFile(Main.defaultConfigFile);
+			
 			break;
 			
 		case "copyrel":
