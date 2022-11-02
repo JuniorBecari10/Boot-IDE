@@ -311,6 +311,7 @@ public final class MouseInput extends MouseInputAdapter {
         
         if (e.getClickCount() == 2 && mouseY < Screen.DECORATION_HEIGHT) {
         	MaximizeWindow.maximize();
+        	updateMouse();
         }
     }
 

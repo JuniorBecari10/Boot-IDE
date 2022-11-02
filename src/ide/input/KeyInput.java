@@ -148,7 +148,15 @@ public final class KeyInput extends KeyAdapter {
 				}
 	    	}
 	    }
-        
+        /*
+        if (Explorer.explorerMode == ExplorerMode.TERMINAL || TerminalCore.showOverlay) {
+        	if (KeyInput.isControlDown() && KeyInput.isShiftDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_Y) { // Ctrl + Shift + Y (Desselecionar o Terminal)
+				Explorer.selected = null;
+				
+				return;
+			}
+        }
+        */
         if (Explorer.setFileName != null && SetFileName.added)
         	Explorer.setFileName.type();
         

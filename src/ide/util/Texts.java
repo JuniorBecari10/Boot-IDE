@@ -140,7 +140,8 @@ public final class Texts {
 	
 	public static String close;
 	
-	public static String cannotFindWord;
+	public static String cannotFindWord1;
+	public static String cannotFindWord2;
 	
 	public static String didNotFindAfterThat;
 	public static String itsTheEnd;
@@ -411,7 +412,8 @@ public final class Texts {
 			caseSensitive = "Sensível a letras maiúsculas";
 			regex = "Expressão Regular";
 			
-			cannotFindWord = "O Localizar/Substituir não encontrou nesse documento as palavras solicitadas, usando as configurações atuais.";
+			cannotFindWord1 = "O Localizar/Substituir não encontrou nesse documento";
+			cannotFindWord2 = " as palavras solicitadas usando as configurações atuais.";
 			
 			didNotFindAfterThat = "Não foram mais encontradas palavras correspondentes.";
 			itsTheEnd = "É o fim!";
@@ -681,7 +683,8 @@ public final class Texts {
 			caseSensitive = "Case Sensitive";
 			regex = "Regular Expression";
 			
-			cannotFindWord = "Search/Replace could not find the requested words in this document using the current settings.";
+			cannotFindWord1 = "Search/Replace could not find the requested";
+			cannotFindWord2 = "words in this document using the current settings.";
 			
 			didNotFindAfterThat = "No more matching words were found.";
 			itsTheEnd = "It's the end!";

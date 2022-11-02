@@ -5,12 +5,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JOptionPane;
-
 import ide.codeeditor.CodeEditor;
 import ide.codeeditor.IDELine;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
+import ide.components.MessageBox;
 import ide.explorer.Explorer;
 import ide.main.Main;
 import ide.screen.Screen;
@@ -182,8 +181,9 @@ public final class SearchReplaceCore {
 		}
 		
 		if (linesfound.size() == 0) {
-			CodeEditor.setSystemLook();
-			JOptionPane.showMessageDialog(null, Texts.cannotFindWord, Texts.nothingFound, JOptionPane.WARNING_MESSAGE);
+			//CodeEditor.setSystemLook();
+			//JOptionPane.showMessageDialog(null, Texts.cannotFindWord, Texts.nothingFound, JOptionPane.WARNING_MESSAGE);
+			MessageBox.showDialog(Texts.nothingFound, new String[] { Texts.cannotFindWord1, Texts.cannotFindWord2 }, new String[] { "Ok" }, new Execute[] { () -> {} });
 			
 			return;
 		}
@@ -199,8 +199,9 @@ public final class SearchReplaceCore {
 			Main.editor.cursorX = xPos.get(occurnum);
 			Main.editor.cursorY = (linesfound.get(occurnum) - 1) + 2;
 			
-			CodeEditor.setSystemLook();
-			JOptionPane.showMessageDialog(null, Texts.didNotFindAfterThat, Texts.itsTheEnd, JOptionPane.INFORMATION_MESSAGE);
+			//CodeEditor.setSystemLook();
+			//JOptionPane.showMessageDialog(null, Texts.didNotFindAfterThat, Texts.itsTheEnd, JOptionPane.INFORMATION_MESSAGE);
+			MessageBox.showDialog(Texts.itsTheEnd, new String[] { Texts.didNotFindAfterThat }, new String[] { "Ok" }, new Execute[] { () -> {} });
 			
 		}
 		
@@ -270,8 +271,9 @@ public final class SearchReplaceCore {
 		}
 		
 		if (linesfound.size() == 0) {
-			CodeEditor.setSystemLook();
-			JOptionPane.showMessageDialog(null, Texts.cannotFindWord, Texts.nothingFound, JOptionPane.WARNING_MESSAGE);
+			//CodeEditor.setSystemLook();
+			//JOptionPane.showMessageDialog(null, Texts.cannotFindWord, Texts.nothingFound, JOptionPane.WARNING_MESSAGE);
+			MessageBox.showDialog(Texts.nothingFound, new String[] { Texts.cannotFindWord1, Texts.cannotFindWord2 }, new String[] { "Ok" }, new Execute[] { () -> {} });
 			
 			return;
 		}
@@ -314,7 +316,8 @@ public final class SearchReplaceCore {
 		Main.editor.callAutomaticColor();
 		//Explorer.selected = null;
 		
-		CodeEditor.setSystemLook();
-		JOptionPane.showMessageDialog(null, Texts.replaced + " " + Texts.occurences + " " + Texts.in +  " " + count + " " + Texts.lines + ".", Texts.success + "!", JOptionPane.INFORMATION_MESSAGE);
+		//CodeEditor.setSystemLook();
+		//JOptionPane.showMessageDialog(null, Texts.replaced + " " + Texts.occurences + " " + Texts.in +  " " + count + " " + Texts.lines + ".", Texts.success + "!", JOptionPane.INFORMATION_MESSAGE);
+		MessageBox.showDialog(Texts.success + "!", new String[] { Texts.replaced + " " + Texts.occurences + " " + Texts.in +  " " + count + " " + Texts.lines + "." }, new String[] { "Ok" }, new Execute[] { () -> {} });
 	}
 }

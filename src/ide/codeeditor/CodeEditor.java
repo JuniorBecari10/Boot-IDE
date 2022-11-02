@@ -6982,30 +6982,20 @@ public class CodeEditor extends IDEComponent {
 					cursorX++;
 					
 					for (Integer i : indxs) {
-						int c = i;
 						int len = 0;
 			
-						while (c < chars.length && c + len < chars.length && c > 0) {
-							c--;
+						while (i + len < chars.length - 1)
 							len++;
-						}
-			
-						// c, c + len
-			
-						len = 0;
-			
-						while (c + len < chars.length - 1)
-							len++;
-			
-						if (chars[c + len] == ' ' || chars[c + len] == '>') {
-							char[] tagArray = Arrays.copyOfRange(chars, c, c + len);
-			
-							String tagStr = new String(tagArray).replaceAll(" ", "").substring(1);
+						
+						if (chars[i + len] == ' ' || chars[i + len] == '>') {
+							char[] tagArray = Arrays.copyOfRange(chars, i, i + len);
+							
+							String tagStr = new String(tagArray).trim().substring(1).split(" ")[0];//.replaceAll(" ", "").substring(1);
 			
 							tagStr = "</" + tagStr + ">"; // o fechamento da outra
 			
 							tagArray = tagStr.toCharArray();
-			
+							
 							for (char ch : tagArray) {
 								cY = write(cY, ch);
 			
