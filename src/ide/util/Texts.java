@@ -210,7 +210,7 @@ public final class Texts {
 	public static String duplicate;
 	
 	public static String initRepository;
-	public static String seeingConfigFile;
+	public static String thisIsConfigFile;
 	
 	public static String general;
 	public static String clone;
@@ -482,7 +482,7 @@ public final class Texts {
 			duplicate = "Duplicar";
 			
 			initRepository = "Criar Repositório";
-			seeingConfigFile = "Você está vendo um Arquivo de Configurações da Boot IDE.";
+			thisIsConfigFile = "Esse é um Arquivo de Configurações da Boot IDE.";
 			
 			general = "Geral";
 			clone = "Clonar";
@@ -753,7 +753,7 @@ public final class Texts {
 			duplicate = "Duplicate";
 			
 			initRepository = "Init Repository";
-			seeingConfigFile = "You are seeing a Boot IDE Configuration File.";
+			thisIsConfigFile = "This is a Boot IDE Configuration File.";
 			
 			general = "General";
 			clone = "Clone";
