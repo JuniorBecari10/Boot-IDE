@@ -40,6 +40,7 @@ import ide.input.MouseInput;
 import ide.main.Main;
 import ide.main.OS;
 import ide.screen.Screen;
+import ide.terminal.TerminalCore;
 import ide.util.Colors;
 import ide.util.ExecuteCommand;
 import ide.util.Language;
@@ -558,6 +559,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("use_antialiasing: " + Fonts.useAntiAliasing + "\n");
 			w.write("show_caps_lock: " + CodeEditor.showCapsLock + "\n");
 			w.write("checkout_to_created_branch: " + GitCore.checkoutToCreatedBranch + "\n");
+			w.write("terminal_prompt: '" + TerminalCore.prompt + "'\n");
 
 			w.close();
 
@@ -977,6 +979,21 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				} catch (NumberFormatException e) {
 					break;
 				}
+
+				break;
+				
+			case "terminal_prompt:":
+				if (split[1].equals("default") || split[1] == "")
+					split[1] = "$";
+				
+				hasAltered = true;
+				
+				int charCount = 0;
+				
+				while (split[1].charAt(charCount) == '\'' || split[1].charAt(charCount) == '\"')
+					charCount++;
+				
+				TerminalCore.prompt = split[1].charAt(charCount);
 
 				break;
 
