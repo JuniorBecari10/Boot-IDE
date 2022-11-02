@@ -389,11 +389,15 @@ public class Main implements Runnable, Tickable {
 	        	public void tick() {
 	        		super.tick();
 	        		
+	        		if (CommandTerminal.expOff) return;
+	        		
 	        		x = explorer.getWidth() - 16;
 	        		caption = Texts.moreOptions;
 	        	}
 	        	
 	        	public void render(Graphics g) {
+	        		if (CommandTerminal.expOff) return;
+	        		
 	        		if (hovered() && enabled) {
 	        			g.setColor(Colors.explorerLight);
 	        			g.fillRect(x, y, width, height);
@@ -1028,7 +1032,7 @@ public class Main implements Runnable, Tickable {
 					String text = ListableFile.getFileExtension(t.getRegent().getRegent()).equalsIgnoreCase(CONFIG_FILE_EXTENSION) && t.getRegent().getRegent().getParent() != null && t.getRegent().getRegent().getParent().equalsIgnoreCase(Main.userDir) ? Texts.seeingConfigFile : t.getRegent().getRegent().getPath().substring(index);
 					text = text.replace('\\', '/');
 					
-					if (editor.editing != null && editor.editing.isTemporary)
+					if (t != null && t.isTemporary)
 						text = Texts.thisIsTemporary;
 					
 					List<String> texts = new ArrayList<>();
@@ -1037,15 +1041,15 @@ public class Main implements Runnable, Tickable {
 					texts.add(Main.editor.codeHelpersOn ? Texts.codeHelpersOn : Texts.codeHelpersOff);
 					texts.add(Texts.fontSizeIs + " " + CodeEditor.FONT_SIZE + " pixels.");
 					
-					if (Main.editor.editing != null && Main.editor.editing.isReadOnly) {
-						if (Main.editor.editing.readMode == FileReadMode.NORMAL)
+					if (t != null && t.isReadOnly) {
+						if (t.readMode == FileReadMode.NORMAL)
 							texts.add(Texts.fileAsReadOnly);
 						else
-							texts.add(Texts.fileAsReadOnly.replace(Texts.readOnly, CodeEditor.getReadModeName(Main.editor.editing.readMode)));
+							texts.add(Texts.fileAsReadOnly.replace(Texts.readOnly, CodeEditor.getReadModeName(t.readMode)));
 					}
 					
 					
-					Explorer.renderCardText(texts.toArray(new String[0]), MouseInput.getMouseX() + 20, MouseInput.getMouseY(), 10, Main.editor.editing != t, g);
+					Explorer.renderCardText(texts.toArray(new String[0]), MouseInput.getMouseX() + 20, MouseInput.getMouseY(), 10, t != editor.editing, g);
 				}
 	        }
         

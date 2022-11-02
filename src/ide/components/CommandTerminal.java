@@ -503,6 +503,8 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "toggleexplorer":
+				IDEComponent.toRemove.addAll(Main.moreOptionsBtns);
+				
 				if (expOff)
 					Main.editor.setX(Main.explorer.getWidth());
 				else
