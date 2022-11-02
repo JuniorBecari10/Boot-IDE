@@ -1285,6 +1285,22 @@ public class CodeEditor extends IDEComponent {
 		return false;
 	}
 	
+	public static boolean isSymbol(char c, char... exclude) {
+		for (String s : syms)
+			if (c == s.charAt(0)) {
+				boolean cont = false;
+				
+				for (char ch : exclude)
+					if (c == ch) cont = true;
+				
+				if (cont) continue;
+				
+				return true;
+			}
+		
+		return false;
+	}
+	
 	public static <T> T[] removeDuplicates(T[] arr) { // talvez remover duplicadas de qqr array
 		Set<T> set = new LinkedHashSet<>();
 		
@@ -2384,7 +2400,7 @@ public class CodeEditor extends IDEComponent {
 			for (Integer i : indxs) {
 				while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
 						&& chars[i + len] != '(' && chars[i + len] != ')' && chars[i + len] != ','
-						&& chars[i + len] != ';' && chars[i + len] != '.' && chars[i + len] != ':')
+						&& chars[i + len] != ';' && chars[i + len] != '.' && chars[i + len] != ':' && !isSymbol(chars[i + len]))
 					len++;
 
 				if (i + len < chars.length)
@@ -4119,7 +4135,7 @@ public class CodeEditor extends IDEComponent {
 		for (Integer i : indxs) {
 			while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
 					&& chars[i + len] != '(' && chars[i + len] != ')' && chars[i + len] != ',' && chars[i + len] != ';'
-					&& chars[i + len] != '.' && chars[i + len] != ':')
+					&& chars[i + len] != '.' && chars[i + len] != ':' && !isSymbol(chars[i + len]))
 				len++;
 
 			fs = color(i - 1, i - 1 + len, new IDEFont(Fonts.numbersEditor, FONT_SIZE), fs);
@@ -4132,7 +4148,7 @@ public class CodeEditor extends IDEComponent {
 		for (Integer i : indxs) {
 			while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
 					&& chars[i + len] != '(' && chars[i + len] != ')' && chars[i + len] != ',' && chars[i + len] != ';'
-					&& chars[i + len] != '.' && chars[i + len] != ':')
+					&& chars[i + len] != '.' && chars[i + len] != ':' && !isSymbol(chars[i + len], '#'))
 				len++;
 			
 			if (fs.size() > i && fs.get(i).getColor().equals(Colors.keywords)) continue;
@@ -4741,7 +4757,7 @@ public class CodeEditor extends IDEComponent {
 							while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '['
 									&& chars[i + len] != ']' && chars[i + len] != '(' && chars[i + len] != ')'
 									&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
-									&& chars[i + len] != ':')
+									&& chars[i + len] != ':' && !isSymbol(chars[i + len]))
 								len++;
 
 							fs = color(i, i + len, new IDEFont(Fonts.numbersEditor, FONT_SIZE), fs);
@@ -4755,7 +4771,7 @@ public class CodeEditor extends IDEComponent {
 							while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '['
 									&& chars[i + len] != ']' && chars[i + len] != '(' && chars[i + len] != ')'
 									&& chars[i + len] != ',' && chars[i + len] != ';' && chars[i + len] != '.'
-									&& chars[i + len] != ':')
+									&& chars[i + len] != ':' && !isSymbol(chars[i + len], '#'))
 								len++;
 
 							fs = color(i, i + len, new IDEFont(Fonts.numbersEditor, FONT_SIZE), fs);
@@ -6007,9 +6023,8 @@ public class CodeEditor extends IDEComponent {
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html")
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".svelte")
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".xhtml")))
-				if (cursorX > 0 && !Character
-						.isLetter(new String(toCharArray(lines.get(cursorY - 1).getChars())).charAt(cursorX - 1)))
-					return pre;
+				if (cursorX > 0 && !Character.isLetter(new String(toCharArray(lines.get(cursorY - 1).getChars())).charAt(cursorX - 1)))
+					return pre; // verifica se o x do cursor é maior que 0 e se o char antes do cursor é uma letra, pq só vai completar se for
 
 			if (pre.length() == 0 || cursorX == pre.length())
 				pre.append('>');
@@ -7213,14 +7228,12 @@ public class CodeEditor extends IDEComponent {
 				return;
 			}// TODO veriifcar se não tem arquivos não salvos ao fechar todas as tabs (Close all tabs)
 
-			if (!KeyInput.isShiftDown()) {
+			if (KeyInput.getKeyCodePressed() != KeyEvent.VK_SHIFT) {
 				KeyInput.updateKeys();
 				
 				int keyCode = KeyInput.getKeyCodePressed();
 				char c = KeyInput.getCharPressed();
-				
-				// as setas
-				if (!Character.isJavaIdentifierPart(c) || keyCode == KeyEvent.VK_ESCAPE) return;
+				//if ((!Character.isJavaIdentifierPart(c) || keyCode == KeyEvent.VK_ESCAPE) && keyCode != KeyEvent.VK_SPACE) return;
 				
 				c = addAccents(keyCode, c);
 				cY = write(cY, c);

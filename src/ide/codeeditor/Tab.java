@@ -913,7 +913,7 @@ public class Tab extends IDEComponent implements Serializable {
 			if (Main.editor.tabs.indexOf(this) > 0)
 				x = Main.editor.tabs.get(Main.editor.tabs.indexOf(this) - 1).getX() + WIDTH + 2;
 			else
-				x = Tab.MIN_X + WIDTH + 2;
+				x = Tab.MIN_X + WIDTH + 3;
 		}
 	}
 	
