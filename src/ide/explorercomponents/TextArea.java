@@ -40,8 +40,8 @@ public class TextArea extends IDEComponent {
 	
 	public int cursorX = 0;
 	
-	private int scrollX = 0;
-	private int scrollY = 0;
+	public int scrollX = 0;
+	public int scrollY = 0;
 	
 	private Thread runner;
 

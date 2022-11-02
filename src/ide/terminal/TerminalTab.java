@@ -226,6 +226,8 @@ public class TerminalTab extends IDEComponent {
 					} catch (Exception ee) {}
 					
 					Explorer.textArea.lines = new String[0];
+					Explorer.textArea.scrollX = 0;
+					Explorer.textArea.scrollY = 0;
 					
 					if (process != null)
 						process.destroy();
