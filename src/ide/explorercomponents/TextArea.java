@@ -170,6 +170,7 @@ public class TextArea extends IDEComponent {
 		
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_UP && !executedCommands.isEmpty()) {
 			lines[lines.length - 1] = TerminalCore.prompt + " " + executedCommands.get(selectIndex);
+			cursorX = lines[lines.length - 1].length();
 			
 			if (selectIndex > 0) selectIndex--;
 			
@@ -177,6 +178,7 @@ public class TextArea extends IDEComponent {
 		
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_DOWN && !executedCommands.isEmpty()) {
 			lines[lines.length - 1] = TerminalCore.prompt + " " + executedCommands.get(selectIndex);
+			cursorX = lines[lines.length - 1].length();
 			
 			if (selectIndex < executedCommands.size() - 1) selectIndex++;
 			
