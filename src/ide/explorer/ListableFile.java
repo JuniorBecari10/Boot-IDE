@@ -1582,6 +1582,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		if ((!CodeEditor.automaticallyOpenTabs && isAutomatic) || file == null)
 			return;
 		
+		if (Main.editor.editing != null)
+			Main.editor.editing.save();
+		
+		RightClickOption.removeAllRightClickOptions();
+		
 		if (file.getRegent().isFile() && Main.editor.tabs != null) {
 			int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX()
 					: Tab.MIN_X;
@@ -1595,9 +1600,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					}
 				}
 			}.start();
-			
-			if (Main.editor.editing != null)
-				Main.editor.editing.save();
 				
 			Tab toAdd = new Tab((lastX + Tab.WIDTH) + 3, file);
 
