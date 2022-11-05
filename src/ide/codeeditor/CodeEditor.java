@@ -4148,7 +4148,7 @@ public class CodeEditor extends IDEComponent {
 		for (Integer i : indxs) {
 			while (i + len < chars.length && chars[i + len] != ' ' && chars[i + len] != '[' && chars[i + len] != ']'
 					&& chars[i + len] != '(' && chars[i + len] != ')' && chars[i + len] != ',' && chars[i + len] != ';'
-					&& chars[i + len] != '.' && chars[i + len] != ':' && !isSymbol(chars[i + len], '#'))
+					&& chars[i + len] != '.' && chars[i + len] != ':' && !isSymbol(chars[i + len], '#', '-'))
 				len++;
 			
 			if (fs.size() > i && fs.get(i).getColor().equals(Colors.keywords)) continue;
