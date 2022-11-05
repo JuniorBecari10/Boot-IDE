@@ -732,18 +732,21 @@ public class Tab extends IDEComponent implements Serializable {
 	
 	public void select() {
 		if (Main.editor.editing != null && !Main.editor.editing.isSaved())
-			Main.editor.editing.saveForced(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para voca!
+			Main.editor.editing.saveForced(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
 		
 		Main.editor.wordSinceSpace = "";
 		RightClickOption.removeAllRightClickOptions();
 		
+		String oldEditingPath = Main.editor.editing.getRegent().getRegent().getAbsolutePath();
 		Main.editor.editing = this;
 		
 		Main.editor.isMultilineCommenting = false;
 		Main.editor.isAnotherIteration = false;
 		Main.editor.foundExt = false;
 		
-		CommandTerminal.runCommand("resetundoredo");
+		// tática pra verificar se o arquivo é o mesmo, strings são imutáveis ksksk
+		if (Main.editor.editing.getRegent().getRegent().getAbsolutePath().equals(oldEditingPath))
+			CommandTerminal.runCommand("resetundoredo");
 		
 		Main.editor.refreshText();
 		

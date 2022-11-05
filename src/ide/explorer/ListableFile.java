@@ -1595,7 +1595,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					}
 				}
 			}.start();
-
+			
+			Main.editor.editing.save();
 			Tab toAdd = new Tab((lastX + Tab.WIDTH) + 3, file);
 
 			if (Main.editor.tabs.size() == 0)
