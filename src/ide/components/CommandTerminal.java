@@ -79,7 +79,8 @@ public class CommandTerminal extends IDEComponent {
 			"setproperty str:property str:new_value",
 			"gengetter str:lang str:variable_name str:variable_type",
 			"gensetter str:lang str:variable_name str:variable_type",
-			"gensnippet cs/csmain str:class_name str:namespace"
+			"gensnippet str:lang str:class_name str:namespace",
+			"gensnippet str:lang str:package"
 			};
 	
 	public static List<String> commandHints = new ArrayList<>();
@@ -1041,26 +1042,6 @@ public class CommandTerminal extends IDEComponent {
 					
 					break;
 					
-				case "java":
-					strs = new String[] { "public class " + classname + " {", CodeEditor.getIndentation(1), "}" };
-					
-					break;
-					
-				case "javainterface":
-					strs = new String[] { "public interface " + classname + " {", CodeEditor.getIndentation(1), "}" };
-					
-					break;
-					
-				case "javaenum":
-					strs = new String[] { "public enum " + classname + " {", CodeEditor.getIndentation(1), "}" };
-					
-					break;
-					
-				case "javamain":
-					strs = new String[] { "public class " + classname + " {", CodeEditor.getIndentation(1), CodeEditor.getIndentation(1) + "public static void main(String[] args) {", CodeEditor.getIndentation(2), CodeEditor.getIndentation(1) + "}", "}" };
-					
-					break;
-					
 				case "cpp":
 					strs = new String[] { "#include <iostream>", "", "using namespace std;" };
 					
@@ -1082,7 +1063,7 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "cmain":
-					strs = new String[] { "#include <stdio.h>", "", "int main()", "{", "    return 0;", "}" };
+					strs = new String[] { "#include <stdio.h>", "", "int main()", "{", CodeEditor.getIndentation(1) + "return 0;", "}" };
 					
 					break;
 					
@@ -1098,11 +1079,6 @@ public class CommandTerminal extends IDEComponent {
 					
 				case "ino":
 					strs = new String[] { "void setup()", "{", CodeEditor.getIndentation(1), "}", "", "void loop()", "{", CodeEditor.getIndentation(1), "}" };
-					
-					break;
-					
-				case "go":
-					strs = new String[] { "package main", "", "import (", CodeEditor.getIndentation(1) + "\"fmt\"", ")", "", "func main() {", CodeEditor.getIndentation(1), "}" };
 					
 					break;
 					
@@ -1227,6 +1203,63 @@ public class CommandTerminal extends IDEComponent {
 					}
 				
 				break;
+				
+			case "gensnippet":
+				if (Main.editor.editing == null) break;
+				if (Main.editor.isReadOnly) break;
+				
+				String[] strs1 = { };
+				
+				String classname = ListableFile.getFileNameWithoutExtension(Main.editor.editing.getRegent().getRegent());
+				String packageName = args[1];
+				
+				switch (args[0]) {
+					case "java":
+						strs1 = new String[] { "package " + packageName + ";", "", "public class " + classname + " {", CodeEditor.getIndentation(1), "}" };
+						
+						break;
+						
+					case "javainterface":
+						strs1 = new String[] { "package " + packageName + ";", "", "public interface " + classname + " {", CodeEditor.getIndentation(1), "}" };
+						
+						break;
+						
+					case "javaenum":
+						strs1 = new String[] { "package " + packageName + ";", "", "public enum " + classname + " {", CodeEditor.getIndentation(1), "}" };
+						
+						break;
+						
+					case "javamain":
+						strs1 = new String[] { "package " + packageName + ";", "", "public class " + classname + " {", CodeEditor.getIndentation(1), CodeEditor.getIndentation(1) + "public static void main(String[] args) {", CodeEditor.getIndentation(2), CodeEditor.getIndentation(1) + "}", "}" };
+						
+						break;
+						
+					case "go":
+						strs1 = new String[] { "package " + packageName, "", "import (", CodeEditor.getIndentation(1) + "\"fmt\"", ")", "", "func main() {", CodeEditor.getIndentation(1), "}" };
+						
+						break;
+				}
+				
+				if (strs1.length == 0) return;
+				
+				for (int i = 0; i < strs1.length - 1; i++) {
+					StringBuilder spaces = new StringBuilder();
+					
+					for (int j = 0; j < CodeEditor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
+						spaces.append(' ');
+					
+					Main.editor.addNewLine(Main.editor.cursorY - 1, spaces.toString());
+				}
+				
+				for (int i = 0; i < strs1.length; i++) {
+					StringBuilder b = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get((Main.editor.cursorY - 1) + i).getChars())));
+					
+					b.append(strs1[i]);
+					
+					Main.editor.register(b, (Main.editor.cursorY - 1) + i);
+				}
+				
+				Main.editor.editing.setSaved(false);
 			}
 		}
 		else if (args.length == 3) {
@@ -1239,7 +1272,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				switch (args[0].toLowerCase()) { // TODO o gengetter do cs tbm tem o setter, talvez dar uma arrumada nisso
 				case "java":
-					String[] javastrs = { "public " + args[2] + " get" + CodeEditor.capitalizeFirstLetter(args[1]) + "() {", "    return " + args[1] + ";", "}"};
+					String[] javastrs = { "public " + args[2] + " get" + CodeEditor.capitalizeFirstLetter(args[1]) + "() {", CodeEditor.getIndentation(1) + "return " + args[1] + ";", "}"};
 					
 					strs = javastrs;
 					
@@ -1286,7 +1319,7 @@ public class CommandTerminal extends IDEComponent {
 				
 				switch (args[0].toLowerCase()) {
 				case "java":
-					String[] javastrs = { "public void set" + CodeEditor.capitalizeFirstLetter(args[1]) + "(" + args[2] + " " + args[1] + ") {", "    this." + args[1] + " = " + args[1] + ";", "}"};
+					String[] javastrs = { "public void set" + CodeEditor.capitalizeFirstLetter(args[1]) + "(" + args[2] + " " + args[1] + ") {", CodeEditor.getIndentation(1) + "this." + args[1] + " = " + args[1] + ";", "}"};
 					
 					strss = javastrs;
 					
@@ -1322,31 +1355,30 @@ public class CommandTerminal extends IDEComponent {
 				if (Main.editor.editing == null) break;
 				if (Main.editor.isReadOnly) break;
 				
-				String[] strs1 = { };
+				String[] strs2 = { };
 				
 				String classname = args[1];
 				String namespace = args[2];
 				
 				switch (args[0].toLowerCase()) {
-				
-				case "cs":
-					String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + namespace, "{", "    ", "    public class " + classname, "    {", "        ", "    }", "}"};
-					
-					strs1 = csstrs;
-					
-					break;
-					
-				case "csmain":
-					String[] csmstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + namespace, "{", "    ", "    public class " + classname, "    {", "        ", "        static void Main(string[] args)", "        {", "            ", "        }", "    }", "}"};
-					
-					strs1 = csmstrs;
-					
-					break;
+					case "cs":
+						String[] csstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + namespace, "{", CodeEditor.getIndentation(1), CodeEditor.getIndentation(1) + "public class " + classname, CodeEditor.getIndentation(1) + "{", CodeEditor.getIndentation(2), CodeEditor.getIndentation(1) + "}", "}"};
+						
+						strs2 = csstrs;
+						
+						break;
+						
+					case "csmain":
+						String[] csmstrs = { "using System;", "using System.Collections.Generic;", "using System.Linq;", "using System.Text;", "using System.Threading.Tasks;", "", "namespace " + namespace, "{", CodeEditor.getIndentation(1), CodeEditor.getIndentation(1) + "public class " + classname, CodeEditor.getIndentation(1) + "{", CodeEditor.getIndentation(2), CodeEditor.getIndentation(2) + "static void Main(string[] args)", CodeEditor.getIndentation(2) + "{", CodeEditor.getIndentation(3), CodeEditor.getIndentation(2) + "}", CodeEditor.getIndentation(1) + "}", "}"};
+						
+						strs2 = csmstrs;
+						
+						break;
 				}
 				
-				if (strs1.length == 0) return;
+				if (strs2.length == 0) return;
 				
-				for (int i = 0; i < strs1.length - 1; i++) {
+				for (int i = 0; i < strs2.length - 1; i++) {
 					StringBuilder spaces = new StringBuilder();
 					
 					for (int j = 0; j < CodeEditor.countChar(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.cursorY - 1).getChars())), ' '); j++)
@@ -1355,10 +1387,10 @@ public class CommandTerminal extends IDEComponent {
 					Main.editor.addNewLine(Main.editor.cursorY - 1, spaces.toString());
 				}
 				
-				for (int i = 0; i < strs1.length; i++) {
+				for (int i = 0; i < strs2.length; i++) {
 					StringBuilder bb = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get((Main.editor.cursorY - 1) + i).getChars())));
 					
-					bb.append(strs1[i]);
+					bb.append(strs2[i]);
 					
 					Main.editor.register(bb, (Main.editor.cursorY - 1) + i);
 				}
