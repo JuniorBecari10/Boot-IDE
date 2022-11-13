@@ -7630,7 +7630,7 @@ public class CodeEditor extends IDEComponent {
 			return;
 		}
 
-		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == 61 ) { // 61 = + | Ctrl + Increase Font Size
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == 61 ) { // 61 = + | Ctrl + Increase Font Size
 			KeyInput.updateKeys();
 
 			CommandTerminal.runCommand("setfontsize " + (FONT_SIZE + 1));
@@ -7638,7 +7638,7 @@ public class CodeEditor extends IDEComponent {
 			return;
 		}
 
-		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_MINUS ) { // Ctrl - Decrease Font Size
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_MINUS ) { // Ctrl - Decrease Font Size
 			KeyInput.updateKeys();
 
 			CommandTerminal.runCommand("setfontsize " + (FONT_SIZE - 1));
@@ -7646,7 +7646,7 @@ public class CodeEditor extends IDEComponent {
 			return;
 		}
 
-		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME ) { // Ctrl
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME ) { // Ctrl
 			// +
 			// Home
 			// -
@@ -7664,6 +7664,10 @@ public class CodeEditor extends IDEComponent {
 			setCursorWithinBounds();
 
 			return;
+		}
+		
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_TAB) {
+			// TODO - remover indentação
 		}
 
 		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_END) { // Ctrl + End - Fim do Documento
