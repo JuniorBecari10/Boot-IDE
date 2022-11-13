@@ -303,12 +303,12 @@ public class Explorer extends IDEComponent {
 	    	if (MouseInput.hovered(0, Screen.DECORATION_HEIGHT + 380, width, 40) && leftClicked() && gitStatus.changedFiles.length > 0) {
 	    		int widthDraw = getHighestNumber(arrayOfLengths(gitStatus.changedFiles)) * 16;
 	    		
-	    		if (widthDraw < Texts.filesChangedTitle.length() * 16)
-	    			widthDraw = Texts.filesChangedTitle.length() * 16;
+	    		if (widthDraw < Texts.changedFilesTitle.length() * 16)
+	    			widthDraw = Texts.changedFilesTitle.length() * 16;
 	    		
 	    		List<RightClickOption> list = new ArrayList<>();
 	    		
-	    		list.add(new RightClickOption(0, 0, widthDraw, false, Texts.filesChangedTitle, (a) -> { }, "", true));
+	    		list.add(new RightClickOption(0, 0, widthDraw, false, Texts.changedFilesTitle, (a) -> { }, "", true));
 	    		
 	    		for (String s : gitStatus.changedFiles) {
 	    			list.add(new RightClickOption(0, 0, widthDraw, s.startsWith(" ") ? s.trim() : s, (a) -> {

@@ -551,7 +551,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("indent_with_spaces: " + CodeEditor.indentSpaces + "\n");
 			w.write("indent_length: " + CodeEditor.indentLength + "\n");
 			w.write("automatically_open_tabs: " + CodeEditor.automaticallyOpenTabs + "\n");
-			w.write("show_whitespace: " + CodeEditor.showWhitespace + "\n");
 			w.write("allow_animations: " + Explorer.allowAnimations + "\n");
 			w.write("force_mac_buttons: " + Main.forceMacButtons + "\n");
 			w.write("line_ending: " + CodeEditor.lineEnding + "\n");
@@ -1098,18 +1097,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				} catch (IllegalArgumentException e) {
 					break;
 				}
-
-				hasAltered = true;
-
-				break;
-				
-			case "show_whitespace:":
-				if (!readConfigs) break;
-				
-				if (split[1].equals("default"))
-					CodeEditor.showWhitespace = false;
-
-				CodeEditor.showWhitespace = Boolean.valueOf(split[1]);
 
 				hasAltered = true;
 
