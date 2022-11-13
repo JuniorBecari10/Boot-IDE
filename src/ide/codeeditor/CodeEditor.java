@@ -4243,7 +4243,14 @@ public class CodeEditor extends IDEComponent {
 			return fs;
 
 		if (isFormatSupported(ListableFile.getFileExtension(editing.getRegent().getRegent()))) {
-
+			
+			if (ext.equalsIgnoreCase(".c") || ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".hpp")) {
+				indxs = findWord(new String(chars), "#include");
+				
+				if (!indxs.isEmpty())
+					fs = color(indxs.get(0) + "#include".length(), fs.size(), new IDEFont(Fonts.stringsEditor, FONT_SIZE), fs);
+			}
+			
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			{
