@@ -1,10 +1,10 @@
 COMPCD=cd src
 COMP=javac
-COMPARGS=-d ../bin ide/main/Start.java
+COMPARGS=-J-Dfile.encoding=UTF-8 -d ../bin ide/main/Start.java
 
 RUNCD=cd bin
 RUN=java
-RUNARGS=ide.main.Start -cp .
+RUNARGS=-Dfile.encoding=UTF-8 ide.main.Start -cp .
 
 MANIFESTNAME=manifest.txt
 MANIFESTCONTENT=Main-Class: ide.main.Start
