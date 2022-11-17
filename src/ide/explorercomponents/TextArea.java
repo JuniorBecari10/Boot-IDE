@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -80,6 +81,17 @@ public class TextArea extends IDEComponent {
 		}
 	}
 	
+	public static synchronized void writeChar(char ch) throws IOException {
+		BufferedWriter wr = new BufferedWriter(new FileWriter(TerminalCore.selected.getLog()));
+		
+		if (ch != '\n')
+			wr.append(ch);
+		else
+			wr.newLine();
+		
+		wr.close();
+	}
+	
 	public void type() {
 		if (TerminalCore.selected == null) return;
 		
@@ -110,7 +122,24 @@ public class TextArea extends IDEComponent {
 			
 			System.out.println(TerminalCore.selected.process.isAlive());
 		}
-
+		
+		if (!acceptInput) {
+			if (KeyInput.isKeyPressed() && !KeyInput.isControlDown()) {
+				try {
+					OutputStream stdin = TerminalCore.selected.process.getOutputStream();
+					
+					char ch = KeyInput.getCharPressed();
+					
+					stdin.write(ch);
+					stdin.flush();
+					
+					writeChar(ch);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		if (!acceptInput || Explorer.selected != this) return;
 
 		StringBuilder text = new StringBuilder(lines[lines.length - 1]);

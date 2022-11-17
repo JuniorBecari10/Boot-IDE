@@ -7646,13 +7646,7 @@ public class CodeEditor extends IDEComponent {
 			return;
 		}
 
-		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME ) { // Ctrl
-			// +
-			// Home
-			// -
-			// Começo
-			// do
-			// Documento
+		else if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) { // Ctrl + Home - Começo do Documento
 			KeyInput.updateKeys();
 
 			scrX = 0;
@@ -7687,7 +7681,7 @@ public class CodeEditor extends IDEComponent {
 			return;
 		}
 
-		else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) { // Home - Comeao da Linha
+		else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) { // Home - Começo da Linha
 			KeyInput.updateKeys();
 
 			scrX = 0;
