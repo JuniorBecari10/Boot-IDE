@@ -130,15 +130,20 @@ public class TextArea extends IDEComponent {
 					OutputStream stdin = TerminalCore.selected.process.getOutputStream();
 					char ch = KeyInput.getCharPressed();
 					
-					if (ch == KeyEvent.VK_BACK_SPACE)
-						TerminalCore.selected.stdin.deleteCharAt(TerminalCore.selected.stdin.length() - 1);
+					if (ch == KeyEvent.VK_BACK_SPACE) {
+						if (TerminalCore.selected.stdin.length() > 0)
+							TerminalCore.selected.stdin.deleteCharAt(TerminalCore.selected.stdin.length() - 1);
+					}
 					else
 						TerminalCore.selected.stdin.append(ch);
 					
 					TerminalCore.selected.read();
 					
 					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
-						stdin.write((TerminalCore.selected.stdin.toString() + KeyEvent.VK_ENTER).getBytes(StandardCharsets.UTF_8));
+						Main.runCommand(new File(Main.userDir), "echo " + TerminalCore.selected.stdin.toString() + KeyEvent.VK_ENTER + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+						
+						stdin.write(TerminalCore.selected.stdin.toString().getBytes(StandardCharsets.UTF_8));
+						stdin.write(KeyEvent.VK_ENTER);
 						stdin.flush();
 					}
 				} catch (IOException e) {
