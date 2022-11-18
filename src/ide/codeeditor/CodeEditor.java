@@ -1838,12 +1838,13 @@ public class CodeEditor extends IDEComponent {
 				|| editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore"))
 			return fs;
 		
-		if (ext.equalsIgnoreCase(".go") || ext.equalsIgnoreCase(".lua") || ext.equalsIgnoreCase(".py") || ext.equalsIgnoreCase(".pyi") ||
-				ext.equalsIgnoreCase(".pyd") || ext.equalsIgnoreCase(".pyx") || ext.equalsIgnoreCase(".por") || 
-				ext.equalsIgnoreCase(".bas") || ext.equalsIgnoreCase(".asm") || ext.equalsIgnoreCase(".s") || 
-				ext.equalsIgnoreCase(".js") || ext.equalsIgnoreCase(".jsx") || ext.equalsIgnoreCase(".vue") || ext.equalsIgnoreCase(".mjs") || 
-				ext.equalsIgnoreCase(".ts") || ext.equalsIgnoreCase(".tsx") || ext.equalsIgnoreCase(".vb") || ext.equalsIgnoreCase(".c") ||
-				ext.equalsIgnoreCase(".cpp") || ext.equalsIgnoreCase(".h") || ext.equalsIgnoreCase(".hxx") || ext.equalsIgnoreCase(".hpp")) {
+		if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
+				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
+				|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
+				|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
+				|| ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh")
+				|| ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
+				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1"))) {
 			fs = color(0, fs.size(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 			
 			return fs;
@@ -3231,10 +3232,13 @@ public class CodeEditor extends IDEComponent {
 
 				for (Integer i : indxs) {
 
-					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
-							|| ((i + s.length() < chars.length)
-									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
+					if (((i - 1 > 0) && (chars[i - 1] == '_'
+							|| Character.isLetter(chars[i - 1])))
+							|| ((i + s.length() < chars.length) && (chars[i + s.length()] == '_'
+							|| Character.isLetter(chars[i + s.length()]))))
 						continue;
+					
+					if (i > 0 && isSymbol(chars[i - 1])) continue;
 					// if (i > 0 && (chars[i - 1] != ' ' || chars[i - 1] != '\t')) continue;
 
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs); // tem q dar offset
@@ -3697,7 +3701,9 @@ public class CodeEditor extends IDEComponent {
 							|| ((i + s.length() < chars.length)
 									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
 						continue;
-
+					
+					if (i > 0 && isSymbol(chars[i - 1])) continue;
+					
 					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs);
 				}
 			}

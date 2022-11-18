@@ -145,6 +145,8 @@ public class TextArea extends IDEComponent {
 						stdin.write(TerminalCore.selected.stdin.toString().getBytes(StandardCharsets.UTF_8));
 						stdin.write(KeyEvent.VK_ENTER);
 						stdin.flush();
+						
+						TerminalCore.selected.stdin = new StringBuilder();
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
