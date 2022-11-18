@@ -44,6 +44,8 @@ public class TerminalTab extends IDEComponent {
 	private String[] lines;
 	public Thread reader;
 	
+	public StringBuilder stdin;
+	
 	private boolean alive = true;
 	
 	public CloseTerminalTabButton button;
@@ -58,8 +60,8 @@ public class TerminalTab extends IDEComponent {
 		button = new CloseTerminalTabButton((x + WIDTH) - 20, y + 8, 13, 13, Main.closeTab, this);
 		
 		this.scope = new File(Explorer.getScopePath());
-		
 		this.width = 0;
+		this.stdin = new StringBuilder();
 		
 		new Thread() {
 			public void run() {
@@ -170,13 +172,20 @@ public class TerminalTab extends IDEComponent {
 		try {
 			lines = Files.readAllLines(log.toPath(), StandardCharsets.UTF_8).toArray(new String[0]);
 			
-			Explorer.textArea.cursorX = lines[lines.length - 1].length();
+			if (lines.length > 0) {
+				lines[lines.length - 1] += stdin.toString();
+				Explorer.textArea.cursorX = lines[lines.length - 1].length();
+			}
+			else
+				Explorer.textArea.cursorX = 2;
 		} catch (Exception e) {
 			try {
 				lines = Files.readAllLines(log.toPath(), StandardCharsets.ISO_8859_1).toArray(new String[0]);
 				
-				if (lines.length > 0)
+				if (lines.length > 0) {
+					lines[lines.length - 1] += stdin.toString();
 					Explorer.textArea.cursorX = lines[lines.length - 1].length();
+				}
 				else
 					Explorer.textArea.cursorX = 2;
 			} catch (IOException e1) {
@@ -241,10 +250,6 @@ public class TerminalTab extends IDEComponent {
 				}
 			}
 		}.start();
-	}
-	
-	public synchronized void terminate() {
-		process.destroyForcibly();
 	}
 		
 	public void select() {

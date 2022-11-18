@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -95,7 +96,7 @@ public class TextArea extends IDEComponent {
 	public void type() {
 		if (TerminalCore.selected == null) return;
 		
-		if (KeyInput.isKeyPressed() && Explorer.selected == this) {
+		if (KeyInput.isKeyPressed() && Explorer.selected == this) { 
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == 61) {
 				fontSize++;
 				return;
@@ -118,7 +119,7 @@ public class TextArea extends IDEComponent {
 		}*/
 		
 		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && TerminalCore.selected.commandRunning) { // Ctrl + C (Commando Rodando) - Terminar
-			TerminalCore.selected.terminate();
+			TerminalCore.selected.process.destroyForcibly();
 			
 			System.out.println(TerminalCore.selected.process.isAlive());
 		}
@@ -127,13 +128,19 @@ public class TextArea extends IDEComponent {
 			if (KeyInput.isKeyPressed() && !KeyInput.isControlDown()) {
 				try {
 					OutputStream stdin = TerminalCore.selected.process.getOutputStream();
-					
 					char ch = KeyInput.getCharPressed();
 					
-					stdin.write(ch);
-					stdin.flush();
+					if (ch == KeyEvent.VK_BACK_SPACE)
+						TerminalCore.selected.stdin.deleteCharAt(TerminalCore.selected.stdin.length() - 1);
+					else
+						TerminalCore.selected.stdin.append(ch);
 					
-					writeChar(ch);
+					TerminalCore.selected.read();
+					
+					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+						stdin.write((TerminalCore.selected.stdin.toString() + KeyEvent.VK_ENTER).getBytes(StandardCharsets.UTF_8));
+						stdin.flush();
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -281,6 +288,7 @@ public class TextArea extends IDEComponent {
 					
 					if (!runInternalCommand(command)) {
 						String[] o = Main.runCommandTerm(TerminalCore.selected.getScope(), command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+						TerminalCore.selected.stdin = new StringBuilder();
 						
 						for (String s : o) {
 							Main.runCommand(new File(Main.userDir), "echo " + s + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
@@ -561,7 +569,7 @@ public class TextArea extends IDEComponent {
 		int cursorX = this.cursorX;
 		// talvez calcular o cursory por um loop while pela posição x
 		
-		if (Main.editor.showCursor && Explorer.selected == this && !TerminalCore.selected.commandRunning 
+		if (Main.editor.showCursor && Explorer.selected == this
 				&& y + 5 + ((lines.length - 1) * (fontSize + MARGIN)) - scrollY > y - fontSize + 4 
 				&& x + 5 + ((fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) * cursorX) - scrollX > x 
 				&& x + 5 + ((fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) * cursorX) - scrollX < width
