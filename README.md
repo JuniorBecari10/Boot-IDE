@@ -81,13 +81,23 @@ Main-Class: ide.main.Start
 
 ### How to run a JAR file
 
-Once generated the JAR, you can run it by executing:
+Once generated the JAR _(see How to generate a JAR file)_, you can run it by executing:
 
 You can use `make launchjar` to run (requires make). It will run the following command:
 
 ```batch
 cd bin
 java -jar Boot-IDE.jar
+```
+
+### How to generate a Windows executable file
+
+Once generated the JAR _(see How to generate a JAR file)_, you can generate it by executing:
+
+You can use `make exe` to run (requires make and Launch4J). It will run the following command:
+
+```batch
+launch4jc exe-template.xml
 ```
 
 ### How to Use
@@ -183,6 +193,16 @@ Você pode usar `make launchjar` para executar (requer make instalado). Ele vai 
 ```batch
 cd bin
 java -jar Boot-IDE.jar
+```
+
+### Como gerar um arquivo executável do Windows
+
+Gerado o arquivo JAR _(veja Como gerar um arquivo JAR)_, você pode gerá-lo pelo comando:
+
+Você pode usar `make exe` para executar (requer make e Launch4J instalados). Ele vai executar o seguinte comando:
+
+```batch
+launch4jc exe-template.xml
 ```
 
 ### Como Usar
