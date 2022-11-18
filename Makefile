@@ -10,8 +10,13 @@ MANIFESTNAME=manifest.txt
 MANIFESTCONTENT=Main-Class: ide.main.Start
 
 JARCD=cd bin
-JAR=jar cfm Boot-IDE.jar $(MANIFESTNAME) *
+JAR=jar cfm ../Boot-IDE.jar $(MANIFESTNAME) *
 LAUNCHJAR=java -jar Boot-IDE.jar
+
+EXECOM=launch4jc
+EXEARGS=exe-template.xml
+
+# ---
 
 build: compile
 all: compile
@@ -40,3 +45,6 @@ manifest:
 clean:
 	$(JARCD) && \
 	del $(MANIFESTNAME)
+
+exe:
+	$(EXECOM) $(EXEARGS)
