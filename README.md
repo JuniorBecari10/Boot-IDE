@@ -186,7 +186,7 @@ Main-Class: ide.main.Start
 
 ### Como executar um arquivo JAR
 
-Gerado o arquivo JAR, você pode executá-lo pelo comando:
+Gerado o arquivo JAR _(veja Como gerar um arquivo JAR)_, você pode executá-lo pelo comando:
 
 Você pode usar `make launchjar` para executar (requer make instalado). Ele vai executar o seguinte comando:
 
