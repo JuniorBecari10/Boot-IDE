@@ -29,7 +29,7 @@ You can use `make`, `make build` or `make compile` to compile (requires make). I
 
 ```batch
 cd src
-javac -d ../bin ide/main/Start.java
+javac -J-Dfile.encoding=UTF-8 -d ../bin ide/main/Start.java
 ```
 
 ##### To Run
@@ -50,7 +50,7 @@ cd src
 javac -d ../bin ide/main/Start.java
 
 cd ../bin
-java ide.main.Start -cp .
+java -Dfile.encoding=UTF-8 ide.main.Start -cp .
 ```
 
 ### How to generate a JAR file
@@ -62,8 +62,7 @@ You can use `make jar` to generate (requires make). It will run the following co
 _The command `make createjar` also works, but you need to run `make manifest` first and `make clean` or delete the `manifest.txt` file._
 
 ```batch
-cd bin
-jar cfm Boot-IDE.jar manifest.txt *
+jar cfm Boot-IDE.jar ../manifest.txt *
 ```
 
 ### How to generate a manifest file
@@ -72,7 +71,7 @@ To generate a JAR file, you need to have the compiled program (i.e. the .class f
 
 You can use `make manifest` too (requires make). It will do the following steps: 
 
-- Create a .txt file (in folder bin, run `cd bin` to get into it);
+- Create a .txt file in base folder;
 - Write this line in it:
 
 ```
@@ -134,7 +133,7 @@ Você pode usar `make`, `make build` ou `make compile` para compilar (requer mak
 
 ```batch
 cd src
-javac -d ../bin ide/main/Start.java
+javac -J-Dfile.encoding=UTF-8 -d ../bin ide/main/Start.java
 ```
 
 ##### Para Executar
@@ -143,7 +142,7 @@ Você pode usar `make run` para executar (requer make instalado). Ele vai execut
 
 ```batch
 cd bin
-java ide.main.Start -cp .
+java -Dfile.encoding=UTF-8 ide.main.Start -cp .
 ```
 
 ##### Para Compilar e Executar
@@ -155,7 +154,7 @@ cd src
 javac -d ../bin ide/main/Start.java
 
 cd ../bin
-java ide.main.Start -cp .
+java -Dfile.encoding=UTF-8 ide.main.Start -cp .
 ```
 
 ### Como gerar um arquivo JAR
@@ -168,7 +167,7 @@ _O comando `make createjar` também funciona, mas você precisa executar `make m
 
 ```batch
 cd bin
-jar cfm Boot-IDE.jar manifest.txt *
+jar cfm Boot-IDE.jar ../manifest.txt *
 ```
 
 ### Como gerar um arquivo de manifesto
@@ -177,7 +176,7 @@ Para gerar um arquivo JAR, você precisa ter o programa compilado (isto é, os a
 
 Você pode usar `make manifest` também (requer make instalado). Ele vai executar os seguintes passos:
 
-- Crie um arquivo .txt (na pasta bin, execute `cd bin` para entrar nela);
+- Crie um arquivo .txt na pasta base;
 - Escreva essa linha nele:
 
 ```
@@ -191,7 +190,6 @@ Gerado o arquivo JAR _(veja Como gerar um arquivo JAR)_, você pode executá-lo 
 Você pode usar `make launchjar` para executar (requer make instalado). Ele vai executar o seguinte comando:
 
 ```batch
-cd bin
 java -jar Boot-IDE.jar
 ```
 

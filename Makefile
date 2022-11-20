@@ -6,11 +6,12 @@ RUNCD=cd bin
 RUN=java
 RUNARGS=-Dfile.encoding=UTF-8 ide.main.Start -cp .
 
-MANIFESTNAME=manifest.txt
+MANIFESTNAME=../manifest.txt
 MANIFESTCONTENT=Main-Class: ide.main.Start
 
 JARCD=cd bin
-JAR=jar cfm ../Boot-IDE.jar $(MANIFESTNAME) *
+JAR=jar
+JARARGS=cfm ../Boot-IDE.jar $(MANIFESTNAME) *
 LAUNCHJAR=java -jar Boot-IDE.jar
 
 EXECOM=launch4jc
@@ -32,10 +33,9 @@ run:
 
 createjar:
 	$(JARCD) && \
-	$(JAR)
+	$(JAR) $(JARARGS)
 
 launchjar:
-	$(JARCD) && \
 	$(LAUNCHJAR)
 
 manifest:
