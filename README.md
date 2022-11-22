@@ -85,7 +85,6 @@ Once generated the JAR _(see How to generate a JAR file)_, you can run it by exe
 You can use `make launchjar` to run (requires make). It will run the following command:
 
 ```batch
-cd bin
 java -jar Boot-IDE.jar
 ```
 

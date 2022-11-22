@@ -143,6 +143,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			t.add(new FileType(".vh", Main.spritesheet.getSprite (688, 16, 16, 16)));
 			t.add(new FileType(".vsh", Main.spritesheet.getSprite(688, 16, 16, 16)));
 			t.add(new FileType(".bas", Main.spritesheet.getSprite(704, 16, 16, 16)));
+			t.add(new FileType(".sm", Main.spritesheet.getSprite(720, 16, 16, 16)));
 			
 			t.add(new FileType(".html", Main.spritesheet.getSprite (0, 32, 16, 16)));
 			t.add(new FileType(".xhtml", Main.spritesheet.getSprite(0, 32, 16, 16)));

@@ -6,6 +6,7 @@ RUNCD=cd bin
 RUN=java
 RUNARGS=-Dfile.encoding=UTF-8 ide.main.Start -cp .
 
+MANIFESTNAMEROOT=manifest.txt
 MANIFESTNAME=../manifest.txt
 MANIFESTCONTENT=Main-Class: ide.main.Start
 
@@ -40,11 +41,10 @@ launchjar:
 
 manifest:
 	$(JARCD) && \
-	echo $(MANIFESTCONTENT) >> $(MANIFESTNAME)
+	echo $(MANIFESTCONTENT) > $(MANIFESTNAME)
 
 clean:
-	$(JARCD) && \
-	del $(MANIFESTNAME)
+	del $(MANIFESTNAMEROOT)
 
 exe:
 	$(EXECOM) $(EXEARGS)

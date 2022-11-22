@@ -778,6 +778,8 @@ public class CodeEditor extends IDEComponent {
 	
 	public static final String[] modKeys = { "module", "go", "require", "replace", "exclude" };
 	
+	public static final String[] smKeys = { "print", "printl", "input", "goto", "exec", "exit", "if", "num", "str" };
+	
 	public Thread killAllTabs;
 	
 	public static CommandTerminal terminal;
@@ -816,7 +818,7 @@ public class CodeEditor extends IDEComponent {
 			public void run() {
 				try {
 					Thread.sleep(TAB_ANIMATION_TIMEOUT);
-				} catch (InterruptedException e) { // Esperar a animaaao acabar
+				} catch (InterruptedException e) { // Esperar a animação acabar
 					e.printStackTrace();
 				}
 				
@@ -1418,6 +1420,7 @@ public class CodeEditor extends IDEComponent {
 		case ".clt": return oCamlKeys;
 		case ".vbs": return vbKeys;
 		case ".bas": return basKeys;
+		case ".sm": return smKeys;
 		
 		case ".html": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
 		case ".svelte": return mergeStringArrays(cssTags, mergeStringArrays(props, mergeStringArrays(jsKeys, phpKeys)));
@@ -1660,6 +1663,7 @@ public class CodeEditor extends IDEComponent {
 		case ".mod": return minMode ? "Go Mod" : (Main.lang == Language.PORT ? "Arquivo de Módulo do Go" : "Go Module File");
 		case ".sum": return minMode ? "Go Mod" : (Main.lang == Language.PORT ? "Arquivo de Módulo do Go" : "Go Module File");
 		case ".bas": return minMode ? "BASIC" : "Beginners' All-Purpose Symbolic Instruction Code - BASIC";
+		case ".sm": return "Simple";
 		
 		case ".html": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
 		case ".xhtml": return minMode ? "HTML" : "Hyper Text Markup Language - HTML";
@@ -2237,6 +2241,23 @@ public class CodeEditor extends IDEComponent {
 
 		case ".vb":
 			for (String s : vbKeys) { // colorir keywords
+				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
+														// s.length()).getFont().equals(Fonts.methodsEditor))
+
+				for (Integer i : indxs) {
+					if (((i - 1 > 0) && (chars[i - 1] == '_' || Character.isLetter(chars[i - 1])))
+							|| ((i + s.length() < chars.length)
+									&& (chars[i + s.length()] == '_' || Character.isLetter(chars[i + s.length()]))))
+						continue;
+
+					fs = color(i, i + s.length(), new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs); // tem q dar offset
+				}
+			}
+
+			break;
+			
+		case ".sm":
+			for (String s : smKeys) { // colorir keywords
 				indxs = findWord(new String(chars), s); // !(lines.get(getLineIndex(chars)).getFonts().get(i +
 														// s.length()).getFont().equals(Fonts.methodsEditor))
 
