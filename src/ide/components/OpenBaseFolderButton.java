@@ -51,6 +51,7 @@ public class OpenBaseFolderButton extends IDEComponent {
 	}
 	
 	public static void openBaseFolder() {
+		chooser.setCurrentDirectory(Main.baseFolder != null ? Main.baseFolder : new File(Main.userDir));
 		int option = chooser.showOpenDialog(Main.screen.frame);
 
 		if (option == JFileChooser.APPROVE_OPTION) {

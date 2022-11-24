@@ -311,7 +311,7 @@ public class CodeEditor extends IDEComponent {
 			"this", "throw", "throws", "transient", "true", "try", "typeof", "var", "void", "volatile", "while", "with",
 			"yield", "undefined", "of", "async", "window", "document", "console", "as", "from", "navigator",
 			"constructor", "debug", "declare", "namespace", "number", "string", "boolean", "array", "object", "any",
-			"void", "mutation", "set" };
+			"void", "mutation", "set", "get" };
 
 	public static final String[] cssTags = { "a", "abbr", "acronym", "address", "applet", "area", "article", "aside",
 			"audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas",
@@ -5219,6 +5219,7 @@ public class CodeEditor extends IDEComponent {
 		case ".yml":
 		case ".yaml":
 		case ".ps1":
+		case ".sm":
 			withSpace = " " + new String(chars);
 			chs = withSpace.toCharArray();
 			
