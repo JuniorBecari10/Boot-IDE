@@ -1846,7 +1846,7 @@ public class CodeEditor extends IDEComponent {
 				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
 				|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
 				|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
-				|| ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh")
+				|| ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".md")
 				|| ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
 				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1"))) {
 			fs = color(0, fs.size(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);

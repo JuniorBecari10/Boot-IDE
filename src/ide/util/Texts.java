@@ -496,7 +496,7 @@ public final class Texts {
 			temporaryFile = "Arquivo Temporário";
 			
 			gitError = "Erro";
-			gitProgress = "Em Progresso";
+			gitProgress = "Progresso";
 			gitConflict = "Conflito";
 			gitWarning = "Aviso";
 			gitDone = "Pronto";
@@ -767,7 +767,7 @@ public final class Texts {
 			temporaryFile = "Temporary File";
 			
 			gitError = "Error";
-			gitProgress = "In Progress";
+			gitProgress = "Progress";
 			gitConflict = "Conflict";
 			gitWarning = "Warning";
 			gitDone = "Done";

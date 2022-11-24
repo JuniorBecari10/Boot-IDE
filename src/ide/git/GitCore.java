@@ -88,15 +88,19 @@ public class GitCore {
 	}
 	
 	public static void push(String repo, String branch, boolean force) {
-		actions.add(new GitAction("git push", ActionState.PROGRESS, null));
-		String[] output = Main.runCommand(Main.baseFolder, "git push " + (force ? "-f " : "-u ") + repo + " " + branch);
-		
-		Explorer.fetchStatus();
-		
-		boolean error = Main.isError(output);
-		boolean warn = Main.isWarning(output);
-		
-		actions.set(actions.size() - 1, new GitAction("git push", getState(error, warn), output));
+		new Thread() {
+			public void run() {
+				actions.add(new GitAction("git push", ActionState.PROGRESS, null));
+				String[] output = Main.runCommand(Main.baseFolder, "git push " + (force ? "-f " : "-u ") + repo + " " + branch);
+				
+				Explorer.fetchStatus();
+				
+				boolean error = Main.isError(output);
+				boolean warn = Main.isWarning(output);
+				
+				actions.set(actions.size() - 1, new GitAction("git push", GitCore.getState(error, warn), output));
+			}
+		}.start();
 	}
 	
 	public static void init() {
