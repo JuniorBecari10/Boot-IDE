@@ -876,17 +876,13 @@ public class CodeEditor extends IDEComponent {
 
 		lcmy = (MouseInput.getMouseY() / LINE_HEIGHT - 1)
 				+ (scrY / LINE_HEIGHT);
-		lcmx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / FONT_SIZE)
+		lcmx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / (FONT_SIZE - Fonts.charWidthOffset))
 				+ (scrX / FONT_SIZE));
 
-		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset < MouseInput
-				.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica
-			// adicionando enquanto for menor
+		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset < MouseInput.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
 			lcmx++;
 
-		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset > MouseInput
-				.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica
-			// adicionando enquanto for menor
+		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset > MouseInput.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
 			lcmx--;
 
 		while (MIN_Y + lcmy * LINE_HEIGHT - FONT_SIZE - scrY - 2 < MouseInput.getMouseY()) // o mesmo para aqui, sa que com o y
