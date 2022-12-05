@@ -113,7 +113,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			t.add(new FileType(".r",  Main.spritesheet.getSprite (320, 16, 16, 16)));
 			t.add(new FileType(".jl", Main.spritesheet.getSprite (336, 16, 16, 16)));
 			t.add(new FileType(".pl", Main.spritesheet.getSprite (352, 16, 16, 16)));
-			t.add(new FileType(".t", Main.spritesheet.getSprite (352, 16, 16, 16)));
+			t.add(new FileType(".ts", Main.spritesheet.getSprite (352, 16, 16, 16)));
 			t.add(new FileType(".has", Main.spritesheet.getSprite(368, 16, 16, 16)));
 			t.add(new FileType(".hs", Main.spritesheet.getSprite (368, 16, 16, 16)));
 			t.add(new FileType(".fs", Main.spritesheet.getSprite (384, 16, 16, 16)));
@@ -133,8 +133,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			t.add(new FileType(".gd", Main.spritesheet.getSprite (608, 16, 16, 16)));
 			t.add(new FileType(".mcfunction",Main.spritesheet.getSprite(624,16,16,16)));
 			t.add(new FileType(".por", Main.spritesheet.getSprite(640, 16, 16, 16)));
-			t.add(new FileType(".cmxa", Main.spritesheet.getSprite(656, 16, 16, 16)));
-			t.add(new FileType(".ml", Main.spritesheet.getSprite(656, 16, 16, 16)));
+			t.add(new FileType(".cmxa",Main.spritesheet.getSprite(656, 16, 16, 16)));
+			t.add(new FileType(".ml", Main.spritesheet.getSprite (656, 16, 16, 16)));
 			t.add(new FileType(".mli", Main.spritesheet.getSprite(656, 16, 16, 16)));
 			t.add(new FileType(".mly", Main.spritesheet.getSprite(656, 16, 16, 16)));
 			t.add(new FileType(".cmt", Main.spritesheet.getSprite(656, 16, 16, 16)));
@@ -143,7 +143,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			t.add(new FileType(".vh", Main.spritesheet.getSprite (688, 16, 16, 16)));
 			t.add(new FileType(".vsh", Main.spritesheet.getSprite(688, 16, 16, 16)));
 			t.add(new FileType(".bas", Main.spritesheet.getSprite(704, 16, 16, 16)));
-			t.add(new FileType(".sm", Main.spritesheet.getSprite(720, 16, 16, 16)));
+			t.add(new FileType(".sm", Main.spritesheet.getSprite (720, 16, 16, 16)));
 			
 			t.add(new FileType(".html", Main.spritesheet.getSprite (0, 32, 16, 16)));
 			t.add(new FileType(".xhtml", Main.spritesheet.getSprite(0, 32, 16, 16)));
@@ -560,6 +560,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("show_caps_lock: " + CodeEditor.showCapsLock + "\n");
 			w.write("checkout_to_created_branch: " + GitCore.checkoutToCreatedBranch + "\n");
 			w.write("terminal_prompt: '" + TerminalCore.prompt + "'\n");
+			w.write("line_height_offset: " + CodeEditor.lineHeightOffset + "\n");
 
 			w.close();
 
@@ -1186,6 +1187,18 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					GitCore.checkoutToCreatedBranch = true;
 
 				GitCore.checkoutToCreatedBranch = Boolean.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
+				
+			case "line_height_offset:":
+				if (!readConfigs) break;
+				
+				if (split[1].equals("default"))
+					CodeEditor.lineHeightOffset = 0;
+
+				CodeEditor.lineHeightOffset = Integer.valueOf(split[1]);
 
 				hasAltered = true;
 

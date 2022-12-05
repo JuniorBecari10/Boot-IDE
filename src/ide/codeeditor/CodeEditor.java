@@ -71,8 +71,11 @@ public class CodeEditor extends IDEComponent {
 	public static final int DEFAULT_FONT_SIZE = 16;
 	public static final int LOWER_BAR_HEIGHT = 22;
 	
-	public static int FONT_SIZE = DEFAULT_FONT_SIZE; // 18, 16 (Padrao: 16)
-	public static int LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
+	public static int FONT_SIZE = DEFAULT_FONT_SIZE; // 18, 16 (Padrão: 16)
+	
+	public static int lineHeightOffset = 0;
+	public static int LINE_HEIGHT = (FONT_SIZE + (FONT_SIZE / 3));// - lineHeightOffset;
+	
 	public static final int CURSOR_OPACITY = 127;
 
 	final int originalEditorX = 280;
@@ -778,7 +781,7 @@ public class CodeEditor extends IDEComponent {
 	
 	public static final String[] modKeys = { "module", "go", "require", "replace", "exclude" };
 	
-	public static final String[] smKeys = { "print", "printl", "input", "goto", "exec", "exit", "if", "num", "str" };
+	public static final String[] smKeys = { "print", "printl", "input", "goto", "exec", "exit", "if", "num", "str", "emptystr" };
 	
 	public Thread killAllTabs;
 	
@@ -8321,7 +8324,7 @@ public class CodeEditor extends IDEComponent {
 		capsLock = Main.toolkit.getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
 		
 		height = Main.screen.getHeight();
-		LINE_HEIGHT = FONT_SIZE + (FONT_SIZE / 3);
+		LINE_HEIGHT = (FONT_SIZE + (FONT_SIZE / 3)) - lineHeightOffset;
 		
 		// arrumar isso aqui pra n dar erro
 		/*if (editing != null && !tabs.isEmpty() && tabs.indexOf(editing) < 0)

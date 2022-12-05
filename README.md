@@ -150,7 +150,7 @@ Você pode usar `make compile run` ou `make build run` para compilar e executar 
 
 ```batch
 cd src
-javac -d ../bin ide/main/Start.java
+javac -Dfile.encoding=UTF-8 -d ../bin ide/main/Start.java
 
 cd ../bin
 java -Dfile.encoding=UTF-8 ide.main.Start -cp .
