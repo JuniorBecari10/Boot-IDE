@@ -561,6 +561,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("checkout_to_created_branch: " + GitCore.checkoutToCreatedBranch + "\n");
 			w.write("terminal_prompt: '" + TerminalCore.prompt + "'\n");
 			w.write("line_height_offset: " + CodeEditor.lineHeightOffset + "\n");
+			w.write("char_width_offset: " + Fonts.charWidthOffset + "\n");
 
 			w.close();
 
@@ -1199,6 +1200,18 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 					CodeEditor.lineHeightOffset = 0;
 
 				CodeEditor.lineHeightOffset = Integer.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
+				
+			case "char_width_offset:":
+				if (!readConfigs) break;
+				
+				if (split[1].equals("default"))
+					Fonts.charWidthOffset = 0;
+
+				Fonts.charWidthOffset = Integer.valueOf(split[1]);
 
 				hasAltered = true;
 

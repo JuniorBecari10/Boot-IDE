@@ -22,6 +22,7 @@ public class Fonts {
 	public static Font emojiFont;*/
 	
 	public static boolean useAntiAliasing = false;
+	public static int charWidthOffset = 0;
 	
     public static BufferedImage[] normal;
     public static BufferedImage[] editor;
@@ -787,7 +788,7 @@ public class Fonts {
 	    		g2.setRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT));
     		}
     		else {
-    			g2.drawImage(chr, (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw, fonts[i].getSize() + ((ch == 'i' || ch == ',' || ch == ';' || ch == '|') && (CodeEditor.FONT_SIZE == 14 || CodeEditor.FONT_SIZE == 13) ? 1 : 0), fonts[i].getSize(), null);
+    			g2.drawImage(chr, (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4) - charWidthOffset) * i)), ydraw, fonts[i].getSize() + ((ch == 'i' || ch == ',' || ch == ';' || ch == '|') && (CodeEditor.FONT_SIZE == 14 || CodeEditor.FONT_SIZE == 13) ? 1 : 0), fonts[i].getSize(), null);
     		}
     	}
     }

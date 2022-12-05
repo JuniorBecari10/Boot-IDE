@@ -687,14 +687,6 @@ public class Tab extends IDEComponent implements Serializable {
 		case "closeapply":
 			Main.load(regent.getRegent().getAbsolutePath());
 			
-			if (Main.editor.editing != null && Main.editor.editing.getRegent().getRegent().equals(Main.defaultConfigFile)) {
-				try {
-					Main.editor.lines = Main.editor.readFile(Main.defaultConfigFile);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	        }
-			
 			ListableFile.generateLocalConfigFile(Main.defaultConfigFile);
 			
 			break;

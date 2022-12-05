@@ -943,7 +943,7 @@ public class CodeEditor extends IDEComponent {
 		
 		/// another (one)
 		
-		realcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
+		realcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - (Fonts.charWidthOffset * cursorX);
 		realcy = MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY;
 
 		/*
