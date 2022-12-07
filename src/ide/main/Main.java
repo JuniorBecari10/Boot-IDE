@@ -1001,7 +1001,7 @@ public class Main implements Runnable, Tickable {
             screen.createBufferStrategy(3);
             return;
         }
-
+        
         Graphics g = null;
         
         try {

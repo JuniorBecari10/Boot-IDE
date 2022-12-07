@@ -21,8 +21,11 @@ public class Fonts {
 	/*public static InputStream emojiStream;
 	public static Font emojiFont;*/
 	
+	public static final int ACTUAL_CHAR_WIDTH = 6;
+	
 	public static boolean useAntiAliasing = false;
-	public static int charWidthOffset = 0;
+	public static int charWidth = ACTUAL_CHAR_WIDTH;
+	public static int hangingLettersOffset = 2;
 	
     public static BufferedImage[] normal;
     public static BufferedImage[] editor;
@@ -766,7 +769,7 @@ public class Fonts {
     		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) < minX) continue; // TODO talvez aumentar ou diminuir o espaaamento entre letras por parte do usuario, ou nao sla
     		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) > maxX) break;
     		
-    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + CodeEditor.FONT_SIZE / 8 : y;
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + Fonts.hangingLettersOffset : y;
     		
     		BufferedImage chr = text[i];
     		
@@ -783,12 +786,12 @@ public class Fonts {
     		if (CodeEditor.FONT_SIZE % 8 != 0 && useAntiAliasing) {
 	    		g2.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
 	    		g2.setRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
-	    		g2.drawImage(chr, (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw, fonts[i].getSize() + ((ch == 'i' || ch == ',' || ch == ';' || ch == '|') && (CodeEditor.FONT_SIZE == 14 || CodeEditor.FONT_SIZE == 13) ? 1 : 0), fonts[i].getSize(), null);
+	    		g2.drawImage(chr, (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)), ydraw, fonts[i].getSize() + ((ch == 'i' || ch == ',' || ch == ';' || ch == '|') && (CodeEditor.FONT_SIZE == 14 || CodeEditor.FONT_SIZE == 13) ? hangingLettersOffset : 0), fonts[i].getSize(), null);
 	    		g2.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF));
 	    		g2.setRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT));
     		}
     		else {
-    			g2.drawImage(chr, (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4) - charWidthOffset) * i)), ydraw, fonts[i].getSize() + ((ch == 'i' || ch == ',' || ch == ';' || ch == '|') && (CodeEditor.FONT_SIZE == 14 || CodeEditor.FONT_SIZE == 13) ? 1 : 0), fonts[i].getSize(), null);
+    			g2.drawImage(chr, (x + ((fonts[i].getSize() - (fonts[i].getSize() / 4) - (ACTUAL_CHAR_WIDTH - charWidth)) * i)), ydraw, fonts[i].getSize() + ((ch == 'i' || ch == ',' || ch == ';' || ch == '|') && (CodeEditor.FONT_SIZE == 14 || CodeEditor.FONT_SIZE == 13) ? hangingLettersOffset : 0), fonts[i].getSize(), null);
     		}
     	}
     }

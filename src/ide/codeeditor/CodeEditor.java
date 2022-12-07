@@ -136,7 +136,7 @@ public class CodeEditor extends IDEComponent {
 	public Direction directionStarted = Direction.NONE;
 
 	private int realcx, realcy; // c = cursor
-	public int drawcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX,
+	public int drawcx = ((x + (Fonts.charWidth * 4)) + cursorX * Fonts.charWidth) - scrX,
 			drawcy = MIN_Y + cursorY * LINE_HEIGHT - FONT_SIZE - scrY - 2;
 
 	private PressedAccent prAcc;
@@ -727,7 +727,7 @@ public class CodeEditor extends IDEComponent {
 			"atomic", "nonatomic", "retain" };
 
 	public static final String[] ideConfKeys = { Main.PROGRAM_NAME + " Configuration File",
-			"port", "eng", "PORT", "ENG", "Colors", "Files", "Settings", "default", "true", "false", "LF", "lf", "CR", "cr", "CRLF", "crlf" };
+			"port", "eng", "PORT", "ENG", "Colors", "Files", "Settings", "Advanced", "default", "true", "false", "LF", "lf", "CR", "cr", "CRLF", "crlf" };
 
 	public static final String[] makeKeys = { "if", "else", "export" };
 
@@ -876,13 +876,17 @@ public class CodeEditor extends IDEComponent {
 
 		lcmy = (MouseInput.getMouseY() / LINE_HEIGHT - 1)
 				+ (scrY / LINE_HEIGHT);
-		lcmx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / (FONT_SIZE - Fonts.charWidthOffset))
+		lcmx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / FONT_SIZE)
 				+ (scrX / FONT_SIZE));
 
-		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset < MouseInput.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
+		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset < MouseInput
+				.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica
+			// adicionando enquanto for menor
 			lcmx++;
 
-		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset > MouseInput.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
+		while (((lcx + off) + lcmx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX + offset > MouseInput
+				.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica
+			// adicionando enquanto for menor
 			lcmx--;
 
 		while (MIN_Y + lcmy * LINE_HEIGHT - FONT_SIZE - scrY - 2 < MouseInput.getMouseY()) // o mesmo para aqui, sa que com o y
@@ -939,7 +943,7 @@ public class CodeEditor extends IDEComponent {
 		
 		/// another (one)
 		
-		realcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - (Fonts.charWidthOffset * cursorX);
+		realcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
 		realcy = MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY;
 
 		/*
@@ -8777,7 +8781,7 @@ public class CodeEditor extends IDEComponent {
 				showCursor = true;
 	
 			// Desenhar cursor
-			if (showCursor && !WindowInput.isDeactivated() && drawcx > x + (FONT_SIZE * 4) - 1) {
+			if (showCursor && !WindowInput.isDeactivated() && drawcx > x + (Fonts.charWidth * 4) - 1) {
 				g.setColor(Colors.cursor);
 				
 				if (Explorer.selected != null) {
