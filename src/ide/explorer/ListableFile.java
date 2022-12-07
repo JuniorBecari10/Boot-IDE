@@ -1423,6 +1423,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 						CodeEditor.setSystemLook();
 		
 						JOptionPane.showMessageDialog(null, Texts.delError, Texts.cantDelete, JOptionPane.OK_OPTION);
+						
+						MessageBox.showDialog(Texts.cantDelete, new String[] { Texts.delError }, new String[] { "Ok" }, new Execute[] { () -> {} });
 					}
 				}
 				else {

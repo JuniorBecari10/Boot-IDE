@@ -110,16 +110,9 @@ public class MessageBox extends IDEComponent {
 	public static void showDialog(String title, String[] text, String[] buttons, Execute[] actions) {
 		if (active) return;
 		
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        StackTraceElement element = stackTrace[2];
-        System.out.println("I was called by a method named: " + element.getMethodName());
-        System.out.println("That method is in class: " + element.getClassName());
-		
 		MessageBox box = new MessageBox(title, text, buttons, actions);
 		
 		IDEComponent.toAdd.add(box);
-		
-		//return box.clicked != null ? box.clicked.text : null;
 	}
 	
 	public void tick() {
