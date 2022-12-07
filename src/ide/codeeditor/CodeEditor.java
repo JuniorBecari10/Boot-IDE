@@ -6066,7 +6066,7 @@ public class CodeEditor extends IDEComponent {
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".xhtml")))
 				if (cursorX > 0 && !Character.isLetter(new String(toCharArray(lines.get(cursorY - 1).getChars())).charAt(cursorX - 1)))
 					return pre; // verifica se o x do cursor é maior que 0 e se o char antes do cursor é uma letra, pq só vai completar se for
-
+			
 			if (pre.length() == 0 || cursorX == pre.length())
 				pre.append('>');
 			else
@@ -7019,6 +7019,8 @@ public class CodeEditor extends IDEComponent {
 				if (cursorX > 0 && chars[cursorX] == '>' && digit == '>') { // isso tem um bug mt chato que quando apaga a tag de fechar e tenta por de novo estraga td, talvez adicionar um keystroke que se apertado ele n detecta
 					if (cursorX > 0 && lines.get(cursorY - 1).getChars().get(cursorX - 1) == '>') return cY;
 					
+					int cx = cursorX;
+					
 					List<Integer> indxs = findWord(new String(chars), "<"); // antes de <palavra>
 					cursorX++;
 					
@@ -7046,6 +7048,8 @@ public class CodeEditor extends IDEComponent {
 							cursorX++;
 						}
 					}
+					
+					cursorX = cx;
 				}
 			}
 		

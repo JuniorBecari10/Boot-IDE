@@ -608,7 +608,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "background:":
 				if (split[1].equals("default")) {
 					split[1] = "#353b48";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -645,7 +644,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "background_light:":
 				if (split[1].equals("default")) {
 					split[1] = "#28394d";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -664,7 +662,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "explorer:":
 				if (split[1].equals("default")) {
 					split[1] = "#222f3e";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -683,7 +680,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "code_editor:":
 				if (split[1].equals("default")) {
 					split[1] = "#222f3e";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -702,7 +698,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "explorer_light:":
 				if (split[1].equals("default")) {
 					split[1] = "#2d3f54";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -721,7 +716,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "explorer_lighter:":
 				if (split[1].equals("default")) {
 					split[1] = "#354d69";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -740,7 +734,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "text_light:":
 				if (split[1].equals("default")) {
 					split[1] = "#95afc0";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -759,7 +752,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "text_lighter:":
 				if (split[1].equals("default")) {
 					split[1] = "#a9c4c2";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -778,7 +770,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "objects:":
 				if (split[1].equals("default")) {
 					split[1] = "#94fa92";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -797,7 +788,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "methods:":
 				if (split[1].equals("default")) {
 					split[1] = "#e7d789";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -816,7 +806,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "numbers:":
 				if (split[1].equals("default")) {
 					split[1] ="#5485b6";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -908,7 +897,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "symbols:":
 				if (split[1].equals("default")) {
 					split[1] = "#a9c4c2";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -927,7 +915,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "selection:":
 				if (split[1].equals("default")) {
 					split[1] = "#8c8c8c";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -946,7 +933,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "cursor:":
 				if (split[1].equals("default")) {
 					split[1] = "#ffffff";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -965,7 +951,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "other:":
 				if (split[1].equals("default")) {
 					split[1] = "#ffffff";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -984,7 +969,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "lower_bar:":
 				if (split[1].equals("default")) {
 					split[1] = "#28394d";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -1003,7 +987,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "error:":
 				if (split[1].equals("default")) {
 					split[1] = "#ff6961";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -1022,7 +1005,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "line_number:":
 				if (split[1].equals("default")) {
 					split[1] = "#95afc0";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -1041,7 +1023,6 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "selected_line_number:":
 				if (split[1].equals("default")) {
 					split[1] = "#c5d5ea";
-					break;
 				}
 
 				if (!split[1].startsWith("#"))
@@ -1057,33 +1038,13 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				break;
 
-			////////
-
-			/*
-			 * case "spritesheet:": if (split[1].equals("default")) break;
-			 * 
-			 * Main.sprsh = split[1];
-			 * 
-			 * break;
-			 * 
-			 * case "font_normal:": if (split[1].equals("default")) break;
-			 * 
-			 * Main.fntnr = split[1];
-			 * 
-			 * break;
-			 * 
-			 * case "font_bold:": if (split[1].equals("default")) break;
-			 * 
-			 * Main.fntbl = split[1];
-			 * 
-			 * break;
-			 */
+			// Settings
 
 			case "font_size:":
 				if (!readConfigs) break;
 				
 				if (split[1].equals("default")) {
-					CodeEditor.FONT_SIZE = 16;
+					CodeEditor.FONT_SIZE = CodeEditor.DEFAULT_FONT_SIZE;
 					break;
 				}
 
@@ -1309,7 +1270,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				break;
 				
-				///
+				// Advanced
 				
 			case "line_height_offset:":
 				if (!readConfigs) break;
