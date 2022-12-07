@@ -43,7 +43,6 @@ import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
-import ide.explorercomponents.Execute;
 import ide.explorercomponents.SearchReplaceCore;
 import ide.explorercomponents.SetBranchName;
 import ide.explorercomponents.SetCommitName;
@@ -2203,7 +2202,7 @@ public class CodeEditor extends IDEComponent {
 								|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
 								|| ext.equalsIgnoreCase(".svg") || ext.equalsIgnoreCase(".xml")
 								|| ext.equalsIgnoreCase(".css") || ext.equalsIgnoreCase(".scss") || ext.equalsIgnoreCase(".json")
-								|| ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".mcfunction"))
+								|| ext.equalsIgnoreCase(".jsonc") || ext.equalsIgnoreCase(".mcfunction") || ext.equalsIgnoreCase(".sm"))
 							fs = color(i, i + len, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 						else {
 							if (i - 1 > 0 && Character.isLetter(chars[i - 1]))
