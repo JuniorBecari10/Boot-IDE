@@ -1070,7 +1070,8 @@ public class CodeEditor extends IDEComponent {
 	
 	public void refreshText() {
 		if (editing == null) return;
-		if (!editing.isSaved()) {
+		
+		/*if (!editing.isSaved()) {
 			String[] options = { Texts.yes, Texts.no, Texts.cancel };
 			MessageBox.showDialog(Texts.confirmSave, new String[] { Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.doYouWantToSave }, options, new Execute[] {
 					() -> {
@@ -1079,8 +1080,11 @@ public class CodeEditor extends IDEComponent {
 					},
 					() -> {}, // n faz nada
 					() -> { return; }
-					});;
-		}
+					});
+		}*/
+		
+		// TODO se ter algum problema é aqui
+		if (!editing.isSaved()) return;
 		
 		try {
 			Main.editor.lines = Main.editor.readFile(editing.getRegent().getRegent());
