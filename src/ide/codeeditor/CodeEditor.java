@@ -2011,6 +2011,30 @@ public class CodeEditor extends IDEComponent {
 				fs = color(i, fs.size(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs); // tem q dar offset
 			}
 			
+			indxs = findWord(new String(chars), ">");
+			
+			for (Integer i : indxs) {
+				if (i == 0) continue;
+				
+				len = 0;
+				
+				while (i + len < chars.length && chars[i + len] != '<')
+					len++;
+				
+				fs = color(i, i + len, new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs);
+			}
+			
+			indxs = findWord(new String(chars), "/>");
+			
+			for (Integer i : indxs) {
+				len = 0;
+				
+				while (i + len < chars.length && chars[i + len] != '<')
+					len++;
+				
+				fs = color(i, i + len, new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs);
+			}
+			
 			indxs = findWord(new String(chars), "**");
 
 			for (int i = 0; i < indxs.size() - 1; i += 2)

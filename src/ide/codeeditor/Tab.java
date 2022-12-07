@@ -335,31 +335,33 @@ public class Tab extends IDEComponent implements Serializable {
 			if (!Main.editor.tabs.isEmpty()) {
 				Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() > 0 ? Main.editor.tabs.size() - 1 : 0).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
 				
-				// aqui rola uma exception TODO
-				Tab next = Main.editor.tabs.indexOf(t) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(t) - 1);
+				if (Main.editor.editing.closing) {
+					// aqui rola uma exception TODO
+					Tab next = Main.editor.tabs.indexOf(t) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(t) - 1);
+					
+					if (Main.editor.toRemove != null && !Main.editor.toRemove.get(0).equals(t)) // aqui rola um nullpointerexception quando fecha uma tab
+						next = t;
+					
+					if (Main.editor.editing.getRegent().getRegent().getAbsolutePath().equals(t.getRegent().getRegent().getAbsolutePath())) {
+						Main.editor.cursorX = 0;
+						Main.editor.cursorY = 1;
+					}
+					
+					Main.editor.editing = next;
+					
+					Main.editor.cursorX = cx;
+					Main.editor.cursorY = cy;
+					
+					Main.editor.scrX = next.scrX;
+					Main.editor.scrY = next.scrY;
+					
+					Main.editor.lines.clear();
 				
-				if (Main.editor.toRemove != null && !Main.editor.toRemove.get(0).equals(t)) // aqui rola um nullpointerexception quando fecha uma tab
-					next = t;
-				
-				if (Main.editor.editing == t) {
-					Main.editor.cursorX = 0;
-					Main.editor.cursorY = 1;
-				}
-				
-				Main.editor.editing = next;
-				
-				Main.editor.cursorX = cx;
-				Main.editor.cursorY = cy;
-				
-				Main.editor.scrX = next.scrX;
-				Main.editor.scrY = next.scrY;
-				
-				Main.editor.lines.clear();
-			
-				try {
-					Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
-				} catch (IOException e) {
-					e.printStackTrace();
+					try {
+						Main.editor.lines = Main.editor.readFile(next.getRegent().getRegent());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			
