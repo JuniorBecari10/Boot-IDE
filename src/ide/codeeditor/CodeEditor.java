@@ -7306,30 +7306,18 @@ public class CodeEditor extends IDEComponent {
 				
 				if (editing != null)
 					if (ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html")
-							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-									.equalsIgnoreCase(".xhtml")
-							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-									.equalsIgnoreCase(".svelte")
-							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-									.equalsIgnoreCase(".htm")
-							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-									.equalsIgnoreCase(".ejs")
-							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-									.equalsIgnoreCase(".xml")
-							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-									.equalsIgnoreCase(".svg")
-							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-									.equalsIgnoreCase(".sln")
-							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-									.equalsIgnoreCase(".config")
-							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-									.equalsIgnoreCase(".cfg")
-							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-									.equalsIgnoreCase(".classpath")
-							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-									.equalsIgnoreCase(".csproj")
-							|| ListableFile.getFileExtension(editing.getRegent().getRegent())
-									.equalsIgnoreCase(".project")) {
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".xhtml")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".svelte")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".htm")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".ejs")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".xml")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".svg")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".sln")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".config")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".cfg")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".classpath")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".csproj")
+							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".project")) {
 							if (c == '<') {
 								wordSinceSpace = "";
 								RightClickOption.removeAllRightClickOptions(); // aqui
@@ -7348,8 +7336,7 @@ public class CodeEditor extends IDEComponent {
 				
 				// Add AutoComplete
 
-				if ((Character.isLetter(c) || isNumber(c) || KeyInput.getCharPressed() == 46) && !isReadOnly
-					&& editing != null) { // adicionar esse cadigo no backspace, e se
+				if ((Character.isLetter(c) || isNumber(c) || KeyInput.getCharPressed() == 46) && !isReadOnly && editing != null) { // adicionar esse cadigo no backspace, e se
 																	// tiver espaaos na frente, a keyword vai no
 																	// lugar errado
 					String[] autoc = ListableFile.fileHasExtension(editing.getRegent().getRegent())
@@ -8717,11 +8704,8 @@ public class CodeEditor extends IDEComponent {
 						
 						if (i > line1 && i < line2) { // do meio (do 0 até o fim da linha)
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do 0 até o index2
-									// (i + 1) * LINE_HEIGHT - scrY,
 									MIN_Y + ((i - 1) * LINE_HEIGHT) - scrY,
-									// Main.screen.getWidth() + scrX,
-									((x + (FONT_SIZE * 4)) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX
-											- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
+									((x + (FONT_SIZE * 4)) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
 									LINE_HEIGHT);
 						}
 					}

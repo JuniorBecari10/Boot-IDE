@@ -561,6 +561,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("checkout_to_created_branch: " + GitCore.checkoutToCreatedBranch + "\n");
 			w.write("terminal_prompt: '" + TerminalCore.prompt + "'\n");
 			w.write("program_name: '" + Main.PROGRAM_NAME + "'\n");
+			w.write("font: '" + Main.fntnr + "'\n");
+			w.write("editor_font: '" + Main.fnted + "'\n");
 			w.write("\n");
 			w.write("Advanced\n");
 			w.write("\n");
@@ -1267,6 +1269,40 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				
 				Main.PROGRAM_NAME = String.join(" ", sub).replace("'", "").replace("\"", "").trim();
 				
+
+				break;
+				
+			case "font:":
+				if (split[1].equals("default") || split[1] == "") {
+					Main.fntnr = "/font.png";
+					break;
+				}
+				
+				hasAltered = true;
+				
+				sub = Arrays.copyOfRange(split, 1, split.length);
+				
+				Main.fntnr = String.join(" ", sub).replace("'", "").replace("\"", "").trim();
+				
+				if (!Main.fntnr.startsWith("/"))
+					Main.fntnr = "/" + Main.fntnr;
+
+				break;
+				
+			case "editor_font:":
+				if (split[1].equals("default") || split[1] == "") {
+					Main.fnted = "/editorfont";
+					break;
+				}
+				
+				hasAltered = true;
+				
+				sub = Arrays.copyOfRange(split, 1, split.length);
+				
+				Main.fnted = String.join(" ", sub).replace("'", "").replace("\"", "").trim();
+				
+				if (!Main.fnted.startsWith("/"))
+					Main.fnted = "/" + Main.fnted;
 
 				break;
 				
