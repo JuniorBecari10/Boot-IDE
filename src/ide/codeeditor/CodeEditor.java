@@ -942,7 +942,8 @@ public class CodeEditor extends IDEComponent {
 		
 		/// another (one)
 		
-		realcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
+		//realcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
+		realcx = ((x + (FONT_SIZE * 4)) + (cursorX * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth)))) - scrX;
 		realcy = MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY;
 
 		/*
@@ -8765,8 +8766,7 @@ public class CodeEditor extends IDEComponent {
 						}
 					}
 	
-					IDEFont font = i == cursorY - 1 ? new IDEFont(Fonts.selectedLineNumberNormal, FONT_SIZE)
-							: new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
+					IDEFont font = i == cursorY - 1 ? new IDEFont(Fonts.selectedLineNumberEditor, FONT_SIZE) : new IDEFont(Fonts.lineNumberEditor, FONT_SIZE);
 	
 					// if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 	
