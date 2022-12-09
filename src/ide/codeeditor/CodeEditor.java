@@ -911,25 +911,20 @@ public class CodeEditor extends IDEComponent {
 				+ (scrY / LINE_HEIGHT);
 		mx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / FONT_SIZE) + (scrX / FONT_SIZE));
 
-		while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX < MouseInput
-				.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica
-			// adicionando enquanto for menor
+		// detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
+		while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX < MouseInput.getMouseX())
 			mx++;
 
-		while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX > MouseInput
-				.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica
-			// adicionando enquanto for menor
+		// detecta se a posição real do cursor for menor do que a do cursor e fica adicionando enquanto for menor
+		while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX > MouseInput.getMouseX())
 			mx--;
 
-		while (MIN_Y + my * LINE_HEIGHT - FONT_SIZE - scrY - 2 < MouseInput
-				.getMouseY()) // o mesmo para aqui, sa que com o y
+		while (MIN_Y + my * LINE_HEIGHT - FONT_SIZE - scrY - 2 < MouseInput.getMouseY()) // o mesmo para aqui, só que com o y
 			my++;
 
-		while (MIN_Y + my * LINE_HEIGHT - FONT_SIZE - scrY - 2 > MouseInput
-				.getMouseY()) // o mesmo para aqui, sa que com o y
+		while (MIN_Y + my * LINE_HEIGHT - FONT_SIZE - scrY - 2 > MouseInput.getMouseY()) // o mesmo para aqui, só que com o y
 			my--;
 
-		//if (FONT_SIZE < 13)
 		mx--;
 
 		mx = setWithinBounds(mx, my, true);
@@ -944,7 +939,7 @@ public class CodeEditor extends IDEComponent {
 		
 		realcx = ((x + (FONT_SIZE * 4)) + (cursorX * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth)))) - scrX;
 		realcy = MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY;
-
+		
 		/*
 		 * if (drawcx != realcx) { if (drawcx < realcx) drawcx += speed; if (drawcx >
 		 * realcx) drawcx -= speed; }
@@ -8705,7 +8700,7 @@ public class CodeEditor extends IDEComponent {
 						if (i > line1 && i < line2) { // do meio (do 0 até o fim da linha)
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do 0 até o index2
 									MIN_Y + ((i - 1) * LINE_HEIGHT) - scrY,
-									((x + (FONT_SIZE * 4)) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
+									((x + (FONT_SIZE * 4)) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX),
 									LINE_HEIGHT);
 						}
 					}
@@ -8738,28 +8733,26 @@ public class CodeEditor extends IDEComponent {
 	
 						if (i == line1 - 1) { // - 1 porque a line1 é base 1
 							if (i == line2 - 1) {
-								g.fillRect(((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
+								g.fillRect(((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX, // preencher do
 																										// index1 até o
 																										// index2
 										MIN_Y + ((line1 - 1) * LINE_HEIGHT) - scrY,
-										(((x + (FONT_SIZE * 4)) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX)
-												- (((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
+										(((x + (FONT_SIZE * 4)) + index2 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX) - (((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX),
 										LINE_HEIGHT);
 							} else {
-								g.fillRect(((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do
+								g.fillRect(((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX, // preencher do
 																										// index1 até o fim
 																										// da linha
 										MIN_Y + ((line1 - 1) * LINE_HEIGHT) - scrY,
-										(lines.get(line1 - 1).getChars().size() * (FONT_SIZE - (FONT_SIZE / 4))) - ((index1 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
+										(lines.get(line1 - 1).getChars().size() * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - ((index1 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX),
 										LINE_HEIGHT);
 							}
 						}
 						if (i == line2 - 1) {
 							if (i != line1 - 1) { // do 0 ao index2
-								g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher até o index2
+								g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX, // preencher até o index2
 										MIN_Y + ((line2 - 1) * LINE_HEIGHT) - scrY,
-										((x + (FONT_SIZE * 4)) + index2 * (FONT_SIZE - (FONT_SIZE / 4))) - scrX
-												- (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX),
+										((x + (FONT_SIZE * 4)) + index2 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX),
 										LINE_HEIGHT);
 							}
 						}
