@@ -1169,7 +1169,7 @@ public class CodeEditor extends IDEComponent {
 				cs.add(c);
 
 			for (int i = 0; i < cs.size(); i++)
-				fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
+				fs.add(new IDEFont(Fonts.otherEditor, FONT_SIZE));
 
 			IDELine gen = new IDELine(cs, fs);
 
@@ -5859,7 +5859,7 @@ public class CodeEditor extends IDEComponent {
 		List<IDEFont> fs = new ArrayList<>();
 
 		for (int i = 0; i < chars.length; i++)
-			fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
+			fs.add(new IDEFont(Fonts.otherEditor, FONT_SIZE));
 		
 		if (!ListableFile.fileHasExtension(ext))
 			ext = editing.getRegent().getRegent().getName();
