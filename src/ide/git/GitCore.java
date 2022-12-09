@@ -329,8 +329,12 @@ public class GitCore {
 				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.checkout.getY(), list.toArray(new RightClickOption[list.size()]));
 			}), Texts.deleteBranch) {
 				public void tick() {
-					enabled = Explorer.gitStatus.branches.length > 1;
-					
+					try {
+						enabled = Explorer.gitStatus.branches.length > 1;
+					} catch (Exception e) {
+						enabled = false;
+					}
+						
 					super.tick();
 					
 					caption = Texts.deleteBranch;

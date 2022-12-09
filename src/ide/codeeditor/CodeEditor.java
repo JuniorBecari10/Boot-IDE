@@ -4617,6 +4617,8 @@ public class CodeEditor extends IDEComponent {
 		if (!foundExt) {// (!foundExt && editing != null) || (extType.equalsIgnoreCase("") || extType ==
 						// null)) { // TODO o culpado do gitignore estar assim a esse ARRUMAR DEPOIS
 			for (FileType f : ListableFile.types) {
+				if (f == null || f.getExtension() == null) continue;
+				
 				if (f.getExtension().equalsIgnoreCase(editing.getRegent().getRegent().getName())) { // tenta ver se tem
 																									// algum especial
 					String st = capitalizeFirstLetter(f.getExtension());
