@@ -8762,7 +8762,7 @@ public class CodeEditor extends IDEComponent {
 	
 					// if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 	
-					Fonts.drawChars(cs, (x + (FONT_SIZE * 4)) - scrX, (MIN_Y + (i * LINE_HEIGHT) - scrY) + ((LINE_HEIGHT / 2) - FONT_SIZE / 2), fs, x + (FONT_SIZE * 4), Main.screen.getWidth(), g);
+					Fonts.drawChars(cs, (x + (FONT_SIZE * 4)) - scrX, (MIN_Y + (i * LINE_HEIGHT) - scrY), fs, x + (FONT_SIZE * 4), Main.screen.getWidth(), g);
 	
 					String nums = String.valueOf(i + 1); // nums = num string
 					// int num = i + 1;
@@ -8780,7 +8780,7 @@ public class CodeEditor extends IDEComponent {
 					g.setColor(c);
 					g.fillRect(x, MIN_Y + (i * LINE_HEIGHT) - scrY, FONT_SIZE * 4, LINE_HEIGHT); // linha do num da linha
 	
-					Fonts.drawString(nums, nx, (MIN_Y + (i * LINE_HEIGHT) - scrY) + ((LINE_HEIGHT / 2) - FONT_SIZE / 2), font, g);
+					Fonts.drawString(nums, nx, (MIN_Y + (i * LINE_HEIGHT) - scrY), font, g);
 				}
 			} catch (Exception e) {}
 	

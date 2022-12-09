@@ -26,6 +26,7 @@ public class Fonts {
 	public static boolean useAntiAliasing = false;
 	public static int charWidth = ACTUAL_CHAR_WIDTH;
 	public static int hangingLettersOffset = 2;
+	public static int yOffset = 0;
 	
     public static BufferedImage[] normal;
     public static BufferedImage[] editor;
@@ -770,6 +771,7 @@ public class Fonts {
     		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) > maxX) break;
     		
     		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + Fonts.hangingLettersOffset : y;
+    		ydraw -= yOffset;
     		
     		BufferedImage chr = text[i];
     		

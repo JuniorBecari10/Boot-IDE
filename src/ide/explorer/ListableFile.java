@@ -569,6 +569,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("line_height_offset: " + CodeEditor.lineHeightOffset + "\n");
 			w.write("char_width: " + Fonts.charWidth + "\n");
 			w.write("hanging_letters_offset: " + Fonts.hangingLettersOffset + "\n");
+			w.write("y_offset: " + Fonts.yOffset + "\n");
 
 			w.close();
 
@@ -1345,6 +1346,20 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				}
 
 				Fonts.hangingLettersOffset = Integer.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
+				
+			case "y_offset:":
+				if (!readConfigs) break;
+				
+				if (split[1].equalsIgnoreCase("default")) {
+					Fonts.yOffset = 0;
+					break;
+				}
+
+				Fonts.yOffset = Integer.valueOf(split[1]);
 
 				hasAltered = true;
 
