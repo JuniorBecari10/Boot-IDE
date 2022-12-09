@@ -8780,7 +8780,7 @@ public class CodeEditor extends IDEComponent {
 					g.setColor(c);
 					g.fillRect(x, MIN_Y + (i * LINE_HEIGHT) - scrY, FONT_SIZE * 4, LINE_HEIGHT); // linha do num da linha
 	
-					Fonts.drawString(nums, nx, (MIN_Y + (i * LINE_HEIGHT) - scrY), font, g);
+					Fonts.drawString(nums, nx, (MIN_Y + (i * LINE_HEIGHT) - scrY) - Fonts.yOffset, font, g);
 				}
 			} catch (Exception e) {}
 	
