@@ -608,7 +608,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 			switch (split[0]) {
 			case "background:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#353b48";
 				}
 
@@ -626,7 +626,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "background2:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#29394a";
 				}
 
@@ -644,7 +644,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "background_light:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#28394d";
 				}
 
@@ -662,7 +662,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "explorer:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#222f3e";
 				}
 
@@ -680,7 +680,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 				
 			case "code_editor:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#222f3e";
 				}
 
@@ -698,7 +698,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "explorer_light:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#2d3f54";
 				}
 
@@ -716,7 +716,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "explorer_lighter:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#354d69";
 				}
 
@@ -734,7 +734,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "text_light:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#95afc0";
 				}
 
@@ -752,7 +752,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "text_lighter:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#a9c4c2";
 				}
 
@@ -770,7 +770,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "objects:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#94fa92";
 				}
 
@@ -788,7 +788,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "methods:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#e7d789";
 				}
 
@@ -806,7 +806,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "numbers:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] ="#5485b6";
 				}
 
@@ -824,7 +824,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "keywords:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#95bddc";
 					break;
 				}
@@ -843,7 +843,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "variables:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#80d1f2";
 				}
 
@@ -861,7 +861,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "comments:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#a9c4c2";
 				}
 
@@ -879,7 +879,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "strings:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#95afc0";
 				}
 
@@ -897,7 +897,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "symbols:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#a9c4c2";
 				}
 
@@ -915,7 +915,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "selection:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#8c8c8c";
 				}
 
@@ -933,7 +933,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "cursor:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#ffffff";
 				}
 
@@ -951,7 +951,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "other:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#ffffff";
 				}
 
@@ -969,7 +969,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "lower_bar:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#28394d";
 				}
 
@@ -987,7 +987,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "error:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#ff6961";
 				}
 
@@ -1005,7 +1005,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "line_number:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#95afc0";
 				}
 
@@ -1023,7 +1023,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 
 			case "selected_line_number:":
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#c5d5ea";
 				}
 
@@ -1045,7 +1045,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "font_size:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					CodeEditor.FONT_SIZE = CodeEditor.DEFAULT_FONT_SIZE;
 					break;
 				}
@@ -1067,7 +1067,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "autocomplete_active:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					CodeEditor.isAutoCompleteActive = true;
 					break;
 				}
@@ -1081,7 +1081,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "automatically_open_tabs:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					CodeEditor.automaticallyOpenTabs = true;
 					break;
 				}
@@ -1095,7 +1095,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "indent_with_spaces:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					CodeEditor.indentSpaces = true;
 					break;
 				}
@@ -1109,7 +1109,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "indent_length:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					CodeEditor.indentLength = 4;
 					break;
 				}
@@ -1123,7 +1123,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "language:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					Main.lang = Language.ENG;
 					break;
 				}
@@ -1141,7 +1141,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "allow_animations:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					Explorer.allowAnimations = true;
 					break;
 				}
@@ -1155,7 +1155,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "force_mac_buttons:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					Main.forceMacButtons = false;
 					break;
 				}
@@ -1169,7 +1169,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "line_ending:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					CodeEditor.lineEnding = LineEnding.LF;
 					break;
 				}
@@ -1187,7 +1187,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "show_unsaved_title_bar:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					CodeEditor.showUnsavedTitleBar = true;
 					break;
 				}
@@ -1201,7 +1201,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "use_antialiasing:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					Fonts.useAntiAliasing = true;
 					break;
 				}
@@ -1215,7 +1215,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "show_caps_lock:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					CodeEditor.showCapsLock = true;
 					break;
 				}
@@ -1229,7 +1229,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "checkout_to_created_branch:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					GitCore.checkoutToCreatedBranch = true;
 					break;
 				}
@@ -1241,7 +1241,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 				
 			case "terminal_prompt:":
-				if (split[1].equals("default") || split[1] == "") {
+				if (split[1].equalsIgnoreCase("default") || split[1] == "") {
 					TerminalCore.prompt = '$';
 					break;
 				}
@@ -1258,7 +1258,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 				
 			case "program_name:":
-				if (split[1].equals("default") || split[1] == "") {
+				if (split[1].equalsIgnoreCase("default") || split[1] == "") {
 					Main.PROGRAM_NAME = "Boot IDE";
 					break;
 				}
@@ -1273,7 +1273,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 				
 			case "font:":
-				if (split[1].equals("default") || split[1] == "") {
+				if (split[1].equalsIgnoreCase("default") || split[1] == "") {
 					Main.fntnr = "/font.png";
 					break;
 				}
@@ -1290,8 +1290,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				break;
 				
 			case "editor_font:":
-				if (split[1].equals("default") || split[1] == "") {
-					Main.fnted = "/editorfont";
+				if (split[1].equalsIgnoreCase("default") || split[1] == "") {
+					Main.fnted = "/editorfont.png";
 					break;
 				}
 				
@@ -1303,7 +1303,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				
 				if (!Main.fnted.startsWith("/"))
 					Main.fnted = "/" + Main.fnted;
-
+				
 				break;
 				
 				// Advanced
@@ -1311,7 +1311,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "line_height_offset:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					CodeEditor.lineHeightOffset = 0;
 					break;
 				}
@@ -1325,7 +1325,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "char_width:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					Fonts.charWidth = Fonts.ACTUAL_CHAR_WIDTH;
 					break;
 				}
@@ -1339,7 +1339,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			case "hanging_letters_offset:":
 				if (!readConfigs) break;
 				
-				if (split[1].equals("default")) {
+				if (split[1].equalsIgnoreCase("default")) {
 					Fonts.hangingLettersOffset = 2;
 					break;
 				}
@@ -1350,7 +1350,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 				break;
 			/*
-			 * case "put_chevrons_on_html_tags:": if (split[1].equals("default")) break;
+			 * case "put_chevrons_on_html_tags:": if (split[1].equalsIgnoreCase("default")) break;
 			 * 
 			 * CodeEditor.putChevronsOnTags = Boolean.valueOf(split[1]);
 			 * 

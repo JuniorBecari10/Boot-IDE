@@ -911,12 +911,12 @@ public class CodeEditor extends IDEComponent {
 				+ (scrY / LINE_HEIGHT);
 		mx = (((MouseInput.getMouseX() - (Main.editor.getX() + off)) / FONT_SIZE) + (scrX / FONT_SIZE));
 
-		while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX < MouseInput
+		while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX < MouseInput
 				.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica
 			// adicionando enquanto for menor
 			mx++;
 
-		while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4))) - scrX > MouseInput
+		while (((Main.editor.getX() + off) + mx * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX > MouseInput
 				.getMouseX()) // detecta se a posiaao real do cursor for menor do que a do cursor e fica
 			// adicionando enquanto for menor
 			mx--;
@@ -942,7 +942,6 @@ public class CodeEditor extends IDEComponent {
 		
 		/// another (one)
 		
-		//realcx = ((x + (FONT_SIZE * 4)) + cursorX * (FONT_SIZE - (FONT_SIZE / 4))) - scrX;
 		realcx = ((x + (FONT_SIZE * 4)) + (cursorX * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth)))) - scrX;
 		realcy = MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY;
 
