@@ -6186,7 +6186,7 @@ public class CodeEditor extends IDEComponent {
 
 		for (Character c : lc) {
 			lines.get(y).getChars().add(c);
-			lines.get(y).getFonts().add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
+			lines.get(y).getFonts().add(new IDEFont(Fonts.otherEditor, FONT_SIZE));
 		}
 	}
 
@@ -6464,7 +6464,7 @@ public class CodeEditor extends IDEComponent {
 		List<IDEFont> fs = new ArrayList<>();
 
 		//chars.add('\0');
-		fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
+		fs.add(new IDEFont(Fonts.otherEditor, FONT_SIZE));
 
 		lines.add(yPos, new IDELine(chars, fs));
 	}
@@ -6477,7 +6477,7 @@ public class CodeEditor extends IDEComponent {
 
 		for (char c : arr) {
 			chars.add(c);
-			fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
+			fs.add(new IDEFont(Fonts.otherEditor, FONT_SIZE));
 		}
 
 		lines.add(yPos, new IDELine(chars, fs));
@@ -8849,8 +8849,7 @@ public class CodeEditor extends IDEComponent {
 				if (minMode)
 					selectingText = selecting && countIndexDistance(index1, index2, line1, line2) > 0 ? (" | " + countIndexDistance(index1, index2, line1, line2)) : "";
 				
-				Fonts.drawString(lowerBarText,
-						x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
+				Fonts.drawString(lowerBarText, x + 10, Main.screen.getHeight() - 20, new IDEFont(Fonts.otherNormal, 16), g);
 			}
 		} catch (Exception e) {}
 	}
