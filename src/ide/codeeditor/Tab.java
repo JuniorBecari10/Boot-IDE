@@ -479,6 +479,8 @@ public class Tab extends IDEComponent implements Serializable {
 	public void saveForced() {
 		if (isReadOnly || Main.editor.lines.isEmpty() || Main.editor.lines == null || readMode != FileReadMode.NORMAL) return;
 		
+		Main.editor.addToUndo();
+		
 		try {
 			Charset ch = Main.editor.codeType.equalsIgnoreCase("UTF-8") ? StandardCharsets.UTF_8 : StandardCharsets.ISO_8859_1;
 			
@@ -516,6 +518,8 @@ public class Tab extends IDEComponent implements Serializable {
 	public int save() {
 		if (!isTemporary) {
 			if (isReadOnly || Main.editor.lines.isEmpty() || Main.editor.lines == null || readMode != FileReadMode.NORMAL) return 1;
+			
+			Main.editor.addToUndo();
 			
 			try {
 				Charset ch = Main.editor.codeType.equalsIgnoreCase("UTF-8") ? StandardCharsets.UTF_8 : StandardCharsets.ISO_8859_1;

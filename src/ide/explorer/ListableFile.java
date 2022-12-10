@@ -1260,7 +1260,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				
 			case "program_name:":
 				if (split[1].equalsIgnoreCase("default") || split[1] == "") {
-					Main.PROGRAM_NAME = "Boot IDE";
+					Main.PROGRAM_NAME = Main.DEFAULT_PROGRAM_NAME;
 					break;
 				}
 				

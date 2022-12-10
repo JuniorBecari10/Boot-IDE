@@ -6176,8 +6176,6 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public void register(StringBuilder cY, int y) { // cY = cursorY
-		addToUndo();
-		
 		String gs = cY.toString(); // gen string
 		char[] ca = gs.toCharArray(); // char array
 
@@ -7237,7 +7235,9 @@ public class CodeEditor extends IDEComponent {
 
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				KeyInput.updateKeys();
-				 CommandTerminal.runCommand("gotocursor");
+				addToUndo();
+				
+				CommandTerminal.runCommand("gotocursor");
 
 				if (RightClickOption.isAutoCompleteActive()) {
 					autocompletes.get(autocompleteindex).command
@@ -7323,6 +7323,8 @@ public class CodeEditor extends IDEComponent {
 
 				if (codeHelpersOn)
 					cY = addCodeHelps(cY);
+				
+				// talvez adicionar no undo quando apertar espaço
 				
 				cY = addExtraCode(cY, c);
 				register(cY, cursorY - 1);
@@ -8329,6 +8331,8 @@ public class CodeEditor extends IDEComponent {
 
 		if (tabs.size() == 0)
 			CommandTerminal.runCommand("resettabscroll");
+		
+		System.out.println(undo.size());
 		
 		if (Main.editor.tabs.isEmpty() && Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) {
 			Explorer.explorerMode = ExplorerMode.EXPLORER;
