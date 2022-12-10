@@ -574,15 +574,20 @@ public class TextArea extends IDEComponent {
 		}
 		
 		int cursorX = this.cursorX;
-		// talvez calcular o cursory por um loop while pela posição x
+		int cursorY = this.lines.length - 1;
+		
+		while (cursorX > maxChars) {
+			cursorX -= maxChars;
+			cursorY++;
+		}
 		
 		if (Main.editor.showCursor && Explorer.selected == this
-				&& y + 5 + ((lines.length - 1) * (fontSize + MARGIN)) - scrollY > y - fontSize + 4 
+				&& y + 5 + (cursorY * (fontSize + MARGIN)) - scrollY > y - fontSize + 4 
 				&& x + 5 + ((fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) * cursorX) - scrollX > x 
 				&& x + 5 + ((fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) * cursorX) - scrollX < width
-				&& y + 5 + ((lines.length - 1) * (fontSize + MARGIN)) - scrollY < height) {
+				&& y + 5 + (cursorY * (fontSize + MARGIN)) - scrollY < height) {
 			g.setColor(Colors.other);
-			g.fillRect(x + 5 + ((fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) * cursorX) - scrollX, y + 5 + (fontSize + MARGIN) * (lines.length - 1) - scrollY, fontSize < 13 ? 1 : 2, fontSize + MARGIN);
+			g.fillRect(x + 5 + ((fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) * cursorX) - scrollX, y + 5 + (fontSize + MARGIN) * cursorY - scrollY, fontSize < 13 ? 1 : 2, fontSize + MARGIN);
 		}
 		
 		g.setColor(Colors.explorerLight);
