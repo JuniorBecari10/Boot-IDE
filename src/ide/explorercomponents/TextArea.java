@@ -187,6 +187,10 @@ public class TextArea extends IDEComponent {
 				text.insert(cursorX, CodeEditor.clipboard);
 				cursorX += CodeEditor.clipboard.length();
 			}
+			
+			lines[lines.length - 1] = new String(text.toString());
+			setCursorWithinBounds();
+			return;
 		}
 		
 		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_X) { // Ctrl + X - Recortar (Tudo)
