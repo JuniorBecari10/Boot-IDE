@@ -426,10 +426,12 @@ public class GitCore {
 					
 					text = Texts.push;
 					
-					if (Explorer.gitStatus.remoteRepos.length == 0)
-						enabled = false;
-					else
-						enabled = true;
+					if (Explorer.gitStatus != null) {
+						if (Explorer.gitStatus.remoteRepos.length == 0)
+							enabled = false;
+						else
+							enabled = true;
+					}
 				}
 			};
 		}

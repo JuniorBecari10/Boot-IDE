@@ -1178,25 +1178,24 @@ public class CodeEditor extends IDEComponent {
 
 		new Thread("automaticColor") { // quando vc deleta as linhas ou fecha as tabs isso (exception) acontece mesmo
 			public void run() {
-				if (editing != null && editing.getRegent() != null && editing.getRegent().getRegent() != null) {
-					int i = 0;
-					for (IDELine l : lines) {
-						int yr = MIN_Y + (i++ * LINE_HEIGHT) - scrY;
-						
-						if (yr < 0 || yr > Main.screen.getHeight())
-							continue;
-						
-						if (editing != null && editing.closing)
-							break;
+				if (editing == null || editing.getRegent() == null || editing.getRegent().getRegent() == null) return;
+					
+				int i = 0;
+				for (IDELine l : lines) {
+					int yr = MIN_Y + (i++ * LINE_HEIGHT) - scrY;
+					
+					if (yr < 0 || yr > Main.screen.getHeight())
+						continue;
+					
+					if (editing != null && editing.closing)
+						break;
 
-						l.setFonts(automaticColor(toCharArray(l.getChars()),
-								ListableFile.getFileExtension(editing.getRegent().getRegent())));
+					l.setFonts(automaticColor(toCharArray(l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
 
-						if (editing != null && editing.closing)
-							break;
-					}
-					restartVariables();
+					if (editing != null && editing.closing)
+						break;
 				}
+				restartVariables();
 			}
 		}.start();
 		
