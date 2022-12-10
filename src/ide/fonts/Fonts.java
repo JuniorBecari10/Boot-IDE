@@ -767,8 +767,8 @@ public class Fonts {
     	for (int i = 0; i < text.length; i++) {
     		char ch = c[i];
     		
-    		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) < minX) continue; // TODO talvez aumentar ou diminuir o espaaamento entre letras por parte do usuario, ou nao sla
-    		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4)) * i)) > maxX) break;
+    		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4) - (ACTUAL_CHAR_WIDTH - charWidth)) * i)) < minX) continue; // TODO talvez aumentar ou diminuir o espaaamento entre letras por parte do usuario, ou nao sla
+    		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4) - (ACTUAL_CHAR_WIDTH - charWidth)) * i)) > maxX) break;
     		
     		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + Fonts.hangingLettersOffset : y;
     		ydraw -= yOffset;
