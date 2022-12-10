@@ -6402,6 +6402,8 @@ public class CodeEditor extends IDEComponent {
 		if (editing == null)
 			return;
 
+		addToUndo();
+		
 		CommandTerminal.runCommand("del"); // se colar deleta o que ta selecionado
 
 		String[] sp = clipboard.split("\n");
@@ -7270,10 +7272,11 @@ public class CodeEditor extends IDEComponent {
 				List<IDEFont> fs = new ArrayList<>();
 
 				for (int i = 0; i < s.length(); i++)
-					fs.add(new IDEFont(Fonts.otherNormal, FONT_SIZE));
+					fs.add(new IDEFont(Fonts.otherEditor, FONT_SIZE));
 
 				lines.add(cursorY, new IDELine(toCharList(s.toCharArray()), fs));
-
+				
+				CommandTerminal.runCommand("del");
 				register(cY, cursorY - 1);
 
 				editing.setSaved(false);
