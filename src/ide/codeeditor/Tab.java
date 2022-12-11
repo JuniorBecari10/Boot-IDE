@@ -729,6 +729,8 @@ public class Tab extends IDEComponent implements Serializable {
 		if (Main.editor.editing != null && !Main.editor.editing.isSaved())
 			Main.editor.editing.saveForced(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
 		
+		CommandTerminal.runCommand("resetundoredo");
+		
 		Main.editor.wordSinceSpace = "";
 		RightClickOption.removeAllRightClickOptions();
 		

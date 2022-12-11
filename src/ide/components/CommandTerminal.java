@@ -247,20 +247,6 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "resetundoredo":
-				/*if (Main.editor.cursorThread.isAlive() || Main.editor.cursorThread.getState() != State.TERMINATED) {
-					try {
-						Main.editor.cursorThread.interrupt();
-					} catch (Exception e) {} // usar somente quando necessario
-				}
-				
-				Main.editor.cursorThread = new Thread() {
-					public void run() {
-						Main.editor.cursor.play();
-					}
-				};
-				
-				Main.editor.cursorThread.start();*/
-				
 				Main.editor.undo.clear();
 				Main.editor.redo.clear();
 				
@@ -325,6 +311,8 @@ public class CommandTerminal extends IDEComponent {
 				if (Main.editor.editing == null) break;
 				if (!Main.editor.selecting) break;
 				if (Main.editor.isReadOnly) break;
+				
+				Main.editor.addToUndo();
 				
 				try {
 					StringBuilder s = new StringBuilder(new String(CodeEditor.toCharArray(Main.editor.lines.get(Main.editor.line1 - 1).getChars())));

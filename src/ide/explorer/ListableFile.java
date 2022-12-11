@@ -1746,6 +1746,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		if ((!CodeEditor.automaticallyOpenTabs && isAutomatic) || file == null)
 			return;
 		
+		CommandTerminal.runCommand("resetundoredo");
+		
 		if (Main.editor.editing != null)
 			Main.editor.editing.save();
 		
@@ -1931,43 +1933,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			}
 
 			if (regent.isFile() && Main.editor.tabs != null) {
-				int lastX = Main.editor.tabs.size() > 0 ? Main.editor.tabs.get(Main.editor.tabs.size() - 1).getX()
-						: Tab.MIN_X;
-
-				new Thread() {
-					public void run() {
-						try {
-							Main.editor.lines = Main.editor.readFile(regent);
-						} catch (IOException e) { // nao suportado, se caiu aqui
-							return;
-						}
-					}
-				}.start();
-
-				Tab toAdd = new Tab((lastX + Tab.WIDTH) + 3, this);
-
-				Main.editor.cursorX = 0;
-				Main.editor.cursorY = 1;
-
-				Main.editor.scrX = 0;
-				Main.editor.scrY = 0;
-
-				Main.editor.isMultilineCommenting = false;
-				Main.editor.isAnotherIteration = false;
-				
-				Main.editor.wordSinceSpace = "";
-
-				for (Tab t : Main.editor.tabs)
-					if (t.getRegent().getRegent().getPath().equals(this.regent.getPath())) {
-						Main.editor.editing = t;
-
-						return;
-					}
-
-				Main.editor.wordSinceSpace = "";
-
-				Main.editor.toAdd.add(toAdd);
-				Main.editor.editing = toAdd;
+				addTab(this, false);
 			}
 		}
 

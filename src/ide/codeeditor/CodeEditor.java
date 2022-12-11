@@ -8287,21 +8287,9 @@ public class CodeEditor extends IDEComponent {
 					
 					// colocar a string no undo
 					undo.push(list);
-				}/* catch (OutOfMemoryError e) {
-					// clean list, except last MAX_UNDOS
-					List<String> u = new ArrayList<>(undo.subList(undo.size() - MAX_UNDOS < 0 ? 0 : undo.size() - MAX_UNDOS, undo.size()));
-					List<String> r = new ArrayList<>(redo.subList(redo.size() - MAX_UNDOS < 0 ? 0 : redo.size() - MAX_UNDOS, redo.size()));
-					
-					undo = new Stack<>();
-					redo = new Stack<>();
-					
-					undo.addAll(u);
-					redo.addAll(r);
-					
+				} catch (Exception a) {
 					return;
-				} */catch (Exception a) {
-					return;
-				} finally {
+				}/* finally {
 					if (undo.size() > MAX_UNDOS) {
 						List<String> u = new ArrayList<>(undo.subList(undo.size() - MAX_UNDOS < 0 ? 0 : undo.size() - MAX_UNDOS, undo.size()));
 						List<String> r = new ArrayList<>(redo.subList(redo.size() - MAX_UNDOS < 0 ? 0 : redo.size() - MAX_UNDOS, redo.size()));
@@ -8312,7 +8300,7 @@ public class CodeEditor extends IDEComponent {
 						undo.addAll(u);
 						redo.addAll(r);
 					}
-				}
+				}*/
 			}
 		}.start();
 	}
@@ -8333,6 +8321,8 @@ public class CodeEditor extends IDEComponent {
 
 		if (tabs.size() == 0)
 			CommandTerminal.runCommand("resettabscroll");
+		
+		//System.out.println(undo.size());
 		
 		if (Main.editor.tabs.isEmpty() && Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) {
 			Explorer.explorerMode = ExplorerMode.EXPLORER;
