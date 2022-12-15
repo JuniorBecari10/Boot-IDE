@@ -13,14 +13,16 @@ import ide.util.Colors;
 
 public class CustomMessageBox extends IDEComponent {
 	
-	public static boolean active = false;
-	
 	private List<IDEComponent> innerComponents;
 	private boolean closing = false;
 	
-	private CustomMessageBox(int width, int height, List<IDEComponent> innerComponents) {
+	protected CustomMessageBox(int width, int height, List<IDEComponent> innerComponents) {
 		super(Main.screen.getWidth() / 4, Screen.DECORATION_HEIGHT - Main.screen.getHeight() / 4, width, height, null);
-		active = true;
+		MessageBox.active = true;
+		
+		if (innerComponents == null) {
+			throw new IllegalArgumentException("The components lost cannot be null!");
+		}
 		
 		this.innerComponents = innerComponents;
 		
@@ -58,13 +60,13 @@ public class CustomMessageBox extends IDEComponent {
 	
 		if (y <= Screen.DECORATION_HEIGHT - Main.screen.getHeight() / 4 - 1) {
 			IDEComponent.toRemove.add(this);
-			active = false;
+			MessageBox.active = false;
 		}
 	}
 	
 	// Shows up a dialog and returns the name of the clicked button
 	public static void showDialog(int width, int height, List<IDEComponent> innerComponents) {
-		if (active) return;
+		if (MessageBox.active) return;
 		
 		CustomMessageBox box = new CustomMessageBox(width, height, components);
 		

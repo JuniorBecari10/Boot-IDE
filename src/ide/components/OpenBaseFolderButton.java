@@ -5,8 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.swing.JFileChooser;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
@@ -15,6 +13,7 @@ import ide.explorercomponents.SetBranchName;
 import ide.explorercomponents.SetCommitName;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.screen.Screen;
 import ide.util.Colors;
 import ide.util.Texts;
 
@@ -25,21 +24,14 @@ public class OpenBaseFolderButton extends IDEComponent {
 	public OpenBaseFolderButton(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			
-			chooser = new JFileChooser();
-			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
+		//chooser = new JFileChooser();
+		//chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 	}
 	
 	public void tick() {
 		if (CommandTerminal.expOff || Explorer.explorerMode != ExplorerMode.EXPLORER) return;
 		
-		chooser.setDialogTitle(Texts.selectBaseFolder + "...");
+		//chooser.setDialogTitle(Texts.selectBaseFolder + "...");
 		
 		super.tick();
 		
@@ -51,9 +43,16 @@ public class OpenBaseFolderButton extends IDEComponent {
 	}
 	
 	public static void openBaseFolder() {
-		chooser.setCurrentDirectory(Main.baseFolder != null ? Main.baseFolder : new File(Main.userDir));
-		int option = chooser.showOpenDialog(Main.screen.frame);
-
+		//chooser.setCurrentDirectory(Main.baseFolder != null ? Main.baseFolder : new File(Main.userDir));
+		//int option = chooser.showOpenDialog(Main.screen.frame);
+		int option = 0;
+		
+		FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(Main.userDir), true, Texts.selectBaseFolder + "...");
+		int a = 0;
+		
+		if (a == 0)
+			return;
+		
 		if (option == JFileChooser.APPROVE_OPTION) {
 			if (chooser.getSelectedFile() == null || chooser.getSelectedFile().listFiles() == null) return;
 			
