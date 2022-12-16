@@ -13,7 +13,6 @@ import ide.explorercomponents.SetBranchName;
 import ide.explorercomponents.SetCommitName;
 import ide.input.MouseInput;
 import ide.main.Main;
-import ide.screen.Screen;
 import ide.util.Colors;
 import ide.util.Texts;
 

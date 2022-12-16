@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import ide.main.Main;
-import ide.screen.Screen;
 
 public class FileChooser extends CustomMessageBox {
 	
@@ -12,8 +11,10 @@ public class FileChooser extends CustomMessageBox {
 	public boolean onlyDirs;
 	public String title;
 	
+	public static int HEIGHT = Main.screen.getHeight() - (Main.screen.getHeight() / 4);
+	
 	private FileChooser(File folder, boolean onlyDirs, String title) {
-		super(Main.screen.getWidth() / 4, Screen.DECORATION_HEIGHT - Main.screen.getHeight() / 4, new ArrayList<>());
+		super(Main.screen.getWidth() - (Main.screen.getWidth() / 4), HEIGHT, new ArrayList<>());
 		
 		this.folder = folder;
 		this.onlyDirs = onlyDirs;

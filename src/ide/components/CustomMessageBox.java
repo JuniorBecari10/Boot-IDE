@@ -17,11 +17,12 @@ public class CustomMessageBox extends IDEComponent {
 	private boolean closing = false;
 	
 	protected CustomMessageBox(int width, int height, List<IDEComponent> innerComponents) {
-		super(Main.screen.getWidth() / 4, Screen.DECORATION_HEIGHT - Main.screen.getHeight() / 4, width, height, null);
+		super((Main.screen.getWidth() / 2) - (width / 2), Screen.DECORATION_HEIGHT - height, width, height, null);
+		
 		MessageBox.active = true;
 		
 		if (innerComponents == null) {
-			throw new IllegalArgumentException("The components lost cannot be null!");
+			throw new IllegalArgumentException("The components list cannot be null!");
 		}
 		
 		this.innerComponents = innerComponents;
@@ -29,7 +30,7 @@ public class CustomMessageBox extends IDEComponent {
 		new Thread() {
 			public void run() {
 				while (y < Screen.DECORATION_HEIGHT) {
-					y++;
+					y += 2;
 					Main.canRunLoop = true;
 					
 					try {
@@ -45,7 +46,7 @@ public class CustomMessageBox extends IDEComponent {
 	public void close() {
 		new Thread() {
 			public void run() {
-				while (y > Screen.DECORATION_HEIGHT - Main.screen.getHeight() / 4 - 1) {
+				while (y > Screen.DECORATION_HEIGHT - height - 1) {
 					y--;
 					Main.canRunLoop = true;
 					
@@ -58,7 +59,7 @@ public class CustomMessageBox extends IDEComponent {
 			}
 		}.start();
 	
-		if (y <= Screen.DECORATION_HEIGHT - Main.screen.getHeight() / 4 - 1) {
+		if (y <= Screen.DECORATION_HEIGHT - height - 1) {
 			IDEComponent.toRemove.add(this);
 			MessageBox.active = false;
 		}
