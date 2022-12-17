@@ -3,9 +3,12 @@ package ide.explorercomponents;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
+import ide.components.RightClickOption;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.util.Colors;
@@ -23,11 +26,25 @@ public class ComboBox extends IDEComponent {
 		this.options = options;
 		this.editable = editable;
 		
-		text = new StringBuilder("Documents");
+		if (options == null || options.length == 0)
+			text = new StringBuilder();
+		else
+			text = new StringBuilder(options[0]);
 	}
 	
 	public void tick() {
-		
+		if (leftClicked()) {
+			List<RightClickOption> list = new ArrayList<>();
+			
+			boolean isTop = true;
+			
+			for (String s : options) {
+				list.add(new RightClickOption(0, 0, width, s, (a) -> {  }, "", isTop));
+				isTop = false;
+			}
+			
+			IDEComponent.addRightClickOptions(x, y + height, list.toArray(new RightClickOption[0]));
+		}
 	}
 	
 	public void render(Graphics g) {
