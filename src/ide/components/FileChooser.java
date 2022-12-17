@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import ide.codeeditor.CodeEditor;
+import ide.explorercomponents.ComboBox;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.main.Main;
@@ -23,6 +24,8 @@ public class FileChooser extends CustomMessageBox {
 		this.folder = folder;
 		this.onlyDirs = onlyDirs;
 		this.title = title;
+		
+		innerComponents.add(new ComboBox(x + ((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - ( Main.screen.getWidth() / 8), y + 60, Main.screen.getWidth() / 4, 30, null, true));
 	}
 	
 	

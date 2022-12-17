@@ -13,7 +13,7 @@ import ide.util.Colors;
 
 public class CustomMessageBox extends IDEComponent {
 	
-	private List<IDEComponent> innerComponents;
+	protected List<IDEComponent> innerComponents;
 	private boolean closing = false;
 	
 	protected CustomMessageBox(int width, int height, List<IDEComponent> innerComponents) {
@@ -31,6 +31,10 @@ public class CustomMessageBox extends IDEComponent {
 			public void run() {
 				while (y < Screen.DECORATION_HEIGHT) {
 					y += 2;
+					
+					for (IDEComponent c : innerComponents)
+						c.y += 2;
+					
 					Main.canRunLoop = true;
 					
 					try {
@@ -48,6 +52,10 @@ public class CustomMessageBox extends IDEComponent {
 			public void run() {
 				while (y > Screen.DECORATION_HEIGHT - height - 1) {
 					y--;
+					
+					for (IDEComponent c : innerComponents)
+						c.y--;
+					
 					Main.canRunLoop = true;
 					
 					try {
