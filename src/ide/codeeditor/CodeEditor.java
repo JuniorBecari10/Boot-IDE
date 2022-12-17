@@ -858,6 +858,9 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public synchronized void scrollLogic() {
+		if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added || SetCommitName.added || MessageBox.active)
+			return;
+		
 		Main.editor.scroll();
 		Main.editor.scrollTabs();
 	}
@@ -8030,6 +8033,9 @@ public class CodeEditor extends IDEComponent {
 	}
 
 	public void scrollTabs() {
+		if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added || SetCommitName.added || MessageBox.active)
+			return;
+		
 		if (MouseInput.hovered(x, Screen.DECORATION_HEIGHT, Main.screen.getWidth(), Tab.HEIGHT) && tabs != null && tabs.size() > 0) {
 			if (MouseInput.isMouseRolling()) {
 				if (MouseInput.wheelUp() && tabScr < 0) {
@@ -8051,6 +8057,9 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public void scroll() {
+		if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added || SetCommitName.added || MessageBox.active)
+			return;
+		
 		if (MouseInput.isMouseRolling()) { // resolver isso aqui
 			//new Thread("scroll") {
 				//public void run() {
