@@ -8,9 +8,11 @@ import javax.swing.filechooser.FileSystemView;
 
 import ide.codeeditor.CodeEditor;
 import ide.explorercomponents.ComboBox;
+import ide.explorercomponents.ExecuteButtonIcon;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.main.Main;
+import ide.util.Texts;
 
 public class FileChooser extends CustomMessageBox {
 	
@@ -21,6 +23,8 @@ public class FileChooser extends CustomMessageBox {
 	public boolean onlyDirs;
 	public String title;
 	
+	public ComboBox folderScope;
+	
 	public static int HEIGHT = Main.screen.getHeight() - (Main.screen.getHeight() / 4);
 	
 	private FileChooser(File folder, boolean onlyDirs, String title) {
@@ -30,14 +34,16 @@ public class FileChooser extends CustomMessageBox {
 		this.onlyDirs = onlyDirs;
 		this.title = title;
 		
-		innerComponents.add(
-				new ComboBox(
-						x + ((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - (Main.screen.getWidth() / 6),
-						y + 60,
-						Main.screen.getWidth() / 3,
-						30,
-						new String[] { DEFAULT_FOLDER, HOME_FOLDER },
-						true));
+		folderScope = new ComboBox(
+				x + ((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - (Main.screen.getWidth() / 6),
+				y + 60,
+				Main.screen.getWidth() / 3,
+				30,
+				new String[] { DEFAULT_FOLDER, HOME_FOLDER },
+				true);
+		
+		innerComponents.add(folderScope);
+		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> {  }, Texts.createFolder));
 	}
 	
 	
