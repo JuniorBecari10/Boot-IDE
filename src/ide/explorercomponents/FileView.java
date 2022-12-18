@@ -53,6 +53,10 @@ public class FileView extends IDEComponent {
 		}
 	}
 	
+	public void scroll() {
+		
+	}
+	
 	public void tick() {
 		int i = 0;
 		for (FileViewFile f : files) {

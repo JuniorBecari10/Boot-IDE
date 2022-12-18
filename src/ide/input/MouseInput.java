@@ -380,6 +380,8 @@ public final class MouseInput extends MouseInputAdapter {
 		if (hovered(0, TerminalTab.Y_EXPLORER, Main.explorer.getWidth(), TerminalTab.HEIGHT))
 			TerminalCore.scroll();
 		
+		
+		
 		if (Main.main != null)
 	        Main.main.mainLogic();
     }
