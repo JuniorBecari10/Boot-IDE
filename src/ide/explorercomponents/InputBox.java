@@ -139,10 +139,11 @@ public class InputBox extends IDEComponent {
 	
 	public void render(Graphics g) {
 		g.setColor(Colors.explorerLighter);
-		g.fillRect(x - 2, y - 2, width + 4, height + 4);
+		//g.fillRect(x - 2, y - 2, width + 4, height + 4);
+		g.fillRect(x, y + height + 2, width, 2);
 		
-		g.setColor(hovered() ? Colors.explorerLighter : Colors.explorerLight);
-		g.fillRect(x, y, width, height);
+		g.setColor(hovered() ? Colors.explorerLight : Colors.explorer);
+		g.fillRect(x, y, width, height + 2);
 		
 		Fonts.drawString(getText(), (x + 2) - scroll, y + 2, new IDEFont(Fonts.otherNormal, 16), x, x + width, g);
 		
