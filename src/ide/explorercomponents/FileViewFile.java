@@ -25,6 +25,6 @@ public class FileViewFile extends IDEComponent {
 		g.fillRect(x, y, width, height);
 		
 		g.drawImage(ListableFile.getFileIcon(regent.getName()), x + 5, y, height, height, null);
-		Fonts.drawString(regent.getName(), x + 40, y + ((height / 2) - (CodeEditor.DEFAULT_FONT_SIZE / 2)), new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), x, g);
+		Fonts.drawString(regent.getName(), x + 50, y + ((height / 2) - (CodeEditor.DEFAULT_FONT_SIZE / 2)) - 2, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), x + width, g);
 	}
 }

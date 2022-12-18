@@ -13,6 +13,7 @@ public class FileView extends IDEComponent {
 	@SuppressWarnings("unused")
 	private File folder;
 	private List<FileViewFile> files;
+	private int scroll = 0;
 	
 	public static final int FILE_HEIGHT = 30;
 	
@@ -28,15 +29,20 @@ public class FileView extends IDEComponent {
 		
 		int i = 0;
 		for (File f : folder.listFiles()) {
-			files.add(new FileViewFile(x, y + (i * FILE_HEIGHT), width, FILE_HEIGHT, f));
+			files.add(new FileViewFile(x, y + (i * FILE_HEIGHT) - scroll, width, FILE_HEIGHT, f));
 			
 			i++;
 		}
 	}
 	
 	public void tick() {
-		for (FileViewFile f : files)
+		int i = 0;
+		for (FileViewFile f : files) {
+			f.setY(y + (i * FILE_HEIGHT) - scroll);
+			
 			f.tick();
+			i++;
+		}
 	}
 	
 	public void render(Graphics g) {
