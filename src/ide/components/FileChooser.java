@@ -12,6 +12,7 @@ import ide.explorercomponents.ExecuteButtonIcon;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.main.Main;
+import ide.util.Colors;
 import ide.util.Texts;
 
 public class FileChooser extends CustomMessageBox {
@@ -43,7 +44,9 @@ public class FileChooser extends CustomMessageBox {
 				true);
 		
 		innerComponents.add(folderScope);
-		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> {  }, Texts.createFolder));
+		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> {  }, true, Texts.createFolder));
+		innerComponents.add(new ExecuteButtonIcon(x + 60, y + 120, 32, 32, Main.folderUp, () -> {  }, true, Texts.oneFolderUp));
+		innerComponents.add(new ExecuteButtonIcon(x + 100, y + 120, 32, 32, Main.reloadSpr, () -> {  }, true, Texts.reload));
 	}
 	
 	
@@ -59,6 +62,8 @@ public class FileChooser extends CustomMessageBox {
 		super.render(g);
 		
 		Fonts.drawString(title, (Main.screen.frame.getWidth() / 2) - (title.length() * (CodeEditor.DEFAULT_FONT_SIZE - 4)) / 2, y + 10, new IDEFont(Fonts.lightGrayNormal, 16), g);
+		
+		g.setColor(Colors.textLight);
 		g.drawLine(x + 15, y + 40, x + width - 15, y + 40);
 		
 	}

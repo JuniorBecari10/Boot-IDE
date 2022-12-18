@@ -422,8 +422,6 @@ public class Main implements Runnable, Tickable {
 	        
 	        IDEComponent.components.add(logo);
 	        
-	        IDEComponent.components.add(openBase);
-	        
 	        if (settingsFile.exists())
 	    		readFile(settingsFile);
 	        
@@ -446,15 +444,17 @@ public class Main implements Runnable, Tickable {
 	        TopComponent.topComponents.add(minimizeWindow);
 	        
 	        ListableFile.updateTypes();
-	        
-	        IDEComponent.toAdd.add(Main.newFile);
-			IDEComponent.toAdd.add(Main.newFolder);
-			IDEComponent.toAdd.add(Main.oneFolder);
-			IDEComponent.toAdd.add(Main.returnBase);
-			IDEComponent.toAdd.add(Main.reload);
 			
-			IDEComponent.toAdd.add(settingsButton);
-			IDEComponent.toAdd.add(moreOptions);
+	        IDEComponent.toAdd.add(moreOptions);
+	        IDEComponent.toAdd.add(settingsButton);
+	        
+			IDEComponent.toAdd.add(Main.reload);
+			IDEComponent.toAdd.add(Main.returnBase);
+			IDEComponent.toAdd.add(Main.oneFolder);
+			IDEComponent.toAdd.add(Main.newFolder);
+			IDEComponent.toAdd.add(Main.newFile);
+			
+			IDEComponent.components.add(openBase);
 			
 			Explorer.fetchStatus();
 			
