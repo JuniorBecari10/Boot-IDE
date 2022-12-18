@@ -10,11 +10,11 @@ import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.util.Colors;
 
-public class FileChooserFile extends IDEComponent {
+public class FileViewFile extends IDEComponent {
 
 	public File regent;
 	
-	public FileChooserFile(int x, int y, int width, int height, File regent) {
+	public FileViewFile(int x, int y, int width, int height, File regent) {
 		super(x, y, width, height, null);
 		
 		this.regent = regent;

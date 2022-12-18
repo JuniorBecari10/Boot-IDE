@@ -9,6 +9,7 @@ import javax.swing.filechooser.FileSystemView;
 import ide.codeeditor.CodeEditor;
 import ide.explorercomponents.ComboBox;
 import ide.explorercomponents.ExecuteButtonIcon;
+import ide.explorercomponents.FileView;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.main.Main;
@@ -44,6 +45,9 @@ public class FileChooser extends CustomMessageBox {
 				true);
 		
 		innerComponents.add(folderScope);
+		
+		innerComponents.add(new FileView(x + 15, y + 200, width - 30, FileView.FILE_HEIGHT * 7, folder));
+		
 		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> {  }, true, Texts.createFolder));
 		innerComponents.add(new ExecuteButtonIcon(x + 60, y + 120, 32, 32, Main.folderUp, () -> {  }, true, Texts.oneFolderUp));
 		innerComponents.add(new ExecuteButtonIcon(x + 100, y + 120, 32, 32, Main.reloadSpr, () -> {  }, true, Texts.reload));
@@ -66,10 +70,5 @@ public class FileChooser extends CustomMessageBox {
 		// linha abaixo do titulo
 		g.setColor(Colors.textLight);
 		g.drawLine(x + 15, y + 40, x + width - 15, y + 40);
-		
-		// linha acima dos arquivos
-		g.setColor(Colors.textLight);
-		g.drawLine(x + 15, y + 170, x + width - 15, y + 170);
-		
 	}
 }
