@@ -26,6 +26,7 @@ public class FileChooser extends CustomMessageBox {
 	public String title;
 	
 	public ComboBox folderScope;
+	public FileView fileView;
 	
 	public static int HEIGHT = Main.screen.getHeight() - (Main.screen.getHeight() / 4);
 	
@@ -44,13 +45,15 @@ public class FileChooser extends CustomMessageBox {
 				new String[] { folder.getPath(), DEFAULT_FOLDER, HOME_FOLDER },
 				true);
 		
+		fileView = new FileView(x + 15, y + 180, width - 30, FileView.FILE_HEIGHT * 8, folder, onlyDirs);
+		
 		innerComponents.add(folderScope);
 		
-		innerComponents.add(new FileView(x + 15, y + 180, width - 30, FileView.FILE_HEIGHT * 8, folder));
+		innerComponents.add(fileView);
 		
 		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> {  }, true, Texts.createFolder));
-		innerComponents.add(new ExecuteButtonIcon(x + 60, y + 120, 32, 32, Main.folderUp, () -> {  }, true, Texts.oneFolderUp));
-		innerComponents.add(new ExecuteButtonIcon(x + 100, y + 120, 32, 32, Main.reloadSpr, () -> {  }, true, Texts.reload));
+		innerComponents.add(new ExecuteButtonIcon(x + 60, y + 120, 32, 32, Main.folderUp, () -> { fileView.setFolder(fileView.getFolder().getParentFile()); }, true, Texts.oneFolderUp));
+		innerComponents.add(new ExecuteButtonIcon(x + 100, y + 120, 32, 32, Main.reloadSpr, () -> { fileView.setFolder(fileView.getFolder()); }, true, Texts.reload));
 	}
 	
 	
