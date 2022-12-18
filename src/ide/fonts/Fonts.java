@@ -770,8 +770,11 @@ public class Fonts {
     		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4) - (ACTUAL_CHAR_WIDTH - charWidth)) * i)) < minX) continue; // TODO talvez aumentar ou diminuir o espaaamento entre letras por parte do usuario, ou nao sla
     		if ((x + ((fonts[i].getSize() - (fonts[i].getSize() / 4) - (ACTUAL_CHAR_WIDTH - charWidth)) * i)) > maxX) break;
     		
-    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'ý' || ch == 'j' || ch == ',' || ch == ';' || ch == 'ç' || ch == 'Ç' ? y + Fonts.hangingLettersOffset : y;
+    		int ydraw = ch == 'p' || ch == 'q' || ch == 'g'  || ch == 'y' || ch == 'ý' || ch == 'j' || ch == 'ç' || ch == 'Ç' ? y + Fonts.hangingLettersOffset : y;
     		ydraw -= yOffset;
+    		
+    		if (ch == ',')
+    			ydraw = y + Fonts.hangingLettersOffset;
     		
     		BufferedImage chr = text[i];
     		

@@ -46,7 +46,7 @@ public class FileChooser extends CustomMessageBox {
 		
 		innerComponents.add(folderScope);
 		
-		innerComponents.add(new FileView(x + 15, y + 200, width - 30, FileView.FILE_HEIGHT * 7, folder));
+		innerComponents.add(new FileView(x + 15, y + 180, width - 30, FileView.FILE_HEIGHT * 8, folder));
 		
 		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> {  }, true, Texts.createFolder));
 		innerComponents.add(new ExecuteButtonIcon(x + 60, y + 120, 32, 32, Main.folderUp, () -> {  }, true, Texts.oneFolderUp));
