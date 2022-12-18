@@ -28,7 +28,7 @@ public class FileView extends IDEComponent {
 		
 		int i = 0;
 		for (File f : folder.listFiles()) {
-			files.add(new FileViewFile(x, y + (i * 30), width, FILE_HEIGHT, f));
+			files.add(new FileViewFile(x, y + (i * FILE_HEIGHT), width, FILE_HEIGHT, f));
 			
 			i++;
 		}
