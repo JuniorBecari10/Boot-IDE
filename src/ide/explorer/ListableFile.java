@@ -3,6 +3,7 @@ package ide.explorer;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -1861,6 +1862,20 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		return false;
 	}
 	
+	public static Image getFileIcon(String filename) {
+		for (FileType f : types) {
+			if (f.getExtension().equalsIgnoreCase(getFileExtension(filename))) {
+				return f.getIcon();
+			}
+
+			else if (f.getExtension().equalsIgnoreCase(filename)) {
+				return f.getIcon();
+			}
+		}
+		
+		return Main.spritesheet.getSprite(0, 64, 16, 16);
+	}
+	
 	public void tick() {
 		if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added
 				|| MouseInput.hovered(Main.explorer.getX() + Main.explorer.getWidth() - 5, Main.explorer.getY(), 10,
@@ -2023,22 +2038,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		} else if (regent.isFile()) {
 			Fonts.drawString(name, x + 40, y + 4, new IDEFont(Fonts.lightGrayNormal, 16), width, g);
 
-			String extension = getFileExtension(regent);
-
-			for (FileType f : types) {
-				if (f.getExtension().equalsIgnoreCase(extension)) {
-					g.drawImage(f.getIcon(), x + 5, y, height, height, null);
-
-					return;
-				}
-
-				else if (f.getExtension().equalsIgnoreCase(regent.getName())) {
-					g.drawImage(f.getIcon(), x + 5, y, height, height, null);
-
-					return;
-				}
-			}
-			g.drawImage(Main.spritesheet.getSprite(0, 64, 16, 16), x + 5, y, height, height, null);
+			g.drawImage(ListableFile.getFileIcon(regent.getName()), x + 5, y, height, height, null);
 		}
 		
 		if (regent.isHidden()/* || (copy != null && copy.equals(regent) && cutFlag)*/) {

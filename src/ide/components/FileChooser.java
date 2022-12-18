@@ -40,7 +40,7 @@ public class FileChooser extends CustomMessageBox {
 				y + 60,
 				Main.screen.getWidth() / 3,
 				30,
-				new String[] { DEFAULT_FOLDER, HOME_FOLDER },
+				new String[] { folder.getPath(), DEFAULT_FOLDER, HOME_FOLDER },
 				true);
 		
 		innerComponents.add(folderScope);
@@ -63,8 +63,13 @@ public class FileChooser extends CustomMessageBox {
 		
 		Fonts.drawString(title, (Main.screen.frame.getWidth() / 2) - (title.length() * (CodeEditor.DEFAULT_FONT_SIZE - 4)) / 2, y + 10, new IDEFont(Fonts.lightGrayNormal, 16), g);
 		
+		// linha abaixo do titulo
 		g.setColor(Colors.textLight);
 		g.drawLine(x + 15, y + 40, x + width - 15, y + 40);
+		
+		// linha acima dos arquivos
+		g.setColor(Colors.textLight);
+		g.drawLine(x + 15, y + 170, x + width - 15, y + 170);
 		
 	}
 }
