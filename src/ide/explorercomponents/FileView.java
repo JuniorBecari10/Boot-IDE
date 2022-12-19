@@ -11,8 +11,8 @@ import ide.util.Colors;
 
 public class FileView extends IDEComponent {
 
-	@SuppressWarnings("unused")
 	private File folder;
+	private File folderScheduled;
 	public boolean onlyDirs;
 	
 	private List<FileViewFile> files;
@@ -33,6 +33,17 @@ public class FileView extends IDEComponent {
 		return folder;
 	}
 	
+	public void scheduleSetFolder(File folder) {
+		folderScheduled = folder;
+	}
+	
+	public void performScheduled() {
+		if (folderScheduled == null) return;
+		
+		setFolder(folderScheduled);
+		folderScheduled = null;
+	}
+	
 	public void setFolder(File folder) {
 		this.folder = folder;
 		
@@ -47,7 +58,12 @@ public class FileView extends IDEComponent {
 		
 		int i = 0;
 		for (File f : filesList) {
-			files.add(new FileViewFile(x, y + (i * FILE_HEIGHT) - scroll, width, FILE_HEIGHT, f));
+			files.add(new FileViewFile(x, y + (i * FILE_HEIGHT) - scroll, width, FILE_HEIGHT, f) {
+				public void onClick() {
+					if (regent.isDirectory())
+						scheduleSetFolder(regent);
+				}
+			});
 			
 			i++;
 		}
@@ -68,6 +84,8 @@ public class FileView extends IDEComponent {
 			f.tick();
 			i++;
 		}
+		
+		performScheduled();
 	}
 	
 	public void render(Graphics g) {

@@ -22,6 +22,7 @@ public class InputBox extends IDEComponent {
 	private int cursorIndex = 0;
 	
 	private int scroll = 0;
+	private boolean isMessageBox = false;
 	
 	public InputBox(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
@@ -29,17 +30,36 @@ public class InputBox extends IDEComponent {
 		text = new StringBuilder();
 	}
 	
+	public InputBox(int x, int y, int width, int height, boolean isMessageBox) {
+		super(x, y, width, height, null);
+		
+		text = new StringBuilder();
+		this.isMessageBox = true;
+	}
+	
+	public InputBox(int x, int y, int width, int height, boolean isMessageBox, String t) {
+		super(x, y, width, height, null);
+		
+		text = new StringBuilder(t);
+		this.isMessageBox = true;
+		cursorIndex = t.length();
+	}
+	
 	public boolean hovered() {
-		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added || SetCommitName.added || RightClickOption.isRightClickActive()) return false;
+		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added || SetCommitName.added || RightClickOption.isRightClickActive()) return false;
+		
+		if (!isMessageBox)
+			return MessageBox.active;
 		
 		return super.hovered();
 	}
 	
 	public void tick() {
-		width = Main.explorer.getWidth() - 40;
+		if (!isMessageBox) // arrumar
+			width = Main.explorer.getWidth() - 40;
 		
 		// mover pra frente (o texto vai pra trás)
-		while (x + 1 + (cursorIndex * (16 - 4)) - scroll > width)
+		while (x + 1 + (cursorIndex * (16 - 4)) - scroll > x + width)
 			scroll += 12;
 		// mover pra trás (o texto vai pra frente)
 		while (x + 1 + (cursorIndex * (16 - 4)) - scroll < x || (x + 1 + (cursorIndex * (16 - 4)) - scroll == x + 1 && text.length() > 0))
@@ -137,6 +157,10 @@ public class InputBox extends IDEComponent {
 		return text.toString();
 	}
 	
+	public void setText(String t) {
+		text = new StringBuilder(t);
+	}
+	
 	public void render(Graphics g) {
 		g.setColor(Colors.explorerLighter);
 		//g.fillRect(x - 2, y - 2, width + 4, height + 4);
@@ -149,7 +173,7 @@ public class InputBox extends IDEComponent {
 		
 		g.setColor(Colors.other);
 		
-		if (Explorer.selected == this && Main.editor.showCursor && x + 1 + (cursorIndex * (16 - 4)) - scroll < width)
+		if (Explorer.selected == this && Main.editor.showCursor && x + 1 + (cursorIndex * (16 - 4)) - scroll < x + width)
 			g.fillRect(x + 1 + (cursorIndex * (16 - 4)) - scroll, y, 2, height);
 	}
 }

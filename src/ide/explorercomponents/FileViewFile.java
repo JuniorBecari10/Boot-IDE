@@ -21,6 +21,13 @@ public class FileViewFile extends IDEComponent {
 		this.regent = regent;
 	}
 	
+	public void onClick() {}
+	
+	public void tick() {
+		if (leftClicked())
+			onClick();
+	}
+	
 	public void render(Graphics g) {
 		g.setColor(hovered() ? Colors.explorerLight : Colors.explorer);
 		g.fillRect(x, y, width, height);
