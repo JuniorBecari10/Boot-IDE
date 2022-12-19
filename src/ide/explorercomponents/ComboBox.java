@@ -9,6 +9,7 @@ import java.util.List;
 import ide.codeeditor.CodeEditor;
 import ide.components.IDEComponent;
 import ide.components.RightClickOption;
+import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.util.Colors;
@@ -34,12 +35,18 @@ public class ComboBox extends IDEComponent {
 	
 	public void tick() {
 		if (leftClicked()) {
+			Explorer.selected = this;	
+			
 			List<RightClickOption> list = new ArrayList<>();
 			
 			boolean isTop = true;
 			
 			for (String s : options) {
-				list.add(new RightClickOption(0, 0, width, s, (a) -> {  }, "", isTop));
+				list.add(new RightClickOption(0, 0, width, s, (a) -> {
+					if (Explorer.selected instanceof ComboBox) {
+						((ComboBox) Explorer.selected).text = new StringBuilder(s);
+					}
+				}, "", isTop));
 				isTop = false;
 			}
 			
