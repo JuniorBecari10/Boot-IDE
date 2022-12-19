@@ -77,7 +77,7 @@ public class FileView extends IDEComponent {
 		int i = 0;
 		for (FileViewFile f : files) {
 			if (y + (i * FILE_HEIGHT) - scroll < y) continue;
-			if (y + (i * FILE_HEIGHT) - scroll > y + height) break;
+			if (y + (i * FILE_HEIGHT) + FILE_HEIGHT - scroll > y + height) break;
 			
 			f.setY(y + (i * FILE_HEIGHT) - scroll);
 			
@@ -98,7 +98,7 @@ public class FileView extends IDEComponent {
 		int i = 0;
 		for (FileViewFile f : files) {
 			if (y + (i * FILE_HEIGHT) - scroll < y) continue;
-			if (y + (i * FILE_HEIGHT) - scroll > y + height) break;
+			if (y + (i * FILE_HEIGHT) + FILE_HEIGHT - scroll > y + height) break;
 			
 			f.render(g);
 			i++;
