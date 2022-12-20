@@ -8331,7 +8331,6 @@ public class CodeEditor extends IDEComponent {
 		if (tabs.size() == 0)
 			CommandTerminal.runCommand("resettabscroll");
 		
-		//System.out.println(undo.size());
 		
 		if (Main.editor.tabs.isEmpty() && Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) {
 			Explorer.explorerMode = ExplorerMode.EXPLORER;

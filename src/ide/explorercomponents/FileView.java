@@ -48,9 +48,7 @@ public class FileView extends IDEComponent {
 	}
 	
 	public void setFolder(File folder) {
-		this.folder = folder;
-		
-		files.clear();
+		if (folder == null) return;
 		
 		File[] filesList = folder.listFiles(new FilenameFilter() {
 			@Override
@@ -61,10 +59,17 @@ public class FileView extends IDEComponent {
 			}
 		});
 		
+		if (filesList == null) return;
+		
+		files.clear();
+		
 		int i = 0;
 		for (File f : filesList) {
-			files.add(new FileViewFile(x, y + (i * FILE_HEIGHT) - scroll, width, FILE_HEIGHT, f) {
+			files.add(new FileViewFile(x, (y + (i * FILE_HEIGHT)) - scroll, width, FILE_HEIGHT, f) {
 				public void onClick() {
+					if (this.y < y || this.y > y + height)
+						return;
+					
 					if (f.isDirectory())
 						scheduleSetFolder(f);
 				}
@@ -72,6 +77,8 @@ public class FileView extends IDEComponent {
 			
 			i++;
 		}
+		
+		this.folder = folder;
 	}
 	
 	public void scroll() {

@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import ide.explorer.Explorer;
 import ide.input.KeyInput;
 import ide.main.Main;
 import ide.screen.Screen;
@@ -48,6 +49,8 @@ public class CustomMessageBox extends IDEComponent {
 	}
 	
 	public void close() {
+		CustomMessageBox m = this;
+		
 		new Thread() {
 			public void run() {
 				while (y > Screen.DECORATION_HEIGHT - height - 1) {
@@ -64,13 +67,12 @@ public class CustomMessageBox extends IDEComponent {
 						e.printStackTrace();
 					}
 				}
+				
+				IDEComponent.toRemove.add(m);
+				MessageBox.active = false;
+				Explorer.selected = null;
 			}
 		}.start();
-	
-		if (y <= Screen.DECORATION_HEIGHT - height - 1) {
-			IDEComponent.toRemove.add(this);
-			MessageBox.active = false;
-		}
 	}
 	
 	// Shows up a dialog and returns the name of the clicked button
