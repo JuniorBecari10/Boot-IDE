@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ide.components.IDEComponent;
+import ide.explorer.Explorer;
+import ide.input.MouseInput;
+import ide.input.MouseWheelRoll;
 import ide.util.Colors;
 
 public class FileView extends IDEComponent {
@@ -47,6 +50,8 @@ public class FileView extends IDEComponent {
 	public void setFolder(File folder) {
 		this.folder = folder;
 		
+		files.clear();
+		
 		File[] filesList = folder.listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String name) {
@@ -60,8 +65,8 @@ public class FileView extends IDEComponent {
 		for (File f : filesList) {
 			files.add(new FileViewFile(x, y + (i * FILE_HEIGHT) - scroll, width, FILE_HEIGHT, f) {
 				public void onClick() {
-					if (regent.isDirectory())
-						scheduleSetFolder(regent);
+					if (f.isDirectory())
+						scheduleSetFolder(f);
 				}
 			});
 			
@@ -70,7 +75,15 @@ public class FileView extends IDEComponent {
 	}
 	
 	public void scroll() {
+		System.out.println(folder);
+		System.out.println(scroll);
+		System.out.println("---");
 		
+		if (MouseInput.getWheelRoll() == MouseWheelRoll.DOWN)
+			scroll += FILE_HEIGHT;
+		else if (MouseInput.getWheelRoll() == MouseWheelRoll.UP)
+			if (scroll > 0)
+				scroll -= FILE_HEIGHT;
 	}
 	
 	public void tick() {
@@ -86,6 +99,8 @@ public class FileView extends IDEComponent {
 		}
 		
 		performScheduled();
+		
+		if (hovered()) Explorer.selected = this;
 	}
 	
 	public void render(Graphics g) {

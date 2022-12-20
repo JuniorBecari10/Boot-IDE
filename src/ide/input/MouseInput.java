@@ -15,6 +15,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
 import ide.explorer.Explorer;
+import ide.explorercomponents.FileView;
 import ide.main.Main;
 import ide.screen.Screen;
 import ide.terminal.TerminalCore;
@@ -380,7 +381,8 @@ public final class MouseInput extends MouseInputAdapter {
 		if (hovered(0, TerminalTab.Y_EXPLORER, Main.explorer.getWidth(), TerminalTab.HEIGHT))
 			TerminalCore.scroll();
 		
-		
+		if (Explorer.selected instanceof FileView)
+			((FileView) Explorer.selected).scroll();
 		
 		if (Main.main != null)
 	        Main.main.mainLogic();
