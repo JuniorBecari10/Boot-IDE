@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import javax.swing.filechooser.FileSystemView;
 
 import ide.codeeditor.CodeEditor;
+import ide.explorercomponents.ComboBox;
 import ide.explorercomponents.ExecuteButtonIcon;
 import ide.explorercomponents.FileView;
-import ide.explorercomponents.InputBox;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.main.Main;
@@ -25,7 +25,7 @@ public class FileChooser extends CustomMessageBox {
 	public boolean onlyDirs;
 	public String title;
 	
-	public InputBox folderScope;
+	public ComboBox folderScope;
 	public FileView fileView;
 	
 	public static int HEIGHT = Main.screen.getHeight() - (Main.screen.getHeight() / 4);
@@ -37,13 +37,18 @@ public class FileChooser extends CustomMessageBox {
 		this.onlyDirs = onlyDirs;
 		this.title = title;
 		
-		folderScope = new InputBox(
+		folderScope = new ComboBox(
 				x + ((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - (Main.screen.getWidth() / 6),
 				y + 60,
 				Main.screen.getWidth() / 3,
 				30,
-				true,
-				folder.getPath());
+				new String[] { }) {
+			public void tick() {
+				super.tick();
+				
+				text = new StringBuilder(fileView.getFolder().getPath());
+			}
+		};
 		
 		fileView = new FileView(x + 15, y + 180, width - 30, FileView.FILE_HEIGHT * 8, folder, onlyDirs);
 		

@@ -83,7 +83,7 @@ public abstract class IDEComponent implements Tickable, Renderable, Clickable { 
     public void tick() {}
     
     public static final void addRightClickOptions(int initialX, int initialY, RightClickOption... options) {
-    	if (RightClickOption.isRightClickActive()) return;
+    	if (RightClickOption.isRightClickActive() || options.length == 0) return;
     	
     	int width = options[0].getWidth();
     	

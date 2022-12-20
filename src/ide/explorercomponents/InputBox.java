@@ -18,8 +18,8 @@ import ide.util.Colors;
 
 public class InputBox extends IDEComponent {
 
-	private StringBuilder text;
-	private int cursorIndex = 0;
+	protected StringBuilder text;
+	protected int cursorIndex = 0;
 	
 	private int scroll = 0;
 	private boolean isMessageBox = false;

@@ -75,10 +75,6 @@ public class FileView extends IDEComponent {
 	}
 	
 	public void scroll() {
-		System.out.println(folder);
-		System.out.println(scroll);
-		System.out.println("---");
-		
 		if (MouseInput.getWheelRoll() == MouseWheelRoll.DOWN)
 			scroll += FILE_HEIGHT;
 		else if (MouseInput.getWheelRoll() == MouseWheelRoll.UP)
@@ -89,10 +85,7 @@ public class FileView extends IDEComponent {
 	public void tick() {
 		int i = 0;
 		for (FileViewFile f : files) {
-			if (y + (i * FILE_HEIGHT) - scroll < y) continue;
-			if (y + (i * FILE_HEIGHT) + FILE_HEIGHT - scroll > y + height) break;
-			
-			f.setY(y + (i * FILE_HEIGHT) - scroll);
+			f.setY((y + (i * FILE_HEIGHT)) - scroll);
 			
 			f.tick();
 			i++;
@@ -110,13 +103,11 @@ public class FileView extends IDEComponent {
 		g.setColor(Colors.explorer);
 		g.fillRect(x, y, width, height);
 		
-		int i = 0;
 		for (FileViewFile f : files) {
-			if (y + (i * FILE_HEIGHT) - scroll < y) continue;
-			if (y + (i * FILE_HEIGHT) + FILE_HEIGHT - scroll > y + height) break;
+			if (f.getY() < y) continue;
+			if (f.getY() > y + height) break;
 			
 			f.render(g);
-			i++;
 		}
 	}
 }
