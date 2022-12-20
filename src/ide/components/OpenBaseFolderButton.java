@@ -30,8 +30,6 @@ public class OpenBaseFolderButton extends IDEComponent {
 	public void tick() {
 		if (CommandTerminal.expOff || Explorer.explorerMode != ExplorerMode.EXPLORER) return;
 		
-		//chooser.setDialogTitle(Texts.selectBaseFolder + "...");
-		
 		super.tick();
 		
 		if (leftClicked() && (!SetFileName.added && !CommandTerminal.active && !MessageBox.active && !SetBranchName.added && !SetCommitName.added && !RenameFile.added && Explorer.selected == null)) {

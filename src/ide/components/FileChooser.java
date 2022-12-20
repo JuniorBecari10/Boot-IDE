@@ -10,6 +10,7 @@ import ide.codeeditor.CodeEditor;
 import ide.explorercomponents.ComboBox;
 import ide.explorercomponents.ExecuteButtonIcon;
 import ide.explorercomponents.FileView;
+import ide.explorercomponents.InputBox;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.main.Main;
@@ -27,6 +28,8 @@ public class FileChooser extends CustomMessageBox {
 	
 	public ComboBox folderScope;
 	public FileView fileView;
+	
+	public InputBox fileName;
 	
 	public static int HEIGHT = Main.screen.getHeight() - (Main.screen.getHeight() / 4);
 	
@@ -52,8 +55,16 @@ public class FileChooser extends CustomMessageBox {
 		
 		fileView = new FileView(x + 15, y + 180, width - 30, FileView.FILE_HEIGHT * 8, folder, onlyDirs);
 		
+		fileName = new InputBox(
+				x + ((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - (Main.screen.getWidth() / 6),
+				y + 260,
+				Main.screen.getWidth(),
+				30,
+				true);
+		
 		innerComponents.add(folderScope);
 		innerComponents.add(fileView);
+		innerComponents.add(fileName);
 		
 		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> {  }, true, Texts.createFolder));
 		innerComponents.add(new ExecuteButtonIcon(x + 60, y + 120, 32, 32, Main.folderUp, () -> { fileView.setFolder(fileView.getFolder().getParentFile()); folderScope.setText(fileView.getFolder().getPath()); }, true, Texts.oneFolderUp));
