@@ -49,7 +49,7 @@ public class InputBox extends IDEComponent {
 		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added || SetCommitName.added || RightClickOption.isRightClickActive()) return false;
 		
 		if (!isMessageBox)
-			return !MessageBox.active;
+			return !MessageBox.active && super.hovered();
 		
 		return super.hovered();
 	}

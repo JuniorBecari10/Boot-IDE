@@ -91,6 +91,7 @@ public class FileChooser extends CustomMessageBox {
 		super.render(g);
 		
 		Fonts.drawString(title, (Main.screen.frame.getWidth() / 2) - (title.length() * (CodeEditor.DEFAULT_FONT_SIZE - 4)) / 2, y + 10, new IDEFont(Fonts.lightGrayNormal, 16), g);
+		Fonts.drawString(Texts.file + ":", x + 30, y + 435, new IDEFont(Fonts.lightGrayNormal, 16), g);
 		
 		// linha abaixo do titulo
 		g.setColor(Colors.textLight);
