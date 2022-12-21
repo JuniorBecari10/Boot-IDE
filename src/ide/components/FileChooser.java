@@ -56,11 +56,18 @@ public class FileChooser extends CustomMessageBox {
 		fileView = new FileView(x + 15, y + 180, width - 30, FileView.FILE_HEIGHT * 8, folder, onlyDirs);
 		
 		fileName = new InputBox(
-				x + ((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - (Main.screen.getWidth() / 6),
-				y + 260,
-				Main.screen.getWidth(),
-				30,
-				true);
+				x + ((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - (Main.screen.getWidth() / 4),
+				y + 430,
+				Main.screen.getWidth() / 2,
+				20,
+				true) {
+			public void tick() {
+				super.tick();
+				
+				if (fileView.selectedFile != null)
+					text = new StringBuilder(fileView.selectedFile.getPath());
+			}
+		};
 		
 		innerComponents.add(folderScope);
 		innerComponents.add(fileView);

@@ -22,7 +22,7 @@ public class InputBox extends IDEComponent {
 	protected int cursorIndex = 0;
 	
 	private int scroll = 0;
-	private boolean isMessageBox = false;
+	public boolean isMessageBox = false;
 	
 	public InputBox(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
@@ -49,9 +49,18 @@ public class InputBox extends IDEComponent {
 		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added || SetCommitName.added || RightClickOption.isRightClickActive()) return false;
 		
 		if (!isMessageBox)
-			return MessageBox.active;
+			return !MessageBox.active;
 		
 		return super.hovered();
+	}
+	
+	public void setText(String t) {
+		this.text = new StringBuilder(t);
+		this.cursorIndex = t.length();
+	}
+	
+	public String getText() {
+		return text.toString();
 	}
 	
 	public void tick() {
@@ -151,14 +160,6 @@ public class InputBox extends IDEComponent {
 			if (text.length() == 0) text.append(c);
 			else text.insert(cursorIndex - 1, c);
 		}
-	}
-	
-	public String getText() {
-		return text.toString();
-	}
-	
-	public void setText(String t) {
-		text = new StringBuilder(t);
 	}
 	
 	public void render(Graphics g) {

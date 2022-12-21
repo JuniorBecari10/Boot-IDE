@@ -8324,6 +8324,9 @@ public class CodeEditor extends IDEComponent {
 		if (editing != null)
 			isReadOnly = editing.isReadOnly;
 		
+		if (Explorer.search != null)
+			System.out.println(Explorer.search.isMessageBox);
+		
 		if (tabs.size() > 0)
 			if (tabs.get(0).getX() + tabScr > x + 10)
 				CommandTerminal.runCommand("resettabscroll"); // colocar no onmouseroll
