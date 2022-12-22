@@ -1,6 +1,7 @@
 package ide.components;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import ide.explorercomponents.FileView;
 import ide.explorercomponents.InputBox;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
+import ide.input.KeyInput;
 import ide.main.Main;
 import ide.util.Colors;
 import ide.util.Texts;
@@ -111,13 +113,21 @@ public class FileChooser extends CustomMessageBox {
 		innerComponents.add(new ExecuteButtonIcon(x + 100, y + 120, 32, 32, Main.reloadSpr, () -> { fileView.setFolder(fileView.getFolder()); }, true, Texts.reload));
 	}
 	
-	
 	public static void showDialog(File folder, boolean onlyDirs, String title) {
 		if (MessageBox.active) return;
 		
 		FileChooser f = new FileChooser(folder, onlyDirs, title);
 		
 		IDEComponent.toAdd.add(f);
+	}
+	
+	public void tick() {
+		super.tick();
+		
+		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+			OpenBaseFolderButton.setBaseFolder(fileView.selectedFile);
+			doClose();
+		}
 	}
 	
 	public void render(Graphics g) {
