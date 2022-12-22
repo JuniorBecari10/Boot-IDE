@@ -78,7 +78,8 @@ public class GitStatus {
 		
 		if (files.length > 0) {
 			for (int i = 0; i < files.length; i++) {
-				files[i] = files[i].substring(1);
+				if (files[i].length() > 0)
+					files[i] = files[i].substring(1);
 			}
 		}
 		

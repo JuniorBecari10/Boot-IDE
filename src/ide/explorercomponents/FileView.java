@@ -81,6 +81,7 @@ public class FileView extends IDEComponent {
 					if (y < this.y || y + FILE_HEIGHT > this.y + height)
 						return;
 
+					scroll = 0;
 					if (f.isDirectory())
 						scheduleSetFolder(f);
 					
@@ -96,7 +97,7 @@ public class FileView extends IDEComponent {
 	
 	public void scroll() {
 		if (MouseInput.wheelDown()) {
-			if (files.get(files.size() - 1).getY() - FILE_HEIGHT >= y)
+			if (files.get(files.size() - 1 < 0 ? 0 : files.size() - 1).getY() - FILE_HEIGHT >= y)
 				scroll += FILE_HEIGHT;
 		}
 		else if (MouseInput.wheelUp()) {
