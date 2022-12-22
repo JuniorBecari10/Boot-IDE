@@ -1074,6 +1074,31 @@ public class CommandTerminal extends IDEComponent {
 					strs = new String[] { "def main():", CodeEditor.getIndentation(1), "", "if __name__ == \"__main__\":", CodeEditor.getIndentation(1) + "main()" };
 					
 					break;
+					
+				case "java":
+					strs = new String[] { "public class " + classname + " {", CodeEditor.getIndentation(1), "}" };
+					
+					break;
+					
+				case "javainterface":
+					strs = new String[] { "public interface " + classname + " {", CodeEditor.getIndentation(1), "}" };
+					
+					break;
+					
+				case "javaenum":
+					strs = new String[] { "public enum " + classname + " {", CodeEditor.getIndentation(1), "}" };
+					
+					break;
+					
+				case "javamain":
+					strs = new String[] { "public class " + classname + " {", CodeEditor.getIndentation(1), CodeEditor.getIndentation(1) + "public static void main(String[] args) {", CodeEditor.getIndentation(2), CodeEditor.getIndentation(1) + "}", "}" };
+					
+					break;
+					
+				case "go":
+					strs = new String[] { "package main", "", "import (", CodeEditor.getIndentation(1) + "\"fmt\"", ")", "", "func main() {", CodeEditor.getIndentation(1), "}" };
+					
+					break;
 				}
 				
 				if (strs.length == 0) return;
