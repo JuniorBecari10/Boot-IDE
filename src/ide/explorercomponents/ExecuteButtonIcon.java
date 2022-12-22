@@ -1,5 +1,6 @@
 package ide.explorercomponents;
 
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -11,6 +12,7 @@ import ide.components.SetFileName;
 import ide.explorer.Explorer;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
+import ide.main.Main;
 import ide.util.Colors;
 
 public class ExecuteButtonIcon extends IDEComponent {
@@ -52,6 +54,9 @@ public class ExecuteButtonIcon extends IDEComponent {
 	}
 	
 	public void tick() {
+		if (hovered())
+			Main.screen.setCursor(Cursor.getDefaultCursor());
+		
 		if (leftClicked() && enabled) {
 			KeyInput.updateKeys();
 			RightClickOption.removeAllRightClickOptions();

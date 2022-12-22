@@ -125,6 +125,7 @@ public class Main implements Runnable, Tickable {
     public static List<IDEComponent> moreOptionsBtns = new ArrayList<>();
     
     public static ExecuteButtonIcon resetExplorerDrag;
+    public static ExecuteButtonIcon closeBaseFolder;
     
     public static ExecuteButtonIcon moreOptions;
     
@@ -240,6 +241,7 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage moreOptionsSpr;
     
     public static BufferedImage resetExplorerDragSpr;
+    public static BufferedImage closeBaseFolderSpr;
     
     ///
     
@@ -256,9 +258,6 @@ public class Main implements Runnable, Tickable {
 	    	
 	        spritesheet = new Spritesheet(sprsh);
 	        
-	        
-	        //System.out.println(fntnr + " " + fnted);
-	        
 	        toolkit = Toolkit.getDefaultToolkit();
 	        screen = new Screen(PROGRAM_NAME);
 	        
@@ -267,8 +266,6 @@ public class Main implements Runnable, Tickable {
 	        lang = Language.ENG; // default
 	        
 	        UNKNOWN_FILE_ICON = Main.spritesheet.getSprite(0, 64, 16, 16);
-	        
-	        //Fonts.initFonts(fntnr, fnted);
 	        
 	        ///////
 	        
@@ -349,6 +346,7 @@ public class Main implements Runnable, Tickable {
 	        moreOptionsSpr = spritesheet.getSprite(170, 6, 1, 5);
 	        
 	        resetExplorerDragSpr = spritesheet.getSprite(576, 0, 16, 16);
+	        closeBaseFolderSpr = spritesheet.getSprite(608, 0, 16, 16);
 	        
 	        ///////
 	        
@@ -384,7 +382,20 @@ public class Main implements Runnable, Tickable {
 	        	}
 	        };
 	        
+	        closeBaseFolder = new ExecuteButtonIcon(explorer.getWidth() + 34, Screen.DECORATION_HEIGHT + 2, 32, 32, closeBaseFolderSpr, () -> {
+	        	CommandTerminal.runCommand("closebasefolder");
+	        	IDEComponent.toRemove.addAll(moreOptionsBtns);
+	        	}, Texts.closeBaseFolder) {
+	        	public void tick() {
+	        		super.tick();
+	        		
+	        		x = explorer.getWidth() + 34;
+	        		caption = Texts.closeBaseFolder;
+	        	}
+	        };
+	        
 	        moreOptionsBtns.add(resetExplorerDrag);
+	        moreOptionsBtns.add(closeBaseFolder);
 	        
 	        // Por enquanto é null mas o tick vai rolar e vai atualizar
 	        moreOptions = new ExecuteButtonIcon(explorer.getWidth() - 16, Screen.DECORATION_HEIGHT + 2, 14, 32, moreOptionsSpr, () -> { IDEComponent.toAdd.addAll(moreOptionsBtns); }, Texts.moreOptions) {
@@ -598,6 +609,7 @@ public class Main implements Runnable, Tickable {
         moreOptionsSpr = Colors.swapColor(moreOptionsSpr, Colors.textLightDefault, Colors.textLight);
         
         resetExplorerDragSpr = Colors.swapColor(resetExplorerDragSpr, Colors.textLightDefault, Colors.textLight);
+        closeBaseFolderSpr = Colors.swapColor(closeBaseFolderSpr, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         
@@ -973,6 +985,20 @@ public class Main implements Runnable, Tickable {
     	
     	for (TopComponent t : TopComponent.topComponents)
 			t.tick();
+    	
+    	boolean hovered = false;
+    	
+    	if (MouseInput.isLeftPressed()) {
+    		for (IDEComponent c : moreOptionsBtns) {
+    			if (c.hovered()) {
+    				hovered = true;
+    				break;
+    			}
+    		}
+    		
+    		if (!hovered)
+    			IDEComponent.toRemove.addAll(moreOptionsBtns);
+    	}
     	
         KeyInput.updateKeys();
         MouseInput.updateMouse();

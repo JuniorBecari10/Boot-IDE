@@ -285,6 +285,7 @@ public final class Texts {
 	
 	public static String moreOptions;
 	public static String resetExplorerWidth;
+	public static String closeBaseFolder;
 	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
@@ -556,6 +557,7 @@ public final class Texts {
 			
 			moreOptions = "Mais Opções";
 			resetExplorerWidth = "Redefinir Largura do Explorador";
+			closeBaseFolder = "Fechar Pasta Base";
 			
 			break;
 		
@@ -827,6 +829,7 @@ public final class Texts {
 			
 			moreOptions = "More Options";
 			resetExplorerWidth = "Reset Explorer Width";
+			closeBaseFolder = "Close Base Folder";
 			
 			break;
 		}
