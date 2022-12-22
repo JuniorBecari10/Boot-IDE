@@ -66,13 +66,11 @@ public class FileView extends IDEComponent {
 		
 		int i = 0;
 		for (File f : filesList) {
-			int ii = i;
-			
 			files.add(new FileViewFile(x, (y + (i * FILE_HEIGHT)) - scroll, width, FILE_HEIGHT, f) {
-				public void onClick() {
-					if ((y + (ii * FILE_HEIGHT)) - scroll < y || (y + (ii * FILE_HEIGHT)) - scroll + FILE_HEIGHT > y + height)
+				public void onClick(int y) {
+					if (y < this.y || y + FILE_HEIGHT > this.y + height)
 						return;
-					
+
 					if (f.isDirectory())
 						scheduleSetFolder(f);
 					

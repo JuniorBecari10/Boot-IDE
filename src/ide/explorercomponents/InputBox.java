@@ -23,6 +23,7 @@ public class InputBox extends IDEComponent {
 	
 	private int scroll = 0;
 	public boolean isMessageBox = false;
+	private boolean editable = true;
 	
 	public InputBox(int x, int y, int width, int height) {
 		super(x, y, width, height, null);
@@ -37,11 +38,21 @@ public class InputBox extends IDEComponent {
 		this.isMessageBox = true;
 	}
 	
-	public InputBox(int x, int y, int width, int height, boolean isMessageBox, String t) {
+	public InputBox(int x, int y, int width, int height, boolean isMessageBox, boolean editable) {
+		super(x, y, width, height, null);
+		
+		text = new StringBuilder();
+		this.isMessageBox = true;
+		this.editable = editable;
+	}
+	
+	public InputBox(int x, int y, int width, int height, boolean isMessageBox, String t, boolean editable) {
 		super(x, y, width, height, null);
 		
 		text = new StringBuilder(t);
 		this.isMessageBox = true;
+		this.editable = editable;
+		
 		cursorIndex = t.length();
 	}
 	
@@ -67,15 +78,17 @@ public class InputBox extends IDEComponent {
 		if (!isMessageBox) // arrumar
 			width = Main.explorer.getWidth() - 40;
 		
-		// mover pra frente (o texto vai pra trás)
-		while (x + 1 + (cursorIndex * (16 - 4)) - scroll > x + width)
-			scroll += 12;
-		// mover pra trás (o texto vai pra frente)
-		while (x + 1 + (cursorIndex * (16 - 4)) - scroll < x || (x + 1 + (cursorIndex * (16 - 4)) - scroll == x + 1 && text.length() > 0))
-			scroll -= 12;
-		
-		if (text.length() == 0 || scroll < 0)
-			scroll = 0;
+		if (editable) {
+			// mover pra frente (o texto vai pra trás)
+			while (x + 1 + (cursorIndex * (16 - 4)) - scroll > x + width)
+				scroll += 12;
+			// mover pra trás (o texto vai pra frente)
+			while (x + 1 + (cursorIndex * (16 - 4)) - scroll < x || (x + 1 + (cursorIndex * (16 - 4)) - scroll == x + 1 && text.length() > 0))
+				scroll -= 12;
+			
+			if (text.length() == 0 || scroll < 0)
+				scroll = 0;
+		}
 		
 		if (leftClicked())
 			Explorer.selected = this;
@@ -87,16 +100,18 @@ public class InputBox extends IDEComponent {
 			
 			// Shortcuts Area
 			
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C) { // Ctrl + C - Copiar (Tudo)
+				CodeEditor.copyText(text.toString());
+			}
+			
+			if (!editable) return;
+			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) {
 				cursorIndex = 0;
 			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END) {
 				cursorIndex = text.length();
-			}
-			
-			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C) { // Ctrl + C - Copiar (Tudo)
-				CodeEditor.copyText(text.toString());
 			}
 			
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_V) { // Ctrl + V - Colar
@@ -174,7 +189,7 @@ public class InputBox extends IDEComponent {
 		
 		g.setColor(Colors.other);
 		
-		if (Explorer.selected == this && Main.editor.showCursor && x + 1 + (cursorIndex * (16 - 4)) - scroll < x + width)
+		if (Explorer.selected == this && editable && Main.editor.showCursor && x + 1 + (cursorIndex * (16 - 4)) - scroll < x + width)
 			g.fillRect(x + 1 + (cursorIndex * (16 - 4)) - scroll, y, 2, height);
 	}
 }

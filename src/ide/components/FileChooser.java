@@ -8,6 +8,7 @@ import javax.swing.filechooser.FileSystemView;
 
 import ide.codeeditor.CodeEditor;
 import ide.explorercomponents.ComboBox;
+import ide.explorercomponents.ExecuteButton;
 import ide.explorercomponents.ExecuteButtonIcon;
 import ide.explorercomponents.FileView;
 import ide.explorercomponents.InputBox;
@@ -30,6 +31,9 @@ public class FileChooser extends CustomMessageBox {
 	public FileView fileView;
 	
 	public InputBox fileName;
+	
+	public ExecuteButton cancel;
+	public ExecuteButton ok;
 	
 	public static int HEIGHT = Main.screen.getHeight() - (Main.screen.getHeight() / 4);
 	
@@ -60,7 +64,8 @@ public class FileChooser extends CustomMessageBox {
 				y + 430,
 				Main.screen.getWidth() / 2,
 				20,
-				true) {
+				true,
+				false) {
 			public void tick() {
 				super.tick();
 				
@@ -69,9 +74,22 @@ public class FileChooser extends CustomMessageBox {
 			}
 		};
 		
+		cancel = new ExecuteButton(
+				x + 15,
+				y + height - 15 - 20,
+				(Main.screen.getWidth() - (Main.screen.getWidth() / 4) / 2),
+				20,
+				Texts.cancel,
+				() -> {
+					doClose();
+				},
+				true,
+				true);
+		
 		innerComponents.add(folderScope);
 		innerComponents.add(fileView);
 		innerComponents.add(fileName);
+		innerComponents.add(cancel);
 		
 		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> {  }, true, Texts.createFolder));
 		innerComponents.add(new ExecuteButtonIcon(x + 60, y + 120, 32, 32, Main.folderUp, () -> { fileView.setFolder(fileView.getFolder().getParentFile()); folderScope.setText(fileView.getFolder().getPath()); }, true, Texts.oneFolderUp));

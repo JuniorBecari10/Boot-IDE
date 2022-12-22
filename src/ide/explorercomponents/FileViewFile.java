@@ -21,11 +21,11 @@ public class FileViewFile extends IDEComponent {
 		this.regent = regent;
 	}
 	
-	public void onClick() {}
+	public void onClick(int y) {}
 	
 	public void tick() {
 		if (leftClicked())
-			onClick();
+			onClick(y);
 	}
 	
 	public void render(Graphics g) {

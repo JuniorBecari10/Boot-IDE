@@ -48,6 +48,10 @@ public class CustomMessageBox extends IDEComponent {
 		}.start();
 	}
 	
+	public void doClose() {
+		closing = true;
+	}
+	
 	public void close() {
 		CustomMessageBox m = this;
 		
