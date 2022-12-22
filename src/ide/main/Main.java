@@ -912,7 +912,7 @@ public class Main implements Runnable, Tickable {
 						File reg = new File(s);
 						if (!reg.exists()) continue;
 						
-						Tab t = new Tab((i - 4) * Tab.WIDTH, ListableFile.newListableFile(reg));
+						Tab t = new Tab((i - 4) * Tab.WIDTH, ListableFile.newListableFileParent(reg));
 						
 						Main.editor.tabs.add(t);
 					}

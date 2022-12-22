@@ -8192,9 +8192,11 @@ public class CodeEditor extends IDEComponent {
 			
 			list.add(new RightClickOption(0, 0, width, Main.os == OS.WINDOWS, Texts.openCmd, (s) -> execute(s), "cmd", true));
 			list.add(new RightClickOption(0, 0, width, Texts.openTerminal, (s) -> execute(s), "term"));
-
-			list.add(new RightClickOption(0, 0, width, Texts.openExplorer, (s) -> execute(s), "sysexp"));
-			list.add(new RightClickOption(0, 0, width, Texts.setBaseFolder, (s) -> execute(s), "setbase"));
+			
+			if (Main.baseFolder != null) {
+				list.add(new RightClickOption(0, 0, width, Texts.openExplorer, (s) -> execute(s), "sysexp"));
+				list.add(new RightClickOption(0, 0, width, Texts.setBaseFolder, (s) -> execute(s), "setbase"));
+			}
 
 			if (editing != null) {
 				list.add(new RightClickOption(0, 0, width, Texts.openDefault, (s) -> execute(s), "opendef"));

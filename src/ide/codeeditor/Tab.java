@@ -669,7 +669,6 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			Explorer.scope = regent.getParent();
 			ListableFile.files = ListableFile.loadFolder((!regent.getParent().getRegent().equals(Main.baseFolder) ? regent.getParent() : null));
-			
 			break;
 			
 		case "closeother":

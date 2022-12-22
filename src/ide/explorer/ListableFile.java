@@ -1732,8 +1732,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!filePresent) {
 					throw new FileNotFoundException("File does not exist: " + file);
 				}
-				final String message =
-						"Unable to delete file: " + file;
+				final String message = "Unable to delete file: " + file;
 				throw new IOException(message);
 			}
 		}
@@ -1741,6 +1740,11 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 	public static ListableFile newListableFile(File regent) {
 		return new ListableFile(0,0,0,0, regent, null);
+	}
+	
+	// recursion is good ;)
+	public static ListableFile newListableFileParent(File regent) {
+		return new ListableFile(0,0,0,0, regent, newListableFile(regent.getParentFile()));
 	}
 
 	public static void addTab(ListableFile file, boolean isAutomatic) {
