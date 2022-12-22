@@ -57,7 +57,7 @@ public class FileChooser extends CustomMessageBox {
 			}
 		};
 		
-		fileView = new FileView(x + 15, y + 180, width - 30, FileView.FILE_HEIGHT * 8, folder, onlyDirs);
+		fileView = new FileView(x + 15, y + 180, width - 30, FileView.FILE_HEIGHT * 8, folder, onlyDirs, folder);
 		
 		fileName = new InputBox(
 				x + ((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - (Main.screen.getWidth() / 4),
@@ -93,6 +93,7 @@ public class FileChooser extends CustomMessageBox {
 				20,
 				"Ok",
 				() -> {
+					OpenBaseFolderButton.setBaseFolder(fileView.selectedFile);
 					doClose();
 				},
 				true,

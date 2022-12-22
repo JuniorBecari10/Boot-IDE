@@ -39,47 +39,36 @@ public class OpenBaseFolderButton extends IDEComponent {
 		}
 	}
 	
-	public static void openBaseFolder() {
-		//chooser.setCurrentDirectory(Main.baseFolder != null ? Main.baseFolder : new File(Main.userDir));
-		//int option = chooser.showOpenDialog(Main.screen.frame);
-		int option = 0;
+	public static void setBaseFolder(File f) {
+		boolean alreadyHasBaseFolder = Main.baseFolder != null;
 		
-		FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(Main.userDir), true, Texts.selectBaseFolder + "...");
+		Main.baseFolder = f;
 		
-		if (option == 0)
-			return;
+		Explorer.files.clear();
+		ListableFile.files.clear();
 		
-		if (option == JFileChooser.APPROVE_OPTION) {
-			if (chooser.getSelectedFile() == null || chooser.getSelectedFile().listFiles() == null) return;
-			
-			File sel = chooser.getSelectedFile();
-			
-			boolean alreadyHasBaseFolder = Main.baseFolder != null;
-			
-			Main.baseFolder = sel;
-			
-			Explorer.files.clear();
-			ListableFile.files.clear();
-			
-			Explorer.scope = null;
-			Explorer.files = ListableFile.loadFolder(ListableFile.newListableFile(Main.baseFolder));
-			Explorer.gitStatus = null;
-			
-			Main.screen.frame.setTitle(Main.baseFolder.getName() + " - " + Main.PROGRAM_NAME);
-			
-			if (!alreadyHasBaseFolder) {
-				IDEComponent.toAdd.add(Main.oneFolder);
-				IDEComponent.toAdd.add(Main.returnBase);
-				IDEComponent.toAdd.add(Main.newFile);
-				IDEComponent.toAdd.add(Main.newFolder);
-				IDEComponent.toAdd.add(Main.reload);
-			}
-			
-			//Main.writeFile(Main.settingsFile);
-			
-			Explorer.fetchStatus();
-			MouseInput.updateMouse();
+		Explorer.scope = null;
+		Explorer.files = ListableFile.loadFolder(ListableFile.newListableFile(Main.baseFolder));
+		Explorer.gitStatus = null;
+		
+		Main.screen.frame.setTitle(Main.baseFolder.getName() + " - " + Main.PROGRAM_NAME);
+		
+		if (!alreadyHasBaseFolder) {
+			IDEComponent.toAdd.add(Main.oneFolder);
+			IDEComponent.toAdd.add(Main.returnBase);
+			IDEComponent.toAdd.add(Main.newFile);
+			IDEComponent.toAdd.add(Main.newFolder);
+			IDEComponent.toAdd.add(Main.reload);
 		}
+		
+		//Main.writeFile(Main.settingsFile);
+		
+		Explorer.fetchStatus();
+		MouseInput.updateMouse();
+	}
+	
+	public static void openBaseFolder() {
+		FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(Main.userDir), true, Texts.selectBaseFolder + "...");
 	}
 	
 	public void render(Graphics g) {

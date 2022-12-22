@@ -33,6 +33,16 @@ public class FileView extends IDEComponent {
 		setFolder(folder);
 	}
 	
+	public FileView(int x, int y, int width, int height, File folder, boolean onlyDirs, File selectedFile) {
+		super(x, y, width, height, null);
+		
+		files = new ArrayList<>();
+		this.onlyDirs = onlyDirs;
+		this.selectedFile = selectedFile;
+		
+		setFolder(folder);
+	}
+	
 	public File getFolder() {
 		return folder;
 	}
