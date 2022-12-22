@@ -52,7 +52,8 @@ public class ExecuteButton extends IDEComponent {
 	}
 	
 	public void tick() {
-		width = Main.explorer.getWidth() - 40;
+		if (!inMessageBox)
+			width = Main.explorer.getWidth() - 40;
 		
 		if (leftClicked() && enabled) {
 			RightClickOption.removeAllRightClickOptions();
