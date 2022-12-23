@@ -17,7 +17,7 @@ public class ExecuteButton extends IDEComponent {
 	
 	public String text;
 	protected Execute execute;
-	protected boolean enabled;
+	public boolean enabled;
 	
 	protected boolean inMessageBox;
 	

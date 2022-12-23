@@ -425,9 +425,9 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "generateconfigfile":
-				int option = chooser.showSaveDialog(Main.screen.frame);
+				//int option = chooser.showSaveDialog(Main.screen.frame);
 				
-				if (option == JFileChooser.APPROVE_OPTION) {
+				FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(FileChooser.DEFAULT_FOLDER), false, "Save Config File" + "...", (path) -> {
 					File fl = chooser.getSelectedFile();
 					
 					if (!fl.getName().contains(Main.CONFIG_FILE_EXTENSION)) fl = new File(fl.getAbsolutePath() + Main.CONFIG_FILE_EXTENSION);
@@ -455,11 +455,11 @@ public class CommandTerminal extends IDEComponent {
     					
     					ListableFile.addTab(ListableFile.newListableFile(file), false);
     				}, () -> {} });
-				}
+				});
 				break;
 				
 			case "generateconfigfileloaded":
-				option = chooser.showSaveDialog(Main.screen.frame);
+				int option = chooser.showSaveDialog(Main.screen.frame);
 				
 				if (option == JFileChooser.APPROVE_OPTION) {
 					File fl = chooser.getSelectedFile();
@@ -1608,6 +1608,7 @@ public class CommandTerminal extends IDEComponent {
 			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+				KeyInput.updateKeys();
 				//lastCommand = builder.toString(); // tem que ser o altimo que voca digitou, nao o altimo que executou (pq o sistema executa)
 				
 				typedCommands.push(builder.toString());

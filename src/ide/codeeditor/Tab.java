@@ -22,6 +22,7 @@ import javax.swing.JFileChooser;
 
 import ide.components.CloseTabButton;
 import ide.components.CommandTerminal;
+import ide.components.FileChooser;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
 import ide.components.RightClickOption;
@@ -555,23 +556,22 @@ public class Tab extends IDEComponent implements Serializable {
 				e.printStackTrace();
 			}
 		} else {
-			JFileChooser chooser = new JFileChooser(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent());
-			int option = chooser.showSaveDialog(Main.screen.frame);
+			//JFileChooser chooser = new JFileChooser(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent());
+			//int option = chooser.showSaveDialog(Main.screen.frame);
 			
-			File oldFile = regent.getRegent();
+			int ret = 0;
 			
-			if (option == JFileChooser.APPROVE_OPTION) {
-				regent = ListableFile.newListableFile(chooser.getSelectedFile());
+			FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(FileChooser.DEFAULT_FOLDER), false, Texts.selectBaseFolder + "...", (path) -> {
+				File oldFile = regent.getRegent();
+				
+				regent = ListableFile.newListableFile(new File(path));
 				
 				oldFile.delete();
 				isTemporary = false;
 				save();
-				
-				return 0;
-			}
-			else {
-				return 1;
-			}
+			});
+			
+			return ret;
 		}
 		
 		return 0;

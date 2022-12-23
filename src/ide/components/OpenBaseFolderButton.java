@@ -68,7 +68,7 @@ public class OpenBaseFolderButton extends IDEComponent {
 	}
 	
 	public static void openBaseFolder() {
-		FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(FileChooser.DEFAULT_FOLDER), true, Texts.selectBaseFolder + "...");
+		FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(FileChooser.DEFAULT_FOLDER), true, Texts.selectBaseFolder + "...", (a) -> {});
 	}
 	
 	public void render(Graphics g) {

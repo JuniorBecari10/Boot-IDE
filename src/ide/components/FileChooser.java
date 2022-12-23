@@ -18,6 +18,7 @@ import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.main.Main;
 import ide.util.Colors;
+import ide.util.ExecuteCommand;
 import ide.util.Texts;
 
 public class FileChooser extends CustomMessageBox {
@@ -37,14 +38,17 @@ public class FileChooser extends CustomMessageBox {
 	public ExecuteButton cancel;
 	public ExecuteButton ok;
 	
+	public ExecuteCommand func;
+	
 	public static int HEIGHT = Main.screen.getHeight() - (Main.screen.getHeight() / 4);
 	
-	private FileChooser(File folder, boolean onlyDirs, String title) {
+	private FileChooser(File folder, boolean onlyDirs, String title, ExecuteCommand func) {
 		super(Main.screen.getWidth() - (Main.screen.getWidth() / 4), HEIGHT, new ArrayList<>());
 		
 		this.folder = folder;
 		this.onlyDirs = onlyDirs;
 		this.title = title;
+		this.func = func;
 		
 		folderScope = new ComboBox(
 				x + ((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - (Main.screen.getWidth() / 6),
@@ -113,10 +117,10 @@ public class FileChooser extends CustomMessageBox {
 		innerComponents.add(new ExecuteButtonIcon(x + 100, y + 120, 32, 32, Main.reloadSpr, () -> { fileView.setFolder(fileView.getFolder()); }, true, Texts.reload));
 	}
 	
-	public static void showDialog(File folder, boolean onlyDirs, String title) {
+	public static void showDialog(File folder, boolean onlyDirs, String title, ExecuteCommand func) {
 		if (MessageBox.active) return;
 		
-		FileChooser f = new FileChooser(folder, onlyDirs, title);
+		FileChooser f = new FileChooser(folder, onlyDirs, title, func);
 		
 		IDEComponent.toAdd.add(f);
 	}
@@ -127,6 +131,10 @@ public class FileChooser extends CustomMessageBox {
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 			OpenBaseFolderButton.setBaseFolder(fileView.selectedFile);
 			doClose();
+		}
+		
+		if (ok.leftClicked() && ok.enabled) {
+			func.execute(fileView.selectedFile.getAbsolutePath());
 		}
 	}
 	
