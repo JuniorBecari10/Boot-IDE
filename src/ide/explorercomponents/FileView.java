@@ -110,13 +110,12 @@ public class FileView extends IDEComponent {
 		int i = 0;
 		for (FileViewFile f : files) {
 			f.setY((y + (i * FILE_HEIGHT)) - scroll);
+			i++;
 			
-			// continue pq precisa ficar definindo o y
-			//if (f.getY() < y) continue;
-			//if (f.getY() + f.getHeight() > y + height) continue;
+			if (f.getY() < y) continue;
+			if (f.getY() + f.getHeight() > y + height) break;
 			
 			f.tick();
-			i++;
 		}
 		
 		performScheduled();

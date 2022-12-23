@@ -675,7 +675,7 @@ public class Tab extends IDEComponent implements Serializable {
 			for (Tab t : Main.editor.tabs)
 				if (t != this) t.close();
 			
-			Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para voca!
+			Main.editor.editing.save(); // agr n tem mais problema em abrir outra tab sem salvar essa pq a Boot IDE salva para você!
 			
 			Main.editor.editing = this;
 			
