@@ -425,8 +425,6 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "generateconfigfile":
-				//int option = chooser.showSaveDialog(Main.screen.frame);
-				
 				FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(FileChooser.DEFAULT_FOLDER), false, "Save Config File" + "...", (path) -> {
 					File fl = chooser.getSelectedFile();
 					
@@ -455,7 +453,7 @@ public class CommandTerminal extends IDEComponent {
     					
     					ListableFile.addTab(ListableFile.newListableFile(file), false);
     				}, () -> {} });
-				});
+				}, (a) -> {});
 				break;
 				
 			case "generateconfigfileloaded":

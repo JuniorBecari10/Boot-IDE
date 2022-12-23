@@ -35,20 +35,22 @@ public class FileChooser extends CustomMessageBox {
 	
 	public InputBox fileName;
 	
-	public ExecuteButton cancel;
-	public ExecuteButton ok;
+	public ExecuteButton cancelBtn;
+	public ExecuteButton okBtn;
 	
-	public ExecuteCommand func;
+	public ExecuteCommand ok;
+	public ExecuteCommand cancel;
 	
 	public static int HEIGHT = Main.screen.getHeight() - (Main.screen.getHeight() / 4);
 	
-	private FileChooser(File folder, boolean onlyDirs, String title, ExecuteCommand func) {
+	private FileChooser(File folder, boolean onlyDirs, String title, ExecuteCommand ok, ExecuteCommand cancel) {
 		super(Main.screen.getWidth() - (Main.screen.getWidth() / 4), HEIGHT, new ArrayList<>());
 		
 		this.folder = folder;
 		this.onlyDirs = onlyDirs;
 		this.title = title;
-		this.func = func;
+		this.ok = ok;
+		this.cancel = cancel;
 		
 		folderScope = new ComboBox(
 				x + ((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - (Main.screen.getWidth() / 6),
@@ -80,7 +82,7 @@ public class FileChooser extends CustomMessageBox {
 			}
 		};
 		
-		cancel = new ExecuteButton(
+		cancelBtn = new ExecuteButton(
 				x + 15,
 				y + height - 15 - 20,
 				((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - 15,
@@ -92,7 +94,7 @@ public class FileChooser extends CustomMessageBox {
 				true,
 				true);
 		
-		ok = new ExecuteButton(
+		okBtn = new ExecuteButton(
 				x + (((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2)) + 15,
 				y + height - 15 - 20,
 				((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - 30,
@@ -109,18 +111,18 @@ public class FileChooser extends CustomMessageBox {
 		innerComponents.add(fileView);
 		innerComponents.add(fileName);
 		
-		innerComponents.add(cancel);
-		innerComponents.add(ok);
+		innerComponents.add(cancelBtn);
+		innerComponents.add(okBtn);
 		
-		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> {  }, true, Texts.createFolder));
+		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> { IDEComponent.toAdd.add(new SetFileName(x + 15, y + 180, width - 30, 30, false, true, fileView.getFolder())); }, true, Texts.createFolder));
 		innerComponents.add(new ExecuteButtonIcon(x + 60, y + 120, 32, 32, Main.folderUp, () -> { fileView.setFolder(fileView.getFolder().getParentFile()); folderScope.setText(fileView.getFolder().getPath()); }, true, Texts.oneFolderUp));
 		innerComponents.add(new ExecuteButtonIcon(x + 100, y + 120, 32, 32, Main.reloadSpr, () -> { fileView.setFolder(fileView.getFolder()); }, true, Texts.reload));
 	}
 	
-	public static void showDialog(File folder, boolean onlyDirs, String title, ExecuteCommand func) {
+	public static void showDialog(File folder, boolean onlyDirs, String title, ExecuteCommand ok, ExecuteCommand cancel) {
 		if (MessageBox.active) return;
 		
-		FileChooser f = new FileChooser(folder, onlyDirs, title, func);
+		FileChooser f = new FileChooser(folder, onlyDirs, title, ok, cancel);
 		
 		IDEComponent.toAdd.add(f);
 	}
@@ -133,8 +135,11 @@ public class FileChooser extends CustomMessageBox {
 			doClose();
 		}
 		
-		if (ok.leftClicked() && ok.enabled) {
-			func.execute(fileView.selectedFile.getAbsolutePath());
+		if (okBtn.leftClicked() && okBtn.enabled) {
+			ok.execute(fileView.selectedFile.getAbsolutePath());
+		}
+		else if (cancelBtn.leftClicked() && cancelBtn.enabled) {
+			cancel.execute(fileView.selectedFile.getAbsolutePath());
 		}
 	}
 	

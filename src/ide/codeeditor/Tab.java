@@ -18,8 +18,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.swing.JFileChooser;
-
 import ide.components.CloseTabButton;
 import ide.components.CommandTerminal;
 import ide.components.FileChooser;
@@ -569,6 +567,8 @@ public class Tab extends IDEComponent implements Serializable {
 				oldFile.delete();
 				isTemporary = false;
 				save();
+			}, (path) -> {
+				//ret = 1;
 			});
 			
 			return ret;

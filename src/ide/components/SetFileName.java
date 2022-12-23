@@ -36,6 +36,8 @@ public class SetFileName extends IDEComponent {
 	private Animation cursor;
 	
 	private boolean canShow = false;
+	public boolean inMessageBox = false;
+	public File scope;
 
 	public SetFileName(int x, int y, int width, int height, boolean isFile) {
 		super(x, y, width, height, null);
@@ -74,24 +76,34 @@ public class SetFileName extends IDEComponent {
 		}
 	}
 	
+	public SetFileName(int x, int y, int width, int height, boolean isFile, boolean inMessageBox, File scope) {
+		this(x, y, width, height, isFile);
+		
+		this.inMessageBox = inMessageBox;
+		this.scope = scope;
+	}
+	
 	private boolean hasIllegalChars(String s) {
 		return s.contains("\\") || s.contains("/") || s.contains(":") || s.contains("*") || s.contains("?") || s.contains("<") || s.contains(">") || s.contains("|");
 	}
 	
 	public void tick() {
-		if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).y + 30;
+		if (!inMessageBox) {
+			if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).y + 30;
+			
+			if (text.length() > Main.explorer.maxFileCreateWidth) width = Main.screen.getWidth();
+			else width = Main.explorer.width - 2;
+		}
 		
-		if (text.length() > Main.explorer.maxFileCreateWidth) width = Main.screen.getWidth();
-		else width = Main.explorer.width - 2;
-		
-		if (MouseInput.isLeftPressed() && !leftClicked()) {
+		if ((MouseInput.isLeftPressed() && !leftClicked()) || KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
 			IDEComponent.toRemove.add(this);
 			added = false;
 		}
 	}
 	
 	public synchronized void type() {
-		if (!SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || Explorer.selected != null) return;
+		if (!SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) return;
+		if (!inMessageBox && MessageBox.active) return;
 		
 		if (KeyInput.isKeyPressed()) {
 			// Shortcuts Area
@@ -160,18 +172,31 @@ public class SetFileName extends IDEComponent {
 				if (text.length() == 0 || text.toString().endsWith(".")) return;
 				if (hasIllegalChars(text.toString())) return;
 				
-				File f = new File(Explorer.getScopePath() + File.separator + text.toString());
+				File f;
 				
-				if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath()))) {
-					//CommandTerminal.runCommand("openfile " + text.toString());
+				if (!inMessageBox) {
+					f = new File(Explorer.getScopePath() + File.separator + text.toString());
 					
-					if (!CodeEditor.isBinary(ListableFile.getFileExtension(f)))
-						ListableFile.addTab(ListableFile.search(f, f.getParentFile()), true);
+					if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath()))) {
+						//CommandTerminal.runCommand("openfile " + text.toString());
+						
+						if (!CodeEditor.isBinary(ListableFile.getFileExtension(f)))
+							ListableFile.addTab(ListableFile.search(f, f.getParentFile()), true);
+						
+						IDEComponent.toRemove.add(this);
+						added = false;
+						
+						return;
+					}
+				} else {
+					f = new File(scope.getPath() + File.separator + text.toString());
 					
-					IDEComponent.toRemove.add(this);
-					added = false;
-					
-					return;
+					if (ListableFile.hasDuplicateFileNames(text.toString(), scope)) {
+						IDEComponent.toRemove.add(this);
+						added = false;
+						
+						return;
+					}
 				}
 				
 				//if (text.toString().trim().equals("")) return;

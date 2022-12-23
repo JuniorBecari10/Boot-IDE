@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 
 import ide.explorer.Explorer;
+import ide.explorercomponents.SetBranchName;
+import ide.explorercomponents.SetCommitName;
 import ide.input.KeyInput;
 import ide.main.Main;
 import ide.screen.Screen;
@@ -93,7 +95,7 @@ public class CustomMessageBox extends IDEComponent {
 			c.tick();
 		}
 		
-		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
+		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && !(SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added || SetCommitName.added || RightClickOption.isRightClickActive())) {
 			KeyInput.updateKeys();
 			
 			closing = true;
