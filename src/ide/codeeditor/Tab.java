@@ -694,6 +694,9 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			ListableFile.generateLocalConfigFile(Main.defaultConfigFile);
 			
+			if (Main.editor.editing.getRegent().getRegent().equals(Main.defaultConfigFile))
+				Main.editor.refreshText();
+			
 			break;
 			
 		case "copyrel":
