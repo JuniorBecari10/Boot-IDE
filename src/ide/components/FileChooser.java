@@ -130,7 +130,13 @@ public class FileChooser extends CustomMessageBox {
 				}
 			}.start();
 		}, true, Texts.oneFolderUp));
-		innerComponents.add(new ExecuteButtonIcon(x + 100, y + 120, 32, 32, Main.reloadSpr, () -> { fileView.setFolder(fileView.getFolder()); }, true, Texts.reload));
+		innerComponents.add(new ExecuteButtonIcon(x + 100, y + 120, 32, 32, Main.reloadSpr, () -> {
+			new Thread() {
+				public void run() {
+					fileView.setFolder(fileView.getFolder());
+				}
+			}.start();
+		}, true, Texts.reload));
 	}
 	
 	public static void showDialog(File folder, boolean onlyDirs, String title, ExecuteCommand ok, ExecuteCommand cancel) {
