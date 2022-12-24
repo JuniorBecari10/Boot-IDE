@@ -122,7 +122,14 @@ public class FileChooser extends CustomMessageBox {
 		innerComponents.add(okBtn);
 		
 		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> { IDEComponent.toAdd.add(setFileName); }, true, Texts.createFolder));
-		innerComponents.add(new ExecuteButtonIcon(x + 60, y + 120, 32, 32, Main.folderUp, () -> { fileView.setFolder(fileView.getFolder().getParentFile()); folderScope.setText(fileView.getFolder().getPath()); }, true, Texts.oneFolderUp));
+		innerComponents.add(new ExecuteButtonIcon(x + 60, y + 120, 32, 32, Main.folderUp, () -> {
+			new Thread() {
+				public void run() {
+					fileView.setFolder(fileView.getFolder().getParentFile());
+					folderScope.setText(fileView.getFolder().getPath());
+				}
+			}.start();
+		}, true, Texts.oneFolderUp));
 		innerComponents.add(new ExecuteButtonIcon(x + 100, y + 120, 32, 32, Main.reloadSpr, () -> { fileView.setFolder(fileView.getFolder()); }, true, Texts.reload));
 	}
 	
