@@ -157,6 +157,7 @@ public final class KeyInput extends KeyAdapter {
 			}
         }
         */
+        
         if (Explorer.setFileName != null && SetFileName.added)
         	Explorer.setFileName.type();
         

@@ -26,6 +26,8 @@ public class FileChooser extends CustomMessageBox {
 	public static final String DEFAULT_FOLDER = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
 	public static final String HOME_FOLDER = FileSystemView.getFileSystemView().getHomeDirectory().getPath();
 	
+	public static FileChooser fileChooser;
+	
 	public File folder;
 	public boolean onlyDirs;
 	public String title;
@@ -37,6 +39,8 @@ public class FileChooser extends CustomMessageBox {
 	
 	public ExecuteButton cancelBtn;
 	public ExecuteButton okBtn;
+	
+	public FileViewSetFileName setFileName;
 	
 	public ExecuteCommand ok;
 	public ExecuteCommand cancel;
@@ -89,6 +93,7 @@ public class FileChooser extends CustomMessageBox {
 				20,
 				Texts.cancel,
 				() -> {
+					fileChooser = null;
 					doClose();
 				},
 				true,
@@ -107,6 +112,8 @@ public class FileChooser extends CustomMessageBox {
 				true,
 				true);
 		
+		setFileName = new FileViewSetFileName(x + 15, y + 180, width - 30, 30, false, fileView);
+		
 		innerComponents.add(folderScope);
 		innerComponents.add(fileView);
 		innerComponents.add(fileName);
@@ -114,7 +121,7 @@ public class FileChooser extends CustomMessageBox {
 		innerComponents.add(cancelBtn);
 		innerComponents.add(okBtn);
 		
-		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> { IDEComponent.toAdd.add(new SetFileName(x + 15, y + 180, width - 30, 30, false, true, fileView.getFolder())); }, true, Texts.createFolder));
+		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> { IDEComponent.toAdd.add(setFileName); }, true, Texts.createFolder));
 		innerComponents.add(new ExecuteButtonIcon(x + 60, y + 120, 32, 32, Main.folderUp, () -> { fileView.setFolder(fileView.getFolder().getParentFile()); folderScope.setText(fileView.getFolder().getPath()); }, true, Texts.oneFolderUp));
 		innerComponents.add(new ExecuteButtonIcon(x + 100, y + 120, 32, 32, Main.reloadSpr, () -> { fileView.setFolder(fileView.getFolder()); }, true, Texts.reload));
 	}
@@ -122,9 +129,9 @@ public class FileChooser extends CustomMessageBox {
 	public static void showDialog(File folder, boolean onlyDirs, String title, ExecuteCommand ok, ExecuteCommand cancel) {
 		if (MessageBox.active) return;
 		
-		FileChooser f = new FileChooser(folder, onlyDirs, title, ok, cancel);
+		fileChooser = new FileChooser(folder, onlyDirs, title, ok, cancel);
 		
-		IDEComponent.toAdd.add(f);
+		IDEComponent.toAdd.add(fileChooser);
 	}
 	
 	public void tick() {
@@ -133,6 +140,17 @@ public class FileChooser extends CustomMessageBox {
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 			OpenBaseFolderButton.setBaseFolder(fileView.selectedFile);
 			doClose();
+		}
+		
+		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
+			KeyInput.updateKeys();
+			
+			if (FileViewSetFileName.added) {
+				FileViewSetFileName.added = false;
+				IDEComponent.toRemove.add(setFileName);
+			}
+			else
+				doClose();
 		}
 		
 		if (okBtn.leftClicked() && okBtn.enabled) {

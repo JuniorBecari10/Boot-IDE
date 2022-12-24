@@ -14,6 +14,7 @@ import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
+import ide.input.MouseInput;
 import ide.util.Colors;
 
 public class ComboBox extends IDEComponent {
@@ -109,5 +110,8 @@ public class ComboBox extends IDEComponent {
 		Fonts.drawString(text.toString(), x + 2, (y + (height / 2)) - (CodeEditor.DEFAULT_FONT_SIZE / 2), new IDEFont(Fonts.lighterGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), x + width, g2);
 		
 		g.setColor(Colors.textLight);
+		
+		if (hovered())
+			Explorer.renderCardText(new String[] { text.toString() }, MouseInput.getMouseX() + 20, MouseInput.getMouseY() - 5, g);
 	}
 }

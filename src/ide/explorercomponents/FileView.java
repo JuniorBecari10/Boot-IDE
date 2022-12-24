@@ -19,7 +19,7 @@ public class FileView extends IDEComponent {
 	
 	public File selectedFile;
 	
-	private List<FileViewFile> files;
+	public List<FileViewFile> files;
 	private int scroll = 0;
 	
 	public static final int FILE_HEIGHT = 30;

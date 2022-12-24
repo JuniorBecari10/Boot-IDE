@@ -14,6 +14,8 @@ import ide.codeeditor.CodeEditor;
 import ide.explorer.Explorer;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
+import ide.explorercomponents.FileView;
+import ide.explorercomponents.FileViewFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
@@ -23,7 +25,7 @@ import ide.util.Animation;
 import ide.util.Colors;
 import ide.util.Texts;
 
-public class SetFileName extends IDEComponent {
+public class FileViewSetFileName extends IDEComponent {
 	
 	public static boolean added = false;
 	
@@ -36,11 +38,13 @@ public class SetFileName extends IDEComponent {
 	private Animation cursor;
 	
 	private boolean canShow = false;
+	private FileView view;
 
-	public SetFileName(int x, int y, int width, int height, boolean isFile) {
+	public FileViewSetFileName(int x, int y, int width, int height, boolean isFile, FileView view) {
 		super(x, y, width, height, null);
 		
 		this.isFile = isFile;
+		this.view = view;
 		
 		cursor = new Animation() { // 20
 			private boolean flip = false;
@@ -67,8 +71,8 @@ public class SetFileName extends IDEComponent {
 		}.start();
 		
 		while (this.y > Main.screen.getHeight() - 30) {
-			for (ListableFile l : Explorer.files)
-				l.setY(l.getY() - 30);
+			for (FileViewFile f : view.files)
+				f.setY(f.getY() - FileView.FILE_HEIGHT);
 			
 			this.y -= 30;
 		}
@@ -82,7 +86,7 @@ public class SetFileName extends IDEComponent {
 		if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).y + 30;
 		
 		if (text.length() > Main.explorer.maxFileCreateWidth) width = Main.screen.getWidth();
-		else width = Main.explorer.width - 2;
+		else width = view.width - 2;
 		
 		if (MouseInput.isLeftPressed() && !leftClicked()) {
 			IDEComponent.toRemove.add(this);
@@ -91,7 +95,7 @@ public class SetFileName extends IDEComponent {
 	}
 	
 	public synchronized void type() {
-		if (!SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || Explorer.selected != null) return;
+		if (!SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) return;
 		
 		if (KeyInput.isKeyPressed()) {
 			// Shortcuts Area
@@ -125,11 +129,6 @@ public class SetFileName extends IDEComponent {
 			
 			if (KeyInput.isKeyPressed() && Character.isLetter(KeyInput.getCharPressed()) || KeyInput.getKeyCodePressed() == KeyEvent.VK_BACK_SPACE) canShow = true;
 			
-			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
-				IDEComponent.toRemove.add(this);
-				added = false;
-			}
-			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_LEFT && cursorIndex > 0) cursorIndex--;
 			else if (KeyInput.getKeyCodePressed() == KeyEvent.VK_RIGHT && cursorIndex < text.length()) cursorIndex++;
 			
@@ -160,11 +159,9 @@ public class SetFileName extends IDEComponent {
 				if (text.length() == 0 || text.toString().endsWith(".")) return;
 				if (hasIllegalChars(text.toString())) return;
 				
-				File f = new File(Explorer.getScopePath() + File.separator + text.toString());
+				File f = new File(view.getFolder() + File.separator + text.toString());
 				
 				if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath()))) {
-					//CommandTerminal.runCommand("openfile " + text.toString());
-					
 					if (!CodeEditor.isBinary(ListableFile.getFileExtension(f)))
 						ListableFile.addTab(ListableFile.search(f, f.getParentFile()), true);
 					
@@ -239,7 +236,7 @@ public class SetFileName extends IDEComponent {
 		g2.setStroke(new BasicStroke(2f));
 		
 		if (showCursor)
-			g.fillRect(cursorIndex * (CodeEditor.DEFAULT_FONT_SIZE - 4), y, 2, height);
+			g.fillRect(x + (cursorIndex * (CodeEditor.DEFAULT_FONT_SIZE - 4)), y, 2, height);
 		
 		if (isFile)
 			Fonts.drawString(Texts.createFile + "...", MouseInput.getMouseX() + 30, MouseInput.getMouseY() - 35, new IDEFont(Fonts.lightGrayNormal, CodeEditor.DEFAULT_FONT_SIZE), g);
