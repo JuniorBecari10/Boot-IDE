@@ -562,8 +562,16 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(FileChooser.DEFAULT_FOLDER), false, Texts.selectBaseFolder + "...", (path) -> {
 				File oldFile = regent.getRegent();
+				File newFile = new File(path);
 				
-				regent = ListableFile.newListableFile(new File(path));
+				regent = ListableFile.newListableFile(newFile);
+				
+				if (!newFile.exists())
+					try {
+						newFile.createNewFile();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				
 				oldFile.delete();
 				isTemporary = false;

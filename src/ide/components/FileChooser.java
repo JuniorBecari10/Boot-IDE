@@ -121,7 +121,7 @@ public class FileChooser extends CustomMessageBox {
 					fileView.setFolder(fileView.getFolder().getParentFile());
 					folderScope.setText(fileView.getFolder().getPath());
 					
-					fileName.setText(fileView.selectedFile.getPath());
+					fileName.setText(fileView.getFolder().getPath());
 				}
 			}.start();
 		}, true, Texts.oneFolderUp));
@@ -146,7 +146,6 @@ public class FileChooser extends CustomMessageBox {
 		super.tick();
 		
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
-			OpenBaseFolderButton.setBaseFolder(fileView.selectedFile);
 			doClose();
 			ok.execute(fileName.getText());
 		}
