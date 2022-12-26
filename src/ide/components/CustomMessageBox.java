@@ -17,7 +17,7 @@ import ide.util.Colors;
 public class CustomMessageBox extends IDEComponent {
 	
 	protected List<IDEComponent> innerComponents;
-	private boolean closing = false;
+	protected boolean closing = false;
 	
 	protected CustomMessageBox(int width, int height, List<IDEComponent> innerComponents) {
 		super((Main.screen.getWidth() / 2) - (width / 2), Screen.DECORATION_HEIGHT - height, width, height, null);

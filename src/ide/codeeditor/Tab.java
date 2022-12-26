@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import ide.components.CloseTabButton;
 import ide.components.CommandTerminal;
@@ -557,7 +558,7 @@ public class Tab extends IDEComponent implements Serializable {
 			//JFileChooser chooser = new JFileChooser(Explorer.scope == null ? Main.baseFolder : Explorer.scope.getRegent());
 			//int option = chooser.showSaveDialog(Main.screen.frame);
 			
-			int ret = 0;
+			AtomicInteger ret = new AtomicInteger(0);
 			
 			FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(FileChooser.DEFAULT_FOLDER), false, Texts.selectBaseFolder + "...", (path) -> {
 				File oldFile = regent.getRegent();
@@ -568,10 +569,10 @@ public class Tab extends IDEComponent implements Serializable {
 				isTemporary = false;
 				save();
 			}, (path) -> {
-				//ret = 1;
+				ret.getAndSet(1);
 			});
 			
-			return ret;
+			return ret.intValue();
 		}
 		
 		return 0;

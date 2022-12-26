@@ -69,7 +69,7 @@ public class FileChooser extends CustomMessageBox {
 			}
 		};
 		
-		fileView = new FileView(x + 15, y + 180, width - 30, FileView.FILE_HEIGHT * 8, folder, onlyDirs, folder);
+		fileView = new FileView(x + 15, y + 180, width - 30, FileView.FILE_HEIGHT * 8, folder, onlyDirs, folder, this);
 		
 		fileName = new InputBox(
 				x + ((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - (Main.screen.getWidth() / 4),
@@ -77,14 +77,7 @@ public class FileChooser extends CustomMessageBox {
 				Main.screen.getWidth() / 2,
 				20,
 				true,
-				false) {
-			public void tick() {
-				super.tick();
-				
-				if (fileView.selectedFile != null)
-					text = new StringBuilder(fileView.selectedFile.getPath());
-			}
-		};
+				true);
 		
 		cancelBtn = new ExecuteButton(
 				x + 15,
@@ -127,6 +120,8 @@ public class FileChooser extends CustomMessageBox {
 				public void run() {
 					fileView.setFolder(fileView.getFolder().getParentFile());
 					folderScope.setText(fileView.getFolder().getPath());
+					
+					fileName.setText(fileView.selectedFile.getPath());
 				}
 			}.start();
 		}, true, Texts.oneFolderUp));
@@ -153,6 +148,7 @@ public class FileChooser extends CustomMessageBox {
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 			OpenBaseFolderButton.setBaseFolder(fileView.selectedFile);
 			doClose();
+			ok.execute(fileName.getText());
 		}
 		
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
@@ -164,13 +160,15 @@ public class FileChooser extends CustomMessageBox {
 			}
 			else
 				doClose();
+			
+			cancel.execute(fileName.getText());
 		}
 		
 		if (okBtn.leftClicked() && okBtn.enabled) {
-			ok.execute(fileView.selectedFile.getAbsolutePath());
+			ok.execute(fileName.getText());
 		}
 		else if (cancelBtn.leftClicked() && cancelBtn.enabled) {
-			cancel.execute(fileView.selectedFile.getAbsolutePath());
+			cancel.execute(fileName.getText());
 		}
 	}
 	

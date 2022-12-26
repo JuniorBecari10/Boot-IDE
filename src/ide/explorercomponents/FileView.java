@@ -6,6 +6,7 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+import ide.components.FileChooser;
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
 import ide.input.MouseInput;
@@ -18,6 +19,8 @@ public class FileView extends IDEComponent {
 	public boolean onlyDirs;
 	
 	public File selectedFile;
+	
+	public FileChooser parent;
 	
 	public List<FileViewFile> files;
 	private int scroll = 0;
@@ -39,6 +42,17 @@ public class FileView extends IDEComponent {
 		files = new ArrayList<>();
 		this.onlyDirs = onlyDirs;
 		this.selectedFile = selectedFile;
+		
+		setFolder(folder);
+	}
+	
+	public FileView(int x, int y, int width, int height, File folder, boolean onlyDirs, File selectedFile, FileChooser parent) {
+		super(x, y, width, height, null);
+		
+		files = new ArrayList<>();
+		this.onlyDirs = onlyDirs;
+		this.selectedFile = selectedFile;
+		this.parent = parent;
 		
 		setFolder(folder);
 	}
@@ -86,6 +100,7 @@ public class FileView extends IDEComponent {
 						scheduleSetFolder(f);
 					
 					selectedFile = this.regent;
+					parent.fileName.text = new StringBuilder(selectedFile.getPath());
 				}
 			});
 			
