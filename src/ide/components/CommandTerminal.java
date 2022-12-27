@@ -33,6 +33,7 @@ import ide.input.MouseInput;
 import ide.main.Main;
 import ide.main.OS;
 import ide.screen.Screen;
+import ide.terminal.TerminalCore;
 import ide.util.Animation;
 import ide.util.Colors;
 import ide.util.Language;
@@ -770,6 +771,13 @@ public class CommandTerminal extends IDEComponent {
 				IDEComponent.toRemove.add(Main.reload);
 				
 				Main.writeFile(Main.settingsFile);
+				
+				Explorer.explorerMode = ExplorerMode.EXPLORER;
+    			Explorer.selected = null;
+    			
+    			SearchReplaceCore.dispose();
+    			GitCore.dispose();
+    			TerminalCore.dispose();
 				
 				break;
 				

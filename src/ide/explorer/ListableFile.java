@@ -1378,6 +1378,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 		}
 	}
 
+	// aqui da nullpointer
 	public static List<File> listFilesOrdered(File folder) {
 		File[] dirs = folder.listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {

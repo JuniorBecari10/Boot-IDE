@@ -287,6 +287,8 @@ public final class Texts {
 	public static String resetExplorerWidth;
 	public static String closeBaseFolder;
 	
+	public static String saveFile;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -559,6 +561,8 @@ public final class Texts {
 			resetExplorerWidth = "Redefinir Largura do Explorador";
 			closeBaseFolder = "Fechar Pasta Base";
 			
+			saveFile = "Salvar Arquivo";
+			
 			break;
 		
 		case ENG:
@@ -830,6 +834,8 @@ public final class Texts {
 			moreOptions = "More Options";
 			resetExplorerWidth = "Reset Explorer Width";
 			closeBaseFolder = "Close Base Folder";
+			
+			saveFile = "Save File";
 			
 			break;
 		}

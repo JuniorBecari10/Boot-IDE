@@ -24,6 +24,7 @@ import ide.components.CommandTerminal;
 import ide.components.FileChooser;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
+import ide.components.ReloadButton;
 import ide.components.RightClickOption;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
@@ -560,11 +561,13 @@ public class Tab extends IDEComponent implements Serializable {
 			
 			AtomicInteger ret = new AtomicInteger(0);
 			
-			FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(FileChooser.DEFAULT_FOLDER), false, Texts.selectBaseFolder + "...", (path) -> {
+			FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(FileChooser.DEFAULT_FOLDER), false, Texts.saveFile + "...", (path) -> {
+				System.out.println(path);
+				
 				File oldFile = regent.getRegent();
 				File newFile = new File(path);
 				
-				regent = ListableFile.newListableFile(newFile);
+				regent = ListableFile.newListableFileParent(newFile);
 				
 				if (!newFile.exists())
 					try {
@@ -576,6 +579,8 @@ public class Tab extends IDEComponent implements Serializable {
 				oldFile.delete();
 				isTemporary = false;
 				save();
+				
+				ReloadButton.reloadExplorer();
 			}, (path) -> {
 				ret.getAndSet(1);
 			});

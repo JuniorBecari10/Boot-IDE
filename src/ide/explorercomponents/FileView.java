@@ -100,7 +100,7 @@ public class FileView extends IDEComponent {
 						scheduleSetFolder(f);
 					
 					selectedFile = this.regent;
-					parent.fileName.text = new StringBuilder(selectedFile.getPath());
+					parent.fileName.text = new StringBuilder(selectedFile.getName());
 				}
 			});
 			
