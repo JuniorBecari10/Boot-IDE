@@ -522,12 +522,9 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "loadconfigfile":
-				option = chooser.showOpenDialog(Main.screen.frame);
-				
-				if (option == JFileChooser.APPROVE_OPTION) {
-					//Main.conffile = chooser.getSelectedFile().getPath();
-					
-					Main.load(chooser.getSelectedFile().getPath());
+				//option = chooser.showOpenDialog(Main.screen.frame);
+				FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(FileChooser.DEFAULT_FOLDER), false, Texts.saveFile + "...", (path) -> {
+					Main.load(new File(path).getPath());
 					
 					if (!ListableFile.hasAltered) {
 						String[] options = { Texts.yes, Texts.no };
@@ -549,6 +546,13 @@ public class CommandTerminal extends IDEComponent {
 							e.printStackTrace();
 						}
 			        }
+				}, (path) -> {});
+				
+				option = -1;
+				if (option == JFileChooser.APPROVE_OPTION) {
+					//Main.conffile = chooser.getSelectedFile().getPath();
+					
+					
 				}
 				
 				break;
