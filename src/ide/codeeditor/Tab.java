@@ -562,8 +562,6 @@ public class Tab extends IDEComponent implements Serializable {
 			AtomicInteger ret = new AtomicInteger(0);
 			
 			FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(FileChooser.DEFAULT_FOLDER), false, Texts.saveFile + "...", (path) -> {
-				System.out.println(path);
-				
 				File oldFile = regent.getRegent();
 				File newFile = new File(path);
 				

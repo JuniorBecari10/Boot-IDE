@@ -146,7 +146,6 @@ public class FileChooser extends CustomMessageBox {
 		super.tick();
 		
 		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
-			System.out.println("aa");
 			doClose();
 			ok.execute(fileView.getFolder() + File.separator + fileName.getText());
 		}
@@ -164,11 +163,12 @@ public class FileChooser extends CustomMessageBox {
 			cancel.execute(fileView.getFolder() + File.separator + fileName.getText());
 		}
 		
-		if (okBtn.leftClicked() && okBtn.enabled) {
-			System.out.println("a");
+		if (okBtn.leftClicked()) {
+			doClose();
 			ok.execute(fileView.getFolder() + File.separator + fileName.getText());
 		}
-		else if (cancelBtn.leftClicked() && cancelBtn.enabled) {
+		else if (cancelBtn.leftClicked()) {
+			doClose();
 			cancel.execute(fileView.getFolder() + File.separator + fileName.getText());
 		}
 	}
