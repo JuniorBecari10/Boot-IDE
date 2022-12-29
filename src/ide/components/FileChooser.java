@@ -56,10 +56,12 @@ public class FileChooser extends CustomMessageBox {
 		this.ok = ok;
 		this.cancel = cancel;
 		
+		fileView = new FileView(x + 15, y + 180, width - 30, FileView.FILE_HEIGHT * 8, folder, onlyDirs, folder, this);
+		
 		folderScope = new ComboBox(
-				x + ((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - (Main.screen.getWidth() / 6),
+				x + 50,
 				y + 60,
-				Main.screen.getWidth() / 3,
+				width - 100,
 				30,
 				new String[] { }) {
 			public void tick() {
@@ -68,8 +70,6 @@ public class FileChooser extends CustomMessageBox {
 				text = new StringBuilder(fileView.getFolder().getPath());
 			}
 		};
-		
-		fileView = new FileView(x + 15, y + 180, width - 30, FileView.FILE_HEIGHT * 8, folder, onlyDirs, folder, this);
 		
 		fileName = new InputBox(
 				x + ((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - (Main.screen.getWidth() / 4),
@@ -98,6 +98,8 @@ public class FileChooser extends CustomMessageBox {
 				() -> {},
 				true,
 				true);
+		
+		fileName.setText(fileView.getFolder().getName());
 		
 		setFileName = new FileViewSetFileName(x + 15, y + 180, width - 30, 30, false, fileView);
 		
@@ -139,10 +141,12 @@ public class FileChooser extends CustomMessageBox {
 	public void tick() {
 		super.tick();
 		
+		String path = fileView.getFolder() + File.separator + (fileName.getText().equals(fileView.getFolder().getName()) ? "" : fileName.getText());
+		
 		if (KeyInput.isKeyPressed()) {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				doClose();
-				ok.execute(fileView.getFolder() + File.separator + fileName.getText());
+				ok.execute(path);
 			}
 			
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
@@ -156,17 +160,17 @@ public class FileChooser extends CustomMessageBox {
 					doClose();
 				}
 				
-				cancel.execute(fileView.getFolder() + File.separator + fileName.getText());
+				cancel.execute(path);
 			}
 		}
 		
 		if (okBtn.leftClicked()) {
 			doClose();
-			ok.execute(fileView.getFolder() + File.separator + fileName.getText());
+			ok.execute(path);
 		}
 		else if (cancelBtn.leftClicked()) {
 			doClose();
-			cancel.execute(fileView.getFolder() + File.separator + fileName.getText());
+			cancel.execute(path);
 		}
 	}
 	
