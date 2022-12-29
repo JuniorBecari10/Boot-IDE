@@ -48,7 +48,7 @@ public class FileChooser extends CustomMessageBox {
 	public static int HEIGHT = Main.screen.getHeight() - (Main.screen.getHeight() / 4);
 	
 	private FileChooser(File folder, boolean onlyDirs, String title, ExecuteCommand ok, ExecuteCommand cancel) {
-		super(Main.screen.getWidth() - (Main.screen.getWidth() / 4), HEIGHT, new ArrayList<>());
+		super(Main.screen.getWidth() - (Main.screen.getWidth() / 4), HEIGHT, new ArrayList<>(), false);
 		
 		this.folder = folder;
 		this.onlyDirs = onlyDirs;
@@ -85,10 +85,7 @@ public class FileChooser extends CustomMessageBox {
 				((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - 15,
 				20,
 				Texts.cancel,
-				() -> {
-					fileChooser = null;
-					doClose();
-				},
+				() -> {},
 				true,
 				true);
 		
@@ -98,10 +95,7 @@ public class FileChooser extends CustomMessageBox {
 				((Main.screen.getWidth() - (Main.screen.getWidth() / 4)) / 2) - 30,
 				20,
 				"Ok",
-				() -> {
-					OpenBaseFolderButton.setBaseFolder(fileView.selectedFile);
-					doClose();
-				},
+				() -> {},
 				true,
 				true);
 		
@@ -145,22 +139,25 @@ public class FileChooser extends CustomMessageBox {
 	public void tick() {
 		super.tick();
 		
-		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
-			doClose();
-			ok.execute(fileView.getFolder() + File.separator + fileName.getText());
-		}
-		
-		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
-			KeyInput.updateKeys();
-			
-			if (FileViewSetFileName.added) {
-				FileViewSetFileName.added = false;
-				IDEComponent.toRemove.add(setFileName);
-			}
-			else
+		if (KeyInput.isKeyPressed()) {
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				doClose();
+				ok.execute(fileView.getFolder() + File.separator + fileName.getText());
+			}
 			
-			cancel.execute(fileView.getFolder() + File.separator + fileName.getText());
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
+				KeyInput.updateKeys();
+				
+				if (FileViewSetFileName.added) {
+					FileViewSetFileName.added = false;
+					IDEComponent.toRemove.add(setFileName);
+				}
+				else {
+					doClose();
+				}
+				
+				cancel.execute(fileView.getFolder() + File.separator + fileName.getText());
+			}
 		}
 		
 		if (okBtn.leftClicked()) {

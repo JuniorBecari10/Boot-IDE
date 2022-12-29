@@ -426,7 +426,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "generateconfigfile":
-				FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(FileChooser.DEFAULT_FOLDER), false, "Save Config File" + "...", (path) -> {
+				FileChooser.showDialog(new File(FileChooser.DEFAULT_FOLDER), false, "Save Config File" + "...", (path) -> {
 					File fl = chooser.getSelectedFile();
 					
 					if (!fl.getName().contains(Main.CONFIG_FILE_EXTENSION)) fl = new File(fl.getAbsolutePath() + Main.CONFIG_FILE_EXTENSION);

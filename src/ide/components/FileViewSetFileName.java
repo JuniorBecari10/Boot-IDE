@@ -46,6 +46,8 @@ public class FileViewSetFileName extends IDEComponent {
 		this.isFile = isFile;
 		this.view = view;
 		
+		added = true;
+		
 		cursor = new Animation() { // 20
 			private boolean flip = false;
 			

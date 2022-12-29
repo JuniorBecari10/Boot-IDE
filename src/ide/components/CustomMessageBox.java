@@ -19,6 +19,8 @@ public class CustomMessageBox extends IDEComponent {
 	protected List<IDEComponent> innerComponents;
 	protected boolean closing = false;
 	
+	private boolean doNativeClosing = true;
+	
 	protected CustomMessageBox(int width, int height, List<IDEComponent> innerComponents) {
 		super((Main.screen.getWidth() / 2) - (width / 2), Screen.DECORATION_HEIGHT - height, width, height, null);
 		
@@ -48,6 +50,12 @@ public class CustomMessageBox extends IDEComponent {
 				}
 			}
 		}.start();
+	}
+	
+	protected CustomMessageBox(int width, int height, List<IDEComponent> innerComponents, boolean doNativeClosing) {
+		this(width, height, innerComponents);
+		
+		this.doNativeClosing = doNativeClosing;
 	}
 	
 	public void doClose() {
@@ -95,7 +103,7 @@ public class CustomMessageBox extends IDEComponent {
 			c.tick();
 		}
 		
-		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && !(SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added || SetCommitName.added || RightClickOption.isRightClickActive())) {
+		if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE && doNativeClosing && !(SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added || SetCommitName.added || RightClickOption.isRightClickActive())) {
 			KeyInput.updateKeys();
 			
 			closing = true;
