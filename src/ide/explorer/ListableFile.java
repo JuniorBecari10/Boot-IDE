@@ -1414,10 +1414,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 	public static List<ListableFile> loadFolder(ListableFile folder) {
 		Explorer.scope = folder;
-
+		
 		List<ListableFile> files = new ArrayList<>();
 
 		if (folder != null) {
+			/*File[] list = folder.regent.listFiles();
+			if (list.length == 1 && list[0].isDirectory()) {
+				Explorer.files = loadFolder(newListableFile(list[0]));
+			}*/
+			
 			if (folder.regent.isDirectory()) {
 				int index = 0;
 

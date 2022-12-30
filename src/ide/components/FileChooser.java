@@ -124,7 +124,7 @@ public class FileChooser extends CustomMessageBox {
 		innerComponents.add(new ExecuteButtonIcon(x + 100, y + 120, 32, 32, Main.reloadSpr, () -> {
 			new Thread() {
 				public void run() {
-					fileView.setFolder(fileView.getFolder());
+					fileView.reload();
 				}
 			}.start();
 		}, true, Texts.reload));
@@ -145,6 +145,8 @@ public class FileChooser extends CustomMessageBox {
 		
 		if (KeyInput.isKeyPressed()) {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
+				if (FileViewSetFileName.added) return;
+				
 				doClose();
 				ok.execute(path);
 			}

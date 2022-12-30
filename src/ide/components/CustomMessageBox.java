@@ -37,7 +37,7 @@ public class CustomMessageBox extends IDEComponent {
 				while (y < Screen.DECORATION_HEIGHT) {
 					y += 2;
 					
-					for (IDEComponent c : innerComponents)
+					for (IDEComponent c : innerComponents) // concurrentmodification aqui
 						c.y += 2;
 					
 					Main.canRunLoop = true;

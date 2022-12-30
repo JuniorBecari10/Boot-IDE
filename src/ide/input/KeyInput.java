@@ -5,6 +5,8 @@ import java.awt.event.KeyEvent;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.CommandTerminal;
+import ide.components.FileChooser;
+import ide.components.FileViewSetFileName;
 import ide.components.MessageBox;
 import ide.components.RenameFile;
 import ide.components.SetFileName;
@@ -175,6 +177,9 @@ public final class KeyInput extends KeyAdapter {
         
         if (Explorer.setCommitName != null && SetCommitName.added)
         	Explorer.setCommitName.type();
+        
+        if (FileChooser.fileChooser.setFileName != null && FileViewSetFileName.added)
+        	FileChooser.fileChooser.setFileName.type();
         
         /*if (Character.isLetterOrDigit(charPressed)) {
 	        keyCodes.add(keyCodePressed);

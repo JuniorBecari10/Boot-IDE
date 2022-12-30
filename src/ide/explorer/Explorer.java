@@ -61,6 +61,7 @@ public class Explorer extends IDEComponent {
 	public static ListableFile scope;
 	
 	public static boolean allowAnimations = true;
+	//public static boolean autoEnterFolders = true;
 
 	public static String folderPath = "";
 	public static String folderPathFull = "";

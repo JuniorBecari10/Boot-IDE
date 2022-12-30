@@ -97,8 +97,6 @@ public class FileViewSetFileName extends IDEComponent {
 	}
 	
 	public synchronized void type() {
-		if (!SetFileName.added || CommandTerminal.active || RenameFile.added || Explorer.selected != null) return;
-		
 		if (KeyInput.isKeyPressed()) {
 			// Shortcuts Area
 			
@@ -160,20 +158,11 @@ public class FileViewSetFileName extends IDEComponent {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				if (text.length() == 0 || text.toString().endsWith(".")) return;
 				if (hasIllegalChars(text.toString())) return;
+				if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath()))) return;
+				
+				KeyInput.updateKeys();
 				
 				File f = new File(view.getFolder() + File.separator + text.toString());
-				
-				if (ListableFile.hasDuplicateFileNames(text.toString(), new File(Explorer.getScopePath()))) {
-					if (!CodeEditor.isBinary(ListableFile.getFileExtension(f)))
-						ListableFile.addTab(ListableFile.search(f, f.getParentFile()), true);
-					
-					IDEComponent.toRemove.add(this);
-					added = false;
-					
-					return;
-				}
-				
-				//if (text.toString().trim().equals("")) return;
 				
 				if (isFile)
 					try {
@@ -192,6 +181,7 @@ public class FileViewSetFileName extends IDEComponent {
 					IDEComponent.toRemove.add(this);
 					added = false;
 					
+					FileChooser.fileChooser.fileView.reload();
 					return;
 				}
 				

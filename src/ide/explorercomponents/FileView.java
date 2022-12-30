@@ -72,6 +72,10 @@ public class FileView extends IDEComponent {
 		folderScheduled = null;
 	}
 	
+	public void reload() {
+		setFolder(folder);
+	}
+	
 	public void setFolder(File folder) {
 		if (folder == null) return;
 		
@@ -111,6 +115,11 @@ public class FileView extends IDEComponent {
 	}
 	
 	public void scroll() {
+		if (files.size() == 0) {
+			scroll = 0;
+			return;
+		}
+		
 		if (MouseInput.wheelDown()) {
 			if (files.get(files.size() - 1 < 0 ? 0 : files.size() - 1).getY() - FILE_HEIGHT >= y)
 				scroll += FILE_HEIGHT;
@@ -134,6 +143,7 @@ public class FileView extends IDEComponent {
 		}
 		
 		performScheduled();
+		reload();
 		
 		if (hovered()) Explorer.selected = this;
 	}
