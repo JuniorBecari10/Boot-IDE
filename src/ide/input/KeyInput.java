@@ -178,7 +178,7 @@ public final class KeyInput extends KeyAdapter {
         if (Explorer.setCommitName != null && SetCommitName.added)
         	Explorer.setCommitName.type();
         
-        if (FileChooser.fileChooser.setFileName != null && FileViewSetFileName.added)
+        if (FileChooser.fileChooser != null && FileChooser.fileChooser.setFileName != null && FileViewSetFileName.added)
         	FileChooser.fileChooser.setFileName.type();
         
         /*if (Character.isLetterOrDigit(charPressed)) {

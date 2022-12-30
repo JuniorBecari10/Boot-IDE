@@ -86,8 +86,6 @@ public class CommandTerminal extends IDEComponent {
 	
 	public static List<String> commandHints = new ArrayList<>();
 	
-	private static JFileChooser chooser;
-	
 	//private static boolean typedFlag = false; // a necessario que exista, pelo menos por enquanto
 	
 	public CommandTerminal(int x, int y, int width, int height) {
@@ -125,8 +123,6 @@ public class CommandTerminal extends IDEComponent {
 				cursor.play();
 			}
 		}.start();
-		
-		chooser = new JFileChooser(Texts.save + "/" + Texts.open);
 	}
 	
 	/**
@@ -427,7 +423,7 @@ public class CommandTerminal extends IDEComponent {
 				
 			case "generateconfigfile":
 				FileChooser.showDialog(new File(FileChooser.DEFAULT_FOLDER), false, "Save Config File" + "...", (path) -> {
-					File fl = chooser.getSelectedFile();
+					File fl = new File(path);
 					
 					if (!fl.getName().contains(Main.CONFIG_FILE_EXTENSION)) fl = new File(fl.getAbsolutePath() + Main.CONFIG_FILE_EXTENSION);
 					
@@ -441,7 +437,7 @@ public class CommandTerminal extends IDEComponent {
 					String[] options = { Texts.openFolder, Texts.openInNewTab, Texts.cancel };
 					
     				MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, options, new Execute[] { () -> {
-    					File file = chooser.getSelectedFile();
+    					File file = new File(path);
     					
     					try {
 							Main.desktop.open(file.getParentFile());
@@ -449,7 +445,7 @@ public class CommandTerminal extends IDEComponent {
 							e.printStackTrace();
 						}
     				}, () -> {
-    					File file = chooser.getSelectedFile();
+    					File file = new File(path);
     					if (!file.getName().contains(Main.CONFIG_FILE_EXTENSION)) file = new File(file.getAbsolutePath() + Main.CONFIG_FILE_EXTENSION);
     					
     					ListableFile.addTab(ListableFile.newListableFile(file), false);
@@ -458,23 +454,22 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "generateconfigfileloaded":
-				int option = chooser.showSaveDialog(Main.screen.frame);
-				
-				if (option == JFileChooser.APPROVE_OPTION) {
-					File fl = chooser.getSelectedFile();
+				FileChooser.showDialog(new File(FileChooser.DEFAULT_FOLDER), false, "Save Config File" + "...", (path) -> {
+					File fl = new File(path);
 					
 					if (!fl.getName().contains(Main.CONFIG_FILE_EXTENSION)) fl = new File(fl.getAbsolutePath() + Main.CONFIG_FILE_EXTENSION);
 					
 					ListableFile.generateConfigFileLoaded(fl);
 					
 					if (!fl.exists()) {
+						System.out.println("an error occurred");
 						return;
 					}
 					
-					String[] options = { Texts.openFolder, Texts.cancel, /*Texts.openInNewTab*/ Texts.openInNewTab };
-    				
-					MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, options, new Execute[] { () -> {
-    					File file = chooser.getSelectedFile();
+					String[] options = { Texts.openFolder, Texts.openInNewTab, Texts.cancel };
+					
+    				MessageBox.showDialog(Texts.wantOpenFile, new String[] { Texts.wouldEdit }, options, new Execute[] { () -> {
+    					File file = new File(path);
     					
     					try {
 							Main.desktop.open(file.getParentFile());
@@ -482,12 +477,12 @@ public class CommandTerminal extends IDEComponent {
 							e.printStackTrace();
 						}
     				}, () -> {
-    					File file = chooser.getSelectedFile();
+    					File file = new File(path);
     					if (!file.getName().contains(Main.CONFIG_FILE_EXTENSION)) file = new File(file.getAbsolutePath() + Main.CONFIG_FILE_EXTENSION);
     					
     					ListableFile.addTab(ListableFile.newListableFile(file), false);
     				}, () -> {} });
-				}
+				}, (a) -> {});
 				break;
 				
 			case "toggleexplorer":
@@ -547,13 +542,6 @@ public class CommandTerminal extends IDEComponent {
 						}
 			        }
 				}, (path) -> {});
-				
-				option = -1;
-				if (option == JFileChooser.APPROVE_OPTION) {
-					//Main.conffile = chooser.getSelectedFile().getPath();
-					
-					
-				}
 				
 				break;
 				
