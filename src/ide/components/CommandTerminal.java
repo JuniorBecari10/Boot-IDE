@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import ide.codeeditor.CodeEditor;
@@ -422,7 +421,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "generateconfigfile":
-				FileChooser.showDialog(new File(FileChooser.DEFAULT_FOLDER), false, "Save Config File" + "...", (path) -> {
+				FileChooser.showDialog(new File(FileChooser.DEFAULT_FOLDER), false, Texts.saveFile + "...", (path) -> {
 					File fl = new File(path);
 					
 					if (!fl.getName().contains(Main.CONFIG_FILE_EXTENSION)) fl = new File(fl.getAbsolutePath() + Main.CONFIG_FILE_EXTENSION);
@@ -454,7 +453,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "generateconfigfileloaded":
-				FileChooser.showDialog(new File(FileChooser.DEFAULT_FOLDER), false, "Save Config File" + "...", (path) -> {
+				FileChooser.showDialog(new File(FileChooser.DEFAULT_FOLDER), false, Texts.saveFile + "...", (path) -> {
 					File fl = new File(path);
 					
 					if (!fl.getName().contains(Main.CONFIG_FILE_EXTENSION)) fl = new File(fl.getAbsolutePath() + Main.CONFIG_FILE_EXTENSION);
@@ -517,8 +516,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "loadconfigfile":
-				//option = chooser.showOpenDialog(Main.screen.frame);
-				FileChooser.showDialog(Main.baseFolder != null ? Main.baseFolder : new File(FileChooser.DEFAULT_FOLDER), false, Texts.saveFile + "...", (path) -> {
+				FileChooser.showDialog(new File(FileChooser.DEFAULT_FOLDER), false, Texts.loadConfigFile + "...", (path) -> {
 					Main.load(new File(path).getPath());
 					
 					if (!ListableFile.hasAltered) {
@@ -544,23 +542,6 @@ public class CommandTerminal extends IDEComponent {
 				}, (path) -> {});
 				
 				break;
-				
-			/*case "unloadconfigfile":
-				Main.conffile = "none";
-				
-				Main.writeFile(Main.settingsFile);
-				runCommand("revertconfigfile");
-				
-				Main.hasConfigFile = false;
-				
-				if (typedFlag) {
-					String[] options = {"  Ok  " };
-					
-					CodeEditor.setSystemLook();
-					JOptionPane.showOptionDialog(null, Texts.pleaseRestart, Texts.restartRequired, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-				}
-				
-				break;*/
 			
 			case "sysout":
 			case "syso":
