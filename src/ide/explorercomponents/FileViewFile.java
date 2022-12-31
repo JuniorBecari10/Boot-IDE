@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.io.File;
 
 import ide.codeeditor.CodeEditor;
+import ide.components.FileViewSetFileName;
 import ide.components.IDEComponent;
 import ide.explorer.ListableFile;
 import ide.fonts.Fonts;
@@ -19,6 +20,12 @@ public class FileViewFile extends IDEComponent {
 		super(x, y, width, height, null);
 		
 		this.regent = regent;
+	}
+	
+	public boolean hovered() {
+		if (FileViewSetFileName.added) return false;
+		
+		return super.hovered();
 	}
 	
 	public void onClick(int y) {}

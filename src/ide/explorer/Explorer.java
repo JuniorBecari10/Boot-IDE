@@ -209,7 +209,12 @@ public class Explorer extends IDEComponent {
     }
     
     public static String getScopePath() {
-    	if (scope == null) return Main.baseFolder.getAbsolutePath();
+    	if (scope == null) {
+    		if (Main.baseFolder == null)
+    			return "";
+    		else
+    			return Main.baseFolder.getAbsolutePath();
+    	}
     	
     	return scope.getRegent().getAbsolutePath();
     }
