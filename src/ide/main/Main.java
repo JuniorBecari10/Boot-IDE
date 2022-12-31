@@ -126,6 +126,8 @@ public class Main implements Runnable, Tickable {
     
     public static ExecuteButtonIcon resetExplorerDrag;
     public static ExecuteButtonIcon closeBaseFolder;
+    public static ExecuteButtonIcon loadConfigFile;
+    public static ExecuteButtonIcon revertColors;
     
     public static ExecuteButtonIcon moreOptions;
     
@@ -242,6 +244,8 @@ public class Main implements Runnable, Tickable {
     
     public static BufferedImage resetExplorerDragSpr;
     public static BufferedImage closeBaseFolderSpr;
+    public static BufferedImage loadConfigFileSpr;
+    public static BufferedImage revertColorsSpr;
     
     ///
     
@@ -347,6 +351,8 @@ public class Main implements Runnable, Tickable {
 	        
 	        resetExplorerDragSpr = spritesheet.getSprite(576, 0, 16, 16);
 	        closeBaseFolderSpr = spritesheet.getSprite(608, 0, 16, 16);
+	        loadConfigFileSpr = spritesheet.getSprite(624, 0, 16, 16);
+	        revertColorsSpr = spritesheet.getSprite(640, 0, 16, 16);
 	        
 	        ///////
 	        
@@ -394,8 +400,34 @@ public class Main implements Runnable, Tickable {
 	        	}
 	        };
 	        
+	        loadConfigFile = new ExecuteButtonIcon(explorer.getWidth() + 66, Screen.DECORATION_HEIGHT + 2, 32, 32, loadConfigFileSpr, () -> {
+	        	CommandTerminal.runCommand("loadconfigfile");
+	        	IDEComponent.toRemove.addAll(moreOptionsBtns);
+	        	}, Texts.loadConfigFile) {
+	        	public void tick() {
+	        		super.tick();
+	        		
+	        		x = explorer.getWidth() + 66;
+	        		caption = Texts.loadConfigFile;
+	        	}
+	        };
+	        
+	        revertColors = new ExecuteButtonIcon(explorer.getWidth() + 98, Screen.DECORATION_HEIGHT + 2, 32, 32, revertColorsSpr, () -> {
+	        	CommandTerminal.runCommand("revertcolors");
+	        	IDEComponent.toRemove.addAll(moreOptionsBtns);
+	        	}, Texts.revertColors) {
+	        	public void tick() {
+	        		super.tick();
+	        		
+	        		x = explorer.getWidth() + 98;
+	        		caption = Texts.revertColors;
+	        	}
+	        };
+	        
 	        moreOptionsBtns.add(resetExplorerDrag);
 	        moreOptionsBtns.add(closeBaseFolder);
+	        moreOptionsBtns.add(loadConfigFile);
+	        moreOptionsBtns.add(revertColors);
 	        
 	        // Por enquanto é null mas o tick vai rolar e vai atualizar
 	        moreOptions = new ExecuteButtonIcon(explorer.getWidth() - 16, Screen.DECORATION_HEIGHT + 2, 14, 32, moreOptionsSpr, () -> { IDEComponent.toAdd.addAll(moreOptionsBtns); }, Texts.moreOptions) {
@@ -610,6 +642,8 @@ public class Main implements Runnable, Tickable {
         
         resetExplorerDragSpr = Colors.swapColor(resetExplorerDragSpr, Colors.textLightDefault, Colors.textLight);
         closeBaseFolderSpr = Colors.swapColor(closeBaseFolderSpr, Colors.textLightDefault, Colors.textLight);
+        loadConfigFileSpr = Colors.swapColor(loadConfigFileSpr, Colors.textLightDefault, Colors.textLight);
+        revertColorsSpr = Colors.swapColor(revertColorsSpr, Colors.textLightDefault, Colors.textLight);
         
         /// Change some colors ///
         
