@@ -676,6 +676,8 @@ public class Main implements Runnable, Tickable {
     }
     
     public static boolean anyMoreOptionsButtonHovered() {
+    	if (!IDEComponent.components.contains(Main.resetExplorerDrag)) return false;
+    	
     	for (IDEComponent c : moreOptionsBtns)
     		if (c.hovered()) return true;
     	
