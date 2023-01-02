@@ -682,9 +682,6 @@ public class Explorer extends IDEComponent {
 	    
 	    for (ExplorerTab t : tabs)
 	    	t.tick();
-	    
-	    for (IDEComponent c : Main.moreOptionsBtns)
-	    	c.tick();
     }
     
     private void renderExplorer(Graphics g) {
