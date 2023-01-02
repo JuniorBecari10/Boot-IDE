@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ide.components.FileChooser;
+import ide.components.FileViewSetFileName;
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
 import ide.input.MouseInput;
@@ -23,7 +24,7 @@ public class FileView extends IDEComponent {
 	public FileChooser parent;
 	
 	public List<FileViewFile> files;
-	private int scroll = 0;
+	public int scroll = 0;
 	
 	public static final int FILE_HEIGHT = 30;
 	
@@ -119,6 +120,8 @@ public class FileView extends IDEComponent {
 			scroll = 0;
 			return;
 		}
+		
+		if (FileViewSetFileName.added || components.contains(FileChooser.fileChooser.setFileName)) return;
 		
 		if (MouseInput.wheelDown()) {
 			if (files.get(files.size() - 1 < 0 ? 0 : files.size() - 1).getY() - FILE_HEIGHT >= y)

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.io.File;
 
 import ide.codeeditor.CodeEditor;
+import ide.components.FileChooser;
 import ide.components.FileViewSetFileName;
 import ide.components.IDEComponent;
 import ide.explorer.ListableFile;
@@ -23,7 +24,7 @@ public class FileViewFile extends IDEComponent {
 	}
 	
 	public boolean hovered() {
-		if (FileViewSetFileName.added) return false;
+		if (FileViewSetFileName.added || components.contains(FileChooser.fileChooser.setFileName)) return false;
 		
 		return super.hovered();
 	}
