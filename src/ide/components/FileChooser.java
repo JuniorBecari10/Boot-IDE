@@ -135,6 +135,9 @@ public class FileChooser extends CustomMessageBox {
 		
 		fileChooser = new FileChooser(folder, onlyDirs, title, ok, cancel);
 		
+		FileViewSetFileName.added = false;
+		IDEComponent.toRemove.add(fileChooser.setFileName);
+		
 		IDEComponent.toAdd.add(fileChooser);
 	}
 	
