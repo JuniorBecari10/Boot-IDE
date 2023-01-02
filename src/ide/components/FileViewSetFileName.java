@@ -77,9 +77,6 @@ public class FileViewSetFileName extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (text.length() > Main.explorer.maxFileCreateWidth) width = Main.screen.getWidth();
-		else width = view.width - 2;
-		
 		if (MouseInput.isLeftPressed() && !leftClicked()) {
 			IDEComponent.toRemove.add(this);
 			added = false;

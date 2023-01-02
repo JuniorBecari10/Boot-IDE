@@ -101,7 +101,7 @@ public class FileChooser extends CustomMessageBox {
 		
 		fileName.setText(fileView.getFolder().getName());
 		
-		setFileName = new FileViewSetFileName(x + 15, y + 180, width - 30, 30, false, fileView);
+		setFileName = new FileViewSetFileName(x + 15, y + 180, width - 28, 30, false, fileView);
 		
 		innerComponents.add(folderScope);
 		innerComponents.add(fileView);
@@ -147,7 +147,10 @@ public class FileChooser extends CustomMessageBox {
 		String path = fileView.getFolder() + File.separator + (fileName.getText().equals(fileView.getFolder().getName()) ? "" : fileName.getText());
 		
 		//File[] l = fileView.getFolder().listFiles();
-		setFileName.y = fileView.files.get(fileView.files.size() - 1).y + FileView.FILE_HEIGHT;
+		if (fileView.files.size() > 0)
+			setFileName.y = fileView.files.get(fileView.files.size() - 1).y + FileView.FILE_HEIGHT;
+		else
+			setFileName.y = fileView.y;
 		
 		if (KeyInput.isKeyPressed()) {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
@@ -160,7 +163,7 @@ public class FileChooser extends CustomMessageBox {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ESCAPE) {
 				KeyInput.updateKeys();
 				
-				if (!FileViewSetFileName.added)
+				if (!IDEComponent.components.contains(FileChooser.fileChooser.setFileName))
 					doClose();
 				
 				FileViewSetFileName.added = false;

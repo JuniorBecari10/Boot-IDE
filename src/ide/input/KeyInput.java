@@ -7,6 +7,7 @@ import ide.codeeditor.CodeEditor;
 import ide.components.CommandTerminal;
 import ide.components.FileChooser;
 import ide.components.FileViewSetFileName;
+import ide.components.IDEComponent;
 import ide.components.MessageBox;
 import ide.components.RenameFile;
 import ide.components.SetFileName;
@@ -178,7 +179,7 @@ public final class KeyInput extends KeyAdapter {
         if (Explorer.setCommitName != null && SetCommitName.added)
         	Explorer.setCommitName.type();
         
-        if (FileChooser.fileChooser != null && FileChooser.fileChooser.setFileName != null && FileViewSetFileName.added)
+        if (FileChooser.fileChooser != null && FileChooser.fileChooser.setFileName != null && (FileViewSetFileName.added || IDEComponent.components.contains(FileChooser.fileChooser.setFileName)))
         	FileChooser.fileChooser.setFileName.type();
         
         /*if (Character.isLetterOrDigit(charPressed)) {
