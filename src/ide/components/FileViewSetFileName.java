@@ -15,7 +15,6 @@ import ide.explorer.Explorer;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
 import ide.explorercomponents.FileView;
-import ide.explorercomponents.FileViewFile;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
@@ -71,13 +70,6 @@ public class FileViewSetFileName extends IDEComponent {
 				cursor.play();
 			}
 		}.start();
-		
-		while (this.y > Main.screen.getHeight() - 30) {
-			for (FileViewFile f : view.files)
-				f.setY(f.getY() - FileView.FILE_HEIGHT);
-			
-			this.y -= 30;
-		}
 	}
 	
 	private boolean hasIllegalChars(String s) {
@@ -85,8 +77,6 @@ public class FileViewSetFileName extends IDEComponent {
 	}
 	
 	public void tick() {
-		if (Explorer.files.size() > 0) y = Explorer.files.get(Explorer.files.size() - 1).y + 30;
-		
 		if (text.length() > Main.explorer.maxFileCreateWidth) width = Main.screen.getWidth();
 		else width = view.width - 2;
 		

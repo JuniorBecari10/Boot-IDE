@@ -146,8 +146,8 @@ public class FileChooser extends CustomMessageBox {
 		
 		String path = fileView.getFolder() + File.separator + (fileName.getText().equals(fileView.getFolder().getName()) ? "" : fileName.getText());
 		
-		File[] l = fileView.getFolder().listFiles();
-		setFileName.y = fileView.y + (l.length * FileView.FILE_HEIGHT) - fileView.scroll;
+		//File[] l = fileView.getFolder().listFiles();
+		setFileName.y = fileView.files.get(fileView.files.size() - 1).y + FileView.FILE_HEIGHT;
 		
 		if (KeyInput.isKeyPressed()) {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
