@@ -12,6 +12,7 @@ import ide.explorercomponents.ComboBox;
 import ide.explorercomponents.ExecuteButton;
 import ide.explorercomponents.ExecuteButtonIcon;
 import ide.explorercomponents.FileView;
+import ide.explorercomponents.FileViewFile;
 import ide.explorercomponents.InputBox;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -157,9 +158,19 @@ public class FileChooser extends CustomMessageBox {
 		else
 			setFileName.y = fileView.y;
 		
-		// terminar
-		if (setFileName.y >= fileView.y + fileView.height && IDEComponent.components.contains(FileChooser.fileChooser.setFileName)) {
+		while (setFileName.y >= fileView.y + fileView.height && IDEComponent.components.contains(FileChooser.fileChooser.setFileName)) {
 			fileView.scroll += FileView.FILE_HEIGHT;
+			
+			if (fileView.files.size() > 0)
+				setFileName.y = fileView.files.get(fileView.files.size() - 1).y + FileView.FILE_HEIGHT;
+			else
+				setFileName.y = fileView.y;
+			
+			int i = 0;
+			for (FileViewFile f : fileView.files) {
+				f.setY((y + (i * FileView.FILE_HEIGHT)) - fileView.scroll);
+				i++;
+			}
 		}
 		
 		if (KeyInput.isKeyPressed()) {

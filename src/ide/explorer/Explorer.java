@@ -114,6 +114,8 @@ public class Explorer extends IDEComponent {
 	public static ToggleButton showOverlay;
 	public static TextArea textArea;
 	
+	// ---
+	
 	public static int MINIMUM_Y = 200 + Screen.DECORATION_HEIGHT;
 	
 	public static ExplorerMode explorerMode = ExplorerMode.EXPLORER;
