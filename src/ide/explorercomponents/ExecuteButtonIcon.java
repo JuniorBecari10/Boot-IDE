@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import ide.components.CommandTerminal;
+import ide.components.FileChooser;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
 import ide.components.RightClickOption;
@@ -49,6 +50,8 @@ public class ExecuteButtonIcon extends IDEComponent {
 		if (SetBranchName.added || SetFileName.added || CommandTerminal.active || SetBranchName.added || SetCommitName.added) return false;
 		
 		if (MessageBox.active && !isMessageBox) return false;
+		if (isMessageBox && IDEComponent.components.contains(FileChooser.fileChooser.setFileName))
+			return false;
 		
 		return super.hovered();
 	}

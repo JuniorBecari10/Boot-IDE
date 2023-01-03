@@ -110,7 +110,11 @@ public class FileChooser extends CustomMessageBox {
 		innerComponents.add(cancelBtn);
 		innerComponents.add(okBtn);
 		
-		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> { IDEComponent.toAdd.add(setFileName); }, true, Texts.createFolder));
+		innerComponents.add(new ExecuteButtonIcon(x + 20, y + 120, 32, 32, Main.newFolderSpr, () -> {
+			setFileName = new FileViewSetFileName(x + 15, y + 180, width - 28, 30, false, fileView);
+			IDEComponent.toAdd.add(setFileName);
+		}, true, Texts.createFolder));
+		
 		innerComponents.add(new ExecuteButtonIcon(x + 60, y + 120, 32, 32, Main.folderUp, () -> {
 			new Thread() {
 				public void run() {
@@ -121,6 +125,7 @@ public class FileChooser extends CustomMessageBox {
 				}
 			}.start();
 		}, true, Texts.oneFolderUp));
+		
 		innerComponents.add(new ExecuteButtonIcon(x + 100, y + 120, 32, 32, Main.reloadSpr, () -> {
 			new Thread() {
 				public void run() {
@@ -152,11 +157,21 @@ public class FileChooser extends CustomMessageBox {
 		else
 			setFileName.y = fileView.y;
 		
+		// terminar
+		if (setFileName.y >= fileView.y + fileView.height && IDEComponent.components.contains(FileChooser.fileChooser.setFileName)) {
+			fileView.scroll += FileView.FILE_HEIGHT;
+		}
+		
 		if (KeyInput.isKeyPressed()) {
 			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
 				if (FileViewSetFileName.added) return;
 				
-				doClose();
+				if (!IDEComponent.components.contains(FileChooser.fileChooser.setFileName))
+					doClose();
+				
+				FileViewSetFileName.added = false;
+				IDEComponent.toRemove.add(setFileName);
+				
 				ok.execute(path);
 			}
 			
@@ -174,11 +189,21 @@ public class FileChooser extends CustomMessageBox {
 		}
 		
 		if (okBtn.leftClicked()) {
-			doClose();
+			if (!IDEComponent.components.contains(FileChooser.fileChooser.setFileName))
+				doClose();
+			
+			FileViewSetFileName.added = false;
+			IDEComponent.toRemove.add(setFileName);
+			
 			ok.execute(path);
 		}
 		else if (cancelBtn.leftClicked()) {
-			doClose();
+			if (!IDEComponent.components.contains(FileChooser.fileChooser.setFileName))
+				doClose();
+			
+			FileViewSetFileName.added = false;
+			IDEComponent.toRemove.add(setFileName);
+			
 			cancel.execute(path);
 		}
 	}

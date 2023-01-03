@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ide.codeeditor.CodeEditor;
+import ide.components.FileChooser;
 import ide.components.IDEComponent;
 import ide.components.RightClickOption;
 import ide.explorer.Explorer;
@@ -34,6 +35,13 @@ public class ComboBox extends IDEComponent {
 			text = new StringBuilder();
 		else
 			text = new StringBuilder(options[0]);
+	}
+	
+	public boolean hovered() {
+		if (IDEComponent.components.contains(FileChooser.fileChooser.setFileName))
+			return false;
+		
+		return super.hovered();
 	}
 	
 	public synchronized void type() {

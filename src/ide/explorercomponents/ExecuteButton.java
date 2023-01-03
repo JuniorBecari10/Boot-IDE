@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import ide.components.CommandTerminal;
+import ide.components.FileChooser;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
 import ide.components.RightClickOption;
@@ -47,6 +48,9 @@ public class ExecuteButton extends IDEComponent {
 		}
 		else
 			if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added || SetCommitName.added) return false;
+		
+		if (inMessageBox && IDEComponent.components.contains(FileChooser.fileChooser.setFileName))
+			return false;
 		
 		return super.hovered();
 	}

@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 import ide.codeeditor.CodeEditor;
 import ide.components.CommandTerminal;
+import ide.components.FileChooser;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
 import ide.components.RightClickOption;
@@ -61,6 +62,9 @@ public class InputBox extends IDEComponent {
 		
 		if (!isMessageBox)
 			return !MessageBox.active && super.hovered();
+		
+		if (isMessageBox && IDEComponent.components.contains(FileChooser.fileChooser.setFileName))
+			return false;
 		
 		return super.hovered();
 	}
