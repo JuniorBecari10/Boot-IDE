@@ -1411,6 +1411,39 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 		return all;
 	}
+	
+	public static File[] listFilesOrderedArray(File folder) {
+		File[] dirs = folder.listFiles(new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				File f = new File(dir, name);
+
+				return f.isDirectory();
+			}
+		});
+
+		File[] fls = folder.listFiles(new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				File f = new File(dir, name);
+
+				return f.isFile();
+			}
+		});
+
+		if (dirs == null)
+			dirs = new File[0];
+		if (fls == null)
+			fls = new File[0];
+
+		List<File> dirsList = Arrays.asList(dirs);
+		List<File> flsList = Arrays.asList(fls);
+
+		List<File> all = new ArrayList<>();
+
+		all.addAll(dirsList);
+		all.addAll(flsList);
+
+		return all.toArray(new File[] {});
+	}
 
 	public static List<ListableFile> loadFolder(ListableFile folder) {
 		Explorer.scope = folder;

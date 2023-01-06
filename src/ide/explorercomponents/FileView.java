@@ -10,6 +10,8 @@ import ide.components.FileChooser;
 import ide.components.FileViewSetFileName;
 import ide.components.IDEComponent;
 import ide.explorer.Explorer;
+import ide.explorer.ListableFile;
+import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.util.Colors;
 
@@ -80,14 +82,7 @@ public class FileView extends IDEComponent {
 	public void setFolder(File folder) {
 		if (folder == null) return;
 		
-		File[] filesList = folder.listFiles(new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-				File f = new File(dir, name);
-				
-				return onlyDirs ? f.isDirectory() : true;
-			}
-		});
+		File[] filesList = ListableFile.listFilesOrderedArray(folder);
 		
 		if (filesList == null) return;
 		
@@ -123,13 +118,16 @@ public class FileView extends IDEComponent {
 		
 		if (FileViewSetFileName.added || components.contains(FileChooser.fileChooser.setFileName)) return;
 		
+		int amount = FILE_HEIGHT;
+		if (KeyInput.isControlDown()) amount *= 3;
+		
 		if (MouseInput.wheelDown()) {
 			if (files.get(files.size() - 1 < 0 ? 0 : files.size() - 1).getY() - FILE_HEIGHT >= y)
-				scroll += FILE_HEIGHT;
+				scroll += amount;
 		}
 		else if (MouseInput.wheelUp()) {
 			if (scroll > 0)
-				scroll -= FILE_HEIGHT;
+				scroll -= amount;
 		}
 	}
 	
