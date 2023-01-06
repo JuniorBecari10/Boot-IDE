@@ -31,7 +31,9 @@ public class CustomMessageBox extends IDEComponent {
 		}
 		
 		this.innerComponents = innerComponents;
-		
+	}
+	
+	protected void doDescending() {
 		new Thread() {
 			public void run() {
 				while (y < Screen.DECORATION_HEIGHT) {

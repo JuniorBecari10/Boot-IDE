@@ -134,6 +134,8 @@ public class FileChooser extends CustomMessageBox {
 				}
 			}.start();
 		}, true, Texts.reload));
+		
+		doDescending();
 	}
 	
 	public static void showDialog(File folder, boolean onlyDirs, String title, ExecuteCommand ok, ExecuteCommand cancel) {

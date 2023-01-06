@@ -158,7 +158,7 @@ public class FileView extends IDEComponent {
 		g.setColor(Colors.explorer);
 		g.fillRect(x, y, width, height);
 		
-		for (FileViewFile f : files) {
+		for (FileViewFile f : files) { // concurrentmodification
 			if (f.getY() < y) continue;
 			if (f.getY() + f.getHeight() > y + height) break;
 			
