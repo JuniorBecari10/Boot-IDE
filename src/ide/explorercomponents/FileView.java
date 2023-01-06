@@ -2,7 +2,6 @@ package ide.explorercomponents;
 
 import java.awt.Graphics;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,6 +131,9 @@ public class FileView extends IDEComponent {
 	}
 	
 	public void tick() {
+		/*while (y + (scroll * FILE_HEIGHT) <= y + FILE_HEIGHT)
+			scroll -= FILE_HEIGHT;*/
+		
 		int i = 0;
 		for (FileViewFile f : files) {
 			f.setY((y + (i * FILE_HEIGHT)) - scroll);
