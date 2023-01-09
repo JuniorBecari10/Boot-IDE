@@ -8040,12 +8040,12 @@ public class CodeEditor extends IDEComponent {
 			if (MouseInput.isMouseRolling()) {
 				if (MouseInput.wheelUp() && tabScr < 0) {
 					MouseInput.updateMouseRoll();
-					tabScr += 203; // 3 é a compensação para as tab n se distanciar
+					tabScr += 202; // 3 é a compensação para as tab n se distanciar
 				}
 				else if (MouseInput.wheelDown()
 						&& (tabs.get(tabs.size() - 1).getX() + tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280)) { // 280
 					MouseInput.updateMouseRoll();
-					tabScr -= 203;
+					tabScr -= 202;
 				}
 
 				for (IDEComponent i : components) {
