@@ -49,7 +49,7 @@ public class ExecuteButton extends IDEComponent {
 		else
 			if (SetBranchName.added || SetFileName.added || CommandTerminal.active || MessageBox.active || SetBranchName.added || SetCommitName.added) return false;
 		
-		if (inMessageBox && IDEComponent.components.contains(FileChooser.fileChooser.setFileName))
+		if (inMessageBox && FileChooser.fileChooser != null && IDEComponent.components.contains(FileChooser.fileChooser.setFileName))
 			return false;
 		
 		return super.hovered();

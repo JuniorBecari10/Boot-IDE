@@ -1850,7 +1850,7 @@ public class CodeEditor extends IDEComponent {
 				|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
 				|| ext.equalsIgnoreCase(".classpath") || ext.equalsIgnoreCase(".csproj")
 				|| ext.equalsIgnoreCase(".project") || ext.equalsIgnoreCase(".bat") || ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".md")
-				|| ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com")
+				|| ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc") || ext.equalsIgnoreCase(".com") || ext.equalsIgnoreCase(".markdown")
 				|| ext.equalsIgnoreCase(".cmd") || ext.equalsIgnoreCase(".ps1"))) {
 			fs = color(0, fs.size(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 			
@@ -2007,7 +2007,7 @@ public class CodeEditor extends IDEComponent {
 
 				fs = color(i, fs.size(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs); // tem q dar offset
 			}
-			
+			/*
 			indxs = findWord(new String(chars), ">");
 			
 			for (Integer i : indxs) {
@@ -2020,7 +2020,7 @@ public class CodeEditor extends IDEComponent {
 				
 				fs = color(i, i + len, new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs);
 			}
-			
+			*/
 			indxs = findWord(new String(chars), "/>");
 			
 			for (Integer i : indxs) {
@@ -4066,7 +4066,8 @@ public class CodeEditor extends IDEComponent {
 					|| ext.equalsIgnoreCase(".sh") || ext.equalsIgnoreCase(".bash_profile") || ext.equalsIgnoreCase(".bashrc"))) {
 
 				// primeira vez usando labels!
-				methods: if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
+				methods: 
+				if (!(ext.equalsIgnoreCase(".md") || ext.equalsIgnoreCase(".markdown"))) {
 					if (ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
 							|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
 							|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
@@ -6086,7 +6087,9 @@ public class CodeEditor extends IDEComponent {
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".htm")
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".html")
 					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".svelte")
-					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".xhtml")))
+					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".xhtml")
+					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".md")
+					|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".markdown")))
 				if (cursorX > 0 && !Character.isLetter(new String(toCharArray(lines.get(cursorY - 1).getChars())).charAt(cursorX - 1)))
 					return pre; // verifica se o x do cursor é maior que 0 e se o char antes do cursor é uma letra, pq só vai completar se for
 			
