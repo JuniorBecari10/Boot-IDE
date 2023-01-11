@@ -168,6 +168,22 @@ public class TerminalTab extends IDEComponent {
 		}
 	}
 	
+	public void clear() {
+		try {
+			BufferedWriter wr = Files.newBufferedWriter(log.toPath(), StandardCharsets.UTF_8);
+			
+			if (!commandRunning) {
+				wr.write(TerminalCore.prompt + " ");
+			}
+			
+			wr.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		read();
+	}
+	
 	public void read() {
 		try {
 			lines = Files.readAllLines(log.toPath(), StandardCharsets.UTF_8).toArray(new String[0]);

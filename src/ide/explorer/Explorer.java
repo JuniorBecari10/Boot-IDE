@@ -111,6 +111,7 @@ public class Explorer extends IDEComponent {
 	
 	public static ToggleButton wordWrap;
 	public static ExecuteButtonIcon addTerminal;
+	public static ExecuteButtonIcon clearTerminal;
 	public static ToggleButton showOverlay;
 	public static TextArea textArea;
 	

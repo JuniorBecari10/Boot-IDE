@@ -274,6 +274,7 @@ public final class Texts {
 	public static String wordWrap;
 	public static String addTerminal;
 	public static String showOverlay;
+	public static String clearTerminal;
 	
 	public static String clickOpenTerminal;
 	public static String toOpenTerminal;
@@ -550,6 +551,7 @@ public final class Texts {
 			wordWrap = "Quebrar Linha";
 			addTerminal = "Adicionar Terminal";
 			showOverlay = "Mostrar Sobreposição";
+			clearTerminal = "Limpar Terminal";
 			
 			clickOpenTerminal = "Clique no botão";
 			toOpenTerminal = "para abrir um novo";
@@ -826,6 +828,7 @@ public final class Texts {
 			wordWrap = "Word Wrap";
 			addTerminal = "Add Terminal";
 			showOverlay = "Show Overlay";
+			clearTerminal = "Clear Terminal";
 			
 			clickOpenTerminal = "Click on the button";
 			toOpenTerminal = "to open a new";

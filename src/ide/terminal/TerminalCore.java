@@ -80,6 +80,18 @@ public class TerminalCore {
 			};
 		}
 		
+		if (Explorer.clearTerminal == null) {
+			Explorer.clearTerminal = new ExecuteButtonIcon(134, Screen.DECORATION_HEIGHT + 80, 32, 32, Main.trashCanSpr, () -> {
+				selected.clear();
+			}, Texts.clearTerminal) {
+				public void tick() {
+					super.tick();
+					
+					caption = Texts.clearTerminal;
+				}
+			};
+		}
+		
 		if (Explorer.textArea == null) {
 			Explorer.textArea = new TextArea(10, TerminalTab.Y_EXPLORER + (TerminalTab.HEIGHT * 2) - 10, Main.explorer.getWidth() - 20, (Main.screen.getHeight() - Screen.DECORATION_HEIGHT + 280), selected == null ? new String[0] : selected.getLines()) {
 				public void tick() {
@@ -95,6 +107,7 @@ public class TerminalCore {
 			};
 		}
 		
+		IDEComponent.toAdd.add(Explorer.clearTerminal);
 		IDEComponent.toAdd.add(Explorer.showOverlay);
 		IDEComponent.toAdd.add(Explorer.addTerminal);
 		IDEComponent.toAdd.add(Explorer.wordWrap); // por causa do texto
@@ -105,6 +118,7 @@ public class TerminalCore {
 		IDEComponent.toRemove.add(Explorer.wordWrap);
 		IDEComponent.toRemove.add(Explorer.addTerminal);
 		IDEComponent.toRemove.add(Explorer.showOverlay);
+		IDEComponent.toRemove.add(Explorer.clearTerminal);
 		
 		if (showOverlay) return;
 		
