@@ -126,7 +126,7 @@ public class TextArea extends IDEComponent {
 		}
 		
 		if (!acceptInput) {
-			if (KeyInput.isKeyPressed() && !KeyInput.isControlDown()) {
+			if (KeyInput.isKeyPressed() && !KeyInput.isControlDown() && TerminalCore.selected != null) {
 				try {
 					OutputStream stdin = TerminalCore.selected.process.getOutputStream();
 					char ch = KeyInput.getCharPressed();
@@ -579,7 +579,7 @@ public class TextArea extends IDEComponent {
 		}
 		
 		int cursorX = this.cursorX;
-		int cursorY = this.lines.length - 1;
+		int cursorY = lines.length - 1;
 		
 		while (cursorX > maxChars) {
 			cursorX -= maxChars;

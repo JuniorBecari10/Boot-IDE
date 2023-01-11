@@ -867,6 +867,48 @@ public class CodeEditor extends IDEComponent {
 		Main.editor.scrollTabs();
 	}
 	
+	public void animateCursor() {
+		if (drawcx != realcy || drawcy != realcy) {
+			if (animateCursor) {
+				new Thread() {
+					public void run() {
+						while (drawcx != realcx) {
+							if (drawcx < realcx)
+								drawcx++;
+							if (drawcx > realcx)
+								drawcx--;
+							
+							Main.canRunLoop = true;
+							try {
+								Thread.sleep(1);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+						 
+						while (drawcy != realcy) {
+							if (drawcy < realcy)
+								drawcy++;
+							if (drawcy > realcy)
+								drawcy--;
+							
+							Main.canRunLoop = true;
+							try {
+								Thread.sleep(1);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}.start();
+			}
+			else {
+				drawcx = realcx;
+				drawcy = realcy;
+			}
+		}
+	}
+	
 	public synchronized void cursor() {
 		int offset = CommandTerminal.expOff ? Main.editor.getX() : 0;
 		int lcx = !CommandTerminal.expOff ? 0 : Main.editor.getX();
@@ -945,44 +987,12 @@ public class CodeEditor extends IDEComponent {
 		realcx = ((x + (FONT_SIZE * 4)) + (cursorX * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth)))) - scrX;
 		realcy = MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY;
 		
-		if (drawcx != realcy || drawcy != realcy) {
-			if (animateCursor) {
-				new Thread() {
-					public void run() {
-						while (drawcx != realcx) {
-							if (drawcx < realcx)
-								drawcx++;
-							if (drawcx > realcx)
-								drawcx--;
-							
-							Main.canRunLoop = true;
-							try {
-								Thread.sleep(1);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-						 
-						while (drawcy != realcy) {
-							if (drawcy < realcy)
-								drawcy++;
-							if (drawcy > realcy)
-								drawcy--;
-							
-							Main.canRunLoop = true;
-							try {
-								Thread.sleep(1);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				}.start();
-			}
-			else {
-				drawcx = realcx;
-				drawcy = realcy;
-			}
+		if (MouseInput.isLeftPressed()) {
+			drawcx = realcx;
+			drawcy = realcy;
+		}
+		else {
+			animateCursor();
 		}
 	}
 
@@ -8368,6 +8378,7 @@ public class CodeEditor extends IDEComponent {
 		if (tabs.size() == 0)
 			CommandTerminal.runCommand("resettabscroll");
 		
+		animateCursor();
 		
 		if (Main.editor.tabs.isEmpty() && Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) {
 			Explorer.explorerMode = ExplorerMode.EXPLORER;
