@@ -122,6 +122,7 @@ public class TextArea extends IDEComponent {
 			// aqui vai forçar a parada do comando
 			//TerminalCore.selected.process.destroyForcibly();
 			//Main.runCommand(null, "taskkill /f /PID " + TerminalCore.selected.process.pid());
+			Main.runCommand(null, "taskkill /f /im cmd.exe");
 			
 			//System.out.println(TerminalCore.selected.process.isAlive());
 		}
@@ -300,7 +301,7 @@ public class TextArea extends IDEComponent {
 					String command = String.join(" ", c);
 					
 					if (!runInternalCommand(command)) {
-						String[] o = Main.runCommandTerm(TerminalCore.selected.getScope(), command);// + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+						String[] o = Main.runCommandTerm(TerminalCore.selected.getScope(), command/*);*/ + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
 						TerminalCore.selected.stdin = new StringBuilder();
 						
 						for (String s : o) {
