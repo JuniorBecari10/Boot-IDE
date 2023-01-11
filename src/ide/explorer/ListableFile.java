@@ -1247,7 +1247,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				if (!readConfigs) break;
 				
 				if (split[1].equalsIgnoreCase("default")) {
-					CodeEditor.animateCursor = false;
+					CodeEditor.animateCursor = true;
 					break;
 				}
 

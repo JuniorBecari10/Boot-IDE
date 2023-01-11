@@ -120,9 +120,10 @@ public class TextArea extends IDEComponent {
 		
 		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && TerminalCore.selected.commandRunning) { // Ctrl + C (Commando Rodando) - Terminar
 			// aqui vai forçar a parada do comando
-			TerminalCore.selected.process.destroyForcibly();
+			//TerminalCore.selected.process.destroyForcibly();
+			//Main.runCommand(null, "taskkill /f /PID " + TerminalCore.selected.process.pid());
 			
-			System.out.println(TerminalCore.selected.process.isAlive());
+			//System.out.println(TerminalCore.selected.process.isAlive());
 		}
 		
 		if (!acceptInput) {

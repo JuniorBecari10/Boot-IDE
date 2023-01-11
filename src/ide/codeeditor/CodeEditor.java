@@ -88,7 +88,7 @@ public class CodeEditor extends IDEComponent {
 	public static boolean capsLock = Main.toolkit.getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
 	public static boolean showCapsLock = true;
 	
-	public static boolean animateCursor = false;
+	public static boolean animateCursor = true;
 
 	public int line1, line2;
 	public int index1, index2; // TODO fazer a verificação do CSS se está dentro do seletor, e se tiver, colore
