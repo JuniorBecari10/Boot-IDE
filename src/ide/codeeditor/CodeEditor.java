@@ -69,7 +69,6 @@ public class CodeEditor extends IDEComponent {
 	public static final int TAB_ANIMATION_TIMEOUT = 300;
 	public static final int DEFAULT_FONT_SIZE = 16;
 	public static final int LOWER_BAR_HEIGHT = 22;
-	public static final int CURSOR_SPEED = 1;
 	
 	public static int FONT_SIZE = DEFAULT_FONT_SIZE; // 18, 16 (Padrão: 16)
 	
@@ -88,6 +87,8 @@ public class CodeEditor extends IDEComponent {
 	
 	public static boolean capsLock = Main.toolkit.getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
 	public static boolean showCapsLock = true;
+	
+	public static boolean animateCursor = false;
 
 	public int line1, line2;
 	public int index1, index2; // TODO fazer a verificação do CSS se está dentro do seletor, e se tiver, colore
@@ -866,22 +867,6 @@ public class CodeEditor extends IDEComponent {
 		Main.editor.scrollTabs();
 	}
 	
-	public void animateCursor() {
-		if (drawcx != realcx) {
-			if (drawcx < realcx)
-				drawcx += CURSOR_SPEED;
-			if (drawcx > realcx)
-				drawcx -= CURSOR_SPEED;
-		}
-		 
-		if (drawcy != realcy) {
-			if (drawcy < realcy)
-				drawcy += CURSOR_SPEED;
-			if (drawcy > realcy)
-				drawcy -= CURSOR_SPEED;
-		}
-	}
-	
 	public synchronized void cursor() {
 		int offset = CommandTerminal.expOff ? Main.editor.getX() : 0;
 		int lcx = !CommandTerminal.expOff ? 0 : Main.editor.getX();
@@ -961,37 +946,43 @@ public class CodeEditor extends IDEComponent {
 		realcy = MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY;
 		
 		if (drawcx != realcy || drawcy != realcy) {
-			new Thread() {
-				public void run() {
-					while (drawcx != realcx) {
-						if (drawcx < realcx)
-							drawcx += CURSOR_SPEED;
-						if (drawcx > realcx)
-							drawcx -= CURSOR_SPEED;
-						
-						Main.canRunLoop = true;
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
+			if (animateCursor) {
+				new Thread() {
+					public void run() {
+						while (drawcx != realcx) {
+							if (drawcx < realcx)
+								drawcx++;
+							if (drawcx > realcx)
+								drawcx--;
+							
+							Main.canRunLoop = true;
+							try {
+								Thread.sleep(1);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+						 
+						while (drawcy != realcy) {
+							if (drawcy < realcy)
+								drawcy++;
+							if (drawcy > realcy)
+								drawcy--;
+							
+							Main.canRunLoop = true;
+							try {
+								Thread.sleep(1);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
 						}
 					}
-					 
-					while (drawcy != realcy) {
-						if (drawcy < realcy)
-							drawcy += CURSOR_SPEED;
-						if (drawcy > realcy)
-							drawcy -= CURSOR_SPEED;
-						
-						Main.canRunLoop = true;
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}.start();
+				}.start();
+			}
+			else {
+				drawcx = realcx;
+				drawcy = realcy;
+			}
 		}
 	}
 
