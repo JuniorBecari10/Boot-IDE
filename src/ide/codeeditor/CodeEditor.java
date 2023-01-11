@@ -69,6 +69,7 @@ public class CodeEditor extends IDEComponent {
 	public static final int TAB_ANIMATION_TIMEOUT = 300;
 	public static final int DEFAULT_FONT_SIZE = 16;
 	public static final int LOWER_BAR_HEIGHT = 22;
+	public static final int CURSOR_SPEED = 1;
 	
 	public static int FONT_SIZE = DEFAULT_FONT_SIZE; // 18, 16 (Padrão: 16)
 	
@@ -865,6 +866,22 @@ public class CodeEditor extends IDEComponent {
 		Main.editor.scrollTabs();
 	}
 	
+	public void animateCursor() {
+		if (drawcx != realcx) {
+			if (drawcx < realcx)
+				drawcx += CURSOR_SPEED;
+			if (drawcx > realcx)
+				drawcx -= CURSOR_SPEED;
+		}
+		 
+		if (drawcy != realcy) {
+			if (drawcy < realcy)
+				drawcy += CURSOR_SPEED;
+			if (drawcy > realcy)
+				drawcy -= CURSOR_SPEED;
+		}
+	}
+	
 	public synchronized void cursor() {
 		int offset = CommandTerminal.expOff ? Main.editor.getX() : 0;
 		int lcx = !CommandTerminal.expOff ? 0 : Main.editor.getX();
@@ -943,16 +960,39 @@ public class CodeEditor extends IDEComponent {
 		realcx = ((x + (FONT_SIZE * 4)) + (cursorX * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth)))) - scrX;
 		realcy = MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY;
 		
-		/*
-		 * if (drawcx != realcx) { if (drawcx < realcx) drawcx += speed; if (drawcx >
-		 * realcx) drawcx -= speed; }
-		 * 
-		 * if (drawcy != realcy) { if (drawcy < realcy) drawcy += speed; if (drawcy >
-		 * realcy) drawcy -= speed; }
-		 */
-
-		drawcx = realcx;
-		drawcy = realcy;
+		if (drawcx != realcy || drawcy != realcy) {
+			new Thread() {
+				public void run() {
+					while (drawcx != realcx) {
+						if (drawcx < realcx)
+							drawcx += CURSOR_SPEED;
+						if (drawcx > realcx)
+							drawcx -= CURSOR_SPEED;
+						
+						Main.canRunLoop = true;
+						try {
+							Thread.sleep(1);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					 
+					while (drawcy != realcy) {
+						if (drawcy < realcy)
+							drawcy += CURSOR_SPEED;
+						if (drawcy > realcy)
+							drawcy -= CURSOR_SPEED;
+						
+						Main.canRunLoop = true;
+						try {
+							Thread.sleep(1);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}.start();
+		}
 	}
 
 	public boolean hovered() {

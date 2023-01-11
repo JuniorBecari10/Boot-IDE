@@ -105,6 +105,8 @@ public class Explorer extends IDEComponent {
 	public static ExecuteButton push;
 	public static ToggleButton forcePush;
 	
+	public static ExecuteButton pull;
+	
 	public static LastAction lastAction;
 	
 	// -- Terminal --
@@ -759,9 +761,9 @@ public class Explorer extends IDEComponent {
     private void renderGit(Graphics g) {
     	Graphics2D g2 = (Graphics2D) g;
     	
-    	if (gitStatus == null) return;
-    	
     	if (isBaseFolderRepository()) {
+    		if (gitStatus == null) return;
+    		
 	    	Fonts.drawString("Branches", 20, Screen.DECORATION_HEIGHT + 50, new IDEFont(Fonts.lightGrayNormal, 16), g);
 	    	g2.setColor(Colors.textLight);
 	    	g2.setStroke(new BasicStroke(2f));

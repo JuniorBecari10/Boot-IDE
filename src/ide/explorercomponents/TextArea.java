@@ -119,6 +119,7 @@ public class TextArea extends IDEComponent {
 		}*/
 		
 		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && TerminalCore.selected.commandRunning) { // Ctrl + C (Commando Rodando) - Terminar
+			// aqui vai forçar a parada do comando
 			TerminalCore.selected.process.destroyForcibly();
 			
 			System.out.println(TerminalCore.selected.process.isAlive());
@@ -298,7 +299,7 @@ public class TextArea extends IDEComponent {
 					String command = String.join(" ", c);
 					
 					if (!runInternalCommand(command)) {
-						String[] o = Main.runCommandTerm(TerminalCore.selected.getScope(), command + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+						String[] o = Main.runCommandTerm(TerminalCore.selected.getScope(), command);// + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
 						TerminalCore.selected.stdin = new StringBuilder();
 						
 						for (String s : o) {

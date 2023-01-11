@@ -102,6 +102,23 @@ public class GitCore {
 		}.start();
 	}
 	
+	public static void pull(String repo, String branch) {
+		new Thread() {
+			public void run() {
+				actions.add(new GitAction("git pull", ActionState.PROGRESS, null));
+				String[] output = Main.runCommand(Main.baseFolder, "git pull " + repo + " " + branch);
+				
+				Explorer.fetchStatus();
+				
+				boolean error = Main.isError(output);
+				boolean warn = Main.isWarning(output);
+				boolean conf = Main.isConflict(output);
+				
+				actions.set(actions.size() - 1, new GitAction("git pull", GitCore.getState(error, warn, conf), output));
+			}
+		}.start();
+	}
+	
 	public static void init() {
 		Explorer.explorerMode = ExplorerMode.GIT;
 		
@@ -459,6 +476,38 @@ public class GitCore {
 			};
 		}
 		
+		if (Explorer.pull == null) {
+			Explorer.pull = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 600, Main.explorer.getWidth() - 82, 20, Texts.pull, () -> Main.newThread(() -> {
+				List<RightClickOption> list = new ArrayList<>();
+				int width = Texts.selectARepository.length() * 14;
+				
+				list.add(new RightClickOption(0, 0, width, 30, false, Texts.selectARepository, (a) -> {  }, "", true));
+				list.add(new RightClickOption(0, 0, width, 30, false, "Branch: " + Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch], (a) -> {  }, "", false));
+				
+				for (String s : Explorer.gitStatus.remoteRepos) {
+					list.add(new RightClickOption(0, 0, width, 30, s, (a) -> { pull(s, Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch]); }, ""));
+				}
+				
+				IDEComponent.addRightClickOptions(Main.explorer.getWidth() + 1, Explorer.push.getY(), list.toArray(new RightClickOption[list.size()]));
+				}), false) {
+				public void tick() {
+					super.tick();
+					
+					if (leftClicked() && enabled)
+						execute.execute();
+					
+					text = Texts.pull;
+					
+					if (Explorer.gitStatus != null) {
+						if (Explorer.gitStatus.remoteRepos.length == 0)
+							enabled = false;
+						else
+							enabled = true;
+					}
+				}
+			};
+		}
+		
 		IDEComponent.toAdd.add(Explorer.createBranch);
 		IDEComponent.toAdd.add(Explorer.checkout);
 		IDEComponent.toAdd.add(Explorer.renameBranch);
@@ -469,6 +518,7 @@ public class GitCore {
 		IDEComponent.toAdd.add(Explorer.commit);
 		IDEComponent.toAdd.add(Explorer.push);
 		IDEComponent.toAdd.add(Explorer.forcePush);
+		IDEComponent.toAdd.add(Explorer.pull);
 		IDEComponent.toAdd.add(Explorer.allowEmpty); // coloca por cima por causa da caption
 	}
 	
@@ -489,5 +539,6 @@ public class GitCore {
 		IDEComponent.toRemove.add(Explorer.allowEmpty);
 		IDEComponent.toRemove.add(Explorer.push);
 		IDEComponent.toRemove.add(Explorer.forcePush);
+		IDEComponent.toRemove.add(Explorer.pull);
 	}
 }

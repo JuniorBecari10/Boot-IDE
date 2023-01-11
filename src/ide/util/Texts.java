@@ -265,6 +265,7 @@ public final class Texts {
 	public static String createNewCommit;
 	public static String selectARepository;
 	public static String push;
+	public static String pull;
 	
 	public static String allowEmpty;
 	public static String forcePush;
@@ -542,6 +543,7 @@ public final class Texts {
 			createNewCommit = "Criar Novo Commit";
 			selectARepository = "Selecione um Repositório Remoto:";
 			push = "Carregar";
+			pull = "Puxar";
 			
 			allowEmpty = "Permitir Commits Vazios";
 			forcePush = "Forçar Carregamento";
@@ -819,6 +821,7 @@ public final class Texts {
 			createNewCommit = "Create New Commit";
 			selectARepository = "Select a Remote Repository:";
 			push = "Push";
+			pull = "Pull";
 			
 			allowEmpty = "Allow Empty Commits";
 			forcePush = "Force Push";
