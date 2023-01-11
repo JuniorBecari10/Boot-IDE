@@ -229,7 +229,7 @@ public class Main implements Runnable, Tickable {
     public static BufferedImage checkoutSpr;
     public static BufferedImage renameBranchSpr;
     public static BufferedImage mergeBranchSpr;
-    public static BufferedImage deleteBranchSpr;
+    public static BufferedImage trashCanSpr;
     
     public static BufferedImage allowEmptySpr;
     public static BufferedImage forcePushSpr;
@@ -336,7 +336,7 @@ public class Main implements Runnable, Tickable {
 	        checkoutSpr = spritesheet.getSprite(432, 0, 16, 16);
 	        renameBranchSpr = spritesheet.getSprite(448, 0, 16, 16);
 	        mergeBranchSpr = spritesheet.getSprite(464, 0, 16, 16);
-	        deleteBranchSpr = spritesheet.getSprite(480, 0, 16, 16);
+	        trashCanSpr = spritesheet.getSprite(480, 0, 16, 16);
 	        
 	        allowEmptySpr = spritesheet.getSprite(496, 0, 16, 16);
 	        forcePushSpr = spritesheet.getSprite(512, 0, 16, 16);
@@ -627,7 +627,7 @@ public class Main implements Runnable, Tickable {
         checkoutSpr = Colors.swapColor(checkoutSpr, Colors.textLightDefault, Colors.textLight);
         renameBranchSpr = Colors.swapColor(renameBranchSpr, Colors.textLightDefault, Colors.textLight);
         mergeBranchSpr = Colors.swapColor(mergeBranchSpr, Colors.textLightDefault, Colors.textLight);
-        deleteBranchSpr = Colors.swapColor(deleteBranchSpr, Colors.textLightDefault, Colors.textLight);
+        trashCanSpr = Colors.swapColor(trashCanSpr, Colors.textLightDefault, Colors.textLight);
         
         allowEmptySpr = Colors.swapColor(allowEmptySpr, Colors.textLightDefault, Colors.textLight);
         forcePushSpr = Colors.swapColor(forcePushSpr, Colors.textLightDefault, Colors.textLight);
@@ -1161,7 +1161,7 @@ public class Main implements Runnable, Tickable {
         String text = screen.frame.getTitle();
 		Fonts.drawString(text, (screen.frame.getWidth() / 2) - ((text.length() * 12) / 2), Screen.DECORATION_HEIGHT / 2 - (16 / 2), new IDEFont(Fonts.lighterGrayNormal, 16), g);
         
-		if (Explorer.explorerMode == ExplorerMode.GIT && Explorer.isBaseFolderRepository() && MouseInput.hovered(0, Screen.DECORATION_HEIGHT + 70, explorer.getWidth(), 40) && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added || SetCommitName.added))
+		if (Explorer.explorerMode == ExplorerMode.GIT && Explorer.gitStatus != null && Explorer.isBaseFolderRepository() && MouseInput.hovered(0, Screen.DECORATION_HEIGHT + 70, explorer.getWidth(), 40) && !(SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added || SetCommitName.added))
 	    	Explorer.renderCardText(new String[] { Texts.currentBranch + ":", Explorer.gitStatus.branches[Explorer.gitStatus.currentBranch] }, MouseInput.getMouseX() + 20, MouseInput.getMouseY(), g);
 		
 		for (TopComponent t : TopComponent.topComponents)

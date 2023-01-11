@@ -321,7 +321,7 @@ public class GitCore {
 		}
 		
 		if (Explorer.deleteBranch == null) {
-			Explorer.deleteBranch = new ExecuteButtonIcon(172, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.deleteBranchSpr, () -> Main.newThread(() -> {
+			Explorer.deleteBranch = new ExecuteButtonIcon(172, Screen.DECORATION_HEIGHT + 130, 32, 32, Main.trashCanSpr, () -> Main.newThread(() -> {
 				List<RightClickOption> list = new ArrayList<>();
 				int width = Texts.selectABranch.length() * 14;
 				
@@ -451,7 +451,7 @@ public class GitCore {
 					x = Main.explorer.getWidth() - 52;
 					caption = Texts.forcePush;
 					
-					if (Explorer.gitStatus.remoteRepos.length == 0)
+					if (Explorer.gitStatus != null && Explorer.gitStatus.remoteRepos.length == 0)
 						enabled = false;
 					else
 						enabled = true;

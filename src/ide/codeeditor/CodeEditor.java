@@ -6567,6 +6567,7 @@ public class CodeEditor extends IDEComponent {
 			Explorer.folderPath = "";
 
 			ListableFile.files = ListableFile.loadFolder(null);
+			Explorer.fetchStatus();
 
 			break;
 
