@@ -46,6 +46,8 @@ public class TerminalTab extends IDEComponent {
 	
 	public StringBuilder stdin;
 	
+	public boolean write = false;
+	
 	private boolean alive = true;
 	
 	public CloseTerminalTabButton button;
@@ -113,7 +115,12 @@ public class TerminalTab extends IDEComponent {
 					
 					if (!commandRunning) continue;
 					
-					read();
+					if (write) {
+						write();
+						write = false;
+					}
+					else
+						read();
 				}
 			}
 		};
@@ -271,7 +278,7 @@ public class TerminalTab extends IDEComponent {
 	public void select() {
 		TerminalCore.selected = this;
 		
-		if (lines.length > 0)
+		if (lines != null && lines.length > 0)
 			Explorer.textArea.cursorX = lines[lines.length - 1].length();
 		else
 			Explorer.textArea.cursorX = 0;

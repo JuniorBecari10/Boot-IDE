@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +23,7 @@ import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.input.MouseInput;
 import ide.main.Main;
+import ide.main.OS;
 import ide.terminal.TerminalCore;
 import ide.util.Colors;
 import ide.util.Texts;
@@ -59,8 +59,11 @@ public class TextArea extends IDEComponent {
 		if (Explorer.selected != this || !hovered()) return;
 		
 		if (MouseInput.wheelDown()) {
-			if (KeyInput.isShiftDown())
+			if (KeyInput.isShiftDown()) {
+				if (TerminalCore.breakLine) return;
+				
 				scrollX += fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
+			}
 			else {
 				scrollY += (fontSize - CodeEditor.ruleOf3(16, 4, fontSize)) * 3;
 				
@@ -70,6 +73,8 @@ public class TextArea extends IDEComponent {
 		}
 		else if (MouseInput.wheelUp()) {
 			if (KeyInput.isShiftDown()) {
+				if (TerminalCore.breakLine) return;
+				
 				scrollX -= fontSize - CodeEditor.ruleOf3(16, 4, fontSize);
 				
 				if (scrollX < 0) scrollX = 0;
@@ -118,41 +123,29 @@ public class TextArea extends IDEComponent {
 				}, () -> {}});
 		}*/
 		
-		if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && TerminalCore.selected.commandRunning) { // Ctrl + C (Commando Rodando) - Terminar
-			// aqui vai forçar a parada do comando
-			//TerminalCore.selected.process.destroyForcibly();
-			//Main.runCommand(null, "taskkill /f /PID " + TerminalCore.selected.process.pid());
-			Main.runCommand(null, "taskkill /f /im cmd.exe");
+		if (KeyInput.isKeyPressed()) {
+			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C && TerminalCore.selected.commandRunning) { // Ctrl + C (Commando Rodando) - Terminar
+				if (Main.os == OS.WINDOWS)
+					Main.runCommand(null, "taskkill /f /im " + executedCommands.get(executedCommands.size() - 1).split(" ")[0] + ".exe");			
+			}
 			
-			//System.out.println(TerminalCore.selected.process.isAlive());
-		}
-		
-		if (!acceptInput) {
-			if (KeyInput.isKeyPressed() && !KeyInput.isControlDown() && TerminalCore.selected != null) {
-				try {
-					OutputStream stdin = TerminalCore.selected.process.getOutputStream();
-					char ch = KeyInput.getCharPressed();
-					
-					if (ch == KeyEvent.VK_BACK_SPACE) {
-						if (TerminalCore.selected.stdin.length() > 0)
-							TerminalCore.selected.stdin.deleteCharAt(TerminalCore.selected.stdin.length() - 1);
-					}
-					else
-						TerminalCore.selected.stdin.append(ch);
-					
-					TerminalCore.selected.read();
-					
-					if (KeyInput.getKeyCodePressed() == KeyEvent.VK_ENTER) {
-						Main.runCommand(new File(Main.userDir), "echo " + TerminalCore.selected.stdin.toString() + KeyEvent.VK_ENTER + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
+			if (!acceptInput) {
+				if (KeyInput.isKeyPressed() && !KeyInput.isControlDown() && TerminalCore.selected != null) {
+					try {
+						OutputStream stdin = TerminalCore.selected.process.getOutputStream();
+						char ch = KeyInput.getCharPressed();
 						
-						stdin.write(TerminalCore.selected.stdin.toString().getBytes(StandardCharsets.UTF_8));
-						stdin.write(KeyEvent.VK_ENTER);
+						stdin.write(ch);
 						stdin.flush();
 						
-						TerminalCore.selected.stdin = new StringBuilder();
+						StringBuilder b = new StringBuilder(TerminalCore.selected.getLines()[TerminalCore.selected.getLines().length - 1]);
+						b.append(ch);
+						
+						TerminalCore.selected.getLines()[TerminalCore.selected.getLines().length - 1] = b.toString();
+						TerminalCore.selected.write = true;
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -302,7 +295,6 @@ public class TextArea extends IDEComponent {
 					
 					if (!runInternalCommand(command)) {
 						String[] o = Main.runCommandTerm(TerminalCore.selected.getScope(), command/*);*/ + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
-						TerminalCore.selected.stdin = new StringBuilder();
 						
 						for (String s : o) {
 							Main.runCommand(new File(Main.userDir), "echo " + s + " >> " + TerminalCore.selected.getLog().getAbsolutePath());
