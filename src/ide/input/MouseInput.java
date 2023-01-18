@@ -334,8 +334,10 @@ public final class MouseInput extends MouseInputAdapter {
 		
 		screenBounds = Main.screen.frame.getBounds();
 		
-		if (Main.maximizeWindow != null && Main.maximizeWindow.leftClicked())
+		if (Main.maximizeWindow != null && Main.maximizeWindow.leftClicked()) {
 			MaximizeWindow.maximize();
+			updateMouse();
+		}
 		
         if (Main.main != null)
 	        Main.main.mainLogic();
