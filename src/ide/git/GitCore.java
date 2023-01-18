@@ -29,96 +29,6 @@ public class GitCore {
 	public static boolean checkoutToCreatedBranch = true;
 	public static boolean allowEmptyCommits;
 	
-	public static ActionState getState(boolean error, boolean warn) {
-		if (warn)
-			return ActionState.WARNING;
-		else if (error)
-			return ActionState.ERROR;
-		
-		return ActionState.DONE;
-	}
-	
-	public static ActionState getState(boolean error, boolean warn, boolean conflict) {
-		if (conflict)
-			return ActionState.CONFLICT;
-		else if (warn)
-			return ActionState.WARNING;
-		else if (error)
-			return ActionState.ERROR;
-		
-		return ActionState.DONE;
-	}
-	
-	public static void merge(String branch1, String branch2) {
-		actions.add(new GitAction("git merge", ActionState.PROGRESS, null));
-		String[] output = Main.runCommand(Main.baseFolder, "git merge " + branch1 + " " + branch2);
-		
-		Explorer.fetchStatus();
-		
-		boolean error = Main.isError(output);
-		boolean warn = Main.isWarning(output);
-		boolean conflict = Main.isConflict(output);
-		
-		actions.set(actions.size() - 1, new GitAction("git merge", getState(error, warn, conflict), output));
-	}
-	
-	public static void checkout(String branch) {
-		actions.add(new GitAction("git checkout", ActionState.PROGRESS, null));
-		String[] output = Main.runCommand(Main.baseFolder, "git checkout " + branch);
-		
-		Explorer.fetchStatus();
-		
-		boolean error = Main.isError(output);
-		boolean warn = Main.isWarning(output);
-		
-		actions.set(actions.size() - 1, new GitAction("git checkout", getState(error, warn), output));
-	}
-	
-	public static void delete(String branch) {
-		actions.add(new GitAction("git branch", ActionState.PROGRESS, null));
-		String[] output = Main.runCommand(Main.baseFolder, "git branch -d " + branch);
-		
-		Explorer.fetchStatus();
-		
-		boolean error = Main.isError(output);
-		boolean warn = Main.isWarning(output);
-		
-		actions.set(actions.size() - 1, new GitAction("git branch", getState(error, warn), output));
-	}
-	
-	public static void push(String repo, String branch, boolean force) {
-		new Thread() {
-			public void run() {
-				actions.add(new GitAction("git push", ActionState.PROGRESS, null));
-				String[] output = Main.runCommand(Main.baseFolder, "git push " + (force ? "-f " : "-u ") + repo + " " + branch);
-				
-				Explorer.fetchStatus();
-				
-				boolean error = Main.isError(output);
-				boolean warn = Main.isWarning(output);
-				
-				actions.set(actions.size() - 1, new GitAction("git push", GitCore.getState(error, warn), output));
-			}
-		}.start();
-	}
-	
-	public static void pull(String repo, String branch) {
-		new Thread() {
-			public void run() {
-				actions.add(new GitAction("git pull", ActionState.PROGRESS, null));
-				String[] output = Main.runCommand(Main.baseFolder, "git pull " + repo + " " + branch);
-				
-				Explorer.fetchStatus();
-				
-				boolean error = Main.isError(output);
-				boolean warn = Main.isWarning(output);
-				boolean conf = Main.isConflict(output);
-				
-				actions.set(actions.size() - 1, new GitAction("git pull", GitCore.getState(error, warn, conf), output));
-			}
-		}.start();
-	}
-	
 	public static void init() {
 		Explorer.explorerMode = ExplorerMode.GIT;
 		
@@ -245,6 +155,96 @@ public class GitCore {
 			initRepoComponents();
 		
 		IDEComponent.toAdd.add(Explorer.lastAction);
+	}
+	
+	public static ActionState getState(boolean error, boolean warn) {
+		if (warn)
+			return ActionState.WARNING;
+		else if (error)
+			return ActionState.ERROR;
+		
+		return ActionState.DONE;
+	}
+	
+	public static ActionState getState(boolean error, boolean warn, boolean conflict) {
+		if (conflict)
+			return ActionState.CONFLICT;
+		else if (warn)
+			return ActionState.WARNING;
+		else if (error)
+			return ActionState.ERROR;
+		
+		return ActionState.DONE;
+	}
+	
+	public static void merge(String branch1, String branch2) {
+		actions.add(new GitAction("git merge", ActionState.PROGRESS, null));
+		String[] output = Main.runCommand(Main.baseFolder, "git merge " + branch1 + " " + branch2);
+		
+		Explorer.fetchStatus();
+		
+		boolean error = Main.isError(output);
+		boolean warn = Main.isWarning(output);
+		boolean conflict = Main.isConflict(output);
+		
+		actions.set(actions.size() - 1, new GitAction("git merge", getState(error, warn, conflict), output));
+	}
+	
+	public static void checkout(String branch) {
+		actions.add(new GitAction("git checkout", ActionState.PROGRESS, null));
+		String[] output = Main.runCommand(Main.baseFolder, "git checkout " + branch);
+		
+		Explorer.fetchStatus();
+		
+		boolean error = Main.isError(output);
+		boolean warn = Main.isWarning(output);
+		
+		actions.set(actions.size() - 1, new GitAction("git checkout", getState(error, warn), output));
+	}
+	
+	public static void delete(String branch) {
+		actions.add(new GitAction("git branch", ActionState.PROGRESS, null));
+		String[] output = Main.runCommand(Main.baseFolder, "git branch -d " + branch);
+		
+		Explorer.fetchStatus();
+		
+		boolean error = Main.isError(output);
+		boolean warn = Main.isWarning(output);
+		
+		actions.set(actions.size() - 1, new GitAction("git branch", getState(error, warn), output));
+	}
+	
+	public static void push(String repo, String branch, boolean force) {
+		new Thread() {
+			public void run() {
+				actions.add(new GitAction("git push", ActionState.PROGRESS, null));
+				String[] output = Main.runCommand(Main.baseFolder, "git push " + (force ? "-f " : "-u ") + repo + " " + branch);
+				
+				Explorer.fetchStatus();
+				
+				boolean error = Main.isError(output);
+				boolean warn = Main.isWarning(output);
+				
+				actions.set(actions.size() - 1, new GitAction("git push", GitCore.getState(error, warn), output));
+			}
+		}.start();
+	}
+	
+	public static void pull(String repo, String branch) {
+		new Thread() {
+			public void run() {
+				actions.add(new GitAction("git pull", ActionState.PROGRESS, null));
+				String[] output = Main.runCommand(Main.baseFolder, "git pull " + repo + " " + branch);
+				
+				Explorer.fetchStatus();
+				
+				boolean error = Main.isError(output);
+				boolean warn = Main.isWarning(output);
+				boolean conf = Main.isConflict(output);
+				
+				actions.set(actions.size() - 1, new GitAction("git pull", GitCore.getState(error, warn, conf), output));
+			}
+		}.start();
 	}
 	
 	public static synchronized void initRepoComponents() {
@@ -401,7 +401,7 @@ public class GitCore {
 		
 		if (Explorer.commit == null) {
 			Explorer.commit = new ExecuteButton(20, Screen.DECORATION_HEIGHT + 540, Main.explorer.getWidth() - 82, 20, (Main.lang == Language.PORT ? Texts.create + " " : "") + "Commit", () -> Main.newThread(() -> {
-				Explorer.setCommitName = new SetCommitName(0, Screen.DECORATION_HEIGHT + 600, 0, 30);
+				Explorer.setCommitName = new SetCommitName(0, Screen.DECORATION_HEIGHT + 630, 0, 30);
 
 				IDEComponent.toAdd.add(Explorer.setCommitName);
 				SetCommitName.added = true;
@@ -517,8 +517,8 @@ public class GitCore {
 		IDEComponent.toAdd.add(Explorer.unstageAll);
 		IDEComponent.toAdd.add(Explorer.commit);
 		IDEComponent.toAdd.add(Explorer.push);
-		IDEComponent.toAdd.add(Explorer.forcePush);
 		IDEComponent.toAdd.add(Explorer.pull);
+		IDEComponent.toAdd.add(Explorer.forcePush);
 		IDEComponent.toAdd.add(Explorer.allowEmpty); // coloca por cima por causa da caption
 	}
 	
