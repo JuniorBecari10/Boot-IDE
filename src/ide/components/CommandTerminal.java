@@ -70,7 +70,7 @@ public class CommandTerminal extends IDEComponent {
 			"reseteditorscroll", "deselect", "copy", "del", "cut", "paste", "selectline", "version", "resetexplorerdrag", "resetundoredo",
 			"selectall", "toggleexplorer", "loadconfigfile", "resetreadmode", "resetfontsize", "togglewhitespaces",
 			"sysout", "syso", "cout", "coutend", "stdcout", "stdcoutend", "writeline", "readline", "syserr", "clog", "cerr", "gendiv", "closebasefolder",
-			"revertcolors", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
+			"resetcolors", "resetsettings", "resetadvanced", "togglecodehelpers", "gotocursor", "togglereadonly", "closetab int:tab_index", "setexplorerdrag int:px",
 			"setfontsize int:size/default", "insertchar int:ascii_code", "setreadmode str:mode", "setwhitespaces bool:true/false",
 			"gendiv str:class_name", "gensnippet str:type", "selecttab int:index",
 			"lorem int:num_words", "swaptabs int:tab_from int:tab_to", "openfile str:file",
@@ -526,7 +526,7 @@ public class CommandTerminal extends IDEComponent {
 							Main.conffile = "none";
 							Main.hasConfigFile = false;
 							
-							runCommand("revertcolors");
+							runCommand("resetcolors");
 						}, () -> { } });
 					}
 					
@@ -754,8 +754,18 @@ public class CommandTerminal extends IDEComponent {
 				
 				break;
 				
-			case "revertcolors":
-				Colors.revertColors();
+			case "resetcolors":
+				MessageBox.showDialog("Are you sure?", new String[] { "Are you sure you want to reset to default?" }, new String[] { Texts.yes, Texts.no }, new Execute[] { () -> { 
+					Colors.resetColors();
+				}, () -> {} });
+				break;
+				
+			case "resetsettings":
+				Colors.resetSettings();
+				break;
+				
+			case "resetadvanced":
+				Colors.resetAdvanced();
 				break;
 				
 			case "togglecodehelpers":

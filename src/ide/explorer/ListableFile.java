@@ -1274,7 +1274,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				
 			case "terminal_prompt:":
 				if (split[1].equalsIgnoreCase("default") || split[1] == "") {
-					TerminalCore.prompt = '$';
+					TerminalCore.prompt = TerminalCore.defaultPrompt;
 					break;
 				}
 				

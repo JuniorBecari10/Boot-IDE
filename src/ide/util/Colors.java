@@ -4,8 +4,14 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import ide.codeeditor.CodeEditor;
+import ide.codeeditor.LineEnding;
+import ide.explorer.Explorer;
 import ide.explorer.ListableFile;
+import ide.fonts.Fonts;
+import ide.git.GitCore;
 import ide.main.Main;
+import ide.terminal.TerminalCore;
 
 /**
  * Uma classe para organizar as cores. Como se fosse uma paleta. Tambam tem outras coisas ateis.
@@ -44,7 +50,7 @@ public class Colors {
     public static Color lineNumber =			 Colors.textLight;
     public static Color selectedLineNumber=Color.decode("#c5d5ea");
     
-    public static void revertColors() {
+    public static void resetColors() {
     	Color textLightOld = textLight;
     	
         background = 	  Color.decode("#353b48");
@@ -139,6 +145,41 @@ public class Colors {
 			}
          }
     }
+    
+    public static void resetSettings() {
+		CodeEditor.FONT_SIZE = 16;
+		Main.lang = Language.ENG;
+		CodeEditor.isAutoCompleteActive = true;
+		CodeEditor.indentSpaces = true;
+		CodeEditor.indentLength = 4;
+		CodeEditor.automaticallyOpenTabs = true;
+		Explorer.allowAnimations = true;
+		Main.forceMacButtons = false;
+		CodeEditor.lineEnding = LineEnding.LF;
+		CodeEditor.showUnsavedTitleBar = true;
+		Fonts.useAntiAliasing = true;
+		CodeEditor.showCapsLock = true;
+		GitCore.checkoutToCreatedBranch = true;
+		CodeEditor.animateCursor = true;
+		CodeEditor.homeAbsBeginning = true;
+		TerminalCore.prompt = TerminalCore.defaultPrompt;
+		Main.PROGRAM_NAME = Main.DEFAULT_PROGRAM_NAME;
+		Main.fntnr = "/font.png";
+		Main.fnted = "/editorfont.png";
+		
+		ListableFile.generateLocalConfigFile(Main.defaultConfigFile);
+		Main.load(Main.conffile);
+	}
+    
+    public static void resetAdvanced() {
+    	CodeEditor.lineHeightOffset = 0;
+    	Fonts.charWidth = Fonts.ACTUAL_CHAR_WIDTH;
+    	Fonts.hangingLettersOffset = 2;
+    	Fonts.yOffset = 0;
+    	
+    	ListableFile.generateLocalConfigFile(Main.defaultConfigFile);
+    	Main.load(Main.conffile);
+	}
     
     /**
      * Troca a cor especificada em {@code target} na cor especificada em {@code out}.

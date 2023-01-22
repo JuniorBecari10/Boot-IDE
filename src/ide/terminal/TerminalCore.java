@@ -24,6 +24,8 @@ public class TerminalCore {
 	 * command >> file | append output to file
 	 */
 	
+	public static final char defaultPrompt = '$';
+	
 	public static boolean breakLine = true;
 	public static boolean showOverlay = false;
 	

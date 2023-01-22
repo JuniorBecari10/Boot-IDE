@@ -309,7 +309,7 @@ public final class Texts {
 			codeHelpersOn = "Os CodeHelpers estão ativados.";
 			codeHelpersOff = "Os CodeHelpers estão desativados.";
 			
-			fileAsReadOnly = "Esse arquivo está como somente leitura.";
+			fileAsReadOnly = "Esse arquivo está sendo lido no modo somente leitura.";
 			
 			baseFolder_ = "Pasta Base:";
 			currentFolder = "Pasta Atual:";
@@ -587,7 +587,7 @@ public final class Texts {
 			codeHelpersOn = "The CodeHelpers are enabled.";
 			codeHelpersOff = "The CodeHelpers are disabled.";
 			
-			fileAsReadOnly = "This file is as Read-Only.";
+			fileAsReadOnly = "This file is being read in Read-Only mode.";
 			
 			baseFolder_ = "Base Folder:";
 			currentFolder = "Current Folder:";

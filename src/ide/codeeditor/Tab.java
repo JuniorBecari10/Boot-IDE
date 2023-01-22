@@ -288,29 +288,31 @@ public class Tab extends IDEComponent implements Serializable {
 	public void close() {
 		closing = true;
 		
-		if (Main.editor.editing != null && save) { // nao for nulo
-			if (!Main.editor.editing.isSaved()) { // nao estiver salvo
-				String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
-				
-				new Thread() {
-					public void run() {
-		    			MessageBox.showDialog(Texts.confirmSave, new String[] { Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.doYouWantToSave }, options, new Execute[] {
-		    					() -> {
-		    						save();
-		    						close();
-		    					},
-		    					() -> {
-		    						WindowInput.update();
-		    						
-		    						save = false;
-		    						close();
-		    					}, () -> { } });
-					}
-				}.start();
-				
-				return;
-			}
+		if (save && !isSaved) {
+			String[] options = { Texts.save, Texts.dont + " " + Texts.save, Texts.cancel };
+			
+			new Thread() {
+				public void run() {
+	    			MessageBox.showDialog(Texts.confirmSave, new String[] { Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.doYouWantToSave }, options, new Execute[] {
+	    					() -> {
+	    						save();
+	    						close();
+	    					},
+	    					() -> {
+	    						WindowInput.update();
+	    						
+	    						save = false;
+	    						close();
+	    					}, () -> { } });
+				}
+			}.start();
+			
+			return;
 		}
+		
+		// provisório
+		if (Main.editor.editing != null)
+			Main.editor.editing.save();
 		
 		CommandTerminal.runCommand("resetundoredo");
 		
