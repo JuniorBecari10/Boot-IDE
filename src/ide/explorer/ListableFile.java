@@ -29,10 +29,10 @@ import ide.components.MessageBox;
 import ide.components.ReloadButton;
 import ide.components.RenameFile;
 import ide.components.RightClickOption;
+import ide.components.SetBranchName;
+import ide.components.SetCommitName;
 import ide.components.SetFileName;
 import ide.explorercomponents.Execute;
-import ide.explorercomponents.SetBranchName;
-import ide.explorercomponents.SetCommitName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.git.GitCore;
@@ -207,7 +207,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			t.add(new FileType(".yml", Main.spritesheet.getSprite(864, 32, 16, 16)));
 			t.add(new FileType(".yaml",Main.spritesheet.getSprite(864, 32, 16, 16)));
 			t.add(new FileType(".hex", Main.spritesheet.getSprite(880, 32, 16, 16)));
-			t.add(new FileType(".sum", Main.spritesheet.getSprite(848, 32, 16, 16))); 
+			t.add(new FileType(".sum", Main.spritesheet.getSprite(848, 32, 16, 16)));
 			
 			t.add(new FileType(".png", Main.spritesheet.getSprite  (0, 48, 16, 16)));
 			t.add(new FileType(".jpg", Main.spritesheet.getSprite  (0, 48, 16, 16)));

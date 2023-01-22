@@ -8,6 +8,8 @@ import ide.components.FileChooser;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
 import ide.components.RightClickOption;
+import ide.components.SetBranchName;
+import ide.components.SetCommitName;
 import ide.components.SetFileName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;

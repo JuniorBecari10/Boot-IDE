@@ -10,6 +10,8 @@ import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
 import ide.components.RenameFile;
+import ide.components.SetBranchName;
+import ide.components.SetCommitName;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;

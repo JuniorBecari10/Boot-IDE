@@ -7,8 +7,6 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 
 import ide.explorer.Explorer;
-import ide.explorercomponents.SetBranchName;
-import ide.explorercomponents.SetCommitName;
 import ide.input.KeyInput;
 import ide.main.Main;
 import ide.screen.Screen;

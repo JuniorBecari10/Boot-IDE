@@ -10,12 +10,12 @@ import ide.components.FileViewSetFileName;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
 import ide.components.RenameFile;
+import ide.components.SetBranchName;
+import ide.components.SetCommitName;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorercomponents.SearchReplaceCore;
-import ide.explorercomponents.SetBranchName;
-import ide.explorercomponents.SetCommitName;
 import ide.main.Main;
 
 public final class KeyInput extends KeyAdapter {

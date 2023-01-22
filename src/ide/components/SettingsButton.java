@@ -4,8 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import ide.explorer.Explorer;
-import ide.explorercomponents.SetBranchName;
-import ide.explorercomponents.SetCommitName;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;

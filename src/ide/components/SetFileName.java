@@ -96,6 +96,14 @@ public class SetFileName extends IDEComponent {
 		if (KeyInput.isKeyPressed()) {
 			// Shortcuts Area
 			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) { // Home - Ir para o início
+				cursorIndex = 0;
+			}
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END) { // End - Ir para o fim
+				cursorIndex = text.length();
+			}
+			
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C) { // Ctrl + C - Copiar (Tudo)
 				CodeEditor.copyText(text.toString());
 			}

@@ -38,14 +38,14 @@ import ide.components.MessageBox;
 import ide.components.ReloadButton;
 import ide.components.RenameFile;
 import ide.components.RightClickOption;
+import ide.components.SetBranchName;
+import ide.components.SetCommitName;
 import ide.components.SetFileName;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
 import ide.explorercomponents.SearchReplaceCore;
-import ide.explorercomponents.SetBranchName;
-import ide.explorercomponents.SetCommitName;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.git.GitCore;
@@ -7718,8 +7718,24 @@ public class CodeEditor extends IDEComponent {
 
 			scrX = 0;
 			scrY = 0;
-
-			cursorX = 0;
+			
+			if (homeAbsBeginning) {
+				if (KeyInput.isShiftDown()) {
+					cursorX = 0;
+				}
+				else {
+					cursorX = countChar(new String(toCharArray(lines.get(cursorY - 1).getChars())), ' ');
+				}
+			}
+			else {
+				if (KeyInput.isShiftDown()) {
+					cursorX = countChar(new String(toCharArray(lines.get(cursorY - 1).getChars())), ' ');
+				}
+				else {
+					cursorX = 0;
+				}
+			}
+			
 			cursorY = 1;
 
 			setCursorWithinBounds();

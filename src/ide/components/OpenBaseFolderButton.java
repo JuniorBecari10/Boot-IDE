@@ -9,8 +9,6 @@ import javax.swing.JFileChooser;
 import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorer.ListableFile;
-import ide.explorercomponents.SetBranchName;
-import ide.explorercomponents.SetCommitName;
 import ide.input.MouseInput;
 import ide.main.Main;
 import ide.util.Colors;

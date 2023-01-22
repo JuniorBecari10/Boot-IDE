@@ -1,4 +1,4 @@
-package ide.explorercomponents;
+package ide.components;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
 import ide.codeeditor.CodeEditor;
-import ide.components.IDEComponent;
 import ide.explorer.Explorer;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -56,6 +55,14 @@ public class SetBranchName extends IDEComponent {
 	public synchronized void type() {
 		if (KeyInput.isKeyPressed()) {
 			// Shortcuts Area
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_HOME) { // Home - Ir para o início
+				cursorIndex = 0;
+			}
+			
+			if (KeyInput.getKeyCodePressed() == KeyEvent.VK_END) { // End - Ir para o fim
+				cursorIndex = text.length();
+			}
 			
 			if (KeyInput.isControlDown() && KeyInput.getKeyCodePressed() == KeyEvent.VK_C) { // Ctrl + C - Copiar (Tudo)
 				CodeEditor.copyText(text.toString());
