@@ -561,6 +561,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("show_caps_lock: " + CodeEditor.showCapsLock + "\n");
 			w.write("checkout_to_created_branch: " + GitCore.checkoutToCreatedBranch + "\n");
 			w.write("animate_cursor: " + CodeEditor.animateCursor + "\n");
+			w.write("home_abs_beginning: " + CodeEditor.homeAbsBeginning + "\n");
 			w.write("terminal_prompt: '" + TerminalCore.prompt + "'\n");
 			w.write("program_name: '" + Main.PROGRAM_NAME + "'\n");
 			w.write("font: '" + Main.fntnr + "'\n");
@@ -1252,6 +1253,20 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				}
 
 				CodeEditor.animateCursor = Boolean.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
+				
+			case "home_abs_beginning:":
+				if (!readConfigs) break;
+				
+				if (split[1].equalsIgnoreCase("default")) {
+					CodeEditor.homeAbsBeginning = false;
+					break;
+				}
+
+				CodeEditor.homeAbsBeginning = Boolean.valueOf(split[1]);
 
 				hasAltered = true;
 

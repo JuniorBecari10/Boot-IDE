@@ -88,11 +88,13 @@ public class CodeEditor extends IDEComponent {
 	public static boolean capsLock = Main.toolkit.getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
 	public static boolean showCapsLock = true;
 	
+	public static boolean homeAbsBeginning = true;
+	
 	public static boolean animateCursor = true;
+	//public static boolean persistentCursor = true;
 
 	public int line1, line2;
-	public int index1, index2; // TODO fazer a verificação do CSS se está dentro do seletor, e se tiver, colore
-								// números
+	public int index1, index2;
 	
 	public static final int MAX_UNDOS = 50;
 	
@@ -327,15 +329,7 @@ public class CodeEditor extends IDEComponent {
 			"pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source",
 			"span", "strike", "strong", "style", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot",
 			"th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "applet", "moz",
-			"webkit", "ms", "mixin", "extend", "webview", "user", "select", "drag", "src" /* TODO colocar mais desses ultimos */ // TODO
-																														// talvez
-																														// se
-																														// der
-																														// erro,
-																														// colorir
-																														// center
-																														// de
-																														// novo
+			"webkit", "ms", "mixin", "extend", "webview", "user", "select", "drag", "src"
 	};
 
 	public static final String[] cssAdds = { "important", "screen", "and", "or", "from", "to", "rotate", };
@@ -1109,18 +1103,6 @@ public class CodeEditor extends IDEComponent {
 	public void refreshText() {
 		if (editing == null) return;
 		
-		/*if (!editing.isSaved()) {
-			String[] options = { Texts.yes, Texts.no, Texts.cancel };
-			MessageBox.showDialog(Texts.confirmSave, new String[] { Texts.theFile + " " + Main.editor.editing.getRegent().getRegent().getName() + " " + Texts.isNotSaved, Texts.doYouWantToSave }, options, new Execute[] {
-					() -> {
-						editing.save();
-						return; // retorna pq o texto do editor é o texto que vai ficar
-					},
-					() -> {}, // n faz nada
-					() -> { return; }
-					});
-		}*/
-		
 		// TODO se ter algum problema é aqui
 		if (!editing.isSaved()) return;
 		
@@ -1886,6 +1868,13 @@ public class CodeEditor extends IDEComponent {
 				|| editing.getRegent().getRegent().getName().equalsIgnoreCase("gitignore"))
 			return fs;
 		
+		if (ext.equalsIgnoreCase(".yml") || ext.equalsIgnoreCase(".yaml")) {
+			fs = color(0, fs.size(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
+			fs = color(0, new String(chars).lastIndexOf(':'), new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs);
+			
+			return fs;
+		}
+		
 		if (!(ext.equalsIgnoreCase(".html") || ext.equalsIgnoreCase(".xhtml") || ext.equalsIgnoreCase(".svelte") || ext.equalsIgnoreCase(".htm")
 				|| ext.equalsIgnoreCase(".ejs") || ext.equalsIgnoreCase(".xml") || ext.equalsIgnoreCase(".svg")
 				|| ext.equalsIgnoreCase(".sln") || ext.equalsIgnoreCase(".config") || ext.equalsIgnoreCase(".cfg")
@@ -1907,26 +1896,6 @@ public class CodeEditor extends IDEComponent {
 					len++;
 	
 				fs = color(i, i + len + 1, new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-			}
-			
-			return fs;
-		}
-		
-		if (ext.equalsIgnoreCase(".yml") || ext.equalsIgnoreCase(".yaml")) {
-			fs = color(0, fs.size(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
-			
-			indxs = findWord(new String(chars), ":"); // antes de <palavra>
-
-			for (Integer i : indxs) {
-				int c = i;
-				int len = 0;
-
-				while (c < chars.length && c + len < chars.length && c > 0) {
-					c--;
-					len++;
-				}
-
-				fs = color(c, c + len, new IDEFont(Fonts.keywordsEditor, FONT_SIZE), fs);
 			}
 			
 			return fs;
@@ -7783,7 +7752,23 @@ public class CodeEditor extends IDEComponent {
 			KeyInput.updateKeys();
 
 			scrX = 0;
-			cursorX = 0;
+			
+			if (homeAbsBeginning) {
+				if (KeyInput.isShiftDown()) {
+					cursorX = 0;
+				}
+				else {
+					cursorX = countChar(new String(toCharArray(lines.get(cursorY - 1).getChars())), ' ');
+				}
+			}
+			else {
+				if (KeyInput.isShiftDown()) {
+					cursorX = countChar(new String(toCharArray(lines.get(cursorY - 1).getChars())), ' ');
+				}
+				else {
+					cursorX = 0;
+				}
+			}
 
 			setCursorWithinBounds();
 
@@ -8333,6 +8318,7 @@ public class CodeEditor extends IDEComponent {
 					// converter os objetos da lista em strings e colocar numa lista de strings, que sao os objetos
 					List<String> objs = new ArrayList<>();
 					
+					// concurrentmodification
 					for (IDELine l : lines) {
 						String s = Serialization.objectToString(l);
 						objs.add(s);
@@ -8344,19 +8330,9 @@ public class CodeEditor extends IDEComponent {
 					// colocar a string no undo
 					undo.push(list);
 				} catch (Exception a) {
+					a.printStackTrace();
 					return;
-				}/* finally {
-					if (undo.size() > MAX_UNDOS) {
-						List<String> u = new ArrayList<>(undo.subList(undo.size() - MAX_UNDOS < 0 ? 0 : undo.size() - MAX_UNDOS, undo.size()));
-						List<String> r = new ArrayList<>(redo.subList(redo.size() - MAX_UNDOS < 0 ? 0 : redo.size() - MAX_UNDOS, redo.size()));
-						
-						undo = new Stack<>();
-						redo = new Stack<>();
-						
-						undo.addAll(u);
-						redo.addAll(r);
-					}
-				}*/
+				}
 			}
 		}.start();
 	}
