@@ -524,7 +524,6 @@ public class CommandTerminal extends IDEComponent {
 						
 						MessageBox.showDialog(Texts.didNothing, new String[] { Texts.configFileNotChanged }, options, new Execute[] { () -> {
 							Main.conffile = "none";
-							Main.hasConfigFile = false;
 							
 							runCommand("resetcolors");
 						}, () -> { } });
@@ -755,7 +754,7 @@ public class CommandTerminal extends IDEComponent {
 				break;
 				
 			case "resetcolors":
-				MessageBox.showDialog("Are you sure?", new String[] { "Are you sure you want to reset to default?" }, new String[] { Texts.yes, Texts.no }, new Execute[] { () -> { 
+				MessageBox.showDialog(Texts.areYouSure, new String[] { Texts.sureWantResetDefault }, new String[] { Texts.yes, Texts.no }, new Execute[] { () -> { 
 					Colors.resetColors();
 				}, () -> {} });
 				break;

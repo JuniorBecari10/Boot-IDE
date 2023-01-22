@@ -293,6 +293,9 @@ public final class Texts {
 	
 	public static String saveFile;
 	
+	public static String areYouSure;
+	public static String sureWantResetDefault;
+	
 	public static synchronized void setTexts(Language lang) {
 		switch (lang) {
 		case PORT:
@@ -571,6 +574,9 @@ public final class Texts {
 			
 			saveFile = "Salvar Arquivo";
 			
+			areYouSure = "Você tem certeza?";
+			sureWantResetDefault = "Você tem certeza de que quer redefinir para os padrões?";
+			
 			break;
 		
 		case ENG:
@@ -848,6 +854,9 @@ public final class Texts {
 			revertColors = "Revert Colors";
 			
 			saveFile = "Save File";
+			
+			areYouSure = "Are you sure?";
+			sureWantResetDefault = "Are you sure you want to reset to default?";
 			
 			break;
 		}

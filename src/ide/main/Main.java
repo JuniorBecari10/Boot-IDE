@@ -146,7 +146,6 @@ public class Main implements Runnable, Tickable {
     
     public static boolean alreadyLoaded = false;
     
-    public static boolean hasConfigFile = false;
     public static Language lang;
     
     public static OS os;
@@ -470,13 +469,11 @@ public class Main implements Runnable, Tickable {
 	        
 	        if (defaultConfigFile.exists()) {
 	        	conffile = defaultConfigFile.getPath();
-	        	hasConfigFile = true;
 	        }
 	        else {
 	        	ListableFile.generateConfigFile(defaultConfigFile);
 	        	
 	        	conffile = defaultConfigFile.getPath();
-	        	hasConfigFile = true;
 	        }
 	        
 	        if (!alreadyLoaded)
@@ -665,9 +662,6 @@ public class Main implements Runnable, Tickable {
         ///
         
         ////////
-        
-        if (!conffile.equals("none"))
-        	hasConfigFile = true;
         
         Explorer.tabs.clear();
         explorer.addTabs();
@@ -914,9 +908,6 @@ public class Main implements Runnable, Tickable {
 					}
 					else if (i == 1) {
 						conffile = s;
-						
-						if (!conffile.equals("none"))
-							hasConfigFile = true;
 					}
 					
 					else if (i == 2)
