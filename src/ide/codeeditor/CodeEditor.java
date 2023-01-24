@@ -138,8 +138,8 @@ public class CodeEditor extends IDEComponent {
 
 	public Direction directionStarted = Direction.NONE;
 
-	private int realcx, realcy; // c = cursor
-	public int drawcx = ((x + (Fonts.charWidth * 4)) + cursorX * Fonts.charWidth) - scrX,
+	private volatile int realcx, realcy; // c = cursor
+	public volatile int drawcx = ((x + (Fonts.charWidth * 4)) + cursorX * Fonts.charWidth) - scrX,
 			drawcy = MIN_Y + cursorY * LINE_HEIGHT - FONT_SIZE - scrY - 2;
 
 	private PressedAccent prAcc;
@@ -8369,8 +8369,6 @@ public class CodeEditor extends IDEComponent {
 
 		if (tabs.size() == 0)
 			CommandTerminal.runCommand("resettabscroll");
-		
-		animateCursor();
 		
 		if (Main.editor.tabs.isEmpty() && Explorer.explorerMode == ExplorerMode.SEARCHREPLACE) {
 			Explorer.explorerMode = ExplorerMode.EXPLORER;
