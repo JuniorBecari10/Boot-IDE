@@ -866,11 +866,19 @@ public class CodeEditor extends IDEComponent {
 			if (animateCursor) {
 				new Thread() {
 					public void run() {
-						while (drawcx != realcx) {
-							if (drawcx < realcx)
-								drawcx++;
-							if (drawcx > realcx)
-								drawcx--;
+						while (drawcx < realcx) {
+							drawcx++;
+							
+							Main.canRunLoop = true;
+							try {
+								Thread.sleep(1);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+						
+						while (drawcx > realcx) {
+							drawcx--;
 							
 							Main.canRunLoop = true;
 							try {
@@ -880,11 +888,19 @@ public class CodeEditor extends IDEComponent {
 							}
 						}
 						 
-						while (drawcy != realcy) {
-							if (drawcy < realcy)
-								drawcy++;
-							if (drawcy > realcy)
-								drawcy--;
+						while (drawcy < realcy) {
+							drawcy++;
+							
+							Main.canRunLoop = true;
+							try {
+								Thread.sleep(1);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+						
+						while (drawcy > realcy) {
+							drawcy--;
 							
 							Main.canRunLoop = true;
 							try {
@@ -8380,6 +8396,10 @@ public class CodeEditor extends IDEComponent {
 		
 		height = Main.screen.getHeight();
 		LINE_HEIGHT = (FONT_SIZE + (FONT_SIZE / 3)) - lineHeightOffset;
+		
+		System.out.printf("realcx: %d, realcy: %d\n", realcx, realcy);
+		System.out.printf("drawcx: %d, drawcy: %d\n", drawcx, drawcy);
+		System.out.println("---");
 		
 		// arrumar isso aqui pra n dar erro
 		/*if (editing != null && !tabs.isEmpty() && tabs.indexOf(editing) < 0)
