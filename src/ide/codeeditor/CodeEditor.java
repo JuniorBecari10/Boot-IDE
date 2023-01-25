@@ -862,60 +862,58 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public void animateCursor() {
-		if (drawcx != realcy || drawcy != realcy) {
-			if (animateCursor) {
-				new Thread() {
-					public void run() {
-						while (drawcx < realcx) {
-							drawcx++;
-							
-							Main.canRunLoop = true;
-							try {
-								Thread.sleep(1);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
+		if (animateCursor) {
+			new Thread() {
+				public void run() {
+					while (drawcx < realcx) {
+						drawcx++;
 						
-						while (drawcx > realcx) {
-							drawcx--;
-							
-							Main.canRunLoop = true;
-							try {
-								Thread.sleep(1);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-						 
-						while (drawcy < realcy) {
-							drawcy++;
-							
-							Main.canRunLoop = true;
-							try {
-								Thread.sleep(1);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-						
-						while (drawcy > realcy) {
-							drawcy--;
-							
-							Main.canRunLoop = true;
-							try {
-								Thread.sleep(1);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
+						Main.canRunLoop = true;
+						try {
+							Thread.sleep(1);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
 						}
 					}
-				}.start();
-			}
-			else {
-				drawcx = realcx;
-				drawcy = realcy;
-			}
+					
+					while (drawcx > realcx) {
+						drawcx--;
+						
+						Main.canRunLoop = true;
+						try {
+							Thread.sleep(1);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					 
+					while (drawcy < realcy) {
+						drawcy++;
+						
+						Main.canRunLoop = true;
+						try {
+							Thread.sleep(1);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					
+					while (drawcy > realcy) {
+						drawcy--;
+						
+						Main.canRunLoop = true;
+						try {
+							Thread.sleep(1);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}.start();
+		}
+		else {
+			drawcx = realcx;
+			drawcy = realcy;
 		}
 	}
 	
@@ -8397,9 +8395,11 @@ public class CodeEditor extends IDEComponent {
 		height = Main.screen.getHeight();
 		LINE_HEIGHT = (FONT_SIZE + (FONT_SIZE / 3)) - lineHeightOffset;
 		
+		/*
 		System.out.printf("realcx: %d, realcy: %d\n", realcx, realcy);
 		System.out.printf("drawcx: %d, drawcy: %d\n", drawcx, drawcy);
 		System.out.println("---");
+		*/
 		
 		// arrumar isso aqui pra n dar erro
 		/*if (editing != null && !tabs.isEmpty() && tabs.indexOf(editing) < 0)
