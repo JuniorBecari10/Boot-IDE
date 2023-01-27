@@ -8,5 +8,7 @@ public enum TokenType {
 	VARIABLE,
 	COMMENT,
 	STRING,
-	SYMBOL;
+	SYMBOL,
+	SPACE,
+	END;
 }

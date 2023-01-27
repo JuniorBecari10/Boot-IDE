@@ -32,6 +32,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import automaticcolor.Lexer;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
@@ -1315,9 +1316,13 @@ public class CodeEditor extends IDEComponent {
 
         return result.toString();
     }
+	
+	public static boolean isLetter(char c) {
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
+	}
 
 	public static boolean isNumber(char c) {
-		return c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9' || c == '0';
+		return c >= '0' && c <= '9';
 	}
 	
 	public static boolean isSymbol(char c) {
@@ -8402,6 +8407,8 @@ public class CodeEditor extends IDEComponent {
 		
 		height = Main.screen.getHeight();
 		LINE_HEIGHT = (FONT_SIZE + (FONT_SIZE / 3)) - lineHeightOffset;
+		
+		System.out.println(Lexer.Lex(new String(toCharArray(lines.get(0).getChars()))));
 		
 		/*
 		System.out.printf("realcx: %d, realcy: %d\n", realcx, realcy);
