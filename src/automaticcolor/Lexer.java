@@ -21,6 +21,8 @@ public class Lexer {
 	}
 	
 	public Token nextToken() {
+		int pos = cursor;
+		
 		if (ch == '\0')
 			return new Token("", cursor, TokenType.END);
 		
@@ -39,14 +41,16 @@ public class Lexer {
 		}
 		
 		else if (Character.isDigit(ch)) { // n vai verificar ponto aqui
-			int pos = cursor;
 			return new Token(readNumber(), pos, TokenType.NUMBER);
+		}
+		
+		else if (ch == '"') { // n vai verificar ponto aqui
+			return new Token(readString(), pos, TokenType.STRING);
 		}
 		
 		else if (CodeEditor.isLetter(ch)) {
 			String value = readLetters();
 			TokenType type = TokenType.VARIABLE;
-			int pos = cursor;
 			
 			String[] keywords = ListableFile.fileHasExtension(Main.editor.editing.getRegent().getRegent())
 					? CodeEditor.getKeywords(ListableFile.getFileExtension(Main.editor.editing.getRegent().getRegent()))
@@ -102,6 +106,18 @@ public class Lexer {
 		int pos = cursor;
 		
 		while (CodeEditor.isLetter(ch) || Character.isDigit(ch) || ch == '.') {
+			readChar();
+		}
+		
+		return line.substring(pos, cursor);
+	}
+	
+	public String readString() {
+		int pos = cursor;
+		
+		readChar();
+		
+		while (ch != '"') {
 			readChar();
 		}
 		

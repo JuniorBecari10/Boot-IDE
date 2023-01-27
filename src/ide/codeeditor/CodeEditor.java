@@ -5902,8 +5902,8 @@ public class CodeEditor extends IDEComponent {
 		List<Token> tokens = Lexer.Lex(new String(chars));
 		
 		for (Token t : tokens) {
-			System.out.println(t.pos + ", " + (t.pos + t.value.length()));
-			fs = color(t.pos, t.pos + t.value.length(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
+			//System.out.println(t.pos + ", " + (t.pos + t.value.length()));
+			fs = color(t.pos, fs.size(), new IDEFont(Colors.getFont(t.type), FONT_SIZE), fs);
 		}
 		
 		resetHTML(chars);
