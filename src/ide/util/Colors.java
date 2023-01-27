@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import automaticcolor.TokenType;
 import ide.codeeditor.CodeEditor;
 import ide.codeeditor.LineEnding;
 import ide.explorer.Explorer;
@@ -180,6 +181,39 @@ public class Colors {
     	ListableFile.generateLocalConfigFile(Main.defaultConfigFile);
     	Main.load(Main.conffile);
 	}
+    
+    public static BufferedImage[] getFont(TokenType type) {
+    	switch (type) {
+    	case OBJECT:
+    		return Fonts.objectsEditor;
+    		
+    	case FUNCTION:
+    		return Fonts.methodsEditor;
+    		
+    	case NUMBER:
+    		return Fonts.numbersEditor;
+    		
+    	case KEYWORD:
+    		return Fonts.keywordsEditor;
+    				
+    	case VARIABLE:
+    		return Fonts.variablesEditor;
+    		
+    	case COMMENT:
+    		return Fonts.commentsEditor;
+    		
+    	case STRING:
+    		return Fonts.stringsEditor;
+    	
+    	case SPACE:
+    	case SYMBOL:
+    		return Fonts.symbolsEditor;
+    		
+		case END:
+		default:
+			return null;
+    	}
+    }
     
     /**
      * Troca a cor especificada em {@code target} na cor especificada em {@code out}.

@@ -33,6 +33,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import automaticcolor.Lexer;
+import automaticcolor.Token;
 import ide.components.CommandTerminal;
 import ide.components.IDEComponent;
 import ide.components.MessageBox;
@@ -5898,47 +5899,13 @@ public class CodeEditor extends IDEComponent {
 		if (!ListableFile.fileHasExtension(ext))
 			ext = editing.getRegent().getRegent().getName();
 		
-		if (editing.readMode != FileReadMode.NORMAL) {
-			fs = colorOtherModes(ext, chars, fs);
-			
-			return fs;
+		List<Token> tokens = Lexer.Lex(new String(chars));
+		
+		for (Token t : tokens) {
+			System.out.println(t.pos + ", " + (t.pos + t.value.length()));
+			fs = color(t.pos, t.pos + t.value.length(), new IDEFont(Fonts.variablesEditor, FONT_SIZE), fs);
 		}
 		
-		fs = colorNoExtensions(ext, chars, fs);
-
-		if (editing == null)
-			return fs;
-		
-		if ((isBinary(ext) || !isFormatSupported(ext)) || ext.equalsIgnoreCase(".setconf") && !(ext.equalsIgnoreCase(".ini")
-				&& ext.equalsIgnoreCase(".make") && ext.equalsIgnoreCase(".mk") && ext.equalsIgnoreCase(".mak")
-				&& editing.getRegent().getRegent().getName().equalsIgnoreCase("makefile") && ext.equalsIgnoreCase(".txt") && ext.equalsIgnoreCase(".log")
-				&& editing.getRegent().getRegent().getName().equalsIgnoreCase("dockerfile"))) {
-			fs = colorWhitespaces(ext, chars, fs);
-			
-			return fs;
-		}
-		
-		if (ext.equalsIgnoreCase(".txt") || ext.equalsIgnoreCase(".log")) {
-			fs = colorWhitespaces(ext, chars, fs);
-			
-			return fs;
-		}
-
-		/////////////////////////////////////////////////////
-
-		fs = colorVariables(ext, chars, fs);
-		fs = colorObjects(ext, chars, fs);
-		fs = colorMethods(ext, chars, fs);
-		fs = colorKeywords(ext, chars, fs);
-		fs = colorNumbers(ext, chars, fs);
-		fs = colorSymbols(ext, chars, fs);
-		fs = colorHTMLTags(ext, chars, fs);
-		fs = colorExtras(ext, chars, fs);
-		fs = colorWhitespaces(ext, chars, fs);
-		fs = colorComments(ext, chars, fs);
-
-		/////////////////////////////////////////////////////
-
 		resetHTML(chars);
 
 		return fs;
