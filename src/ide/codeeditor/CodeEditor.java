@@ -992,7 +992,7 @@ public class CodeEditor extends IDEComponent {
 		
 		/// another (one)
 		
-		realcx = ((x + (FONT_SIZE * 4)) + (cursorX * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth)))) - scrX;
+		realcx = (((x + (FONT_SIZE * 4) + 1)) + (cursorX * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth)))) - scrX;
 		realcy = MIN_Y + ((cursorY - 1) * LINE_HEIGHT) - scrY;
 		
 		if (MouseInput.isLeftPressed()) {
@@ -8762,7 +8762,7 @@ public class CodeEditor extends IDEComponent {
 						if (i > line1 && i < line2) { // do meio (do 0 até o fim da linha)
 							g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4))) - scrX, // preencher do 0 até o index2
 									MIN_Y + ((i - 1) * LINE_HEIGHT) - scrY,
-									((x + (FONT_SIZE * 4)) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX),
+									(((x + (FONT_SIZE * 4) + 1)) + (lines.get(i - 1).getChars().size()) * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX),
 									LINE_HEIGHT);
 						}
 					}
@@ -8795,14 +8795,14 @@ public class CodeEditor extends IDEComponent {
 	
 						if (i == line1 - 1) { // - 1 porque a line1 é base 1
 							if (i == line2 - 1) {
-								g.fillRect(((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX, // preencher do
+								g.fillRect((((x + (FONT_SIZE * 4) + 1)) + index1 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX, // preencher do
 																										// index1 até o
 																										// index2
 										MIN_Y + ((line1 - 1) * LINE_HEIGHT) - scrY,
-										(((x + (FONT_SIZE * 4)) + index2 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX) - (((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX),
+										((((x + (FONT_SIZE * 4) + 1)) + index2 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX) - ((((x + (FONT_SIZE * 4) + 1)) + index1 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX),
 										LINE_HEIGHT);
 							} else {
-								g.fillRect(((x + (FONT_SIZE * 4)) + index1 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX, // preencher do
+								g.fillRect((((x + (FONT_SIZE * 4) + 1)) + index1 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX, // preencher do
 																										// index1 até o fim
 																										// da linha
 										MIN_Y + ((line1 - 1) * LINE_HEIGHT) - scrY,
@@ -8814,7 +8814,7 @@ public class CodeEditor extends IDEComponent {
 							if (i != line1 - 1) { // do 0 ao index2
 								g.fillRect(((x + 38) + (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX, // preencher até o index2
 										MIN_Y + ((line2 - 1) * LINE_HEIGHT) - scrY,
-										((x + (FONT_SIZE * 4)) + index2 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX),
+										(((x + (FONT_SIZE * 4) + 1)) + index2 * (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX - (((x + 38) + (FONT_SIZE - (FONT_SIZE / 4) - (Fonts.ACTUAL_CHAR_WIDTH - Fonts.charWidth))) - scrX),
 										LINE_HEIGHT);
 							}
 						}
@@ -8824,12 +8824,12 @@ public class CodeEditor extends IDEComponent {
 	
 					// if (isReadOnly) font = new IDEFont(Fonts.lineNumberNormal, FONT_SIZE);
 	
-					Fonts.drawChars(cs, (x + (FONT_SIZE * 4)) - scrX, (MIN_Y + (i * LINE_HEIGHT) - scrY), fs, x + (FONT_SIZE * 4), Main.screen.getWidth(), g);
+					Fonts.drawChars(cs, ((x + (FONT_SIZE * 4) + 1)) - scrX, (MIN_Y + (i * LINE_HEIGHT) - scrY), fs, x + (FONT_SIZE * 4), Main.screen.getWidth(), g);
 	
 					String nums = String.valueOf(i + 1); // nums = num string
 					// int num = i + 1;
 	
-					int nx = x + 1;
+					int nx = x + 2;
 	
 					/*
 					 * if (num < 10) nx = x + 1 + (2 * FONT_SIZE) + 3; if (num >= 10 && num < 100)
