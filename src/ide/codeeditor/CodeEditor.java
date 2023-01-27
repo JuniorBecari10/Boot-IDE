@@ -6916,9 +6916,7 @@ public class CodeEditor extends IDEComponent {
 							if (yr < 0 || yr > Main.screen.getHeight())
 								continue;
 							
-							l.setFonts(automaticColor(toCharArray(l.getChars()),
-									ListableFile.getFileExtension(editing.getRegent().getRegent())));
-	
+							l.setFonts(automaticColor(toCharArray(l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
 						}
 						restartVariables();
 					} catch (Exception e) {
@@ -8407,8 +8405,6 @@ public class CodeEditor extends IDEComponent {
 		
 		height = Main.screen.getHeight();
 		LINE_HEIGHT = (FONT_SIZE + (FONT_SIZE / 3)) - lineHeightOffset;
-		
-		System.out.println(Lexer.Lex(new String(toCharArray(lines.get(0).getChars()))));
 		
 		/*
 		System.out.printf("realcx: %d, realcy: %d\n", realcx, realcy);

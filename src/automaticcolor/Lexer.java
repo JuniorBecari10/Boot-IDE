@@ -114,7 +114,6 @@ public class Lexer {
 		List<Token> tokens = new ArrayList<>();
 		
 		for (Token t = l.nextToken(); t.type != TokenType.END; t = l.nextToken()) {
-			System.out.println(t.type);
 			tokens.add(t);
 		}
 		
