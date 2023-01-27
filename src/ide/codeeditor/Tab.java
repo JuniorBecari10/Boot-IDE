@@ -236,7 +236,7 @@ public class Tab extends IDEComponent implements Serializable {
 		Main.editor.isMultilineCommenting = false; // TODO closeother reseta o cursor
 		Main.editor.isAnotherIteration = false;
 		Main.editor.foundExt = false;
-		Main.editor.wordSinceSpace = "";
+		Main.editor.wordSinceSpace = new StringBuilder();
 
 		Main.editor.toRemove.add(t);
 
@@ -323,7 +323,7 @@ public class Tab extends IDEComponent implements Serializable {
 			Main.editor.isMultilineCommenting = false; // TODO closeother reseta o cursor
 			Main.editor.isAnotherIteration = false;
 			Main.editor.foundExt = false;
-			Main.editor.wordSinceSpace = "";
+			Main.editor.wordSinceSpace = new StringBuilder();
 			
 			Main.editor.toRemove.add(t);
 			
@@ -747,7 +747,7 @@ public class Tab extends IDEComponent implements Serializable {
 		
 		CommandTerminal.runCommand("resetundoredo");
 		
-		Main.editor.wordSinceSpace = "";
+		Main.editor.wordSinceSpace = new StringBuilder();
 		RightClickOption.removeAllRightClickOptions();
 		
 		String oldEditingPath = Main.editor.editing.getRegent().getRegent().getAbsolutePath();

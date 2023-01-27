@@ -182,7 +182,7 @@ public class CodeEditor extends IDEComponent {
 	public int autocompletescroll = 0;
 
 	// public List<String> autocomplete = new ArrayList<>();
-	public String wordSinceSpace = "";
+	public StringBuilder wordSinceSpace = new StringBuilder();
 	public int autocompleteindex = 0;
 
 	public List<AutoComplete> autocomplete = new ArrayList<>();
@@ -6940,8 +6940,8 @@ public class CodeEditor extends IDEComponent {
 		String s = new String(toCharArray(lines.get(cursorY - 1).getChars()));
 		StringBuilder sb = new StringBuilder(s);
 
-		sb.delete(cursorX - wordSinceSpace.length(), cursorX);
-		cursorX -= wordSinceSpace.length();
+		sb.delete(cursorX - wordSinceSpace.toString().length(), cursorX);
+		cursorX -= wordSinceSpace.toString().length();
 		sb.insert(cursorX, e);
 
 		cursorX += e.length();
@@ -7127,10 +7127,10 @@ public class CodeEditor extends IDEComponent {
 
 				RightClickOption.removeAllRightClickOptions();
 
-				if (wordSinceSpace.length() > 0)
-					wordSinceSpace = wordSinceSpace.substring(0, wordSinceSpace.length() - 1);
+				if (wordSinceSpace.toString().length() > 0)
+					wordSinceSpace = new StringBuilder(wordSinceSpace.toString().substring(0, wordSinceSpace.toString().length() - 1));
 				else
-					wordSinceSpace = "";
+					wordSinceSpace = new StringBuilder();
 
 				if (selecting) {
 					CommandTerminal.runCommand("del");
@@ -7194,7 +7194,7 @@ public class CodeEditor extends IDEComponent {
 					 
 					 if (!KeyInput.isShiftDown()) {
 						 if (!RightClickOption.isAutoCompleteActive()) {
-							wordSinceSpace = "";
+							wordSinceSpace = new StringBuilder();
 							
 							RightClickOption.removeAllRightClickOptions();
 							
@@ -7227,7 +7227,7 @@ public class CodeEditor extends IDEComponent {
 								autocompletescroll += 90;
 						}
 					 } else {
-						 wordSinceSpace = "";
+						 wordSinceSpace = new StringBuilder();
 							RightClickOption.removeAllRightClickOptions();
 							
 							String indentation = "\t";
@@ -7280,7 +7280,7 @@ public class CodeEditor extends IDEComponent {
 					return;
 				}
 
-				wordSinceSpace = "";
+				wordSinceSpace = new StringBuilder();
 				RightClickOption.removeAllRightClickOptions();
 
 				StringBuilder spaces = new StringBuilder();
@@ -7328,9 +7328,9 @@ public class CodeEditor extends IDEComponent {
 				cY = write(cY, c);
 				
 				if (!(c < 32 || c > 1000))
-					wordSinceSpace += c;
+					wordSinceSpace.append(c);
 				if (keyCode == KeyEvent.VK_SPACE) {
-					wordSinceSpace = "";
+					wordSinceSpace = new StringBuilder();
 					RightClickOption.removeAllRightClickOptions(); // aqui
 				}
 				
@@ -7349,7 +7349,7 @@ public class CodeEditor extends IDEComponent {
 							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".csproj")
 							|| ListableFile.getFileExtension(editing.getRegent().getRegent()).equalsIgnoreCase(".project")) {
 							if (c == '<') {
-								wordSinceSpace = "";
+								wordSinceSpace = new StringBuilder();
 								RightClickOption.removeAllRightClickOptions(); // aqui
 							}
 						}
@@ -7365,6 +7365,9 @@ public class CodeEditor extends IDEComponent {
 				cursorX++;
 
 				setCursorWithinBounds();
+				
+				if (isSymbol(c) && c != '-')
+					wordSinceSpace = new StringBuilder();
 				
 				// Add AutoComplete
 
@@ -7385,7 +7388,7 @@ public class CodeEditor extends IDEComponent {
 
 					if (autoc != null) {
 						for (String s : autoc)
-							if (s.toLowerCase().contains(wordSinceSpace.toLowerCase()))
+							if (s.toLowerCase().contains(wordSinceSpace.toString().toLowerCase()))
 								autocomplete.add(new AutoComplete(s, AutoCompleteType.KEYWORD));
 						
 						autocompleteindex = 0;
@@ -7435,7 +7438,7 @@ public class CodeEditor extends IDEComponent {
 								return;
 							}
 							
-							wordSinceSpace = "";
+							wordSinceSpace = new StringBuilder();
 							
 							if (cursorY == 1) cursorX = 0;
 							
@@ -7470,7 +7473,7 @@ public class CodeEditor extends IDEComponent {
 								return;
 							}
 							
-							wordSinceSpace = "";
+							wordSinceSpace = new StringBuilder();
 							
 							if (cursorY == lines.size()) cursorX = lines.get(cursorY - 1).getChars().size();
 							
@@ -7492,7 +7495,7 @@ public class CodeEditor extends IDEComponent {
 							
 							CommandTerminal.runCommand("gotocursor");
 							
-							wordSinceSpace = "";
+							wordSinceSpace = new StringBuilder();
 							
 							cursorX--;
 
@@ -7512,7 +7515,7 @@ public class CodeEditor extends IDEComponent {
 							
 							CommandTerminal.runCommand("gotocursor");
 							
-							wordSinceSpace = "";
+							wordSinceSpace = new StringBuilder();
 							
 							cursorX++;
 
@@ -7532,7 +7535,7 @@ public class CodeEditor extends IDEComponent {
 							
 							CommandTerminal.runCommand("gotocursor");
 							
-							wordSinceSpace = "";
+							wordSinceSpace = new StringBuilder();
 							
 							if (noneSelected())
 								directionStarted = Direction.UP;
@@ -7556,7 +7559,7 @@ public class CodeEditor extends IDEComponent {
 							
 							CommandTerminal.runCommand("gotocursor");
 							
-							wordSinceSpace = "";
+							wordSinceSpace = new StringBuilder();
 							
 							if (noneSelected())
 								directionStarted = Direction.DOWN;
@@ -7578,7 +7581,7 @@ public class CodeEditor extends IDEComponent {
 							
 							CommandTerminal.runCommand("gotocursor");
 							
-							wordSinceSpace = "";
+							wordSinceSpace = new StringBuilder();
 							
 							if (noneSelected())
 								directionStarted = Direction.LEFT;
@@ -7600,7 +7603,7 @@ public class CodeEditor extends IDEComponent {
 							
 							CommandTerminal.runCommand("gotocursor");
 							
-							wordSinceSpace = "";
+							wordSinceSpace = new StringBuilder();
 							
 							if (noneSelected())
 								directionStarted = Direction.RIGHT;
@@ -7852,7 +7855,7 @@ public class CodeEditor extends IDEComponent {
 				) { // Ctrl + R - Refresh Auto Complete
 			KeyInput.updateKeys();
 
-			wordSinceSpace = "";
+			wordSinceSpace = new StringBuilder();
 
 			return;
 		}
@@ -8029,7 +8032,7 @@ public class CodeEditor extends IDEComponent {
 			autocomplete.clear();
 
 			for (String s : autoc)
-				if (s.toLowerCase().contains(wordSinceSpace.toLowerCase()))
+				if (s.toLowerCase().contains(wordSinceSpace.toString().toLowerCase()))
 					autocomplete.add(new AutoComplete(s, AutoCompleteType.KEYWORD));
 
 			/*
@@ -8240,7 +8243,7 @@ public class CodeEditor extends IDEComponent {
 				cursorX = mx;
 				cursorY = my;
 				
-				wordSinceSpace = ""; // se n funcionar corre aqui e nas setas e deleta ta
+				wordSinceSpace = new StringBuilder(); // se n funcionar corre aqui e nas setas e deleta ta
 	
 				setCursorWithinBounds();
 			}
@@ -8350,7 +8353,7 @@ public class CodeEditor extends IDEComponent {
 					
 					// concurrentmodification
 					for (IDELine l : lines) {
-						String s = Serialization.objectToString(l);
+						String s = Serialization.objectToString(l); // notserializableexception
 						objs.add(s);
 					}
 					
