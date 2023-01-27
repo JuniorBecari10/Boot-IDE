@@ -8345,6 +8345,11 @@ public class CodeEditor extends IDEComponent {
 	}
 	
 	public void addToUndo() {
+		boolean b = true;
+		if (b) return;
+		
+		// TODO desativado
+		
 		new Thread() {
 			public void run() {
 				try {

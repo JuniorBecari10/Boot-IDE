@@ -1084,6 +1084,11 @@ public class CommandTerminal extends IDEComponent {
 					break;
 					
 				case "go":
+					strs = new String[] { "package main", "", "import (", CodeEditor.getIndentation(1) + "\"fmt\"", ")" };
+					
+					break;
+					
+				case "gomain":
 					strs = new String[] { "package main", "", "import (", CodeEditor.getIndentation(1) + "\"fmt\"", ")", "", "func main() {", CodeEditor.getIndentation(1), "}" };
 					
 					break;
@@ -1236,6 +1241,11 @@ public class CommandTerminal extends IDEComponent {
 						break;
 						
 					case "go":
+						strs1 = new String[] { "package " + packageName, "", "import (", CodeEditor.getIndentation(1) + "\"fmt\"", ")" };
+						
+						break;
+						
+					case "gomain":
 						strs1 = new String[] { "package " + packageName, "", "import (", CodeEditor.getIndentation(1) + "\"fmt\"", ")", "", "func main() {", CodeEditor.getIndentation(1), "}" };
 						
 						break;
