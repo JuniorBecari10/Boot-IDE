@@ -1217,29 +1217,6 @@ public class CodeEditor extends IDEComponent {
 
 			ls.add(gen);
 		}
-
-		new Thread("automaticColor") { // quando vc deleta as linhas ou fecha as tabs isso (exception) acontece mesmo
-			public void run() {
-				if (editing == null || editing.getRegent() == null || editing.getRegent().getRegent() == null) return;
-					
-				int i = 0;
-				for (IDELine l : lines) {
-					int yr = MIN_Y + (i++ * LINE_HEIGHT) - scrY;
-					
-					if (yr < 0 || yr > Main.screen.getHeight())
-						continue;
-					
-					if (editing != null && editing.closing)
-						break;
-
-					l.setFonts(automaticColor(toCharArray(l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
-
-					if (editing != null && editing.closing)
-						break;
-				}
-				restartVariables();
-			}
-		}.start();
 		
 		callAutomaticColor();
 
@@ -1835,11 +1812,7 @@ public class CodeEditor extends IDEComponent {
 
 	public static List<IDEFont> color(int s, int e, IDEFont color, List<IDEFont> fs) {
 		if (e < s)
-			e = s;// throw new IllegalArgumentException("o start nao pode ser maior que o
-					// final!");
-		if (e > fs.size())
-			e = fs.size();// throw new IndexOutOfBoundsException("o final nao pode ser maior que o final
-							// da fonte!");
+			throw new IllegalArgumentException("o start não pode ser maior que o final!");
 		
 		if (s < 0) s = 0;
 		if (e < 0) e = 0;
@@ -5902,8 +5875,8 @@ public class CodeEditor extends IDEComponent {
 		List<Token> tokens = Lexer.Lex(new String(chars));
 		
 		for (Token t : tokens) {
-			//System.out.println(t.pos + ", " + (t.pos + t.value.length()));
-			fs = color(t.pos, fs.size(), new IDEFont(Colors.getFont(t.type), FONT_SIZE), fs);
+			System.out.println(t);
+			fs = color(t.pos, t.pos + t.value.length(), new IDEFont(Colors.getFont(t.type), FONT_SIZE), fs);
 		}
 		
 		resetHTML(chars);
@@ -6880,8 +6853,11 @@ public class CodeEditor extends IDEComponent {
 						for (IDELine l : lines) {
 							int yr = MIN_Y + (i++ * LINE_HEIGHT) - scrY;
 							
-							if (yr < 0 || yr > Main.screen.getHeight())
+							if (yr < 0)
 								continue;
+							
+							if (yr > Main.screen.getHeight())
+								break;
 							
 							l.setFonts(automaticColor(toCharArray(l.getChars()), ListableFile.getFileExtension(editing.getRegent().getRegent())));
 						}
@@ -8389,8 +8365,6 @@ public class CodeEditor extends IDEComponent {
 		
 		if (leftClicked() || rightClicked())
 			onClick();
-		
-		callAutomaticColor(); // tem que ficar rodando
 		
 		width = Main.screen.getWidth() - x;
 		

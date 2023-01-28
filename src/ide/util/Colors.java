@@ -206,6 +206,8 @@ public class Colors {
     		return Fonts.stringsEditor;
     	
     	case SPACE:
+    		return Fonts.symbolsEditor;
+    	
     	case SYMBOL:
     		return Fonts.symbolsEditor;
     		
