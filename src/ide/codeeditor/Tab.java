@@ -338,7 +338,7 @@ public class Tab extends IDEComponent implements Serializable {
 			if (!Main.editor.tabs.isEmpty()) {
 				Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() > 0 ? Main.editor.tabs.size() - 1 : 0).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
 				
-				if (Main.editor.editing.closing) {
+				if (this == Main.editor.editing) {
 					// aqui rola uma exception TODO
 					Tab next = Main.editor.tabs.indexOf(t) == 0 ? Main.editor.tabs.get(1) : Main.editor.tabs.get(Main.editor.tabs.indexOf(t) - 1);
 					
@@ -400,7 +400,7 @@ public class Tab extends IDEComponent implements Serializable {
 					return;
 				}
 				
-				if (!Main.editor.tabs.isEmpty()) {
+				if (!Main.editor.tabs.isEmpty() && t == Main.editor.editing) {
 					Main.editor.tabScr = (Main.editor.tabs.get(Main.editor.tabs.size() > 0 ? Main.editor.tabs.size() - 1 : 0).getX() + Main.editor.tabScr) - 200 > (CommandTerminal.expOff ? 0 : 280) ? Main.editor.tabScr : Main.editor.tabScr + 203;
 					
 					// T = Tab

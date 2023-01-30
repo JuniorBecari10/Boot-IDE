@@ -1804,7 +1804,7 @@ public class CodeEditor extends IDEComponent {
 		case "authors": return  (Main.lang == Language.PORT ? "Nomes dos Autores" : "Authors' Names");
 		case "gitignore": return  "Git Ignore";
 
-		default: return  (Main.lang == Language.PORT ? "Sem Extensão" : "No Extension");
+		default: return (Main.lang == Language.PORT ? "Sem Extensão" : "No Extension");
 		}
 	}
 
