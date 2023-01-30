@@ -28,7 +28,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -45,6 +44,7 @@ import ide.explorer.Explorer;
 import ide.explorer.ExplorerMode;
 import ide.explorer.FileType;
 import ide.explorer.ListableFile;
+import ide.explorercomponents.Execute;
 import ide.explorercomponents.SearchReplaceCore;
 import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
@@ -6585,10 +6585,7 @@ public class CodeEditor extends IDEComponent {
 					try {
 						Main.desktop.open(editing.getRegent().getRegent());
 					} catch (Exception e) {
-						setSystemLook();
-
-						JOptionPane.showMessageDialog(null, Texts.cantFindDefault, Texts.nothingFound,
-								JOptionPane.OK_OPTION);
+						MessageBox.showDialog(Texts.nothingFound, new String[] { Texts.cantFindDefault, Texts.cantFindDefault2 }, new String[] { "Ok" }, new Execute[] { () -> {} });
 					}
 				}
 			}.start();
@@ -8580,7 +8577,7 @@ public class CodeEditor extends IDEComponent {
 			else
 				Main.screen.frame.setTitle(editing.getRegent().getRegent().getName() + " - " + Main.PROGRAM_NAME);
 			
-			if (!editing.isSaved() && showUnsavedTitleBar)
+			if (editing != null && !editing.isSaved() && showUnsavedTitleBar)
 				Main.screen.frame.setTitle("* " + Main.screen.frame.getTitle());
 		}
 		else if (Main.baseFolder != null)

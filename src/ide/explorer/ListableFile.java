@@ -1669,25 +1669,15 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			break;
 
 		case "opendef":
-			/*
-			 * String userdir = System.getProperty("user.dir");
-			 * System.setProperty("user.dir", regent.getParent());
-			 */
-
-			new Thread() {
+			new Thread("open default program") {
 				public void run() {
 					try {
 						Main.desktop.open(regent);
 					} catch (Exception e) {
-						CodeEditor.setSystemLook();
-
-						JOptionPane.showMessageDialog(null, Texts.cantFindDefault, Texts.nothingFound,
-								JOptionPane.OK_OPTION);
+						MessageBox.showDialog(Texts.nothingFound, new String[] { Texts.cantFindDefault, Texts.cantFindDefault2 }, new String[] { "Ok" }, new Execute[] { () -> {} });
 					}
 				}
 			}.start();
-
-			// System.setProperty("user.dir", userdir);
 
 			break;
 

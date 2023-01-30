@@ -103,6 +103,7 @@ public final class Texts {
 	public static String cantDelete;
 	
 	public static String cantFindDefault;
+	public static String cantFindDefault2;
 	public static String nothingFound;
 	
 	public static String cancel;
@@ -384,7 +385,8 @@ public final class Texts {
 			delError = "Ocorreu um erro ao deletar.";
 			cantDelete = "Não foi possível deletar.";
 			
-			cantFindDefault = "O sistema não encontrou um programa padrão para abrir esse arquivo.";
+			cantFindDefault = "O sistema não encontrou um programa padrão";
+			cantFindDefault2 = "para abrir esse arquivo.";
 			nothingFound = "Não encontrou nada!";
 			
 			cancel = "Cancelar";
@@ -665,7 +667,8 @@ public final class Texts {
 			delError = "An error has occurred while deleting.";
 			cantDelete = "Could not delete.";
 			
-			cantFindDefault = "The system could not find a default program to open this file.";
+			cantFindDefault = "The system could not find a default program";
+			cantFindDefault2 = "to open this file.";
 			nothingFound = "Nothing found!";
 			
 			cancel = "Cancel";
