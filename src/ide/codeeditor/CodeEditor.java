@@ -1810,7 +1810,7 @@ public class CodeEditor extends IDEComponent {
 
 	public static List<IDEFont> color(int s, int e, IDEFont color, List<IDEFont> fs) {
 		if (e < s)
-			throw new IllegalArgumentException("o start não pode ser maior que o final!");
+			e = s; //throw new IllegalArgumentException("o start não pode ser maior que o final!");
 		
 		if (s < 0) s = 0;
 		if (e < 0) e = 0;

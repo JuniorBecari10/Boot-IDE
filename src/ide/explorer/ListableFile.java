@@ -613,7 +613,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			// if (s.startsWith("-") || s.startsWith("\n")) continue;
 			String[] split = s.split(" ");
 
-			switch (split[0]) {
+			switch (split[0].toLowerCase()) {
 			case "background:":
 				if (split[1].equalsIgnoreCase("default")) {
 					split[1] = "#353b48";
