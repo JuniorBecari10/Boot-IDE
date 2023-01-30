@@ -553,6 +553,10 @@ public class Tab extends IDEComponent implements Serializable {
 				setSaved(true);
 				save = true;
 				
+				if (regent.getRegent().getParentFile().getAbsolutePath().equals(Main.userDir) && ListableFile.applyOnSave) {
+					execute("closeapply");
+				}
+				
 				return 0;
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -8108,6 +8108,8 @@ public class CodeEditor extends IDEComponent {
 		if (SetFileName.added || CommandTerminal.active || MessageBox.active || RenameFile.added || SetBranchName.added || SetCommitName.added || MessageBox.active)
 			return;
 		
+		callAutomaticColor();
+		
 		if (MouseInput.isMouseRolling()) { // resolver isso aqui
 			//new Thread("scroll") {
 				//public void run() {

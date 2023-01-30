@@ -51,6 +51,8 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 
 	public static boolean hasAltered = false;
 	
+	public static boolean applyOnSave = true;
+	
 	public static boolean cutFlag = false;
 	public static File copy;
 	
@@ -562,6 +564,7 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 			w.write("checkout_to_created_branch: " + GitCore.checkoutToCreatedBranch + "\n");
 			w.write("animate_cursor: " + CodeEditor.animateCursor + "\n");
 			w.write("home_abs_beginning: " + CodeEditor.homeAbsBeginning + "\n");
+			w.write("apply_on_save: " + ListableFile.applyOnSave + "\n");
 			w.write("terminal_prompt: '" + TerminalCore.prompt + "'\n");
 			w.write("program_name: '" + Main.PROGRAM_NAME + "'\n");
 			w.write("font: '" + Main.fntnr + "'\n");
@@ -1267,6 +1270,20 @@ public class ListableFile extends IDEComponent implements ExecuteCommand {
 				}
 
 				CodeEditor.homeAbsBeginning = Boolean.valueOf(split[1]);
+
+				hasAltered = true;
+
+				break;
+				
+			case "apply_on_save:":
+				if (!readConfigs) break;
+				
+				if (split[1].equalsIgnoreCase("default")) {
+					ListableFile.applyOnSave = true;
+					break;
+				}
+
+				ListableFile.applyOnSave = Boolean.valueOf(split[1]);
 
 				hasAltered = true;
 
