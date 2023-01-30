@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import automaticcolor.TokenType;
+import ide.automaticcolor.TokenType;
 import ide.codeeditor.CodeEditor;
 import ide.codeeditor.LineEnding;
 import ide.explorer.Explorer;

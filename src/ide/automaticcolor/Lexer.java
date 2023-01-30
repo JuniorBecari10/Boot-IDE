@@ -1,4 +1,4 @@
-package automaticcolor;
+package ide.automaticcolor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +26,14 @@ public class Lexer {
 		if (ch == '\0')
 			return new Token("", cursor, TokenType.END);
 		
+		else if (ch == '"') { // n vai verificar ponto aqui
+			return new Token(readString(), pos, TokenType.STRING);
+		}
+		
+		else if (ch == '\'') { // n vai verificar ponto aqui
+			return new Token(readStringSingle(), pos, TokenType.STRING);
+		}
+		
 		else if (CodeEditor.isSymbol(ch)) {				
 			char ch = this.ch;
 			readChar();
@@ -42,10 +50,6 @@ public class Lexer {
 		
 		else if (Character.isDigit(ch)) { // n vai verificar ponto aqui
 			return new Token(readNumber(), pos, TokenType.NUMBER);
-		}
-		
-		else if (ch == '"') { // n vai verificar ponto aqui
-			return new Token(readString(), pos, TokenType.STRING);
 		}
 		
 		else if (CodeEditor.isLetter(ch)) {
@@ -118,6 +122,19 @@ public class Lexer {
 		readChar();
 		
 		while (ch != '"') {
+			System.out.println(ch);
+			readChar();
+		}
+		
+		return line.substring(pos, cursor);
+	}
+	
+	public String readStringSingle() {
+		int pos = cursor;
+		
+		readChar();
+		
+		while (ch != '\'') {
 			readChar();
 		}
 		

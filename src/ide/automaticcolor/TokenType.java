@@ -1,4 +1,4 @@
-package automaticcolor;
+package ide.automaticcolor;
 
 public enum TokenType {
 	OBJECT,
