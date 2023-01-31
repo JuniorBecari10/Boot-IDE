@@ -8126,17 +8126,20 @@ public class CodeEditor extends IDEComponent {
 								}
 							}
 						}
+						
+						int targetScrX = scrX;
+						int targetScrY = scrY;
 
 						if (KeyInput.isShiftDown() && !KeyInput.isControlDown()) { // isso nao pode acontecer com o x por causa dos autocompletes
 							if (MouseInput.wheelUp() && scrX > 0) {
 								MouseInput.updateMouseRoll();
-								
-								scrX -= FONT_SIZE * 3;
+
+								targetScrX -= FONT_SIZE * 3;
 							}
 							else if (MouseInput.wheelDown()) {
 								MouseInput.updateMouseRoll();
-								
-								scrX += FONT_SIZE * 3;
+
+								targetScrX += FONT_SIZE * 3;
 							}
 						}
 
@@ -8144,30 +8147,86 @@ public class CodeEditor extends IDEComponent {
 							if (!KeyInput.isControlDown()) {
 								if (MouseInput.wheelUp() && scrY > 0) {
 									MouseInput.updateMouseRoll();
-									
-									scrY -= LINE_HEIGHT * 3;
+
+									targetScrY -= LINE_HEIGHT * 3;
 								}
 								else if (MouseInput.wheelDown() && scrY + LINE_HEIGHT * 3 < lines.size()
 										* LINE_HEIGHT) {
 									MouseInput.updateMouseRoll();
-									
-									scrY += LINE_HEIGHT * 3;
+
+									targetScrY += LINE_HEIGHT * 3;
 								}
 							}
 							else {
 								if (MouseInput.wheelUp() && scrY > 0) {
 									MouseInput.updateMouseRoll();
-									
-									scrY -= LINE_HEIGHT * 6;
+
+									targetScrY -= LINE_HEIGHT * 6;
 								}
 								else if (MouseInput.wheelDown() && scrY + LINE_HEIGHT * 3 < lines.size() 
 										* LINE_HEIGHT) {
 									MouseInput.updateMouseRoll();
-									
-									scrY += LINE_HEIGHT * 6;
-							}
+
+									targetScrY += LINE_HEIGHT * 6;
+								}
 							}
 						}
+						
+						if (targetScrX < 0) targetScrX = 0;
+						if (targetScrY < 0) targetScrY = 0;
+						
+						final int tx = targetScrX;
+						final int ty = targetScrY;
+						
+						new Thread() {
+							public void run() {
+								while (scrX < tx) {
+									scrX++;
+									
+									Main.canRunLoop = true;
+									try {
+										Thread.sleep(1);
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
+								}
+								
+								while (scrX > tx) {
+									scrX--;
+									
+									Main.canRunLoop = true;
+									try {
+										Thread.sleep(1);
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
+								}
+								
+								while (scrY < ty) {
+									scrY++;
+									
+									System.out.println("a");
+									Main.canRunLoop = true;
+									try {
+										Thread.sleep(1);
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
+								}
+								
+								while (scrY > ty) {
+									scrY--;
+									
+									System.out.println("b");
+									Main.canRunLoop = true;
+									try {
+										Thread.sleep(1);
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
+								}
+							}
+						}.start();
 
 						return;
 					}
