@@ -1171,7 +1171,7 @@ public class Main implements Runnable, Tickable {
     
     public static void writeLog(Throwable e) {
     	try {
-    		BufferedWriter wr = Files.newBufferedWriter(logFile.toPath(), StandardCharsets.UTF_8);
+    		BufferedWriter wr = new BufferedWriter(new FileWriter(logFile, true));
     		
     		String st = getStackTrace(e);
     		Calendar c = Calendar.getInstance();
@@ -1184,6 +1184,8 @@ public class Main implements Runnable, Tickable {
 			wr.write("Cause: " + e.getCause() + "\n\n");
 			
 			wr.write("Stack Trace:\n" + st);
+			
+			wr.write("\n----------\n\n");
 			
 			wr.close();
 			
