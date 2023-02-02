@@ -80,7 +80,7 @@ public class Main implements Runnable, Tickable {
     public static final String DEFAULT_PROGRAM_NAME = "Boot IDE";
     public static String PROGRAM_NAME = DEFAULT_PROGRAM_NAME;
     
-    public static final String VERSION = "Release v4.5 (Dev Test)";
+    public static final String VERSION = "Release v4.5";
     
     public static final String userDir = System.getProperty("user.dir");
     

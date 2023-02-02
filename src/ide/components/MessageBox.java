@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ide.codeeditor.CodeEditor;
+import ide.explorer.Explorer;
 import ide.explorercomponents.Execute;
 import ide.explorercomponents.ExecuteButton;
 import ide.fonts.Fonts;
@@ -58,47 +59,56 @@ public class MessageBox extends IDEComponent {
 			i++;
 		}
 		
-		new Thread() {
-			public void run() {
-				while (y < Screen.DECORATION_HEIGHT) {
-					y++;
-					Main.canRunLoop = true;
-					
-					int i = 0;
-					for (ExecuteButton b : buttonsList) {
-						b.y = (((HEIGHT - 5 - (buttonsList.size() * 30)) + (30 * i++))) + y;
-					}
-					
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+		if (Explorer.allowAnimations) {
+			new Thread() {
+				public void run() {
+					while (y < Screen.DECORATION_HEIGHT) {
+						y++;
+						Main.canRunLoop = true;
+						
+						int i = 0;
+						for (ExecuteButton b : buttonsList) {
+							b.y = (((HEIGHT - 5 - (buttonsList.size() * 30)) + (30 * i++))) + y;
+						}
+						
+						try {
+							Thread.sleep(1);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
 				}
-			}
-		}.start();
+			}.start();
+		}
+		else {
+			y = Screen.DECORATION_HEIGHT;
+		}
 	}
 	
 	public void close() {
-		new Thread() {
-			public void run() {
-				while (y > Screen.DECORATION_HEIGHT - Main.screen.getHeight() / 4 - 1) {
-					y--;
-					Main.canRunLoop = true;
-					
-					int i = 0;
-					for (ExecuteButton b : buttonsList) {
-						b.y = (((HEIGHT - 5 - (buttonsList.size() * 30)) + (30 * i++))) + y;
-					}
-					
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+		if (Explorer.allowAnimations) {
+			new Thread() {
+				public void run() {
+					while (y > Screen.DECORATION_HEIGHT - Main.screen.getHeight() / 4 - 1) {
+						y--;
+						Main.canRunLoop = true;
+						
+						int i = 0;
+						for (ExecuteButton b : buttonsList) {
+							b.y = (((HEIGHT - 5 - (buttonsList.size() * 30)) + (30 * i++))) + y;
+						}
+						
+						try {
+							Thread.sleep(1);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
 				}
-			}
-		}.start();
+			}.start();
+		} else {
+			y = Screen.DECORATION_HEIGHT - Main.screen.getHeight() / 4 - 1;
+		}
 	
 		if (y <= Screen.DECORATION_HEIGHT - Main.screen.getHeight() / 4 - 1) {
 			IDEComponent.toRemove.add(this);

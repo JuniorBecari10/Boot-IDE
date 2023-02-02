@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.filechooser.FileSystemView;
 
 import ide.codeeditor.CodeEditor;
+import ide.explorer.Explorer;
 import ide.explorercomponents.ComboBox;
 import ide.explorercomponents.ExecuteButton;
 import ide.explorercomponents.ExecuteButtonIcon;
@@ -18,6 +19,7 @@ import ide.fonts.Fonts;
 import ide.fonts.IDEFont;
 import ide.input.KeyInput;
 import ide.main.Main;
+import ide.screen.Screen;
 import ide.util.Colors;
 import ide.util.ExecuteCommand;
 import ide.util.Texts;
@@ -56,6 +58,9 @@ public class FileChooser extends CustomMessageBox {
 		this.title = title;
 		this.ok = ok;
 		this.cancel = cancel;
+		
+		if (!Explorer.allowAnimations)
+			y = Screen.DECORATION_HEIGHT;
 		
 		fileView = new FileView(x + 15, y + 180, width - 30, FileView.FILE_HEIGHT * 8, folder, onlyDirs, folder, this);
 		

@@ -65,28 +65,35 @@ public class CustomMessageBox extends IDEComponent {
 	public void close() {
 		CustomMessageBox m = this;
 		
-		new Thread() {
-			public void run() {
-				while (y > Screen.DECORATION_HEIGHT - height - 1) {
-					y--;
-					
-					for (IDEComponent c : innerComponents)
-						c.y--;
-					
-					Main.canRunLoop = true;
-					
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+		if (Explorer.allowAnimations) {
+			new Thread() {
+				public void run() {
+					while (y > Screen.DECORATION_HEIGHT - height - 1) {
+						y--;
+						
+						for (IDEComponent c : innerComponents)
+							c.y--;
+						
+						Main.canRunLoop = true;
+						
+						try {
+							Thread.sleep(1);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
+					
+					IDEComponent.toRemove.add(m);
+					MessageBox.active = false;
+					Explorer.selected = null;
 				}
-				
-				IDEComponent.toRemove.add(m);
-				MessageBox.active = false;
-				Explorer.selected = null;
-			}
-		}.start();
+			}.start();
+		}
+		else {
+			IDEComponent.toRemove.add(m);
+			MessageBox.active = false;
+			Explorer.selected = null;
+		}
 	}
 	
 	// Shows up a dialog and returns the name of the clicked button
