@@ -240,6 +240,15 @@ public class Colors {
     	String g = Integer.toHexString(c.getGreen());
     	String b = Integer.toHexString(c.getBlue());
     	
+    	if (r.equals("0"))
+    		r = "00";
+    	
+    	if (g.equals("0"))
+    		g = "00";
+    	
+    	if (b.equals("0"))
+    		b = "00";
+    	
     	return "#" + r + g + b;
     }
     

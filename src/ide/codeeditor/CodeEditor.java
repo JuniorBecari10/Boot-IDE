@@ -8108,130 +8108,192 @@ public class CodeEditor extends IDEComponent {
 		callAutomaticColor();
 		
 		if (MouseInput.isMouseRolling()) { // resolver isso aqui
-			//new Thread("scroll") {
-				//public void run() {
-					if (Main.editor.hovered()) {
-						if (RightClickOption.isAutoCompleteActive()) {
-							if (KeyInput.isControlDown() && KeyInput.isShiftDown()) {
-								if (MouseInput.wheelUp() && autocompletes.get(0).getY() + 30 < (y + height) - 30) { // TODO aaaaaaaaaa
-									MouseInput.updateMouseRoll();
-									
-									autocompletescroll -= 30;
-								}
-								else if (MouseInput.wheelDown()
-										&& autocompletes.get(autocompletes.size() - 1).getY() > MIN_Y) {
-									MouseInput.updateMouseRoll();
-									
-									autocompletescroll += 30;
-								}
-							}
+//			new Thread("scroll") {
+//				public void run() {
+//					if (Main.editor.hovered()) {
+//						if (RightClickOption.isAutoCompleteActive()) {
+//							if (KeyInput.isControlDown() && KeyInput.isShiftDown()) {
+//								if (MouseInput.wheelUp() && autocompletes.get(0).getY() + 30 < (y + height) - 30) { // TODO aaaaaaaaaa
+//									MouseInput.updateMouseRoll();
+//									
+//									autocompletescroll -= 30;
+//								}
+//								else if (MouseInput.wheelDown()
+//										&& autocompletes.get(autocompletes.size() - 1).getY() > MIN_Y) {
+//									MouseInput.updateMouseRoll();
+//									
+//									autocompletescroll += 30;
+//								}
+//							}
+//						}
+//						
+//						int targetScrX = scrX;
+//						int targetScrY = scrY;
+//
+//						if (KeyInput.isShiftDown() && !KeyInput.isControlDown()) { // isso nao pode acontecer com o x por causa dos autocompletes
+//							if (MouseInput.wheelUp() && scrX > 0) {
+//								MouseInput.updateMouseRoll();
+//
+//								targetScrX -= FONT_SIZE * 3;
+//							}
+//							else if (MouseInput.wheelDown()) {
+//								MouseInput.updateMouseRoll();
+//
+//								targetScrX += FONT_SIZE * 3;
+//							}
+//						}
+//
+//						if (!KeyInput.isShiftDown()) {
+//							if (!KeyInput.isControlDown()) {
+//								if (MouseInput.wheelUp() && scrY > 0) {
+//									MouseInput.updateMouseRoll();
+//
+//									targetScrY -= LINE_HEIGHT * 3;
+//								}
+//								else if (MouseInput.wheelDown() && scrY + LINE_HEIGHT * 3 < lines.size()
+//										* LINE_HEIGHT) {
+//									MouseInput.updateMouseRoll();
+//
+//									targetScrY += LINE_HEIGHT * 3;
+//								}
+//							}
+//							else {
+//								if (MouseInput.wheelUp() && scrY > 0) {
+//									MouseInput.updateMouseRoll();
+//
+//									targetScrY -= LINE_HEIGHT * 6;
+//								}
+//								else if (MouseInput.wheelDown() && scrY + LINE_HEIGHT * 3 < lines.size() 
+//										* LINE_HEIGHT) {
+//									MouseInput.updateMouseRoll();
+//
+//									targetScrY += LINE_HEIGHT * 6;
+//								}
+//							}
+//						}
+//						
+//						if (targetScrX < 0) targetScrX = 0;
+//						if (targetScrY < 0) targetScrY = 0;
+//						
+//						final int tx = targetScrX;
+//						final int ty = targetScrY;
+//						
+//						new Thread() {
+//							public void run() {
+//								while (scrX < tx) {
+//									scrX++;
+//									
+//									Main.canRunLoop = true;
+//									try {
+//										Thread.sleep(1);
+//									} catch (InterruptedException e) {
+//										e.printStackTrace();
+//									}
+//								}
+//								
+//								while (scrX > tx) {
+//									scrX--;
+//									
+//									Main.canRunLoop = true;
+//									try {
+//										Thread.sleep(1);
+//									} catch (InterruptedException e) {
+//										e.printStackTrace();
+//									}
+//								}
+//								
+//								while (scrY < ty) {
+//									scrY++;
+//									
+//									System.out.println("a");
+//									Main.canRunLoop = true;
+//									try {
+//										Thread.sleep(1);
+//									} catch (InterruptedException e) {
+//										e.printStackTrace();
+//									}
+//								}
+//								
+//								while (scrY > ty) {
+//									scrY--;
+//									
+//									System.out.println("b");
+//									Main.canRunLoop = true;
+//									try {
+//										Thread.sleep(1);
+//									} catch (InterruptedException e) {
+//										e.printStackTrace();
+//									}
+//								}
+//							}
+//						}.start();
+//
+//						return;
+//					}
+//				}
+//			}.start();
+			
+			if (Main.editor.hovered()) {
+				if (RightClickOption.isAutoCompleteActive()) {
+					if (KeyInput.isControlDown() && KeyInput.isShiftDown()) {
+						if (MouseInput.wheelUp() && autocompletes.get(0).getY() + 30 < (y + height) - 30) { // TODO aaaaaaaaaa
+							MouseInput.updateMouseRoll();
+							
+							autocompletescroll -= 30;
 						}
-						
-						int targetScrX = scrX;
-						int targetScrY = scrY;
-
-						if (KeyInput.isShiftDown() && !KeyInput.isControlDown()) { // isso nao pode acontecer com o x por causa dos autocompletes
-							if (MouseInput.wheelUp() && scrX > 0) {
-								MouseInput.updateMouseRoll();
-
-								targetScrX -= FONT_SIZE * 3;
-							}
-							else if (MouseInput.wheelDown()) {
-								MouseInput.updateMouseRoll();
-
-								targetScrX += FONT_SIZE * 3;
-							}
+						else if (MouseInput.wheelDown()
+								&& autocompletes.get(autocompletes.size() - 1).getY() > MIN_Y) {
+							MouseInput.updateMouseRoll();
+							
+							autocompletescroll += 30;
 						}
-
-						if (!KeyInput.isShiftDown()) {
-							if (!KeyInput.isControlDown()) {
-								if (MouseInput.wheelUp() && scrY > 0) {
-									MouseInput.updateMouseRoll();
-
-									targetScrY -= LINE_HEIGHT * 3;
-								}
-								else if (MouseInput.wheelDown() && scrY + LINE_HEIGHT * 3 < lines.size()
-										* LINE_HEIGHT) {
-									MouseInput.updateMouseRoll();
-
-									targetScrY += LINE_HEIGHT * 3;
-								}
-							}
-							else {
-								if (MouseInput.wheelUp() && scrY > 0) {
-									MouseInput.updateMouseRoll();
-
-									targetScrY -= LINE_HEIGHT * 6;
-								}
-								else if (MouseInput.wheelDown() && scrY + LINE_HEIGHT * 3 < lines.size() 
-										* LINE_HEIGHT) {
-									MouseInput.updateMouseRoll();
-
-									targetScrY += LINE_HEIGHT * 6;
-								}
-							}
-						}
-						
-						if (targetScrX < 0) targetScrX = 0;
-						if (targetScrY < 0) targetScrY = 0;
-						
-						final int tx = targetScrX;
-						final int ty = targetScrY;
-						
-						new Thread() {
-							public void run() {
-								while (scrX < tx) {
-									scrX++;
-									
-									Main.canRunLoop = true;
-									try {
-										Thread.sleep(1);
-									} catch (InterruptedException e) {
-										e.printStackTrace();
-									}
-								}
-								
-								while (scrX > tx) {
-									scrX--;
-									
-									Main.canRunLoop = true;
-									try {
-										Thread.sleep(1);
-									} catch (InterruptedException e) {
-										e.printStackTrace();
-									}
-								}
-								
-								while (scrY < ty) {
-									scrY++;
-									
-									System.out.println("a");
-									Main.canRunLoop = true;
-									try {
-										Thread.sleep(1);
-									} catch (InterruptedException e) {
-										e.printStackTrace();
-									}
-								}
-								
-								while (scrY > ty) {
-									scrY--;
-									
-									System.out.println("b");
-									Main.canRunLoop = true;
-									try {
-										Thread.sleep(1);
-									} catch (InterruptedException e) {
-										e.printStackTrace();
-									}
-								}
-							}
-						}.start();
-
-						return;
 					}
-				//}
-			//}.start();
+				}
+
+				if (KeyInput.isShiftDown() && !KeyInput.isControlDown()) { // isso nao pode acontecer com o x por causa dos autocompletes
+					if (MouseInput.wheelUp() && scrX > 0) {
+						MouseInput.updateMouseRoll();
+						
+						scrX -= FONT_SIZE * 3;
+					}
+					else if (MouseInput.wheelDown()) {
+						MouseInput.updateMouseRoll();
+						
+						scrX += FONT_SIZE * 3;
+					}
+				}
+
+				if (!KeyInput.isShiftDown()) {
+					if (!KeyInput.isControlDown()) {
+						if (MouseInput.wheelUp() && scrY > 0) {
+							MouseInput.updateMouseRoll();
+							
+							scrY -= LINE_HEIGHT * 3;
+						}
+						else if (MouseInput.wheelDown() && scrY + LINE_HEIGHT * 3 < lines.size()
+								* LINE_HEIGHT) {
+							MouseInput.updateMouseRoll();
+							
+							scrY += LINE_HEIGHT * 3;
+						}
+					}
+					else {
+						if (MouseInput.wheelUp() && scrY > 0) {
+							MouseInput.updateMouseRoll();
+							
+							scrY -= LINE_HEIGHT * 6;
+						}
+						else if (MouseInput.wheelDown() && scrY + LINE_HEIGHT * 3 < lines.size() 
+								* LINE_HEIGHT) {
+							MouseInput.updateMouseRoll();
+							
+							scrY += LINE_HEIGHT * 6;
+					}
+					}
+				}
+
+				return;
+			}
 		}
 	}
 	
