@@ -127,7 +127,7 @@ public class Main implements Runnable, Tickable {
     public static ExecuteButtonIcon resetExplorerDrag;
     public static ExecuteButtonIcon closeBaseFolder;
     public static ExecuteButtonIcon loadConfigFile;
-    public static ExecuteButtonIcon revertColors;
+    public static ExecuteButtonIcon resetColors;
     
     public static ExecuteButtonIcon moreOptions;
     
@@ -411,22 +411,22 @@ public class Main implements Runnable, Tickable {
 	        	}
 	        };
 	        
-	        revertColors = new ExecuteButtonIcon(explorer.getWidth() + 98, Screen.DECORATION_HEIGHT + 2, 32, 32, revertColorsSpr, () -> {
-	        	CommandTerminal.runCommand("revertcolors");
+	        resetColors = new ExecuteButtonIcon(explorer.getWidth() + 98, Screen.DECORATION_HEIGHT + 2, 32, 32, revertColorsSpr, () -> {
+	        	CommandTerminal.runCommand("resetcolors");
 	        	IDEComponent.toRemove.addAll(moreOptionsBtns);
-	        	}, Texts.revertColors) {
+	        	}, Texts.resetColors) {
 	        	public void tick() {
 	        		super.tick();
 	        		
 	        		x = explorer.getWidth() + 98;
-	        		caption = Texts.revertColors;
+	        		caption = Texts.resetColors;
 	        	}
 	        };
 	        
 	        moreOptionsBtns.add(resetExplorerDrag);
 	        moreOptionsBtns.add(closeBaseFolder);
 	        moreOptionsBtns.add(loadConfigFile);
-	        moreOptionsBtns.add(revertColors);
+	        moreOptionsBtns.add(resetColors);
 	        
 	        // Por enquanto é null mas o tick vai rolar e vai atualizar
 	        moreOptions = new ExecuteButtonIcon(explorer.getWidth() - 16, Screen.DECORATION_HEIGHT + 2, 14, 32, moreOptionsSpr, () -> { IDEComponent.toAdd.addAll(moreOptionsBtns); }, Texts.moreOptions) {
